@@ -40,6 +40,13 @@ def test_can_be_replaced_by():
     # Check with specific required features
     assert gpt4o.can_be_replaced_by(gpt4o_mini, required_features=["vision", "function_calling"]) is True
 
+def test_feature_enum():
+    from llmcapa import Feature
+    gpt4o = llmcapa.get("gpt-4o")
+    assert gpt4o.supports(Feature.LLMC_FEATURE_VISION) is True
+    assert gpt4o.supports(Feature.LLMC_FEATURE_REASONING_EFFORT) is False
+    assert gpt4o.supports("vision") is True
+
 def test_tokenizer_name():
     gpt = llmcapa.get("gpt-4o")
     assert gpt.tokenizer_name == "o200k_base"

@@ -3,7 +3,35 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field, asdict
+from enum import Enum
 from typing import Any, Dict, List, Optional
+
+
+class Feature(str, Enum):
+    """Standard feature flags supported by LLM models."""
+    LLMC_FEATURE_VISION = "vision"
+    LLMC_FEATURE_FUNCTION_CALLING = "function_calling"
+    LLMC_FEATURE_JSON_MODE = "json_mode"
+    LLMC_FEATURE_STREAMING = "streaming"
+    LLMC_FEATURE_REASONING = "reasoning"
+    LLMC_FEATURE_CHAT_COMPLETION = "chat_completion"
+    LLMC_FEATURE_RESPONSES_API = "responses_api"
+    LLMC_FEATURE_REASONING_EFFORT = "reasoning_effort"
+    LLMC_FEATURE_THINKING_BUDGET = "thinking_budget"
+    LLMC_FEATURE_MULTIMODAL = "multimodal"
+
+    # Modalities (Input)
+    LLMC_FEATURE_TEXT_INPUT = "text_input"
+    LLMC_FEATURE_IMAGE_INPUT = "image_input"
+    LLMC_FEATURE_AUDIO_INPUT = "audio_input"
+    LLMC_FEATURE_VIDEO_INPUT = "video_input"
+
+    # Modalities (Output)
+    LLMC_FEATURE_TEXT_OUTPUT = "text_output"
+    LLMC_FEATURE_IMAGE_OUTPUT = "image_output"
+    LLMC_FEATURE_AUDIO_OUTPUT = "audio_output"
+    LLMC_FEATURE_VIDEO_OUTPUT = "video_output"
+
 
 
 @dataclass(frozen=True)
@@ -33,7 +61,7 @@ class Capability:
     aliases: List[str] = field(default_factory=list)
     extra: Dict[str, Any] = field(default_factory=dict)
 
-    def supports(self, feature: str) -> bool:
+    def supports(self, feature: Feature | str) -> bool:
         """Return True if the model supports the given feature.
 
         Accepts short names such as "vision", "json_mode",
@@ -41,7 +69,11 @@ class Capability:
         "chat_completion", "responses_api", "multimodal",
         "reasoning_effort", "thinking_budget",
         or an input modality such as "image", "audio".
+
+        Also accepts `Feature` enum members (e.g., `Feature.LLMC_FEATURE_VISION`).
         """
+        feature_str = feature.value if isinstance(feature, Feature) else feature
+
         # Use a private cache dictionary to avoid re-evaluating the same feature check.
         # Since Capability is frozen, its state does not change.
         if not hasattr(self, "_supports_cache"):
@@ -49,11 +81,11 @@ class Capability:
             object.__setattr__(self, "_supports_cache", {})
         
         cache = getattr(self, "_supports_cache")
-        if feature in cache:
-            return cache[feature]
+        if feature_str in cache:
+            return cache[feature_str]
 
-        res = self._eval_supports(feature)
-        cache[feature] = res
+        res = self._eval_supports(feature_str)
+        cache[feature_str] = res
         return res
 
     def _eval_supports(self, feature: str) -> bool:
