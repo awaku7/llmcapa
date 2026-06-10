@@ -51,12 +51,19 @@ print(cap.features())
 # ['chat_completion', 'function_calling', 'image', 'image_input', 'image_output', 'json_mode', 'multimodal', 'responses_api', 'streaming', 'text', 'text_input', 'text_output', 'vision']
 ```
 
-### Cost Estimation
+### Token & Cost Estimation
 
-Estimate API costs based on input and output token counts (returns cost and currency):
+Estimate the number of tokens for a given text (supporting 30+ major languages) and calculate API costs:
 
 ```python
 gpt = llmcapa.get("gpt-4o")
+
+# Estimate tokens for multilingual text (dynamically adjusts for modern/older tokenizers)
+text = "Hello world! こんにちは世界。"
+tokens = gpt.estimate_tokens(text)
+print(tokens)  # 10 (estimated tokens)
+
+# Estimate API costs based on token counts (returns cost and currency)
 res = gpt.estimate_cost(input_tokens=1500, output_tokens=500)
 print(res)  # {'cost': 0.00875, 'currency': 'USD'}
 ```
