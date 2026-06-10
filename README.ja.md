@@ -41,10 +41,13 @@ print(cap.context_window)       # 128000
 print(cap.max_output_tokens)    # 16384
 print(cap.tokenizer_name)       # "o200k_base"
 
-# 機能のサポート状況を確認
-print(cap.supports("vision"))            # True
-print(cap.supports("responses_api"))     # True
-print(cap.supports("reasoning_effort"))  # False
+# 機能のサポート状況を確認（文字列またはFeature Enumを使用可能）
+from llmcapa import Feature
+
+print(cap.supports("vision"))                     # True
+print(cap.supports(Feature.LLMC_FEAT_VISION))     # True
+print(cap.supports("responses_api"))              # True
+print(cap.supports("reasoning_effort"))           # False
 
 # サポートされているすべての機能を一覧表示
 print(cap.features())

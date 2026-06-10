@@ -41,10 +41,13 @@ print(cap.context_window)       # 128000
 print(cap.max_output_tokens)    # 16384
 print(cap.tokenizer_name)       # "o200k_base"
 
-# Check feature support
-print(cap.supports("vision"))            # True
-print(cap.supports("responses_api"))     # True
-print(cap.supports("reasoning_effort"))  # False
+# Check feature support (using strings or Feature enum)
+from llmcapa import Feature
+
+print(cap.supports("vision"))                     # True
+print(cap.supports(Feature.LLMC_FEAT_VISION))     # True
+print(cap.supports("responses_api"))              # True
+print(cap.supports("reasoning_effort"))           # False
 
 # List all supported features
 print(cap.features())
