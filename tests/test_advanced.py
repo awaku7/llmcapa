@@ -44,6 +44,30 @@ def test_tokenizer_name():
     gpt = llmcapa.get("gpt-4o")
     assert gpt.tokenizer_name == "o200k_base"
 
+def test_estimate_tokens():
+    gpt4o = llmcapa.get("gpt-4o")
+    gpt4 = llmcapa.get("gpt-4")
+
+    # English
+    eng = "Hello world! This is a test."
+    assert gpt4o.estimate_tokens(eng) == 8
+    assert gpt4.estimate_tokens(eng) == 8
+
+    # Japanese
+    jp = "こんにちは世界。これはテストです。"
+    assert gpt4o.estimate_tokens(jp) == 13
+    assert gpt4.estimate_tokens(jp) == 22
+
+    # Russian (Cyrillic)
+    ru = "Привет, мир! Это тест."
+    assert gpt4o.estimate_tokens(ru) == 9
+    assert gpt4.estimate_tokens(ru) == 26
+
+    # Hindi (Devanagari)
+    hi = "नमस्ते दुनिया! यह एक परीक्षण है।"
+    assert gpt4o.estimate_tokens(hi) == 17
+    assert gpt4.estimate_tokens(hi) == 80
+
 def test_features_list():
     gpt = llmcapa.get("gpt-4o")
     feats = gpt.features()

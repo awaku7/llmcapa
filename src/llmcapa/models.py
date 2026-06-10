@@ -103,6 +103,89 @@ class Capability:
                 supported.add(f)
         return sorted(list(supported))
 
+    def estimate_tokens(self, text: str) -> int:
+        """Estimate the number of tokens for the given text.
+
+        This is a lightweight, offline, standard-library-only estimation
+        optimized for 30+ major languages (including English, Japanese, Chinese,
+        Korean, Russian, Arabic, Hindi, Thai, Spanish, French, etc.).
+
+        It dynamically adjusts the estimation based on the model's tokenizer
+        efficiency (e.g., modern tokenizers like o200k_base, Llama 3, Gemini,
+        and Claude 3 are highly optimized for non-English scripts compared to
+        older tokenizers like cl100k_base).
+        """
+        if not text:
+            return 0
+
+        # Determine if the model uses a modern, highly-optimized tokenizer
+        # Modern tokenizers have much larger vocabularies (100k-250k+) and are
+        # highly efficient for non-Latin scripts.
+        t_name = self.tokenizer_name.lower()
+        is_modern = (
+            any(k in t_name for k in ["o200k", "llama3", "gemini", "claude3", "gemma", "r1", "deepseek"])
+            or self.provider.lower() in ["google", "anthropic", "deepseek"]
+        )
+
+        # Multipliers for different character classes: (modern_tokenizer, older_tokenizer)
+        # CJK (Chinese, Japanese, Korean)
+        cjk_mult = 0.75 if is_modern else 1.3
+        # Cyrillic (Russian, Ukrainian, Bulgarian, etc.)
+        cyrillic_mult = 0.45 if is_modern else 1.5
+        # Arabic / Persian / Urdu
+        arabic_mult = 0.55 if is_modern else 2.5
+        # Devanagari (Hindi, Marathi, Nepali)
+        devanagari_mult = 0.6 if is_modern else 3.0
+        # Thai
+        thai_mult = 0.7 if is_modern else 3.5
+        # Greek
+        greek_mult = 0.45 if is_modern else 1.8
+        # Hebrew
+        hebrew_mult = 0.55 if is_modern else 2.5
+        # Other Indic scripts (Bengali, Tamil, Telugu, Kannada, Malayalam, Gujarati, Gurmukhi)
+        indic_mult = 0.65 if is_modern else 3.2
+        # Other non-Latin scripts (Georgian, Armenian, Burmese, Lao, Tibetan, etc.)
+        other_non_latin_mult = 0.8 if is_modern else 2.2
+
+        tokens = 0.0
+
+        for char in text:
+            cp = ord(char)
+            if cp <= 0x024F or (0x1E00 <= cp <= 0x1EFF):
+                # Latin / ASCII / Common punctuation / Latin Extended (Turkish, Vietnamese, etc.)
+                # 1 Latin char is roughly 0.25 to 0.3 tokens (4 chars = 1 token)
+                tokens += 0.28
+            elif (0x4E00 <= cp <= 0x9FFF) or (0x3000 <= cp <= 0x30FF) or (0xAC00 <= cp <= 0xD7AF) or (0xF900 <= cp <= 0xFAFF) or (0xFF00 <= cp <= 0xFFEF):
+                # CJK Unified Ideographs, Hiragana/Katakana, Hangul, Fullwidth
+                tokens += cjk_mult
+            elif 0x0400 <= cp <= 0x052F:
+                # Cyrillic
+                tokens += cyrillic_mult
+            elif 0x0600 <= cp <= 0x077F:
+                # Arabic / Persian / Urdu
+                tokens += arabic_mult
+            elif 0x0900 <= cp <= 0x097F:
+                # Devanagari (Hindi)
+                tokens += devanagari_mult
+            elif 0x0E00 <= cp <= 0x0E7F:
+                # Thai
+                tokens += thai_mult
+            elif 0x0370 <= cp <= 0x03FF:
+                # Greek
+                tokens += greek_mult
+            elif 0x0590 <= cp <= 0x05FF:
+                # Hebrew
+                tokens += hebrew_mult
+            elif 0x0980 <= cp <= 0x0DFF:
+                # Other Indic scripts (Bengali, Gurmukhi, Gujarati, Tamil, Telugu, Kannada, Malayalam, Sinhala)
+                tokens += indic_mult
+            else:
+                # Other non-Latin scripts
+                tokens += other_non_latin_mult
+
+        # Round up to nearest integer, minimum 1 token if text is not empty
+        return max(1, int(round(tokens)))
+
     def estimate_cost(self, input_tokens: int = 0, output_tokens: int = 0) -> Dict[str, Any]:
         """Estimate the cost for the given number of input and output tokens.
 
