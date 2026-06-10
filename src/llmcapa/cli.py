@@ -71,6 +71,18 @@ def _cmd_providers(_args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_update(_args: argparse.Namespace) -> int:
+    try:
+        print("Fetching latest models from OpenRouter API...")
+        # Force fetch by passing cache_ttl=0 or None (we want to update the cache)
+        count = default_registry().fetch_openrouter(cache_ttl=0)
+        print(f"Successfully updated {count} models from OpenRouter.")
+        return 0
+    except Exception as e:
+        print(f"error updating models: {e}", file=sys.stderr)
+        return 1
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="llmcapa", description="Lookup LLM model capabilities (offline).")
     parser.add_argument("--version", action="version", version=f"llmcapa {__version__}")
@@ -92,6 +104,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_prov = sub.add_parser("providers", help="list known providers")
     p_prov.set_defaults(func=_cmd_providers)
+
+    p_upd = sub.add_parser("update", help="fetch and update OpenRouter models cache")
+    p_upd.set_defaults(func=_cmd_update)
 
     return parser
 
