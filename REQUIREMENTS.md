@@ -69,8 +69,8 @@ llmcapa.find(supports_vision=True, min_context_window=100000)
 # Load custom user-defined model data from a local JSON file
 llmcapa.load_extra("my_models.json")
 
-# Fetch and register OpenRouter models dynamically with a TTL cache
-llmcapa.fetch_openrouter(cache_ttl=86400)
+# Fetch and register OpenRouter models dynamically
+llmcapa.fetch_openrouter()
 ```
 
 ## CLI
@@ -89,9 +89,6 @@ llmcapa providers
 
 # Explicitly fetch and update the OpenRouter models cache
 llmcapa update
-
-# Clear local OpenRouter cache file
-llmcapa --clear-cache
 ```
 
 ## Package Structure

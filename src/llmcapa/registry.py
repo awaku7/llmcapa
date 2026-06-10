@@ -38,6 +38,22 @@ class Registry:
             if entry.name.endswith(".json"):
                 self._load_json_text(entry.read_text(encoding="utf-8"))
 
+        # Load local OpenRouter cache if it exists to override bundled data with latest updates
+        import os
+        home = os.path.expanduser("~")
+        cache_file = os.path.join(home, ".llmcapa", "openrouter_cache.json")
+        if os.path.exists(cache_file):
+            try:
+                with open(cache_file, "r", encoding="utf-8") as f:
+                    records = json.load(f)
+                for r in records:
+                    model_id = r.get("id")
+                    if not model_id:
+                        continue
+                    self.register(self._map_openrouter_record(r))
+            except Exception:
+                pass
+
     def _load_json_text(self, text: str) -> int:
         payload = json.loads(text)
         if isinstance(payload, dict):
@@ -68,6 +84,65 @@ class Registry:
         self._alias_index[key] = key
         for alias in cap.aliases:
             self._alias_index[alias.lower()] = key
+
+    def _map_openrouter_record(self, r: dict) -> Capability:
+        model_id = r.get("id", "")
+        context_window = int(r.get("context_length") or 0)
+        top_provider = r.get("top_provider") or {}
+        max_output = int(top_provider.get("max_completion_tokens") or 0)
+
+        # Modalities
+        arch = r.get("architecture") or {}
+        input_mods = arch.get("input_modalities") or ["text"]
+        output_mods = arch.get("output_modalities") or ["text"]
+
+        # Features
+        supported_params = r.get("supported_parameters") or []
+        supports_fc = "tools" in supported_params or "tool_choice" in supported_params
+        supports_json = "structured_outputs" in supported_params or "response_format" in supported_params
+        supports_reasoning = "reasoning" in supported_params or "include_reasoning" in supported_params
+        supports_reasoning_effort = "reasoning" in supported_params
+
+        # Pricing
+        pricing_data = r.get("pricing") or {}
+        pricing = None
+        if pricing_data:
+            try:
+                pricing = {
+                    "input_per_1m": float(pricing_data.get("prompt", 0)) * 1000000,
+                    "output_per_1m": float(pricing_data.get("completion", 0)) * 1000000,
+                    "currency": "USD"
+                }
+            except (ValueError, TypeError):
+                pass
+
+        # Determine provider from model_id prefix (e.g. "meta-llama/..." -> "meta-llama")
+        provider = "openrouter"
+        if "/" in model_id:
+            parts = model_id.split("/")
+            if not parts[0].startswith("~"):
+                provider = parts[0]
+
+        return Capability(
+            provider=provider,
+            model_id=model_id,
+            display_name=r.get("name", model_id),
+            context_window=context_window,
+            max_output_tokens=max_output,
+            input_modalities=input_mods,
+            output_modalities=output_mods,
+            supports_function_calling=supports_fc,
+            supports_json_mode=supports_json,
+            supports_streaming=True,
+            supports_vision="image" in input_mods,
+            supports_reasoning=supports_reasoning,
+            supports_reasoning_effort=supports_reasoning_effort,
+            supports_chat_completion=True,
+            supports_responses_api=False,
+            knowledge_cutoff=r.get("knowledge_cutoff"),
+            pricing=pricing,
+            aliases=[model_id.lower()]
+        )
 
     # ------------------------------------------------------------------
     # OpenRouter dynamic fetching
@@ -129,63 +204,7 @@ class Registry:
             if not model_id:
                 continue
 
-            # Map OpenRouter schema to Capability
-            context_window = int(r.get("context_length") or 0)
-            top_provider = r.get("top_provider") or {}
-            max_output = int(top_provider.get("max_completion_tokens") or 0)
-
-            # Modalities
-            arch = r.get("architecture") or {}
-            input_mods = arch.get("input_modalities") or ["text"]
-            output_mods = arch.get("output_modalities") or ["text"]
-
-            # Features
-            supported_params = r.get("supported_parameters") or []
-            supports_fc = "tools" in supported_params or "tool_choice" in supported_params
-            supports_json = "structured_outputs" in supported_params or "response_format" in supported_params
-            supports_reasoning = "reasoning" in supported_params or "include_reasoning" in supported_params
-            supports_reasoning_effort = "reasoning" in supported_params
-
-            # Pricing
-            pricing_data = r.get("pricing") or {}
-            pricing = None
-            if pricing_data:
-                try:
-                    pricing = {
-                        "input_per_1m": float(pricing_data.get("prompt", 0)) * 1000000,
-                        "output_per_1m": float(pricing_data.get("completion", 0)) * 1000000,
-                        "currency": "USD"
-                    }
-                except (ValueError, TypeError):
-                    pass
-
-            # Determine provider from model_id prefix (e.g. "meta-llama/..." -> "meta-llama")
-            provider = "openrouter"
-            if "/" in model_id:
-                parts = model_id.split("/")
-                if not parts[0].startswith("~"):
-                    provider = parts[0]
-
-            cap = Capability(
-                provider=provider,
-                model_id=model_id,
-                display_name=r.get("name", model_id),
-                context_window=context_window,
-                max_output_tokens=max_output,
-                input_modalities=input_mods,
-                output_modalities=output_mods,
-                supports_function_calling=supports_fc,
-                supports_json_mode=supports_json,
-                supports_streaming=True,
-                supports_vision="image" in input_mods,
-                supports_reasoning=supports_reasoning,
-                supports_reasoning_effort=supports_reasoning_effort,
-                supports_chat_completion=True,
-                supports_responses_api=False,
-                knowledge_cutoff=r.get("knowledge_cutoff"),
-                pricing=pricing,
-                aliases=[model_id.lower()]
-            )
+            cap = self._map_openrouter_record(r)
             self.register(cap)
             count += 1
         return count

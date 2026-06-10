@@ -87,8 +87,6 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="llmcapa", description="Lookup LLM model capabilities (offline).")
     parser.add_argument("--version", action="version", version=f"llmcapa {__version__}")
     parser.add_argument("--extra", metavar="JSON_FILE", help="load extra model data from a local JSON file")
-    parser.add_argument("--fetch-openrouter", action="store_true", help="fetch all models dynamically from OpenRouter API")
-    parser.add_argument("--clear-cache", action="store_true", help="clear local OpenRouter cache file")
     sub = parser.add_subparsers(dest="command")
 
     p_show = sub.add_parser("show", help="show capability of a model")
@@ -114,28 +112,8 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: Optional[List[str]] = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
-    if args.clear_cache:
-        import os
-        home = os.path.expanduser("~")
-        cache_file = os.path.join(home, ".llmcapa", "openrouter_cache.json")
-        if os.path.exists(cache_file):
-            try:
-                os.remove(cache_file)
-                print("Local OpenRouter cache cleared.")
-            except Exception as e:
-                print(f"error clearing cache: {e}", file=sys.stderr)
-                return 1
-        else:
-            print("No local cache found.")
     if args.extra:
         default_registry().load_extra(args.extra)
-    if args.fetch_openrouter:
-        try:
-            # Use a default TTL of 24 hours (86400 seconds) for CLI to avoid hitting API limits
-            default_registry().fetch_openrouter(cache_ttl=86400)
-        except Exception as e:
-            print(f"error: {e}", file=sys.stderr)
-            return 1
     if not getattr(args, "command", None):
         parser.print_help()
         return 0

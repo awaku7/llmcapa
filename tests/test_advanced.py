@@ -84,3 +84,11 @@ def test_openrouter_cache(tmp_path, monkeypatch):
     reg = llmcapa.Registry()
     count2 = reg.fetch_openrouter(cache_ttl=3600)
     assert count2 == 1
+
+    # Verify that Registry initialization automatically loads the cache file if it exists
+    reg3 = llmcapa.Registry()
+    # Trigger ensure_loaded
+    reg3.providers()
+    # Since we modified the cache file to only have 1 model, only that model should be registered from OpenRouter
+    # (along with other bundled models)
+    assert reg3.get("x-ai/grok-build-0.1") is not None

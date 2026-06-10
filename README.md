@@ -12,7 +12,7 @@ Lookup capabilities (context window, modalities, supported features) of various 
 - **Cost Estimation**: Estimate API costs based on input and output token counts.
 - **Drop-in Replacement Checker**: Check if a model can be safely replaced by another model based on context window and required features.
 - **Tokenizer Mapping**: Access tokenizer names (e.g., `o200k_base`) directly from model capabilities.
-- **Dynamic OpenRouter Integration with TTL Cache**: Fetch and register all 300+ models from OpenRouter API dynamically, with local file caching and TTL (Time-To-Live) support to prevent redundant API requests.
+- **Dynamic OpenRouter Integration**: Fetch and register all 300+ models from OpenRouter API dynamically, with local file caching to ensure offline availability with the latest updates.
 - **Extendable**: Load your own local JSON model definitions.
 - **CLI Included**: Query and list model capabilities directly from your terminal.
 
@@ -120,13 +120,13 @@ big_reasoning_models = llmcapa.find(
 )
 ```
 
-### Dynamic OpenRouter Integration with TTL Cache
+### Dynamic OpenRouter Integration
 
-Fetch and register all 300+ models dynamically from OpenRouter API to get real-time capabilities and pricing. You can specify a `cache_ttl` (in seconds) to cache the response locally in `~/.llmcapa/openrouter_cache.json` and avoid redundant API requests.
+Fetch and register all 300+ models dynamically from OpenRouter API to get real-time capabilities and pricing. You can fetch models dynamically using `fetch_openrouter()`. The response is cached locally in `~/.llmcapa/openrouter_cache.json` and automatically loaded on subsequent imports to ensure offline availability with the latest updates.
 
 ```python
-# Fetch and register OpenRouter models dynamically with a 24-hour cache TTL
-count = llmcapa.fetch_openrouter(cache_ttl=86400)
+# Fetch and register OpenRouter models dynamically
+count = llmcapa.fetch_openrouter()
 print(f"Registered {count} models from OpenRouter!")
 
 # Lookup using OpenRouter model ID
@@ -178,14 +178,8 @@ llmcapa list --json --no-deprecated
 # List all known providers
 llmcapa providers
 
-# Fetch OpenRouter models dynamically (uses 24-hour cache TTL by default) and query
-llmcapa --fetch-openrouter show meta-llama/llama-3.3-70b-instruct
-
 # Explicitly fetch and update the OpenRouter models cache (forces cache refresh)
 llmcapa update
-
-# Clear local OpenRouter cache file
-llmcapa --clear-cache
 ```
 
 ## Notes
