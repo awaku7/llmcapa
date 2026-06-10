@@ -100,28 +100,32 @@ print(gpt4o.can_be_replaced_by(gemini, required_features=["vision", "function_ca
 
 ### モダリティとマルチモーダルの確認
 
-特定の入力/出力モダリティや、一般的なマルチモーダルサポートを確認できます。
+`Feature` Enum を使用して、特定の入力/出力モダリティや、一般的なマルチモーダルサポートを確認できます。
 
 ```python
+from llmcapa import Feature
+
 gemini = llmcapa.get("gemini-3.5-flash")
 
-print(gemini.supports("multimodal"))    # True (複数のモダリティをサポート)
-print(gemini.supports("audio_input"))   # True
-print(gemini.supports("image_output"))  # False
+print(gemini.supports(Feature.LLMC_FEAT_MULTIMODAL))    # True (複数のモダリティをサポート)
+print(gemini.supports(Feature.LLMC_FEAT_AUDIO_INPUT))   # True
+print(gemini.supports(Feature.LLMC_FEAT_IMAGE_OUTPUT))  # False
 ```
 
 ### 推論（Reasoning）と思考（Thinking）の確認
 
-OpenAIスタイルの `reasoning_effort` と Anthropicスタイルの `thinking_budget` を区別して確認できます。
+`Feature` Enum を使用して、OpenAIスタイルの `reasoning_effort` と Anthropicスタイルの `thinking_budget` を区別して確認できます。
 
 ```python
+from llmcapa import Feature
+
 o1 = llmcapa.get("o1")
-print(o1.supports("reasoning_effort"))  # True
-print(o1.supports("thinking_budget"))   # False
+print(o1.supports(Feature.LLMC_FEAT_REASONING_EFFORT))  # True
+print(o1.supports(Feature.LLMC_FEAT_THINKING_BUDGET))   # False
 
 claude = llmcapa.get("claude-3-7-sonnet")
-print(claude.supports("reasoning_effort"))  # False
-print(claude.supports("thinking_budget"))   # True
+print(claude.supports(Feature.LLMC_FEAT_REASONING_EFFORT))  # False
+print(claude.supports(Feature.LLMC_FEAT_THINKING_BUDGET))   # True
 ```
 
 ### モデルの一覧表示と検索
