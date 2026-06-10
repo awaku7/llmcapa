@@ -41,17 +41,14 @@ print(cap.max_output_tokens)    # 16384
 print(cap.tokenizer_name)       # "o200k_base"
 
 # 機能のサポート状況を確認（文字列またはFeature Enumを使用可能）
-from llmcapa import Feature
+from llmcapa import Feature, ReasoningEffort
 
-print(cap.supports("vision"))                     # True
-print(cap.supports(Feature.LLMC_FEAT_VISION))     # True
-print(cap.supports("responses_api"))              # True
-print(cap.supports("reasoning_effort"))           # False
-
+print(cap.supports(Feature.LLMC_FEAT_VISION))             # True
+print(cap.supports(Feature.LLMC_FEAT_RESPONSES_API))      # True
+print(cap.supports(Feature.LLMC_FEAT_REASONING_EFFORT))   # False
 
 # reasoning_effortをサポートするモデル向けのReasoningEffort Enum
-from llmcapa import ReasoningEffort
-print(ReasoningEffort.LLMC_EFFORT_HIGH)           # "high"
+print(ReasoningEffort.LLMC_EFFORT_HIGH)                   # "high"
 # サポートされているすべての機能を一覧表示
 print(cap.features())
 # ['chat_completion', 'function_calling', 'image', 'image_input', 'image_output', 'json_mode', 'multimodal', 'responses_api', 'streaming', 'text', 'text_input', 'text_output', 'vision']
