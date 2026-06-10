@@ -53,7 +53,10 @@ print(cap.features())
 
 ### Token & Cost Estimation
 
-Estimate the number of tokens for a given text (supporting 30+ major languages) and calculate API costs:
+Roughly estimate the number of tokens for a given text (supporting 30+ major languages) and calculate API costs:
+
+> [!NOTE]
+> Token estimation is a lightweight, offline approximation. For exact token counts, please use the official APIs or dedicated tokenizers from each provider.
 
 ```python
 gpt = llmcapa.get("gpt-4o")
