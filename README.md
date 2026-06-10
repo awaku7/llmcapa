@@ -177,6 +177,9 @@ llmcapa providers
 # Fetch OpenRouter models dynamically (uses 24-hour cache TTL by default) and query
 llmcapa --fetch-openrouter show meta-llama/llama-3.3-70b-instruct
 
+# Explicitly fetch and update the OpenRouter models cache (forces cache refresh)
+llmcapa update
+
 # Clear local OpenRouter cache file
 llmcapa --clear-cache
 ```
