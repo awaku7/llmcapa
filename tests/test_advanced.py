@@ -47,6 +47,11 @@ def test_feature_enum():
     assert gpt4o.supports(Feature.LLMC_FEAT_REASONING_EFFORT) is False
     assert gpt4o.supports("vision") is True
 
+
+    from llmcapa import ReasoningEffort
+    assert ReasoningEffort.LLMC_EFFORT_LOW == "low"
+    assert ReasoningEffort.LLMC_EFFORT_MEDIUM == "medium"
+    assert ReasoningEffort.LLMC_EFFORT_HIGH == "high"
 def test_tokenizer_name():
     gpt = llmcapa.get("gpt-4o")
     assert gpt.tokenizer_name == "o200k_base"

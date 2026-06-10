@@ -48,6 +48,10 @@ print(cap.supports(Feature.LLMC_FEAT_VISION))     # True
 print(cap.supports("responses_api"))              # True
 print(cap.supports("reasoning_effort"))           # False
 
+
+# Use ReasoningEffort enum for models supporting reasoning_effort
+from llmcapa import ReasoningEffort
+print(ReasoningEffort.LLMC_EFFORT_HIGH)           # "high"
 # List all supported features
 print(cap.features())
 # ['chat_completion', 'function_calling', 'image', 'image_input', 'image_output', 'json_mode', 'multimodal', 'responses_api', 'streaming', 'text', 'text_input', 'text_output', 'vision']

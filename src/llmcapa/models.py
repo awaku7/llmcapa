@@ -34,6 +34,13 @@ class Feature(str, Enum):
 
 
 
+class ReasoningEffort(str, Enum):
+    """Standard reasoning effort levels for models supporting reasoning_effort."""
+    LLMC_EFFORT_LOW = "low"
+    LLMC_EFFORT_MEDIUM = "medium"
+    LLMC_EFFORT_HIGH = "high"
+
+
 @dataclass(frozen=True)
 class Capability:
     """Capability information of a single LLM model."""
