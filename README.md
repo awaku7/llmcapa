@@ -58,7 +58,9 @@ Estimate the number of tokens for a given text (supporting 30+ major languages) 
 ```python
 gpt = llmcapa.get("gpt-4o")
 
-# Estimate tokens for multilingual text (dynamically adjusts for modern/older tokenizers)
+# Estimate tokens for multilingual text
+# If `tiktoken` is installed, it dynamically uses it for exact OpenAI token counts.
+# Otherwise, it falls back to a highly-optimized, standard-library-only estimation.
 text = "Hello world! こんにちは世界。"
 tokens = gpt.estimate_tokens(text)
 print(tokens)  # 10 (estimated tokens)
