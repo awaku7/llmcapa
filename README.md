@@ -1,6 +1,6 @@
 # llmcapa
 
-Lookup capabilities (context window, modalities, supported features) of various LLM models — fully offline, with optional dynamic OpenRouter integration and advanced helper utilities.
+Lookup capabilities (context window, modalities, supported features) of various LLM models — fully offline by default, with on-demand OpenRouter integration to fetch and cache the latest models, and advanced helper utilities.
 
 ## Features
 
