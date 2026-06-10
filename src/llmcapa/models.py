@@ -9,28 +9,28 @@ from typing import Any, Dict, List, Optional
 
 class Feature(str, Enum):
     """Standard feature flags supported by LLM models."""
-    LLMC_FEATURE_VISION = "vision"
-    LLMC_FEATURE_FUNCTION_CALLING = "function_calling"
-    LLMC_FEATURE_JSON_MODE = "json_mode"
-    LLMC_FEATURE_STREAMING = "streaming"
-    LLMC_FEATURE_REASONING = "reasoning"
-    LLMC_FEATURE_CHAT_COMPLETION = "chat_completion"
-    LLMC_FEATURE_RESPONSES_API = "responses_api"
-    LLMC_FEATURE_REASONING_EFFORT = "reasoning_effort"
-    LLMC_FEATURE_THINKING_BUDGET = "thinking_budget"
-    LLMC_FEATURE_MULTIMODAL = "multimodal"
+    LLMC_FEAT_VISION = "vision"
+    LLMC_FEAT_FUNCTION_CALLING = "function_calling"
+    LLMC_FEAT_JSON_MODE = "json_mode"
+    LLMC_FEAT_STREAMING = "streaming"
+    LLMC_FEAT_REASONING = "reasoning"
+    LLMC_FEAT_CHAT_COMPLETION = "chat_completion"
+    LLMC_FEAT_RESPONSES_API = "responses_api"
+    LLMC_FEAT_REASONING_EFFORT = "reasoning_effort"
+    LLMC_FEAT_THINKING_BUDGET = "thinking_budget"
+    LLMC_FEAT_MULTIMODAL = "multimodal"
 
     # Modalities (Input)
-    LLMC_FEATURE_TEXT_INPUT = "text_input"
-    LLMC_FEATURE_IMAGE_INPUT = "image_input"
-    LLMC_FEATURE_AUDIO_INPUT = "audio_input"
-    LLMC_FEATURE_VIDEO_INPUT = "video_input"
+    LLMC_FEAT_TEXT_INPUT = "text_input"
+    LLMC_FEAT_IMAGE_INPUT = "image_input"
+    LLMC_FEAT_AUDIO_INPUT = "audio_input"
+    LLMC_FEAT_VIDEO_INPUT = "video_input"
 
     # Modalities (Output)
-    LLMC_FEATURE_TEXT_OUTPUT = "text_output"
-    LLMC_FEATURE_IMAGE_OUTPUT = "image_output"
-    LLMC_FEATURE_AUDIO_OUTPUT = "audio_output"
-    LLMC_FEATURE_VIDEO_OUTPUT = "video_output"
+    LLMC_FEAT_TEXT_OUTPUT = "text_output"
+    LLMC_FEAT_IMAGE_OUTPUT = "image_output"
+    LLMC_FEAT_AUDIO_OUTPUT = "audio_output"
+    LLMC_FEAT_VIDEO_OUTPUT = "video_output"
 
 
 

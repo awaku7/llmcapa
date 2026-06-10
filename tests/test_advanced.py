@@ -43,8 +43,8 @@ def test_can_be_replaced_by():
 def test_feature_enum():
     from llmcapa import Feature
     gpt4o = llmcapa.get("gpt-4o")
-    assert gpt4o.supports(Feature.LLMC_FEATURE_VISION) is True
-    assert gpt4o.supports(Feature.LLMC_FEATURE_REASONING_EFFORT) is False
+    assert gpt4o.supports(Feature.LLMC_FEAT_VISION) is True
+    assert gpt4o.supports(Feature.LLMC_FEAT_REASONING_EFFORT) is False
     assert gpt4o.supports("vision") is True
 
 def test_tokenizer_name():
