@@ -36,7 +36,11 @@ def test_record_schema(fname, record):
     missing = REQUIRED_KEYS - set(record)
     assert not missing, f"{fname}: {record.get('model_id')}: missing {missing}"
     assert isinstance(record["context_window"], int) and record["context_window"] > 0
-    assert isinstance(record["max_output_tokens"], int) and record["max_output_tokens"] > 0
+    # OpenRouter models might have max_output_tokens as 0 if not provided by the API
+    if fname == "openrouter.json":
+        assert isinstance(record["max_output_tokens"], int) and record["max_output_tokens"] >= 0
+    else:
+        assert isinstance(record["max_output_tokens"], int) and record["max_output_tokens"] > 0
     # must round-trip through Capability
     cap = Capability.from_dict(record)
     assert cap.model_id == record["model_id"]
