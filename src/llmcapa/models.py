@@ -106,22 +106,32 @@ class Capability:
     def estimate_tokens(self, text: str) -> int:
         """Estimate the number of tokens for the given text.
 
-        This is a lightweight, offline, standard-library-only estimation
-        optimized for 30+ major languages (including English, Japanese, Chinese,
-        Korean, Russian, Arabic, Hindi, Thai, Spanish, French, etc.).
-
-        It dynamically adjusts the estimation based on the model's tokenizer
-        efficiency (e.g., modern tokenizers like o200k_base, Llama 3, Gemini,
-        and Claude 3 are highly optimized for non-English scripts compared to
-        older tokenizers like cl100k_base).
+        If `tiktoken` is installed and the model uses an OpenAI tokenizer (e.g., `o200k_base`,
+        `cl100k_base`), it will dynamically import `tiktoken` and return the exact token count.
+        Otherwise, it falls back to a highly-optimized, standard-library-only estimation
+        supporting 30+ major languages.
         """
         if not text:
             return 0
 
+        t_name = self.tokenizer_name.lower()
+
+        # Try to use tiktoken if installed and applicable
+        if t_name and any(k in t_name for k in ["o200k", "cl100k", "p50k", "r50k"]):
+            try:
+                import tiktoken
+                # Get encoding by name or fallback to model_id
+                try:
+                    enc = tiktoken.get_encoding(self.tokenizer_name)
+                except Exception:
+                    enc = tiktoken.encoding_for_model(self.model_id)
+                return len(enc.encode(text))
+            except Exception:
+                pass
+
         # Determine if the model uses a modern, highly-optimized tokenizer
         # Modern tokenizers have much larger vocabularies (100k-250k+) and are
         # highly efficient for non-Latin scripts.
-        t_name = self.tokenizer_name.lower()
         is_modern = (
             any(k in t_name for k in ["o200k", "llama3", "gemini", "claude3", "gemma", "r1", "deepseek"])
             or self.provider.lower() in ["google", "anthropic", "deepseek"]
