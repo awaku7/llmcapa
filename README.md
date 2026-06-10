@@ -12,7 +12,6 @@ Lookup capabilities (context window, modalities, supported features) of various 
 - **Cost Estimation**: Estimate API costs based on input and output token counts.
 - **Drop-in Replacement Checker**: Check if a model can be safely replaced by another model based on context window and required features.
 - **Tokenizer Mapping**: Access tokenizer names (e.g., `o200k_base`) directly from model capabilities.
-- **Dynamic OpenRouter Integration**: Fetch and register all 300+ models from OpenRouter API dynamically, with local file caching to ensure offline availability with the latest updates.
 - **Extendable**: Load your own local JSON model definitions.
 - **CLI Included**: Query and list model capabilities directly from your terminal.
 
@@ -135,9 +134,9 @@ big_reasoning_models = llmcapa.find(
 )
 ```
 
-### Dynamic OpenRouter Integration
+### On-demand OpenRouter Integration (Caching)
 
-Fetch and register all 300+ models dynamically from OpenRouter API to get real-time capabilities and pricing. You can fetch models dynamically using `fetch_openrouter()`. The response is cached locally in `~/.llmcapa/openrouter_cache.json` and automatically loaded on subsequent imports to ensure offline availability with the latest updates.
+To update model data or fetch the latest pricing, you can optionally fetch and register models from the OpenRouter API on-demand using `fetch_openrouter()`. The response is cached locally in `~/.llmcapa/openrouter_cache.json` and automatically loaded on subsequent imports, keeping the library fully offline during regular usage.
 
 ```python
 # Fetch and register OpenRouter models dynamically
