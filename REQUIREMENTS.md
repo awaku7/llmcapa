@@ -1,97 +1,132 @@
-# llmcapa 要件定義（ドラフト）
+# llmcapa Requirements Specification
 
-## 目的
-各種 LLM モデルの capability（能力・制約）を統一的な API で取得できる Python ライブラリを提供する。
-pip でインストール可能なパッケージとして配布する。
+## Purpose
+Provide a Python library that offers a unified API to retrieve the capabilities and constraints (context window, modalities, supported features, pricing, etc.) of various LLM models.
+The library is distributed as a pip-installable package.
 
-## 基本方針
-- オフラインファースト: capability データはパッケージ内に静的データ（JSON）として同梱し、ネットワーク接続なしで動作する。
-- データとロジックを分離し、データ更新のみでモデル追加に対応できる構造にする。
-- I18N 対応: メッセージ・説明文は将来の多言語化を考慮した構造にする。
+## Core Principles
+- **Offline-First**: Capability data is bundled statically inside the package as JSON files, allowing standard lookups to run fully offline without any network connection.
+- **Separation of Data and Logic**: Model definitions are stored in JSON files, making it easy to add or update models without changing the core Python code.
+- **Zero Runtime Dependencies**: Built entirely on the Python standard library to ensure high compatibility and lightweight installation.
 
-## 対象プロバイダ（初期）
-- OpenAI（GPT-4o, GPT-4.1, o1/o3 系 など）
-- Anthropic（Claude 3.5/3.7/4 系）
-- Google（Gemini 1.5/2.0/2.5 系）
-- ※ データ追加でその他プロバイダ（Meta Llama, Mistral, Cohere 等）を拡張可能
+## Supported Providers
+- **Bundled Static Data**: OpenAI, Anthropic, Google (Gemini), Meta (Llama), Mistral, Qwen, DeepSeek, NVIDIA, Microsoft (Phi), Amazon (Nova/Titan), and Japanese domestic models (NTT tsuzumi, PFN PLaMo, ELYZA, etc.).
+- **Dynamic Integration**: Supports fetching and registering all 300+ models dynamically from the OpenRouter API.
 
-## capability 項目
-| 項目 | 型 | 例 |
+## Capability Schema
+| Field | Type | Description / Example |
 |---|---|---|
-| provider | str | "openai" |
-| model_id | str | "gpt-4o" |
-| display_name | str | "GPT-4o" |
-| context_window | int | 128000 |
-| max_output_tokens | int | 16384 |
-| input_modalities | list[str] | ["text", "image"] |
-| output_modalities | list[str] | ["text"] |
-| supports_function_calling | bool | true |
-| supports_json_mode | bool | true |
-| supports_streaming | bool | true |
-| supports_vision | bool | true |
-| supports_reasoning | bool | false |
-| knowledge_cutoff | str (YYYY-MM) | "2023-10" |
-| pricing | dict (任意) | {"input_per_1m": 2.5, "output_per_1m": 10.0, "currency": "USD"} |
-| deprecated | bool | false |
-| aliases | list[str] | ["gpt-4o-2024-08-06"] |
+| `provider` | `str` | Name of the provider (e.g., `"openai"`) |
+| `model_id` | `str` | Unique model identifier (e.g., `"gpt-4o"`) |
+| `display_name` | `str` | Human-readable name (e.g., `"GPT-4o"`) |
+| `context_window` | `int` | Maximum context length in tokens (e.g., `128000`) |
+| `max_output_tokens` | `int` | Maximum completion tokens (e.g., `16384`) |
+| `input_modalities` | `list[str]` | Supported input modalities (e.g., `["text", "image"]`) |
+| `output_modalities` | `list[str]` | Supported output modalities (e.g., `["text"]`) |
+| `supports_function_calling` | `bool` | Whether function calling/tool use is supported |
+| `supports_json_mode` | `bool` | Whether JSON mode or structured outputs are supported |
+| `supports_streaming` | `bool` | Whether streaming responses are supported |
+| `supports_vision` | `bool` | Whether image input is supported |
+| `supports_reasoning` | `bool` | Whether reasoning/thinking is supported |
+| `supports_chat_completion` | `bool` | Whether standard chat completion API is supported |
+| `supports_responses_api` | `bool` | Whether OpenAI-style Responses API is supported |
+| `supports_reasoning_effort` | `bool` | Whether reasoning effort parameter is supported |
+| `supports_thinking_budget` | `bool` | Whether thinking budget parameter is supported |
+| `tokenizer_name` | `str` | Name of the tokenizer used (e.g., `"o200k_base"`) |
+| `knowledge_cutoff` | `str` | Knowledge cutoff date (e.g., `"2023-10"`) |
+| `pricing` | `dict` | Pricing rates per 1M tokens (e.g., `{"input_per_1m": 2.5, "output_per_1m": 10.0, "currency": "USD"}`) |
+| `deprecated` | `bool` | Whether the model is deprecated |
+| `aliases` | `list[str]` | Alternative names or specific versions (e.g., `["gpt-4o-2024-08-06"]`) |
+| `extra` | `dict` | Custom provider-specific fields |
 
-## 公開 API（案）
+## Public API
 ```python
 import llmcapa
 
-# 単一モデルの capability 取得（alias でも解決可）
+# Retrieve capabilities for a single model (case-insensitive, alias-resolved)
 cap = llmcapa.get("gpt-4o")
-cap.context_window        # 128000
-cap.supports("vision")    # True
+print(cap.context_window)       # 128000
+print(cap.supports("vision"))    # True
 
-# モデル一覧
-llmcapa.list_models()                      # 全モデル
-llmcapa.list_models(provider="anthropic")  # プロバイダ絞り込み
+# List all supported features as a sorted list
+print(cap.features())            # ['chat_completion', 'function_calling', ...]
 
-# 条件検索
+# Estimate API costs based on token counts
+cost_info = cap.estimate_cost(input_tokens=1500, output_tokens=500)
+
+# Check if a model can be safely replaced by another model
+gpt4o = llmcapa.get("gpt-4o")
+gemini = llmcapa.get("gemini-3.5-flash")
+can_replace = gpt4o.can_be_replaced_by(gemini, required_features=["vision", "function_calling"])
+
+# List models
+llmcapa.list_models()                      # All models
+llmcapa.list_models(provider="anthropic")  # Filtered by provider
+
+# Search models by capability criteria
 llmcapa.find(supports_vision=True, min_context_window=100000)
 
-# ユーザー定義データの追加/上書き（ローカル JSON 読み込み）
+# Load custom user-defined model data from a local JSON file
 llmcapa.load_extra("my_models.json")
+
+# Fetch and register OpenRouter models dynamically with a TTL cache
+llmcapa.fetch_openrouter(cache_ttl=86400)
 ```
 
-## CLI（案）
-```
+## CLI
+```bash
+# Show capabilities of a specific model
 llmcapa show gpt-4o
-llmcapa list --provider openai
-llmcapa list --json
+llmcapa show gpt-4o --json
+
+# List all known models
+llmcapa list
+llmcapa list --provider google
+llmcapa list --json --no-deprecated
+
+# List all known providers
+llmcapa providers
+
+# Explicitly fetch and update the OpenRouter models cache
+llmcapa update
+
+# Clear local OpenRouter cache file
+llmcapa --clear-cache
 ```
 
-## パッケージ構成
+## Package Structure
 ```
 llmcapa/
-├── pyproject.toml        # setuptools or hatchling, PEP 621
-├── README.md
-├── LICENSE               # MIT
+├── pyproject.toml        # Build configuration (Hatchling / PEP 621)
+├── README.md             # User documentation
+├── DEVELOP.md            # Developer guide
+├── REQUIREMENTS.md       # Requirements specification (this document)
+├── LICENSE               # Apache License 2.0
 ├── src/llmcapa/
-│   ├── __init__.py       # 公開 API
-│   ├── models.py         # Capability dataclass
-│   ├── registry.py       # データ読み込み・検索
-│   ├── cli.py            # CLI エントリポイント
-│   └── data/
+│   ├── __init__.py       # Public API entry point
+│   ├── models.py         # Capability dataclass and feature evaluation
+│   ├── registry.py       # In-memory registry, loading, and OpenRouter fetching
+│   ├── cli.py            # Command-line interface
+│   └── data/             # Bundled offline capability data (JSON)
+│       ├── __init__.py
 │       ├── openai.json
 │       ├── anthropic.json
-│       └── google.json
-└── tests/
-    └── test_registry.py
+│       ├── google.json
+│       ├── openrouter.json
+│       └── ...
+└── tests/                # Unit tests (pytest)
+    ├── test_registry.py
+    ├── test_cache.py
+    └── test_advanced.py
 ```
 
-## 配布
-- ビルドバックエンド: hatchling（pyproject.toml のみで完結）
-- `pip install llmcapa` / `pip install .` / wheel ビルド対応
-- Python >= 3.9
-- 実行時依存: なし（標準ライブラリのみ）
+## Distribution & Requirements
+- **Build Backend**: Hatchling (PEP 621 compliant)
+- **Installation**: `pip install llmcapa` / `pip install .`
+- **Python Compatibility**: Python >= 3.9
+- **Runtime Dependencies**: None (Standard library only)
+- **License**: Apache License 2.0
 
-## テスト
-- pytest による単体テスト
-- 全 JSON データのスキーマ検証テスト
-
-## 未決事項（要確認）
-1. パッケージ名は `llmcapa` でよいか
-2. pricing 情報を含めるか（変動が激しいため任意項目とする案）
-3. ライセンス（MIT 想定）
+## Testing
+- Unit tests using `pytest`
+- Schema validation tests for all bundled JSON data files
