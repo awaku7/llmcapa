@@ -45,6 +45,10 @@ print(cap.tokenizer_name)       # "o200k_base"
 print(cap.supports("vision"))            # True
 print(cap.supports("responses_api"))     # True
 print(cap.supports("reasoning_effort"))  # False
+
+# List all supported features
+print(cap.features())
+# ['chat_completion', 'function_calling', 'image', 'image_input', 'image_output', 'json_mode', 'multimodal', 'responses_api', 'streaming', 'text', 'text_input', 'text_output', 'vision']
 ```
 
 ### Cost Estimation
