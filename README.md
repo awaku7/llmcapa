@@ -1,0 +1,190 @@
+# llmcapa
+
+Lookup capabilities (context window, modalities, supported features) of various LLM models — fully offline, with optional dynamic OpenRouter integration and advanced helper utilities.
+
+## Features
+
+- **Comprehensive Bundled Data**: Offline capability data for OpenAI, Anthropic, Google (Gemini), Microsoft (Phi), Amazon (Nova/Titan), Meta (Llama), Mistral, Qwen, DeepSeek, NVIDIA, and Japanese domestic models (NTT tsuzumi, PFN PLaMo, ELYZA, etc. adopted by the Digital Agency's "GENNAI" platform).
+- **Zero Runtime Dependencies**: Built entirely on the Python standard library.
+- **Alias Resolution**: Automatically resolves aliases and provider-specific names (e.g., `gpt-4o-2024-08-06` -> `gpt-4o`, `gemini-1.5-pro-preview-0409` -> `gemini-1.5-pro`).
+- **Advanced Feature Queries**: Check support for `vision`, `multimodal`, `chat_completion`, `responses_api`, `reasoning_effort`, `thinking_budget`, and specific input/output modalities (e.g., `image_input`, `image_output`, `audio_input`).
+- **High Performance**: Evaluated feature checks are cached internally using memoization to avoid redundant calculations.
+- **Cost Estimation**: Estimate API costs based on input and output token counts.
+- **Drop-in Replacement Checker**: Check if a model can be safely replaced by another model based on context window and required features.
+- **Tokenizer Mapping**: Access tokenizer names (e.g., `o200k_base`) directly from model capabilities.
+- **Dynamic OpenRouter Integration with TTL Cache**: Fetch and register all 300+ models from OpenRouter API dynamically, with local file caching and TTL (Time-To-Live) support to prevent redundant API requests.
+- **Extendable**: Load your own local JSON model definitions.
+- **CLI Included**: Query and list model capabilities directly from your terminal.
+
+## Install
+
+```bash
+pip install llmcapa
+```
+
+Or from source:
+
+```bash
+pip install .
+```
+
+## Usage
+
+### Basic Lookup
+
+```python
+import llmcapa
+
+# Get model capabilities (case-insensitive, alias-resolved)
+cap = llmcapa.get("gpt-4o")
+print(cap.context_window)       # 128000
+print(cap.max_output_tokens)    # 16384
+print(cap.tokenizer_name)       # "o200k_base"
+
+# Check feature support
+print(cap.supports("vision"))            # True
+print(cap.supports("responses_api"))     # True
+print(cap.supports("reasoning_effort"))  # False
+```
+
+### Cost Estimation
+
+Estimate API costs based on input and output token counts (returns cost and currency):
+
+```python
+gpt = llmcapa.get("gpt-4o")
+res = gpt.estimate_cost(input_tokens=1500, output_tokens=500)
+print(res)  # {'cost': 0.00875, 'currency': 'USD'}
+```
+
+### Drop-in Replacement Checker
+
+Check if a model can be safely replaced by another model. The replacement model must have a context window at least as large as the target model and support all required features.
+
+```python
+gpt4o = llmcapa.get("gpt-4o")
+gpt4o_mini = llmcapa.get("gpt-4o-mini")
+gemini = llmcapa.get("gemini-3.5-flash")
+
+# gpt-4o-mini has the same context window but lacks image_output (which gpt-4o supports)
+print(gpt4o.can_be_replaced_by(gpt4o_mini))  # False
+
+# gemini-3.5-flash has a larger context window but also lacks image_output
+print(gpt4o.can_be_replaced_by(gemini))  # False
+
+# If we only require vision and function_calling, gemini-3.5-flash can replace gpt-4o
+print(gpt4o.can_be_replaced_by(gemini, required_features=["vision", "function_calling"]))  # True
+```
+
+### Modality & Multimodal Checks
+
+You can check specific input/output modalities or general multimodal support:
+
+```python
+gemini = llmcapa.get("gemini-3.5-flash")
+
+print(gemini.supports("multimodal"))    # True (supports multiple modalities)
+print(gemini.supports("audio_input"))   # True
+print(gemini.supports("image_output"))  # False
+```
+
+### Reasoning & Thinking Checks
+
+Differentiate between OpenAI-style `reasoning_effort` and Anthropic-style `thinking_budget`:
+
+```python
+o1 = llmcapa.get("o1")
+print(o1.supports("reasoning_effort"))  # True
+print(o1.supports("thinking_budget"))   # False
+
+claude = llmcapa.get("claude-3-7-sonnet")
+print(claude.supports("reasoning_effort"))  # False
+print(claude.supports("thinking_budget"))   # True
+```
+
+### Listing & Searching Models
+
+```python
+# List all models for a specific provider
+for c in llmcapa.list_models(provider="anthropic"):
+    print(c.model_id, c.context_window)
+
+# Search models by capability criteria
+big_reasoning_models = llmcapa.find(
+    supports_reasoning=True,
+    min_context_window=200000
+)
+```
+
+### Dynamic OpenRouter Integration with TTL Cache
+
+Fetch and register all 300+ models dynamically from OpenRouter API to get real-time capabilities and pricing. You can specify a `cache_ttl` (in seconds) to cache the response locally in `~/.llmcapa/openrouter_cache.json` and avoid redundant API requests.
+
+```python
+# Fetch and register OpenRouter models dynamically with a 24-hour cache TTL
+count = llmcapa.fetch_openrouter(cache_ttl=86400)
+print(f"Registered {count} models from OpenRouter!")
+
+# Lookup using OpenRouter model ID
+cap = llmcapa.get("meta-llama/llama-3.3-70b-instruct")
+print(cap.context_window)  # 131072
+print(cap.pricing)         # {'input_per_1m': 0.1, 'output_per_1m': 0.32, 'currency': 'USD'}
+```
+
+### Custom Local Data
+
+Load your own model definitions from a local JSON file:
+
+```python
+llmcapa.load_extra("my_models.json")
+```
+
+`my_models.json` format:
+```json
+{
+  "models": [
+    {
+      "provider": "local",
+      "model_id": "my-custom-model",
+      "context_window": 32768,
+      "max_output_tokens": 4096,
+      "supports_function_calling": true,
+      "aliases": ["my-model-latest"]
+    }
+  ]
+}
+```
+
+## Development
+
+For details on how to extend the library, add new providers, or implement new feature flags, please refer to the [DEVELOP.md](DEVELOP.md) guide.
+
+## CLI
+
+```bash
+# Show capabilities of a specific model
+llmcapa show gpt-4o
+llmcapa show gpt-4o --json
+
+# List all known models
+llmcapa list
+llmcapa list --provider google
+llmcapa list --json --no-deprecated
+
+# List all known providers
+llmcapa providers
+
+# Fetch OpenRouter models dynamically (uses 24-hour cache TTL by default) and query
+llmcapa --fetch-openrouter show meta-llama/llama-3.3-70b-instruct
+
+# Clear local OpenRouter cache file
+llmcapa --clear-cache
+```
+
+## Notes
+
+- **Static Snapshot**: Bundled capability data is a static snapshot. While we strive to keep it updated with the latest models (including GPT-5.5, Claude Fable, Gemini 3.5, DeepSeek V4, etc.), providers change limits and pricing frequently. Use `fetch_openrouter()` or verify with official documentation when absolute accuracy is critical.
+
+## License
+
+Apache License 2.0
