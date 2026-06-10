@@ -52,6 +52,11 @@ def test_feature_enum():
     assert ReasoningEffort.LLMC_EFFORT_LOW == "low"
     assert ReasoningEffort.LLMC_EFFORT_MEDIUM == "medium"
     assert ReasoningEffort.LLMC_EFFORT_HIGH == "high"
+
+    assert ReasoningEffort.LLMC_EFFORT_NONE == "none"
+    assert ReasoningEffort.LLMC_EFFORT_MINIMAL == "minimal"
+    assert ReasoningEffort.LLMC_EFFORT_XHIGH == "xhigh"
+
 def test_tokenizer_name():
     gpt = llmcapa.get("gpt-4o")
     assert gpt.tokenizer_name == "o200k_base"
