@@ -44,6 +44,22 @@ def test_tokenizer_name():
     gpt = llmcapa.get("gpt-4o")
     assert gpt.tokenizer_name == "o200k_base"
 
+def test_features_list():
+    gpt = llmcapa.get("gpt-4o")
+    feats = gpt.features()
+    assert "vision" in feats
+    assert "chat_completion" in feats
+    assert "text_input" in feats
+    assert "text_output" in feats
+    assert "image_input" in feats
+    assert "image_output" in feats
+    assert "multimodal" in feats
+    assert "reasoning_effort" not in feats
+
+    o1 = llmcapa.get("o1")
+    o1_feats = o1.features()
+    assert "reasoning_effort" in o1_feats
+
 def test_openrouter_cache(tmp_path, monkeypatch):
     import os
     # Mock home directory to use tmp_path

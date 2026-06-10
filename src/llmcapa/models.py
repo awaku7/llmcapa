@@ -72,6 +72,37 @@ class Capability:
             return True
         return bool(self.extra.get(attr) or self.extra.get(feature))
 
+    def features(self) -> List[str]:
+        """Return a sorted list of all standard and custom features supported by this model."""
+        standard_features = [
+            "vision", "function_calling", "json_mode", "streaming",
+            "reasoning", "chat_completion", "responses_api",
+            "reasoning_effort", "thinking_budget"
+        ]
+        # Gather input/output modalities
+        for mod in self.input_modalities:
+            standard_features.append(f"{mod}_input")
+            standard_features.append(mod)
+        for mod in self.output_modalities:
+            standard_features.append(f"{mod}_output")
+            standard_features.append(mod)
+        if self.supports("multimodal"):
+            standard_features.append("multimodal")
+
+        # Gather custom features from extra
+        for key in self.extra:
+            if key.startswith("supports_"):
+                standard_features.append(key[9:])
+            else:
+                standard_features.append(key)
+
+        # Filter unique and supported features
+        supported = set()
+        for f in standard_features:
+            if self.supports(f):
+                supported.add(f)
+        return sorted(list(supported))
+
     def estimate_cost(self, input_tokens: int = 0, output_tokens: int = 0) -> Dict[str, Any]:
         """Estimate the cost for the given number of input and output tokens.
 
