@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import ssl
 import urllib.request
 from importlib import resources
@@ -212,13 +213,24 @@ class Registry:
     # ------------------------------------------------------------------
     # lookup
     # ------------------------------------------------------------------
+    def _lookup_candidates(self, model_id: str) -> list[str]:
+        """Return lookup keys including safe date-suffix normalization."""
+        key = (model_id or "").strip().lower()
+        candidates = [key]
+        if "-" in key:
+            base, suffix = key.rsplit("-", 1)
+            if re.fullmatch(r"\d{8}", suffix):
+                candidates.append(base)
+        return candidates
+
     def get(self, model_id: str) -> Capability:
         """Resolve a model id or alias to its Capability."""
         self._ensure_loaded()
-        key = self._alias_index.get(model_id.lower())
-        if key is None:
-            raise ModelNotFoundError(model_id)
-        return self._models[key]
+        for key in self._lookup_candidates(model_id):
+            resolved = self._alias_index.get(key)
+            if resolved is not None:
+                return self._models[resolved]
+        raise ModelNotFoundError(model_id)
 
     def list_models(
         self,

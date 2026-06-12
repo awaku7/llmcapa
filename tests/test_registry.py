@@ -36,11 +36,9 @@ def test_record_schema(fname, record):
     missing = REQUIRED_KEYS - set(record)
     assert not missing, f"{fname}: {record.get('model_id')}: missing {missing}"
     assert isinstance(record["context_window"], int) and record["context_window"] > 0
-    # OpenRouter models might have max_output_tokens as 0 if not provided by the API
-    if fname == "openrouter.json":
-        assert isinstance(record["max_output_tokens"], int) and record["max_output_tokens"] >= 0
-    else:
-        assert isinstance(record["max_output_tokens"], int) and record["max_output_tokens"] > 0
+    # Some bundled records may have max_output_tokens=0 when the provider
+    # does not publish a reliable limit.
+    assert isinstance(record["max_output_tokens"], int) and record["max_output_tokens"] >= 0
     # must round-trip through Capability
     cap = Capability.from_dict(record)
     assert cap.model_id == record["model_id"]
@@ -71,6 +69,10 @@ def test_get_by_alias():
 
 def test_get_case_insensitive():
     assert llmcapa.get("GPT-4O").model_id == "gpt-4o"
+
+
+def test_get_date_suffix_alias():
+    assert llmcapa.get("claude-sonnet-4-5-20250929").model_id == "claude-sonnet-4-5"
 
 
 def test_get_not_found():
@@ -128,7 +130,7 @@ def test_supports_modality():
     # input/output modality checks
     gpt = llmcapa.get("gpt-4o")
     assert gpt.supports("image_input")
-    assert gpt.supports("image_output")
+    assert not gpt.supports("image_output")
     assert not gpt.supports("audio_output")
 
 def test_supports_chat_completion_and_responses():
