@@ -139,7 +139,7 @@ class Registry:
             supports_reasoning=supports_reasoning,
             supports_reasoning_effort=supports_reasoning_effort,
             supports_chat_completion=True,
-            supports_responses_api=False,
+            supports_responses_api=True,
             knowledge_cutoff=r.get("knowledge_cutoff"),
             pricing=pricing,
             aliases=[model_id.lower()]
@@ -214,13 +214,48 @@ class Registry:
     # lookup
     # ------------------------------------------------------------------
     def _lookup_candidates(self, model_id: str) -> list[str]:
-        """Return lookup keys including safe date-suffix normalization."""
+        """Return lookup keys including safe suffix normalization.
+
+        Automatically strips known suffixes such as:
+          -colon suffix (:free, :beta, etc.)
+          -date patterns: YYYY-MM-DD, MM-DD, YYYYMMDD
+          -literal suffixes: -latest, -preview, -preview-XX-XX
+        Supports separators: -, _, . (e.g. gpt-4o-latest, model_latest,
+        claude.latest). Multiple suffixes are stripped iteratively
+        (e.g., -preview-05-20 removes -05-20 first, then -preview).
+        """
         key = (model_id or "").strip().lower()
         candidates = [key]
-        if "-" in key:
-            base, suffix = key.rsplit("-", 1)
-            if re.fullmatch(r"\d{8}", suffix):
-                candidates.append(base)
+
+        # 1. Strip colon suffix (e.g., :free, :beta)
+        if ":" in key:
+            candidates.append(key.split(":")[0])
+
+        # 2. Progressively strip known trailing patterns
+        DatePat = r"\d{4}-\d{2}-\d{2}|\d{2}-\d{2}|\d{8}"
+        suffix_pats = [f"[-_.]({DatePat})$", r"[-_.](latest|preview)$"]
+
+        for base in list(candidates):
+            k = base
+            changed = True
+            while changed:
+                changed = False
+                # Try date patterns first (longest match)
+                m = re.search(suffix_pats[0], k)
+                if m:
+                    k = k[: m.start()]
+                    if k not in candidates:
+                        candidates.append(k)
+                    changed = True
+                    continue
+                # Try literal suffixes
+                m = re.search(suffix_pats[1], k)
+                if m:
+                    k = k[: m.start()]
+                    if k not in candidates:
+                        candidates.append(k)
+                    changed = True
+                    continue
         return candidates
 
     def get(self, model_id: str) -> Capability:

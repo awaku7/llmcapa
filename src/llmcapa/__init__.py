@@ -17,7 +17,7 @@ from pathlib import Path
 from .models import Capability, Feature, ReasoningEffort
 from .registry import Registry, ModelNotFoundError, default_registry
 
-__version__ = "0.1.1"
+__version__ = "0.1.4"
 
 __all__ = [
     "Capability",

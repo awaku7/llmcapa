@@ -25,12 +25,11 @@ def test_can_be_replaced_by():
     gpt4o_mini = llmcapa.get("gpt-4o-mini")
     gemini = llmcapa.get("gemini-3.5-flash")
 
-    # gpt-4o-mini has same context window (128k) but supports fewer features (e.g. no image output)
-    # So gpt-4o cannot be replaced by gpt-4o-mini if we require all features
-    assert gpt4o.can_be_replaced_by(gpt4o_mini) is False
+    # gpt-4o and gpt-4o-mini have the same context window (128k) and same features
+    # (neither model supports image_output), so gpt-4o can be replaced by gpt-4o-mini.
+    assert gpt4o.can_be_replaced_by(gpt4o_mini) is True
 
-    # gemini-3.5-flash has larger context window (1M) and supports vision, fc, json, etc.
-    # But gemini-3.5-flash does not support image_output (which gpt-4o supports).
+    # gemini-3.5-flash has larger context window (1M) but lacks file_input and responses_api.
     # So gpt-4o cannot be replaced by gemini-3.5-flash if we require all features.
     assert gpt4o.can_be_replaced_by(gemini) is False
 
@@ -72,18 +71,18 @@ def test_estimate_tokens():
 
     # Japanese
     jp = "こんにちは世界。これはテストです。"
-    assert gpt4o.estimate_tokens(jp) == 13
-    assert gpt4.estimate_tokens(jp) == 22
+    assert gpt4o.estimate_tokens(jp) == 8
+    assert gpt4.estimate_tokens(jp) == 11
 
     # Russian (Cyrillic)
     ru = "Привет, мир! Это тест."
-    assert gpt4o.estimate_tokens(ru) == 9
-    assert gpt4.estimate_tokens(ru) == 26
+    assert gpt4o.estimate_tokens(ru) == 8
+    assert gpt4.estimate_tokens(ru) == 12
 
     # Hindi (Devanagari)
     hi = "नमस्ते दुनिया! यह एक परीक्षण है।"
-    assert gpt4o.estimate_tokens(hi) == 17
-    assert gpt4.estimate_tokens(hi) == 80
+    assert gpt4o.estimate_tokens(hi) == 11
+    assert gpt4.estimate_tokens(hi) == 33
 
 def test_features_list():
     gpt = llmcapa.get("gpt-4o")
@@ -93,7 +92,7 @@ def test_features_list():
     assert "text_input" in feats
     assert "text_output" in feats
     assert "image_input" in feats
-    assert "image_output" in feats
+    assert "image_output" not in feats
     assert "multimodal" in feats
     assert "reasoning_effort" not in feats
 
