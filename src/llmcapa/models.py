@@ -238,6 +238,20 @@ class Capability:
         # Round up to nearest integer, minimum 1 token if text is not empty
         return max(1, int(round(tokens)))
 
+    def count_tokens(self, text: str) -> int:
+        """Count tokens for the given text using the best available tokenizer.
+
+        Uses provider-specific tokenizers when available (tiktoken for OpenAI/DeepSeek,
+        LocalTokenizer for Gemini, etc.). Falls back to estimate_tokens otherwise.
+
+        See ``llmcapa.count_tokens(text, model_id)`` for the standalone version.
+        """
+        if not text:
+            return 0
+        from .tokenizer import _count_for_cap
+
+        return _count_for_cap(text, self)
+
     def estimate_cost(self, input_tokens: int = 0, output_tokens: int = 0) -> Dict[str, Any]:
         """Estimate the cost for the given number of input and output tokens.
 

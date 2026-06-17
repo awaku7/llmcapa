@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "llmcapa"
-version = "0.1.4"
+version = "0.2.0"
 description = "Lookup capabilities (context window, modalities, features) of various LLM models offline."
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -32,6 +32,11 @@ llmcapa = "llmcapa.cli:main"
 Homepage = "https://github.com/awaku7/llmcapa"
 Repository = "https://github.com/awaku7/llmcapa"
 "Bug Tracker" = "https://github.com/awaku7/llmcapa/issues"
+
+[project.optional-dependencies]
+openai = ["tiktoken>=0.5.0"]
+gemini = ["sentencepiece>=0.2.0"]
+all = ["tiktoken>=0.5.0", "sentencepiece>=0.2.0"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/llmcapa"]

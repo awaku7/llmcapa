@@ -13,7 +13,7 @@ import json
 import sys
 from typing import List, Optional
 
-from . import __version__, get, list_models, providers
+from . import __version__, count_messages_tokens, count_tokens, get, list_models, providers
 from .registry import ModelNotFoundError, default_registry
 
 
@@ -71,6 +71,36 @@ def _cmd_providers(_args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_tokens(args: argparse.Namespace) -> int:
+    text = args.text
+    if not text and not sys.stdin.isatty():
+        text = sys.stdin.read().strip()
+
+    try:
+        if args.messages:
+            import json as _json
+            try:
+                msgs = _json.loads(text or "[]")
+            except json.JSONDecodeError as e:
+                print(f"error: invalid JSON: {e}", file=sys.stderr)
+                return 1
+            total = count_messages_tokens(msgs, args.model_id)
+            print(total)
+        elif text:
+            total = count_tokens(text, args.model_id)
+            print(total)
+        else:
+            print("error: provide text as argument or pipe via stdin", file=sys.stderr)
+            return 1
+    except ModelNotFoundError:
+        print(f"error: model not found: {args.model_id}", file=sys.stderr)
+        return 1
+    except Exception as e:
+        print(f"error: {e}", file=sys.stderr)
+        return 1
+    return 0
+
+
 def _cmd_update(_args: argparse.Namespace) -> int:
     try:
         print("Fetching latest models from OpenRouter API...")
@@ -105,6 +135,12 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_upd = sub.add_parser("update", help="fetch and update OpenRouter models cache")
     p_upd.set_defaults(func=_cmd_update)
+
+    p_tok = sub.add_parser("tokens", help="count tokens for text or messages")
+    p_tok.add_argument("model_id", help="model identifier")
+    p_tok.add_argument("text", nargs="?", default="", help="text to count, or JSON messages with --messages")
+    p_tok.add_argument("--messages", action="store_true", help="treat input as JSON messages list")
+    p_tok.set_defaults(func=_cmd_tokens)
 
     return parser
 
