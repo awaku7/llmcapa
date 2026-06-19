@@ -1,0 +1,103 @@
+{
+  "models": [
+    {
+      "provider": "xiaomi",
+      "model_id": "mimo-v2.5-pro",
+      "display_name": "Xiaomi MiMo-V2.5-Pro",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "input_modalities": ["text"],
+      "output_modalities": ["text"],
+      "supports_chat_completion": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-12",
+      "pricing": {"input_per_1m": 0.435, "output_per_1m": 0.87, "currency": "USD"},
+      "extra": {
+        "total_params": "1T",
+        "active_params": "42B",
+        "input_cache_hit_per_1m": 0.0036
+      },
+      "aliases": ["xiaomi/mimo-v2.5-pro", "mimo-v2.5-pro"]
+    },
+    {
+      "provider": "xiaomi",
+      "model_id": "mimo-v2.5-pro-ultraspeed",
+      "display_name": "Xiaomi MiMo-V2.5-Pro-UltraSpeed",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "input_modalities": ["text"],
+      "output_modalities": ["text"],
+      "supports_chat_completion": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-12",
+      "pricing": {"input_per_1m": 1.305, "output_per_1m": 2.61, "currency": "USD"},
+      "extra": {
+        "input_cache_hit_per_1m": 0.0108
+      },
+      "aliases": ["xiaomi/mimo-v2.5-pro-ultraspeed", "mimo-v2.5-pro-ultraspeed"]
+    },
+    {
+      "provider": "xiaomi",
+      "model_id": "mimo-v2.5",
+      "display_name": "Xiaomi MiMo-V2.5",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "input_modalities": ["text", "image", "video", "audio"],
+      "output_modalities": ["text"],
+      "supports_chat_completion": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-12",
+      "pricing": {"input_per_1m": 0.14, "output_per_1m": 0.28, "currency": "USD"},
+      "extra": {
+        "input_cache_hit_per_1m": 0.0028
+      },
+      "aliases": ["xiaomi/mimo-v2.5", "mimo-v2.5"]
+    },
+    {
+      "provider": "xiaomi",
+      "model_id": "mimo-v2.5-tts",
+      "display_name": "Xiaomi MiMo-V2.5-TTS",
+      "context_window": 8192,
+      "max_output_tokens": 8192,
+      "input_modalities": ["text"],
+      "output_modalities": ["speech", "audio"],
+      "supports_chat_completion": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": null,
+      "aliases": ["xiaomi/mimo-v2.5-tts", "mimo-v2.5-tts"]
+    },
+    {
+      "provider": "xiaomi",
+      "model_id": "mimo-v2.5-asr",
+      "display_name": "Xiaomi MiMo-V2.5-ASR",
+      "context_window": 8192,
+      "max_output_tokens": 2000,
+      "input_modalities": ["audio"],
+      "output_modalities": ["text"],
+      "supports_chat_completion": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": null,
+      "pricing": {"input_per_1m": 0.0, "output_per_1m": 0.0, "currency": "USD"},
+      "extra": {
+        "price_per_audio_hour": 0.074
+      },
+      "aliases": ["xiaomi/mimo-v2.5-asr", "mimo-v2.5-asr"]
+    }
+  ]
+}

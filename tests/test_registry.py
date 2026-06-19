@@ -95,6 +95,8 @@ def test_providers():
         "xai", "meta", "mistral", "qwen", "deepseek", "nvidia",
         "microsoft", "amazon", "ntt", "customer-cloud", "elyza",
         "softbank", "nec", "fujitsu", "pfn",
+        "ibm", "liquid", "zhipu", "essential", "olmo",
+        "allen", "minimax", "bytedance", "baidu", "xiaomi", "openbmb",
     }
     assert expected <= set(provs)
 
@@ -145,7 +147,8 @@ def test_supports_chat_completion_and_responses():
     assert not o1.supports("thinking_budget")
 
     claude = llmcapa.get("claude-3-5-sonnet")
-    assert claude.supports("chat_completion")
+    assert claude.supports("anthropic_api")
+    assert not claude.supports("chat_completion")
     assert not claude.supports("responses_api")
     assert claude.supports("multimodal")
 

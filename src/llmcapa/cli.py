@@ -4,6 +4,7 @@ Usage:
     llmcapa show <model_id> [--json]
     llmcapa list [--provider NAME] [--json] [--no-deprecated]
     llmcapa providers
+    llmcapa search <prefix> [--provider NAME] [--json] [--no-deprecated] [--limit N]
 """
 
 from __future__ import annotations
@@ -13,7 +14,15 @@ import json
 import sys
 from typing import List, Optional
 
-from . import __version__, count_messages_tokens, count_tokens, get, list_models, providers
+from . import (
+    __version__,
+    count_messages_tokens,
+    count_tokens,
+    get,
+    list_models,
+    providers,
+    search,
+)
 from .registry import ModelNotFoundError, default_registry
 
 
@@ -71,6 +80,34 @@ def _cmd_providers(_args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_search(args: argparse.Namespace) -> int:
+    caps = search(
+        args.prefix,
+        provider=args.provider,
+        include_deprecated=not args.no_deprecated,
+        limit=args.limit,
+    )
+    if args.json:
+        print(json.dumps([c.to_dict() for c in caps], ensure_ascii=False, indent=2))
+        return 0
+    if not caps:
+        print(f"no models matching prefix: {args.prefix}", file=sys.stderr)
+        return 1
+    rows = []
+    for c in caps:
+        rows.append([
+            c.provider,
+            c.model_id,
+            str(c.context_window),
+            str(c.max_output_tokens),
+            "yes" if c.supports_vision else "no",
+            "yes" if c.supports_function_calling else "no",
+            "yes" if c.deprecated else "no",
+        ])
+    _print_table(rows, ["provider", "model_id", "context", "max_out", "vision", "tools", "deprecated"])
+    return 0
+
+
 def _cmd_tokens(args: argparse.Namespace) -> int:
     text = args.text
     if not text and not sys.stdin.isatty():
@@ -104,7 +141,6 @@ def _cmd_tokens(args: argparse.Namespace) -> int:
 def _cmd_update(_args: argparse.Namespace) -> int:
     try:
         print("Fetching latest models from OpenRouter API...")
-        # Force fetch by passing cache_ttl=0 or None (we want to update the cache)
         count = default_registry().fetch_openrouter(cache_ttl=0)
         print(f"Successfully updated {count} models from OpenRouter.")
         return 0
@@ -132,6 +168,14 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_prov = sub.add_parser("providers", help="list known providers")
     p_prov.set_defaults(func=_cmd_providers)
+
+    p_search = sub.add_parser("search", help="search models by prefix")
+    p_search.add_argument("prefix", help="prefix to match against model_id, display_name, or aliases")
+    p_search.add_argument("--provider", help="filter by provider")
+    p_search.add_argument("--json", action="store_true", help="output as JSON")
+    p_search.add_argument("--no-deprecated", action="store_true", help="hide deprecated models")
+    p_search.add_argument("--limit", type=int, default=None, help="maximum number of results")
+    p_search.set_defaults(func=_cmd_search)
 
     p_upd = sub.add_parser("update", help="fetch and update OpenRouter models cache")
     p_upd.set_defaults(func=_cmd_update)

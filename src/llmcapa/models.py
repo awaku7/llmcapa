@@ -64,6 +64,8 @@ class Capability:
     supports_responses_api: bool = False
     supports_reasoning_effort: bool = False
     supports_thinking_budget: bool = False
+    supports_anthropic_api: bool = False
+    supports_google_api: bool = False
     tokenizer_name: str = ""
     knowledge_cutoff: Optional[str] = None
     pricing: Optional[Dict[str, Any]] = None

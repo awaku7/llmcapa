@@ -6,15 +6,28 @@
       "display_name": "Gemini 1.5 Pro",
       "context_window": 2097152,
       "max_output_tokens": 8192,
-      "input_modalities": ["text", "image", "audio", "video"],
-      "output_modalities": ["text"],
+      "input_modalities": [
+        "text",
+        "image",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": false,
       "knowledge_cutoff": "2024-05",
-      "aliases": ["gemini-1.5-pro-002", "gemini-1.5-pro-preview-0409"]
+      "aliases": [
+        "gemini-1.5-pro-002",
+        "gemini-1.5-pro-preview-0409"
+      ],
+      "supports_google_api": true,
+      "supports_chat_completion": false,
+      "supports_responses_api": false
     },
     {
       "provider": "google",
@@ -22,15 +35,28 @@
       "display_name": "Gemini 1.5 Flash",
       "context_window": 1048576,
       "max_output_tokens": 8192,
-      "input_modalities": ["text", "image", "audio", "video"],
-      "output_modalities": ["text"],
+      "input_modalities": [
+        "text",
+        "image",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": false,
       "knowledge_cutoff": "2024-05",
-      "aliases": ["gemini-1.5-flash-002", "gemini-1.5-flash-preview-0409"]
+      "aliases": [
+        "gemini-1.5-flash-002",
+        "gemini-1.5-flash-preview-0409"
+      ],
+      "supports_google_api": true,
+      "supports_chat_completion": false,
+      "supports_responses_api": false
     },
     {
       "provider": "google",
@@ -38,16 +64,28 @@
       "display_name": "Gemini 2.0 Flash",
       "context_window": 1048576,
       "max_output_tokens": 8192,
-      "input_modalities": ["text", "image", "audio", "video"],
-      "output_modalities": ["text"],
+      "input_modalities": [
+        "text",
+        "image",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": false,
       "knowledge_cutoff": "2024-08",
-      "aliases": ["gemini-2.0-flash-001"],
-      "deprecated": true
+      "aliases": [
+        "gemini-2.0-flash-001"
+      ],
+      "deprecated": true,
+      "supports_google_api": true,
+      "supports_chat_completion": false,
+      "supports_responses_api": false
     },
     {
       "provider": "google",
@@ -55,15 +93,28 @@
       "display_name": "Gemini 2.5 Pro",
       "context_window": 1048576,
       "max_output_tokens": 65536,
-      "input_modalities": ["text", "image", "audio", "video"],
-      "output_modalities": ["text"],
+      "input_modalities": [
+        "text",
+        "image",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text",
+        "image"
+      ],
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
       "knowledge_cutoff": "2025-01",
-      "aliases": ["gemini-2.5-pro-preview-05-06"]
+      "aliases": [
+        "gemini-2.5-pro-preview-05-06"
+      ],
+      "supports_google_api": true,
+      "supports_chat_completion": false,
+      "supports_responses_api": false
     },
     {
       "provider": "google",
@@ -71,15 +122,28 @@
       "display_name": "Gemini 2.5 Flash",
       "context_window": 1048576,
       "max_output_tokens": 65536,
-      "input_modalities": ["text", "image", "audio", "video"],
-      "output_modalities": ["text"],
+      "input_modalities": [
+        "text",
+        "image",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text",
+        "image"
+      ],
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
       "knowledge_cutoff": "2025-01",
-      "aliases": ["gemini-2.5-flash-preview-05-20"]
+      "aliases": [
+        "gemini-2.5-flash-preview-05-20"
+      ],
+      "supports_google_api": true,
+      "supports_chat_completion": false,
+      "supports_responses_api": false
     },
     {
       "provider": "google",
@@ -87,15 +151,76 @@
       "display_name": "Gemini 2.5 Flash-Lite",
       "context_window": 1048576,
       "max_output_tokens": 65536,
-      "input_modalities": ["text", "image", "audio", "video"],
-      "output_modalities": ["text"],
+      "input_modalities": [
+        "text",
+        "image",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": false,
       "knowledge_cutoff": "2025-01",
-      "aliases": []
+      "aliases": [],
+      "supports_google_api": true,
+      "supports_chat_completion": false,
+      "supports_responses_api": false
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-2.5-flash-image",
+      "display_name": "Gemini 2.5 Flash Image",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2025-10",
+      "aliases": [],
+      "supports_google_api": true,
+      "supports_chat_completion": false,
+      "supports_responses_api": false
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-live-2.5-flash-native-audio",
+      "display_name": "Gemini 2.5 Flash with Gemini Live API",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "audio",
+        "speech"
+      ],
+      "output_modalities": [
+        "text",
+        "speech"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2025-06",
+      "aliases": [],
+      "supports_google_api": true,
+      "supports_chat_completion": false,
+      "supports_responses_api": false
     },
     {
       "provider": "google",
@@ -103,15 +228,26 @@
       "display_name": "Gemini 3 Pro",
       "context_window": 1048576,
       "max_output_tokens": 65536,
-      "input_modalities": ["text", "image", "audio", "video"],
-      "output_modalities": ["text"],
+      "input_modalities": [
+        "text",
+        "image",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text",
+        "image"
+      ],
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
       "knowledge_cutoff": "2025-09",
-      "aliases": []
+      "aliases": [],
+      "supports_google_api": true,
+      "supports_chat_completion": false,
+      "supports_responses_api": false
     },
     {
       "provider": "google",
@@ -119,15 +255,26 @@
       "display_name": "Gemini 3 Flash",
       "context_window": 1048576,
       "max_output_tokens": 64000,
-      "input_modalities": ["text", "image", "audio", "video"],
-      "output_modalities": ["text"],
+      "input_modalities": [
+        "text",
+        "image",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text",
+        "image"
+      ],
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
       "knowledge_cutoff": "2025-09",
-      "aliases": []
+      "aliases": [],
+      "supports_google_api": true,
+      "supports_chat_completion": false,
+      "supports_responses_api": false
     },
     {
       "provider": "google",
@@ -135,15 +282,28 @@
       "display_name": "Gemini 3.1 Pro",
       "context_window": 1048576,
       "max_output_tokens": 65536,
-      "input_modalities": ["text", "image", "audio", "video"],
-      "output_modalities": ["text"],
+      "input_modalities": [
+        "text",
+        "image",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text",
+        "image"
+      ],
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
       "knowledge_cutoff": "2025-12",
-      "aliases": ["gemini-3.1-pro-preview"]
+      "aliases": [
+        "gemini-3.1-pro-preview"
+      ],
+      "supports_google_api": true,
+      "supports_chat_completion": false,
+      "supports_responses_api": false
     },
     {
       "provider": "google",
@@ -151,15 +311,77 @@
       "display_name": "Gemini 3.1 Flash-Lite",
       "context_window": 1048576,
       "max_output_tokens": 65536,
-      "input_modalities": ["text", "image", "audio", "video"],
-      "output_modalities": ["text"],
+      "input_modalities": [
+        "text",
+        "image",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": false,
       "knowledge_cutoff": "2025-12",
-      "aliases": ["gemini-3.1-flash-lite-preview"]
+      "aliases": [
+        "gemini-3.1-flash-lite-preview"
+      ],
+      "supports_google_api": true,
+      "supports_chat_completion": false,
+      "supports_responses_api": false
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-3.1-flash-image",
+      "display_name": "Gemini 3.1 Flash Image",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "2026-01",
+      "aliases": [],
+      "supports_google_api": true,
+      "supports_chat_completion": false,
+      "supports_responses_api": false
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-3-pro-image",
+      "display_name": "Gemini 3 Pro Image",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2026-01",
+      "aliases": [],
+      "supports_google_api": true,
+      "supports_chat_completion": false,
+      "supports_responses_api": false
     },
     {
       "provider": "google",
@@ -167,16 +389,31 @@
       "display_name": "Gemini 3.5 Flash",
       "context_window": 1048576,
       "max_output_tokens": 65536,
-      "input_modalities": ["text", "image", "audio", "video"],
-      "output_modalities": ["text"],
+      "input_modalities": [
+        "text",
+        "image",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text",
+        "image"
+      ],
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
       "knowledge_cutoff": "2026-01",
-      "pricing": {"input_per_1m": 1.5, "output_per_1m": 9.0, "currency": "USD"},
-      "aliases": []
+      "pricing": {
+        "input_per_1m": 1.5,
+        "output_per_1m": 9.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "supports_google_api": true,
+      "supports_chat_completion": false,
+      "supports_responses_api": false
     },
     {
       "provider": "google",
@@ -184,15 +421,70 @@
       "display_name": "Gemini 3.5 Pro",
       "context_window": 1048576,
       "max_output_tokens": 65536,
-      "input_modalities": ["text", "image", "audio", "video"],
-      "output_modalities": ["text"],
+      "input_modalities": [
+        "text",
+        "image",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text",
+        "image"
+      ],
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
       "knowledge_cutoff": "2026-01",
-      "aliases": []
+      "aliases": [],
+      "supports_google_api": true,
+      "supports_chat_completion": false,
+      "supports_responses_api": false
+    },
+    {
+      "provider": "google",
+      "model_id": "text-embedding",
+      "display_name": "Google Text Embedding",
+      "context_window": 8192,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embedding"
+      ],
+      "supports_chat_completion": false,
+      "knowledge_cutoff": null,
+      "aliases": [
+        "text-embedding-005",
+        "text-embedding-004",
+        "text-embedding-preview-0815"
+      ],
+      "supports_responses_api": false,
+      "supports_google_api": false
+    },
+    {
+      "provider": "google",
+      "model_id": "multimodal-embedding",
+      "display_name": "Google Multimodal Embedding",
+      "context_window": 8192,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "embedding"
+      ],
+      "supports_chat_completion": false,
+      "supports_vision": true,
+      "knowledge_cutoff": null,
+      "aliases": [
+        "multimodalembedding"
+      ],
+      "supports_responses_api": false,
+      "supports_google_api": false
     }
   ]
 }

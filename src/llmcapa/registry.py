@@ -317,6 +317,47 @@ class Registry:
                 result.append(cap)
         return result
 
+    def search(
+        self,
+        prefix: str,
+        provider: Optional[str] = None,
+        include_deprecated: bool = False,
+        limit: Optional[int] = None,
+    ) -> List[Capability]:
+        """Search models by prefix matching on model_id, display_name, or aliases.
+
+        Case-insensitive prefix search. Results are sorted by (provider, model_id).
+        """
+        self._ensure_loaded()
+        prefix_lower = prefix.strip().lower()
+        if not prefix_lower:
+            return []
+
+        result = []
+        for cap in self._models.values():
+            if provider is not None and cap.provider.lower() != provider.lower():
+                continue
+            if not include_deprecated and cap.deprecated:
+                continue
+            # Check model_id
+            if cap.model_id.lower().startswith(prefix_lower):
+                result.append(cap)
+                continue
+            # Check display_name
+            if cap.display_name and cap.display_name.lower().startswith(prefix_lower):
+                result.append(cap)
+                continue
+            # Check aliases
+            for alias in cap.aliases:
+                if alias.lower().startswith(prefix_lower):
+                    result.append(cap)
+                    break
+
+        result.sort(key=lambda c: (c.provider, c.model_id))
+        if limit is not None and limit > 0:
+            result = result[:limit]
+        return result
+
 
 # Module-level default registry
 _default = Registry()

@@ -18,7 +18,7 @@ from .models import Capability, Feature, ReasoningEffort
 from .registry import Registry, ModelNotFoundError, default_registry
 from .tokenizer import count_tokens, count_messages_tokens
 
-__version__ = "0.2.3"
+__version__ = "0.2.4"
 
 __all__ = [
     "Capability",
@@ -30,6 +30,7 @@ __all__ = [
     "list_models",
     "providers",
     "find",
+    "search",
     "load_extra",
     "fetch_openrouter",
     "register",
@@ -61,6 +62,19 @@ def providers() -> List[str]:
 def find(**kwargs) -> List[Capability]:
     """Search models by conditions. See Registry.find."""
     return default_registry().find(**kwargs)
+
+
+def search(
+    prefix: str,
+    provider: Optional[str] = None,
+    include_deprecated: bool = False,
+    limit: Optional[int] = None,
+) -> List[Capability]:
+    """Search models by prefix matching on model_id, display_name, or aliases.
+
+    Case-insensitive prefix search. Results are sorted by (provider, model_id).
+    """
+    return default_registry().search(prefix, provider, include_deprecated, limit)
 
 
 def load_extra(path: Union[str, Path]) -> int:
