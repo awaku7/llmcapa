@@ -4,7 +4,7 @@
 
 ## 特徴
 
-- **包括的な同梱データ**: OpenAI、Anthropic、Google (Gemini)、Microsoft (Phi)、Amazon (Nova/Titan)、Meta (Llama)、Mistral、Qwen、DeepSeek、NVIDIA、および日本の国内モデル（デジタル庁の「GENNAI」プラットフォームで採用されているNTT tsuzumi、PFN PLaMo、ELYZA、SoftBank、NEC、Fujitsuなど）のオフライン機能データを同梱しています。
+- **包括的な同梱データ**: OpenAI、Anthropic、Google (Gemini)、Microsoft (Phi)、Amazon (Nova/Titan)、Meta (Llama)、Mistral、Qwen、DeepSeek、xAI (Grok)、NVIDIA、MoonshotAI (Kimi)、zhipu-ai (GLM)、OpenRouter、および日本の国内モデル（デジタル庁の「GENNAI」プラットフォームで採用されているNTT tsuzumi、PFN PLaMo、ELYZA、SoftBank、NEC、Fujitsuなど）のオフライン機能データを同梱しています。
 - **実行時依存関係ゼロ**: Python標準ライブラリのみで動作します。外部パッケージ（`pytest` や `build` など）は開発・テスト用のみです。
 - **エイリアス解決**: エイリアスやプロバイダー固有の名前を自動的に解決します（例: `gpt-4o-2024-08-06` -> `gpt-4o`、`gemini-1.5-pro-preview-0409` -> `gemini-1.5-pro`）。
 - **高度な機能クエリ**: `vision`、`multimodal`、`chat_completion`、`responses_api`、`reasoning_effort`、`thinking_budget`、および特定の入力/出力モダリティ（例: `image_input`、`image_output`、`audio_input`）のサポート状況を確認できます。
@@ -51,7 +51,7 @@ print(cap.supports(Feature.LLMC_FEAT_REASONING_EFFORT))   # False
 print(ReasoningEffort.LLMC_EFFORT_HIGH)                   # "high"
 # サポートされているすべての機能を一覧表示
 print(cap.features())
-# ['chat_completion', 'function_calling', 'image', 'image_input', 'image_output', 'json_mode', 'multimodal', 'responses_api', 'streaming', 'text', 'text_input', 'text_output', 'vision']
+# ['chat_completion', 'file', 'file_input', 'function_calling', 'image', 'image_input', 'json_mode', 'multimodal', 'responses_api', 'streaming', 'text', 'text_input', 'text_output', 'vision']
 ```
 
 ### トークン数とコストの見積もり
@@ -85,10 +85,10 @@ gpt4o = llmcapa.get("gpt-4o")
 gpt4o_mini = llmcapa.get("gpt-4o-mini")
 gemini = llmcapa.get("gemini-3.5-flash")
 
-# gpt-4o-miniは同じコンテキストウィンドウを持ちますが、image_output（gpt-4oがサポート）がありません
-print(gpt4o.can_be_replaced_by(gpt4o_mini))  # False
+# gpt-4o-miniは同じコンテキストウィンドウを持ち、同じ機能をすべてサポートしています
+print(gpt4o.can_be_replaced_by(gpt4o_mini))  # True
 
-# gemini-3.5-flashはより大きなコンテキストウィンドウを持ちますが、同様にimage_outputがありません
+# gemini-3.5-flashはより大きなコンテキストウィンドウを持ちますが、responses_api（gpt-4oがサポート）がありません
 print(gpt4o.can_be_replaced_by(gemini))  # False
 
 # visionとfunction_callingのみが必要な場合、gemini-3.5-flashはgpt-4oを代替できます
@@ -154,6 +154,47 @@ print(cap.context_window)  # 131072
 print(cap.pricing)         # {'input_per_1m': 0.1, 'output_per_1m': 0.32, 'currency': 'USD'}
 ```
 
+### トークン数のカウント（スタンドアロン）
+
+指定されたモデルに最適なトークナイザーを使用して、単一テキストまたはチャットメッセージのトークン数をカウントします。
+
+```python
+# テキストのトークン数をカウント
+import llmcapa
+tokens = llmcapa.count_tokens("Hello, world!", "gpt-4o")
+print(tokens)  # tiktokenがインストールされていれば正確な値、それ以外は推定値
+
+# チャットメッセージのトークン数（オーバーヘッド含む）
+messages = [
+    {"role": "user", "content": "Hello"},
+    {"role": "assistant", "content": "Hi there!"},
+]
+total = llmcapa.count_messages_tokens(messages, "gpt-4o")
+print(total)
+```
+
+### プログラムによるモデル登録
+
+JSONファイルを使わずに直接Capabilityを登録:
+
+```python
+from llmcapa import Capability
+
+cap = Capability(
+    provider="local",
+    model_id="my-model",
+    context_window=4096,
+    max_output_tokens=1024,
+    supports_function_calling=True,
+    aliases=["mm"],
+)
+llmcapa.register(cap)
+
+print(llmcapa.get("my-model").context_window)  # 4096
+```
+
+> **注意**: `llmcapa.get()` はモデルが見つからない場合 `ModelNotFoundError` を送出します。
+
 ### カスタムローカルデータ
 
 ローカルのJSONファイルから独自のモデル定義をロードできます。
@@ -196,6 +237,13 @@ llmcapa list --json --no-deprecated
 
 # 既知のすべてのプロバイダーを一覧表示
 llmcapa providers
+
+# テキストやメッセージのトークン数をカウント
+llmcapa tokens gpt-4o "Hello, world!"
+llmcapa tokens gpt-4o --messages '[{"role":"user","content":"Hi"}]'
+
+# 起動時にローカルJSONファイルから追加モデルをロード
+llmcapa --extra my_models.json show gpt-4o
 
 # 明示的にOpenRouterモデルのキャッシュを取得・更新（キャッシュを強制リフレッシュ）
 llmcapa update

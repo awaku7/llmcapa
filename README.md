@@ -4,7 +4,7 @@ Lookup capabilities (context window, modalities, supported features) of various 
 
 ## Features
 
-- **Comprehensive Bundled Data**: Offline capability data for OpenAI, Anthropic, Google (Gemini), Microsoft (Phi), Amazon (Nova/Titan), Meta (Llama), Mistral, Qwen, DeepSeek, NVIDIA, and Japanese domestic models (NTT tsuzumi, PFN PLaMo, ELYZA, etc. adopted by the Digital Agency's "GENNAI" platform).
+- **Comprehensive Bundled Data**: Offline capability data for OpenAI, Anthropic, Google (Gemini), Microsoft (Phi), Amazon (Nova/Titan), Meta (Llama), Mistral, Qwen, DeepSeek, xAI (Grok), NVIDIA, MoonshotAI (Kimi), zhipu-ai (GLM), OpenRouter, and Japanese domestic models (NTT tsuzumi, PFN PLaMo, ELYZA, SoftBank, NEC, Fujitsu, etc. adopted by the Digital Agency's "GENNAI" platform).
 - **Zero Runtime Dependencies**: Built entirely on the Python standard library.
 - **Alias Resolution**: Automatically resolves aliases and provider-specific names (e.g., `gpt-4o-2024-08-06` -> `gpt-4o`, `gemini-1.5-pro-preview-0409` -> `gemini-1.5-pro`).
 - **Advanced Feature Queries**: Check support for `vision`, `multimodal`, `chat_completion`, `responses_api`, `reasoning_effort`, `thinking_budget`, and specific input/output modalities (e.g., `image_input`, `image_output`, `audio_input`).
@@ -51,7 +51,7 @@ print(cap.supports(Feature.LLMC_FEAT_REASONING_EFFORT))   # False
 print(ReasoningEffort.LLMC_EFFORT_HIGH)                   # "high"
 # List all supported features
 print(cap.features())
-# ['chat_completion', 'function_calling', 'image', 'image_input', 'image_output', 'json_mode', 'multimodal', 'responses_api', 'streaming', 'text', 'text_input', 'text_output', 'vision']
+# ['chat_completion', 'file', 'file_input', 'function_calling', 'image', 'image_input', 'json_mode', 'multimodal', 'responses_api', 'streaming', 'text', 'text_input', 'text_output', 'vision']
 ```
 
 ### Token & Cost Estimation
@@ -85,10 +85,10 @@ gpt4o = llmcapa.get("gpt-4o")
 gpt4o_mini = llmcapa.get("gpt-4o-mini")
 gemini = llmcapa.get("gemini-3.5-flash")
 
-# gpt-4o-mini has the same context window but lacks image_output (which gpt-4o supports)
-print(gpt4o.can_be_replaced_by(gpt4o_mini))  # False
+# gpt-4o-mini has the same context window and supports all the same features
+print(gpt4o.can_be_replaced_by(gpt4o_mini))  # True
 
-# gemini-3.5-flash has a larger context window but also lacks image_output
+# gemini-3.5-flash has a larger context window but lacks responses_api (which gpt-4o supports)
 print(gpt4o.can_be_replaced_by(gemini))  # False
 
 # If we only require vision and function_calling, gemini-3.5-flash can replace gpt-4o
@@ -154,6 +154,47 @@ print(cap.context_window)  # 131072
 print(cap.pricing)         # {'input_per_1m': 0.1, 'output_per_1m': 0.32, 'currency': 'USD'}
 ```
 
+### Token Counting (Standalone)
+
+Count tokens for a single text or a list of chat messages using the best available tokenizer for a given model.
+
+```python
+# Count tokens for a text string
+import llmcapa
+tokens = llmcapa.count_tokens("Hello, world!", "gpt-4o")
+print(tokens)  # exact count if tiktoken is installed, else estimation
+
+# Count tokens for chat messages (includes overhead)
+messages = [
+    {"role": "user", "content": "Hello"},
+    {"role": "assistant", "content": "Hi there!"},
+]
+total = llmcapa.count_messages_tokens(messages, "gpt-4o")
+print(total)
+```
+
+### Programmatic Registration
+
+Register a Capability directly without a JSON file:
+
+```python
+from llmcapa import Capability
+
+cap = Capability(
+    provider="local",
+    model_id="my-model",
+    context_window=4096,
+    max_output_tokens=1024,
+    supports_function_calling=True,
+    aliases=["mm"],
+)
+llmcapa.register(cap)
+
+print(llmcapa.get("my-model").context_window)  # 4096
+```
+
+> **Note**: `llmcapa.get()` raises `ModelNotFoundError` if the model is not found.
+
 ### Custom Local Data
 
 Load your own model definitions from a local JSON file:
@@ -196,6 +237,13 @@ llmcapa list --json --no-deprecated
 
 # List all known providers
 llmcapa providers
+
+# Count tokens for text or messages
+llmcapa tokens gpt-4o "Hello, world!"
+llmcapa tokens gpt-4o --messages '[{"role":"user","content":"Hi"}]'
+
+# Load extra model data from a local JSON file on startup
+llmcapa --extra my_models.json show gpt-4o
 
 # Explicitly fetch and update the OpenRouter models cache (forces cache refresh)
 llmcapa update

@@ -17,6 +17,7 @@ llmcapa/
 │   ├── models.py           # Capability dataclass and feature evaluation
 │   ├── registry.py         # In-memory registry, loading, and OpenRouter fetching
 │   ├── cli.py              # Command-line interface
+│   ├── tokenizer.py        # Token counting (offline, provider-specific)
 │   └── data/               # Bundled offline capability data (JSON)
 │       ├── __init__.py
 │       ├── openai.json

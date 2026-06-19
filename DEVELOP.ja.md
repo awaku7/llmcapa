@@ -19,6 +19,7 @@ llmcapa/
 │   ├── models.py           # 機能データクラスと機能評価
 │   ├── registry.py         # インメモリレジストリ、ロード、およびOpenRouter取得
 │   ├── cli.py              # コマンドラインインターフェース
+│   ├── tokenizer.py        # トークンカウント（オフライン、プロバイダー別）
 │   └── data/               # 同梱されているオフライン機能データ (JSON)
 │       ├── __init__.py
 │       ├── openai.json
