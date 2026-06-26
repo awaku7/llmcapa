@@ -6,8 +6,13 @@
       "display_name": "DeepSeek V4 Pro",
       "context_window": 1000000,
       "max_output_tokens": 131072,
-      "input_modalities": ["text", "image"],
-      "output_modalities": ["text"],
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_chat_completion": true,
       "supports_function_calling": true,
       "supports_json_mode": true,
@@ -16,8 +21,15 @@
       "supports_reasoning": true,
       "supports_thinking_budget": true,
       "knowledge_cutoff": "2026-03",
-      "pricing": {"input_per_1m": 0.5, "output_per_1m": 3.48, "currency": "USD"},
-      "aliases": ["deepseek/deepseek-v4-pro", "deepseek-v4-pro-max"]
+      "pricing": {
+        "input_per_1m": 0.435,
+        "output_per_1m": 0.87,
+        "currency": "USD"
+      },
+      "aliases": [
+        "deepseek/deepseek-v4-pro",
+        "deepseek-v4-pro-max"
+      ]
     },
     {
       "provider": "deepseek",
@@ -25,8 +37,13 @@
       "display_name": "DeepSeek V4 Flash",
       "context_window": 1000000,
       "max_output_tokens": 65536,
-      "input_modalities": ["text", "image"],
-      "output_modalities": ["text"],
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_chat_completion": true,
       "supports_function_calling": true,
       "supports_json_mode": true,
@@ -35,8 +52,15 @@
       "supports_reasoning": true,
       "supports_thinking_budget": true,
       "knowledge_cutoff": "2026-03",
-      "pricing": {"input_per_1m": 0.05, "output_per_1m": 0.3, "currency": "USD"},
-      "aliases": ["deepseek/deepseek-v4-flash", "deepseek-v4-flash-max"]
+      "pricing": {
+        "input_per_1m": 0.14,
+        "output_per_1m": 0.28,
+        "currency": "USD"
+      },
+      "aliases": [
+        "deepseek/deepseek-v4-flash",
+        "deepseek-v4-flash-max"
+      ]
     },
     {
       "provider": "deepseek",
@@ -44,17 +68,29 @@
       "display_name": "DeepSeek V3.2",
       "context_window": 131072,
       "max_output_tokens": 32768,
-      "input_modalities": ["text"],
-      "output_modalities": ["text"],
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_chat_completion": true,
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
-      "supports_vision": false,
+      "supports_vision": true,
       "supports_reasoning": true,
       "knowledge_cutoff": "2025-12",
-      "pricing": {"input_per_1m": 0.0, "output_per_1m": 0.0, "currency": "USD"},
-      "aliases": ["deepseek/deepseek-v3.2", "deepseek-chat-v3.2"]
+      "pricing": {
+        "input_per_1m": 0.62,
+        "output_per_1m": 1.85,
+        "currency": "USD"
+      },
+      "aliases": [
+        "deepseek/deepseek-v3.2",
+        "deepseek-chat-v3.2"
+      ]
     },
     {
       "provider": "deepseek",
@@ -62,17 +98,30 @@
       "display_name": "DeepSeek V3.1",
       "context_window": 131072,
       "max_output_tokens": 32768,
-      "input_modalities": ["text"],
-      "output_modalities": ["text"],
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_chat_completion": true,
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
-      "supports_vision": false,
+      "supports_vision": true,
       "supports_reasoning": false,
       "knowledge_cutoff": "2025-06",
-      "pricing": {"input_per_1m": 0.0, "output_per_1m": 0.0, "currency": "USD"},
-      "aliases": ["deepseek/deepseek-v3.1-terminus", "deepseek/deepseek-chat-v3.1", "deepseek-chat-v3.1"]
+      "pricing": {
+        "input_per_1m": 0.58,
+        "output_per_1m": 1.68,
+        "currency": "USD"
+      },
+      "aliases": [
+        "deepseek/deepseek-v3.1-terminus",
+        "deepseek/deepseek-chat-v3.1",
+        "deepseek-chat-v3.1"
+      ]
     },
     {
       "provider": "deepseek",
@@ -80,8 +129,12 @@
       "display_name": "DeepSeek V3",
       "context_window": 131072,
       "max_output_tokens": 8192,
-      "input_modalities": ["text"],
-      "output_modalities": ["text"],
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_chat_completion": true,
       "supports_function_calling": true,
       "supports_json_mode": true,
@@ -89,7 +142,16 @@
       "supports_vision": false,
       "supports_reasoning": false,
       "knowledge_cutoff": "2024-07",
-      "aliases": ["deepseek-chat", "deepseek/deepseek-chat", "deepseek/deepseek-chat-v3-0324"]
+      "aliases": [
+        "deepseek-chat",
+        "deepseek/deepseek-chat",
+        "deepseek/deepseek-chat-v3-0324"
+      ],
+      "pricing": {
+        "input_per_1m": 0.27,
+        "output_per_1m": 1.1,
+        "currency": "USD"
+      }
     },
     {
       "provider": "deepseek",
@@ -97,8 +159,12 @@
       "display_name": "DeepSeek R1 0528",
       "context_window": 131072,
       "max_output_tokens": 32768,
-      "input_modalities": ["text"],
-      "output_modalities": ["text"],
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_chat_completion": true,
       "supports_function_calling": true,
       "supports_json_mode": true,
@@ -106,7 +172,14 @@
       "supports_vision": false,
       "supports_reasoning": true,
       "knowledge_cutoff": "2025-05",
-      "aliases": ["deepseek/deepseek-r1-0528"]
+      "aliases": [
+        "deepseek/deepseek-r1-0528"
+      ],
+      "pricing": {
+        "input_per_1m": 1.35,
+        "output_per_1m": 5.4,
+        "currency": "USD"
+      }
     },
     {
       "provider": "deepseek",
@@ -114,8 +187,12 @@
       "display_name": "DeepSeek R1",
       "context_window": 65536,
       "max_output_tokens": 8192,
-      "input_modalities": ["text"],
-      "output_modalities": ["text"],
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_chat_completion": true,
       "supports_function_calling": true,
       "supports_json_mode": true,
@@ -123,7 +200,16 @@
       "supports_vision": false,
       "supports_reasoning": true,
       "knowledge_cutoff": "2024-07",
-      "aliases": ["deepseek-reasoner", "deepseek/deepseek-r1", "deepseek-r1:671b"]
+      "aliases": [
+        "deepseek-reasoner",
+        "deepseek/deepseek-r1",
+        "deepseek-r1:671b"
+      ],
+      "pricing": {
+        "input_per_1m": 1.35,
+        "output_per_1m": 5.4,
+        "currency": "USD"
+      }
     }
   ]
 }
