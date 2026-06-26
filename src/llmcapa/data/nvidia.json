@@ -6,8 +6,12 @@
       "display_name": "NVIDIA Nemotron 3 Ultra",
       "context_window": 1000000,
       "max_output_tokens": 16384,
-      "input_modalities": ["text"],
-      "output_modalities": ["text"],
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_chat_completion": true,
       "supports_function_calling": true,
       "supports_json_mode": true,
@@ -16,8 +20,15 @@
       "supports_reasoning": true,
       "supports_thinking_budget": true,
       "knowledge_cutoff": "2025-12",
-      "pricing": {"input_per_1m": 1.2, "output_per_1m": 1.2, "currency": "USD"},
-      "aliases": ["nvidia/nemotron-3-ultra", "nemotron-3-ultra-550b-a55b"]
+      "pricing": {
+        "input_per_1m": 1.2,
+        "output_per_1m": 1.2,
+        "currency": "USD"
+      },
+      "aliases": [
+        "nvidia/nemotron-3-ultra",
+        "nemotron-3-ultra-550b-a55b"
+      ]
     },
     {
       "provider": "nvidia",
@@ -25,8 +36,12 @@
       "display_name": "NVIDIA Nemotron 3 Super",
       "context_window": 1000000,
       "max_output_tokens": 8192,
-      "input_modalities": ["text"],
-      "output_modalities": ["text"],
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_chat_completion": true,
       "supports_function_calling": true,
       "supports_json_mode": true,
@@ -35,17 +50,28 @@
       "supports_reasoning": true,
       "supports_thinking_budget": true,
       "knowledge_cutoff": "2025-12",
-      "pricing": {"input_per_1m": 0.1, "output_per_1m": 0.4, "currency": "USD"},
-      "aliases": ["nvidia/nemotron-3-super", "nemotron-3-super-120b-a12b"]
+      "pricing": {
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      },
+      "aliases": [
+        "nvidia/nemotron-3-super",
+        "nemotron-3-super-120b-a12b"
+      ]
     },
     {
       "provider": "nvidia",
       "model_id": "nemotron-3-nano",
       "display_name": "NVIDIA Nemotron 3 Nano",
-      "context_window": 1000000,
+      "context_window": 128000,
       "max_output_tokens": 4096,
-      "input_modalities": ["text"],
-      "output_modalities": ["text"],
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_chat_completion": true,
       "supports_function_calling": true,
       "supports_json_mode": false,
@@ -54,7 +80,14 @@
       "supports_reasoning": true,
       "supports_thinking_budget": true,
       "knowledge_cutoff": "2025-12",
-      "aliases": ["nvidia/nemotron-3-nano"]
+      "aliases": [
+        "nvidia/nemotron-3-nano"
+      ],
+      "pricing": {
+        "input_per_1m": 0.03,
+        "output_per_1m": 0.24,
+        "currency": "USD"
+      }
     },
     {
       "provider": "nvidia",
@@ -62,8 +95,13 @@
       "display_name": "NVIDIA Nemotron 3.5 Content Safety",
       "context_window": 128000,
       "max_output_tokens": 8192,
-      "input_modalities": ["text", "image"],
-      "output_modalities": ["text"],
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_chat_completion": true,
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -71,7 +109,14 @@
       "supports_vision": true,
       "supports_reasoning": true,
       "knowledge_cutoff": "2026-01",
-      "aliases": ["nvidia/nemotron-3.5-content-safety"]
+      "aliases": [
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "pricing": {
+        "input_per_1m": 0.05,
+        "output_per_1m": 0.2,
+        "currency": "USD"
+      }
     },
     {
       "provider": "nvidia",
@@ -79,8 +124,12 @@
       "display_name": "Llama 3.1 Nemotron 70B Instruct",
       "context_window": 131072,
       "max_output_tokens": 4096,
-      "input_modalities": ["text"],
-      "output_modalities": ["text"],
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_chat_completion": true,
       "supports_function_calling": true,
       "supports_json_mode": false,
@@ -88,7 +137,14 @@
       "supports_vision": false,
       "supports_reasoning": false,
       "knowledge_cutoff": "2023-12",
-      "aliases": ["nvidia/llama-3.1-nemotron-70b-instruct"]
+      "aliases": [
+        "nvidia/llama-3.1-nemotron-70b-instruct"
+      ],
+      "pricing": {
+        "input_per_1m": 0.25,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      }
     },
     {
       "provider": "nvidia",
@@ -96,8 +152,12 @@
       "display_name": "Llama 3.3 Nemotron Super 49B",
       "context_window": 131072,
       "max_output_tokens": 131072,
-      "input_modalities": ["text"],
-      "output_modalities": ["text"],
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_chat_completion": true,
       "supports_function_calling": true,
       "supports_json_mode": false,
@@ -105,7 +165,14 @@
       "supports_vision": false,
       "supports_reasoning": true,
       "knowledge_cutoff": "2023-12",
-      "aliases": ["nvidia/llama-3.3-nemotron-super-49b-v1"]
+      "aliases": [
+        "nvidia/llama-3.3-nemotron-super-49b-v1"
+      ],
+      "pricing": {
+        "input_per_1m": 0.4,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      }
     }
   ]
 }
