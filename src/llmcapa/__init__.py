@@ -18,7 +18,7 @@ from .models import Capability, Feature, ReasoningEffort
 from .registry import Registry, ModelNotFoundError, default_registry
 from .tokenizer import count_tokens, count_messages_tokens
 
-__version__ = "0.2.6"
+__version__ = "0.2.7"
 
 __all__ = [
     "Capability",
@@ -33,6 +33,7 @@ __all__ = [
     "search",
     "load_extra",
     "fetch_openrouter",
+    "fetch_huggingface",
     "register",
     "default_registry",
     "count_tokens",
@@ -85,6 +86,23 @@ def load_extra(path: Union[str, Path]) -> int:
 def fetch_openrouter(cache_ttl: Optional[int] = None) -> int:
     """Fetch all models dynamically from OpenRouter API and register them."""
     return default_registry().fetch_openrouter(cache_ttl)
+
+
+def fetch_huggingface(
+    limit: int = 100,
+    cache_ttl: Optional[int] = None,
+) -> int:
+    """Fetch top models from HuggingFace API and register them.
+
+    Retrieves the most downloaded text-generation and image-text-to-text models
+    from HuggingFace, registers their basic capabilities, and caches the result
+    locally in ~/.llmcapa/huggingface_cache.json.
+
+    Args:
+        limit: Maximum number of models to fetch per pipeline tag (default 100).
+        cache_ttl: Cache lifetime in seconds. Pass 0 to force refresh.
+    """
+    return default_registry().fetch_huggingface(limit=limit, cache_ttl=cache_ttl)
 
 
 def register(cap: Capability) -> None:

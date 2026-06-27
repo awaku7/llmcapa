@@ -5,6 +5,8 @@ Usage:
     llmcapa list [--provider NAME] [--json] [--no-deprecated]
     llmcapa providers
     llmcapa search <prefix> [--provider NAME] [--json] [--no-deprecated] [--limit N]
+    llmcapa update
+    llmcapa fetch-hf [--limit N]
 """
 
 from __future__ import annotations
@@ -149,6 +151,17 @@ def _cmd_update(_args: argparse.Namespace) -> int:
         return 1
 
 
+def _cmd_fetch_hf(args: argparse.Namespace) -> int:
+    try:
+        print(f"Fetching top {args.limit} text-generation models from HuggingFace API...")
+        count = default_registry().fetch_huggingface(limit=args.limit, cache_ttl=0)
+        print(f"Successfully registered {count} models from HuggingFace.")
+        return 0
+    except Exception as e:
+        print(f"error fetching HuggingFace models: {e}", file=sys.stderr)
+        return 1
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="llmcapa", description="Lookup LLM model capabilities (offline).")
     parser.add_argument("--version", action="version", version=f"llmcapa {__version__}")
@@ -179,6 +192,10 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_upd = sub.add_parser("update", help="fetch and update OpenRouter models cache")
     p_upd.set_defaults(func=_cmd_update)
+
+    p_hf = sub.add_parser("fetch-hf", help="fetch and register top models from HuggingFace")
+    p_hf.add_argument("--limit", type=int, default=100, help="max models to fetch per pipeline tag")
+    p_hf.set_defaults(func=_cmd_fetch_hf)
 
     p_tok = sub.add_parser("tokens", help="count tokens for text or messages")
     p_tok.add_argument("model_id", help="model identifier")

@@ -23,7 +23,17 @@ class Registry:
     def __init__(self) -> None:
         self._models: Dict[str, Capability] = {}
         self._alias_index: Dict[str, str] = {}
+
         self._loaded = False
+
+    # Provider aliases map: canonical name -> list of equivalent provider names
+    # Used by list_models() so that e.g. provider="deepseek" also matches "deepseek-ai"
+    _provider_aliases: Dict[str, List[str]] = {
+        "deepseek": ["deepseek-ai"],
+        "meta": ["meta-llama"],
+        "mistral": ["mistralai"],
+        "xai": ["x-ai"],
+    }
 
     # ------------------------------------------------------------------
     # loading
@@ -39,11 +49,18 @@ class Registry:
             if entry.name.endswith(".json"):
                 self._load_json_text(entry.read_text(encoding="utf-8"))
 
-        # Load local OpenRouter cache if it exists to override bundled data with latest updates
+        # Load local OpenRouter cache if it exists (up to 24h old) to override bundled data with latest updates
         import os
+        import time
         home = os.path.expanduser("~")
         cache_file = os.path.join(home, ".llmcapa", "openrouter_cache.json")
         if os.path.exists(cache_file):
+            try:
+                mtime = os.path.getmtime(cache_file)
+                if time.time() - mtime > 86400:
+                    return
+            except Exception:
+                pass
             try:
                 with open(cache_file, "r", encoding="utf-8") as f:
                     records = json.load(f)
@@ -211,7 +228,143 @@ class Registry:
         return count
 
     # ------------------------------------------------------------------
-    # lookup
+    # HuggingFace dynamic fetching
+    # ------------------------------------------------------------------
+    def _map_huggingface_record(self, r: dict) -> Capability:
+        """Map a HuggingFace API record to a Capability."""
+        model_id = r.get("modelId", r.get("_id", ""))
+        pipeline = r.get("pipeline_tag", "")
+        tags = r.get("tags", [])
+        card = r.get("cardData", {}) or {}
+        config = r.get("config", {}) or {}
+
+        # Provider from model_id prefix (e.g. "deepseek-ai/..." -> "deepseek-ai")
+        provider = "huggingface"
+        if "/" in model_id:
+            provider = model_id.split("/", 1)[0]
+
+        # Determine input modalities from pipeline_tag
+        is_vision = pipeline in ("image-text-to-text", "visual-question-answering", "image-feature-extraction")
+        input_mods = ["text"]
+        if is_vision:
+            input_mods.append("image")
+
+        # Context window: try card -> config -> default
+        model_data = card.get("model_data", {}) or {}
+        ctx_win = (
+            model_data.get("context_window")
+            or card.get("context_window")
+            or card.get("context_length")
+            or config.get("max_position_embeddings")
+            or config.get("n_positions")
+            or config.get("n_ctx")
+            or 4096
+        )
+
+        max_out = (
+            model_data.get("max_output_tokens")
+            or card.get("max_output_tokens")
+            or 2048
+        )
+
+        # Chat completion is supported for text-generation and image-text-to-text
+        supports_chat = pipeline in ("text-generation", "image-text-to-text", "conversational")
+
+        return Capability(
+            provider=provider,
+            model_id=model_id,
+            display_name=r.get("modelId", model_id),
+            context_window=int(ctx_win) if ctx_win else 4096,
+            max_output_tokens=int(max_out) if max_out else 2048,
+            input_modalities=input_mods,
+            output_modalities=["text"],
+            supports_chat_completion=supports_chat,
+            supports_streaming=True,
+            supports_vision=is_vision,
+            supports_function_calling=False,
+            supports_json_mode=False,
+            aliases=[model_id.lower()],
+        )
+
+    def fetch_huggingface(
+        self,
+        limit: int = 100,
+        cache_ttl: Optional[int] = None,
+    ) -> int:
+        """Fetch top models from HuggingFace API and register them.
+
+        Retrieves the most downloaded text-generation and image-text-to-text models
+        from HuggingFace, registers their basic capabilities, and caches the result
+        locally in ~/.llmcapa/huggingface_cache.json.
+
+        Args:
+            limit: Maximum number of models to fetch per pipeline tag (default 100).
+            cache_ttl: Cache lifetime in seconds. If provided, the response is cached
+                       to avoid redundant API requests. Pass 0 to force refresh.
+        """
+        self._ensure_loaded()
+
+        records = []
+        cache_file = None
+        if cache_ttl is not None:
+            import os
+            import time
+            home = os.path.expanduser("~")
+            cache_dir = os.path.join(home, ".llmcapa")
+            os.makedirs(cache_dir, exist_ok=True)
+            cache_file = os.path.join(cache_dir, "huggingface_cache.json")
+
+            if os.path.exists(cache_file):
+                mtime = os.path.getmtime(cache_file)
+                if time.time() - mtime < cache_ttl:
+                    try:
+                        with open(cache_file, "r", encoding="utf-8") as f:
+                            records = json.load(f)
+                    except Exception:
+                        pass
+
+        if not records:
+            ctx = ssl._create_unverified_context()
+            headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
+            records = []
+
+            # Fetch text-generation models
+            for tag in ("text-generation", "image-text-to-text"):
+                url = (
+                    f"https://huggingface.co/api/models"
+                    f"?pipeline_tag={tag}&sort=downloads&direction=-1&limit={limit}"
+                )
+                try:
+                    req = urllib.request.Request(url, headers=headers)
+                    with urllib.request.urlopen(req, context=ctx, timeout=30) as response:
+                        chunk = json.loads(response.read().decode("utf-8"))
+                        for r in chunk:
+                            if r.get("modelId") or r.get("_id"):
+                                records.append(r)
+                except Exception as e:
+                    raise RuntimeError(f"Failed to fetch models from HuggingFace ({tag}): {e}") from e
+
+            if cache_file and records:
+                try:
+                    with open(cache_file, "w", encoding="utf-8") as f:
+                        json.dump(records, f, ensure_ascii=False, indent=2)
+                except Exception:
+                    pass
+
+        count = 0
+        for r in records:
+            model_id = r.get("modelId") or r.get("_id")
+            if not model_id:
+                continue
+            try:
+                cap = self._map_huggingface_record(r)
+                self.register(cap)
+                count += 1
+            except Exception:
+                continue
+        return count
+
+
     # ------------------------------------------------------------------
     def _lookup_candidates(self, model_id: str) -> list[str]:
         """Return lookup keys including safe suffix normalization.
@@ -277,7 +430,15 @@ class Registry:
         result: Iterable[Capability] = self._models.values()
         if provider is not None:
             p = provider.lower()
-            result = (c for c in result if c.provider.lower() == p)
+            # Collect matching provider names (canonical + aliases)
+            matching_providers = {p}
+            for canonical, aliases in self._provider_aliases.items():
+                if p == canonical:
+                    matching_providers.update(aliases)
+                elif p in aliases:
+                    matching_providers.add(canonical)
+                    matching_providers.update(a for a in aliases if a != p)
+            result = (c for c in result if c.provider.lower() in matching_providers)
         if not include_deprecated:
             result = (c for c in result if not c.deprecated)
         return sorted(result, key=lambda c: (c.provider, c.model_id))

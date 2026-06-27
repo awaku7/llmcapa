@@ -15,7 +15,7 @@ llmcapa/
 ├── src/llmcapa/
 │   ├── __init__.py         # Public API entry point
 │   ├── models.py           # Capability dataclass and feature evaluation
-│   ├── registry.py         # In-memory registry, loading, and OpenRouter fetching
+│   ├── registry.py         # In-memory registry, loading, OpenRouter/HuggingFace fetching
 │   ├── cli.py              # Command-line interface
 │   ├── tokenizer.py        # Token counting (offline, provider-specific)
 │   └── data/               # Bundled offline capability data (JSON)
@@ -186,3 +186,21 @@ When `fetch_openrouter()` is called, it maps the OpenRouter API model schema to 
 | `supports_reasoning_effort` | `supported_parameters` | `True` if `"reasoning"` is present |
 | `pricing` | `pricing` | Converts `prompt` and `completion` rates to per-1M token rates |
 | `aliases` | `id` | Lowercased `id` is added as an alias |
+
+---
+
+## HuggingFace Mapping Details
+
+When `fetch_huggingface()` is called, it maps the HuggingFace API model schema to our `Capability` dataclass as follows:
+
+| Capability Field | HuggingFace API Field | Mapping Logic / Fallback |
+|---|---|---|
+| `model_id` | `modelId` | Falls back to `_id` |
+| `display_name` | `modelId` | Matches the model id |
+| `context_window` | `cardData.model_data.context_window` / `config.max_position_embeddings` | Default `4096` |
+| `max_output_tokens` | `cardData.model_data.max_output_tokens` | Default `2048` |
+| `input_modalities` | `pipeline_tag` | `["text", "image"]` for `image-text-to-text`, else `["text"]` |
+| `supports_vision` | `pipeline_tag` | `True` if pipeline is `image-text-to-text` or `visual-question-answering` |
+| `supports_chat_completion` | `pipeline_tag` | `True` if `text-generation` or `image-text-to-text` |
+
+

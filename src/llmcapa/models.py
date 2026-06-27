@@ -312,11 +312,16 @@ class Capability:
         known = {f for f in cls.__dataclass_fields__}  # type: ignore[attr-defined]
         kwargs: Dict[str, Any] = {}
         extra: Dict[str, Any] = dict(data.get("extra") or {})
+        _list_fields = {"aliases", "input_modalities", "output_modalities"}
         for key, value in data.items():
             if key == "extra":
                 continue
             if key in known:
-                kwargs[key] = value
+                # Normalize None to empty list for list-typed fields
+                if key in _list_fields and value is None:
+                    kwargs[key] = []
+                else:
+                    kwargs[key] = value
             else:
                 extra[key] = value
         kwargs["extra"] = extra

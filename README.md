@@ -141,7 +141,7 @@ big_reasoning_models = llmcapa.find(
 
 ### On-demand OpenRouter Integration (Caching)
 
-To update model data or fetch the latest pricing, you can optionally fetch and register models from the OpenRouter API on-demand using `fetch_openrouter()`. The response is cached locally in `~/.llmcapa/openrouter_cache.json` and automatically loaded on subsequent imports, keeping the library fully offline during regular usage.
+To update model data or fetch the latest pricing, you can optionally fetch and register models from the OpenRouter API on-demand using `fetch_openrouter()`. The response is cached locally in `~/.llmcapa/openrouter_cache.json` and automatically loaded on subsequent imports (if the cache is less than 24 hours old), keeping the library fully offline during regular usage.
 
 ```python
 # Fetch and register OpenRouter models dynamically
@@ -153,6 +153,26 @@ cap = llmcapa.get("meta-llama/llama-3.3-70b-instruct")
 print(cap.context_window)  # 131072
 print(cap.pricing)         # {'input_per_1m': 0.1, 'output_per_1m': 0.32, 'currency': 'USD'}
 ```
+
+### On-demand HuggingFace Integration (Caching)
+
+You can also fetch and register popular models from the HuggingFace API on-demand using `fetch_huggingface()`. This retrieves the most downloaded text-generation and image-text-to-text models, registers their basic capabilities, and caches the result locally in `~/.llmcapa/huggingface_cache.json`.
+
+```python
+# Fetch and register top 100 HuggingFace models dynamically
+count = llmcapa.fetch_huggingface()
+print(f"Registered {count} models from HuggingFace!")
+
+# Lookup using HuggingFace model ID
+cap = llmcapa.get("deepseek-ai/DeepSeek-V4-Flash")
+print(cap.context_window)   # 4096 (estimated; exact value not available via HF API)
+print(cap.supports_vision)  # False (text-generation pipeline)
+
+# Fetch a different number of models
+count = llmcapa.fetch_huggingface(limit=200)
+```
+
+> **Note**: The HuggingFace listing API does not provide context window, pricing, or detailed capability data. The registered models have conservative defaults (4K context, 2K max output). For accurate data, use `fetch_openrouter()` or bundled snapshots.
 
 ### Token Counting (Standalone)
 
@@ -247,11 +267,16 @@ llmcapa --extra my_models.json show gpt-4o
 
 # Explicitly fetch and update the OpenRouter models cache (forces cache refresh)
 llmcapa update
+
+# Fetch and register popular models from HuggingFace
+llmcapa fetch-hf
+llmcapa fetch-hf --limit 200
 ```
 
 ## Notes
 
 - **Static Snapshot**: Bundled capability data is a static snapshot. While we strive to keep it updated with the latest models (including GPT-5.5, Claude Fable, Gemini 3.5, DeepSeek V4, etc.), providers change limits and pricing frequently. Use `fetch_openrouter()` or verify with official documentation when absolute accuracy is critical.
+- **HuggingFace Data Accuracy**: Models fetched via `fetch_huggingface()` have conservative defaults (4K context, 2K max output) since the HuggingFace listing API does not expose detailed capability data. For accurate specifications, use `fetch_openrouter()` or the bundled data.
 
 ## License
 
