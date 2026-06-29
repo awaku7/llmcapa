@@ -4,7 +4,7 @@ Lookup capabilities (context window, modalities, supported features) of various 
 
 ## Features
 
-- **Comprehensive Bundled Data**: Offline capability data for OpenAI, Anthropic, Google (Gemini), Microsoft (Phi), Amazon (Nova/Titan), Meta (Llama), Mistral, Qwen, DeepSeek, xAI (Grok), NVIDIA, MoonshotAI (Kimi), zhipu-ai (GLM), OpenRouter, and Japanese domestic models (NTT tsuzumi, PFN PLaMo, ELYZA, SoftBank, NEC, Fujitsu, etc. adopted by the Digital Agency's "GENNAI" platform).
+- **Comprehensive Bundled Data**: Offline capability data for OpenAI, Anthropic, Google (Gemini), Microsoft (Phi), Amazon (Nova/Titan), Meta (Llama), Mistral, Qwen, DeepSeek, xAI (Grok), NVIDIA, MoonshotAI (Kimi), zhipu-ai (GLM), Sakana AI (Fugu), OpenRouter, and Japanese domestic models (NTT tsuzumi, PFN PLaMo, ELYZA, SoftBank, NEC, Fujitsu, etc. adopted by the Digital Agency's "GENNAI" platform).
 - **Zero Runtime Dependencies**: Built entirely on the Python standard library.
 - **Alias Resolution**: Automatically resolves aliases and provider-specific names (e.g., `gpt-4o-2024-08-06` -> `gpt-4o`, `gemini-1.5-pro-preview-0409` -> `gemini-1.5-pro`).
 - **Advanced Feature Queries**: Check support for `vision`, `multimodal`, `chat_completion`, `responses_api`, `reasoning_effort`, `thinking_budget`, and specific input/output modalities (e.g., `image_input`, `image_output`, `audio_input`).
@@ -123,6 +123,29 @@ print(o1.supports(Feature.LLMC_FEAT_THINKING_BUDGET))   # False
 claude = llmcapa.get("claude-3-7-sonnet")
 print(claude.supports(Feature.LLMC_FEAT_REASONING_EFFORT))  # False
 print(claude.supports(Feature.LLMC_FEAT_THINKING_BUDGET))   # True
+```
+
+### Sakana Fugu (Multi-Agent Orchestration)
+
+Sakana AI's Fugu is a multi-agent orchestration system presented as a single model. It dynamically coordinates frontier models to tackle complex tasks. llmcapa bundles capability data for both Fugu and Fugu Ultra.
+
+```python
+import llmcapa
+
+# Look up Fugu models (case-insensitive, alias-resolved)
+fugu = llmcapa.get("fugu")
+print(fugu.context_window)       # 272000
+print(fugu.max_output_tokens)    # 128000
+print(fugu.supports("vision"))   # True (text+image input)
+print(fugu.pricing)              # {'input_per_1m': 5.0, 'output_per_1m': 30.0, ...}
+
+fugu_ultra = llmcapa.get("fugu-ultra")
+print(fugu_ultra.context_window) # 1000000 (1M tokens)
+print(fugu_ultra.pricing)        # {'input_per_1m': 5.0, 'output_per_1m': 30.0, ...}
+
+# List all Sakana models
+for cap in llmcapa.list_models(provider="sakana"):
+    print(cap.model_id, cap.context_window)
 ```
 
 ### Listing & Searching Models
@@ -275,7 +298,7 @@ llmcapa fetch-hf --limit 200
 
 ## Notes
 
-- **Static Snapshot**: Bundled capability data is a static snapshot. While we strive to keep it updated with the latest models (including GPT-5.5, Claude Fable, Gemini 3.5, DeepSeek V4, etc.), providers change limits and pricing frequently. Use `fetch_openrouter()` or verify with official documentation when absolute accuracy is critical.
+- **Static Snapshot**: Bundled capability data is a static snapshot. While we strive to keep it updated with the latest models (including GPT-5.5, Claude Fable, Gemini 3.5, DeepSeek V4, Sakana Fugu, etc.), providers change limits and pricing frequently. Use `fetch_openrouter()` or verify with official documentation when absolute accuracy is critical.
 - **HuggingFace Data Accuracy**: Models fetched via `fetch_huggingface()` have conservative defaults (4K context, 2K max output) since the HuggingFace listing API does not expose detailed capability data. For accurate specifications, use `fetch_openrouter()` or the bundled data.
 
 ## License
