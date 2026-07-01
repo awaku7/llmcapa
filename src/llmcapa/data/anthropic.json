@@ -188,6 +188,39 @@
     },
     {
       "provider": "anthropic",
+      "model_id": "claude-sonnet-5",
+      "display_name": "Claude Sonnet 5",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_reasoning_effort": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_anthropic_api": true,
+      "knowledge_cutoff": "2026-01",
+      "aliases": [
+        "anthropic/claude-sonnet-5"
+      ],
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "anthropic",
       "model_id": "claude-opus-4-6",
       "display_name": "Claude Opus 4.6",
       "context_window": 1000000,
@@ -457,7 +490,6 @@
       "supports_vision": true,
       "supports_reasoning": false,
       "knowledge_cutoff": "2023-08",
-      "deprecated": true,
       "aliases": [
         "claude-3-sonnet-20240229"
       ],

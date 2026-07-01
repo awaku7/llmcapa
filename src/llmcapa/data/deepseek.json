@@ -4,8 +4,8 @@
       "provider": "deepseek",
       "model_id": "deepseek-v4-pro",
       "display_name": "DeepSeek V4 Pro",
-      "context_window": 1000000,
-      "max_output_tokens": 131072,
+      "context_window": 1048576,
+      "max_output_tokens": 384000,
       "input_modalities": [
         "text"
       ],
@@ -23,6 +23,7 @@
       "pricing": {
         "input_per_1m": 0.435,
         "output_per_1m": 0.87,
+        "input_cache_hit_per_1m": 0.003625,
         "currency": "USD"
       },
       "aliases": [
@@ -34,8 +35,8 @@
       "provider": "deepseek",
       "model_id": "deepseek-v4-flash",
       "display_name": "DeepSeek V4 Flash",
-      "context_window": 1000000,
-      "max_output_tokens": 65536,
+      "context_window": 1048576,
+      "max_output_tokens": 384000,
       "input_modalities": [
         "text"
       ],
@@ -53,6 +54,7 @@
       "pricing": {
         "input_per_1m": 0.14,
         "output_per_1m": 0.28,
+        "input_cache_hit_per_1m": 0.0028,
         "currency": "USD"
       },
       "aliases": [
@@ -138,6 +140,7 @@
       "supports_vision": false,
       "supports_reasoning": false,
       "knowledge_cutoff": "2024-07",
+      "deprecated": true,
       "aliases": [
         "deepseek-chat",
         "deepseek/deepseek-chat",
@@ -148,6 +151,30 @@
         "output_per_1m": 1.1,
         "currency": "USD"
       }
+    },
+    {
+      "provider": "deepseek",
+      "model_id": "deepseek-v3.2-speciale",
+      "display_name": "DeepSeek V3.2 Speciale",
+      "context_window": 131072,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2025-12",
+      "aliases": [
+        "deepseek/deepseek-v3.2-speciale",
+        "deepseek-v3.2-speciale"
+      ]
     },
     {
       "provider": "deepseek",
@@ -196,6 +223,7 @@
       "supports_vision": false,
       "supports_reasoning": true,
       "knowledge_cutoff": "2024-07",
+      "deprecated": true,
       "aliases": [
         "deepseek-reasoner",
         "deepseek/deepseek-r1",
