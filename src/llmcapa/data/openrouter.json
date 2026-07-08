@@ -1,6 +1,497 @@
 {
   "models": [
     {
+      "provider": "aion-labs",
+      "model_id": "aion-labs/aion-3.0-mini",
+      "display_name": "AionLabs: Aion-3.0-Mini",
+      "context_window": 131072,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_reasoning_effort": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.7,
+        "output_per_1m": 1.4,
+        "currency": "USD"
+      },
+      "aliases": [
+        "aion-labs/aion-3.0-mini"
+      ]
+    },
+    {
+      "provider": "aion-labs",
+      "model_id": "aion-labs/aion-3.0",
+      "display_name": "AionLabs: Aion-3.0",
+      "context_window": 131072,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_reasoning_effort": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 3.0,
+        "output_per_1m": 6.0,
+        "currency": "USD"
+      },
+      "aliases": [
+        "aion-labs/aion-3.0"
+      ]
+    },
+    {
+      "provider": "tencent",
+      "model_id": "tencent/hy3:free",
+      "display_name": "Tencent: Hy3 (free)",
+      "context_window": 262144,
+      "max_output_tokens": 262144,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_reasoning_effort": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [
+        "tencent/hy3:free"
+      ]
+    },
+    {
+      "provider": "tencent",
+      "model_id": "tencent/hy3",
+      "display_name": "Tencent: Hy3",
+      "context_window": 262144,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_reasoning_effort": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.2,
+        "output_per_1m": 0.8,
+        "currency": "USD"
+      },
+      "aliases": [
+        "tencent/hy3"
+      ]
+    },
+    {
+      "provider": "poolside",
+      "model_id": "poolside/laguna-xs-2.1:free",
+      "display_name": "Poolside: Laguna XS 2.1 (free)",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_reasoning_effort": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [
+        "poolside/laguna-xs-2.1:free"
+      ]
+    },
+    {
+      "provider": "poolside",
+      "model_id": "poolside/laguna-xs-2.1",
+      "display_name": "Poolside: Laguna XS 2.1",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_reasoning_effort": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.06,
+        "output_per_1m": 0.12,
+        "currency": "USD"
+      },
+      "aliases": [
+        "poolside/laguna-xs-2.1"
+      ]
+    },
+    {
+      "provider": "anthropic",
+      "model_id": "anthropic/claude-sonnet-5",
+      "display_name": "Anthropic: Claude Sonnet 5",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_reasoning_effort": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "aliases": [
+        "anthropic/claude-sonnet-5"
+      ]
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemini-3.1-flash-lite-image",
+      "display_name": "Google: Nano Banana 2 Lite (Gemini 3.1 Flash Lite Image)",
+      "context_window": 65536,
+      "max_output_tokens": 66000,
+      "input_modalities": [
+        "image",
+        "text"
+      ],
+      "output_modalities": [
+        "image",
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_reasoning_effort": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": "2025-01-01",
+      "pricing": {
+        "input_per_1m": 0.25,
+        "output_per_1m": 1.5,
+        "currency": "USD"
+      },
+      "aliases": [
+        "google/gemini-3.1-flash-lite-image"
+      ]
+    },
+    {
+      "provider": "nex-agi",
+      "model_id": "nex-agi/nex-n2-mini",
+      "display_name": "Nex AGI: Nex-N2-Mini",
+      "context_window": 262144,
+      "max_output_tokens": 262144,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_reasoning_effort": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.025,
+        "output_per_1m": 0.1,
+        "currency": "USD"
+      },
+      "aliases": [
+        "nex-agi/nex-n2-mini"
+      ]
+    },
+    {
+      "provider": "sakana",
+      "model_id": "sakana/fugu-ultra",
+      "display_name": "Sakana: Fugu Ultra",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_reasoning_effort": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 5.0,
+        "output_per_1m": 30.0,
+        "currency": "USD"
+      },
+      "aliases": [
+        "sakana/fugu-ultra"
+      ]
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemini-3.1-flash-image",
+      "display_name": "Google: Nano Banana 2 (Gemini 3.1 Flash Image)",
+      "context_window": 131072,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "image",
+        "text"
+      ],
+      "output_modalities": [
+        "image",
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_reasoning_effort": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.5,
+        "output_per_1m": 3.0,
+        "currency": "USD"
+      },
+      "aliases": [
+        "google/gemini-3.1-flash-image"
+      ]
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemini-3-pro-image",
+      "display_name": "Google: Nano Banana Pro (Gemini 3 Pro Image)",
+      "context_window": 65536,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "image",
+        "text"
+      ],
+      "output_modalities": [
+        "image",
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_reasoning_effort": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 12.0,
+        "currency": "USD"
+      },
+      "aliases": [
+        "google/gemini-3-pro-image"
+      ]
+    },
+    {
+      "provider": "cohere",
+      "model_id": "cohere/north-mini-code:free",
+      "display_name": "Cohere: North Mini Code (free)",
+      "context_window": 256000,
+      "max_output_tokens": 64000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_reasoning_effort": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [
+        "cohere/north-mini-code:free"
+      ]
+    },
+    {
+      "provider": "z-ai",
+      "model_id": "z-ai/glm-5.2",
+      "display_name": "Z.ai: GLM 5.2",
+      "context_window": 1048576,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_reasoning_effort": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.93,
+        "output_per_1m": 3.0,
+        "currency": "USD"
+      },
+      "aliases": [
+        "z-ai/glm-5.2"
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "openrouter/fusion",
+      "display_name": "OpenRouter: Fusion",
+      "context_window": 1000000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_reasoning_effort": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": -1000000.0,
+        "output_per_1m": -1000000.0,
+        "currency": "USD"
+      },
+      "aliases": [
+        "openrouter/fusion"
+      ]
+    },
+    {
+      "provider": "moonshotai",
+      "model_id": "moonshotai/kimi-k2.7-code",
+      "display_name": "MoonshotAI: Kimi K2.7 Code",
+      "context_window": 262144,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_reasoning_effort": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.74,
+        "output_per_1m": 3.5,
+        "currency": "USD"
+      },
+      "aliases": [
+        "moonshotai/kimi-k2.7-code"
+      ]
+    },
+    {
       "provider": "openrouter",
       "model_id": "~anthropic/claude-fable-latest",
       "display_name": "Anthropic: Claude Fable Latest",
@@ -30,8 +521,7 @@
       },
       "aliases": [
         "~anthropic/claude-fable-latest"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "anthropic",
@@ -63,13 +553,12 @@
       },
       "aliases": [
         "anthropic/claude-fable-5"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "nex-agi",
-      "model_id": "nex-agi/nex-n2-pro:free",
-      "display_name": "Nex AGI: Nex-N2-Pro (free)",
+      "model_id": "nex-agi/nex-n2-pro",
+      "display_name": "Nex AGI: Nex-N2-Pro",
       "context_window": 262144,
       "max_output_tokens": 262144,
       "input_modalities": [
@@ -80,23 +569,22 @@
         "text"
       ],
       "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
+        "input_per_1m": 0.25,
+        "output_per_1m": 1.0,
         "currency": "USD"
       },
       "aliases": [
-        "nex-agi/nex-n2-pro:free"
-      ],
-      "supports_anthropic_api": false
+        "nex-agi/nex-n2-pro"
+      ]
     },
     {
       "provider": "nvidia",
@@ -116,7 +604,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -127,8 +615,7 @@
       },
       "aliases": [
         "nvidia/nemotron-3.5-content-safety:free"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "nvidia",
@@ -158,8 +645,7 @@
       },
       "aliases": [
         "nvidia/nemotron-3-ultra-550b-a55b:free"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "nvidia",
@@ -184,13 +670,12 @@
       "knowledge_cutoff": null,
       "pricing": {
         "input_per_1m": 0.5,
-        "output_per_1m": 2.5,
+        "output_per_1m": 2.2,
         "currency": "USD"
       },
       "aliases": [
         "nvidia/nemotron-3-ultra-550b-a55b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -210,19 +695,18 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.39999999999999997,
-        "output_per_1m": 1.5999999999999999,
+        "input_per_1m": 0.32,
+        "output_per_1m": 1.28,
         "currency": "USD"
       },
       "aliases": [
         "qwen/qwen3.7-plus"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "minimax",
@@ -243,7 +727,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -254,8 +738,7 @@
       },
       "aliases": [
         "minimax/minimax-m3"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "stepfun",
@@ -281,14 +764,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.19999999999999998,
+        "input_per_1m": 0.2,
         "output_per_1m": 1.15,
         "currency": "USD"
       },
       "aliases": [
         "stepfun/step-3.7-flash"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "anthropic",
@@ -320,8 +802,7 @@
       },
       "aliases": [
         "anthropic/claude-opus-4.8-fast"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "anthropic",
@@ -353,8 +834,7 @@
       },
       "aliases": [
         "anthropic/claude-opus-4.8"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -373,7 +853,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -384,8 +864,7 @@
       },
       "aliases": [
         "qwen/qwen3.7-max"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "x-ai",
@@ -395,7 +874,8 @@
       "max_output_tokens": 0,
       "input_modalities": [
         "text",
-        "image"
+        "image",
+        "file"
       ],
       "output_modalities": [
         "text"
@@ -405,7 +885,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -416,8 +896,7 @@
       },
       "aliases": [
         "x-ai/grok-build-0.1"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "google",
@@ -451,8 +930,7 @@
       },
       "aliases": [
         "google/gemini-3.5-flash"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "anthropic",
@@ -484,39 +962,7 @@
       },
       "aliases": [
         "anthropic/claude-opus-4.7-fast"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "openrouter/fusion",
-      "display_name": "OpenRouter: Fusion",
-      "context_window": 128000,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_reasoning_effort": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": -1000000.0,
-        "output_per_1m": -1000000.0,
-        "currency": "USD"
-      },
-      "aliases": [
-        "openrouter/fusion"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "perceptron",
@@ -537,7 +983,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -548,8 +994,7 @@
       },
       "aliases": [
         "perceptron/perceptron-mk1"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "inclusionai",
@@ -579,8 +1024,7 @@
       },
       "aliases": [
         "inclusionai/ring-2.6-1t"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "google",
@@ -614,8 +1058,7 @@
       },
       "aliases": [
         "google/gemini-3.1-flash-lite"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -647,8 +1090,7 @@
       },
       "aliases": [
         "openai/gpt-chat-latest"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "x-ai",
@@ -658,7 +1100,8 @@
       "max_output_tokens": 0,
       "input_modalities": [
         "text",
-        "image"
+        "image",
+        "file"
       ],
       "output_modalities": [
         "text"
@@ -679,8 +1122,7 @@
       },
       "aliases": [
         "x-ai/grok-4.3"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "ibm-granite",
@@ -704,14 +1146,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.049999999999999996,
-        "output_per_1m": 0.09999999999999999,
+        "input_per_1m": 0.05,
+        "output_per_1m": 0.1,
         "currency": "USD"
       },
       "aliases": [
         "ibm-granite/granite-4.1-8b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "mistralai",
@@ -743,39 +1184,7 @@
       },
       "aliases": [
         "mistralai/mistral-medium-3-5"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "openrouter/owl-alpha",
-      "display_name": "Owl Alpha",
-      "context_window": 1048756,
-      "max_output_tokens": 262144,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_reasoning_effort": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "aliases": [
-        "openrouter/owl-alpha"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "nvidia",
@@ -797,7 +1206,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -808,8 +1217,7 @@
       },
       "aliases": [
         "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "poolside",
@@ -828,7 +1236,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -839,8 +1247,37 @@
       },
       "aliases": [
         "poolside/laguna-xs.2:free"
+      ]
+    },
+    {
+      "provider": "poolside",
+      "model_id": "poolside/laguna-xs.2",
+      "display_name": "Poolside: Laguna XS.2",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
       ],
-      "supports_anthropic_api": false
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_reasoning_effort": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.2,
+        "currency": "USD"
+      },
+      "aliases": [
+        "poolside/laguna-xs.2"
+      ]
     },
     {
       "provider": "poolside",
@@ -859,7 +1296,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -870,8 +1307,37 @@
       },
       "aliases": [
         "poolside/laguna-m.1:free"
+      ]
+    },
+    {
+      "provider": "poolside",
+      "model_id": "poolside/laguna-m.1",
+      "display_name": "Poolside: Laguna M.1",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
       ],
-      "supports_anthropic_api": false
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_reasoning_effort": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.2,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      },
+      "aliases": [
+        "poolside/laguna-m.1"
+      ]
     },
     {
       "provider": "openrouter",
@@ -892,7 +1358,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -903,8 +1369,7 @@
       },
       "aliases": [
         "~anthropic/claude-haiku-latest"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openrouter",
@@ -936,8 +1401,7 @@
       },
       "aliases": [
         "~openai/gpt-mini-latest"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openrouter",
@@ -971,15 +1435,14 @@
       },
       "aliases": [
         "~google/gemini-pro-latest"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openrouter",
       "model_id": "~moonshotai/kimi-latest",
       "display_name": "MoonshotAI Kimi Latest",
       "context_window": 262144,
-      "max_output_tokens": 262142,
+      "max_output_tokens": 262144,
       "input_modalities": [
         "text",
         "image"
@@ -992,19 +1455,18 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.6799999999999999,
+        "input_per_1m": 0.66,
         "output_per_1m": 3.41,
         "currency": "USD"
       },
       "aliases": [
         "~moonshotai/kimi-latest"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openrouter",
@@ -1038,8 +1500,7 @@
       },
       "aliases": [
         "~google/gemini-flash-latest"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openrouter",
@@ -1065,14 +1526,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 3.0,
-        "output_per_1m": 15.0,
+        "input_per_1m": 2.0,
+        "output_per_1m": 10.0,
         "currency": "USD"
       },
       "aliases": [
         "~anthropic/claude-sonnet-latest"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openrouter",
@@ -1104,8 +1564,7 @@
       },
       "aliases": [
         "~openai/gpt-latest"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -1126,19 +1585,18 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
         "input_per_1m": 0.3,
-        "output_per_1m": 1.7999999999999998,
+        "output_per_1m": 1.8,
         "currency": "USD"
       },
       "aliases": [
         "qwen/qwen3.5-plus-20260420"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -1159,7 +1617,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -1170,15 +1628,14 @@
       },
       "aliases": [
         "qwen/qwen3.6-flash"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
       "model_id": "qwen/qwen3.6-35b-a3b",
       "display_name": "Qwen: Qwen3.6 35B A3B",
       "context_window": 262144,
-      "max_output_tokens": 262140,
+      "max_output_tokens": 262144,
       "input_modalities": [
         "text",
         "image",
@@ -1192,7 +1649,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -1203,8 +1660,7 @@
       },
       "aliases": [
         "qwen/qwen3.6-35b-a3b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -1223,7 +1679,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -1234,15 +1690,14 @@
       },
       "aliases": [
         "qwen/qwen3.6-max-preview"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
       "model_id": "qwen/qwen3.6-27b",
       "display_name": "Qwen: Qwen3.6 27B",
       "context_window": 262144,
-      "max_output_tokens": 131072,
+      "max_output_tokens": 262140,
       "input_modalities": [
         "text",
         "image",
@@ -1256,19 +1711,18 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.28900000000000003,
+        "input_per_1m": 0.285,
         "output_per_1m": 2.4,
         "currency": "USD"
       },
       "aliases": [
         "qwen/qwen3.6-27b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -1300,8 +1754,7 @@
       },
       "aliases": [
         "openai/gpt-5.5-pro"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -1333,8 +1786,7 @@
       },
       "aliases": [
         "openai/gpt-5.5"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "deepseek",
@@ -1364,15 +1816,14 @@
       },
       "aliases": [
         "deepseek/deepseek-v4-pro"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "deepseek",
       "model_id": "deepseek/deepseek-v4-flash",
       "display_name": "DeepSeek: DeepSeek V4 Flash",
       "context_window": 1048576,
-      "max_output_tokens": 131072,
+      "max_output_tokens": 65536,
       "input_modalities": [
         "text"
       ],
@@ -1389,14 +1840,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.0983,
-        "output_per_1m": 0.1966,
+        "input_per_1m": 0.09,
+        "output_per_1m": 0.18,
         "currency": "USD"
       },
       "aliases": [
         "deepseek/deepseek-v4-flash"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "inclusionai",
@@ -1426,8 +1876,7 @@
       },
       "aliases": [
         "inclusionai/ling-2.6-1t"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "tencent",
@@ -1457,8 +1906,7 @@
       },
       "aliases": [
         "tencent/hy3-preview"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "xiaomi",
@@ -1477,7 +1925,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -1488,15 +1936,14 @@
       },
       "aliases": [
         "xiaomi/mimo-v2.5-pro"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "xiaomi",
       "model_id": "xiaomi/mimo-v2.5",
       "display_name": "Xiaomi: MiMo-V2.5",
       "context_window": 1048576,
-      "max_output_tokens": 131072,
+      "max_output_tokens": 0,
       "input_modalities": [
         "text",
         "audio",
@@ -1511,19 +1958,18 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.14,
+        "input_per_1m": 0.105,
         "output_per_1m": 0.28,
         "currency": "USD"
       },
       "aliases": [
         "xiaomi/mimo-v2.5"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -1556,8 +2002,7 @@
       },
       "aliases": [
         "openai/gpt-5.4-image-2"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "inclusionai",
@@ -1587,8 +2032,7 @@
       },
       "aliases": [
         "inclusionai/ling-2.6-flash"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openrouter",
@@ -1620,8 +2064,7 @@
       },
       "aliases": [
         "~anthropic/claude-opus-latest"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openrouter",
@@ -1651,8 +2094,38 @@
       },
       "aliases": [
         "openrouter/pareto-code"
+      ]
+    },
+    {
+      "provider": "moonshotai",
+      "model_id": "moonshotai/kimi-k2.6",
+      "display_name": "MoonshotAI: Kimi K2.6",
+      "context_window": 262144,
+      "max_output_tokens": 262144,
+      "input_modalities": [
+        "text",
+        "image"
       ],
-      "supports_anthropic_api": false
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_reasoning_effort": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.66,
+        "output_per_1m": 3.41,
+        "currency": "USD"
+      },
+      "aliases": [
+        "moonshotai/kimi-k2.6"
+      ]
     },
     {
       "provider": "anthropic",
@@ -1684,48 +2157,14 @@
       },
       "aliases": [
         "anthropic/claude-opus-4.7"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "anthropic",
-      "model_id": "anthropic/claude-opus-4.6-fast",
-      "display_name": "Anthropic: Claude Opus 4.6 (Fast)",
-      "context_window": 1000000,
-      "max_output_tokens": 128000,
-      "input_modalities": [
-        "text",
-        "image",
-        "file"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_reasoning_effort": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 30.0,
-        "output_per_1m": 150.0,
-        "currency": "USD"
-      },
-      "aliases": [
-        "anthropic/claude-opus-4.6-fast"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "z-ai",
       "model_id": "z-ai/glm-5.1",
       "display_name": "Z.ai: GLM 5.1",
       "context_window": 202752,
-      "max_output_tokens": 0,
+      "max_output_tokens": 128000,
       "input_modalities": [
         "text"
       ],
@@ -1737,19 +2176,18 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.98,
-        "output_per_1m": 3.08,
+        "input_per_1m": 0.966,
+        "output_per_1m": 3.036,
         "currency": "USD"
       },
       "aliases": [
         "z-ai/glm-5.1"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "google",
@@ -1770,7 +2208,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -1781,8 +2219,7 @@
       },
       "aliases": [
         "google/gemma-4-26b-a4b-it:free"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "google",
@@ -1803,7 +2240,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -1814,46 +2251,12 @@
       },
       "aliases": [
         "google/gemma-4-26b-a4b-it"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "google",
       "model_id": "google/gemma-4-31b-it:free",
       "display_name": "Google: Gemma 4 31B (free)",
-      "context_window": 262144,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "image",
-        "text",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_reasoning_effort": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "aliases": [
-        "google/gemma-4-31b-it:free"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemma-4-31b-it",
-      "display_name": "Google: Gemma 4 31B",
       "context_window": 262144,
       "max_output_tokens": 8192,
       "input_modalities": [
@@ -1869,19 +2272,50 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [
+        "google/gemma-4-31b-it:free"
+      ]
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemma-4-31b-it",
+      "display_name": "Google: Gemma 4 31B",
+      "context_window": 262144,
+      "max_output_tokens": 262144,
+      "input_modalities": [
+        "image",
+        "text",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
         "input_per_1m": 0.12,
-        "output_per_1m": 0.36,
+        "output_per_1m": 0.35,
         "currency": "USD"
       },
       "aliases": [
         "google/gemma-4-31b-it"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -1902,7 +2336,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -1913,17 +2347,18 @@
       },
       "aliases": [
         "qwen/qwen3.6-plus"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
-      "provider": "arcee-ai",
-      "model_id": "arcee-ai/trinity-large-thinking",
-      "display_name": "Arcee AI: Trinity Large Thinking",
-      "context_window": 262144,
-      "max_output_tokens": 262144,
+      "provider": "z-ai",
+      "model_id": "z-ai/glm-5v-turbo",
+      "display_name": "Z.ai: GLM 5V Turbo",
+      "context_window": 202752,
+      "max_output_tokens": 131072,
       "input_modalities": [
-        "text"
+        "image",
+        "text",
+        "video"
       ],
       "output_modalities": [
         "text"
@@ -1931,21 +2366,50 @@
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
-      "supports_vision": false,
+      "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.22,
-        "output_per_1m": 0.85,
+        "input_per_1m": 1.2,
+        "output_per_1m": 4.0,
+        "currency": "USD"
+      },
+      "aliases": [
+        "z-ai/glm-5v-turbo"
+      ]
+    },
+    {
+      "provider": "arcee-ai",
+      "model_id": "arcee-ai/trinity-large-thinking",
+      "display_name": "Arcee AI: Trinity Large Thinking",
+      "context_window": 262144,
+      "max_output_tokens": 80000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_reasoning_effort": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.25,
+        "output_per_1m": 0.8,
         "currency": "USD"
       },
       "aliases": [
         "arcee-ai/trinity-large-thinking"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "x-ai",
@@ -1971,14 +2435,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-09-01",
       "pricing": {
-        "input_per_1m": 2.0,
-        "output_per_1m": 6.0,
+        "input_per_1m": 1.25,
+        "output_per_1m": 2.5,
         "currency": "USD"
       },
       "aliases": [
         "x-ai/grok-4.20-multi-agent"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "x-ai",
@@ -1999,7 +2462,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-09-01",
@@ -2010,8 +2473,7 @@
       },
       "aliases": [
         "x-ai/grok-4.20"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "google",
@@ -2043,8 +2505,7 @@
       },
       "aliases": [
         "google/lyria-3-pro-preview"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "google",
@@ -2076,8 +2537,7 @@
       },
       "aliases": [
         "google/lyria-3-clip-preview"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "kwaipilot",
@@ -2107,8 +2567,7 @@
       },
       "aliases": [
         "kwaipilot/kat-coder-pro-v2"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "rekaai",
@@ -2128,27 +2587,26 @@
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
-      "supports_reasoning": false,
+      "supports_reasoning": true,
       "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.09999999999999999,
-        "output_per_1m": 0.09999999999999999,
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.1,
         "currency": "USD"
       },
       "aliases": [
         "rekaai/reka-edge"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "minimax",
       "model_id": "minimax/minimax-m2.7",
       "display_name": "MiniMax: MiniMax M2.7",
       "context_window": 204800,
-      "max_output_tokens": 131072,
+      "max_output_tokens": 196608,
       "input_modalities": [
         "text"
       ],
@@ -2160,19 +2618,18 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.27,
-        "output_per_1m": 1.08,
+        "input_per_1m": 0.18,
+        "output_per_1m": 0.72,
         "currency": "USD"
       },
       "aliases": [
         "minimax/minimax-m2.7"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -2198,14 +2655,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-08-31",
       "pricing": {
-        "input_per_1m": 0.19999999999999998,
+        "input_per_1m": 0.2,
         "output_per_1m": 1.25,
         "currency": "USD"
       },
       "aliases": [
         "openai/gpt-5.4-nano"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -2237,8 +2693,7 @@
       },
       "aliases": [
         "openai/gpt-5.4-mini"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "mistralai",
@@ -2269,8 +2724,7 @@
       },
       "aliases": [
         "mistralai/mistral-small-2603"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "z-ai",
@@ -2289,7 +2743,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -2300,8 +2754,7 @@
       },
       "aliases": [
         "z-ai/glm-5-turbo"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "nvidia",
@@ -2331,8 +2784,7 @@
       },
       "aliases": [
         "nvidia/nemotron-3-super-120b-a12b:free"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "nvidia",
@@ -2356,14 +2808,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.09,
-        "output_per_1m": 0.44999999999999996,
+        "input_per_1m": 0.08,
+        "output_per_1m": 0.45,
         "currency": "USD"
       },
       "aliases": [
         "nvidia/nemotron-3-super-120b-a12b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "bytedance-seed",
@@ -2395,8 +2846,7 @@
       },
       "aliases": [
         "bytedance-seed/seed-2.0-lite"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -2417,19 +2867,18 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.09999999999999999,
+        "input_per_1m": 0.1,
         "output_per_1m": 0.15,
         "currency": "USD"
       },
       "aliases": [
         "qwen/qwen3.5-9b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -2461,8 +2910,7 @@
       },
       "aliases": [
         "openai/gpt-5.4-pro"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -2494,8 +2942,7 @@
       },
       "aliases": [
         "openai/gpt-5.4"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "inception",
@@ -2525,8 +2972,7 @@
       },
       "aliases": [
         "inception/mercury-2"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -2558,8 +3004,7 @@
       },
       "aliases": [
         "openai/gpt-5.3-chat"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "google",
@@ -2593,8 +3038,7 @@
       },
       "aliases": [
         "google/gemini-3.1-flash-lite-preview"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "bytedance-seed",
@@ -2620,21 +3064,20 @@
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.09999999999999999,
-        "output_per_1m": 0.39999999999999997,
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.4,
         "currency": "USD"
       },
       "aliases": [
         "bytedance-seed/seed-2.0-mini"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "google",
       "model_id": "google/gemini-3.1-flash-image-preview",
       "display_name": "Google: Nano Banana 2 (Gemini 3.1 Flash Image Preview)",
       "context_window": 131072,
-      "max_output_tokens": 65536,
+      "max_output_tokens": 32768,
       "input_modalities": [
         "image",
         "text"
@@ -2659,15 +3102,14 @@
       },
       "aliases": [
         "google/gemini-3.1-flash-image-preview"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
       "model_id": "qwen/qwen3.5-35b-a3b",
       "display_name": "Qwen: Qwen3.5-35B-A3B",
       "context_window": 262144,
-      "max_output_tokens": 262144,
+      "max_output_tokens": 81920,
       "input_modalities": [
         "text",
         "image",
@@ -2681,7 +3123,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -2692,8 +3134,7 @@
       },
       "aliases": [
         "qwen/qwen3.5-35b-a3b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -2714,7 +3155,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -2725,8 +3166,7 @@
       },
       "aliases": [
         "qwen/qwen3.5-27b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -2747,7 +3187,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -2758,8 +3198,7 @@
       },
       "aliases": [
         "qwen/qwen3.5-122b-a10b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -2780,7 +3219,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -2791,8 +3230,7 @@
       },
       "aliases": [
         "qwen/qwen3.5-flash-02-23"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "liquid",
@@ -2807,7 +3245,7 @@
         "text"
       ],
       "supports_function_calling": false,
-      "supports_json_mode": false,
+      "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": false,
@@ -2822,8 +3260,7 @@
       },
       "aliases": [
         "liquid/lfm-2-24b-a2b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "google",
@@ -2857,8 +3294,7 @@
       },
       "aliases": [
         "google/gemini-3.1-pro-preview-customtools"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -2890,8 +3326,7 @@
       },
       "aliases": [
         "openai/gpt-5.3-codex"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "aion-labs",
@@ -2905,24 +3340,23 @@
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.7999999999999999,
-        "output_per_1m": 1.5999999999999999,
+        "input_per_1m": 0.8,
+        "output_per_1m": 1.6,
         "currency": "USD"
       },
       "aliases": [
         "aion-labs/aion-2.0"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "google",
@@ -2956,8 +3390,7 @@
       },
       "aliases": [
         "google/gemini-3.1-pro-preview"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "anthropic",
@@ -2989,8 +3422,7 @@
       },
       "aliases": [
         "anthropic/claude-sonnet-4.6"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -3011,7 +3443,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -3022,15 +3454,14 @@
       },
       "aliases": [
         "qwen/qwen3.5-plus-02-15"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
       "model_id": "qwen/qwen3.5-397b-a17b",
       "display_name": "Qwen: Qwen3.5 397B A17B",
-      "context_window": 262144,
-      "max_output_tokens": 65536,
+      "context_window": 256000,
+      "max_output_tokens": 0,
       "input_modalities": [
         "text",
         "image",
@@ -3044,19 +3475,18 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.39,
-        "output_per_1m": 2.34,
+        "input_per_1m": 0.385,
+        "output_per_1m": 2.45,
         "currency": "USD"
       },
       "aliases": [
         "qwen/qwen3.5-397b-a17b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "minimax",
@@ -3075,19 +3505,18 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.15,
-        "output_per_1m": 0.8999999999999999,
+        "input_per_1m": 0.12,
+        "output_per_1m": 0.48,
         "currency": "USD"
       },
       "aliases": [
         "minimax/minimax-m2.5"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "z-ai",
@@ -3106,7 +3535,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -3117,8 +3546,7 @@
       },
       "aliases": [
         "z-ai/glm-5"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -3137,7 +3565,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -3148,8 +3576,7 @@
       },
       "aliases": [
         "qwen/qwen3-max-thinking"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "anthropic",
@@ -3181,8 +3608,7 @@
       },
       "aliases": [
         "anthropic/claude-opus-4.6"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -3207,13 +3633,12 @@
       "knowledge_cutoff": null,
       "pricing": {
         "input_per_1m": 0.11,
-        "output_per_1m": 0.7999999999999999,
+        "output_per_1m": 0.8,
         "currency": "USD"
       },
       "aliases": [
         "qwen/qwen3-coder-next"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openrouter",
@@ -3233,7 +3658,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -3244,15 +3669,14 @@
       },
       "aliases": [
         "openrouter/free"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "stepfun",
       "model_id": "stepfun/step-3.5-flash",
       "display_name": "StepFun: Step 3.5 Flash",
       "context_window": 262144,
-      "max_output_tokens": 16384,
+      "max_output_tokens": 65536,
       "input_modalities": [
         "text"
       ],
@@ -3260,23 +3684,53 @@
         "text"
       ],
       "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.09,
+        "input_per_1m": 0.1,
         "output_per_1m": 0.3,
         "currency": "USD"
       },
       "aliases": [
         "stepfun/step-3.5-flash"
+      ]
+    },
+    {
+      "provider": "moonshotai",
+      "model_id": "moonshotai/kimi-k2.5",
+      "display_name": "MoonshotAI: Kimi K2.5",
+      "context_window": 262144,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
       ],
-      "supports_anthropic_api": false
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_reasoning_effort": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.375,
+        "output_per_1m": 2.025,
+        "currency": "USD"
+      },
+      "aliases": [
+        "moonshotai/kimi-k2.5"
+      ]
     },
     {
       "provider": "upstage",
@@ -3295,7 +3749,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -3306,8 +3760,7 @@
       },
       "aliases": [
         "upstage/solar-pro-3"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "minimax",
@@ -3337,8 +3790,7 @@
       },
       "aliases": [
         "minimax/minimax-m2-her"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "writer",
@@ -3368,8 +3820,7 @@
       },
       "aliases": [
         "writer/palmyra-x5"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "liquid",
@@ -3383,12 +3834,12 @@
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -3399,8 +3850,7 @@
       },
       "aliases": [
         "liquid/lfm-2.5-1.2b-thinking:free"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "liquid",
@@ -3415,7 +3865,7 @@
         "text"
       ],
       "supports_function_calling": false,
-      "supports_json_mode": false,
+      "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": false,
@@ -3430,8 +3880,7 @@
       },
       "aliases": [
         "liquid/lfm-2.5-1.2b-instruct:free"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -3463,8 +3912,7 @@
       },
       "aliases": [
         "openai/gpt-audio"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -3496,8 +3944,7 @@
       },
       "aliases": [
         "openai/gpt-audio-mini"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "z-ai",
@@ -3516,19 +3963,18 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
         "input_per_1m": 0.06,
-        "output_per_1m": 0.39999999999999997,
+        "output_per_1m": 0.4,
         "currency": "USD"
       },
       "aliases": [
         "z-ai/glm-4.7-flash"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -3559,8 +4005,7 @@
       },
       "aliases": [
         "openai/gpt-5.2-codex"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "bytedance-seed",
@@ -3581,7 +4026,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -3592,8 +4037,7 @@
       },
       "aliases": [
         "bytedance-seed/seed-1.6-flash"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "bytedance-seed",
@@ -3614,7 +4058,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -3625,15 +4069,14 @@
       },
       "aliases": [
         "bytedance-seed/seed-1.6"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "minimax",
       "model_id": "minimax/minimax-m2.1",
       "display_name": "MiniMax: MiniMax M2.1",
       "context_window": 204800,
-      "max_output_tokens": 196608,
+      "max_output_tokens": 131072,
       "input_modalities": [
         "text"
       ],
@@ -3645,19 +4088,18 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.29,
-        "output_per_1m": 0.95,
+        "input_per_1m": 0.3,
+        "output_per_1m": 1.2,
         "currency": "USD"
       },
       "aliases": [
         "minimax/minimax-m2.1"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "z-ai",
@@ -3676,26 +4118,25 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.39999999999999997,
+        "input_per_1m": 0.4,
         "output_per_1m": 1.75,
         "currency": "USD"
       },
       "aliases": [
         "z-ai/glm-4.7"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "google",
       "model_id": "google/gemini-3-flash-preview",
       "display_name": "Google: Gemini 3 Flash Preview",
       "context_window": 1048576,
-      "max_output_tokens": 65536,
+      "max_output_tokens": 65535,
       "input_modalities": [
         "text",
         "image",
@@ -3722,39 +4163,7 @@
       },
       "aliases": [
         "google/gemini-3-flash-preview"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "xiaomi",
-      "model_id": "xiaomi/mimo-v2-flash",
-      "display_name": "Xiaomi: MiMo-V2-Flash",
-      "context_window": 262144,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_reasoning_effort": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 0.09999999999999999,
-        "output_per_1m": 0.3,
-        "currency": "USD"
-      },
-      "aliases": [
-        "xiaomi/mimo-v2-flash"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "nvidia",
@@ -3773,7 +4182,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -3784,8 +4193,7 @@
       },
       "aliases": [
         "nvidia/nemotron-3-nano-30b-a3b:free"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "nvidia",
@@ -3804,19 +4212,18 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.049999999999999996,
-        "output_per_1m": 0.19999999999999998,
+        "input_per_1m": 0.05,
+        "output_per_1m": 0.2,
         "currency": "USD"
       },
       "aliases": [
         "nvidia/nemotron-3-nano-30b-a3b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -3848,8 +4255,7 @@
       },
       "aliases": [
         "openai/gpt-5.2-chat"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -3881,8 +4287,7 @@
       },
       "aliases": [
         "openai/gpt-5.2-pro"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -3914,8 +4319,7 @@
       },
       "aliases": [
         "openai/gpt-5.2"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "mistralai",
@@ -3940,14 +4344,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.39999999999999997,
+        "input_per_1m": 0.4,
         "output_per_1m": 2.0,
         "currency": "USD"
       },
       "aliases": [
         "mistralai/devstral-2512"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "relace",
@@ -3962,7 +4365,7 @@
         "text"
       ],
       "supports_function_calling": true,
-      "supports_json_mode": false,
+      "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": false,
@@ -3977,8 +4380,7 @@
       },
       "aliases": [
         "relace/relace-search"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "z-ai",
@@ -3999,50 +4401,18 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 0.3,
-        "output_per_1m": 0.8999999999999999,
-        "currency": "USD"
-      },
-      "aliases": [
-        "z-ai/glm-4.6v"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "essentialai",
-      "model_id": "essentialai/rnj-1-instruct",
-      "display_name": "EssentialAI: Rnj 1 Instruct",
-      "context_window": 32768,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
       "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.15,
-        "output_per_1m": 0.15,
+        "input_per_1m": 0.3,
+        "output_per_1m": 0.9,
         "currency": "USD"
       },
       "aliases": [
-        "essentialai/rnj-1-instruct"
-      ],
-      "supports_anthropic_api": false
+        "z-ai/glm-4.6v"
+      ]
     },
     {
       "provider": "openrouter",
@@ -4072,8 +4442,7 @@
       },
       "aliases": [
         "openrouter/bodybuilder"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -4104,8 +4473,7 @@
       },
       "aliases": [
         "openai/gpt-5.1-codex-max"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "amazon",
@@ -4127,7 +4495,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -4138,8 +4506,7 @@
       },
       "aliases": [
         "amazon/nova-2-lite-v1"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "mistralai",
@@ -4164,14 +4531,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.19999999999999998,
-        "output_per_1m": 0.19999999999999998,
+        "input_per_1m": 0.2,
+        "output_per_1m": 0.2,
         "currency": "USD"
       },
       "aliases": [
         "mistralai/ministral-14b-2512"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "mistralai",
@@ -4202,8 +4568,7 @@
       },
       "aliases": [
         "mistralai/ministral-8b-2512"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "mistralai",
@@ -4228,14 +4593,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.09999999999999999,
-        "output_per_1m": 0.09999999999999999,
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.1,
         "currency": "USD"
       },
       "aliases": [
         "mistralai/ministral-3b-2512"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "mistralai",
@@ -4267,8 +4631,7 @@
       },
       "aliases": [
         "mistralai/mistral-large-2512"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "arcee-ai",
@@ -4287,7 +4650,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -4298,8 +4661,7 @@
       },
       "aliases": [
         "arcee-ai/trinity-mini"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "deepseek",
@@ -4318,7 +4680,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -4329,39 +4691,7 @@
       },
       "aliases": [
         "deepseek/deepseek-v3.2"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "prime-intellect",
-      "model_id": "prime-intellect/intellect-3",
-      "display_name": "Prime Intellect: INTELLECT-3",
-      "context_window": 131072,
-      "max_output_tokens": 131072,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_reasoning_effort": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 0.19999999999999998,
-        "output_per_1m": 1.1,
-        "currency": "USD"
-      },
-      "aliases": [
-        "prime-intellect/intellect-3"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "anthropic",
@@ -4382,7 +4712,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -4393,8 +4723,7 @@
       },
       "aliases": [
         "anthropic/claude-opus-4.5"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "allenai",
@@ -4413,7 +4742,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -4424,8 +4753,7 @@
       },
       "aliases": [
         "allenai/olmo-3-32b-think"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "google",
@@ -4446,7 +4774,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -4457,8 +4785,7 @@
       },
       "aliases": [
         "google/gemini-3-pro-image-preview"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "deepcogito",
@@ -4477,7 +4804,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -4488,8 +4815,7 @@
       },
       "aliases": [
         "deepcogito/cogito-v2.1-671b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -4521,8 +4847,7 @@
       },
       "aliases": [
         "openai/gpt-5.1"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -4554,8 +4879,7 @@
       },
       "aliases": [
         "openai/gpt-5.1-chat"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -4586,8 +4910,7 @@
       },
       "aliases": [
         "openai/gpt-5.1-codex"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -4618,8 +4941,37 @@
       },
       "aliases": [
         "openai/gpt-5.1-codex-mini"
+      ]
+    },
+    {
+      "provider": "moonshotai",
+      "model_id": "moonshotai/kimi-k2-thinking",
+      "display_name": "MoonshotAI: Kimi K2 Thinking",
+      "context_window": 262144,
+      "max_output_tokens": 100352,
+      "input_modalities": [
+        "text"
       ],
-      "supports_anthropic_api": false
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_reasoning_effort": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.6,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      },
+      "aliases": [
+        "moonshotai/kimi-k2-thinking"
+      ]
     },
     {
       "provider": "amazon",
@@ -4650,8 +5002,7 @@
       },
       "aliases": [
         "amazon/nova-premier-v1"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "perplexity",
@@ -4671,7 +5022,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -4682,8 +5033,7 @@
       },
       "aliases": [
         "perplexity/sonar-pro-search"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "mistralai",
@@ -4709,14 +5059,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.09999999999999999,
+        "input_per_1m": 0.1,
         "output_per_1m": 0.3,
         "currency": "USD"
       },
       "aliases": [
         "mistralai/voxtral-small-24b-2507"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -4735,7 +5084,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -4746,8 +5095,7 @@
       },
       "aliases": [
         "openai/gpt-oss-safeguard-20b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "nvidia",
@@ -4768,7 +5116,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -4779,15 +5127,14 @@
       },
       "aliases": [
         "nvidia/nemotron-nano-12b-v2-vl:free"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "minimax",
       "model_id": "minimax/minimax-m2",
       "display_name": "MiniMax: MiniMax M2",
       "context_window": 204800,
-      "max_output_tokens": 196608,
+      "max_output_tokens": 131072,
       "input_modalities": [
         "text"
       ],
@@ -4799,19 +5146,18 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
         "input_per_1m": 0.255,
-        "output_per_1m": 1.0,
+        "output_per_1m": 1.02,
         "currency": "USD"
       },
       "aliases": [
         "minimax/minimax-m2"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -4836,14 +5182,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.10400000000000001,
-        "output_per_1m": 0.41600000000000004,
+        "input_per_1m": 0.104,
+        "output_per_1m": 0.416,
         "currency": "USD"
       },
       "aliases": [
         "qwen/qwen3-vl-32b-instruct"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "ibm-granite",
@@ -4851,37 +5196,6 @@
       "display_name": "IBM: Granite 4.0 Micro",
       "context_window": 131000,
       "max_output_tokens": 131000,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_reasoning_effort": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 0.017,
-        "output_per_1m": 0.112,
-        "currency": "USD"
-      },
-      "aliases": [
-        "ibm-granite/granite-4.0-h-micro"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "microsoft/phi-4-mini-instruct",
-      "display_name": "Microsoft: Phi 4 Mini Instruct",
-      "context_window": 131072,
-      "max_output_tokens": 128000,
       "input_modalities": [
         "text"
       ],
@@ -4898,14 +5212,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.08,
-        "output_per_1m": 0.35,
+        "input_per_1m": 0.017,
+        "output_per_1m": 0.112,
         "currency": "USD"
       },
       "aliases": [
-        "microsoft/phi-4-mini-instruct"
-      ],
-      "supports_anthropic_api": false
+        "ibm-granite/granite-4.0-h-micro"
+      ]
     },
     {
       "provider": "openai",
@@ -4927,7 +5240,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -4938,8 +5251,7 @@
       },
       "aliases": [
         "openai/gpt-5-image-mini"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "anthropic",
@@ -4960,7 +5272,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -4971,8 +5283,7 @@
       },
       "aliases": [
         "anthropic/claude-haiku-4.5"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -4992,7 +5303,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -5003,8 +5314,7 @@
       },
       "aliases": [
         "qwen/qwen3-vl-8b-thinking"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -5029,14 +5339,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.08,
-        "output_per_1m": 0.5,
+        "input_per_1m": 0.117,
+        "output_per_1m": 0.455,
         "currency": "USD"
       },
       "aliases": [
         "qwen/qwen3-vl-8b-instruct"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -5058,7 +5367,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -5069,8 +5378,7 @@
       },
       "aliases": [
         "openai/gpt-5-image"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -5091,7 +5399,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -5102,8 +5410,7 @@
       },
       "aliases": [
         "openai/o3-deep-research"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -5124,7 +5431,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -5135,8 +5442,7 @@
       },
       "aliases": [
         "openai/o4-mini-deep-research"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "nvidia",
@@ -5155,19 +5461,18 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-03-31",
       "pricing": {
-        "input_per_1m": 0.39999999999999997,
-        "output_per_1m": 0.39999999999999997,
+        "input_per_1m": 0.4,
+        "output_per_1m": 0.4,
         "currency": "USD"
       },
       "aliases": [
         "nvidia/llama-3.3-nemotron-super-49b-v1.5"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "google",
@@ -5199,8 +5504,7 @@
       },
       "aliases": [
         "google/gemini-2.5-flash-image"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -5220,7 +5524,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-03-31",
@@ -5231,8 +5535,7 @@
       },
       "aliases": [
         "qwen/qwen3-vl-30b-a3b-thinking"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -5263,8 +5566,7 @@
       },
       "aliases": [
         "qwen/qwen3-vl-30b-a3b-instruct"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -5296,8 +5598,7 @@
       },
       "aliases": [
         "openai/gpt-5-pro"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "z-ai",
@@ -5316,7 +5617,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-03-31",
@@ -5327,8 +5628,7 @@
       },
       "aliases": [
         "z-ai/glm-4.6"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "anthropic",
@@ -5349,7 +5649,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-01-31",
@@ -5360,8 +5660,7 @@
       },
       "aliases": [
         "anthropic/claude-sonnet-4.5"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "deepseek",
@@ -5380,7 +5679,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-07-31",
@@ -5391,8 +5690,7 @@
       },
       "aliases": [
         "deepseek/deepseek-v3.2-exp"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "thedrummer",
@@ -5407,7 +5705,7 @@
         "text"
       ],
       "supports_function_calling": false,
-      "supports_json_mode": false,
+      "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": false,
@@ -5422,8 +5720,7 @@
       },
       "aliases": [
         "thedrummer/cydonia-24b-v4.1"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "relace",
@@ -5453,8 +5750,7 @@
       },
       "aliases": [
         "relace/relace-apply-3"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "google",
@@ -5477,19 +5773,18 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-01-31",
       "pricing": {
-        "input_per_1m": 0.09999999999999999,
-        "output_per_1m": 0.39999999999999997,
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.4,
         "currency": "USD"
       },
       "aliases": [
         "google/gemini-2.5-flash-lite-preview-09-2025"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -5509,7 +5804,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-03-31",
@@ -5520,8 +5815,7 @@
       },
       "aliases": [
         "qwen/qwen3-vl-235b-a22b-thinking"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -5546,14 +5840,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-03-31",
       "pricing": {
-        "input_per_1m": 0.19999999999999998,
+        "input_per_1m": 0.2,
         "output_per_1m": 0.88,
         "currency": "USD"
       },
       "aliases": [
         "qwen/qwen3-vl-235b-a22b-instruct"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -5571,7 +5864,7 @@
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
-      "supports_reasoning": false,
+      "supports_reasoning": true,
       "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
@@ -5583,8 +5876,7 @@
       },
       "aliases": [
         "qwen/qwen3-max"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -5602,7 +5894,7 @@
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
-      "supports_reasoning": false,
+      "supports_reasoning": true,
       "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
@@ -5614,8 +5906,7 @@
       },
       "aliases": [
         "qwen/qwen3-coder-plus"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -5635,7 +5926,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-09-30",
@@ -5646,8 +5937,7 @@
       },
       "aliases": [
         "openai/gpt-5-codex"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "deepseek",
@@ -5666,7 +5956,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-03-31",
@@ -5677,8 +5967,7 @@
       },
       "aliases": [
         "deepseek/deepseek-v3.1-terminus"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -5708,8 +5997,7 @@
       },
       "aliases": [
         "qwen/qwen3-coder-flash"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -5728,7 +6016,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-09-30",
@@ -5739,8 +6027,7 @@
       },
       "aliases": [
         "qwen/qwen3-next-80b-a3b-thinking"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -5770,8 +6057,7 @@
       },
       "aliases": [
         "qwen/qwen3-next-80b-a3b-instruct:free"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -5801,8 +6087,7 @@
       },
       "aliases": [
         "qwen/qwen3-next-80b-a3b-instruct"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -5821,7 +6106,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-03-31",
@@ -5832,8 +6117,7 @@
       },
       "aliases": [
         "qwen/qwen-plus-2025-07-28:thinking"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -5851,7 +6135,7 @@
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
-      "supports_reasoning": false,
+      "supports_reasoning": true,
       "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
@@ -5863,8 +6147,7 @@
       },
       "aliases": [
         "qwen/qwen-plus-2025-07-28"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "nvidia",
@@ -5883,7 +6166,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-03-31",
@@ -5894,15 +6177,14 @@
       },
       "aliases": [
         "nvidia/nemotron-nano-9b-v2:free"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
-      "provider": "nvidia",
-      "model_id": "nvidia/nemotron-nano-9b-v2",
-      "display_name": "NVIDIA: Nemotron Nano 9B V2",
-      "context_window": 131072,
-      "max_output_tokens": 16384,
+      "provider": "moonshotai",
+      "model_id": "moonshotai/kimi-k2-0905",
+      "display_name": "MoonshotAI: Kimi K2 0905",
+      "context_window": 262144,
+      "max_output_tokens": 100352,
       "input_modalities": [
         "text"
       ],
@@ -5913,27 +6195,26 @@
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning": false,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
-      "knowledge_cutoff": "2025-03-31",
+      "knowledge_cutoff": "2024-12-31",
       "pricing": {
-        "input_per_1m": 0.04,
-        "output_per_1m": 0.16,
+        "input_per_1m": 0.6,
+        "output_per_1m": 2.5,
         "currency": "USD"
       },
       "aliases": [
-        "nvidia/nemotron-nano-9b-v2"
-      ],
-      "supports_anthropic_api": false
+        "moonshotai/kimi-k2-0905"
+      ]
     },
     {
       "provider": "qwen",
       "model_id": "qwen/qwen3-30b-a3b-thinking-2507",
       "display_name": "Qwen: Qwen3 30B A3B Thinking 2507",
       "context_window": 131072,
-      "max_output_tokens": 131072,
+      "max_output_tokens": 32768,
       "input_modalities": [
         "text"
       ],
@@ -5945,19 +6226,18 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-06-30",
       "pricing": {
-        "input_per_1m": 0.08,
-        "output_per_1m": 0.39999999999999997,
+        "input_per_1m": 0.13,
+        "output_per_1m": 1.56,
         "currency": "USD"
       },
       "aliases": [
         "qwen/qwen3-30b-a3b-thinking-2507"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "nousresearch",
@@ -5976,19 +6256,18 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-08-31",
       "pricing": {
         "input_per_1m": 0.13,
-        "output_per_1m": 0.39999999999999997,
+        "output_per_1m": 0.4,
         "currency": "USD"
       },
       "aliases": [
         "nousresearch/hermes-4-70b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "nousresearch",
@@ -6007,7 +6286,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-08-31",
@@ -6018,8 +6297,7 @@
       },
       "aliases": [
         "nousresearch/hermes-4-405b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "deepseek",
@@ -6038,19 +6316,18 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-03-31",
       "pricing": {
         "input_per_1m": 0.21,
-        "output_per_1m": 0.7899999999999999,
+        "output_per_1m": 0.79,
         "currency": "USD"
       },
       "aliases": [
         "deepseek/deepseek-chat-v3.1"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "mistralai",
@@ -6076,14 +6353,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-06-30",
       "pricing": {
-        "input_per_1m": 0.39999999999999997,
+        "input_per_1m": 0.4,
         "output_per_1m": 2.0,
         "currency": "USD"
       },
       "aliases": [
         "mistralai/mistral-medium-3.1"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "z-ai",
@@ -6103,19 +6379,18 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-12-31",
       "pricing": {
         "input_per_1m": 0.6,
-        "output_per_1m": 1.7999999999999998,
+        "output_per_1m": 1.8,
         "currency": "USD"
       },
       "aliases": [
         "z-ai/glm-4.5v"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "ai21",
@@ -6145,8 +6420,7 @@
       },
       "aliases": [
         "ai21/jamba-large-1.7"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -6178,8 +6452,7 @@
       },
       "aliases": [
         "openai/gpt-5-chat"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -6211,8 +6484,7 @@
       },
       "aliases": [
         "openai/gpt-5"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -6244,8 +6516,7 @@
       },
       "aliases": [
         "openai/gpt-5-mini"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -6271,14 +6542,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-05-31",
       "pricing": {
-        "input_per_1m": 0.049999999999999996,
-        "output_per_1m": 0.39999999999999997,
+        "input_per_1m": 0.05,
+        "output_per_1m": 0.4,
         "currency": "USD"
       },
       "aliases": [
         "openai/gpt-5-nano"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -6308,15 +6578,14 @@
       },
       "aliases": [
         "openai/gpt-oss-120b:free"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
       "model_id": "openai/gpt-oss-120b",
       "display_name": "OpenAI: gpt-oss-120b",
       "context_window": 131072,
-      "max_output_tokens": 0,
+      "max_output_tokens": 131072,
       "input_modalities": [
         "text"
       ],
@@ -6333,21 +6602,20 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-06-30",
       "pricing": {
-        "input_per_1m": 0.039,
-        "output_per_1m": 0.18,
+        "input_per_1m": 0.03,
+        "output_per_1m": 0.15,
         "currency": "USD"
       },
       "aliases": [
         "openai/gpt-oss-120b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
       "model_id": "openai/gpt-oss-20b:free",
       "display_name": "OpenAI: gpt-oss-20b (free)",
       "context_window": 131072,
-      "max_output_tokens": 8192,
+      "max_output_tokens": 32768,
       "input_modalities": [
         "text"
       ],
@@ -6355,7 +6623,7 @@
         "text"
       ],
       "supports_function_calling": true,
-      "supports_json_mode": false,
+      "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
@@ -6370,8 +6638,7 @@
       },
       "aliases": [
         "openai/gpt-oss-20b:free"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -6401,8 +6668,7 @@
       },
       "aliases": [
         "openai/gpt-oss-20b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "anthropic",
@@ -6423,7 +6689,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-01-31",
@@ -6434,8 +6700,7 @@
       },
       "aliases": [
         "anthropic/claude-opus-4.1"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "mistralai",
@@ -6461,13 +6726,12 @@
       "knowledge_cutoff": "2025-03-31",
       "pricing": {
         "input_per_1m": 0.3,
-        "output_per_1m": 0.8999999999999999,
+        "output_per_1m": 0.9,
         "currency": "USD"
       },
       "aliases": [
         "mistralai/codestral-2508"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -6497,8 +6761,7 @@
       },
       "aliases": [
         "qwen/qwen3-coder-30b-a3b-instruct"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -6528,8 +6791,7 @@
       },
       "aliases": [
         "qwen/qwen3-30b-a3b-instruct-2507"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "z-ai",
@@ -6548,7 +6810,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-12-31",
@@ -6559,15 +6821,14 @@
       },
       "aliases": [
         "z-ai/glm-4.5"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "z-ai",
       "model_id": "z-ai/glm-4.5-air",
       "display_name": "Z.ai: GLM 4.5 Air",
       "context_window": 131072,
-      "max_output_tokens": 131070,
+      "max_output_tokens": 98304,
       "input_modalities": [
         "text"
       ],
@@ -6575,30 +6836,29 @@
         "text"
       ],
       "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-12-31",
       "pricing": {
-        "input_per_1m": 0.125,
+        "input_per_1m": 0.13,
         "output_per_1m": 0.85,
         "currency": "USD"
       },
       "aliases": [
         "z-ai/glm-4.5-air"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
       "model_id": "qwen/qwen3-235b-a22b-thinking-2507",
       "display_name": "Qwen: Qwen3 235B A22B Thinking 2507",
       "context_window": 262144,
-      "max_output_tokens": 262144,
+      "max_output_tokens": 0,
       "input_modalities": [
         "text"
       ],
@@ -6610,19 +6870,18 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-06-30",
       "pricing": {
-        "input_per_1m": 0.09999999999999999,
-        "output_per_1m": 0.09999999999999999,
+        "input_per_1m": 0.1495,
+        "output_per_1m": 1.495,
         "currency": "USD"
       },
       "aliases": [
         "qwen/qwen3-235b-a22b-thinking-2507"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -6652,8 +6911,7 @@
       },
       "aliases": [
         "qwen/qwen3-coder:free"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -6678,13 +6936,12 @@
       "knowledge_cutoff": "2025-06-30",
       "pricing": {
         "input_per_1m": 0.22,
-        "output_per_1m": 1.7999999999999998,
+        "output_per_1m": 1.8,
         "currency": "USD"
       },
       "aliases": [
         "qwen/qwen3-coder"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "bytedance",
@@ -6700,7 +6957,7 @@
         "text"
       ],
       "supports_function_calling": false,
-      "supports_json_mode": false,
+      "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": false,
@@ -6709,14 +6966,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-01-31",
       "pricing": {
-        "input_per_1m": 0.09999999999999999,
-        "output_per_1m": 0.19999999999999998,
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.2,
         "currency": "USD"
       },
       "aliases": [
         "bytedance/ui-tars-1.5-7b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "google",
@@ -6739,19 +6995,18 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-01-31",
       "pricing": {
-        "input_per_1m": 0.09999999999999999,
-        "output_per_1m": 0.39999999999999997,
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.4,
         "currency": "USD"
       },
       "aliases": [
         "google/gemini-2.5-flash-lite"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -6776,13 +7031,12 @@
       "knowledge_cutoff": "2025-06-30",
       "pricing": {
         "input_per_1m": 0.09,
-        "output_per_1m": 0.09999999999999999,
+        "output_per_1m": 0.1,
         "currency": "USD"
       },
       "aliases": [
         "qwen/qwen3-235b-a22b-2507"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "switchpoint",
@@ -6797,11 +7051,11 @@
         "text"
       ],
       "supports_function_calling": false,
-      "supports_json_mode": false,
+      "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -6812,8 +7066,37 @@
       },
       "aliases": [
         "switchpoint/router"
+      ]
+    },
+    {
+      "provider": "moonshotai",
+      "model_id": "moonshotai/kimi-k2",
+      "display_name": "MoonshotAI: Kimi K2 0711",
+      "context_window": 131072,
+      "max_output_tokens": 100352,
+      "input_modalities": [
+        "text"
       ],
-      "supports_anthropic_api": false
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_reasoning_effort": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": "2024-12-31",
+      "pricing": {
+        "input_per_1m": 0.57,
+        "output_per_1m": 2.3,
+        "currency": "USD"
+      },
+      "aliases": [
+        "moonshotai/kimi-k2"
+      ]
     },
     {
       "provider": "cognitivecomputations",
@@ -6843,8 +7126,7 @@
       },
       "aliases": [
         "cognitivecomputations/dolphin-mistral-24b-venice-edition:free"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "tencent",
@@ -6863,19 +7145,18 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-03-31",
       "pricing": {
         "input_per_1m": 0.14,
-        "output_per_1m": 0.5700000000000001,
+        "output_per_1m": 0.57,
         "currency": "USD"
       },
       "aliases": [
         "tencent/hunyuan-a13b-instruct"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "morph",
@@ -6890,7 +7171,7 @@
         "text"
       ],
       "supports_function_calling": false,
-      "supports_json_mode": false,
+      "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": false,
@@ -6899,14 +7180,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.8999999999999999,
+        "input_per_1m": 0.9,
         "output_per_1m": 1.9,
         "currency": "USD"
       },
       "aliases": [
         "morph/morph-v3-large"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "morph",
@@ -6930,14 +7210,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.7999999999999999,
+        "input_per_1m": 0.8,
         "output_per_1m": 1.2,
         "currency": "USD"
       },
       "aliases": [
         "morph/morph-v3-fast"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "baidu",
@@ -6957,7 +7236,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-03-31",
@@ -6968,8 +7247,7 @@
       },
       "aliases": [
         "baidu/ernie-4.5-vl-424b-a47b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "mistralai",
@@ -6995,13 +7273,12 @@
       "knowledge_cutoff": "2023-10-31",
       "pricing": {
         "input_per_1m": 0.075,
-        "output_per_1m": 0.19999999999999998,
+        "output_per_1m": 0.2,
         "currency": "USD"
       },
       "aliases": [
         "mistralai/mistral-small-3.2-24b-instruct"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "minimax",
@@ -7020,19 +7297,18 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-06-30",
       "pricing": {
-        "input_per_1m": 0.39999999999999997,
+        "input_per_1m": 0.4,
         "output_per_1m": 2.2,
         "currency": "USD"
       },
       "aliases": [
         "minimax/minimax-m1"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "google",
@@ -7055,7 +7331,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-01-31",
@@ -7066,8 +7342,7 @@
       },
       "aliases": [
         "google/gemini-2.5-flash"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "google",
@@ -7090,7 +7365,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-01-31",
@@ -7101,8 +7376,7 @@
       },
       "aliases": [
         "google/gemini-2.5-pro"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -7123,7 +7397,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-06-30",
@@ -7134,8 +7408,7 @@
       },
       "aliases": [
         "openai/o3-pro"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "google",
@@ -7157,7 +7430,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-01-31",
@@ -7168,8 +7441,7 @@
       },
       "aliases": [
         "google/gemini-2.5-pro-preview"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "deepseek",
@@ -7188,19 +7460,18 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-03-31",
       "pricing": {
         "input_per_1m": 0.5,
-        "output_per_1m": 2.1500000000000004,
+        "output_per_1m": 2.15,
         "currency": "USD"
       },
       "aliases": [
         "deepseek/deepseek-r1-0528"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "anthropic",
@@ -7221,7 +7492,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-01-31",
@@ -7232,8 +7503,7 @@
       },
       "aliases": [
         "anthropic/claude-opus-4"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "anthropic",
@@ -7254,7 +7524,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-01-31",
@@ -7265,8 +7535,7 @@
       },
       "aliases": [
         "anthropic/claude-sonnet-4"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "google",
@@ -7281,7 +7550,7 @@
         "text"
       ],
       "supports_function_calling": false,
-      "supports_json_mode": false,
+      "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": false,
@@ -7296,8 +7565,7 @@
       },
       "aliases": [
         "google/gemma-3n-e4b-it"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "mistralai",
@@ -7323,14 +7591,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-03-31",
       "pricing": {
-        "input_per_1m": 0.39999999999999997,
+        "input_per_1m": 0.4,
         "output_per_1m": 2.0,
         "currency": "USD"
       },
       "aliases": [
         "mistralai/mistral-medium-3"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "google",
@@ -7353,7 +7620,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-01-31",
@@ -7364,8 +7631,7 @@
       },
       "aliases": [
         "google/gemini-2.5-pro-preview-05-06"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "arcee-ai",
@@ -7395,8 +7661,7 @@
       },
       "aliases": [
         "arcee-ai/virtuoso-large"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "arcee-ai",
@@ -7421,13 +7686,12 @@
       "knowledge_cutoff": "2025-03-31",
       "pricing": {
         "input_per_1m": 0.5,
-        "output_per_1m": 0.7999999999999999,
+        "output_per_1m": 0.8,
         "currency": "USD"
       },
       "aliases": [
         "arcee-ai/coder-large"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "meta-llama",
@@ -7458,8 +7722,7 @@
       },
       "aliases": [
         "meta-llama/llama-guard-4-12b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -7478,7 +7741,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-03-31",
@@ -7489,8 +7752,7 @@
       },
       "aliases": [
         "qwen/qwen3-30b-a3b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -7509,19 +7771,18 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-03-31",
       "pricing": {
-        "input_per_1m": 0.049999999999999996,
-        "output_per_1m": 0.39999999999999997,
+        "input_per_1m": 0.117,
+        "output_per_1m": 0.455,
         "currency": "USD"
       },
       "aliases": [
         "qwen/qwen3-8b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -7540,19 +7801,18 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-03-31",
       "pricing": {
-        "input_per_1m": 0.09999999999999999,
+        "input_per_1m": 0.1,
         "output_per_1m": 0.24,
         "currency": "USD"
       },
       "aliases": [
         "qwen/qwen3-14b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -7571,7 +7831,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-03-31",
@@ -7582,8 +7842,7 @@
       },
       "aliases": [
         "qwen/qwen3-32b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -7602,19 +7861,18 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-03-31",
       "pricing": {
-        "input_per_1m": 0.45499999999999996,
-        "output_per_1m": 1.8199999999999998,
+        "input_per_1m": 0.455,
+        "output_per_1m": 1.82,
         "currency": "USD"
       },
       "aliases": [
         "qwen/qwen3-235b-a22b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -7646,8 +7904,7 @@
       },
       "aliases": [
         "openai/o4-mini-high"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -7668,7 +7925,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-06-30",
@@ -7679,8 +7936,7 @@
       },
       "aliases": [
         "openai/o3"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -7701,7 +7957,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-06-30",
@@ -7712,8 +7968,7 @@
       },
       "aliases": [
         "openai/o4-mini"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -7745,8 +8000,7 @@
       },
       "aliases": [
         "openai/gpt-4.1"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -7772,14 +8026,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-06-30",
       "pricing": {
-        "input_per_1m": 0.39999999999999997,
-        "output_per_1m": 1.5999999999999999,
+        "input_per_1m": 0.4,
+        "output_per_1m": 1.6,
         "currency": "USD"
       },
       "aliases": [
         "openai/gpt-4.1-mini"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -7805,14 +8058,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-06-30",
       "pricing": {
-        "input_per_1m": 0.09999999999999999,
-        "output_per_1m": 0.39999999999999997,
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.4,
         "currency": "USD"
       },
       "aliases": [
         "openai/gpt-4.1-nano"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "meta-llama",
@@ -7843,8 +8095,7 @@
       },
       "aliases": [
         "meta-llama/llama-4-maverick"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "meta-llama",
@@ -7869,14 +8120,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-08-31",
       "pricing": {
-        "input_per_1m": 0.09999999999999999,
+        "input_per_1m": 0.1,
         "output_per_1m": 0.3,
         "currency": "USD"
       },
       "aliases": [
         "meta-llama/llama-4-scout"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "deepseek",
@@ -7900,14 +8150,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-07-31",
       "pricing": {
-        "input_per_1m": 0.19999999999999998,
-        "output_per_1m": 0.77,
+        "input_per_1m": 0.24,
+        "output_per_1m": 0.9,
         "currency": "USD"
       },
       "aliases": [
         "deepseek/deepseek-chat-v3-0324"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -7928,7 +8177,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2023-10-31",
@@ -7939,8 +8188,7 @@
       },
       "aliases": [
         "openai/o1-pro"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "mistralai",
@@ -7966,13 +8214,12 @@
       "knowledge_cutoff": "2023-10-31",
       "pricing": {
         "input_per_1m": 0.351,
-        "output_per_1m": 0.5549999999999999,
+        "output_per_1m": 0.555,
         "currency": "USD"
       },
       "aliases": [
         "mistralai/mistral-small-3.1-24b-instruct"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "google",
@@ -7997,14 +8244,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-08-31",
       "pricing": {
-        "input_per_1m": 0.049999999999999996,
-        "output_per_1m": 0.09999999999999999,
+        "input_per_1m": 0.05,
+        "output_per_1m": 0.1,
         "currency": "USD"
       },
       "aliases": [
         "google/gemma-3-4b-it"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "google",
@@ -8029,14 +8275,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-08-31",
       "pricing": {
-        "input_per_1m": 0.049999999999999996,
+        "input_per_1m": 0.05,
         "output_per_1m": 0.15,
         "currency": "USD"
       },
       "aliases": [
         "google/gemma-3-12b-it"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "cohere",
@@ -8066,8 +8311,7 @@
       },
       "aliases": [
         "cohere/command-a"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -8097,8 +8341,7 @@
       },
       "aliases": [
         "openai/gpt-4o-mini-search-preview"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -8128,8 +8371,7 @@
       },
       "aliases": [
         "openai/gpt-4o-search-preview"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "rekaai",
@@ -8144,23 +8386,22 @@
         "text"
       ],
       "supports_function_calling": false,
-      "supports_json_mode": false,
+      "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2025-01-31",
       "pricing": {
-        "input_per_1m": 0.09999999999999999,
-        "output_per_1m": 0.19999999999999998,
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.2,
         "currency": "USD"
       },
       "aliases": [
         "rekaai/reka-flash-3"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "google",
@@ -8191,8 +8432,7 @@
       },
       "aliases": [
         "google/gemma-3-27b-it"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "thedrummer",
@@ -8207,7 +8447,7 @@
         "text"
       ],
       "supports_function_calling": false,
-      "supports_json_mode": false,
+      "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": false,
@@ -8217,13 +8457,12 @@
       "knowledge_cutoff": "2024-06-30",
       "pricing": {
         "input_per_1m": 0.55,
-        "output_per_1m": 0.7999999999999999,
+        "output_per_1m": 0.8,
         "currency": "USD"
       },
       "aliases": [
         "thedrummer/skyfall-36b-v2"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "perplexity",
@@ -8243,7 +8482,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -8254,8 +8493,7 @@
       },
       "aliases": [
         "perplexity/sonar-reasoning-pro"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "perplexity",
@@ -8286,8 +8524,7 @@
       },
       "aliases": [
         "perplexity/sonar-pro"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "perplexity",
@@ -8306,7 +8543,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -8317,8 +8554,7 @@
       },
       "aliases": [
         "perplexity/sonar-deep-research"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "mistralai",
@@ -8343,45 +8579,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-09-30",
       "pricing": {
-        "input_per_1m": 0.19999999999999998,
+        "input_per_1m": 0.2,
         "output_per_1m": 0.6,
         "currency": "USD"
       },
       "aliases": [
         "mistralai/mistral-saba"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "meta-llama",
-      "model_id": "meta-llama/llama-guard-3-8b",
-      "display_name": "Llama Guard 3 8B",
-      "context_window": 131072,
-      "max_output_tokens": 131072,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_reasoning_effort": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": "2023-12-31",
-      "pricing": {
-        "input_per_1m": 0.48400000000000004,
-        "output_per_1m": 0.03,
-        "currency": "USD"
-      },
-      "aliases": [
-        "meta-llama/llama-guard-3-8b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -8412,70 +8616,7 @@
       },
       "aliases": [
         "openai/o3-mini-high"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "aion-labs",
-      "model_id": "aion-labs/aion-1.0",
-      "display_name": "AionLabs: Aion-1.0",
-      "context_window": 131072,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_reasoning_effort": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 4.0,
-        "output_per_1m": 8.0,
-        "currency": "USD"
-      },
-      "aliases": [
-        "aion-labs/aion-1.0"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "aion-labs",
-      "model_id": "aion-labs/aion-1.0-mini",
-      "display_name": "AionLabs: Aion-1.0-Mini",
-      "context_window": 131072,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_reasoning_effort": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 0.7,
-        "output_per_1m": 1.4,
-        "currency": "USD"
-      },
-      "aliases": [
-        "aion-labs/aion-1.0-mini"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "aion-labs",
@@ -8499,21 +8640,20 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2023-12-31",
       "pricing": {
-        "input_per_1m": 0.7999999999999999,
-        "output_per_1m": 1.5999999999999999,
+        "input_per_1m": 0.8,
+        "output_per_1m": 1.6,
         "currency": "USD"
       },
       "aliases": [
         "aion-labs/aion-rp-llama-3.1-8b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
       "model_id": "qwen/qwen2.5-vl-72b-instruct",
       "display_name": "Qwen: Qwen2.5 VL 72B Instruct",
       "context_window": 131072,
-      "max_output_tokens": 0,
+      "max_output_tokens": 128000,
       "input_modalities": [
         "text",
         "image"
@@ -8531,14 +8671,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-06-30",
       "pricing": {
-        "input_per_1m": 0.25,
-        "output_per_1m": 0.75,
+        "input_per_1m": 0.8,
+        "output_per_1m": 1.0,
         "currency": "USD"
       },
       "aliases": [
         "qwen/qwen2.5-vl-72b-instruct"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -8568,8 +8707,7 @@
       },
       "aliases": [
         "qwen/qwen-plus"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -8589,7 +8727,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2023-10-31",
@@ -8600,8 +8738,7 @@
       },
       "aliases": [
         "openai/o3-mini"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "mistralai",
@@ -8625,45 +8762,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2023-10-31",
       "pricing": {
-        "input_per_1m": 0.049999999999999996,
+        "input_per_1m": 0.05,
         "output_per_1m": 0.08,
         "currency": "USD"
       },
       "aliases": [
         "mistralai/mistral-small-24b-instruct-2501"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "deepseek",
-      "model_id": "deepseek/deepseek-r1-distill-qwen-32b",
-      "display_name": "DeepSeek: R1 Distill Qwen 32B",
-      "context_window": 128000,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_reasoning_effort": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": "2024-07-31",
-      "pricing": {
-        "input_per_1m": 0.29,
-        "output_per_1m": 0.29,
-        "currency": "USD"
-      },
-      "aliases": [
-        "deepseek/deepseek-r1-distill-qwen-32b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "perplexity",
@@ -8694,15 +8799,14 @@
       },
       "aliases": [
         "perplexity/sonar"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "deepseek",
       "model_id": "deepseek/deepseek-r1-distill-llama-70b",
       "display_name": "DeepSeek: R1 Distill Llama 70B",
-      "context_window": 131072,
-      "max_output_tokens": 16384,
+      "context_window": 128000,
+      "max_output_tokens": 8192,
       "input_modalities": [
         "text"
       ],
@@ -8710,23 +8814,22 @@
         "text"
       ],
       "supports_function_calling": false,
-      "supports_json_mode": true,
+      "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-07-31",
       "pricing": {
-        "input_per_1m": 0.7,
-        "output_per_1m": 0.7999999999999999,
+        "input_per_1m": 0.8,
+        "output_per_1m": 0.8,
         "currency": "USD"
       },
       "aliases": [
         "deepseek/deepseek-r1-distill-llama-70b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "deepseek",
@@ -8745,7 +8848,7 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-07-31",
@@ -8756,8 +8859,7 @@
       },
       "aliases": [
         "deepseek/deepseek-r1"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "minimax",
@@ -8782,14 +8884,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-03-31",
       "pricing": {
-        "input_per_1m": 0.19999999999999998,
+        "input_per_1m": 0.2,
         "output_per_1m": 1.1,
         "currency": "USD"
       },
       "aliases": [
         "minimax/minimax-01"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "microsoft",
@@ -8813,14 +8914,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-06-30",
       "pricing": {
-        "input_per_1m": 0.065,
+        "input_per_1m": 0.07,
         "output_per_1m": 0.14,
         "currency": "USD"
       },
       "aliases": [
         "microsoft/phi-4"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "sao10k",
@@ -8835,7 +8935,7 @@
         "text"
       ],
       "supports_function_calling": false,
-      "supports_json_mode": false,
+      "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": false,
@@ -8850,8 +8950,7 @@
       },
       "aliases": [
         "sao10k/l3.1-70b-hanami-x1"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "deepseek",
@@ -8875,14 +8974,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-07-31",
       "pricing": {
-        "input_per_1m": 0.20020000000000002,
-        "output_per_1m": 0.8000999999999999,
+        "input_per_1m": 0.2002,
+        "output_per_1m": 0.8001,
         "currency": "USD"
       },
       "aliases": [
         "deepseek/deepseek-chat"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "sao10k",
@@ -8912,8 +9010,7 @@
       },
       "aliases": [
         "sao10k/l3.3-euryale-70b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -8934,7 +9031,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": "2023-10-31",
@@ -8945,8 +9042,7 @@
       },
       "aliases": [
         "openai/o1"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "cohere",
@@ -8976,8 +9072,7 @@
       },
       "aliases": [
         "cohere/command-r7b-12-2024"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "meta-llama",
@@ -9007,8 +9102,7 @@
       },
       "aliases": [
         "meta-llama/llama-3.3-70b-instruct:free"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "meta-llama",
@@ -9032,14 +9126,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2023-12-31",
       "pricing": {
-        "input_per_1m": 0.09999999999999999,
+        "input_per_1m": 0.1,
         "output_per_1m": 0.32,
         "currency": "USD"
       },
       "aliases": [
         "meta-llama/llama-3.3-70b-instruct"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "amazon",
@@ -9070,8 +9163,7 @@
       },
       "aliases": [
         "amazon/nova-lite-v1"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "amazon",
@@ -9101,8 +9193,7 @@
       },
       "aliases": [
         "amazon/nova-micro-v1"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "amazon",
@@ -9127,14 +9218,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-10-31",
       "pricing": {
-        "input_per_1m": 0.7999999999999999,
-        "output_per_1m": 3.1999999999999997,
+        "input_per_1m": 0.8,
+        "output_per_1m": 3.2,
         "currency": "USD"
       },
       "aliases": [
         "amazon/nova-pro-v1"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -9166,8 +9256,7 @@
       },
       "aliases": [
         "openai/gpt-4o-2024-11-20"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "mistralai",
@@ -9198,8 +9287,7 @@
       },
       "aliases": [
         "mistralai/mistral-large-2407"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -9229,8 +9317,7 @@
       },
       "aliases": [
         "qwen/qwen-2.5-coder-32b-instruct"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "thedrummer",
@@ -9254,46 +9341,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-04-30",
       "pricing": {
-        "input_per_1m": 0.39999999999999997,
-        "output_per_1m": 0.39999999999999997,
+        "input_per_1m": 0.4,
+        "output_per_1m": 0.4,
         "currency": "USD"
       },
       "aliases": [
         "thedrummer/unslopnemo-12b"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "anthropic",
-      "model_id": "anthropic/claude-3.5-haiku",
-      "display_name": "Anthropic: Claude 3.5 Haiku",
-      "context_window": 200000,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_reasoning_effort": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": "2024-07-31",
-      "pricing": {
-        "input_per_1m": 0.7999999999999999,
-        "output_per_1m": 4.0,
-        "currency": "USD"
-      },
-      "aliases": [
-        "anthropic/claude-3.5-haiku"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "anthracite-org",
@@ -9323,8 +9377,7 @@
       },
       "aliases": [
         "anthracite-org/magnum-v4-72b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -9338,8 +9391,8 @@
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": false,
@@ -9349,13 +9402,12 @@
       "knowledge_cutoff": "2024-06-30",
       "pricing": {
         "input_per_1m": 0.04,
-        "output_per_1m": 0.09999999999999999,
+        "output_per_1m": 0.1,
         "currency": "USD"
       },
       "aliases": [
         "qwen/qwen-2.5-7b-instruct"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "inflection",
@@ -9385,8 +9437,7 @@
       },
       "aliases": [
         "inflection/inflection-3-productivity"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "inflection",
@@ -9416,22 +9467,21 @@
       },
       "aliases": [
         "inflection/inflection-3-pi"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "thedrummer",
       "model_id": "thedrummer/rocinante-12b",
       "display_name": "TheDrummer: Rocinante 12B",
-      "context_window": 32768,
-      "max_output_tokens": 32768,
+      "context_window": 65536,
+      "max_output_tokens": 65536,
       "input_modalities": [
         "text"
       ],
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": true,
+      "supports_function_calling": false,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
@@ -9441,76 +9491,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2024-04-30",
       "pricing": {
-        "input_per_1m": 0.16999999999999998,
-        "output_per_1m": 0.43,
+        "input_per_1m": 0.25,
+        "output_per_1m": 0.5,
         "currency": "USD"
       },
       "aliases": [
         "thedrummer/rocinante-12b"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "meta-llama",
-      "model_id": "meta-llama/llama-3.2-3b-instruct:free",
-      "display_name": "Meta: Llama 3.2 3B Instruct (free)",
-      "context_window": 131072,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_reasoning_effort": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": "2023-12-31",
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "aliases": [
-        "meta-llama/llama-3.2-3b-instruct:free"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "meta-llama",
-      "model_id": "meta-llama/llama-3.2-3b-instruct",
-      "display_name": "Meta: Llama 3.2 3B Instruct",
-      "context_window": 131072,
-      "max_output_tokens": 80000,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_reasoning_effort": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": "2023-12-31",
-      "pricing": {
-        "input_per_1m": 0.0509,
-        "output_per_1m": 0.335,
-        "currency": "USD"
-      },
-      "aliases": [
-        "meta-llama/llama-3.2-3b-instruct"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "meta-llama",
@@ -9540,8 +9527,67 @@
       },
       "aliases": [
         "meta-llama/llama-3.2-1b-instruct"
+      ]
+    },
+    {
+      "provider": "meta-llama",
+      "model_id": "meta-llama/llama-3.2-3b-instruct:free",
+      "display_name": "Meta: Llama 3.2 3B Instruct (free)",
+      "context_window": 131072,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
       ],
-      "supports_anthropic_api": false
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_reasoning_effort": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": "2023-12-31",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [
+        "meta-llama/llama-3.2-3b-instruct:free"
+      ]
+    },
+    {
+      "provider": "meta-llama",
+      "model_id": "meta-llama/llama-3.2-3b-instruct",
+      "display_name": "Meta: Llama 3.2 3B Instruct",
+      "context_window": 131072,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_reasoning_effort": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": "2023-12-31",
+      "pricing": {
+        "input_per_1m": 0.05,
+        "output_per_1m": 0.33,
+        "currency": "USD"
+      },
+      "aliases": [
+        "meta-llama/llama-3.2-3b-instruct"
+      ]
     },
     {
       "provider": "meta-llama",
@@ -9572,8 +9618,7 @@
       },
       "aliases": [
         "meta-llama/llama-3.2-11b-vision-instruct"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "qwen",
@@ -9598,44 +9643,12 @@
       "knowledge_cutoff": "2024-06-30",
       "pricing": {
         "input_per_1m": 0.36,
-        "output_per_1m": 0.39999999999999997,
+        "output_per_1m": 0.4,
         "currency": "USD"
       },
       "aliases": [
         "qwen/qwen-2.5-72b-instruct"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "cohere",
-      "model_id": "cohere/command-r-plus-08-2024",
-      "display_name": "Cohere: Command R+ (08-2024)",
-      "context_window": 128000,
-      "max_output_tokens": 4000,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_reasoning_effort": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": "2024-03-31",
-      "pricing": {
-        "input_per_1m": 2.5,
-        "output_per_1m": 10.0,
-        "currency": "USD"
-      },
-      "aliases": [
-        "cohere/command-r-plus-08-2024"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "cohere",
@@ -9665,8 +9678,37 @@
       },
       "aliases": [
         "cohere/command-r-08-2024"
+      ]
+    },
+    {
+      "provider": "cohere",
+      "model_id": "cohere/command-r-plus-08-2024",
+      "display_name": "Cohere: Command R+ (08-2024)",
+      "context_window": 128000,
+      "max_output_tokens": 4000,
+      "input_modalities": [
+        "text"
       ],
-      "supports_anthropic_api": false
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_reasoning_effort": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": "2024-03-31",
+      "pricing": {
+        "input_per_1m": 2.5,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "aliases": [
+        "cohere/command-r-plus-08-2024"
+      ]
     },
     {
       "provider": "sao10k",
@@ -9696,8 +9738,7 @@
       },
       "aliases": [
         "sao10k/l3.1-euryale-70b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "nousresearch",
@@ -9727,8 +9768,7 @@
       },
       "aliases": [
         "nousresearch/hermes-3-llama-3.1-70b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "nousresearch",
@@ -9758,8 +9798,7 @@
       },
       "aliases": [
         "nousresearch/hermes-3-llama-3.1-405b:free"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "nousresearch",
@@ -9789,8 +9828,7 @@
       },
       "aliases": [
         "nousresearch/hermes-3-llama-3.1-405b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "sao10k",
@@ -9815,13 +9853,12 @@
       "knowledge_cutoff": "2023-12-31",
       "pricing": {
         "input_per_1m": 0.04,
-        "output_per_1m": 0.049999999999999996,
+        "output_per_1m": 0.05,
         "currency": "USD"
       },
       "aliases": [
         "sao10k/l3-lunaris-8b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -9853,8 +9890,37 @@
       },
       "aliases": [
         "openai/gpt-4o-2024-08-06"
+      ]
+    },
+    {
+      "provider": "meta-llama",
+      "model_id": "meta-llama/llama-3.1-70b-instruct",
+      "display_name": "Meta: Llama 3.1 70B Instruct",
+      "context_window": 131072,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
       ],
-      "supports_anthropic_api": false
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_reasoning_effort": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": "2023-12-31",
+      "pricing": {
+        "input_per_1m": 0.4,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      },
+      "aliases": [
+        "meta-llama/llama-3.1-70b-instruct"
+      ]
     },
     {
       "provider": "meta-llama",
@@ -9884,39 +9950,7 @@
       },
       "aliases": [
         "meta-llama/llama-3.1-8b-instruct"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "meta-llama",
-      "model_id": "meta-llama/llama-3.1-70b-instruct",
-      "display_name": "Meta: Llama 3.1 70B Instruct",
-      "context_window": 131072,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_reasoning_effort": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": "2023-12-31",
-      "pricing": {
-        "input_per_1m": 0.39999999999999997,
-        "output_per_1m": 0.39999999999999997,
-        "currency": "USD"
-      },
-      "aliases": [
-        "meta-llama/llama-3.1-70b-instruct"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "mistralai",
@@ -9946,41 +9980,7 @@
       },
       "aliases": [
         "mistralai/mistral-nemo"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "openai",
-      "model_id": "openai/gpt-4o-mini-2024-07-18",
-      "display_name": "OpenAI: GPT-4o-mini (2024-07-18)",
-      "context_window": 128000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text",
-        "image",
-        "file"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_reasoning_effort": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": "2023-10-31",
-      "pricing": {
-        "input_per_1m": 0.15,
-        "output_per_1m": 0.6,
-        "currency": "USD"
-      },
-      "aliases": [
-        "openai/gpt-4o-mini-2024-07-18"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -10012,8 +10012,39 @@
       },
       "aliases": [
         "openai/gpt-4o-mini"
+      ]
+    },
+    {
+      "provider": "openai",
+      "model_id": "openai/gpt-4o-mini-2024-07-18",
+      "display_name": "OpenAI: GPT-4o-mini (2024-07-18)",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image",
+        "file"
       ],
-      "supports_anthropic_api": false
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_reasoning_effort": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": "2023-10-31",
+      "pricing": {
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.6,
+        "currency": "USD"
+      },
+      "aliases": [
+        "openai/gpt-4o-mini-2024-07-18"
+      ]
     },
     {
       "provider": "google",
@@ -10043,8 +10074,7 @@
       },
       "aliases": [
         "google/gemma-2-27b-it"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -10076,8 +10106,7 @@
       },
       "aliases": [
         "openai/gpt-4o-2024-05-13"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -10109,8 +10138,7 @@
       },
       "aliases": [
         "openai/gpt-4o"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "meta-llama",
@@ -10118,37 +10146,6 @@
       "display_name": "Meta: Llama 3 8B Instruct",
       "context_window": 8192,
       "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_reasoning_effort": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": "2023-12-31",
-      "pricing": {
-        "input_per_1m": 0.14,
-        "output_per_1m": 0.14,
-        "currency": "USD"
-      },
-      "aliases": [
-        "meta-llama/llama-3-8b-instruct"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "meta-llama",
-      "model_id": "meta-llama/llama-3-70b-instruct",
-      "display_name": "Meta: Llama 3 70B Instruct",
-      "context_window": 8192,
-      "max_output_tokens": 8000,
       "input_modalities": [
         "text"
       ],
@@ -10165,14 +10162,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2023-12-31",
       "pricing": {
-        "input_per_1m": 0.51,
-        "output_per_1m": 0.74,
+        "input_per_1m": 0.14,
+        "output_per_1m": 0.14,
         "currency": "USD"
       },
       "aliases": [
-        "meta-llama/llama-3-70b-instruct"
-      ],
-      "supports_anthropic_api": false
+        "meta-llama/llama-3-8b-instruct"
+      ]
     },
     {
       "provider": "mistralai",
@@ -10203,8 +10199,7 @@
       },
       "aliases": [
         "mistralai/mixtral-8x22b-instruct"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "microsoft",
@@ -10234,8 +10229,7 @@
       },
       "aliases": [
         "microsoft/wizardlm-2-8x22b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -10266,8 +10260,7 @@
       },
       "aliases": [
         "openai/gpt-4-turbo"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "anthropic",
@@ -10298,8 +10291,7 @@
       },
       "aliases": [
         "anthropic/claude-3-haiku"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "mistralai",
@@ -10330,39 +10322,7 @@
       },
       "aliases": [
         "mistralai/mistral-large"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "openai",
-      "model_id": "openai/gpt-4-turbo-preview",
-      "display_name": "OpenAI: GPT-4 Turbo Preview",
-      "context_window": 128000,
-      "max_output_tokens": 4096,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_reasoning_effort": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": "2023-12-31",
-      "pricing": {
-        "input_per_1m": 10.0,
-        "output_per_1m": 30.0,
-        "currency": "USD"
-      },
-      "aliases": [
-        "openai/gpt-4-turbo-preview"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -10392,8 +10352,37 @@
       },
       "aliases": [
         "openai/gpt-3.5-turbo-0613"
+      ]
+    },
+    {
+      "provider": "openai",
+      "model_id": "openai/gpt-4-turbo-preview",
+      "display_name": "OpenAI: GPT-4 Turbo Preview",
+      "context_window": 128000,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text"
       ],
-      "supports_anthropic_api": false
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_reasoning_effort": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "knowledge_cutoff": "2023-12-31",
+      "pricing": {
+        "input_per_1m": 10.0,
+        "output_per_1m": 30.0,
+        "currency": "USD"
+      },
+      "aliases": [
+        "openai/gpt-4-turbo-preview"
+      ]
     },
     {
       "provider": "openrouter",
@@ -10417,7 +10406,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "knowledge_cutoff": null,
@@ -10428,8 +10417,7 @@
       },
       "aliases": [
         "openrouter/auto"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -10459,8 +10447,7 @@
       },
       "aliases": [
         "openai/gpt-3.5-turbo-instruct"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -10490,8 +10477,7 @@
       },
       "aliases": [
         "openai/gpt-3.5-turbo-16k"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "mancer",
@@ -10521,8 +10507,7 @@
       },
       "aliases": [
         "mancer/weaver"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "undi95",
@@ -10546,14 +10531,13 @@
       "supports_responses_api": true,
       "knowledge_cutoff": "2023-06-30",
       "pricing": {
-        "input_per_1m": 0.44999999999999996,
+        "input_per_1m": 0.45,
         "output_per_1m": 0.65,
         "currency": "USD"
       },
       "aliases": [
         "undi95/remm-slerp-l2-13b"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "gryphe",
@@ -10583,39 +10567,7 @@
       },
       "aliases": [
         "gryphe/mythomax-l2-13b"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "openai",
-      "model_id": "openai/gpt-4",
-      "display_name": "OpenAI: GPT-4",
-      "context_window": 8191,
-      "max_output_tokens": 4096,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_reasoning_effort": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": "2021-09-30",
-      "pricing": {
-        "input_per_1m": 30.0,
-        "output_per_1m": 60.0,
-        "currency": "USD"
-      },
-      "aliases": [
-        "openai/gpt-4"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
       "provider": "openai",
@@ -10645,239 +10597,14 @@
       },
       "aliases": [
         "openai/gpt-3.5-turbo"
-      ],
-      "supports_anthropic_api": false
+      ]
     },
     {
-      "provider": "moonshotai",
-      "model_id": "moonshotai/kimi-k2.6:free",
-      "display_name": "MoonshotAI: Kimi K2.6 (free)",
-      "context_window": 262144,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_reasoning_effort": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "aliases": [
-        "moonshotai/kimi-k2.6:free"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "moonshotai",
-      "model_id": "moonshotai/kimi-k2.6",
-      "display_name": "MoonshotAI: Kimi K2.6",
-      "context_window": 262144,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_reasoning_effort": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 0.15,
-        "output_per_1m": 0.6,
-        "currency": "USD"
-      },
-      "aliases": [
-        "moonshotai/kimi-k2.6"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "moonshotai",
-      "model_id": "moonshotai/kimi-k2.5",
-      "display_name": "MoonshotAI: Kimi K2.5",
-      "context_window": 262144,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_reasoning_effort": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 0.35,
-        "output_per_1m": 1.4,
-        "currency": "USD"
-      },
-      "aliases": [
-        "moonshotai/kimi-k2.5"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "moonshotai",
-      "model_id": "moonshotai/kimi-k2.7-code",
-      "display_name": "MoonshotAI: Kimi K2.7 Code",
-      "context_window": 262144,
-      "max_output_tokens": 262144,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_reasoning_effort": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 0.75,
-        "output_per_1m": 3.5,
-        "currency": "USD"
-      },
-      "aliases": [
-        "moonshotai/kimi-k2.7-code"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "moonshotai",
-      "model_id": "moonshotai/kimi-k2-thinking",
-      "display_name": "MoonshotAI: Kimi K2 Thinking",
-      "context_window": 262144,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_reasoning_effort": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 0.35,
-        "output_per_1m": 1.4,
-        "currency": "USD"
-      },
-      "aliases": [
-        "moonshotai/kimi-k2-thinking"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "moonshotai",
-      "model_id": "moonshotai/kimi-k2-0905",
-      "display_name": "MoonshotAI: Kimi K2 (0905)",
-      "context_window": 262144,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_reasoning_effort": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 0.35,
-        "output_per_1m": 1.4,
-        "currency": "USD"
-      },
-      "aliases": [
-        "moonshotai/kimi-k2-0905"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "moonshotai",
-      "model_id": "moonshotai/kimi-k2",
-      "display_name": "MoonshotAI: Kimi K2",
-      "context_window": 262144,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_reasoning_effort": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 0.35,
-        "output_per_1m": 1.4,
-        "currency": "USD"
-      },
-      "aliases": [
-        "moonshotai/kimi-k2"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "cohere",
-      "model_id": "cohere/north-mini-code",
-      "display_name": "Cohere: North Mini Code",
-      "context_window": 262144,
-      "max_output_tokens": 65536,
+      "provider": "openai",
+      "model_id": "openai/gpt-4",
+      "display_name": "OpenAI: GPT-4",
+      "context_window": 8191,
+      "max_output_tokens": 4096,
       "input_modalities": [
         "text"
       ],
@@ -10888,114 +10615,19 @@
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "aliases": [
-        "cohere/north-mini-code"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "z-ai",
-      "model_id": "z-ai/glm-5.2",
-      "display_name": "Z.ai: GLM 5.2",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_reasoning_effort": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 1.2,
-        "output_per_1m": 4.1,
-        "currency": "USD"
-      },
-      "aliases": [
-        "z-ai/glm-5.2"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-3.1-flash-image",
-      "display_name": "Google: Nano Banana 2 (Gemini 3.1 Flash Image)",
-      "context_window": 131072,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text",
-        "image"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
       "supports_reasoning": false,
+      "supports_reasoning_effort": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
-      "knowledge_cutoff": null,
+      "knowledge_cutoff": "2021-09-30",
       "pricing": {
-        "input_per_1m": 0.5,
-        "output_per_1m": 3.0,
+        "input_per_1m": 30.0,
+        "output_per_1m": 60.0,
         "currency": "USD"
       },
       "aliases": [
-        "google/gemini-3.1-flash-image"
-      ],
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-3-pro-image",
-      "display_name": "Google: Nano Banana Pro (Gemini 3 Pro Image)",
-      "context_window": 65536,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text",
-        "image"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 2.0,
-        "output_per_1m": 12.0,
-        "currency": "USD"
-      },
-      "aliases": [
-        "google/gemini-3-pro-image"
-      ],
-      "supports_anthropic_api": false
+        "openai/gpt-4"
+      ]
     }
   ]
 }

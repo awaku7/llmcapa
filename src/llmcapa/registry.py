@@ -8,7 +8,7 @@ import ssl
 import urllib.request
 from importlib import resources
 from pathlib import Path
-from typing import Dict, Iterable, List, Optional, Union
+from typing import Dict, List, Optional, Union
 
 from .models import Capability
 
@@ -23,6 +23,8 @@ class Registry:
     def __init__(self) -> None:
         self._models: Dict[str, Capability] = {}
         self._alias_index: Dict[str, str] = {}
+        # Provider-scoped index: {provider_lower: {model_id_lower: Capability}}
+        self._by_provider: Dict[str, Dict[str, Capability]] = {}
 
         self._loaded = False
 
@@ -96,12 +98,32 @@ class Registry:
         return self._load_json_text(text)
 
     def register(self, cap: Capability) -> None:
-        """Register (or override) a single Capability."""
+        """Register a single Capability.
+
+        The *flat* model_id -> Capability mapping uses **first-registered-wins**
+        semantics so that native provider data takes precedence over
+        aggregator/reseller data for unqualified lookups.
+
+        Provider-scoped lookups via ``get(..., provider=...)`` always
+        find the correct provider's data regardless of registration order.
+        """
         key = cap.model_id.lower()
-        self._models[key] = cap
-        self._alias_index[key] = key
-        for alias in cap.aliases:
-            self._alias_index[alias.lower()] = key
+        prov = cap.provider.lower()
+
+        # First-registered-wins for the flat model_id index.
+        # Also skip if key is already claimed as an alias for another model.
+        if key not in self._models and key not in self._alias_index:
+            self._models[key] = cap
+            self._alias_index[key] = key
+            for alias in cap.aliases:
+                if alias.lower() not in self._alias_index:
+                    self._alias_index[alias.lower()] = key
+
+        # Always store in the provider-scoped index
+        if prov not in self._by_provider:
+            self._by_provider[prov] = {}
+        if key not in self._by_provider[prov]:
+            self._by_provider[prov][key] = cap
 
     def _map_openrouter_record(self, r: dict) -> Capability:
         model_id = r.get("id", "")
@@ -175,7 +197,7 @@ class Registry:
         in ~/.llmcapa/openrouter_cache.json to avoid redundant API requests.
         """
         self._ensure_loaded()
-        
+
         records = []
         cache_file = None
         if cache_ttl is not None:
@@ -185,7 +207,7 @@ class Registry:
             cache_dir = os.path.join(home, ".llmcapa")
             os.makedirs(cache_dir, exist_ok=True)
             cache_file = os.path.join(cache_dir, "openrouter_cache.json")
-            
+
             if os.path.exists(cache_file):
                 mtime = os.path.getmtime(cache_file)
                 if time.time() - mtime < cache_ttl:
@@ -411,9 +433,37 @@ class Registry:
                     continue
         return candidates
 
-    def get(self, model_id: str) -> Capability:
-        """Resolve a model id or alias to its Capability."""
+    def get(self, model_id: str, provider: Optional[str] = None) -> Capability:
+        """Resolve a model id or alias to its Capability.
+
+        Args:
+            model_id: Model id, alias, or deployment name.
+            provider: If given, scope the lookup to models from this
+                      provider only. Otherwise, returns the first-registered
+                      (native) version.
+
+        Raises:
+            ModelNotFoundError: If the model cannot be resolved.
+        """
         self._ensure_loaded()
+        if provider is not None:
+            # Scoped lookup: search only within the given provider
+            prov = provider.lower()
+            prov_index = self._by_provider.get(prov)
+            if prov_index is not None:
+                for key in self._lookup_candidates(model_id):
+                    # Direct model_id match
+                    cap = prov_index.get(key)
+                    if cap is not None:
+                        return cap
+                    # Alias resolution: key may point to another model_id
+                    resolved = self._alias_index.get(key)
+                    if resolved is not None and resolved != key:
+                        cap = prov_index.get(resolved)
+                        if cap is not None:
+                            return cap
+            raise ModelNotFoundError(model_id)
+        # Unqualified lookup: use alias index (first-registered-wins)
         for key in self._lookup_candidates(model_id):
             resolved = self._alias_index.get(key)
             if resolved is not None:
@@ -427,7 +477,6 @@ class Registry:
     ) -> List[Capability]:
         """Return capabilities, optionally filtered by provider."""
         self._ensure_loaded()
-        result: Iterable[Capability] = self._models.values()
         if provider is not None:
             p = provider.lower()
             # Collect matching provider names (canonical + aliases)
@@ -438,15 +487,21 @@ class Registry:
                 elif p in aliases:
                     matching_providers.add(canonical)
                     matching_providers.update(a for a in aliases if a != p)
-            result = (c for c in result if c.provider.lower() in matching_providers)
+            result: List[Capability] = []
+            for prov in matching_providers:
+                idx = self._by_provider.get(prov)
+                if idx:
+                    result.extend(idx.values())
+        else:
+            result = list(self._models.values())
         if not include_deprecated:
-            result = (c for c in result if not c.deprecated)
+            result = [c for c in result if not c.deprecated]
         return sorted(result, key=lambda c: (c.provider, c.model_id))
 
     def providers(self) -> List[str]:
         """Return the sorted list of known providers."""
         self._ensure_loaded()
-        return sorted({c.provider for c in self._models.values()})
+        return sorted(self._by_provider.keys())
 
     def find(
         self,

@@ -1,0 +1,1666 @@
+@layer theme, base, components, utilities;
+Models | OpenAI API
+@layer components{._Notice_wyxfv_1{margin-top:24px;margin-bottom:24px}._Notice_wyxfv_1 p,._Notice_wyxfv_1 code{margin:0!important;line-height:18px!important}._Notice_wyxfv_1 p code{font-size:.875em}}
+@layer components{._ModelsTitle_163e7_1{font-size:30px;font-weight:var(--font-weight-semibold);letter-spacing:var(--font-tracking-tight);line-height:1.3}}
+@layer components{._TextLink_ssta1_1{display:inline-flex;align-items:center;gap:var(--link-gap);border-radius:var(--link-radius);color:currentcolor;cursor:pointer;font-weight:var(--link-font-weight);overflow-wrap:anywhere;transition-duration:var(--transition-duration-basic);transition-property:opacity,color,box-shadow,text-decoration-color;transition-timing-function:var(--transition-ease-basic)}@media(hover:hover)and (pointer:fine){._TextLink_ssta1_1:hover{color:color-mix(in oklab,currentcolor 80%,transparent)}.text-secondary ._TextLink_ssta1_1:hover{color:var(--color-text)}.text-tertiary ._TextLink_ssta1_1:hover{color:var(--color-text-secondary)}}._TextLink_ssta1_1:focus-visible{outline:2px solid var(--color-ring);outline-offset:1px}._TextLink_ssta1_1[data-underline=always]{text-decoration:underline;text-decoration-color:color-mix(in oklab,currentcolor 70%,transparent);text-underline-offset:var(--link-underline-decoration-offset)}@media(hover:hover)and (pointer:fine){._TextLink_ssta1_1[data-underline=hover]:hover{text-decoration:underline;text-decoration-color:color-mix(in oklab,currentcolor 70%,transparent);text-underline-offset:var(--link-underline-decoration-offset)}}._TextLink_ssta1_1[data-primary]{color:var(--link-primary-text-color)}@media(hover:hover)and (pointer:fine){._TextLink_ssta1_1[data-primary]:hover{color:var(--link-primary-text-color-hover)}}}
+@layer components{._SectionContent_1tiej_1>*{border-top:1px solid var(--color-background-primary-soft)}}
+@layer components{._TransitionItem_1lpir_1{will-change:var(--tg-will-change)}[data-transition-position=absolute] ._TransitionItem_1lpir_1[data-exiting],[data-transition-position=absolute] ._TransitionItem_1lpir_1:not([data-exiting])+._TransitionItem_1lpir_1[data-entering]{position:absolute;top:0;left:0;width:100%}._TransitionItem_1lpir_1[data-entering]{filter:var(--tg-initial-filter);opacity:var(--tg-initial-opacity);transform:var(--tg-initial-transform)}._TransitionItem_1lpir_1[data-exiting]{filter:var(--tg-enter-filter);opacity:var(--tg-enter-opacity);transform:var(--tg-enter-transform)}._TransitionItem_1lpir_1[data-entering-active],._TransitionItem_1lpir_1[data-entering][data-interrupted]{filter:var(--tg-enter-filter);opacity:var(--tg-enter-opacity);transform:var(--tg-enter-transform);transition:opacity var(--tg-enter-duration) var(--tg-enter-timing-function) var(--tg-enter-delay),transform var(--tg-enter-duration) var(--tg-enter-timing-function) var(--tg-enter-delay),filter var(--tg-enter-duration) var(--tg-enter-timing-function) var(--tg-enter-delay)}._TransitionItem_1lpir_1[data-exiting-active],._TransitionItem_1lpir_1[data-exiting][data-interrupted]{filter:var(--tg-exit-filter, none);opacity:var(--tg-exit-opacity, 0);transform:var(--tg-exit-transform, none);transition:opacity var(--tg-exit-duration) var(--tg-exit-timing-function) var(--tg-exit-delay),transform var(--tg-exit-duration) var(--tg-exit-timing-function) var(--tg-exit-delay),filter var(--tg-exit-duration) var(--tg-exit-timing-function) var(--tg-exit-delay)}._TransitionItem_1lpir_1[data-entering][data-interrupted],._TransitionItem_1lpir_1[data-exiting][data-interrupted]{transition-delay:0ms}}
+@layer components{._Tooltip_purug_1{max-width:300px;border-radius:var(--tooltip-border-radius);animation-duration:.25s;animation-name:_scale-in_purug_1;animation-timing-function:var(--cubic-enter);background:var(--tooltip-background-color);box-shadow:var(--tooltip-box-shadow);color:var(--tooltip-text-color);font-size:var(--tooltip-font-size);font-weight:var(--tooltip-font-weight);line-height:var(--tooltip-line-height);transform-origin:var(--radix-tooltip-content-transform-origin);transition:background-color .15s ease}._Tooltip_purug_1[data-state=closed]{animation:_scale-out_purug_1 .25s var(--cubic-enter)}._Tooltip_purug_1[data-clickable=false]{cursor:default}._Tooltip_purug_1[data-clickable=true]{cursor:pointer}@media(hover:hover)and (pointer:fine){._Tooltip_purug_1[data-compact=true][data-clickable=true]:hover{background:var(--tooltip-compact-interactive-background-color-hover);color:var(--tooltip-compact-interactive-text-color-hover)}}._Tooltip_purug_1[data-gutter-size=sm]{padding:var(--tooltip-padding-sm)}._Tooltip_purug_1[data-gutter-size=md]{padding:var(--tooltip-padding-md)}._Tooltip_purug_1[data-gutter-size=lg]{padding:var(--tooltip-padding-lg)}._Tooltip_purug_1[data-compact=true]{padding:var(--tooltip-compact-padding);background:var(--tooltip-compact-background-color);color:var(--tooltip-compact-text-color);font-size:var(--tooltip-compact-font-size);font-weight:var(--tooltip-compact-font-weight)}@keyframes _scale-in_purug_1{0%{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}@keyframes _scale-out_purug_1{0%{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(.97)}}._TriggerDecorator_purug_84{display:inline-flex;cursor:pointer;-webkit-text-decoration:underline dotted;text-decoration:underline dotted;text-decoration-color:transparent;transition:-webkit-text-decoration .2s var(--cubic-exit);transition:text-decoration .2s var(--cubic-exit);transition:text-decoration .2s var(--cubic-exit),-webkit-text-decoration .2s var(--cubic-exit)}._TriggerDecorator_purug_84:focus{outline:0}._TriggerDecorator_purug_84[data-state*=open]{text-decoration-color:var(--color-text-tertiary);transition-timing-function:var(--cubic-enter)}}
+Home
+API
+Docs
+Guides and concepts for the OpenAI API
+API reference
+Endpoints, parameters, and responses
+Codex
+Docs
+Guides, concepts, and product docs for Codex
+Use cases
+Example workflows and tasks teams hand to Codex
+ChatGPT
+Apps SDK
+Build apps to extend ChatGPT
+Workspace Agents
+Trigger published ChatGPT workspace agents
+Commerce
+Build commerce flows in ChatGPT
+Ads
+Publish and measure ads in ChatGPT
+Resources
+Showcase
+Demo apps to get inspired
+Blog
+Learnings and experiences from developers
+Cookbook
+Notebook examples for building with OpenAI models
+Learn
+Docs, videos, and demo apps for building with OpenAI
+Community
+Programs, meetups, and support for builders
+Start searching
+API Dashboard
+Search the API docs
+astro-island,astro-slot,astro-static-slot{display:contents}
+(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).load=e;window.dispatchEvent(new Event("astro:load"));})();
+(()=>{var A=Object.defineProperty;var g=(i,o,a)=>o in i?A(i,o,{enumerable:!0,configurable:!0,writable:!0,value:a}):i[o]=a;var d=(i,o,a)=>g(i,typeof o!="symbol"?o+"":o,a);{let i={0:t=>m(t),1:t=>a(t),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(a(t)),5:t=>new Set(a(t)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(t),9:t=>new Uint16Array(t),10:t=>new Uint32Array(t),11:t=>Number.POSITIVE_INFINITY*t},o=t=>{let[l,e]=t;return l in i?i[l](e):void 0},a=t=>t.map(o),m=t=>typeof t!="object"||t===null?t:Object.fromEntries(Object.entries(t).map(([l,e])=>[l,o(e)]));class y extends HTMLElement{constructor(){super(...arguments);d(this,"Component");d(this,"hydrator");d(this,"hydrate",async()=>{var b;if(!this.hydrator||!this.isConnected)return;let e=(b=this.parentElement)==null?void 0:b.closest("astro-island[ssr]");if(e){e.addEventListener("astro:hydrate",this.hydrate,{once:!0});return}let c=this.querySelectorAll("astro-slot"),n={},h=this.querySelectorAll("template[data-astro-template]");for(let r of h){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("data-astro-template")||"default"]=r.innerHTML,r.remove())}for(let r of c){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("name")||"default"]=r.innerHTML)}let p;try{p=this.hasAttribute("props")?m(JSON.parse(this.getAttribute("props"))):{}}catch(r){let s=this.getAttribute("component-url")||"<unknown>",v=this.getAttribute("component-export");throw v&&(s+=` (export ${v})`),console.error(`[hydrate] Error parsing props for component ${s}`,this.getAttribute("props"),r),r}let u;await this.hydrator(this)(this.Component,p,n,{client:this.getAttribute("client")}),this.removeAttribute("ssr"),this.dispatchEvent(new CustomEvent("astro:hydrate"))});d(this,"unmount",()=>{this.isConnected||this.dispatchEvent(new CustomEvent("astro:unmount"))})}disconnectedCallback(){document.removeEventListener("astro:after-swap",this.unmount),document.addEventListener("astro:after-swap",this.unmount,{once:!0})}connectedCallback(){if(!this.hasAttribute("await-children")||document.readyState==="interactive"||document.readyState==="complete")this.childrenConnectedCallback();else{let e=()=>{document.removeEventListener("DOMContentLoaded",e),c.disconnect(),this.childrenConnectedCallback()},c=new MutationObserver(()=>{var n;((n=this.lastChild)==null?void 0:n.nodeType)===Node.COMMENT_NODE&&this.lastChild.nodeValue==="astro:end"&&(this.lastChild.remove(),e())});c.observe(this,{childList:!0}),document.addEventListener("DOMContentLoaded",e)}}async childrenConnectedCallback(){let e=this.getAttribute("before-hydration-url");e&&await import(e),this.start()}async start(){let e=JSON.parse(this.getAttribute("opts")),c=this.getAttribute("client");if(Astro[c]===void 0){window.addEventListener(`astro:${c}`,()=>this.start(),{once:!0});return}try{await Astro[c](async()=>{let n=this.getAttribute("renderer-url"),[h,{default:p}]=await Promise.all([import(this.getAttribute("component-url")),n?import(n):()=>()=>{}]),u=this.getAttribute("component-export")||"default";if(!u.includes("."))this.Component=h[u];else{this.Component=h;for(let f of u.split("."))this.Component=this.Component[f]}return this.hydrator=p,this.hydrate},e,this)}catch(n){console.error(`[astro-island] Error hydrating ${this.getAttribute("component-url")}`,n)}}attributeChangedCallback(){this.hydrate()}}d(y,"observedAttributes",["props"]),customElements.get("astro-island")||customElements.define("astro-island",y)}})();
+Search docs
+Suggested
+response_format
+reasoning_effort
+streaming
+tools
+Primary navigation
+API
+API Reference
+Codex
+ChatGPT
+Resources
+Search docs
+Suggested
+response_format
+reasoning_effort
+streaming
+tools
+Get started
+Overview
+Quickstart
+Models
+Pricing
+SDKs and CLI
+OpenAI SDK
+Agents SDK
+OpenAI CLI
+Latest: GPT-5.5
+Prompt guidance
+Core concepts
+Text generation
+Code generation
+Images and vision
+Audio and speech
+Structured output
+Function calling
+Responses API
+Using tools
+Agents SDK
+Overview
+Quickstart
+Agent definitions
+Models and providers
+Running agents
+Sandbox agents
+Orchestration
+Guardrails
+Results and state
+Integrations and observability
+Evaluate agent workflows
+Voice agents
+ChatKit
+Overview
+Customize
+Widgets
+Actions
+Advanced integrations
+Tools
+Web search
+MCP and Connectors
+Secure MCP Tunnel
+Skills
+Shell
+Computer use
+File search and retrieval
+File search
+Retrieval
+Tool search
+More tools
+Apply Patch
+Local shell
+Image generation
+Code interpreter
+Run and scale
+Conversation state
+Background mode
+Streaming
+WebSocket mode
+Webhooks
+File inputs
+Context management
+Compaction
+Counting tokens
+Prompt caching
+Prompting
+Overview
+Prompt engineering
+Citation formatting
+Migration guide
+Reasoning
+Reasoning models
+Reasoning best practices
+Evaluation
+Red teaming
+Realtime and audio
+Overview
+Voice agents
+Live translation
+Transcription
+Realtime transcription
+Speech to text
+Speech generation
+Realtime prompting guide
+Connection methods
+WebRTC
+WebSocket
+SIP
+Realtime sessions
+Managing conversations
+Voice activity detection
+Realtime with tools
+Webhooks and server-side controls
+Managing costs
+Specialized models
+Image generation
+Video generation
+Deep research
+Embeddings
+Moderation
+Going live
+Production best practices
+Workload identity federation
+Overview
+Kubernetes
+AWS
+Microsoft Azure
+Google Cloud
+GitHub Actions
+SPIFFE
+Deployment checklist
+Amazon Bedrock
+Latency optimization
+Overview
+Predicted Outputs
+Priority processing
+Cost optimization
+Overview
+Batch
+Flex processing
+Accuracy optimization
+Safety
+Safety best practices
+Safety checks
+Cybersecurity checks
+Under 18 API Guidance
+Legacy APIs
+Agent Builder
+Overview
+Migration guide
+Node reference
+Safety in building agents
+Evals
+Getting started
+Working with evals
+Prompt optimizer
+External models
+Best practices
+Graders
+Fine-tuning
+Optimization cycle
+Supervised fine-tuning
+Vision fine-tuning
+Direct preference optimization
+Reinforcement fine-tuning
+RFT use cases
+Best practices
+Assistants API
+Migration guide
+Deep dive
+Tools
+Resources
+Terms and policies
+Changelog
+Your data
+Permissions
+Rate limits
+IP egress ranges
+Admin APIs
+Deprecations
+MCP for deep research
+Developer mode
+ChatGPT Actions
+Introduction
+Getting started
+Actions library
+Authentication
+Production
+Data retrieval
+Sending files
+Docs
+Use cases
+Getting Started
+Overview
+Quickstart
+Explore use cases
+Import to Codex
+Pricing
+Concepts
+Prompting
+Customization
+Memories
+Chronicle
+Sandboxing
+Auto-review
+Subagents
+Workflows
+Models
+Cyber Safety
+Glossary
+Using Codex
+App
+Overview
+Features
+Settings
+Review
+Automations
+Worktrees
+Local Environments
+In-app browser
+Chrome extension
+Computer Use
+Appshots
+Commands
+Windows
+Troubleshooting
+IDE Extension
+Overview
+Features
+Settings
+IDE Commands
+Slash commands
+CLI
+Overview
+Features
+Command Line Options
+Slash commands
+Web
+Overview
+Environments
+Internet Access
+Integrations
+GitHub
+Slack
+Linear
+Codex Security
+Overview
+Codex Security plugin
+Quickstart
+Run a security scan
+Run a deep scan
+Review code changes
+Triage a backlog
+Fix findings
+Export and track findings
+Changelog
+Codex Security cloud
+Setup
+Improving the threat model
+FAQ
+Configuration
+Config File
+Config Basics
+Advanced Config
+Config Reference
+Environment Variables
+Sample Config
+Permissions
+Speed
+Rules
+Hooks
+AGENTS.md
+MCP
+Plugins
+Overview
+Build plugins
+Sites
+Skills
+Overview
+Record & Replay
+Subagents
+Administration
+Authentication
+Overview
+Access tokens
+Agent approvals & security
+Remote connections
+Deployment
+Amazon Bedrock
+Enterprise
+Admin Setup
+Governance
+Managed configuration
+Windows
+Automation
+Non-interactive Mode
+Codex SDK
+App Server
+MCP Server
+GitHub Action
+Learn
+Best practices
+Videos
+Community
+Blog
+Mastering Codex Remote for engineering
+Using skills to accelerate OSS maintenance
+View all
+Cookbooks
+Build an Agent Improvement Loop with Traces, Evals, and Codex
+Build iterative repair loops with Codex
+View all
+Building AI Teams
+Releases
+Changelog
+Feature Maturity
+Open Source
+Home
+Collections
+Apps SDK
+Workspace Agents
+Commerce
+Ads
+Home
+Quickstart
+Core Concepts
+MCP Apps in ChatGPT
+MCP Server
+UX principles
+UI guidelines
+Plan
+Research use cases
+Define tools
+Design components
+Build
+Set up your server
+Build your ChatGPT UI
+Authenticate users
+Manage state
+Monetize your app
+Examples
+Deploy
+Deploy your app
+Connect from ChatGPT
+Test your integration
+Submit your app
+Conversion apps
+Restaurant reservation spec
+Product checkout spec
+Guides
+Optimize Metadata
+Security & Privacy
+Troubleshooting
+Resources
+Changelog
+App submission guidelines
+Reference
+Home
+Get started
+Trigger workspace agent runs
+Authenticate with Workspace Agent access tokens
+Home
+Guides
+Get started
+Best practices
+File Upload
+Overview
+Products
+API
+Overview
+Feeds
+Products
+Promotions
+Ads Overview
+Measurement
+JavaScript Pixel
+Image tag
+Conversions API
+Supported events
+Advertiser API
+Overview
+Quickstart
+Product feeds
+Campaign Targeting
+API Reference
+Authentication
+Campaigns
+Ad Groups
+Ads
+Ad Account
+Insights
+Files
+Showcase
+Blog
+Cookbook
+Learn
+Community
+Home
+API examples
+Sites
+All posts
+Recent
+Making private MCP servers reachable without making them public
+Mastering Codex Remote for engineering
+How Perplexity Brought Voice Search to Millions Using the Realtime API
+Designing delightful frontends with GPT-5.4
+From prompts to products: One year of Responses
+Topics
+General
+API
+Apps SDK
+Audio
+Codex
+Home
+Topics
+Agents
+Evals
+Multimodal
+Text
+Guardrails
+Optimization
+ChatGPT
+Codex
+gpt-oss
+Contribute
+Cookbook on GitHub
+Home
+OpenAI Developers plugin
+Docs MCP
+Categories
+Demo apps
+Videos
+Topics
+Agents
+Audio & Voice
+Computer Use
+Codex
+Evals
+gpt-oss
+Fine-tuning
+Image generation
+Scaling
+Tools
+Video generation
+Community
+Programs
+Codex Ambassadors
+Codex for Students
+Codex for Open Source
+OpenAI for Startups
+Events
+Meetups
+Spaces
+Developer Forum
+Discord
+Reddit
+X
+API Dashboard
+const MOBILE_NAV_PERSIST_KEY = "mobile-nav:restore-open";
+
+  const readPersistedMobileNavOpen = () => {
+    try {
+      return sessionStorage.getItem(MOBILE_NAV_PERSIST_KEY) === "true";
+    } catch {
+      return false;
+    }
+  };
+
+  const setPersistedMobileNavOpen = (isOpen) => {
+    try {
+      if (isOpen) {
+        sessionStorage.setItem(MOBILE_NAV_PERSIST_KEY, "true");
+      } else {
+        sessionStorage.removeItem(MOBILE_NAV_PERSIST_KEY);
+      }
+    } catch {}
+  };
+
+  function initializeMobileNavigation() {
+    const drawer = document.getElementById("drawer");
+    const drawerButton = document.getElementById("header-drawer-button");
+
+    if (
+      !drawer ||
+      !drawerButton ||
+      drawer.dataset.mobileNavInitialized === "true"
+    ) {
+      return;
+    }
+
+    const navTabElements = Array.from(
+      drawer.querySelectorAll("[data-mobile-nav-tab]")
+    );
+    const defaultSearchPlaceholder =
+      drawer.dataset.defaultSearchPlaceholder || "Search the site";
+    const defaultSearchScope = drawer.dataset.defaultSearchScope || "";
+    const headerSearchOverlay = document.getElementById(
+      "header-search-overlay"
+    );
+    const navLinkElements = Array.from(
+      drawer.querySelectorAll("[data-mobile-nav-link]")
+    );
+    const tabPanels = Array.from(
+      drawer.querySelectorAll("[data-mobile-nav-content]")
+    );
+    const isStarlightApiReferenceRoute =
+      window.location.pathname === "/api/reference" ||
+      window.location.pathname.startsWith("/api/reference/");
+    const shouldRestoreDrawerOpen =
+      matchMedia("(max-width: 50rem)").matches &&
+      !isStarlightApiReferenceRoute &&
+      readPersistedMobileNavOpen();
+
+    let activeTabId =
+      drawer.dataset.defaultTabId ||
+      navTabElements.find((tab) => tab.dataset.selected === "true")?.dataset
+        .tabId ||
+      null;
+
+    const updateSelectedOption = (tabId) => {
+      let selectedLabel = "";
+      let selectedPlaceholder = "";
+      let selectedScope = "";
+
+      navTabElements.forEach((tab) => {
+        const isSelected = tab.dataset.tabId === tabId;
+        tab.dataset.selected = isSelected ? "true" : "false";
+        tab.setAttribute("aria-selected", isSelected ? "true" : "false");
+
+        if (isSelected && !selectedLabel) {
+          selectedLabel = tab.dataset.label || tab.textContent?.trim() || "";
+        }
+
+        if (isSelected && !selectedPlaceholder) {
+          selectedPlaceholder = tab.dataset.searchPlaceholder || "";
+        }
+
+        if (isSelected && !selectedScope) {
+          selectedScope = tab.dataset.searchScope || "";
+        }
+      });
+
+      if (!selectedLabel && navTabElements[0]) {
+        selectedLabel =
+          navTabElements[0].dataset.label ||
+          navTabElements[0].textContent?.trim() ||
+          "";
+      }
+
+      if (!selectedPlaceholder && navTabElements[0]) {
+        selectedPlaceholder = navTabElements[0].dataset.searchPlaceholder || "";
+      }
+
+      if (!selectedScope && navTabElements[0]) {
+        selectedScope = navTabElements[0].dataset.searchScope || "";
+      }
+
+      const nextPlaceholder = selectedPlaceholder || defaultSearchPlaceholder;
+      const nextScope = selectedScope || defaultSearchScope;
+      const updatePlaceholder = (container) => {
+        if (!container) return;
+        const input = container.querySelector("[data-site-search-input]");
+        if (input instanceof HTMLInputElement) {
+          input.placeholder = nextPlaceholder;
+        }
+      };
+      const updateScope = (container) => {
+        if (!container) return;
+        const target = container.querySelector("[data-site-search-root]");
+        if (!target) return;
+        target.setAttribute("data-scope", nextScope);
+        target.dispatchEvent(new CustomEvent("site-search:update"));
+      };
+      updatePlaceholder(drawer);
+      updatePlaceholder(headerSearchOverlay);
+      updateScope(drawer);
+      updateScope(headerSearchOverlay);
+    };
+
+    const activeVariantByTabId = new Map();
+
+    const getTabLabel = (tabId) => {
+      return (
+        navTabElements.find((tab) => tab.dataset.tabId === tabId)?.dataset
+          .label || ""
+      );
+    };
+
+    const updatePanelBreadcrumb = (panel, tabId, contextLabel) => {
+      const breadcrumb = panel.querySelector("[data-mobile-breadcrumb]");
+      const parent = panel.querySelector("[data-mobile-breadcrumb-parent]");
+      const childWrapper = panel.querySelector(
+        "[data-mobile-breadcrumb-child-wrapper]"
+      );
+      const child = panel.querySelector("[data-mobile-breadcrumb-child]");
+      const contextOptions = panel.querySelector(
+        "[data-mobile-context-options]"
+      );
+
+      if (contextOptions) {
+        contextOptions.dataset.contextActive = contextLabel ? "true" : "false";
+      }
+
+      if (!breadcrumb || !parent || !childWrapper || !child) {
+        return;
+      }
+
+      const tabLabel = getTabLabel(tabId);
+      parent.textContent = tabLabel;
+
+      if (!contextLabel) {
+        breadcrumb.setAttribute("hidden", "true");
+        childWrapper.setAttribute("hidden", "true");
+        child.textContent = "";
+        return;
+      }
+
+      breadcrumb.removeAttribute("hidden");
+      childWrapper.removeAttribute("hidden");
+      child.textContent = contextLabel;
+    };
+
+    const selectVariantForPanel = (panel, tabId, variantId) => {
+      if (!variantId) {
+        updatePanelBreadcrumb(panel, tabId, "");
+        return;
+      }
+
+      const contextOptions = Array.from(
+        panel.querySelectorAll("[data-mobile-context-option]")
+      );
+      let selectedContextLabel = "";
+
+      contextOptions.forEach((option) => {
+        const isSelected = option.dataset.contextId === variantId;
+        option.dataset.selected = isSelected ? "true" : "false";
+        if (isSelected) {
+          selectedContextLabel = option.dataset.contextLabel || "";
+        }
+      });
+
+      const variantSections = Array.from(
+        panel.querySelectorAll("[data-mobile-nav-variant-content]")
+      );
+      variantSections.forEach((section) => {
+        const isSelected = section.dataset.variantId === variantId;
+        if (isSelected) {
+          section.removeAttribute("hidden");
+        } else {
+          section.setAttribute("hidden", "true");
+        }
+      });
+
+      updatePanelBreadcrumb(panel, tabId, selectedContextLabel);
+      activeVariantByTabId.set(tabId, variantId);
+    };
+
+    const activateTab = (tabId) => {
+      if (!tabId) return;
+      activeTabId = tabId;
+      updateSelectedOption(tabId);
+
+      tabPanels.forEach((panel) => {
+        const panelTabId = panel.getAttribute("data-tab-id");
+        const isActive = panelTabId === tabId;
+        if (isActive) {
+          panel.removeAttribute("hidden");
+          const defaultVariantId = panel.getAttribute(
+            "data-default-variant-id"
+          );
+          const nextVariantId =
+            activeVariantByTabId.get(tabId) ||
+            defaultVariantId ||
+            panel.querySelector("[data-mobile-nav-variant-content]")?.dataset
+              .variantId ||
+            "";
+          selectVariantForPanel(panel, tabId, nextVariantId);
+        } else {
+          panel.setAttribute("hidden", "true");
+        }
+      });
+    };
+
+    const closeDrawer = () => {
+      drawer.classList.remove("open");
+      drawerButton.classList.remove("open");
+      drawerButton.setAttribute("aria-expanded", "false");
+      setPersistedMobileNavOpen(false);
+    };
+
+    const openDrawer = () => {
+      drawer.classList.add("open");
+      drawerButton.classList.add("open");
+      drawerButton.setAttribute("aria-expanded", "true");
+      if (activeTabId) {
+        activateTab(activeTabId);
+      }
+    };
+
+    const toggleDrawer = () => {
+      if (drawer.classList.contains("open")) {
+        closeDrawer();
+      } else {
+        openDrawer();
+      }
+    };
+
+    const handleTabSelection = (tab) => {
+      const hasNav = tab.dataset.hasNav === "true";
+      const href = tab.dataset.href;
+      const tabId = tab.dataset.tabId;
+
+      if (!tabId) {
+        return;
+      }
+
+      if (!hasNav && href) {
+        setPersistedMobileNavOpen(true);
+        window.location.href = href;
+        return;
+      }
+
+      activateTab(tabId);
+    };
+
+    drawerButton.addEventListener("click", toggleDrawer);
+
+    navTabElements.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        handleTabSelection(tab);
+      });
+
+      tab.addEventListener("keydown", (event) => {
+        if (!navTabElements.length) return;
+
+        const currentIndex = navTabElements.indexOf(tab);
+
+        if (event.key === "ArrowRight") {
+          event.preventDefault();
+          const nextIndex = (currentIndex + 1) % navTabElements.length;
+          navTabElements[nextIndex]?.focus();
+        } else if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          const prevIndex =
+            (currentIndex - 1 + navTabElements.length) % navTabElements.length;
+          navTabElements[prevIndex]?.focus();
+        } else if (event.key === "Home") {
+          event.preventDefault();
+          navTabElements[0]?.focus();
+        } else if (event.key === "End") {
+          event.preventDefault();
+          navTabElements[navTabElements.length - 1]?.focus();
+        } else if (
+          event.key === "Enter" ||
+          event.key === " " ||
+          event.key === "Space" ||
+          event.key === "Spacebar"
+        ) {
+          event.preventDefault();
+          handleTabSelection(tab);
+        } else if (event.key === "Escape") {
+          event.preventDefault();
+          closeDrawer();
+          drawerButton.focus();
+        }
+      });
+    });
+
+    tabPanels.forEach((panel) => {
+      const tabId = panel.getAttribute("data-tab-id") || "";
+      const contextOptions = Array.from(
+        panel.querySelectorAll("[data-mobile-context-option]")
+      );
+
+      contextOptions.forEach((option) => {
+        option.addEventListener("click", () => {
+          const contextHref = option.dataset.contextHref;
+          if (
+            contextHref &&
+            contextHref.startsWith("/api/reference") &&
+            tabId
+          ) {
+            closeDrawer();
+            window.location.href = contextHref;
+            return;
+          }
+
+          const variantId = option.dataset.contextId;
+          if (!variantId || !tabId) {
+            return;
+          }
+
+          selectVariantForPanel(panel, tabId, variantId);
+        });
+      });
+    });
+
+    navLinkElements.forEach((link) => {
+      link.addEventListener("click", () => {
+        closeDrawer();
+      });
+    });
+
+    const mobileSearch = drawer.querySelector("[data-mobile-search]");
+    mobileSearch?.addEventListener("click", (event) => {
+      const target = event.target;
+      if (target instanceof Element) {
+        const anchor = target.closest("a[href]");
+        if (anchor) {
+          closeDrawer();
+        }
+      }
+    });
+
+    mobileSearch?.addEventListener("focusin", (event) => {
+      const target = event.target;
+      if (!(target instanceof HTMLInputElement) || target.type !== "text") {
+        return;
+      }
+      closeDrawer();
+      window.requestAnimationFrame(() => {
+        if (document.activeElement === target) {
+          target.blur();
+        }
+        document.dispatchEvent(
+          new CustomEvent("header:open-search", {
+            detail: {
+              trigger: target,
+              variant: "mobile",
+            },
+          })
+        );
+      });
+    });
+
+    drawer.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeDrawer();
+        drawerButton.focus();
+      }
+    });
+
+    drawer.dataset.mobileNavInitialized = "true";
+    if (activeTabId) {
+      activateTab(activeTabId);
+    }
+
+    if (shouldRestoreDrawerOpen) {
+      openDrawer();
+      setPersistedMobileNavOpen(false);
+    }
+  }
+
+  function initializeHeaderSearch() {
+    const overlay = document.getElementById("header-search-overlay");
+    if (!overlay) {
+      return;
+    }
+
+    const getSearchButtons = () =>
+      Array.from(document.querySelectorAll("[data-header-search-button]"));
+
+    const closeButtons = overlay.querySelectorAll("[data-header-search-close]");
+    const dismissTarget = overlay.querySelector("[data-header-search-dismiss]");
+    const panel = overlay.querySelector("[data-header-search-panel]");
+    const overlayMobileClass = "header-search-overlay--mobile";
+    const panelMobileClass = "header-search-panel--mobile";
+    let lastTrigger = null;
+    let lastVariant = null;
+
+    const setExpandedState = (isOpen) => {
+      const expanded = isOpen ? "true" : "false";
+      getSearchButtons().forEach((button) => {
+        button.setAttribute("aria-expanded", expanded);
+        button.setAttribute("data-active", expanded);
+      });
+      overlay.dataset.open = expanded;
+      overlay.setAttribute("aria-hidden", isOpen ? "false" : "true");
+    };
+
+    const focusSearchInput = () => {
+      window.requestAnimationFrame(() => {
+        const input = overlay.querySelector("[data-site-search-input]");
+        if (input) {
+          input.focus();
+          input.select();
+        }
+      });
+    };
+
+    const openOverlay = (trigger, options = {}) => {
+      lastTrigger = trigger ?? document.activeElement;
+      const variant = options.variant ?? null;
+      lastVariant = typeof variant === "string" ? variant : null;
+      overlay.classList.remove("hidden");
+      overlay.classList.add("flex");
+      const isMobileVariant = lastVariant === "mobile";
+      if (isMobileVariant) {
+        overlay.dataset.variant = "mobile";
+      } else {
+        delete overlay.dataset.variant;
+      }
+      overlay.classList.toggle(overlayMobileClass, isMobileVariant);
+      panel?.classList.toggle(panelMobileClass, isMobileVariant);
+      document.documentElement.classList.add("has-header-search-open");
+      setExpandedState(true);
+      focusSearchInput();
+    };
+
+    const closeOverlay = () => {
+      overlay.classList.add("hidden");
+      overlay.classList.remove("flex");
+      document.documentElement.classList.remove("has-header-search-open");
+      overlay.classList.remove(overlayMobileClass);
+      panel?.classList.remove(panelMobileClass);
+      delete overlay.dataset.variant;
+      setExpandedState(false);
+      if (lastTrigger instanceof HTMLElement) {
+        if (
+          lastVariant === "mobile" &&
+          typeof lastTrigger.blur === "function"
+        ) {
+          lastTrigger.blur();
+        } else if (lastVariant !== "mobile") {
+          lastTrigger.focus();
+        }
+      }
+      lastTrigger = null;
+      lastVariant = null;
+    };
+
+    const bindSearchButtons = () => {
+      getSearchButtons().forEach((button) => {
+        if (button.dataset.searchButtonInitialized === "true") {
+          return;
+        }
+
+        button.addEventListener("click", (event) => {
+          event.preventDefault();
+          openOverlay(button);
+        });
+
+        button.dataset.searchButtonInitialized = "true";
+      });
+    };
+
+    if (overlay.dataset.searchInitialized !== "true") {
+      closeButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          closeOverlay();
+        });
+      });
+
+      overlay.addEventListener("click", (event) => {
+        if (event.target === overlay) {
+          closeOverlay();
+        }
+      });
+
+      dismissTarget?.addEventListener("click", closeOverlay);
+
+      const handleKeydown = (event) => {
+        const key = "key" in event ? event.key : undefined;
+        const isShortcut =
+          !!key &&
+          key.toLowerCase() === "k" &&
+          (event.metaKey || event.ctrlKey);
+
+        if (isShortcut) {
+          event.preventDefault();
+          const buttons = getSearchButtons();
+          openOverlay(buttons[0] ?? null);
+          return;
+        }
+
+        if (key === "Escape" && overlay.dataset.open === "true") {
+          event.preventDefault();
+          closeOverlay();
+        }
+      };
+
+      document.addEventListener("keydown", handleKeydown);
+
+      document.addEventListener("header:open-search", (event) => {
+        const detail =
+          event instanceof CustomEvent && typeof event.detail === "object"
+            ? event.detail
+            : {};
+        const trigger =
+          detail && detail.trigger instanceof HTMLElement
+            ? detail.trigger
+            : null;
+        openOverlay(trigger, detail);
+      });
+
+      document.addEventListener("astro:before-swap", () => {
+        if (overlay.dataset.open === "true") {
+          closeOverlay();
+        }
+      });
+
+      overlay.dataset.searchInitialized = "true";
+    }
+
+    bindSearchButtons();
+  }
+
+  const handleAfterSwap = () => {
+    initializeMobileNavigation();
+    window.requestAnimationFrame(() => {
+      initializeHeaderSearch();
+    });
+  };
+
+  document.addEventListener("astro:after-swap", handleAfterSwap);
+  handleAfterSwap();
+Get started
+Overview
+Quickstart
+Models
+Pricing
+SDKs and CLI
+OpenAI SDK
+Agents SDK
+OpenAI CLI
+Latest: GPT-5.5
+Prompt guidance
+Core concepts
+Text generation
+Code generation
+Images and vision
+Audio and speech
+Structured output
+Function calling
+Responses API
+Using tools
+Agents SDK
+Overview
+Quickstart
+Agent definitions
+Models and providers
+Running agents
+Sandbox agents
+Orchestration
+Guardrails
+Results and state
+Integrations and observability
+Evaluate agent workflows
+Voice agents
+ChatKit
+Overview
+Customize
+Widgets
+Actions
+Advanced integrations
+Tools
+Web search
+MCP and Connectors
+Secure MCP Tunnel
+Skills
+Shell
+Computer use
+File search and retrieval
+File search
+Retrieval
+Tool search
+More tools
+Apply Patch
+Local shell
+Image generation
+Code interpreter
+Run and scale
+Conversation state
+Background mode
+Streaming
+WebSocket mode
+Webhooks
+File inputs
+Context management
+Compaction
+Counting tokens
+Prompt caching
+Prompting
+Overview
+Prompt engineering
+Citation formatting
+Migration guide
+Reasoning
+Reasoning models
+Reasoning best practices
+Evaluation
+Red teaming
+Realtime and audio
+Overview
+Voice agents
+Live translation
+Transcription
+Realtime transcription
+Speech to text
+Speech generation
+Realtime prompting guide
+Connection methods
+WebRTC
+WebSocket
+SIP
+Realtime sessions
+Managing conversations
+Voice activity detection
+Realtime with tools
+Webhooks and server-side controls
+Managing costs
+Specialized models
+Image generation
+Video generation
+Deep research
+Embeddings
+Moderation
+Going live
+Production best practices
+Workload identity federation
+Overview
+Kubernetes
+AWS
+Microsoft Azure
+Google Cloud
+GitHub Actions
+SPIFFE
+Deployment checklist
+Amazon Bedrock
+Latency optimization
+Overview
+Predicted Outputs
+Priority processing
+Cost optimization
+Overview
+Batch
+Flex processing
+Accuracy optimization
+Safety
+Safety best practices
+Safety checks
+Cybersecurity checks
+Under 18 API Guidance
+Legacy APIs
+Agent Builder
+Overview
+Migration guide
+Node reference
+Safety in building agents
+Evals
+Getting started
+Working with evals
+Prompt optimizer
+External models
+Best practices
+Graders
+Fine-tuning
+Optimization cycle
+Supervised fine-tuning
+Vision fine-tuning
+Direct preference optimization
+Reinforcement fine-tuning
+RFT use cases
+Best practices
+Assistants API
+Migration guide
+Deep dive
+Tools
+Resources
+Terms and policies
+Changelog
+Your data
+Permissions
+Rate limits
+IP egress ranges
+Admin APIs
+Deprecations
+MCP for deep research
+Developer mode
+ChatGPT Actions
+Introduction
+Getting started
+Actions library
+Authentication
+Production
+Data retrieval
+Sending files
+const NAV_SELECTOR = "nav[data-left-nav]";
+  const STORAGE_PREFIX = "left-nav-scroll:";
+  const INITIALIZED_ATTRIBUTE = "data-left-nav-scroll-initialized";
+
+  const isStorageAvailable = (() => {
+    try {
+      const storageKey = `${STORAGE_PREFIX}__test__`;
+      sessionStorage.setItem(storageKey, "1");
+      sessionStorage.removeItem(storageKey);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  })();
+
+  const getNav = () => document.querySelector(NAV_SELECTOR);
+
+  const getStorageKey = (nav) =>
+    `${STORAGE_PREFIX}${nav.dataset.leftNavId ?? "default"}`;
+
+  const restoreScrollPosition = (nav) => {
+    if (!isStorageAvailable) return;
+    const storedValue = sessionStorage.getItem(getStorageKey(nav));
+    if (storedValue !== null) {
+      nav.scrollTop = Number(storedValue);
+    }
+  };
+
+  const saveScrollPosition = (nav) => {
+    if (!isStorageAvailable) return;
+    sessionStorage.setItem(getStorageKey(nav), String(nav.scrollTop));
+  };
+
+  const setupNav = () => {
+    const nav = getNav();
+    if (!nav || nav.getAttribute(INITIALIZED_ATTRIBUTE) === "true") return;
+
+    restoreScrollPosition(nav);
+
+    nav.addEventListener(
+      "scroll",
+      () => {
+        saveScrollPosition(nav);
+      },
+      { passive: true }
+    );
+
+    nav.setAttribute(INITIALIZED_ATTRIBUTE, "true");
+  };
+
+  const persistScrollPosition = () => {
+    const nav = getNav();
+    if (!nav) return;
+    saveScrollPosition(nav);
+  };
+
+  const initialize = () => {
+    setupNav();
+    const nav = getNav();
+    if (!nav) return;
+    restoreScrollPosition(nav);
+  };
+
+  window.addEventListener("pageshow", initialize);
+  document.addEventListener("astro:page-load", initialize);
+  document.addEventListener("astro:after-swap", initialize);
+
+  document.addEventListener("astro:before-swap", persistScrollPosition);
+  window.addEventListener("beforeunload", persistScrollPosition);
+
+  initialize();
+Models
+GPT-5.6 is available to select trusted partners in preview. Broad availability coming soon.
+Learn more
+.
+Choosing a model
+If you're not sure where to start, use
+GPT-5.5
+, our flagship model for complex reasoning and coding. If you're optimizing for latency and cost, choose a smaller variant like
+GPT-5.4 mini
+or
+GPT-5.4 nano
+.
+All latest OpenAI models support text and image input, text output, multilingual capabilities, and vision. Models are available via the
+Responses API
+and our
+Client SDKs
+.
+Frontier models
+Start with GPT-5.5 for complex reasoning and coding, or choose GPT-5.4 mini and GPT-5.4 nano for lower-latency, lower-cost workloads.
+View all
+Compare models
+GPT-5.5
+New
+A new class of intelligence for coding and professional work.
+Model ID
+gpt-5.5
+Reasoning
+none
+low
+medium
+high
+xhigh
+Input price
+$5 / Input MTok
+Output price
+$30 / Output MTok
+Latency
+Fast
+Max output
+128K tokens
+Context window
+1M
+Tools
+Functions, Web search, File search, Computer use
+Knowledge cutoff
+Dec 1, 2025
+GPT-5.4
+A more affordable model for coding and professional work.
+Model ID
+gpt-5.4
+Reasoning
+none
+low
+medium
+high
+xhigh
+Input price
+$2.50 / Input MTok
+Output price
+$15 / Output MTok
+Latency
+Fast
+Max output
+128K tokens
+Context window
+1M
+Tools
+Functions, Web search, File search, Computer use
+Knowledge cutoff
+Aug 31, 2025
+GPT-5.4 mini
+Our strongest mini model yet for coding, computer use, and subagents
+Model ID
+gpt-5.4-mini
+Reasoning
+none
+low
+medium
+high
+xhigh
+Input price
+$0.75 / Input MTok
+Output price
+$4.50 / Output MTok
+Latency
+Faster
+Max output
+128K tokens
+Context window
+400K
+Tools
+Functions, Web search, File search, Computer use
+Knowledge cutoff
+Aug 31, 2025
+View more
+Specialized models
+Purpose-built for specific tasks.
+Image
+Models for image generation and editing
+GPT Image 2
+State-of-the-art image generation model
+Realtime
+Models for realtime speech and translation
+GPT-Realtime-2
+Reasoning model for realtime voice interactions
+GPT-Realtime-Translate
+Streaming speech-to-speech translation model
+GPT-Realtime-1.5
+The best voice model for audio in, audio out
+GPT-Realtime mini
+A cost-efficient version of GPT-Realtime
+Speech generation
+Models for generating natural-sounding speech from text
+GPT-4o mini TTS
+Deprecated
+Text-to-speech model powered by GPT-4o mini
+Transcription
+Models for transcribing speech into text
+GPT-Realtime-Whisper
+Streaming speech-to-text model for realtime transcription
+GPT-4o Transcribe
+Speech-to-text model powered by GPT-4o
+GPT-4o mini Transcribe
+Speech-to-text model powered by GPT-4o mini
+Browse our full catalog of models
+Diverse models for a variety of tasks
+View all models
+Compare models
+How we use your data
+·
+Deprecated models
+(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).only=e;window.dispatchEvent(new Event("astro:only"));})();
+var o="@vercel/speed-insights",u="1.3.1",f=()=>{window.si||(window.si=function(...r){(window.siq=window.siq||[]).push(r)})};function l(){return typeof window<"u"}function h(){try{const e="production"}catch{}return"production"}function d(){return h()==="development"}function v(e,r){if(!e||!r)return e;let n=e;try{const t=Object.entries(r);for(const[s,i]of t)if(!Array.isArray(i)){const a=c(i);a.test(n)&&(n=n.replace(a,`/[${s}]`))}for(const[s,i]of t)if(Array.isArray(i)){const a=c(i.join("/"));a.test(n)&&(n=n.replace(a,`/[...${s}]`))}return n}catch{return e}}function c(e){return new RegExp(`/${g(e)}(?=[/?#]|$)`)}function g(e){return e.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")}function m(e){return e.scriptSrc?e.scriptSrc:d()?"https://va.vercel-scripts.com/v1/speed-insights/script.debug.js":e.dsn?"https://va.vercel-scripts.com/v1/speed-insights/script.js":e.basePath?`${e.basePath}/speed-insights/script.js`:"/_vercel/speed-insights/script.js"}function w(e={}){var r;if(!l()||e.route===null)return null;f();const n=m(e);if(document.head.querySelector(`script[src*="${n}"]`))return null;e.beforeSend&&((r=window.si)==null||r.call(window,"beforeSend",e.beforeSend));const t=document.createElement("script");return t.src=n,t.defer=!0,t.dataset.sdkn=o+(e.framework?`/${e.framework}`:""),t.dataset.sdkv=u,e.sampleRate&&(t.dataset.sampleRate=e.sampleRate.toString()),e.route&&(t.dataset.route=e.route),e.endpoint?t.dataset.endpoint=e.endpoint:e.basePath&&(t.dataset.endpoint=`${e.basePath}/speed-insights/vitals`),e.dsn&&(t.dataset.dsn=e.dsn),d()&&e.debug===!1&&(t.dataset.debug="false"),t.onerror=()=>{console.log(`[Vercel Speed Insights] Failed to load script from ${n}. Please check if any content blockers are enabled and try again.`)},document.head.appendChild(t),{setRoute:s=>{t.dataset.route=s??void 0}}}function p(){try{return}catch{}}customElements.define("vercel-speed-insights",class extends HTMLElement{constructor(){super();try{const r=JSON.parse(this.dataset.props??"{}"),n=JSON.parse(this.dataset.params??"{}"),t=v(this.dataset.pathname??"",n);w({route:t,...r,framework:"astro",basePath:p(),beforeSend:window.speedInsightsBeforeSend})}catch(r){throw new Error(`Failed to parse SpeedInsights properties: ${r}`)}}});
+Ask AI
+Docs agent
+Loading docs agent...
+(() => {
+  const registry = window.customElements;
+  if (!registry || window.__docsAgentChatKitMoveGuardInstalled) return;
+  window.__docsAgentChatKitMoveGuardInstalled = true;
+
+  // Astro preserves the launcher with Element.moveBefore(). Registering this
+  // callback before ChatKit is defined prevents its reconnect hooks from
+  // replacing the live message-bridge iframe during that move.
+  const registryPrototype = Object.getPrototypeOf(registry);
+  const defineDescriptor = Object.getOwnPropertyDescriptor(
+    registryPrototype,
+    "define"
+  );
+  if (!defineDescriptor?.value) return;
+
+  Object.defineProperty(registryPrototype, "define", {
+    ...defineDescriptor,
+    value(name, constructor, options) {
+      if (
+        name === "openai-chatkit" &&
+        !("connectedMoveCallback" in constructor.prototype)
+      ) {
+        Object.defineProperty(
+          constructor.prototype,
+          "connectedMoveCallback",
+          {
+            configurable: true,
+            value() {},
+          }
+        );
+      }
+
+      const result = defineDescriptor.value.call(
+        this,
+        name,
+        constructor,
+        options
+      );
+      if (name === "openai-chatkit") {
+        Object.defineProperty(registryPrototype, "define", defineDescriptor);
+      }
+      return result;
+    },
+  });
+})();
+function initializeDocsAgentLauncher() {
+    const root = document.querySelector("[data-docs-agent-root]");
+    if (!root || root.dataset.initialized === "true") return;
+    if (typeof window.__createDocsAgentNavigationQueue !== "function") return;
+
+    const mobileOpenButton = root.querySelector("button[data-docs-agent-open]");
+    const closeButton = root.querySelector("[data-docs-agent-close]");
+    const newButton = root.querySelector("[data-docs-agent-new]");
+    const panel = root.querySelector("[data-docs-agent-panel]");
+    const status = root.querySelector("[data-docs-agent-status]");
+    let chatkit = root.querySelector("openai-chatkit");
+    const apiURL = root.dataset.chatkitApiUrl;
+    const domainKey = root.dataset.chatkitDomainKey || "local-dev";
+    const startGreeting =
+      root.dataset.chatkitGreeting || "OpenAI developer docs";
+    const startPromptsByParentRoute = (() => {
+      try {
+        const parsed = JSON.parse(
+          root.dataset.chatkitStartPromptsByRoute || "{}"
+        );
+        return parsed && typeof parsed === "object" && !Array.isArray(parsed)
+          ? parsed
+          : {};
+      } catch {
+        return {};
+      }
+    })();
+    const docsAgentSessionStorageKey = "docs-agent.chatkit-session-id";
+    const uuidPattern =
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+    const randomUuid = () => {
+      if (window.crypto?.randomUUID) {
+        return window.crypto.randomUUID();
+      }
+
+      const bytes = new Uint8Array(16);
+      if (window.crypto?.getRandomValues) {
+        window.crypto.getRandomValues(bytes);
+      } else {
+        for (let index = 0; index < bytes.length; index += 1) {
+          bytes[index] = Math.floor(Math.random() * 256);
+        }
+      }
+      bytes[6] = (bytes[6] & 0x0f) | 0x40;
+      bytes[8] = (bytes[8] & 0x3f) | 0x80;
+
+      const hex = Array.from(bytes, (byte) =>
+        byte.toString(16).padStart(2, "0")
+      );
+      return [
+        hex.slice(0, 4).join(""),
+        hex.slice(4, 6).join(""),
+        hex.slice(6, 8).join(""),
+        hex.slice(8, 10).join(""),
+        hex.slice(10, 16).join(""),
+      ].join("-");
+    };
+
+    let docsAgentSessionIdValue = null;
+
+    const storeDocsAgentSessionId = (sessionId) => {
+      docsAgentSessionIdValue = sessionId;
+      try {
+        window.sessionStorage.setItem(docsAgentSessionStorageKey, sessionId);
+      } catch {
+        // Ignore storage failures.
+      }
+      return sessionId;
+    };
+
+    const resetDocsAgentSessionId = () =>
+      storeDocsAgentSessionId(randomUuid().toLowerCase());
+
+    const docsAgentSessionId = () => {
+      if (
+        docsAgentSessionIdValue &&
+        uuidPattern.test(docsAgentSessionIdValue)
+      ) {
+        return docsAgentSessionIdValue.toLowerCase();
+      }
+      try {
+        const stored = window.sessionStorage.getItem(
+          docsAgentSessionStorageKey
+        );
+        if (stored && uuidPattern.test(stored)) {
+          docsAgentSessionIdValue = stored.toLowerCase();
+          return docsAgentSessionIdValue;
+        }
+      } catch {
+        // Fall through and create an in-memory session id.
+      }
+      return resetDocsAgentSessionId();
+    };
+
+    if (
+      !mobileOpenButton ||
+      !closeButton ||
+      !newButton ||
+      !(panel instanceof HTMLElement) ||
+      !chatkit ||
+      !apiURL
+    ) {
+      return;
+    }
+
+    let chatkitInitialized = false;
+    let chatkitResponseActive = false;
+    let chatkitTurnActive = false;
+    let docsAgentNavigationInProgress = false;
+    let chatkitReplacement = null;
+    let desiredPathname = window.location.pathname || "/";
+    let previousFocus = null;
+    let lastPageSelection = { text: "", capturedAt: 0 };
+    let conversationStartedTracked = false;
+
+    const selectedTextLimit = 3000;
+    const staleSelectionMs = 2 * 60 * 1000;
+    const docsAgentRequestTimeoutMs = 40 * 1000;
+    const docsAgentNavigationTimeoutMs = 8 * 1000;
+    const docsAgentTransitionWaitTimeoutMs = 15 * 1000;
+    const docsAgentInitializationTimeoutMs = 15 * 1000;
+    const docsAgentUnavailableMessage =
+      "The docs agent couldn't complete the request. Please retry.";
+    const chatKitUserTurnTypes = new Set([
+      "threads.create",
+      "threads.add_user_message",
+      "threads.retry_after_item",
+    ]);
+    const desktopPanelMedia = window.matchMedia("(min-width: 768px)");
+
+    const withTimeout = (operation, timeoutMs, message) =>
+      new Promise((resolve, reject) => {
+        const timeout = window.setTimeout(
+          () => reject(new Error(message)),
+          timeoutMs
+        );
+        Promise.resolve(operation).then(
+          (value) => {
+            window.clearTimeout(timeout);
+            resolve(value);
+          },
+          (error) => {
+            window.clearTimeout(timeout);
+            reject(error);
+          }
+        );
+      });
+
+    const requestDeadlineSignal = (existingSignal) => {
+      const controller = new AbortController();
+      const abort = (signal) => controller.abort(signal?.reason);
+      if (existingSignal) {
+        if (existingSignal.aborted) {
+          abort(existingSignal);
+        } else {
+          existingSignal.addEventListener(
+            "abort",
+            () => abort(existingSignal),
+            {
+              once: true,
+            }
+          );
+        }
+      }
+      window.setTimeout(
+        () => controller.abort(new Error("Docs agent request timed out")),
+        docsAgentRequestTimeoutMs
+      );
+      return controller.signal;
+    };
+
+    const chatKitErrorFrame = (message = docsAgentUnavailableMessage) =>
+      new TextEncoder().encode(
+        `data: ${JSON.stringify({
+          type: "error",
+          code: "custom",
+          message,
+          allow_retry: true,
+        })}\n\n`
+      );
+
+    const chat

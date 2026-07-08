@@ -4,7 +4,7 @@ Lookup capabilities (context window, modalities, supported features) of various 
 
 ## Features
 
-- **Comprehensive Bundled Data**: Offline capability data for OpenAI, Anthropic, Google (Gemini), Microsoft (Phi), Amazon (Nova/Titan), Meta (Llama), Mistral, Qwen, DeepSeek, xAI (Grok), NVIDIA, MoonshotAI (Kimi), zhipu-ai (GLM), Sakana AI (Fugu), OpenRouter, and Japanese domestic models (NTT tsuzumi, PFN PLaMo, ELYZA, SoftBank, NEC, Fujitsu, etc. adopted by the Digital Agency's "GENNAI" platform).
+- **Comprehensive Bundled Data**: Offline capability data for OpenAI, Anthropic, Google (Gemini), Microsoft (Phi), Amazon (Nova/Titan), Meta (Llama), Mistral, Qwen, DeepSeek, xAI (Grok), NVIDIA, MoonshotAI (Kimi), zhipu-ai (GLM), Sakana AI (Fugu), Novita AI, OpenRouter, and Japanese domestic models (NTT tsuzumi, PFN PLaMo, ELYZA, SoftBank, NEC, Fujitsu, etc. adopted by the Digital Agency's "GENNAI" platform).
 - **Zero Runtime Dependencies**: Built entirely on the Python standard library.
 - **Alias Resolution**: Automatically resolves aliases and provider-specific names (e.g., `gpt-4o-2024-08-06` -> `gpt-4o`, `gemini-1.5-pro-preview-0409` -> `gemini-1.5-pro`).
 - **Advanced Feature Queries**: Check support for `vision`, `multimodal`, `chat_completion`, `responses_api`, `reasoning_effort`, `thinking_budget`, and specific input/output modalities (e.g., `image_input`, `image_output`, `audio_input`).
@@ -160,6 +160,32 @@ big_reasoning_models = llmcapa.find(
     supports_reasoning=True,
     min_context_window=200000
 )
+```
+
+### Novita AI (Bundled Provider)
+
+Novita AI is a cloud platform offering 200+ open-source and proprietary models via a single API. llmcapa bundles capability data for 137 Novita AI models, including DeepSeek, Qwen, Meta Llama, GLM, Gemini, and many more, with Novita-specific pricing.
+
+Models are accessed using the `novita/` prefix to avoid conflicts with official provider data:
+
+```python
+import llmcapa
+
+# Look up Novita AI models
+cap = llmcapa.get("novita/deepseek-v3.2")
+print(cap.context_window)  # 163840
+print(cap.pricing)         # {'input_per_1m': 0.269, 'output_per_1m': 0.4, 'currency': 'USD'}
+
+cap = llmcapa.get("novita/qwen3.7-max")
+print(cap.context_window)  # 1000000
+
+# List all Novita AI models
+for c in llmcapa.list_models(provider="novita"):
+    print(c.model_id, c.context_window, c.pricing)
+
+# List all providers including Novita
+print(llmcapa.providers())
+# ['...', 'novita', '...']
 ```
 
 ### On-demand OpenRouter Integration (Caching)

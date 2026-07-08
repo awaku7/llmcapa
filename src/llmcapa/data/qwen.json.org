@@ -1,0 +1,68 @@
+{
+  "models": [
+    {
+      "provider": "qwen",
+      "model_id": "qwen2.5-72b-instruct",
+      "display_name": "Qwen2.5 72B Instruct",
+      "context_window": 131072,
+      "max_output_tokens": 8192,
+      "input_modalities": ["text"],
+      "output_modalities": ["text"],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "2024-09",
+      "aliases": ["qwen2.5:72b", "qwen/qwen2.5-72b-instruct"]
+    },
+    {
+      "provider": "qwen",
+      "model_id": "qwen2.5-coder-32b-instruct",
+      "display_name": "Qwen2.5 Coder 32B Instruct",
+      "context_window": 131072,
+      "max_output_tokens": 8192,
+      "input_modalities": ["text"],
+      "output_modalities": ["text"],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "2024-09",
+      "aliases": ["qwen2.5-coder:32b", "qwen/qwen2.5-coder-32b-instruct"]
+    },
+    {
+      "provider": "qwen",
+      "model_id": "qwq-32b",
+      "display_name": "QwQ 32B",
+      "context_window": 131072,
+      "max_output_tokens": 131072,
+      "input_modalities": ["text"],
+      "output_modalities": ["text"],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-09",
+      "aliases": ["qwq:32b", "qwen/qwq-32b"]
+    },
+    {
+      "provider": "qwen",
+      "model_id": "qwen2.5-vl-72b-instruct",
+      "display_name": "Qwen2.5 VL 72B Instruct",
+      "context_window": 131072,
+      "max_output_tokens": 8192,
+      "input_modalities": ["text", "image", "video"],
+      "output_modalities": ["text"],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "2024-09",
+      "aliases": ["qwen/qwen2.5-vl-72b-instruct"]
+    }
+  ]
+}
