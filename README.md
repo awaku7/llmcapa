@@ -13,6 +13,8 @@ Lookup capabilities (context window, modalities, supported features) of various 
 - **Drop-in Replacement Checker**: Check if a model can be safely replaced by another model based on context window and required features.
 - **Tokenizer Mapping**: Access tokenizer names (e.g., `o200k_base`) directly from model capabilities.
 - **Extendable**: Load your own local JSON model definitions.
+- **Ollama Support**: Full capability data for **1,638 Ollama models** across 236 base models with all size variants (codegemma, llama, qwen, mistral, deepseek, gemma, phi, etc.). Zero-cost local inference models included.
+- **FIM (Fill-in-the-Middle) Support**: Check if a model supports code infilling via `cap.supports('fim')`. Supported for codegemma, codellama, starcoder2, deepseek-coder, qwen2.5-coder, and more.
 - **CLI Included**: Query and list model capabilities directly from your terminal.
 
 ## Install
@@ -148,6 +150,31 @@ for cap in llmcapa.list_models(provider="sakana"):
     print(cap.model_id, cap.context_window)
 ```
 
+
+### FIM (Fill-in-the-Middle) Support
+
+Check if a model supports code infilling / Fill-in-the-Middle completion:
+
+```python
+import llmcapa
+
+cap = llmcapa.get("codegemma:2b", provider="ollama")
+print(cap.supports("fim"))       # True
+print(cap.supports("vision"))    # False
+print("fim" in cap.features())   # True
+
+cap2 = llmcapa.get("llama3.1", provider="ollama")
+print(cap2.supports("fim"))      # False
+```
+
+The `fim` feature is available as a `Feature` enum member:
+
+```python
+from llmcapa import Feature
+cap = llmcapa.get("starcoder2", provider="ollama")
+print(cap.supports(Feature.LLMC_FEAT_FIM))  # True
+```
+
 ### Listing & Searching Models
 
 ```python
@@ -155,7 +182,8 @@ for cap in llmcapa.list_models(provider="sakana"):
 for c in llmcapa.list_models(provider="anthropic"):
     print(c.model_id, c.context_window)
 
-# Search models by capability criteria
+# Search models (provider is required)
+search_results = llmcapa.search("codegemma", provider="ollama")
 big_reasoning_models = llmcapa.find(
     supports_reasoning=True,
     min_context_window=200000

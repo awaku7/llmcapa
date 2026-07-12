@@ -19,6 +19,7 @@ class Feature(str, Enum):
     LLMC_FEAT_REASONING_EFFORT = "reasoning_effort"
     LLMC_FEAT_THINKING_BUDGET = "thinking_budget"
     LLMC_FEAT_MULTIMODAL = "multimodal"
+    LLMC_FEAT_FIM = "fim"
 
     # Modalities (Input)
     LLMC_FEAT_TEXT_INPUT = "text_input"
@@ -66,6 +67,8 @@ class Capability:
     supports_thinking_budget: bool = False
     supports_anthropic_api: bool = False
     supports_google_api: bool = False
+    supports_fim: bool = False
+    license_type: str = "unknown"
     tokenizer_name: str = ""
     knowledge_cutoff: Optional[str] = None
     pricing: Optional[Dict[str, Any]] = None
@@ -79,7 +82,7 @@ class Capability:
         Accepts short names such as "vision", "json_mode",
         "function_calling", "streaming", "reasoning",
         "chat_completion", "responses_api", "multimodal",
-        "reasoning_effort", "thinking_budget",
+        "reasoning_effort", "thinking_budget", "fim",
         or an input modality such as "image", "audio".
 
         Also accepts `Feature` enum members (e.g., `Feature.LLMC_FEATURE_VISION`).
@@ -121,7 +124,7 @@ class Capability:
         standard_features = [
             "vision", "function_calling", "json_mode", "streaming",
             "reasoning", "chat_completion", "responses_api",
-            "reasoning_effort", "thinking_budget"
+            "reasoning_effort", "thinking_budget", "fim"
         ]
         # Gather input/output modalities
         for mod in self.input_modalities:
@@ -285,7 +288,7 @@ class Capability:
             features_to_check = [
                 "vision", "function_calling", "json_mode", "streaming",
                 "reasoning", "chat_completion", "responses_api",
-                "reasoning_effort", "thinking_budget", "image_output",
+                "reasoning_effort", "thinking_budget", "fim", "image_output",
                 "audio_output", "video_output"
             ]
             required_features = [f for f in features_to_check if self.supports(f)]

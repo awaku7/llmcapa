@@ -18,7 +18,7 @@ from .models import Capability, Feature, ReasoningEffort
 from .registry import Registry, ModelNotFoundError, default_registry
 from .tokenizer import count_tokens, count_messages_tokens
 
-__version__ = "0.2.8"
+__version__ = "0.2.10"
 
 __all__ = [
     "Capability",
@@ -42,9 +42,15 @@ __all__ = [
 ]
 
 
-def get(model_id: str) -> Capability:
-    """Return the Capability for a model id or alias."""
-    return default_registry().get(model_id)
+def get(model_id: str, provider: Optional[str] = None) -> Capability:
+    """Return the Capability for a model id or alias.
+
+    Args:
+        model_id: Model id, alias, or deployment name.
+        provider: If given, scope the lookup to models from this
+                  provider only (e.g. ``provider="novita"``).
+    """
+    return default_registry().get(model_id, provider)
 
 
 def list_models(
@@ -67,7 +73,7 @@ def find(**kwargs) -> List[Capability]:
 
 def search(
     prefix: str,
-    provider: Optional[str] = None,
+    provider: str,
     include_deprecated: bool = False,
     limit: Optional[int] = None,
 ) -> List[Capability]:

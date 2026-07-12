@@ -13,6 +13,8 @@
 - **代替モデルチェッカー**: コンテキストウィンドウと必要な機能に基づいて、あるモデルを別のモデルで安全に代替できるかどうかを確認します。
 - **トークナイザーマッピング**: モデルの機能から直接トークナイザー名（例: `o200k_base`）にアクセスできます。
 - **拡張性**: 独自のローカルJSONモデル定義をロードできます。
+- **Ollamaサポート**: **1,638のOllamaモデル**（236ベースモデル×全サイズバリアント）の機能データを収録。codegemma、llama、qwen、mistral、deepseek、gemma、phi など、ローカル推論向けモデルをカバーしています。
+- **FIM（Fill-in-the-Middle）サポート**: `cap.supports('fim')` でコード補完（FIM）対応を確認可能。codegemma、codellama、starcoder2、deepseek-coder、qwen2.5-coder などに対応。
 - **CLI同梱**: ターミナルから直接モデルの機能を照会・一覧表示できます。
 
 ## インストール
@@ -125,6 +127,31 @@ print(claude.supports(Feature.LLMC_FEAT_REASONING_EFFORT))  # False
 print(claude.supports(Feature.LLMC_FEAT_THINKING_BUDGET))   # True
 ```
 
+
+### FIM（Fill-in-the-Middle）サポート
+
+モデルがコード補完（FIM）に対応しているか確認できます：
+
+```python
+import llmcapa
+
+cap = llmcapa.get("codegemma:2b", provider="ollama")
+print(cap.supports("fim"))       # True
+print(cap.supports("vision"))    # False
+print("fim" in cap.features())   # True
+
+cap2 = llmcapa.get("llama3.1", provider="ollama")
+print(cap2.supports("fim"))      # False
+```
+
+`Feature` 列挙型でも利用可能です：
+
+```python
+from llmcapa import Feature
+cap = llmcapa.get("starcoder2", provider="ollama")
+print(cap.supports(Feature.LLMC_FEAT_FIM))  # True
+```
+
 ### モデルの一覧表示と検索
 
 ```python
@@ -133,6 +160,9 @@ for c in llmcapa.list_models(provider="anthropic"):
     print(c.model_id, c.context_window)
 
 # 機能条件を指定してモデルを検索
+# 検索時はproviderが必須
+search_results = llmcapa.search("codegemma", provider="ollama")
+
 big_reasoning_models = llmcapa.find(
     supports_reasoning=True,
     min_context_window=200000

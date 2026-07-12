@@ -2,88 +2,45 @@
   "models": [
     {
       "provider": "google",
-      "model_id": "gemini-3.5-flash",
-      "display_name": "Gemini 3.5 Flash",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
+      "model_id": "functiongemma",
+      "display_name": "Google FunctionGemma",
+      "context_window": 8192,
+      "max_output_tokens": 2048,
       "input_modalities": [
-        "text",
-        "image",
-        "video",
-        "file",
-        "audio"
+        "text"
       ],
       "output_modalities": [
         "text"
       ],
       "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_json_mode": false,
       "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "knowledge_cutoff": "2025-01-01",
-      "pricing": {
-        "input_per_1m": 1.5,
-        "output_per_1m": 9.0,
-        "currency": "USD"
-      },
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
       "aliases": [
-        "codegemma",
-        "codegemma:2b",
-        "codegemma:7b",
-        "codegemma:7b-it",
-        "codegemma:2b-it",
-        "codegemma:7b-pretrained",
-        "codegemma:7b-instruct"
+        "google/functiongemma"
       ],
-      "supports_google_api": true,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true
+      "license_type": "free"
     },
     {
       "provider": "google",
-      "model_id": "gemini-3.1-flash-lite",
-      "display_name": "Gemini 3.1 Flash-Lite",
+      "model_id": "gemini-1.5-flash",
+      "display_name": "Gemini 1.5 Flash",
       "context_window": 1048576,
-      "max_output_tokens": 65536,
+      "max_output_tokens": 8192,
       "input_modalities": [
         "text",
         "image",
-        "video",
-        "file",
-        "audio"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "knowledge_cutoff": "2025-01",
-      "pricing": {
-        "input_per_1m": 0.25,
-        "output_per_1m": 1.5,
-        "currency": "USD"
-      },
-      "aliases": [],
-      "supports_google_api": true,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true
-    },
-    {
-      "provider": "google",
-      "model_id": "gemini-3-flash-preview",
-      "display_name": "Gemini 3 Flash (Preview)",
-      "context_window": 1048576,
-      "max_output_tokens": 65535,
-      "input_modalities": [
-        "text",
-        "image",
-        "file",
         "audio",
         "video"
       ],
@@ -94,62 +51,37 @@
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
-      "supports_reasoning": true,
-      "knowledge_cutoff": "2025-01",
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-05",
+      "deprecated": true,
+      "aliases": [
+        "gemini-1.5-flash-002",
+        "gemini-1.5-flash-preview-0409"
+      ],
       "pricing": {
-        "input_per_1m": 0.5,
-        "output_per_1m": 3.0,
+        "input_per_1m": 0.075,
+        "output_per_1m": 0.3,
         "currency": "USD"
       },
-      "aliases": [],
-      "supports_google_api": true,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true
+      "license_type": "api"
     },
     {
       "provider": "google",
-      "model_id": "gemini-3.1-pro-preview",
-      "display_name": "Gemini 3.1 Pro (Preview)",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "audio",
-        "file",
-        "image",
-        "text",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "knowledge_cutoff": "2025-01",
-      "pricing": {
-        "input_per_1m": 2.0,
-        "output_per_1m": 12.0,
-        "currency": "USD"
-      },
-      "aliases": [],
-      "supports_google_api": true,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true
-    },
-    {
-      "provider": "google",
-      "model_id": "gemini-2.5-pro",
-      "display_name": "Gemini 2.5 Pro",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
+      "model_id": "gemini-1.5-pro",
+      "display_name": "Gemini 1.5 Pro",
+      "context_window": 2097152,
+      "max_output_tokens": 8192,
       "input_modalities": [
         "text",
         "image",
-        "file",
         "audio",
         "video"
       ],
@@ -160,18 +92,107 @@
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
-      "supports_reasoning": true,
-      "knowledge_cutoff": "2025-01-31",
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-05",
+      "deprecated": true,
+      "aliases": [
+        "gemini-1.5-pro-002",
+        "gemini-1.5-pro-preview-0409"
+      ],
       "pricing": {
         "input_per_1m": 1.25,
         "output_per_1m": 10.0,
         "currency": "USD"
       },
-      "aliases": [],
-      "supports_google_api": true,
-      "supports_chat_completion": false,
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-2.0-flash",
+      "display_name": "Gemini 2.0 Flash (Shutdown)",
+      "context_window": 1048576,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
       "supports_responses_api": false,
-      "supports_reasoning_effort": true
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-08",
+      "deprecated": true,
+      "aliases": [
+        "gemini-2.0-flash-001"
+      ],
+      "pricing": {
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      },
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-2.0-flash-lite",
+      "display_name": "Gemini 2.0 Flash-Lite (Shutdown)",
+      "context_window": 1048576,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-08",
+      "deprecated": true,
+      "aliases": [
+        "gemini-2.0-flash-lite-001"
+      ],
+      "pricing": {
+        "input_per_1m": 0.075,
+        "output_per_1m": 0.3,
+        "currency": "USD"
+      },
+      "license_type": "api"
     },
     {
       "provider": "google",
@@ -194,19 +215,64 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": "2025-01-31",
       "pricing": {
         "input_per_1m": 0.3,
         "output_per_1m": 2.5,
         "currency": "USD"
       },
+      "deprecated": false,
       "aliases": [
         "gemini-2.5-flash-preview-09-2025"
       ],
-      "supports_google_api": true,
-      "supports_chat_completion": false,
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-2.5-flash-image",
+      "display_name": "Nano Banana (2.5 Flash Image)",
+      "context_window": 32768,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "image",
+        "text"
+      ],
+      "output_modalities": [
+        "image",
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
       "supports_responses_api": false,
-      "supports_reasoning_effort": true
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-01-31",
+      "pricing": {
+        "input_per_1m": 0.3,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "gemini-2.5-flash-image-preview"
+      ],
+      "license_type": "api"
     },
     {
       "provider": "google",
@@ -229,83 +295,179 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": "2025-01-31",
       "pricing": {
         "input_per_1m": 0.1,
         "output_per_1m": 0.4,
         "currency": "USD"
       },
+      "deprecated": false,
       "aliases": [
         "gemini-2.5-flash-lite-preview-09-2025"
       ],
-      "supports_google_api": true,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true
+      "license_type": "api"
     },
     {
       "provider": "google",
-      "model_id": "gemini-2.5-flash-image",
-      "display_name": "Nano Banana (2.5 Flash Image)",
-      "context_window": 32768,
-      "max_output_tokens": 32768,
+      "model_id": "gemini-2.5-flash-native-audio-preview-12-2025",
+      "display_name": "Gemini 2.5 Flash Live (Preview)",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
       "input_modalities": [
-        "image",
-        "text"
+        "text",
+        "audio"
       ],
       "output_modalities": [
-        "image",
-        "text"
+        "text",
+        "audio"
       ],
-      "supports_function_calling": false,
+      "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "knowledge_cutoff": "2025-01-31",
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-06",
       "pricing": {
-        "input_per_1m": 0.3,
-        "output_per_1m": 2.5,
+        "input_per_1m": 0.5,
+        "output_per_1m": 2.0,
         "currency": "USD"
       },
-      "aliases": [
-        "gemini-2.5-flash-image-preview"
-      ],
-      "supports_google_api": true,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api"
     },
     {
       "provider": "google",
-      "model_id": "gemini-3.1-flash-image",
-      "display_name": "Nano Banana 2 (3.1 Flash Image)",
-      "context_window": 131072,
-      "max_output_tokens": 32768,
+      "model_id": "gemini-2.5-pro",
+      "display_name": "Gemini 2.5 Pro",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
       "input_modalities": [
+        "text",
         "image",
-        "text"
+        "file",
+        "audio",
+        "video"
       ],
       "output_modalities": [
-        "image",
         "text"
       ],
-      "supports_function_calling": false,
+      "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-01-31",
+      "pricing": {
+        "input_per_1m": 1.25,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-2.5-pro-preview-05-06",
+      "display_name": "Google: Gemini 2.5 Pro Preview 05-06",
+      "context_window": 1048576,
+      "max_output_tokens": 65535,
+      "input_modalities": [
+        "text",
+        "image",
+        "file",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-01-31",
+      "pricing": {
+        "input_per_1m": 1.25,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-3-flash-preview",
+      "display_name": "Gemini 3 Flash (Preview)",
+      "context_window": 1048576,
+      "max_output_tokens": 65535,
+      "input_modalities": [
+        "text",
+        "image",
+        "file",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": "2025-01",
       "pricing": {
         "input_per_1m": 0.5,
         "output_per_1m": 3.0,
         "currency": "USD"
       },
+      "deprecated": false,
       "aliases": [],
-      "supports_google_api": true,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true
+      "license_type": "api"
     },
     {
       "provider": "google",
@@ -326,17 +488,169 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": "2025-01",
       "pricing": {
         "input_per_1m": 2.0,
         "output_per_1m": 12.0,
         "currency": "USD"
       },
+      "deprecated": false,
       "aliases": [],
-      "supports_google_api": true,
-      "supports_chat_completion": false,
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-3-pro-preview",
+      "display_name": "Gemini 3 Pro (Preview, Shutdown)",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
       "supports_responses_api": false,
-      "supports_reasoning_effort": true
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-09",
+      "deprecated": true,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-3.1-flash-image",
+      "display_name": "Nano Banana 2 (3.1 Flash Image)",
+      "context_window": 131072,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "image",
+        "text"
+      ],
+      "output_modalities": [
+        "image",
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-01",
+      "pricing": {
+        "input_per_1m": 0.5,
+        "output_per_1m": 3.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-3.1-flash-lite",
+      "display_name": "Gemini 3.1 Flash-Lite",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "file",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-01",
+      "pricing": {
+        "input_per_1m": 0.25,
+        "output_per_1m": 1.5,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-3.1-flash-lite-image",
+      "display_name": "Google: Nano Banana 2 Lite (Gemini 3.1 Flash Lite Image)",
+      "context_window": 65536,
+      "max_output_tokens": 66000,
+      "input_modalities": [
+        "image",
+        "text"
+      ],
+      "output_modalities": [
+        "image",
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-01-01",
+      "pricing": {
+        "input_per_1m": 0.25,
+        "output_per_1m": 1.5,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api"
     },
     {
       "provider": "google",
@@ -359,46 +673,178 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": "2025-01",
       "pricing": {
         "input_per_1m": 0.75,
         "output_per_1m": 4.5,
         "currency": "USD"
       },
+      "deprecated": false,
       "aliases": [],
-      "supports_google_api": true,
-      "supports_chat_completion": false,
-      "supports_responses_api": false
+      "license_type": "api"
     },
     {
       "provider": "google",
-      "model_id": "gemini-2.5-flash-native-audio-preview-12-2025",
-      "display_name": "Gemini 2.5 Flash Live (Preview)",
+      "model_id": "gemini-3.1-pro-preview",
+      "display_name": "Gemini 3.1 Pro (Preview)",
       "context_window": 1048576,
       "max_output_tokens": 65536,
       "input_modalities": [
+        "audio",
+        "file",
+        "image",
         "text",
-        "audio"
+        "video"
       ],
       "output_modalities": [
-        "text",
-        "audio"
+        "text"
       ],
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
-      "supports_vision": false,
+      "supports_vision": true,
       "supports_reasoning": true,
-      "knowledge_cutoff": "2025-06",
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-01",
       "pricing": {
-        "input_per_1m": 0.5,
-        "output_per_1m": 2.0,
+        "input_per_1m": 2.0,
+        "output_per_1m": 12.0,
         "currency": "USD"
       },
+      "deprecated": false,
       "aliases": [],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-3.1-pro-preview-customtools",
+      "display_name": "Google: Gemini 3.1 Pro Preview Custom Tools",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "audio",
+        "image",
+        "video",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
       "supports_google_api": true,
-      "supports_chat_completion": false,
-      "supports_responses_api": false
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 12.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-3.5-flash",
+      "display_name": "Gemini 3.5 Flash",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "file",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-01-01",
+      "pricing": {
+        "input_per_1m": 1.5,
+        "output_per_1m": 9.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-embedding-001",
+      "display_name": "Gemini Embedding",
+      "context_window": 2048,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embedding"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.15,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "text-embedding-005",
+        "text-embedding-004",
+        "text-embedding-preview-0815"
+      ],
+      "license_type": "api"
     },
     {
       "provider": "google",
@@ -415,270 +861,329 @@
       "output_modalities": [
         "embedding"
       ],
-      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
       "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
         "input_per_1m": 0.2,
         "currency": "USD"
       },
+      "deprecated": false,
       "aliases": [],
-      "supports_google_api": false,
-      "supports_responses_api": false
+      "license_type": "api"
     },
     {
       "provider": "google",
-      "model_id": "gemini-embedding-001",
-      "display_name": "Gemini Embedding",
-      "context_window": 2048,
-      "max_output_tokens": 0,
+      "model_id": "gemma-2-27b-it",
+      "display_name": "Google: Gemma 2 27B",
+      "context_window": 8192,
+      "max_output_tokens": 2048,
       "input_modalities": [
         "text"
       ],
       "output_modalities": [
-        "embedding"
+        "text"
       ],
-      "supports_chat_completion": false,
-      "knowledge_cutoff": null,
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-06-30",
       "pricing": {
-        "input_per_1m": 0.15,
+        "input_per_1m": 0.65,
+        "output_per_1m": 0.65,
         "currency": "USD"
       },
-      "aliases": [
-        "text-embedding-005",
-        "text-embedding-004",
-        "text-embedding-preview-0815"
-      ],
-      "supports_google_api": false,
-      "supports_responses_api": false
-    },
-    {
-      "provider": "google",
-      "model_id": "gemini-2.0-flash",
-      "display_name": "Gemini 2.0 Flash (Shutdown)",
-      "context_window": 1048576,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text",
-        "image",
-        "audio",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "knowledge_cutoff": "2024-08",
-      "aliases": [
-        "gemini-2.0-flash-001"
-      ],
-      "deprecated": true,
-      "supports_google_api": true,
-      "supports_chat_completion": false,
-      "supports_responses_api": false
-    },
-    {
-      "provider": "google",
-      "model_id": "gemini-2.0-flash-lite",
-      "display_name": "Gemini 2.0 Flash-Lite (Shutdown)",
-      "context_window": 1048576,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text",
-        "image",
-        "audio",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "knowledge_cutoff": "2024-08",
-      "aliases": [
-        "gemini-2.0-flash-lite-001"
-      ],
-      "deprecated": true,
-      "supports_google_api": true,
-      "supports_chat_completion": false,
-      "supports_responses_api": false
-    },
-    {
-      "provider": "google",
-      "model_id": "gemini-1.5-pro",
-      "display_name": "Gemini 1.5 Pro",
-      "context_window": 2097152,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text",
-        "image",
-        "audio",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "knowledge_cutoff": "2024-05",
-      "aliases": [
-        "gemini-1.5-pro-002",
-        "gemini-1.5-pro-preview-0409"
-      ],
-      "deprecated": true,
-      "supports_google_api": true,
-      "supports_chat_completion": false,
-      "supports_responses_api": false
-    },
-    {
-      "provider": "google",
-      "model_id": "gemini-1.5-flash",
-      "display_name": "Gemini 1.5 Flash",
-      "context_window": 1048576,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text",
-        "image",
-        "audio",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "knowledge_cutoff": "2024-05",
-      "aliases": [
-        "gemini-1.5-flash-002",
-        "gemini-1.5-flash-preview-0409"
-      ],
-      "deprecated": true,
-      "supports_google_api": true,
-      "supports_chat_completion": false,
-      "supports_responses_api": false
-    },
-    {
-      "provider": "google",
-      "model_id": "gemini-3-pro-preview",
-      "display_name": "Gemini 3 Pro (Preview, Shutdown)",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text",
-        "image",
-        "audio",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "knowledge_cutoff": "2025-09",
+      "deprecated": false,
       "aliases": [],
-      "deprecated": true,
-      "supports_google_api": true,
-      "supports_chat_completion": false,
-      "supports_responses_api": false
+      "license_type": "api"
     },
     {
       "provider": "google",
-      "model_id": "multimodal-embedding",
-      "display_name": "Google Multimodal Embedding (Legacy)",
-      "context_window": 8192,
-      "max_output_tokens": 0,
+      "model_id": "gemma-3",
+      "display_name": "Google Gemma 3",
+      "context_window": 32768,
+      "max_output_tokens": 8192,
       "input_modalities": [
         "text",
         "image"
       ],
       "output_modalities": [
-        "embedding"
+        "text"
       ],
-      "supports_chat_completion": false,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
       "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": null,
+      "deprecated": false,
       "aliases": [
-        "multimodalembedding"
+        "google/gemma-3",
+        "gemma-3-270m",
+        "gemma-3-1b",
+        "gemma-3-4b",
+        "gemma-3-12b",
+        "gemma-3-27b",
+        "google/gemma-3-270m",
+        "google/gemma-3-1b",
+        "google/gemma-3-4b",
+        "google/gemma-3-12b",
+        "google/gemma-3-27b"
       ],
-      "deprecated": true,
-      "supports_google_api": false,
-      "supports_responses_api": false
+      "license_type": "free"
     },
     {
       "provider": "google",
-      "model_id": "gemini-3.1-flash-lite-image",
-      "display_name": "Google: Nano Banana 2 Lite (Gemini 3.1 Flash Lite Image)",
-      "context_window": 65536,
-      "max_output_tokens": 66000,
+      "model_id": "gemma-3-12b-it",
+      "display_name": "Google: Gemma 3 12B",
+      "context_window": 131072,
+      "max_output_tokens": 16384,
       "input_modalities": [
-        "image",
-        "text"
+        "text",
+        "image"
       ],
       "output_modalities": [
-        "image",
         "text"
       ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
       "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-08-31",
+      "pricing": {
+        "input_per_1m": 0.05,
+        "output_per_1m": 0.15,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "gemma-3-27b-it",
+      "display_name": "Google: Gemma 3 27B",
+      "context_window": 131072,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-08-31",
+      "pricing": {
+        "input_per_1m": 0.08,
+        "output_per_1m": 0.16,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "gemma-3-4b-it",
+      "display_name": "Google: Gemma 3 4B",
+      "context_window": 131072,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_function_calling": false,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_reasoning_effort": true,
-      "knowledge_cutoff": "2025-01-01",
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-08-31",
       "pricing": {
-        "input_per_1m": 0.25,
-        "output_per_1m": 1.5,
+        "input_per_1m": 0.05,
+        "output_per_1m": 0.1,
         "currency": "USD"
       },
+      "deprecated": false,
       "aliases": [],
-      "deprecated": false
+      "license_type": "api"
     },
     {
       "provider": "google",
-      "model_id": "gemma-4-26b-a4b-it:free",
-      "display_name": "Google: Gemma 4 26B A4B  (free)",
-      "context_window": 262144,
-      "max_output_tokens": 32768,
+      "model_id": "gemma-3n",
+      "display_name": "Google Gemma 3n",
+      "context_window": 32768,
+      "max_output_tokens": 8192,
       "input_modalities": [
-        "image",
         "text",
-        "video"
+        "image"
       ],
       "output_modalities": [
         "text"
       ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
       "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "google/gemma-3n",
+        "gemma-3n-4.5b",
+        "gemma-3n-6.9b",
+        "google/gemma-3n-4.5b",
+        "google/gemma-3n-6.9b"
+      ],
+      "license_type": "free"
+    },
+    {
+      "provider": "google",
+      "model_id": "gemma-3n-e4b-it",
+      "display_name": "Google: Gemma 3n 4B",
+      "context_window": 32768,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-08-31",
+      "pricing": {
+        "input_per_1m": 0.06,
+        "output_per_1m": 0.12,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "gemma-4",
+      "display_name": "Google Gemma 4",
+      "context_window": 256000,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "aliases": [],
-      "deprecated": false
+      "deprecated": false,
+      "aliases": [
+        "google/gemma-4",
+        "google/gemma-4-e2b",
+        "google/gemma-4-e4b",
+        "google/gemma-4-12b",
+        "google/gemma-4-26b-a4b",
+        "google/gemma-4-31b",
+        "gemma-4-e2b",
+        "gemma-4-e4b",
+        "gemma-4-12b",
+        "gemma-4-26b-a4b",
+        "gemma-4-31b"
+      ],
+      "license_type": "free"
     },
     {
       "provider": "google",
@@ -694,28 +1199,35 @@
       "output_modalities": [
         "text"
       ],
-      "supports_chat_completion": true,
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
       "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
         "input_per_1m": 0.06,
         "output_per_1m": 0.33,
         "currency": "USD"
       },
+      "deprecated": false,
       "aliases": [],
-      "deprecated": false
+      "license_type": "api"
     },
     {
       "provider": "google",
-      "model_id": "gemma-4-31b-it:free",
-      "display_name": "Google: Gemma 4 31B (free)",
+      "model_id": "gemma-4-26b-a4b-it:free",
+      "display_name": "Google: Gemma 4 26B A4B  (free)",
       "context_window": 262144,
-      "max_output_tokens": 8192,
+      "max_output_tokens": 32768,
       "input_modalities": [
         "image",
         "text",
@@ -724,21 +1236,28 @@
       "output_modalities": [
         "text"
       ],
-      "supports_chat_completion": true,
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
       "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
         "input_per_1m": 0.0,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
+      "deprecated": false,
       "aliases": [],
-      "deprecated": false
+      "license_type": "free"
     },
     {
       "provider": "google",
@@ -754,25 +1273,1143 @@
       "output_modalities": [
         "text"
       ],
-      "supports_chat_completion": true,
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
       "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
         "input_per_1m": 0.12,
         "output_per_1m": 0.35,
         "currency": "USD"
       },
+      "deprecated": false,
       "aliases": [],
-      "deprecated": false
+      "license_type": "api"
     },
     {
       "provider": "google",
-      "model_id": "lyria-3-pro-preview",
+      "model_id": "gemma-4-31b-it:free",
+      "display_name": "Google: Gemma 4 31B (free)",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "image",
+        "text",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "google",
+      "model_id": "google-gemma-4-26b-a4b-it",
+      "display_name": "google-gemma-4-26b-a4b-it",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "google",
+      "model_id": "google-gemma-4-31b-it",
+      "display_name": "google-gemma-4-31b-it",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "google",
+      "model_id": "google-gemma-4-e2b-it",
+      "display_name": "google-gemma-4-e2b-it",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "google",
+      "model_id": "google-gemma-4-e4b-it",
+      "display_name": "google-gemma-4-e4b-it",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemini-2.5-flash",
+      "display_name": "Google: Gemini 2.5 Flash",
+      "context_window": 1048576,
+      "max_output_tokens": 65535,
+      "input_modalities": [
+        "file",
+        "image",
+        "text",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-01-31",
+      "pricing": {
+        "input_per_1m": 0.3,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemini-2.5-flash"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemini-2.5-flash-image",
+      "display_name": "Google: Nano Banana (Gemini 2.5 Flash Image)",
+      "context_window": 32768,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "image",
+        "text"
+      ],
+      "output_modalities": [
+        "image",
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-01-31",
+      "pricing": {
+        "input_per_1m": 0.3,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemini-2.5-flash-image"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemini-2.5-flash-lite",
+      "display_name": "Google: Gemini 2.5 Flash Lite",
+      "context_window": 1048576,
+      "max_output_tokens": 65535,
+      "input_modalities": [
+        "text",
+        "image",
+        "file",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-01-31",
+      "pricing": {
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemini-2.5-flash-lite"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemini-2.5-flash-lite-preview-09-2025",
+      "display_name": "Google: Gemini 2.5 Flash Lite Preview 09-2025",
+      "context_window": 1048576,
+      "max_output_tokens": 65535,
+      "input_modalities": [
+        "text",
+        "image",
+        "file",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-01-31",
+      "pricing": {
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemini-2.5-flash-lite-preview-09-2025"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemini-2.5-pro",
+      "display_name": "Google: Gemini 2.5 Pro",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "file",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-01-31",
+      "pricing": {
+        "input_per_1m": 1.25,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemini-2.5-pro"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemini-2.5-pro-preview",
+      "display_name": "Google: Gemini 2.5 Pro Preview 06-05",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "file",
+        "image",
+        "text",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-01-31",
+      "pricing": {
+        "input_per_1m": 1.25,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemini-2.5-pro-preview"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemini-2.5-pro-preview-05-06",
+      "display_name": "Google: Gemini 2.5 Pro Preview 05-06",
+      "context_window": 1048576,
+      "max_output_tokens": 65535,
+      "input_modalities": [
+        "text",
+        "image",
+        "file",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-01-31",
+      "pricing": {
+        "input_per_1m": 1.25,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemini-2.5-pro-preview-05-06"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemini-3-flash-preview",
+      "display_name": "Google: Gemini 3 Flash Preview",
+      "context_window": 1048576,
+      "max_output_tokens": 65535,
+      "input_modalities": [
+        "text",
+        "image",
+        "file",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.5,
+        "output_per_1m": 3.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemini-3-flash-preview"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemini-3-pro-image",
+      "display_name": "Google: Nano Banana Pro (Gemini 3 Pro Image)",
+      "context_window": 65536,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "image",
+        "text"
+      ],
+      "output_modalities": [
+        "image",
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 12.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemini-3-pro-image"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemini-3-pro-image-preview",
+      "display_name": "Google: Nano Banana Pro (Gemini 3 Pro Image Preview)",
+      "context_window": 65536,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "image",
+        "text"
+      ],
+      "output_modalities": [
+        "image",
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 12.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemini-3-pro-image-preview"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemini-3.1-flash-image",
+      "display_name": "Google: Nano Banana 2 (Gemini 3.1 Flash Image)",
+      "context_window": 131072,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "image",
+        "text"
+      ],
+      "output_modalities": [
+        "image",
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.5,
+        "output_per_1m": 3.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemini-3.1-flash-image"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemini-3.1-flash-image-preview",
+      "display_name": "Google: Nano Banana 2 (Gemini 3.1 Flash Image Preview)",
+      "context_window": 131072,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "image",
+        "text"
+      ],
+      "output_modalities": [
+        "image",
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.5,
+        "output_per_1m": 3.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemini-3.1-flash-image-preview"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemini-3.1-flash-lite",
+      "display_name": "Google: Gemini 3.1 Flash Lite",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "file",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.25,
+        "output_per_1m": 1.5,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemini-3.1-flash-lite"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemini-3.1-flash-lite-image",
+      "display_name": "Google: Nano Banana 2 Lite (Gemini 3.1 Flash Lite Image)",
+      "context_window": 65536,
+      "max_output_tokens": 66000,
+      "input_modalities": [
+        "image",
+        "text"
+      ],
+      "output_modalities": [
+        "image",
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-01-01",
+      "pricing": {
+        "input_per_1m": 0.25,
+        "output_per_1m": 1.5,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemini-3.1-flash-lite-image"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemini-3.1-flash-lite-preview",
+      "display_name": "Google: Gemini 3.1 Flash Lite Preview",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "file",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.25,
+        "output_per_1m": 1.5,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemini-3.1-flash-lite-preview"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemini-3.1-pro-preview",
+      "display_name": "Google: Gemini 3.1 Pro Preview",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "audio",
+        "file",
+        "image",
+        "text",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 12.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemini-3.1-pro-preview"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemini-3.1-pro-preview-customtools",
+      "display_name": "Google: Gemini 3.1 Pro Preview Custom Tools",
+      "context_window": 1048756,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "audio",
+        "image",
+        "video",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 12.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemini-3.1-pro-preview-customtools"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemini-3.5-flash",
+      "display_name": "Google: Gemini 3.5 Flash",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "file",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-01-01",
+      "pricing": {
+        "input_per_1m": 1.5,
+        "output_per_1m": 9.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemini-3.5-flash"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemma-2-27b-it",
+      "display_name": "Google: Gemma 2 27B",
+      "context_window": 8192,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-06-30",
+      "pricing": {
+        "input_per_1m": 0.65,
+        "output_per_1m": 0.65,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemma-2-27b-it"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemma-3-4b-it",
+      "display_name": "Google: Gemma 3 4B",
+      "context_window": 131072,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-08-31",
+      "pricing": {
+        "input_per_1m": 0.05,
+        "output_per_1m": 0.1,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemma-3-4b-it"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemma-3n-e4b-it",
+      "display_name": "Google: Gemma 3n 4B",
+      "context_window": 32768,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-08-31",
+      "pricing": {
+        "input_per_1m": 0.06,
+        "output_per_1m": 0.12,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemma-3n-e4b-it"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemma-4-26b-a4b-it:free",
+      "display_name": "Google: Gemma 4 26B A4B  (free)",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "image",
+        "text",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemma-4-26b-a4b-it:free"
+      ],
+      "license_type": "free"
+    },
+    {
+      "provider": "google",
+      "model_id": "google/gemma-4-31b-it:free",
+      "display_name": "Google: Gemma 4 31B (free)",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "image",
+        "text",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemma-4-31b-it:free"
+      ],
+      "license_type": "free"
+    },
+    {
+      "provider": "google",
+      "model_id": "google/lyria-3-clip-preview",
+      "display_name": "Google: Lyria 3 Clip Preview",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text",
+        "audio"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/lyria-3-clip-preview"
+      ],
+      "license_type": "free"
+    },
+    {
+      "provider": "google",
+      "model_id": "google/lyria-3-pro-preview",
       "display_name": "Google: Lyria 3 Pro Preview",
       "context_window": 1048576,
       "max_output_tokens": 65536,
@@ -784,21 +2421,60 @@
         "text",
         "audio"
       ],
-      "supports_chat_completion": true,
       "supports_function_calling": false,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
       "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
         "input_per_1m": 0.0,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
+      "deprecated": false,
+      "aliases": [
+        "google/lyria-3-pro-preview"
+      ],
+      "license_type": "free"
+    },
+    {
+      "provider": "google",
+      "model_id": "lilarest-gemma-4-31b-it-nvfp4-turbo",
+      "display_name": "lilarest-gemma-4-31b-it-nvfp4-turbo",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
       "aliases": [],
-      "deprecated": false
+      "license_type": "free"
     },
     {
       "provider": "google",
@@ -814,260 +2490,197 @@
         "text",
         "audio"
       ],
-      "supports_chat_completion": true,
       "supports_function_calling": false,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
       "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
         "input_per_1m": 0.0,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
+      "deprecated": false,
       "aliases": [],
-      "deprecated": false
+      "license_type": "free"
     },
     {
       "provider": "google",
-      "model_id": "gemini-3.1-pro-preview-customtools",
-      "display_name": "Google: Gemini 3.1 Pro Preview Custom Tools",
-      "context_window": 1048756,
+      "model_id": "lyria-3-pro-preview",
+      "display_name": "Google: Lyria 3 Pro Preview",
+      "context_window": 1048576,
       "max_output_tokens": 65536,
       "input_modalities": [
         "text",
-        "audio",
-        "image",
-        "video",
-        "file"
+        "image"
       ],
       "output_modalities": [
-        "text"
+        "text",
+        "audio"
       ],
-      "supports_chat_completion": true,
-      "supports_function_calling": true,
+      "supports_function_calling": false,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_reasoning_effort": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 2.0,
-        "output_per_1m": 12.0,
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
         "currency": "USD"
       },
+      "deprecated": false,
       "aliases": [],
-      "deprecated": false
+      "license_type": "free"
     },
     {
       "provider": "google",
-      "model_id": "gemini-2.5-flash-lite-preview-09-2025",
-      "display_name": "Google: Gemini 2.5 Flash Lite Preview 09-2025",
-      "context_window": 1048576,
-      "max_output_tokens": 65535,
+      "model_id": "medgemma-1.5",
+      "display_name": "Google MedGemma 1.5",
+      "context_window": 32768,
+      "max_output_tokens": 8192,
       "input_modalities": [
         "text",
-        "image",
-        "file",
-        "audio",
-        "video"
+        "image"
       ],
       "output_modalities": [
         "text"
       ],
-      "supports_chat_completion": true,
-      "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_reasoning_effort": true,
-      "knowledge_cutoff": "2025-01-31",
-      "pricing": {
-        "input_per_1m": 0.1,
-        "output_per_1m": 0.4,
-        "currency": "USD"
-      },
-      "aliases": [],
-      "deprecated": false
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "google/medgemma-1.5",
+        "medgemma-1.5-4b"
+      ],
+      "license_type": "free"
     },
     {
       "provider": "google",
-      "model_id": "gemma-3n-e4b-it",
-      "display_name": "Google: Gemma 3n 4B",
-      "context_window": 32768,
+      "model_id": "multimodal-embedding",
+      "display_name": "Google Multimodal Embedding (Legacy)",
+      "context_window": 8192,
       "max_output_tokens": 0,
       "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "embedding"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [
+        "multimodalembedding"
+      ],
+      "license_type": "license"
+    },
+    {
+      "provider": "google",
+      "model_id": "redhatai-gemma-4-31b-it-nvfp4",
+      "display_name": "redhatai-gemma-4-31b-it-nvfp4",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
         "text"
       ],
       "output_modalities": [
         "text"
       ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
       "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "google",
+      "model_id": "translategemma",
+      "display_name": "Google TranslateGemma",
+      "context_window": 32768,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_function_calling": false,
-      "supports_json_mode": true,
+      "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": false,
-      "supports_reasoning_effort": false,
-      "knowledge_cutoff": "2024-08-31",
-      "pricing": {
-        "input_per_1m": 0.06,
-        "output_per_1m": 0.12,
-        "currency": "USD"
-      },
-      "aliases": [],
-      "deprecated": false
-    },
-    {
-      "provider": "google",
-      "model_id": "gemini-2.5-pro-preview-05-06",
-      "display_name": "Google: Gemini 2.5 Pro Preview 05-06",
-      "context_window": 1048576,
-      "max_output_tokens": 65535,
-      "input_modalities": [
-        "text",
-        "image",
-        "file",
-        "audio",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
       "supports_chat_completion": true,
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_reasoning_effort": true,
-      "knowledge_cutoff": "2025-01-31",
-      "pricing": {
-        "input_per_1m": 1.25,
-        "output_per_1m": 10.0,
-        "currency": "USD"
-      },
-      "aliases": [],
-      "deprecated": false
-    },
-    {
-      "provider": "google",
-      "model_id": "gemma-3-4b-it",
-      "display_name": "Google: Gemma 3 4B",
-      "context_window": 131072,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
+      "supports_responses_api": false,
       "supports_reasoning_effort": false,
-      "knowledge_cutoff": "2024-08-31",
-      "pricing": {
-        "input_per_1m": 0.05,
-        "output_per_1m": 0.1,
-        "currency": "USD"
-      },
-      "aliases": [],
-      "deprecated": false
-    },
-    {
-      "provider": "google",
-      "model_id": "gemma-3-12b-it",
-      "display_name": "Google: Gemma 3 12B",
-      "context_window": 131072,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text",
-        "image"
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "google/translategemma",
+        "translategemma-4b",
+        "translategemma-12b",
+        "translategemma-27b"
       ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_reasoning_effort": false,
-      "knowledge_cutoff": "2024-08-31",
-      "pricing": {
-        "input_per_1m": 0.05,
-        "output_per_1m": 0.15,
-        "currency": "USD"
-      },
-      "aliases": [],
-      "deprecated": false
-    },
-    {
-      "provider": "google",
-      "model_id": "gemma-3-27b-it",
-      "display_name": "Google: Gemma 3 27B",
-      "context_window": 131072,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_reasoning_effort": false,
-      "knowledge_cutoff": "2024-08-31",
-      "pricing": {
-        "input_per_1m": 0.08,
-        "output_per_1m": 0.16,
-        "currency": "USD"
-      },
-      "aliases": [],
-      "deprecated": false
-    },
-    {
-      "provider": "google",
-      "model_id": "gemma-2-27b-it",
-      "display_name": "Google: Gemma 2 27B",
-      "context_window": 8192,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_reasoning_effort": false,
-      "knowledge_cutoff": "2024-06-30",
-      "pricing": {
-        "input_per_1m": 0.65,
-        "output_per_1m": 0.65,
-        "currency": "USD"
-      },
-      "aliases": [],
-      "deprecated": false
+      "license_type": "free"
     }
   ]
 }

@@ -2,178 +2,473 @@
   "models": [
     {
       "provider": "xai",
-      "model_id": "grok-4.3",
-      "display_name": "Grok 4.3",
-      "context_window": 1000000,
-      "max_output_tokens": 1000000,
-      "input_modalities": ["text", "image"],
-      "output_modalities": ["text"],
+      "model_id": "grok-3",
+      "display_name": "grok-3",
+      "context_window": 131072,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
       "supports_chat_completion": true,
-      "knowledge_cutoff": null,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
       "pricing": {
-        "input_per_1m": 1.25,
-        "output_per_1m": 2.5,
+        "input_per_1m": 0.3,
+        "output_per_1m": 1.5,
         "currency": "USD"
       },
-      "aliases": ["grok-4.3-latest", "x-ai/grok-4.3"]
+      "license_type": "api"
     },
     {
       "provider": "xai",
-      "model_id": "grok-build-0.1",
-      "display_name": "Grok Build 0.1",
-      "context_window": 256000,
-      "max_output_tokens": 256000,
-      "input_modalities": ["text", "image"],
-      "output_modalities": ["text"],
+      "model_id": "grok-3-mini",
+      "display_name": "grok-3-mini",
+      "context_window": 131072,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
       "supports_reasoning": true,
-      "supports_reasoning_effort": true,
       "supports_chat_completion": true,
-      "knowledge_cutoff": null,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
       "pricing": {
-        "input_per_1m": 1.0,
+        "input_per_1m": 0.3,
+        "output_per_1m": 1.5,
+        "currency": "USD"
+      },
+      "license_type": "api"
+    },
+    {
+      "provider": "xai",
+      "model_id": "grok-4",
+      "display_name": "grok-4",
+      "context_window": 131072,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "pricing": {
+        "input_per_1m": 0.5,
         "output_per_1m": 2.0,
         "currency": "USD"
       },
-      "aliases": ["grok-build-0.1-latest", "x-ai/grok-build-0.1"]
+      "license_type": "api"
     },
     {
       "provider": "xai",
-      "model_id": "grok-4.20-reasoning",
-      "display_name": "Grok 4.20 Reasoning",
-      "context_window": 2000000,
-      "max_output_tokens": 1000000,
-      "input_modalities": ["text", "image", "file"],
-      "output_modalities": ["text"],
+      "model_id": "grok-4-1-fast-non-reasoning",
+      "display_name": "grok-4-1-fast-non-reasoning",
+      "context_window": 131072,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_reasoning_effort": true,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": "2025-09",
-      "pricing": {
-        "input_per_1m": 1.25,
-        "output_per_1m": 2.5,
-        "currency": "USD"
-      },
-      "aliases": ["grok-4.20", "x-ai/grok-4.20", "grok-4.20-0309-reasoning"]
-    },
-    {
-      "provider": "xai",
-      "model_id": "grok-4.20-non-reasoning",
-      "display_name": "Grok 4.20 Non-Reasoning",
-      "context_window": 2000000,
-      "max_output_tokens": 1000000,
-      "input_modalities": ["text", "image", "file"],
-      "output_modalities": ["text"],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_reasoning_effort": false,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": "2025-09",
-      "pricing": {
-        "input_per_1m": 1.25,
-        "output_per_1m": 2.5,
-        "currency": "USD"
-      },
-      "aliases": ["grok-4.20-0309-non-reasoning"]
-    },
-    {
-      "provider": "xai",
-      "model_id": "grok-4.20-multi-agent",
-      "display_name": "Grok 4.20 Multi-Agent",
-      "context_window": 2000000,
-      "max_output_tokens": 1000000,
-      "input_modalities": ["text", "image", "file"],
-      "output_modalities": ["text"],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_reasoning_effort": true,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": "2025-09",
-      "pricing": {
-        "input_per_1m": 1.25,
-        "output_per_1m": 2.5,
-        "currency": "USD"
-      },
-      "aliases": ["grok-4.20-multi-agent-0309", "x-ai/grok-4.20-multi-agent"]
-    },
-    {
-      "provider": "xai",
-      "model_id": "grok-imagine-image",
-      "display_name": "Grok Imagine Image",
-      "context_window": 65536,
-      "max_output_tokens": 0,
-      "input_modalities": ["text", "image"],
-      "output_modalities": ["image"],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "knowledge_cutoff": null,
-      "pricing": {
-        "per_image": 0.02,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "xai",
-      "model_id": "grok-imagine-video",
-      "display_name": "Grok Imagine Video",
-      "context_window": 65536,
-      "max_output_tokens": 0,
-      "input_modalities": ["text", "image"],
-      "output_modalities": ["video"],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "knowledge_cutoff": null,
-      "pricing": {
-        "per_second": 0.05,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "xai",
-      "model_id": "grok-realtime",
-      "display_name": "Grok Realtime API",
-      "context_window": 32000,
-      "max_output_tokens": 0,
-      "input_modalities": ["text", "audio"],
-      "output_modalities": ["text", "audio"],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
+      "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "pricing": {
+        "input_per_1m": 0.5,
+        "output_per_1m": 2.0,
+        "currency": "USD"
+      },
+      "license_type": "api"
+    },
+    {
+      "provider": "xai",
+      "model_id": "grok-4-1-fast-reasoning",
+      "display_name": "grok-4-1-fast-reasoning",
+      "context_window": 131072,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "pricing": {
+        "input_per_1m": 0.5,
+        "output_per_1m": 2.0,
+        "currency": "USD"
+      },
+      "license_type": "api"
+    },
+    {
+      "provider": "xai",
+      "model_id": "grok-4-20-non-reasoning",
+      "display_name": "grok-4-20-non-reasoning",
+      "context_window": 131072,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "pricing": {
+        "input_per_1m": 0.5,
+        "output_per_1m": 2.0,
+        "currency": "USD"
+      },
+      "license_type": "api"
+    },
+    {
+      "provider": "xai",
+      "model_id": "grok-4-20-reasoning",
+      "display_name": "grok-4-20-reasoning",
+      "context_window": 131072,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "pricing": {
+        "input_per_1m": 0.5,
+        "output_per_1m": 2.0,
+        "currency": "USD"
+      },
+      "license_type": "api"
+    },
+    {
+      "provider": "xai",
+      "model_id": "grok-code-fast-1",
+      "display_name": "Grok Code Fast 1",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "xai",
+      "model_id": "x-ai/grok-4.20",
+      "display_name": "xAI: Grok 4.20",
+      "context_window": 2000000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-09-01",
+      "pricing": {
+        "input_per_1m": 3.0,
+        "output_per_1m": 15.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "x-ai/grok-4.20"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "xai",
+      "model_id": "x-ai/grok-4.20-multi-agent",
+      "display_name": "xAI: Grok 4.20 Multi-Agent",
+      "context_window": 2000000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-09-01",
+      "pricing": {
+        "input_per_1m": 3.0,
+        "output_per_1m": 15.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "x-ai/grok-4.20-multi-agent"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "xai",
+      "model_id": "x-ai/grok-4.3",
+      "display_name": "xAI: Grok 4.3",
+      "context_window": 500000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "per_minute": 0.05,
+        "input_per_1m": 1.5,
+        "output_per_1m": 5.0,
         "currency": "USD"
-      }
+      },
+      "deprecated": false,
+      "aliases": [
+        "x-ai/grok-4.3"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "xai",
+      "model_id": "x-ai/grok-4.5",
+      "display_name": "xAI: Grok 4.5",
+      "context_window": 500000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 6.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "x-ai/grok-4.5"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "xai",
+      "model_id": "x-ai/grok-build-0.1",
+      "display_name": "xAI: Grok Build 0.1",
+      "context_window": 1000000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 8.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "x-ai/grok-build-0.1"
+      ],
+      "license_type": "api"
     }
   ]
 }

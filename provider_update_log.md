@@ -126,3 +126,67 @@
 
 ### LMStudio Catalog
 - Preserved as-is (community catalog of open-weight models)
+
+## OpenAI (2026-07-11)
+
+### Source
+- Official OpenAI API Documentation: https://developers.openai.com/api/docs/models
+- Pricing page: https://developers.openai.com/api/docs/pricing
+- Method: Playwright (headless browser) for JavaScript-rendered pages
+
+### Models Updated
+23 models total
+
+### Changes
+- Added GPT-5.6 Sol/Terra/Luna (flagship models, context=1.05M, max_output=128K, reasoning effort supported)
+- Added GPT-5.5, GPT-5.5 Pro
+- Added GPT-5.4, GPT-5.4 Mini, GPT-5.4 Nano, GPT-5.4 Pro
+- Added GPT Image 2, GPT-Realtime 2.1/Mini, GPT-4o Transcribe/Mini Transcribe
+- Added GPT-5.3 Codex, Sora 2
+- Removed: gpt-4o, gpt-4o-mini, gpt-4.1 series (deprecated by OpenAI)
+- Pricing updated to latest (2026-07)
+
+## Bulk Update via OpenRouter API (2026-07-11)
+
+### Source
+- OpenRouter API: https://openrouter.ai/api/v1/models
+- Method: fetch_openrouter(cache_ttl=0) via llmcapa
+
+### Models Updated
+- amazon: 21 models
+- anthropic: 36 models
+- deepseek: 18 models
+- google: 71 models
+- meta: 2 models
+- microsoft: 57 models
+- mistral: 15 models
+- novita: 115 models
+- nvidia: 68 models
+- openai: 88 models
+- openrouter: 14 models
+- qwen: 34 models
+- sakana: 2 models
+- xai: 5 models
+- xiaomi: 5 models
+
+### Notes
+- All provider data refreshed from OpenRouter API (accurate pricing, context windows, capabilities)
+- Provider parameter is now required for search() to avoid cross-provider ambiguity
+- Ollama data (1,638 models) preserved as local-only (not available via OpenRouter)
+- Japanese domestic providers (NTT, ELYZA, SoftBank, NEC, Fujitsu, PFN) preserved from previous bundled data
+- LMStudio catalog preserved from previous bundled data
+
+## Fixes Applied (2026-07-11)
+
+### Source
+- Anthropic: https://platform.claude.com/docs/en/about-claude/pricing (Playwright)
+- DeepSeek: https://api-docs.deepseek.com/quick_start/pricing (Playwright)
+- FIM flags: pattern-based for code completion models
+- Responses API: restricted to OpenAI/Azure only
+
+### Changes
+- **Anthropic**: 9 models updated with official pricing (Fable 5 $10/$50, Opus 4.8 $5/$25, Sonnet 5 $3/$15, Haiku 4.5 $1/$5)
+- **DeepSeek**: 2 models updated with official pricing (v4-flash $0.14/$0.28, v4-pro $0.435/$0.87)
+- **FIM flags**: 0 models corrected (codegemma, codellama, starcoder2, deepseek-coder, qwen-coder, etc.)
+- **Responses API**: 0 non-OpenAI/Azure models set to False
+- **Provider names**: meta-llama->meta, x-ai->xai (consolidated)

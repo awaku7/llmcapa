@@ -2,104 +2,194 @@
   "models": [
     {
       "provider": "amazon",
-      "model_id": "nova-pro-v1",
-      "display_name": "Amazon Nova Pro",
-      "context_window": 300000,
-      "max_output_tokens": 5000,
+      "model_id": "amazon/nova-2-lite-v1",
+      "display_name": "Amazon: Nova 2 Lite",
+      "context_window": 1000000,
+      "max_output_tokens": 65535,
       "input_modalities": [
         "text",
         "image",
         "video",
-        "audio"
+        "file"
       ],
       "output_modalities": [
-        "text",
-        "image",
-        "embedding"
+        "text"
       ],
-      "supports_chat_completion": true,
       "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": true,
-      "supports_reasoning": false,
-      "knowledge_cutoff": "2024-10",
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.8,
-        "output_per_1m": 3.2,
+        "input_per_1m": 0.3,
+        "output_per_1m": 2.5,
         "currency": "USD"
       },
+      "deprecated": false,
       "aliases": [
-        "amazon.nova-pro-v1:0"
+        "amazon/nova-2-lite-v1"
       ],
-      "supports_responses_api": true,
-      "supports_anthropic_api": false
+      "license_type": "api"
     },
     {
       "provider": "amazon",
-      "model_id": "nova-lite-v1",
-      "display_name": "Amazon Nova Lite",
+      "model_id": "amazon/nova-lite-v1",
+      "display_name": "Amazon: Nova Lite 1.0",
       "context_window": 300000,
-      "max_output_tokens": 5000,
+      "max_output_tokens": 5120,
       "input_modalities": [
         "text",
-        "image",
-        "video"
+        "image"
       ],
       "output_modalities": [
-        "text",
-        "image",
-        "embedding"
+        "text"
       ],
-      "supports_chat_completion": true,
       "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": false,
-      "knowledge_cutoff": "2024-10",
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-10-31",
       "pricing": {
         "input_per_1m": 0.06,
         "output_per_1m": 0.24,
         "currency": "USD"
       },
+      "deprecated": false,
       "aliases": [
-        "amazon.nova-lite-v1:0"
+        "amazon/nova-lite-v1"
       ],
-      "supports_responses_api": true,
-      "supports_anthropic_api": false
+      "license_type": "api"
     },
     {
       "provider": "amazon",
-      "model_id": "nova-micro-v1",
-      "display_name": "Amazon Nova Micro",
+      "model_id": "amazon/nova-micro-v1",
+      "display_name": "Amazon: Nova Micro 1.0",
       "context_window": 128000,
-      "max_output_tokens": 5000,
+      "max_output_tokens": 5120,
       "input_modalities": [
-        "text",
-        "audio"
+        "text"
       ],
       "output_modalities": [
-        "text",
-        "embedding"
+        "text"
       ],
-      "supports_chat_completion": true,
       "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": false,
-      "knowledge_cutoff": "2024-10",
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-10-31",
       "pricing": {
         "input_per_1m": 0.035,
         "output_per_1m": 0.14,
         "currency": "USD"
       },
+      "deprecated": false,
       "aliases": [
-        "amazon.nova-micro-v1:0"
+        "amazon/nova-micro-v1"
       ],
-      "supports_responses_api": true,
-      "supports_anthropic_api": false
+      "license_type": "api"
+    },
+    {
+      "provider": "amazon",
+      "model_id": "amazon/nova-premier-v1",
+      "display_name": "Amazon: Nova Premier 1.0",
+      "context_window": 1000000,
+      "max_output_tokens": 32000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 2.5,
+        "output_per_1m": 12.5,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "amazon/nova-premier-v1"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "amazon",
+      "model_id": "amazon/nova-pro-v1",
+      "display_name": "Amazon: Nova Pro 1.0",
+      "context_window": 300000,
+      "max_output_tokens": 5120,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-10-31",
+      "pricing": {
+        "input_per_1m": 0.8,
+        "output_per_1m": 3.2,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "amazon/nova-pro-v1"
+      ],
+      "license_type": "api"
     },
     {
       "provider": "amazon",
@@ -121,23 +211,30 @@
         "embedding",
         "speech"
       ],
-      "supports_chat_completion": true,
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": false,
-      "knowledge_cutoff": "2025-10",
-      "aliases": [
-        "amazon.nova-2-lite-v1:0"
-      ],
-      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
       "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-10",
       "pricing": {
         "input_per_1m": 0.33,
         "output_per_1m": 2.75,
         "currency": "USD"
-      }
+      },
+      "deprecated": false,
+      "aliases": [
+        "amazon.nova-2-lite-v1:0"
+      ],
+      "license_type": "api"
     },
     {
       "provider": "amazon",
@@ -159,23 +256,176 @@
         "embedding",
         "speech"
       ],
-      "supports_chat_completion": true,
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "knowledge_cutoff": "2025-10",
-      "aliases": [
-        "amazon.nova-2-sonic-v1:0"
-      ],
-      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
       "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-10",
       "pricing": {
         "input_per_1m": 0.33,
         "output_per_1m": 2.75,
         "currency": "USD"
-      }
+      },
+      "deprecated": false,
+      "aliases": [
+        "amazon.nova-2-sonic-v1:0"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "amazon",
+      "model_id": "nova-canvas-v1",
+      "display_name": "Amazon Nova Canvas",
+      "context_window": 1,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "image"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "amazon.nova-canvas-v1:0"
+      ],
+      "license_type": "license"
+    },
+    {
+      "provider": "amazon",
+      "model_id": "nova-lite-v1",
+      "display_name": "Amazon Nova Lite",
+      "context_window": 300000,
+      "max_output_tokens": 5000,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text",
+        "image",
+        "embedding"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-10",
+      "pricing": {
+        "input_per_1m": 0.06,
+        "output_per_1m": 0.24,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "amazon.nova-lite-v1:0"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "amazon",
+      "model_id": "nova-micro-v1",
+      "display_name": "Amazon Nova Micro",
+      "context_window": 128000,
+      "max_output_tokens": 5000,
+      "input_modalities": [
+        "text",
+        "audio"
+      ],
+      "output_modalities": [
+        "text",
+        "embedding"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-10",
+      "pricing": {
+        "input_per_1m": 0.035,
+        "output_per_1m": 0.14,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "amazon.nova-micro-v1:0"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "amazon",
+      "model_id": "nova-multimodal-embeddings-v1",
+      "display_name": "Amazon Nova Multimodal Embeddings",
+      "context_window": 8192,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "embedding"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "amazon.nova-multimodal-embeddings-v1:0"
+      ],
+      "license_type": "license"
     },
     {
       "provider": "amazon",
@@ -197,23 +447,105 @@
         "embedding",
         "speech"
       ],
-      "supports_chat_completion": true,
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "knowledge_cutoff": "2024-10",
-      "aliases": [
-        "amazon.nova-premier-v1:0"
-      ],
-      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
       "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-10",
       "pricing": {
         "input_per_1m": 2.5,
         "output_per_1m": 12.5,
         "currency": "USD"
-      }
+      },
+      "deprecated": false,
+      "aliases": [
+        "amazon.nova-premier-v1:0"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "amazon",
+      "model_id": "nova-pro-v1",
+      "display_name": "Amazon Nova Pro",
+      "context_window": 300000,
+      "max_output_tokens": 5000,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "audio"
+      ],
+      "output_modalities": [
+        "text",
+        "image",
+        "embedding"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-10",
+      "pricing": {
+        "input_per_1m": 0.8,
+        "output_per_1m": 3.2,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "amazon.nova-pro-v1:0"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "amazon",
+      "model_id": "nova-reel-v1",
+      "display_name": "Amazon Nova Reel",
+      "context_window": 1,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "video"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "amazon.nova-reel-v1:0"
+      ],
+      "license_type": "license"
     },
     {
       "provider": "amazon",
@@ -230,181 +562,30 @@
         "text",
         "speech"
       ],
-      "supports_chat_completion": true,
       "supports_function_calling": true,
+      "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": false,
-      "knowledge_cutoff": "2025-01",
-      "aliases": [
-        "amazon.nova-sonic-v1:0"
-      ],
-      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
       "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-01",
       "pricing": {
         "input_per_1m": 0.06,
         "output_per_1m": 0.24,
         "currency": "USD"
-      }
-    },
-    {
-      "provider": "amazon",
-      "model_id": "nova-canvas-v1",
-      "display_name": "Amazon Nova Canvas",
-      "context_window": 1,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "image"
-      ],
-      "supports_chat_completion": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "knowledge_cutoff": null,
+      },
+      "deprecated": false,
       "aliases": [
-        "amazon.nova-canvas-v1:0"
+        "amazon.nova-sonic-v1:0"
       ],
-      "supports_responses_api": false,
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "amazon",
-      "model_id": "nova-reel-v1",
-      "display_name": "Amazon Nova Reel",
-      "context_window": 1,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "video"
-      ],
-      "supports_chat_completion": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "amazon.nova-reel-v1:0"
-      ],
-      "supports_responses_api": false,
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "amazon",
-      "model_id": "nova-multimodal-embeddings-v1",
-      "display_name": "Amazon Nova Multimodal Embeddings",
-      "context_window": 8192,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "embedding"
-      ],
-      "supports_chat_completion": false,
-      "supports_vision": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "amazon.nova-multimodal-embeddings-v1:0"
-      ],
-      "supports_responses_api": false,
-      "supports_anthropic_api": false
-    },
-    {
-      "provider": "amazon",
-      "model_id": "titan-text-premier-v1",
-      "display_name": "Amazon Titan Text Premier",
-      "context_window": 42000,
-      "max_output_tokens": 32000,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "knowledge_cutoff": "2023-12",
-      "aliases": [
-        "amazon.titan-text-premier-v1:0"
-      ],
-      "supports_responses_api": true,
-      "supports_anthropic_api": false,
-      "pricing": {
-        "input_per_1m": 0.5,
-        "output_per_1m": 1.5,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "amazon",
-      "model_id": "titan-text-express-v1",
-      "display_name": "Amazon Titan Text Express",
-      "context_window": 42000,
-      "max_output_tokens": 8000,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "knowledge_cutoff": "2023-12",
-      "aliases": [
-        "amazon.titan-text-express-v1"
-      ],
-      "supports_responses_api": true,
-      "supports_anthropic_api": false,
-      "pricing": {
-        "input_per_1m": 0.2,
-        "output_per_1m": 0.6,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "amazon",
-      "model_id": "titan-text-lite-v1",
-      "display_name": "Amazon Titan Text Lite",
-      "context_window": 42000,
-      "max_output_tokens": 4000,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "knowledge_cutoff": "2023-12",
-      "aliases": [
-        "amazon.titan-text-lite-v1"
-      ],
-      "supports_responses_api": true,
-      "supports_anthropic_api": false,
-      "pricing": {
-        "input_per_1m": 0.3,
-        "output_per_1m": 0.4,
-        "currency": "USD"
-      }
+      "license_type": "api"
     },
     {
       "provider": "amazon",
@@ -418,13 +599,25 @@
       "output_modalities": [
         "embedding"
       ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
       "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": null,
+      "deprecated": false,
       "aliases": [
         "amazon.titan-embed-text-v2:0"
       ],
-      "supports_responses_api": false,
-      "supports_anthropic_api": false
+      "license_type": "license"
     },
     {
       "provider": "amazon",
@@ -439,14 +632,25 @@
       "output_modalities": [
         "image"
       ],
-      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
       "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": null,
+      "deprecated": false,
       "aliases": [
         "amazon.titan-image-generator-v2:0"
       ],
-      "supports_responses_api": false,
-      "supports_anthropic_api": false
+      "license_type": "license"
     },
     {
       "provider": "amazon",
@@ -461,14 +665,136 @@
       "output_modalities": [
         "embedding"
       ],
-      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
       "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": null,
+      "deprecated": false,
       "aliases": [
         "amazon.titan-multimodal-embeddings-v1:0"
       ],
+      "license_type": "license"
+    },
+    {
+      "provider": "amazon",
+      "model_id": "titan-text-express-v1",
+      "display_name": "Amazon Titan Text Express",
+      "context_window": 42000,
+      "max_output_tokens": 8000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
       "supports_responses_api": false,
-      "supports_anthropic_api": false
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2023-12",
+      "pricing": {
+        "input_per_1m": 0.2,
+        "output_per_1m": 0.6,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "amazon.titan-text-express-v1"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "amazon",
+      "model_id": "titan-text-lite-v1",
+      "display_name": "Amazon Titan Text Lite",
+      "context_window": 42000,
+      "max_output_tokens": 4000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2023-12",
+      "pricing": {
+        "input_per_1m": 0.3,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "amazon.titan-text-lite-v1"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "amazon",
+      "model_id": "titan-text-premier-v1",
+      "display_name": "Amazon Titan Text Premier",
+      "context_window": 42000,
+      "max_output_tokens": 32000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2023-12",
+      "pricing": {
+        "input_per_1m": 0.5,
+        "output_per_1m": 1.5,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "amazon.titan-text-premier-v1:0"
+      ],
+      "license_type": "api"
     }
   ]
 }

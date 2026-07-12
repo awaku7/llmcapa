@@ -2,6 +2,1322 @@
   "models": [
     {
       "provider": "microsoft",
+      "model_id": "Azure-AI-Content-Safety",
+      "display_name": "Azure-AI-Content-Safety",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Azure-AI-Content-Understanding",
+      "display_name": "Azure-AI-Content-Understanding",
+      "context_window": 25000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Azure-AI-Document-Intelligence",
+      "display_name": "Azure-AI-Document-Intelligence",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Azure-AI-Vision",
+      "display_name": "Azure-AI-Vision",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Azure-Content-Understanding-Layout",
+      "display_name": "Azure-Content-Understanding-Layout",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Azure-Content-Understanding-Read",
+      "display_name": "Azure-Content-Understanding-Read",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Azure-Language-Conversational-PII-redaction",
+      "display_name": "Azure-Language-Conversational-PII-redaction",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Azure-Language-Document-PII-redaction",
+      "display_name": "Azure-Language-Document-PII-redaction",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Azure-Language-Language-detection",
+      "display_name": "Azure-Language-Language-detection",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Azure-Language-Text-Analytics-for-Health",
+      "display_name": "Azure-Language-Text-Analytics-for-Health",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Azure-Language-Text-PII-redaction",
+      "display_name": "Azure-Language-Text-PII-redaction",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Azure-Speech-Speech-Translation",
+      "display_name": "Azure-Speech-Speech-Translation",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Azure-Speech-Speech-to-text",
+      "display_name": "Azure-Speech-Speech-to-text",
+      "context_window": 25000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Azure-Speech-Text-to-speech",
+      "display_name": "Azure-Speech-Text-to-speech",
+      "context_window": 25000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "audio"
+      ],
+      "output_modalities": [
+        "text",
+        "audio"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Azure-Speech-Text-to-speech-Avatar",
+      "display_name": "Azure-Speech-Text-to-speech-Avatar",
+      "context_window": 25000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "audio"
+      ],
+      "output_modalities": [
+        "video"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Azure-Speech-Voice-Live",
+      "display_name": "Azure-Speech-Voice-Live",
+      "context_window": 25000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Azure-Translator-Document-translation",
+      "display_name": "Azure-Translator-Document-translation",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Azure-Translator-Text-translation",
+      "display_name": "Azure-Translator-Text-translation",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "MAI-Image-2.5",
+      "display_name": "MAI-Image-2.5",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "image"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "MAI-Image-2.5-Flash",
+      "display_name": "MAI-Image-2.5-Flash",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "image"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "MAI-Image-2e",
+      "display_name": "MAI-Image-2e",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "image"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "MAI-Transcribe-1",
+      "display_name": "MAI-Transcribe-1",
+      "context_window": 25000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "MAI-Transcribe-1.5",
+      "display_name": "MAI-Transcribe-1.5",
+      "context_window": 25000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "MAI-Voice-1",
+      "display_name": "MAI-Voice-1",
+      "context_window": 25000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "audio"
+      ],
+      "output_modalities": [
+        "text",
+        "audio"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "MAI-Voice-2",
+      "display_name": "MAI-Voice-2",
+      "context_window": 25000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "audio"
+      ],
+      "output_modalities": [
+        "text",
+        "audio"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-3-medium-4k-instruct",
+      "display_name": "Phi-3-medium-4k-instruct",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-3-mini-128k-instruct",
+      "display_name": "Phi-3-mini-128k-instruct",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-3-mini-4k-instruct",
+      "display_name": "Phi-3-mini-4k-instruct",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-3-small-128k-instruct",
+      "display_name": "Phi-3-small-128k-instruct",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-3-small-8k-instruct",
+      "display_name": "Phi-3-small-8k-instruct",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-3-vision-128k-instruct",
+      "display_name": "Phi-3-vision-128k-instruct",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-3.5-MoE-instruct",
+      "display_name": "Phi-3.5-MoE-instruct",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-4-Reasoning-Vision-15B",
+      "display_name": "Phi-4-Reasoning-Vision-15B",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-4-mini-flash-reasoning",
+      "display_name": "Phi-4-mini-flash-reasoning",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-4-mini-reasoning-onnx",
+      "display_name": "Phi-4-mini-reasoning-onnx",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-4-multimodal-instruct",
+      "display_name": "Phi-4-multimodal-instruct",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-4-reasoning-plus",
+      "display_name": "Phi-4-reasoning-plus",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-4-reasoning-plus-onnx",
+      "display_name": "Phi-4-reasoning-plus-onnx",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "ba2han-llama-phi-3-dora",
+      "display_name": "ba2han-llama-phi-3-dora",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "localai-io-localai-functioncall-phi-4-v0.3",
+      "display_name": "localai-io-localai-functioncall-phi-4-v0.3",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "microsoft-phi-4-reasoning-plus",
+      "display_name": "microsoft-phi-4-reasoning-plus",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "microsoft/phi-4",
+      "display_name": "Microsoft: Phi 4",
+      "context_window": 16384,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-06-30",
+      "pricing": {
+        "input_per_1m": 0.07,
+        "output_per_1m": 0.14,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "microsoft/phi-4"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "model-router",
+      "display_name": "Model router",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "microsoft",
       "model_id": "phi-3-mini-instruct",
       "display_name": "Phi-3 Mini Instruct",
       "context_window": 128000,
@@ -12,21 +1328,30 @@
       "output_modalities": [
         "text"
       ],
-      "supports_chat_completion": true,
       "supports_function_calling": false,
       "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": "2023-10",
-      "aliases": [
-        "phi-3-mini"
-      ],
       "pricing": {
         "input_per_1m": 0.04,
         "output_per_1m": 0.04,
         "currency": "USD"
-      }
+      },
+      "deprecated": false,
+      "aliases": [
+        "phi-3-mini"
+      ],
+      "license_type": "api"
     },
     {
       "provider": "microsoft",
@@ -40,21 +1365,30 @@
       "output_modalities": [
         "text"
       ],
-      "supports_chat_completion": true,
       "supports_function_calling": false,
       "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": "2023-10",
-      "aliases": [
-        "phi-3.5-mini"
-      ],
       "pricing": {
         "input_per_1m": 0.04,
         "output_per_1m": 0.04,
         "currency": "USD"
-      }
+      },
+      "deprecated": false,
+      "aliases": [
+        "phi-3.5-mini"
+      ],
+      "license_type": "api"
     },
     {
       "provider": "microsoft",
@@ -69,21 +1403,30 @@
       "output_modalities": [
         "text"
       ],
-      "supports_chat_completion": true,
       "supports_function_calling": false,
       "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": "2023-10",
-      "aliases": [
-        "phi-3.5-vision"
-      ],
       "pricing": {
         "input_per_1m": 0.04,
         "output_per_1m": 0.04,
         "currency": "USD"
-      }
+      },
+      "deprecated": false,
+      "aliases": [
+        "phi-3.5-vision"
+      ],
+      "license_type": "api"
     },
     {
       "provider": "microsoft",
@@ -97,19 +1440,28 @@
       "output_modalities": [
         "text"
       ],
-      "supports_chat_completion": true,
       "supports_function_calling": true,
       "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": "2024-06",
-      "aliases": [],
       "pricing": {
         "input_per_1m": 0.07,
         "output_per_1m": 0.14,
         "currency": "USD"
-      }
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api"
     },
     {
       "provider": "microsoft",
@@ -123,48 +1475,30 @@
       "output_modalities": [
         "text"
       ],
-      "supports_chat_completion": true,
       "supports_function_calling": true,
       "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": "2024-06",
-      "aliases": [
-        "phi-4-mini"
-      ],
       "pricing": {
         "input_per_1m": 0.08,
         "output_per_1m": 0.35,
         "currency": "USD"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "phi-4-reasoning",
-      "display_name": "Phi-4 Reasoning",
-      "context_window": 32768,
-      "max_output_tokens": 4096,
-      "input_modalities": [
-        "text"
+      },
+      "deprecated": false,
+      "aliases": [
+        "phi-4-mini"
       ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_thinking_budget": true,
-      "knowledge_cutoff": "2024-06",
-      "aliases": [],
-      "pricing": {
-        "input_per_1m": 0.07,
-        "output_per_1m": 0.14,
-        "currency": "USD"
-      }
+      "license_type": "api"
     },
     {
       "provider": "microsoft",
@@ -178,20 +1512,273 @@
       "output_modalities": [
         "text"
       ],
-      "supports_chat_completion": true,
       "supports_function_calling": true,
       "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
       "supports_thinking_budget": true,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": "2024-06",
-      "aliases": [],
       "pricing": {
         "input_per_1m": 0.08,
         "output_per_1m": 0.35,
         "currency": "USD"
-      }
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "phi-4-reasoning",
+      "display_name": "Phi-4 Reasoning",
+      "context_window": 32768,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": true,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-06",
+      "pricing": {
+        "input_per_1m": 0.07,
+        "output_per_1m": 0.14,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "sreenington-phi-3-mini-4k-instruct-awq",
+      "display_name": "sreenington-phi-3-mini-4k-instruct-awq",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "third-intellect-phi-3-mini-4k-instruct-orca-math-word-problems-200k-model-16bit",
+      "display_name": "third-intellect-phi-3-mini-4k-instruct-orca-math-word-problems-200k-model-16bit",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "unsloth-phi-3-medium-4k-instruct",
+      "display_name": "unsloth-phi-3-medium-4k-instruct",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "unsloth-phi-3.5-mini-instruct",
+      "display_name": "unsloth-phi-3.5-mini-instruct",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "unsloth-phi-4",
+      "display_name": "unsloth-phi-4",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "unsloth-phi-4-unsloth-bnb-4bit",
+      "display_name": "unsloth-phi-4-unsloth-bnb-4bit",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "vonjack-phi-3-mini-4k-instruct-llamafied",
+      "display_name": "vonjack-phi-3-mini-4k-instruct-llamafied",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
     }
   ]
 }

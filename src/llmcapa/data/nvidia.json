@@ -2,9 +2,9 @@
   "models": [
     {
       "provider": "nvidia",
-      "model_id": "nemotron-3-ultra",
-      "display_name": "NVIDIA Nemotron 3 Ultra",
-      "context_window": 1000000,
+      "model_id": "Boltz2-NIM-microservice",
+      "display_name": "Boltz2-NIM-microservice",
+      "context_window": 128000,
       "max_output_tokens": 16384,
       "input_modalities": [
         "text"
@@ -12,53 +12,1094 @@
       "output_modalities": [
         "text"
       ],
-      "supports_chat_completion": true,
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_thinking_budget": true,
-      "knowledge_cutoff": "2025-12",
-      "pricing": {
-        "input_per_1m": 1.2,
-        "output_per_1m": 1.2,
-        "currency": "USD"
-      },
-      "aliases": [
-        "nvidia/nemotron-3-ultra",
-        "nemotron-3-ultra-550b-a55b"
-      ]
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
     },
     {
       "provider": "nvidia",
-      "model_id": "nemotron-3-super",
-      "display_name": "NVIDIA Nemotron 3 Super",
-      "context_window": 1000000,
-      "max_output_tokens": 8192,
+      "model_id": "Cosmos-reason1-NIM-microservice",
+      "display_name": "Cosmos-reason1-NIM-microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
       "input_modalities": [
         "text"
       ],
       "output_modalities": [
         "text"
       ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Evo2-40b-NIM-microservice",
+      "display_name": "Evo2-40b-NIM-microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Llama-3.1-8B-Instruct-NIM-microservice",
+      "display_name": "Llama-3.1-8B-Instruct-NIM-microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
       "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Llama-3.1-Nemotron-Nano-8B-v1-NIM-microservice",
+      "display_name": "Llama-3.1-Nemotron-Nano-8B-v1-NIM-microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Llama-3.1-Nemotron-Nano-VL-8B-v1-NIM-microservice",
+      "display_name": "Llama-3.1-Nemotron-Nano-VL-8B-v1-NIM-microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Llama-3.2-NV-embedqa-1b-v2-NIM-microservice",
+      "display_name": "Llama-3.2-NV-embedqa-1b-v2-NIM-microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embeddings"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Llama-3.2-NV-rerankqa-1b-v2-NIM-microservice",
+      "display_name": "Llama-3.2-NV-rerankqa-1b-v2-NIM-microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Llama-3.3-70B-Instruct-NIM-microservice",
+      "display_name": "Llama-3.3-70B-Instruct-NIM-microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Llama-3.3-Nemotron-Super-49B-v1-NIM-microservice",
+      "display_name": "Llama-3.3-Nemotron-Super-49B-v1-NIM-microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Llama-3.3-Nemotron-Super-49B-v1.5-NIM-microservice",
+      "display_name": "Llama-3.3-Nemotron-Super-49B-v1.5-NIM-microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "MSA-search-NIM-microservice",
+      "display_name": "MSA-Search",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Mistral-7B-Instruct-v0.3-NIM-microservice",
+      "display_name": "Mistral-7B-Instruct-v0.3-NIM-microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Mixtral-8x7B-Instruct-v0.1-NIM-microservice",
+      "display_name": "Mixtral-8x7B-Instruct-v0.1-NIM-microservice",
+      "context_window": 32768,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "NVIDIA-Nemotron-3-Content-Safety-NIM-microservice",
+      "display_name": "NVIDIA-Nemotron-3-Content-Safety-NIM-microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "NVIDIA-Nemotron-3-Nano-NIM-microservice",
+      "display_name": "NVIDIA-Nemotron-3-Nano-NIM-microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "NVIDIA-Nemotron-3-Super-NIM-microservice",
+      "display_name": "NVIDIA-Nemotron-3-Super-NIM-microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "NVIDIA-Nemotron-3-Ultra-NIM-microservice",
+      "display_name": "NVIDIA-Nemotron-3-Ultra-NIM-microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "NVIDIA-Nemotron-Content-Safety-Reasoning-4B-NIM-microservice",
+      "display_name": "NVIDIA Nemotron Content Safety Reasoning 4B NIM microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "NVIDIA-Nemotron-Nano-12B-v2-VL-NIM-microservice",
+      "display_name": "NVIDIA Nemotron Nano 12B v2 VL NIM microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "NVIDIA-Nemotron-Nano-9b-v2-NIM-microservice",
+      "display_name": "NVIDIA Nemotron Nano 9b v2 NIM microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "NVIDIA-Nemotron-Parse-NIM-microservice",
+      "display_name": "NVIDIA Nemotron Parse NIM microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Nemotron-3-8B-Base-4k",
+      "display_name": "Nemotron-3-8B-Base-4k",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Nemotron-3-8B-Chat-4k-SteerLM",
+      "display_name": "Nemotron-3-8B-Chat-4k-SteerLM",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Nemotron-3-8B-Chat-RLHF",
+      "display_name": "Nemotron-3-8B-Chat-RLHF",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Nemotron-3-8B-Chat-SFT",
+      "display_name": "Nemotron-3-8B-Chat-SFT",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Nemotron-3-8B-Chat-SteerLM",
+      "display_name": "Nemotron-3-8B-Chat-SteerLM",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Nemotron-3-8B-QA-4k",
+      "display_name": "Nemotron-3-8B-QA-4k",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Openfold2-NIM-microservice",
+      "display_name": "Openfold2",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Openfold3_1_2_0-NIM-microservice",
+      "display_name": "Openfold3_1_2_0 NIM Microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "ProteinMPNN-NIM-microservice",
+      "display_name": "ProteinMPNN",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Rfdiffusion-NIM-microservice",
+      "display_name": "RFdiffusion",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Trellis-NIM-microservice",
+      "display_name": "Trellis-NIM-microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "license"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "llama-3.1-nemotron-70b-instruct",
+      "display_name": "Llama 3.1 Nemotron 70B Instruct",
+      "context_window": 131072,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2023-12",
+      "pricing": {
+        "input_per_1m": 0.25,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "nvidia/llama-3.1-nemotron-70b-instruct"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "llama-3.3-nemotron-super-49b",
+      "display_name": "Llama 3.3 Nemotron Super 49B",
+      "context_window": 131072,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2023-12",
+      "pricing": {
+        "input_per_1m": 0.4,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "nvidia/llama-3.3-nemotron-super-49b-v1"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nemotron-3",
+      "display_name": "NVIDIA Nemotron 3",
+      "context_window": 1000000,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_thinking_budget": true,
-      "knowledge_cutoff": "2025-12",
-      "pricing": {
-        "input_per_1m": 0.1,
-        "output_per_1m": 0.4,
-        "currency": "USD"
-      },
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
       "aliases": [
-        "nvidia/nemotron-3-super",
-        "nemotron-3-super-120b-a12b"
-      ]
+        "nvidia/nemotron-3",
+        "nvidia/nemotron-3-30b",
+        "nemotron-3-30b"
+      ],
+      "license_type": "free"
     },
     {
       "provider": "nvidia",
@@ -72,22 +1113,141 @@
       "output_modalities": [
         "text"
       ],
-      "supports_chat_completion": true,
       "supports_function_calling": true,
       "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
       "supports_thinking_budget": true,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": "2025-12",
-      "aliases": [
-        "nvidia/nemotron-3-nano"
-      ],
       "pricing": {
         "input_per_1m": 0.03,
         "output_per_1m": 0.24,
         "currency": "USD"
-      }
+      },
+      "deprecated": false,
+      "aliases": [
+        "nvidia/nemotron-3-nano"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nemotron-3-omni",
+      "display_name": "NVIDIA Nemotron 3 Nano Omni",
+      "context_window": 131072,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "nvidia/nemotron-3-omni",
+        "nemotron-3-nano-omni",
+        "nvidia/nemotron-3-nano-omni"
+      ],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nemotron-3-super",
+      "display_name": "NVIDIA Nemotron 3 Super",
+      "context_window": 1000000,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": true,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-12",
+      "pricing": {
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "nvidia/nemotron-3-super",
+        "nemotron-3-super-120b-a12b"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nemotron-3-ultra",
+      "display_name": "NVIDIA Nemotron 3 Ultra",
+      "context_window": 1000000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": true,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-12",
+      "pricing": {
+        "input_per_1m": 1.2,
+        "output_per_1m": 1.2,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "nvidia/nemotron-3-ultra",
+        "nemotron-3-ultra-550b-a55b"
+      ],
+      "license_type": "api"
     },
     {
       "provider": "nvidia",
@@ -102,77 +1262,916 @@
       "output_modalities": [
         "text"
       ],
-      "supports_chat_completion": true,
       "supports_function_calling": false,
       "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": "2026-01",
-      "aliases": [
-        "nvidia/nemotron-3.5-content-safety"
-      ],
       "pricing": {
         "input_per_1m": 0.05,
         "output_per_1m": 0.2,
         "currency": "USD"
-      }
+      },
+      "deprecated": false,
+      "aliases": [
+        "nvidia/nemotron-3.5-content-safety"
+      ],
+      "license_type": "api"
     },
     {
       "provider": "nvidia",
-      "model_id": "llama-3.1-nemotron-70b-instruct",
-      "display_name": "Llama 3.1 Nemotron 70B Instruct",
-      "context_window": 131072,
-      "max_output_tokens": 4096,
+      "model_id": "nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-BF16",
+      "display_name": "nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-BF16",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
       "input_modalities": [
         "text"
       ],
       "output_modalities": [
         "text"
       ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
       "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-NVFP4",
+      "display_name": "nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-NVFP4",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nvidia-NVIDIA-Nemotron-3-Nano-4B-FP8",
+      "display_name": "nvidia-NVIDIA-Nemotron-3-Nano-4B-FP8",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-BF16",
+      "display_name": "nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-BF16",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-FP8",
+      "display_name": "nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-FP8",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16",
+      "display_name": "nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-FP8",
+      "display_name": "nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-FP8",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-NVFP4",
+      "display_name": "nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-NVFP4",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nvidia-OpenCodeReasoning-Nemotron-32B",
+      "display_name": "nvidia-OpenCodeReasoning-Nemotron-32B",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": true,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nvidia-OpenCodeReasoning-Nemotron-32B-IOI",
+      "display_name": "nvidia-OpenCodeReasoning-Nemotron-32B-IOI",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": true,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nvidia-OpenMath-Nemotron-32B",
+      "display_name": "nvidia-OpenMath-Nemotron-32B",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nvidia-OpenReasoning-Nemotron-32B",
+      "display_name": "nvidia-OpenReasoning-Nemotron-32B",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nvidia-gemma-4-31b-it-nvfp4",
+      "display_name": "nvidia-gemma-4-31b-it-nvfp4",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nvidia-qwen3-nemotron-235b-a22b-genrm",
+      "display_name": "nvidia-qwen3-nemotron-235b-a22b-genrm",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nvidia-qwen3-nemotron-235b-a22b-genrm-2603",
+      "display_name": "nvidia-qwen3-nemotron-235b-a22b-genrm-2603",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nvidia-qwen3.5-122b-a10b-nvfp4",
+      "display_name": "nvidia-qwen3.5-122b-a10b-nvfp4",
+      "context_window": 32000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nvidia-qwen3.6-35b-a3b-nvfp4",
+      "display_name": "nvidia-qwen3.6-35b-a3b-nvfp4",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nvidia/llama-3.3-nemotron-super-49b-v1.5",
+      "display_name": "NVIDIA: Llama 3.3 Nemotron Super 49B V1.5",
+      "context_window": 131072,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_function_calling": true,
-      "supports_json_mode": false,
+      "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
-      "supports_reasoning": false,
-      "knowledge_cutoff": "2023-12",
-      "aliases": [
-        "nvidia/llama-3.1-nemotron-70b-instruct"
-      ],
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-03-31",
       "pricing": {
-        "input_per_1m": 0.25,
+        "input_per_1m": 0.4,
         "output_per_1m": 0.4,
         "currency": "USD"
-      }
+      },
+      "deprecated": false,
+      "aliases": [
+        "nvidia/llama-3.3-nemotron-super-49b-v1.5"
+      ],
+      "license_type": "api"
     },
     {
       "provider": "nvidia",
-      "model_id": "llama-3.3-nemotron-super-49b",
-      "display_name": "Llama 3.3 Nemotron Super 49B",
-      "context_window": 131072,
-      "max_output_tokens": 131072,
+      "model_id": "nvidia/nemotron-3-nano-30b-a3b:free",
+      "display_name": "NVIDIA: Nemotron 3 Nano 30B A3B (free)",
+      "context_window": 256000,
+      "max_output_tokens": 0,
       "input_modalities": [
         "text"
       ],
       "output_modalities": [
         "text"
       ],
-      "supports_chat_completion": true,
       "supports_function_calling": true,
       "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "knowledge_cutoff": "2023-12",
-      "aliases": [
-        "nvidia/llama-3.3-nemotron-super-49b-v1"
-      ],
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.4,
-        "output_per_1m": 0.4,
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
         "currency": "USD"
-      }
+      },
+      "deprecated": false,
+      "aliases": [
+        "nvidia/nemotron-3-nano-30b-a3b:free"
+      ],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+      "display_name": "NVIDIA: Nemotron 3 Nano Omni (free)",
+      "context_window": 256000,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "audio",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free"
+      ],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nvidia/nemotron-3-super-120b-a12b",
+      "display_name": "NVIDIA: Nemotron 3 Super",
+      "context_window": 1000000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.08,
+        "output_per_1m": 0.45,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "nvidia/nemotron-3-super-120b-a12b"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nvidia/nemotron-3-super-120b-a12b:free",
+      "display_name": "NVIDIA: Nemotron 3 Super (free)",
+      "context_window": 1000000,
+      "max_output_tokens": 262144,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "nvidia/nemotron-3-super-120b-a12b:free"
+      ],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nvidia/nemotron-3-ultra-550b-a55b",
+      "display_name": "NVIDIA: Nemotron 3 Ultra",
+      "context_window": 1000000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.5,
+        "output_per_1m": 2.2,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "display_name": "NVIDIA: Nemotron 3 Ultra (free)",
+      "context_window": 1000000,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "nvidia/nemotron-3-ultra-550b-a55b:free"
+      ],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nvidia/nemotron-3.5-content-safety:free",
+      "display_name": "NVIDIA: Nemotron 3.5 Content Safety (free)",
+      "context_window": 128000,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "nvidia/nemotron-3.5-content-safety:free"
+      ],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nvidia/nemotron-nano-12b-v2-vl:free",
+      "display_name": "NVIDIA: Nemotron Nano 12B 2 VL (free)",
+      "context_window": 128000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "image",
+        "text",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "nvidia/nemotron-nano-12b-v2-vl:free"
+      ],
+      "license_type": "free"
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nvidia/nemotron-nano-9b-v2:free",
+      "display_name": "NVIDIA: Nemotron Nano 9B V2 (free)",
+      "context_window": 128000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-03-31",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "nvidia/nemotron-nano-9b-v2:free"
+      ],
+      "license_type": "free"
     }
   ]
 }

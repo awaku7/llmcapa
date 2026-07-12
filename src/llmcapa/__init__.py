@@ -18,7 +18,7 @@ from .models import Capability, Feature, ReasoningEffort
 from .registry import Registry, ModelNotFoundError, default_registry
 from .tokenizer import count_tokens, count_messages_tokens
 
-__version__ = "0.2.10"
+__version__ = "0.3.1"
 
 __all__ = [
     "Capability",
@@ -31,6 +31,7 @@ __all__ = [
     "providers",
     "find",
     "search",
+    "find_model",
     "load_extra",
     "fetch_openrouter",
     "fetch_huggingface",
@@ -71,9 +72,19 @@ def find(**kwargs) -> List[Capability]:
     return default_registry().find(**kwargs)
 
 
+def find_model(model_id: str) -> List[tuple[str, Capability]]:
+    """Find all (provider, Capability) tuples for a given model_id across providers.
+
+    Returns a list of (provider, Capability) for every provider that has a model
+    matching the given model_id. Useful when the same model is available from
+    multiple providers with different specs/pricing.
+    """
+    return default_registry().find_by_model_id(model_id)
+
+
 def search(
     prefix: str,
-    provider: Optional[str] = None,
+    provider: str,
     include_deprecated: bool = False,
     limit: Optional[int] = None,
 ) -> List[Capability]:

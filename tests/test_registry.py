@@ -149,3 +149,105 @@ def test_get_without_provider_returns_first():
     cap = llmcapa.get("deepseek/deepseek-v3.2")
     # native deepseek file should win over novita for unqualified lookup
     assert cap.provider in ("deepseek", "openrouter")
+
+
+def test_get_with_provider_alias() -> None:
+    """get(model_id, provider='bedrock') should resolve to amazon provider."""
+    cap = llmcapa.get("gpt-4o", provider="bedrock")
+    assert cap.provider == "amazon"
+    assert cap.context_window == 128000
+
+
+def test_get_with_provider_normalization() -> None:
+    """get with azure_openai (underscore) should normalize and resolve via aliases."""
+    cap = llmcapa.get("gpt-4o", provider="azure_openai")
+    assert cap.provider == "openai"
+    assert cap.context_window == 128000
+
+
+def test_find_model_across_providers() -> None:
+    """find_model returns all (provider, Capability) tuples for a model_id."""
+    results = llmcapa.find_model("gpt-4o")
+    assert len(results) >= 1
+    providers_found = {p for p, _ in results}
+    assert "openai" in providers_found
+    assert all(c.model_id.lower() == "gpt-4o" for _, c in results)
+
+
+def test_list_models_with_alias() -> None:
+    """list_models(provider='bedrock') should include amazon models."""
+    models = llmcapa.list_models(provider="bedrock")
+    assert all(c.provider == "amazon" for c in models)
+    assert len(models) > 0
+
+
+def test_load_extra_json(tmp_path) -> None:
+    """load_extra should register models from an external JSON file."""
+    extra_json = tmp_path / "extra_models.json"
+    extra_json.write_text(
+        '{"models": [{"provider": "custom", "model_id": "my-model", '
+        '"context_window": 8192, "max_output_tokens": 2048}]}',
+        encoding="utf-8",
+    )
+    count = llmcapa.load_extra(str(extra_json))
+    assert count == 1
+    cap = llmcapa.get("my-model")
+    assert cap.provider == "custom"
+    assert cap.context_window == 8192
+
+
+def test_find_by_model_id_from_registry() -> None:
+    """Registry.find_by_model_id returns results from multiple providers."""
+    reg = Registry()
+    reg._ensure_loaded()
+    results = reg.find_by_model_id("gpt-4o")
+    assert len(results) >= 1
+    # spot check: at least one result has provider=openai
+    assert any(p == "openai" for p, _ in results)
+
+
+def test_new_providers_registered() -> None:
+    """sakura and huggingface providers are loaded from bundled JSON files."""
+    p = llmcapa.providers()
+    assert "sakura" in p, "sakura.json was not loaded into providers()"
+    assert "huggingface" in p, "huggingface.json was not loaded into providers()"
+
+
+def test_new_provider_models_accessible() -> None:
+    """Models from new JSON files are accessible via get()."""
+    sakura = llmcapa.get("sakura-default")
+    assert sakura.provider == "sakura"
+    assert sakura.context_window == 4096
+
+    hf = llmcapa.get("huggingface-default")
+    assert hf.provider == "huggingface"
+    assert hf.context_window == 4096
+
+
+def test_provider_alias_hf_resolves_to_huggingface() -> None:
+    """provider='hf' should resolve to huggingface via alias."""
+    cap = llmcapa.get("huggingface-default", provider="hf")
+    assert cap.provider == "huggingface"
+    assert cap.model_id == "huggingface-default"
+
+
+def test_data_from_bundled_json_not_hardcoded() -> None:
+    """Verify data comes from JSON files, not hardcoded definitions.
+
+    Create a Registry, load bundled data, and check that models from
+    the newly added sakura.json and huggingface.json are present.
+    This proves the generic JSON loading mechanism works.
+    """
+    reg = Registry()
+    reg._ensure_loaded()
+    # sakura.json and huggingface.json are regular JSON files in the data dir
+    # that are loaded by _load_bundled() which iterates all *.json files.
+    # These providers were NOT in the original codebase - they only exist
+    # because we added JSON files.
+    sakura_models = reg.list_models(provider="sakura")
+    assert len(sakura_models) == 1
+    assert sakura_models[0].model_id == "sakura-default"
+
+    hf_models = reg.list_models(provider="huggingface")
+    assert len(hf_models) == 1
+    assert hf_models[0].model_id == "huggingface-default"

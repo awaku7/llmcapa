@@ -35,7 +35,22 @@ class Registry:
         "meta": ["meta-llama"],
         "mistral": ["mistralai"],
         "xai": ["x-ai"],
+        "amazon": ["bedrock"],
+        "bedrock": ["amazon"],
+        "xiaomi": ["mimo"],
+        "mimo": ["xiaomi"],
+        "openai": ["azure-openai", "azure_openai", "azureopenai"],
+        "azure-openai": ["openai"],
+        "huggingface": ["hf"],
+        "hf": ["huggingface"],
     }
+
+    @staticmethod
+    def _normalize_provider(name: str) -> str:
+        """Normalize provider name: lowercase, unify separators to hyphen."""
+        normalized = name.lower().strip()
+        normalized = re.sub(r'[_. \t]+', '-', normalized)
+        return normalized
 
     # ------------------------------------------------------------------
     # loading
@@ -108,7 +123,7 @@ class Registry:
         find the correct provider's data regardless of registration order.
         """
         key = cap.model_id.lower()
-        prov = cap.provider.lower()
+        prov = self._normalize_provider(cap.provider)
 
         # First-registered-wins for the flat model_id index.
         # Also skip if key is already claimed as an alias for another model.
@@ -119,7 +134,7 @@ class Registry:
                 if alias.lower() not in self._alias_index:
                     self._alias_index[alias.lower()] = key
 
-        # Always store in the provider-scoped index
+        # Provider-scoped index: always register (no first-wins here)
         if prov not in self._by_provider:
             self._by_provider[prov] = {}
         if key not in self._by_provider[prov]:
@@ -138,23 +153,17 @@ class Registry:
 
         # Features
         supported_params = r.get("supported_parameters") or []
-        supports_fc = "tools" in supported_params or "tool_choice" in supported_params
-        supports_json = "structured_outputs" in supported_params or "response_format" in supported_params
-        supports_reasoning = "reasoning" in supported_params or "include_reasoning" in supported_params
-        supports_reasoning_effort = "reasoning" in supported_params
+        supports_fc = "tools" in supported_params or "function_calling" in supported_params
 
         # Pricing
         pricing_data = r.get("pricing") or {}
         pricing = None
-        if pricing_data:
-            try:
-                pricing = {
-                    "input_per_1m": float(pricing_data.get("prompt", 0)) * 1000000,
-                    "output_per_1m": float(pricing_data.get("completion", 0)) * 1000000,
-                    "currency": "USD"
-                }
-            except (ValueError, TypeError):
-                pass
+        if pricing_data.get("prompt") is not None:
+            pricing = {
+                "input_per_1m": float(pricing_data.get("prompt", 0)) * 1000000,
+                "output_per_1m": float(pricing_data.get("completion", 0)) * 1000000,
+                "currency": "USD",
+            }
 
         # Determine provider from model_id prefix (e.g. "meta-llama/..." -> "meta-llama")
         provider = "openrouter"
@@ -172,35 +181,37 @@ class Registry:
             input_modalities=input_mods,
             output_modalities=output_mods,
             supports_function_calling=supports_fc,
-            supports_json_mode=supports_json,
             supports_streaming=True,
-            supports_vision="image" in input_mods,
-            supports_reasoning=supports_reasoning,
-            supports_reasoning_effort=supports_reasoning_effort,
             supports_chat_completion=True,
-            supports_responses_api=True,
+            supports_vision="image" in input_mods,
+            supports_json_mode="json_mode" in supported_params or "response_format" in supported_params,
+            supports_reasoning_effort="reasoning" in supported_params or "reasoning_effort" in supported_params,
+            supports_thinking_budget="thinking" in supported_params or "thinking_budget" in supported_params,
             knowledge_cutoff=r.get("knowledge_cutoff"),
             pricing=pricing,
-            aliases=[model_id.lower()]
+            aliases=[model_id.lower()],
         )
 
     # ------------------------------------------------------------------
     # OpenRouter dynamic fetching
     # ------------------------------------------------------------------
-    def fetch_openrouter(self, cache_ttl: Optional[int] = None) -> int:
+    def fetch_openrouter(
+        self,
+        cache_ttl: int = 86400,
+    ) -> int:
         """Fetch all models dynamically from OpenRouter API and register them.
 
-        This allows retrieving capabilities for all 300+ models on OpenRouter
+        This allows users to get the latest models and pricing from OpenRouter
         without bundling them in the static package.
 
-        If cache_ttl (in seconds) is provided, the response is cached locally
+        The response is cached locally
         in ~/.llmcapa/openrouter_cache.json to avoid redundant API requests.
         """
         self._ensure_loaded()
 
         records = []
-        cache_file = None
-        if cache_ttl is not None:
+        # Try loading from cache first
+        if cache_ttl > 0:
             import os
             import time
             home = os.path.expanduser("~")
@@ -223,7 +234,7 @@ class Registry:
             try:
                 req = urllib.request.Request(
                     url,
-                    headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
+                    headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"},
                 )
                 with urllib.request.urlopen(req, context=ctx) as response:
                     data = json.loads(response.read().decode("utf-8"))
@@ -231,7 +242,14 @@ class Registry:
             except Exception as e:
                 raise RuntimeError(f"Failed to fetch models from OpenRouter: {e}") from e
 
-            if cache_file and records:
+            # Cache the response
+            if cache_ttl > 0:
+                import os
+                import time
+                home = os.path.expanduser("~")
+                cache_dir = os.path.join(home, ".llmcapa")
+                os.makedirs(cache_dir, exist_ok=True)
+                cache_file = os.path.join(cache_dir, "openrouter_cache.json")
                 try:
                     with open(cache_file, "w", encoding="utf-8") as f:
                         json.dump(records, f, ensure_ascii=False, indent=2)
@@ -386,7 +404,8 @@ class Registry:
                 continue
         return count
 
-
+    # ------------------------------------------------------------------
+    # lookup
     # ------------------------------------------------------------------
     def _lookup_candidates(self, model_id: str) -> list[str]:
         """Return lookup keys including safe suffix normalization.
@@ -398,6 +417,9 @@ class Registry:
         Supports separators: -, _, . (e.g. gpt-4o-latest, model_latest,
         claude.latest). Multiple suffixes are stripped iteratively
         (e.g., -preview-05-20 removes -05-20 first, then -preview).
+
+        Also, if model_id contains a provider/ prefix (e.g. "openai/o3-mini"),
+        the bare model_id without prefix is added as a candidate.
         """
         key = (model_id or "").strip().lower()
         candidates = [key]
@@ -406,8 +428,14 @@ class Registry:
         if ":" in key:
             candidates.append(key.split(":")[0])
 
-        # 2. Progressively strip known trailing patterns
-        DatePat = r"\d{4}-\d{2}-\d{2}|\d{2}-\d{2}|\d{8}"
+        # 2. If model_id contains a provider/ prefix, also try bare model_id
+        if "/" in key:
+            without_prefix = key.split("/", 1)[1]
+            if without_prefix not in candidates:
+                candidates.append(without_prefix)
+
+        # 3. Progressively strip known trailing patterns
+        DatePat = r"[0-9]{4}-[0-9]{2}-[0-9]{2}|[0-9]{2}-[0-9]{2}|[0-9]{8}"
         suffix_pats = [f"[-_.]({DatePat})$", r"[-_.](latest|preview)$"]
 
         for base in list(candidates):
@@ -448,20 +476,29 @@ class Registry:
         self._ensure_loaded()
         if provider is not None:
             # Scoped lookup: search only within the given provider
-            prov = provider.lower()
-            prov_index = self._by_provider.get(prov)
-            if prov_index is not None:
-                for key in self._lookup_candidates(model_id):
-                    # Direct model_id match
-                    cap = prov_index.get(key)
-                    if cap is not None:
-                        return cap
-                    # Alias resolution: key may point to another model_id
-                    resolved = self._alias_index.get(key)
-                    if resolved is not None and resolved != key:
-                        cap = prov_index.get(resolved)
+            p = self._normalize_provider(provider)
+            # Collect matching provider names (canonical + aliases)
+            matching_providers = {p}
+            for canonical, aliases in self._provider_aliases.items():
+                if p == canonical:
+                    matching_providers.update(aliases)
+                elif p in aliases:
+                    matching_providers.add(canonical)
+                    matching_providers.update(a for a in aliases if a != p)
+            for prov in matching_providers:
+                prov_index = self._by_provider.get(prov)
+                if prov_index is not None:
+                    for key in self._lookup_candidates(model_id):
+                        # Direct model_id match
+                        cap = prov_index.get(key)
                         if cap is not None:
                             return cap
+                        # Alias resolution: key may point to another model_id
+                        resolved = self._alias_index.get(key)
+                        if resolved is not None and resolved != key:
+                            cap = prov_index.get(resolved)
+                            if cap is not None:
+                                return cap
             raise ModelNotFoundError(model_id)
         # Unqualified lookup: use alias index (first-registered-wins)
         for key in self._lookup_candidates(model_id):
@@ -478,7 +515,7 @@ class Registry:
         """Return capabilities, optionally filtered by provider."""
         self._ensure_loaded()
         if provider is not None:
-            p = provider.lower()
+            p = self._normalize_provider(provider)
             # Collect matching provider names (canonical + aliases)
             matching_providers = {p}
             for canonical, aliases in self._provider_aliases.items():
@@ -533,10 +570,29 @@ class Registry:
                 result.append(cap)
         return result
 
+    def find_by_model_id(self, model_id: str) -> List[tuple[str, Capability]]:
+        """Find all (provider, Capability) tuples for a given model_id across providers."""
+        self._ensure_loaded()
+        key = model_id.strip().lower()
+        results: List[tuple[str, Capability]] = []
+        for prov, caps in self._by_provider.items():
+            for lookup_key in [key] + [k for k in self._lookup_candidates(model_id) if k != key]:
+                cap = caps.get(lookup_key)
+                if cap is not None:
+                    results.append((prov, cap))
+                    break
+                resolved = self._alias_index.get(lookup_key)
+                if resolved is not None and resolved != lookup_key:
+                    cap = caps.get(resolved)
+                    if cap is not None:
+                        results.append((prov, cap))
+                        break
+        return results
+
     def search(
         self,
         prefix: str,
-        provider: Optional[str] = None,
+        provider: str,
         include_deprecated: bool = False,
         limit: Optional[int] = None,
     ) -> List[Capability]:
@@ -570,15 +626,14 @@ class Registry:
                     break
 
         result.sort(key=lambda c: (c.provider, c.model_id))
-        if limit is not None and limit > 0:
+        if limit is not None:
             result = result[:limit]
         return result
 
 
-# Module-level default registry
-_default = Registry()
-
-
 def default_registry() -> Registry:
-    """Return the shared default Registry instance."""
-    return _default
+    """Return the global default registry instance."""
+    return _default_registry
+
+
+_default_registry = Registry()

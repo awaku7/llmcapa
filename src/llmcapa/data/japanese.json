@@ -1,72 +1,37 @@
 {
   "models": [
     {
-      "provider": "ntt",
-      "model_id": "tsuzumi-2",
-      "display_name": "NTT tsuzumi 2",
-      "context_window": 128000,
-      "max_output_tokens": 8192,
-      "input_modalities": ["text", "image"],
-      "output_modalities": ["text"],
-      "supports_chat_completion": true,
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "knowledge_cutoff": "2025-10",
-      "aliases": ["ntt/tsuzumi-2", "tsuzumi-2", "tsuzumi2"]
-    },
-    {
       "provider": "customer-cloud",
       "model_id": "cc-gov-llm",
       "display_name": "Customer Cloud CC Gov-LLM",
       "context_window": 128000,
       "max_output_tokens": 8192,
-      "input_modalities": ["text"],
-      "output_modalities": ["text"],
-      "supports_chat_completion": true,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": "2026-01",
-      "aliases": ["customer-cloud/cc-gov-llm", "cc-gov-llm"]
-    },
-    {
-      "provider": "elyza",
-      "model_id": "llama-3.1-elyza-jp-70b",
-      "display_name": "ELYZA Llama-3.1-ELYZA-JP-70B",
-      "context_window": 128000,
-      "max_output_tokens": 8192,
-      "input_modalities": ["text"],
-      "output_modalities": ["text"],
-      "supports_chat_completion": true,
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "knowledge_cutoff": "2024-07",
-      "aliases": ["elyza/llama-3.1-elyza-jp-70b", "llama-3.1-elyza-jp-70b"]
-    },
-    {
-      "provider": "softbank",
-      "model_id": "sarashina2-mini",
-      "display_name": "SoftBank Sarashina2 mini",
-      "context_window": 128000,
-      "max_output_tokens": 4096,
-      "input_modalities": ["text"],
-      "output_modalities": ["text"],
-      "supports_chat_completion": true,
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "knowledge_cutoff": "2025-05",
-      "aliases": ["softbank/sarashina2-mini", "sarashina2-mini"]
+      "deprecated": false,
+      "aliases": [
+        "customer-cloud/cc-gov-llm",
+        "cc-gov-llm"
+      ],
+      "license_type": "free"
     },
     {
       "provider": "nec",
@@ -74,33 +39,65 @@
       "display_name": "NEC cotomi v3",
       "context_window": 128000,
       "max_output_tokens": 8192,
-      "input_modalities": ["text"],
-      "output_modalities": ["text"],
-      "supports_chat_completion": true,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": "2025-07",
-      "aliases": ["nec/cotomi-v3", "cotomi-v3"]
+      "deprecated": false,
+      "aliases": [
+        "nec/cotomi-v3",
+        "cotomi-v3"
+      ],
+      "license_type": "free"
     },
     {
-      "provider": "fujitsu",
-      "model_id": "takane-32b",
-      "display_name": "Fujitsu Takane 32B",
+      "provider": "elyza",
+      "model_id": "llama-3.1-elyza-jp-70b",
+      "display_name": "ELYZA Llama-3.1-ELYZA-JP-70B",
       "context_window": 128000,
       "max_output_tokens": 8192,
-      "input_modalities": ["text"],
-      "output_modalities": ["text"],
-      "supports_chat_completion": true,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
-      "supports_reasoning": true,
-      "knowledge_cutoff": "2025-10",
-      "aliases": ["fujitsu/takane-32b", "takane-32b"]
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-07",
+      "deprecated": false,
+      "aliases": [
+        "elyza/llama-3.1-elyza-jp-70b",
+        "llama-3.1-elyza-jp-70b"
+      ],
+      "license_type": "free"
     },
     {
       "provider": "pfn",
@@ -108,17 +105,37 @@
       "display_name": "PFN PLaMo 2.0 Prime",
       "context_window": 32000,
       "max_output_tokens": 4096,
-      "input_modalities": ["text"],
-      "output_modalities": ["text"],
-      "supports_chat_completion": true,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": "2025-07",
-      "pricing": {"input_per_1m": 0.4, "output_per_1m": 1.6, "currency": "USD"},
-      "aliases": ["pfn/plamo-2.0-prime", "plamo-2.0-prime"]
+      "pricing": {
+        "input_per_1m": 0.4,
+        "output_per_1m": 1.6,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "pfn/plamo-2.0-prime",
+        "plamo-2.0-prime"
+      ],
+      "license_type": "api"
     },
     {
       "provider": "pfn",
@@ -126,17 +143,138 @@
       "display_name": "PFN PLaMo 2.2 Prime",
       "context_window": 32000,
       "max_output_tokens": 8192,
-      "input_modalities": ["text"],
-      "output_modalities": ["text"],
-      "supports_chat_completion": true,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
       "knowledge_cutoff": "2026-03",
-      "pricing": {"input_per_1m": 0.4, "output_per_1m": 1.6, "currency": "USD"},
-      "aliases": ["pfn/plamo-2.2-prime", "plamo-2.2-prime"]
+      "pricing": {
+        "input_per_1m": 0.4,
+        "output_per_1m": 1.6,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "pfn/plamo-2.2-prime",
+        "plamo-2.2-prime"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "softbank",
+      "model_id": "sarashina2-mini",
+      "display_name": "SoftBank Sarashina2 mini",
+      "context_window": 128000,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-05",
+      "deprecated": false,
+      "aliases": [
+        "softbank/sarashina2-mini",
+        "sarashina2-mini"
+      ],
+      "license_type": "free"
+    },
+    {
+      "provider": "fujitsu",
+      "model_id": "takane-32b",
+      "display_name": "Fujitsu Takane 32B",
+      "context_window": 128000,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-10",
+      "deprecated": false,
+      "aliases": [
+        "fujitsu/takane-32b",
+        "takane-32b"
+      ],
+      "license_type": "free"
+    },
+    {
+      "provider": "ntt",
+      "model_id": "tsuzumi-2",
+      "display_name": "NTT tsuzumi 2",
+      "context_window": 128000,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-10",
+      "deprecated": false,
+      "aliases": [
+        "ntt/tsuzumi-2",
+        "tsuzumi-2",
+        "tsuzumi2"
+      ],
+      "license_type": "free"
     }
   ]
 }
