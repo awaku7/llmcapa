@@ -4,7 +4,7 @@ Lookup capabilities (context window, modalities, supported features) of various 
 
 ## Features
 
-- **Comprehensive Bundled Data**: Offline capability data for OpenAI, Anthropic, Google (Gemini), Microsoft (Phi), Amazon (Nova/Titan), Meta (Llama), Mistral, Qwen, DeepSeek, xAI (Grok), NVIDIA, MoonshotAI (Kimi), zhipu-ai (GLM), Sakana AI (Fugu), Novita AI, OpenRouter, and Japanese domestic models (NTT tsuzumi, PFN PLaMo, ELYZA, SoftBank, NEC, Fujitsu, etc. adopted by the Digital Agency's "GENNAI" platform).
+- **Comprehensive Bundled Data**: Offline capability data for OpenAI, Anthropic, Google (Gemini), Microsoft (Phi), Amazon (Nova/Titan), Meta (Llama), Mistral, Qwen, DeepSeek, xAI (Grok), NVIDIA, MoonshotAI (Kimi), zhipu-ai (GLM), Sakana AI (Fugu), **Azure AI Foundry**, Novita AI, OpenRouter, **HuggingFace (2,675 popular models)**, and Japanese domestic models (NTT tsuzumi, PFN PLaMo, ELYZA, SoftBank, NEC, Fujitsu, etc. adopted by the Digital Agency's "GENNAI" platform).
 - **Zero Runtime Dependencies**: Built entirely on the Python standard library.
 - **Alias Resolution**: Automatically resolves aliases and provider-specific names (e.g., `gpt-4o-2024-08-06` -> `gpt-4o`, `gemini-1.5-pro-preview-0409` -> `gemini-1.5-pro`).
 - **Advanced Feature Queries**: Check support for `vision`, `multimodal`, `chat_completion`, `responses_api`, `reasoning_effort`, `thinking_budget`, and specific input/output modalities (e.g., `image_input`, `image_output`, `audio_input`).
@@ -13,7 +13,7 @@ Lookup capabilities (context window, modalities, supported features) of various 
 - **Drop-in Replacement Checker**: Check if a model can be safely replaced by another model based on context window and required features.
 - **Tokenizer Mapping**: Access tokenizer names (e.g., `o200k_base`) directly from model capabilities.
 - **Extendable**: Load your own local JSON model definitions.
-- **Ollama Support**: Full capability data for **1,638 Ollama models** across 236 base models with all size variants (codegemma, llama, qwen, mistral, deepseek, gemma, phi, etc.). Zero-cost local inference models included.
+- **Ollama & HuggingFace Support**: Full capability data for **1,638 Ollama models** and **2,675 popular HuggingFace models** across 236 base models with all size variants (codegemma, llama, qwen, mistral, deepseek, gemma, phi, etc.). Zero-cost local inference models included.
 - **FIM (Fill-in-the-Middle) Support**: Check if a model supports code infilling via `cap.supports('fim')`. Supported for codegemma, codellama, starcoder2, deepseek-coder, qwen2.5-coder, and more.
 - **CLI Included**: Query and list model capabilities directly from your terminal.
 
@@ -287,7 +287,7 @@ print(cap.supports_vision)  # False (text-generation pipeline)
 count = llmcapa.fetch_huggingface(limit=200)
 ```
 
-> **Note**: The HuggingFace listing API does not provide context window, pricing, or detailed capability data. The registered models have conservative defaults (4K context, 2K max output). For accurate data, use `fetch_openrouter()` or bundled snapshots.
+> **Note**: The HuggingFace listing API does not provide context window, pricing, or detailed capability data. The registered models have estimated context windows based on their model family (e.g., Llama 3: 8K, Qwen3: 128K). The bundled `huggingface.json` includes 2,675 popular text-generation models with improved context window estimates. For exact specifications, use `fetch_openrouter()` or official model cards.
 
 ### Token Counting (Standalone)
 
@@ -390,8 +390,8 @@ llmcapa fetch-hf --limit 200
 
 ## Notes
 
-- **Static Snapshot**: Bundled capability data is a static snapshot. While we strive to keep it updated with the latest models (including GPT-5.5, Claude Fable, Gemini 3.5, DeepSeek V4, Sakana Fugu, etc.), providers change limits and pricing frequently. Use `fetch_openrouter()` or verify with official documentation when absolute accuracy is critical.
-- **HuggingFace Data Accuracy**: Models fetched via `fetch_huggingface()` have conservative defaults (4K context, 2K max output) since the HuggingFace listing API does not expose detailed capability data. For accurate specifications, use `fetch_openrouter()` or the bundled data.
+- **Static Snapshot**: Bundled capability data is a static snapshot. See [docs/catalog_data_sources.md](docs/catalog_data_sources.md) for details on each provider's data source and known SSR limitations (Azure AI Catalog). While we strive to keep it updated with the latest models (including GPT-5.6, Claude Sonnet 5, Gemini 3.5 Flash, DeepSeek V4, Sakana Fugu, etc.), providers change limits and pricing frequently. Use `fetch_openrouter()` or verify with official documentation when absolute accuracy is critical.
+- **HuggingFace Data Accuracy**: The bundled `huggingface.json` includes 2,675 popular text-generation models with context windows estimated from model families. Models fetched via `fetch_huggingface()` at runtime have estimated defaults. For exact specifications, consult official model cards.
 
 ## License
 
