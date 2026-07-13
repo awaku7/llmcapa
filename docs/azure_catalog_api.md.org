@@ -157,57 +157,6 @@ API を呼び出すことで認証情報が自動的に付与されます。
 ※ カタログ表示上の「3543」は Hugging Face の全バリアントを含む数値。
 API では `labels=latest` フィルタで重複を除外した 1672 モデルが取得可能。
 
-## 既知の制限：SSR 初期ページの問題
-
-この API には重要な制限があります。
-
-### 現象
-
-カタログの **1ページ目**（人気順で最初の51モデル）は **SSR（Server-Side Rendering）**
-で HTML に直接埋め込まれており、`asset-gallery/v1.0/models` API を経由しません。
-そのため、API ベースの全件取得では **1ページ目のモデルが欠落** します。
-
-### 該当モデルの例
-
-以下のような人気モデルが 1ページ目に表示され、API では取得できません。
-
-```
-gpt-5.6-sol, gpt-5.6-luna, gpt-5.6-terra
-gpt-realtime-2.1, gpt-chat-latest
-Kimi-K2.7-Code, claude-sonnet-5
-Cohere-command-a-plus-05-2026
-...
-```
-
-### 原因
-
-| 動作 | データソース |
-|------|-------------|
-| 初期ページロード（1ページ目） | SSR（React ストリームデータ） |
-| 「Next」クリック（2ページ目以降） | `asset-gallery/v1.0/models` API |
-
-初期ロード時には API が呼ばれず、React Router のストリームデータとして
-全モデル情報が HTML の `<script>` タグ内に埋め込まれています。
-「Next」をクリックして初めて API が呼び出され、2ページ目以降のデータを取得します。
-
-### 回避策
-
-API データに加えて、SSR でレンダリングされた 1ページ目のモデルも
-別途スクレイピングしてマージする必要があります。
-
-```python
-# SSR の1ページ目モデルを DOM から取得
-ssr_models = await page.evaluate("""
-    () => {
-        const cards = document.querySelectorAll('a[class*="_cardLink"]');
-        return Array.from(cards).map(el => el.href);
-    }
-""")
-```
-
-または、各モデルの詳細ページを個別に開いて情報を取得します。
-詳細ページも SSR でレンダリングされるため、URL が分かれば直接アクセスできます。
-
 ## 実装例（Playwright + Python）
 
 ```python
