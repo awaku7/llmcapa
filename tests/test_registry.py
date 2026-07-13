@@ -51,7 +51,7 @@ def test_no_duplicate_model_ids():
         # Aggregator/reseller files (novita, openrouter) may intentionally
         # overlap with native provider data; the registry uses
         # first-registered-wins for unqualified lookups.
-        if fname in ("novita.json", "openrouter.json", "azure_foundry.json", "lmstudio.json", "ollama.json"):
+        if fname in ("novita.json", "openrouter.json", "azure_foundry.json", "lmstudio.json", "ollama.json", "huggingface.json"):
             continue
         assert mid not in seen, f"duplicate model_id {mid} in {fname} and {seen[mid]}"
         seen[mid] = fname
@@ -249,5 +249,5 @@ def test_data_from_bundled_json_not_hardcoded() -> None:
     assert sakura_models[0].model_id == "sakura-default"
 
     hf_models = reg.list_models(provider="huggingface")
-    assert len(hf_models) == 1
-    assert hf_models[0].model_id == "huggingface-default"
+    assert len(hf_models) > 1  # now contains real models from HF API
+    assert any(m.model_id == "huggingface-default" for m in hf_models), "huggingface-default should be in HF models"
