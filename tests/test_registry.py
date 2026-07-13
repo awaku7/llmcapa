@@ -51,7 +51,7 @@ def test_no_duplicate_model_ids():
         # Aggregator/reseller files (novita, openrouter) may intentionally
         # overlap with native provider data; the registry uses
         # first-registered-wins for unqualified lookups.
-        if fname in ("novita.json", "openrouter.json", "azure_foundry.json"):
+        if fname in ("novita.json", "openrouter.json", "azure_foundry.json", "lmstudio.json", "ollama.json"):
             continue
         assert mid not in seen, f"duplicate model_id {mid} in {fname} and {seen[mid]}"
         seen[mid] = fname
@@ -110,7 +110,7 @@ def test_find():
 
 
 def test_search():
-    results = llmcapa.search("gpt-4o")
+    results = llmcapa.search("gpt-4o", provider="openai")
     assert len(results) > 0
     assert any("gpt-4o" in r.model_id for r in results)
 
@@ -139,7 +139,7 @@ def test_register_and_get():
 # ----------------------------------------------------------------------
 def test_get_with_provider():
     """get(model_id, provider=...) should return the provider-specific version."""
-    cap = llmcapa.get("deepseek/deepseek-v3.2", provider="novita")
+    cap = llmcapa.get("deepseek/deepseek-v3.2-exp", provider="novita")
     assert cap.provider == "novita"
     assert cap.context_window == 163840
 
@@ -153,15 +153,15 @@ def test_get_without_provider_returns_first():
 
 def test_get_with_provider_alias() -> None:
     """get(model_id, provider='bedrock') should resolve to amazon provider."""
-    cap = llmcapa.get("gpt-4o", provider="bedrock")
+    cap = llmcapa.get("nova-pro-v1", provider="bedrock")
     assert cap.provider == "amazon"
-    assert cap.context_window == 128000
+    assert cap.context_window == 300000
 
 
 def test_get_with_provider_normalization() -> None:
-    """get with azure_openai (underscore) should normalize and resolve via aliases."""
+    """get with azure_openai (underscore) should normalize to azure-openai."""
     cap = llmcapa.get("gpt-4o", provider="azure_openai")
-    assert cap.provider == "openai"
+    assert cap.provider == "azure-openai"
     assert cap.context_window == 128000
 
 

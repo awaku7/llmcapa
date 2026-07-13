@@ -36,13 +36,8 @@ class Registry:
         "mistral": ["mistralai"],
         "xai": ["x-ai"],
         "amazon": ["bedrock"],
-        "bedrock": ["amazon"],
         "xiaomi": ["mimo"],
-        "mimo": ["xiaomi"],
-        "openai": ["azure-openai", "azure_openai", "azureopenai"],
-        "azure-openai": ["openai"],
         "huggingface": ["hf"],
-        "hf": ["huggingface"],
     }
 
     @staticmethod
@@ -62,9 +57,19 @@ class Registry:
 
     def _load_bundled(self) -> None:
         data_pkg = resources.files("llmcapa.data")
+        # Aggregator/reseller files are loaded last so native provider data
+        # takes precedence via first-registered-wins.
+        aggregators = {"openrouter.json", "novita.json", "azure_foundry.json", "lmstudio.json", "ollama.json"}
+        regular = []
+        agg = []
         for entry in sorted(data_pkg.iterdir(), key=lambda e: e.name):
             if entry.name.endswith(".json"):
-                self._load_json_text(entry.read_text(encoding="utf-8"))
+                if entry.name in aggregators:
+                    agg.append(entry)
+                else:
+                    regular.append(entry)
+        for entry in regular + agg:
+            self._load_json_text(entry.read_text(encoding="utf-8"))
 
         # Load local OpenRouter cache if it exists (up to 24h old) to override bundled data with latest updates
         import os
