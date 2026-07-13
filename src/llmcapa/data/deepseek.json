@@ -557,7 +557,7 @@
       "supports_reasoning": true,
       "supports_chat_completion": true,
       "supports_responses_api": false,
-      "supports_reasoning_effort": false,
+      "supports_reasoning_effort": true,
       "supports_thinking_budget": true,
       "supports_anthropic_api": false,
       "supports_google_api": false,
@@ -574,7 +574,20 @@
         "deepseek/deepseek-v4-flash",
         "deepseek-v4-flash-max"
       ],
-      "license_type": "api"
+      "license_type": "api",
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 393216
+      },
+      "reasoning_effort_values": [
+        "none",
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ]
     },
     {
       "provider": "deepseek",
@@ -595,7 +608,7 @@
       "supports_reasoning": true,
       "supports_chat_completion": true,
       "supports_responses_api": false,
-      "supports_reasoning_effort": false,
+      "supports_reasoning_effort": true,
       "supports_thinking_budget": true,
       "supports_anthropic_api": false,
       "supports_google_api": false,
@@ -612,7 +625,20 @@
         "deepseek/deepseek-v4-pro",
         "deepseek-v4-pro-max"
       ],
-      "license_type": "api"
+      "license_type": "api",
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 393216
+      },
+      "reasoning_effort_values": [
+        "none",
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ]
     }
   ]
 }

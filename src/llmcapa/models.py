@@ -43,6 +43,7 @@ class ReasoningEffort(str, Enum):
     LLMC_EFFORT_MEDIUM = "medium"
     LLMC_EFFORT_HIGH = "high"
     LLMC_EFFORT_XHIGH = "xhigh"
+    LLMC_EFFORT_MAX = "max"
 
 
 @dataclass(frozen=True)
@@ -74,6 +75,8 @@ class Capability:
     pricing: Optional[Dict[str, Any]] = None
     deprecated: bool = False
     aliases: List[str] = field(default_factory=list)
+    reasoning_effort_values: Optional[List[str]] = None
+    thinking_budget_values: Optional[Dict[str, Any]] = None
     extra: Dict[str, Any] = field(default_factory=dict)
 
     def supports(self, feature: Feature | str) -> bool:
@@ -298,6 +301,55 @@ class Capability:
                 return False
         return True
 
+    def get_reasoning_effort_values(self) -> List[str]:
+        """Return the list of valid reasoning_effort values for this model.
+
+        If not explicitly set, returns a sensible default based on the provider.
+        Returns an empty list if the model does not support reasoning_effort.
+        """
+        if not self.supports_reasoning_effort:
+            return []
+        if self.reasoning_effort_values is not None:
+            return list(self.reasoning_effort_values)
+        # Provider-specific defaults
+        prov = self.provider.lower()
+        if prov in ("openai", "azure-openai", "azure_openai", "azure-foundry", "azure_foundry"):
+            return ["none", "low", "medium", "high"]
+        if prov in ("google",):
+            return ["none", "low", "medium", "high"]
+        if prov in ("xai", "x-ai"):
+            return ["none", "low", "medium", "high"]
+        if prov in ("mistral", "mistralai"):
+            return ["none", "low", "medium", "high"]
+        if prov in ("minimax", "minimaxai"):
+            return ["none", "low", "medium", "high"]
+        if prov in ("moonshot", "moonshotai"):
+            return ["none", "low", "medium", "high"]
+        if prov in ("openrouter",):
+            # OpenRouter normalizes reasoning_effort across all providers
+            return ["none", "minimal", "low", "medium", "high", "xhigh"]
+        return ["low", "medium", "high"]
+
+    def get_thinking_budget_values(self) -> Dict[str, Any]:
+        """Return information about valid thinking_budget values for this model.
+
+        If not explicitly set, returns a sensible default based on the provider.
+        Returns an empty dict if the model does not support thinking_budget.
+        """
+        if not self.supports_thinking_budget:
+            return {}
+        if self.thinking_budget_values is not None:
+            return dict(self.thinking_budget_values)
+        # Provider-specific defaults
+        prov = self.provider.lower()
+        if prov in ("anthropic",):
+            return {"type": "token_range", "min": 1024, "max": self.max_output_tokens or 128000}
+        if prov in ("deepseek", "deepseek-ai"):
+            return {"type": "token_range", "min": 1024, "max": self.max_output_tokens or 8192}
+        if prov in ("microsoft",):
+            return {"type": "token_range", "min": 1024, "max": self.max_output_tokens or 16384}
+        return {"type": "token_range", "min": 1024, "max": self.max_output_tokens or 4096}
+
     def to_dict(self) -> Dict[str, Any]:
         """Return a plain dict representation."""
         d = asdict(self)
@@ -305,6 +357,10 @@ class Capability:
             d.pop("extra", None)
         if d.get("pricing") is None:
             d.pop("pricing", None)
+        if d.get("reasoning_effort_values") is None:
+            d.pop("reasoning_effort_values", None)
+        if d.get("thinking_budget_values") is None:
+            d.pop("thinking_budget_values", None)
         # Exclude internal cache from dict representation
         d.pop("_supports_cache", None)
         return d

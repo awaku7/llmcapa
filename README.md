@@ -127,6 +127,44 @@ print(claude.supports(Feature.LLMC_FEAT_REASONING_EFFORT))  # False
 print(claude.supports(Feature.LLMC_FEAT_THINKING_BUDGET))   # True
 ```
 
+### Reasoning Effort Values
+
+Retrieve the list of valid `reasoning_effort` values supported by a specific model:
+
+```python
+cap = llmcapa.get("gpt-5.5")
+print(cap.get_reasoning_effort_values())
+# ['none', 'minimal', 'low', 'medium', 'high', 'xhigh']
+
+cap2 = llmcapa.get("o1")
+print(cap2.get_reasoning_effort_values())
+# ['none', 'low', 'medium', 'high']
+
+# Models without reasoning_effort support return an empty list
+cap3 = llmcapa.get("gpt-4o")
+print(cap3.get_reasoning_effort_values())
+# []
+```
+
+### Thinking Budget Values
+
+Retrieve information about valid `thinking_budget` values for models that support it:
+
+```python
+cap = llmcapa.get("claude-sonnet-4-20250501")
+print(cap.get_thinking_budget_values())
+# {'type': 'token_range', 'min': 1024, 'max': 128000}
+
+cap2 = llmcapa.get("deepseek-r1")
+print(cap2.get_thinking_budget_values())
+# {'type': 'token_range', 'min': 1024, 'max': 8192}
+
+# Models without thinking_budget support return an empty dict
+cap3 = llmcapa.get("gpt-4o")
+print(cap3.get_thinking_budget_values())
+# {}
+```
+
 ### Sakana Fugu (Multi-Agent Orchestration)
 
 Sakana AI's Fugu is a multi-agent orchestration system presented as a single model. It dynamically coordinates frontier models to tackle complex tasks. llmcapa bundles capability data for both Fugu and Fugu Ultra.
