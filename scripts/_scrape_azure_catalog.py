@@ -3,16 +3,18 @@
 Usage:
     python scripts/_scrape_azure_catalog.py [--save] [--output PATH]
 
-This script handles the SSR limitation of Azure AI Catalog:
-- Page 1 (top ~51 models by popularity) is server-side rendered into HTML
-  and NOT accessible via the asset-gallery/v1.0/models API.
-- Pages 2+ use the API for data.
+How it works:
+    1. Reads model names from the SSR page 1 DOM (top ~51 models).
+    2. Clicks "Next" repeatedly via Playwright to trigger the API for pages 2+.
+       (Direct API calls via fetch() don't work - they lack auth tokens.)
+    3. Captures model data from each API response.
+    4. Visits detail pages for any SSR-only models to get their metadata.
+    5. Outputs combined catalog in our standard format.
 
-The script:
-  1. Reads model names from the SSR page 1 DOM
-  2. Fetches pages 2+ via the API
-  3. Visits each SSR-only model's detail page for metadata
-  4. Outputs combined catalog in our standard format
+Important:
+    The Azure AI Catalog API requires a continuationToken that is generated
+    from the SSR page state. The only way to paginate is to click "Next" in
+    the browser. Direct fetch() calls to the API will fail with 400 errors.
 """
 
 import asyncio
@@ -29,42 +31,11 @@ except ImportError:
     sys.exit(1)
 
 
-AZURE_API_BASE = "https://ai.azure.com/api/japanwest/asset-gallery/v1.0/models"
 CATALOG_URL = "https://ai.azure.com/catalog/models"
 DETAIL_URL = "https://ai.azure.com/catalog/models/{name}"
 
 
-def _build_api_body(token=None):
-    """Build the standard API request body for the catalog API."""
-    body = {
-        "filters": [
-            {"field": "type", "operator": "eq", "values": ["models"]},
-            {"field": "kind", "operator": "eq", "values": ["Versioned"]},
-            {"field": "properties/isAnonymous", "operator": "ne", "values": ["true"]},
-            {"field": "annotations/archived", "operator": "ne", "values": ["true"]},
-            {"field": "properties/userProperties/is-promptflow", "operator": "notexists"},
-            {"field": "labels", "operator": "eq", "values": ["latest"]},
-        ],
-        "searchParameters": {
-            "freeTextSearch": "",
-            "freeTextSearchColumns": [
-                {"name": "annotations/systemCatalogData/publisher"},
-                {"name": "properties/name"},
-                {"name": "annotations/systemCatalogData/inferenceTasks"},
-            ],
-        },
-        "order": [{"field": "usage/popularity", "direction": "Desc"}],
-        "pageSize": 200,
-        "facets": [],
-        "includeTotalResultCount": True,
-        "searchBuilder": "AppendPrefix",
-    }
-    if token:
-        body["continuationToken"] = token
-    return body
-
-
-def _convert_api_item(item: dict) -> dict:
+def _api_item_to_entry(item: dict) -> dict:
     """Convert an API response item to our catalog format."""
     props = item.get("properties", {})
     annotations = item.get("annotations", {})
@@ -80,7 +51,7 @@ def _convert_api_item(item: dict) -> dict:
     supports_audio_output = False
 
     for task in tasks:
-        tl = task.lower() if task else ""
+        tl = (task or "").lower()
         if "image" in tl or "vision" in tl:
             if "image" not in input_mods:
                 input_mods.append("image")
@@ -89,12 +60,10 @@ def _convert_api_item(item: dict) -> dict:
             if "audio" not in input_mods:
                 input_mods.append("audio")
             supports_audio_input = True
-        if "audio" in tl or "speech" in tl:
             if "audio" not in output_mods:
                 output_mods.append("audio")
             supports_audio_output = True
 
-    # Context window estimation from limits
     limits = props.get("limits", {})
     ctx = limits.get("maxContextLength", 4096) or 4096
     max_out = limits.get("maxOutputTokens", 2048) or 2048
@@ -114,46 +83,7 @@ def _convert_api_item(item: dict) -> dict:
     }
 
 
-def _quick_facts_from_text(text: str) -> dict:
-    """Extract quick facts from a detail page's text content."""
-    r = {}
-    lines = [l.strip() for l in text.split("\n") if l.strip()]
-
-    # Find labels and take next line as value
-    labels = {
-        "Model provider": "provider",
-        "Type": "type",
-        "Lifecycle": "lifecycle",
-        "Input type": "input_type",
-        "Output type": "output_type",
-        "Context window": "context_window",
-        "Token limits": "token_limits",
-    }
-
-    for i, line in enumerate(lines):
-        if line in labels and i + 1 < len(lines):
-            r[labels[line]] = lines[i + 1]
-
-    # Parse context window (e.g. "400k" -> 400000)
-    ctx_raw = r.get("context_window", "")
-    if ctx_raw:
-        ctx_match = re.search(r"([\d,.]+)\s*k", ctx_raw, re.I)
-        if ctx_match:
-            num = float(ctx_match.group(1).replace(",", ""))
-            r["context_window_num"] = int(num * 1000)
-
-    # Parse token limits
-    tok_raw = r.get("token_limits", "")
-    if tok_raw:
-        tok_match = re.search(r"([\d,.]+)\s*k", tok_raw, re.I)
-        if tok_match:
-            num = float(tok_match.group(1).replace(",", ""))
-            r["token_limits_num"] = int(num * 1000)
-
-    return r
-
-
-async def fetch_ssr_page1_names(page) -> set:
+async def get_ssr_page1_names(page) -> set:
     """Get model names from SSR page 1 DOM."""
     await page.goto(CATALOG_URL, timeout=30000, wait_until="domcontentloaded")
     await page.wait_for_timeout(3000)
@@ -170,42 +100,64 @@ async def fetch_ssr_page1_names(page) -> set:
     return set(names)
 
 
-async def fetch_api_models(page) -> list:
-    """Fetch models from pages 2+ via API. Returns list of catalog-format dicts."""
+async def click_until_no_next(page) -> list:
+    """Click 'Next' repeatedly to paginate through all API pages.
+
+    Returns list of catalog-format entries from all API responses.
+    """
+    all_entries = []
     page_num = 0
-    token = None
-    all_items = []
+    max_pages = 500  # safety limit
 
-    while True:
-        page_num += 1
-        body = _build_api_body(token)
-
-        result = await page.evaluate(f"""
-            async () => {{
-                const resp = await fetch('{AZURE_API_BASE}', {{
-                    method: 'POST',
-                    headers: {{'Content-Type': 'application/json'}},
-                    body: JSON.stringify({json.dumps(body)})
-                }});
-                return await resp.json();
-            }}
-        """)
-
-        values = result.get("value", [])
-        for item in values:
-            all_items.append(_convert_api_item(item))
-
-        token = result.get("continuationToken")
-        if not token:
+    while page_num < max_pages:
+        # Wait for the Next button to appear and be clickable
+        next_btn = page.locator('button:has-text("Next")')
+        try:
+            await next_btn.wait_for(timeout=5000)
+        except Exception:
+            print("  No more Next button found.")
             break
-        await asyncio.sleep(0.3)
 
-    print(f"  API pages 2+: {len(all_items)} models across {page_num} pages")
-    return all_items
+        is_disabled = await next_btn.is_disabled()
+        if is_disabled:
+            print("  Next button is disabled. Reached last page.")
+            break
+
+        # Before clicking, set up a one-shot listener for the API response
+        future_response = asyncio.get_event_loop().create_future()
+
+        def capture_response(response):
+            if "asset-gallery/v1.0/models" in response.url and response.status == 200:
+                if not future_response.done():
+                    future_response.set_result(response)
+
+        page.on("response", capture_response)
+
+        # Click Next
+        await next_btn.click()
+        page_num += 1
+
+        # Wait a moment for the API response
+        try:
+            resp = await asyncio.wait_for(future_response, timeout=10)
+            data = await resp.json()
+            values = data.get("value", [])
+            for item in values:
+                all_entries.append(_api_item_to_entry(item))
+            print(f"  Page {page_num}: {len(values)} models (total: {len(all_entries)})")
+        except asyncio.TimeoutError:
+            print(f"  Page {page_num}: timeout waiting for API response")
+            break
+        finally:
+            page.remove_listener("response", capture_response)
+
+        await asyncio.sleep(0.5)
+
+    return all_entries
 
 
 async def fetch_ssr_detail(page, model_name: str) -> dict:
-    """Visit a model's detail page to get metadata."""
+    """Visit a model's detail page to get metadata (for SSR-only models)."""
     url = DETAIL_URL.format(name=model_name)
     await page.goto(url, timeout=15000, wait_until="domcontentloaded")
     await page.wait_for_timeout(1500)
@@ -217,44 +169,61 @@ async def fetch_ssr_detail(page, model_name: str) -> dict:
         await page.wait_for_timeout(500)
 
     text = await page.evaluate("document.body.innerText")
-    qf = _quick_facts_from_text(text)
+    lines = [l.strip() for l in text.split("\n") if l.strip()]
 
-    entry = {
+    # Extract quick facts
+    qf = {}
+    labels = ["Model provider", "Type", "Lifecycle", "Input type",
+              "Output type", "Context window", "Token limits"]
+    for i, line in enumerate(lines):
+        if line in labels and i + 1 < len(lines):
+            qf[line] = lines[i + 1]
+
+    # Parse context window (e.g. "400k" -> 400000)
+    ctx_raw = qf.get("Context window", "")
+    ctx_match = re.search(r"([\d,.]+)\s*k", ctx_raw, re.I)
+    ctx = int(float(ctx_match.group(1).replace(",", "")) * 1000) if ctx_match else 4096
+
+    # Parse token limits
+    tok_raw = qf.get("Token limits", "")
+    tok_match = re.search(r"([\d,.]+)\s*k", tok_raw, re.I)
+    max_out = int(float(tok_match.group(1).replace(",", "")) * 1000) if tok_match else 2048
+
+    # Modalities
+    input_type = qf.get("Input type", "").lower()
+    output_type = qf.get("Output type", "").lower()
+
+    input_mods = ["text"]
+    output_mods = ["text"]
+    supports_vision = "image" in input_type
+    supports_audio_input = "audio" in input_type
+    supports_audio_output = "audio" in output_type
+
+    if supports_vision and "image" not in input_mods:
+        input_mods.append("image")
+    if supports_audio_input and "audio" not in input_mods:
+        input_mods.append("audio")
+    if supports_audio_output and "audio" not in output_mods:
+        output_mods.append("audio")
+    if "image" in output_type and "image" not in output_mods:
+        output_mods.append("image")
+
+    model_type = qf.get("Type", "").lower()
+    supports_fc = "responses" in model_type
+
+    return {
         "provider": "azure-openai",
         "model_id": model_name,
         "display_name": model_name,
-        "context_window": qf.get("context_window_num", 4096),
-        "max_output_tokens": qf.get("token_limits_num", 2048),
-        "input_modalities": ["text"],
-        "output_modalities": ["text"],
-        "supports_function_calling": False,
-        "supports_vision": False,
-        "supports_audio_input": False,
-        "supports_audio_output": False,
+        "context_window": ctx,
+        "max_output_tokens": max_out,
+        "input_modalities": input_mods,
+        "output_modalities": output_mods,
+        "supports_function_calling": supports_fc,
+        "supports_vision": supports_vision,
+        "supports_audio_input": supports_audio_input,
+        "supports_audio_output": supports_audio_output,
     }
-
-    # Infer modalities from type
-    model_type = qf.get("type", "").lower()
-    input_type = qf.get("input_type", "").lower()
-    output_type = qf.get("output_type", "").lower()
-
-    if "image" in input_type:
-        entry["input_modalities"].append("image")
-        entry["supports_vision"] = True
-    if "audio" in input_type:
-        entry["input_modalities"].append("audio")
-        entry["supports_audio_input"] = True
-    if "audio" in output_type:
-        if "audio" not in entry["output_modalities"]:
-            entry["output_modalities"].append("audio")
-        entry["supports_audio_output"] = True
-    if "image" in output_type:
-        entry["output_modalities"].append("image")
-
-    if "responses" in model_type:
-        entry["supports_function_calling"] = True
-
-    return entry
 
 
 async def main():
@@ -270,39 +239,40 @@ async def main():
 
         # Step 1: Get SSR page 1 model names
         print("Step 1: Fetching SSR page 1 model names...")
-        ssr_names = await fetch_ssr_page1_names(page)
+        ssr_names = await get_ssr_page1_names(page)
         print(f"  SSR page 1: {len(ssr_names)} models")
 
-        # Step 2: Fetch API models (pages 2+)
-        print("Step 2: Fetching API models...")
-        api_models = await fetch_api_models(page)
-        api_names = {m["model_id"] for m in api_models}
+        # Step 2: Click Next repeatedly to get API models (pages 2+)
+        print("\nStep 2: Paginating through API pages via Next clicks...")
+        api_entries = await click_until_no_next(page)
+        print(f"  Total API models: {len(api_entries)}")
+
+        api_names = {m["model_id"] for m in api_entries}
 
         # Step 3: Identify SSR-only models
         ssr_only = ssr_names - api_names
         both = ssr_names & api_names
-        print(f"  API only: {len(api_names - ssr_names)}")
-        print(f"  Both: {len(both)}")
-        print(f"  SSR only: {len(ssr_only)}")
-
-        # Report duplicates
-        for m in sorted(both):
-            print(f"    (both) {m}")
+        print(f"\n  SSR only: {len(ssr_only)}")
+        print(f"  Both SSR+API: {len(both)}")
 
         # Step 4: Fetch detail data for SSR-only models
-        print("\nStep 3: Fetching detail pages for SSR-only models...")
-        ssr_models = []
-        for i, model_name in enumerate(sorted(ssr_only)):
-            entry = await fetch_ssr_detail(page, model_name)
-            ssr_models.append(entry)
-            ctx = entry["context_window"]
-            print(f"  [{i+1}/{len(ssr_only)}] {model_name}: ctx={ctx}")
-            await asyncio.sleep(0.5)
+        if ssr_only:
+            print("\nStep 3: Fetching detail pages for SSR-only models...")
+            ssr_entries = []
+            for i, model_name in enumerate(sorted(ssr_only)):
+                entry = await fetch_ssr_detail(page, model_name)
+                ssr_entries.append(entry)
+                ctx = entry["context_window"]
+                print(f"  [{i+1}/{len(ssr_only)}] {model_name}: ctx={ctx}")
+                await asyncio.sleep(0.5)
+        else:
+            ssr_entries = []
+            print("\nStep 3: No SSR-only models to fetch.")
 
-        # Combine: API models + SSR-only models
-        combined = api_models + ssr_models
+        # Combine: API entries + SSR-only entries
+        combined = api_entries + ssr_entries
 
-        # Deduplicate (shouldn't happen but just in case)
+        # Deduplicate
         seen = set()
         unique = []
         for m in combined:
@@ -312,7 +282,7 @@ async def main():
 
         print(f"\n=== Summary ===")
         print(f"  SSR page 1 models:  {len(ssr_names)}")
-        print(f"  API models:         {len(api_models)}")
+        print(f"  API models:         {len(api_entries)}")
         print(f"  SSR-only models:    {len(ssr_only)}")
         print(f"  Total unique:       {len(unique)}")
 

@@ -63,7 +63,7 @@ def is_fim_model(model_id):
 
 # ── Process all JSON files ──
 for fname in os.listdir(DATA):
-    if not fname.endswith(".json") or fname == "ollama.json":
+    if not fname.endswith(".json") or fname in ("ollama.json", "huggingface.json"):
         continue
     
     data = load_json(fname)

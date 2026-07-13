@@ -65,7 +65,7 @@ print(f"  Providers in registry: {sorted(by_provider.keys())}", flush=True)
 # Load existing bundled data to preserve non-OpenRouter models
 existing_data = {}
 for fname in os.listdir(DATA_DIR):
-    if fname.endswith(".json") and fname != "ollama.json":
+    if fname.endswith(".json") and fname not in ("ollama.json", "huggingface.json"):
         try:
             with open(os.path.join(DATA_DIR, fname), encoding="utf-8") as f:
                 existing_data[fname] = json.load(f)
