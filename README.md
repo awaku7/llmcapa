@@ -230,19 +230,19 @@ big_reasoning_models = llmcapa.find(
 
 ### Novita AI (Bundled Provider)
 
-Novita AI is a cloud platform offering 200+ open-source and proprietary models via a single API. llmcapa bundles capability data for 137 Novita AI models, including DeepSeek, Qwen, Meta Llama, GLM, Gemini, and many more, with Novita-specific pricing.
+Novita AI is a cloud platform offering 200+ open-source and proprietary models via a single API. llmcapa bundles capability data for 136 Novita AI models, including DeepSeek, Qwen, Meta Llama, GLM, Gemini, and many more, with Novita-specific pricing.
 
-Models are accessed using the `novita/` prefix to avoid conflicts with official provider data:
+Use the `provider="novita"` parameter to scope lookups to Novita AI models:
 
 ```python
 import llmcapa
 
-# Look up Novita AI models
-cap = llmcapa.get("novita/deepseek-v3.2")
+# Look up Novita AI models using provider scope
+cap = llmcapa.get("deepseek/deepseek-v3.2", provider="novita")
 print(cap.context_window)  # 163840
-print(cap.pricing)         # {'input_per_1m': 0.269, 'output_per_1m': 0.4, 'currency': 'USD'}
+print(cap.pricing)         # {'input_per_1m': 0.0269, 'output_per_1m': 0.04, 'currency': 'USD'}
 
-cap = llmcapa.get("novita/qwen3.7-max")
+cap = llmcapa.get("qwen/qwen3.7-max", provider="novita")
 print(cap.context_window)  # 1000000
 
 # List all Novita AI models

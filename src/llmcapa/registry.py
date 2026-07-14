@@ -424,7 +424,11 @@ class Registry:
         (e.g., -preview-05-20 removes -05-20 first, then -preview).
 
         Also, if model_id contains a provider/ prefix (e.g. "openai/o3-mini"),
-        the bare model_id without prefix is added as a candidate.
+        the bare model_id without prefix is added as a candidate, UNLESS
+        the prefix is a known provider name — in that case, the fallback
+        is skipped to avoid false matches (e.g. "novita/deepseek-v4-flash"
+        should not fall back to "deepseek-v4-flash" which might belong to
+        a different provider).
         """
         key = (model_id or "").strip().lower()
         candidates = [key]
@@ -434,10 +438,17 @@ class Registry:
             candidates.append(key.split(":")[0])
 
         # 2. If model_id contains a provider/ prefix, also try bare model_id
+        #    Skip if the prefix is a known provider to prevent false matches
+        #    (e.g. "novita/deepseek-v4-flash" should not fall back to "deepseek-v4-flash"
+        #     which might match a different provider's model).
+        #    Known providers are detected via self._by_provider (populated after _ensure_loaded).
         if "/" in key:
-            without_prefix = key.split("/", 1)[1]
-            if without_prefix not in candidates:
-                candidates.append(without_prefix)
+            prefix = key.split("/", 1)[0]
+            # Only add bare model_id if the prefix is NOT a known provider name
+            if prefix not in self._by_provider:
+                without_prefix = key.split("/", 1)[1]
+                if without_prefix not in candidates:
+                    candidates.append(without_prefix)
 
         # 3. Progressively strip known trailing patterns
         DatePat = r"[0-9]{4}-[0-9]{2}-[0-9]{2}|[0-9]{2}-[0-9]{2}|[0-9]{8}"
@@ -505,7 +516,17 @@ class Registry:
                             if cap is not None:
                                 return cap
             raise ModelNotFoundError(model_id)
-        # Unqualified lookup: use alias index (first-registered-wins)
+        # Unqualified lookup: use alias index (first-registered-wins).
+        # If model_id contains a "/" and the prefix matches a known provider,
+        # try a scoped lookup first to avoid false matches.
+        if "/" in model_id:
+            prefix = model_id.split("/", 1)[0].lower().strip()
+            bare = model_id.split("/", 1)[1]
+            if prefix in self._by_provider:
+                try:
+                    return self.get(bare, provider=prefix)
+                except ModelNotFoundError:
+                    pass  # Fall through to normal lookup
         for key in self._lookup_candidates(model_id):
             resolved = self._alias_index.get(key)
             if resolved is not None:
