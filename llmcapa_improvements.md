@@ -1,20 +1,34 @@
 # llmcapa Improvement Requests
 
-This document lists gaps and inconsistencies between **uag** (agentcli) providers and
-**llmcapa** model capability database. Addressing these would improve token counting
-and capability detection accuracy for uag users.
+> **Status vs local source 0.4.0 (2026-07-18)**
+>
+> | # | Topic | Status |
+> |---|---|---|
+> | 1 | Missing providers (`lmstudio`, `hf`, `sakura`) | **Done** — `lmstudio` + `sakura` bundled; `hf` → `huggingface`; `lm-studio`/`lm_studio` → `lmstudio` |
+> | 2 | Mismatched provider names (aliases) | **Done** — `_provider_aliases` (bedrock, gemini, vertexai, grok, moonshot, mimo, alibaba/dashscope→qwen, …) |
+> | 3 | Provider name normalization | **Done** — lower + unify `_. \t` → `-` |
+> | 4 | Incomplete capability flags | **Open** |
+> | 5 | Multi-provider model discovery | **Partial** — `search(provider=None)` returns all provider-scoped matches; dedicated `find()` not added |
+> | 6 | Model ID variations / short-name aliases | **Open** (model-level; separate from provider aliases) |
+>
+> Implemented details: see `provider_update_log.md` §0.4.0, `DEVELOP.md` §Provider Aliases.
 
 ## 1. Missing providers (not in llmcapa at all)
 
-These uag providers have **no corresponding entry** in llmcapa:
+> **Status (0.4.0): DONE** — providers/aliases present in local source.
+
+These uag providers were originally missing; current status:
 
 | uag provider | Description | Notes |
 |---|---|---|
-| `lmstudio` | LM Studio — local model server | Models are user-installed; static DB may not apply. Consider a generic "local/lmstudio" fallback entry with conservative specs. |
-| `hf` | HuggingFace Inference API | HuggingFace hosts thousands of models. A representative subset (e.g. popular Text Generation Inference models) would be useful. |
-| `sakura` | SAKURA AI Engine | Japanese LLM provider. Currently no models indexed. |
+| `lmstudio` | LM Studio — local model server | Bundled `lmstudio.json` catalog; aliases `lm-studio` / `lm_studio`. |
+| `hf` | HuggingFace Inference API | Alias `hf` → `huggingface`. Catalog has popular HF models. |
+| `sakura` | SAKURA AI Engine | Bundled `sakura.json` with `sakura-default` fallback. |
 
 ## 2. Mismatched provider names
+
+> **Status (0.4.0): DONE** for rows below (see `_provider_aliases`), including `alibaba`/`dashscope` → `qwen`.
+
 
 These uag providers exist in llmcapa but under a **different name**:
 
@@ -32,6 +46,9 @@ These uag providers exist in llmcapa but under a **different name**:
 the same capability as `llmcapa.get("gpt-4o", provider="amazon")`.
 
 ## 3. Provider name normalization
+
+> **Status (0.4.0): DONE** — case-insensitive + separator unification implemented.
+
 
 llmcapa provider names use inconsistent casing and separators:
 
@@ -61,6 +78,9 @@ Treat `None` as "unknown" only when truly uncertain.
 
 ## 5. Model ID discovery from API responses
 
+> **Status (0.4.0): PARTIAL** — `search(model_id)` without provider returns all provider-scoped hits. A dedicated `find()` API was not added.
+
+
 When uag calls `llmcapa.get(model_id)` without a provider, the first-registered
 (native) version is returned. However, the same model_id may exist under multiple
 providers with different specs (e.g. `gpt-4o` under both `openai` and `azure-openai`).
@@ -82,6 +102,6 @@ Suggestion: maintain an alias table so that common short names resolve correctly
 
 ## 7. Implementation notes
 
-- llmcapa version at time of writing: **0.3.0**
+- llmcapa version at time of writing: **0.3.0** (this doc); local source now **0.4.0**
 - uag provider list source: `AGENTS.md` and `src/uagent/providers/provider_caps.py`
 - Test file: `tests/test_llmcapa.py` (37 tests covering all 70 llmcapa providers)

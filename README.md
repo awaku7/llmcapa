@@ -6,7 +6,8 @@ Lookup capabilities (context window, modalities, supported features) of various 
 
 - **Comprehensive Bundled Data**: Offline capability data for OpenAI, Anthropic, Google (Gemini), Microsoft (Phi), Amazon (Nova/Titan), Meta (Llama), Mistral, Qwen, DeepSeek, xAI (Grok), NVIDIA, MoonshotAI (Kimi), zhipu-ai (GLM), Sakana AI (Fugu), **Azure AI Foundry**, Novita AI, OpenRouter, **HuggingFace (2,675 popular models)**, and Japanese domestic models (NTT tsuzumi, PFN PLaMo, ELYZA, SoftBank, NEC, Fujitsu, etc. adopted by the Digital Agency's "GENNAI" platform).
 - **Zero Runtime Dependencies**: Built entirely on the Python standard library.
-- **Alias Resolution**: Automatically resolves aliases and provider-specific names (e.g., `gpt-4o-2024-08-06` -> `gpt-4o`, `gemini-1.5-pro-preview-0409` -> `gemini-1.5-pro`).
+- **Alias Resolution**: Automatically resolves model aliases and provider-specific names (e.g., `gpt-4o-2024-08-06` -> `gpt-4o`, `gemini-1.5-pro-preview-0409` -> `gemini-1.5-pro`).
+- **Provider Aliases**: Provider arguments accept common aliases and normalized forms (e.g., `grok`/`x-ai` → `xai`, `bedrock` → `amazon`, `vertexai`/`gemini` → `google`, `azure` → `azure-openai`, `hf` → `huggingface`, `alibaba`/`dashscope` → `qwen`, `lm-studio` → `lmstudio`). Separators `_. ` are treated as `-`.
 - **Advanced Feature Queries**: Check support for `vision`, `multimodal`, `chat_completion`, `responses_api`, `reasoning_effort`, `thinking_budget`, and specific input/output modalities (e.g., `image_input`, `image_output`, `audio_input`).
 - **High Performance**: Evaluated feature checks are cached internally using memoization to avoid redundant calculations.
 - **Cost Estimation**: Estimate API costs based on input and output token counts.
@@ -38,6 +39,8 @@ import llmcapa
 
 # Get model capabilities (case-insensitive, alias-resolved)
 cap = llmcapa.get("gpt-4o")
+# Provider aliases: grok→xai, bedrock→amazon, alibaba→qwen, lm-studio→lmstudio, ...
+# cap = llmcapa.get("grok-4", provider="grok")
 print(cap.context_window)       # 128000
 print(cap.max_output_tokens)    # 16384
 print(cap.tokenizer_name)       # "o200k_base"
@@ -220,8 +223,9 @@ print(cap.supports(Feature.LLMC_FEAT_FIM))  # True
 for c in llmcapa.list_models(provider="anthropic"):
     print(c.model_id, c.context_window)
 
-# Search models (provider is required)
+# Search models by prefix (provider optional; aliases accepted)
 search_results = llmcapa.search("codegemma", provider="ollama")
+search_results = llmcapa.search("gpt-4o")  # all providers
 big_reasoning_models = llmcapa.find(
     supports_reasoning=True,
     min_context_window=200000

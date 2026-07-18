@@ -39,6 +39,58 @@ llmcapa/
 
 ---
 
+
+---
+
+## Provider Aliases & Normalization
+
+`get()`, `list_models()`, and `search()` accept provider names that are normalized and alias-resolved before lookup.
+
+### Normalization
+1. Lowercase
+2. Unify separators `_. \t` → `-` (e.g. `azure_openai` → `azure-openai`, `X AI` → `x-ai`)
+
+### Built-in aliases (`Registry._provider_aliases`)
+
+| Canonical provider | Accepted aliases |
+|---|---|
+| `deepseek` | `deepseek-ai` |
+| `meta` | `meta-llama` |
+| `mistral` | `mistralai` |
+| `xai` | `x-ai`, `grok` |
+| `anthropic` | `claude` |
+| `google` | `gemini`, `vertexai`, `vertex-ai` |
+| `azure-openai` | `azure` |
+| `zhipu` | `zai`, `z-ai` |
+| `moonshotai` | `moonshot`, `kimi` |
+| `amazon` | `bedrock` |
+| `xiaomi` | `mimo` |
+| `huggingface` | `hf` |
+| `qwen` | `alibaba`, `dashscope` |
+| `lmstudio` | `lm-studio`, `lm_studio` |
+
+Examples:
+
+```python
+import llmcapa
+
+# All resolve to the same provider catalog
+llmcapa.list_models(provider="grok")
+llmcapa.list_models(provider="x-ai")
+llmcapa.list_models(provider="xai")
+
+llmcapa.get("claude-sonnet-4", provider="claude")   # → anthropic
+llmcapa.search("gpt-4o", provider="azure")          # → azure-openai
+```
+
+When adding a new alias, update `_provider_aliases` in `src/llmcapa/registry.py` and add tests under `tests/test_registry.py`.
+
+### `search(provider=None)`
+
+- `provider` is **optional** (since 0.4.0).
+- When omitted, search iterates all providers via `list_models` / `_by_provider` (not the flat `_models` index), so the same model id under multiple providers is preserved.
+- When provided, the same alias/normalization path as `list_models`/`get` is used.
+
 ## Adding a New Provider
 
 To add a new model provider (e.g., `cohere`):

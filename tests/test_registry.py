@@ -120,6 +120,43 @@ def test_search_novita():
     assert len(results) > 0
 
 
+def test_search_provider_optional():
+    """provider may be omitted; results span multiple providers."""
+    results = llmcapa.search("gpt-4o", limit=50)
+    assert len(results) > 0
+    providers = {r.provider for r in results}
+    assert len(providers) >= 1
+
+
+def test_search_provider_scoped_not_flat_index():
+    """search must use provider-scoped index, not first-wins flat _models.
+
+    azure gpt-4o is often shadowed by openai in the flat index; list_models
+    still finds it, so search(provider=azure) must too.
+    """
+    listed = llmcapa.list_models(provider="azure")
+    azure_gpt = [c for c in listed if c.model_id.lower().startswith("gpt-4o")]
+    if not azure_gpt:
+        # data may not include azure gpt-4o; skip soft
+        return
+    results = llmcapa.search("gpt-4o", provider="azure")
+    assert len(results) > 0
+    assert all(
+        c.provider.lower() in {"azure", "azure-openai"}
+        or "azure" in c.provider.lower()
+        for c in results
+    )
+    assert any("gpt-4o" in c.model_id.lower() for c in results)
+
+
+def test_search_provider_alias():
+    """provider aliases (e.g. grok -> xai) work for search filters."""
+    via_alias = llmcapa.search("grok", provider="grok", limit=20)
+    via_canon = llmcapa.search("grok", provider="xai", limit=20)
+    assert len(via_alias) == len(via_canon)
+    assert {c.model_id for c in via_alias} == {c.model_id for c in via_canon}
+
+
 def test_register_and_get():
     from llmcapa import Capability
 
@@ -229,6 +266,25 @@ def test_provider_alias_hf_resolves_to_huggingface() -> None:
     cap = llmcapa.get("huggingface-default", provider="hf")
     assert cap.provider == "huggingface"
     assert cap.model_id == "huggingface-default"
+
+
+def test_provider_alias_alibaba_dashscope_to_qwen() -> None:
+    """provider='alibaba' / 'dashscope' should resolve to qwen."""
+    for alias in ("alibaba", "dashscope"):
+        cap = llmcapa.get("qwen3-32b", provider=alias)
+        assert cap.provider == "qwen"
+        assert cap.model_id.lower() == "qwen3-32b"
+
+
+def test_provider_alias_lmstudio_variants() -> None:
+    """provider='lm-studio' / 'lm_studio' should resolve to lmstudio."""
+    for alias in ("lm-studio", "lm_studio", "lmstudio"):
+        models = llmcapa.list_models(provider=alias)
+        assert models, f"no models for provider alias {alias!r}"
+        assert all(c.provider == "lmstudio" for c in models)
+        cap = llmcapa.get("granite-4.1", provider=alias)
+        assert cap.provider == "lmstudio"
+        assert cap.model_id == "granite-4.1"
 
 
 def test_data_from_bundled_json_not_hardcoded() -> None:

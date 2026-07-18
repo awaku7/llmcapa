@@ -2,6 +2,76 @@
   "models": [
     {
       "provider": "openai",
+      "aliases": [],
+      "deprecated": false,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "model_id": "chat-latest",
+      "display_name": "Chat Latest",
+      "context_window": 1048576,
+      "max_output_tokens": 131072,
+      "pricing": {
+        "input_per_1m": 5.0,
+        "output_per_1m": 30.0,
+        "currency": "USD"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning": true,
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/pricing",
+        "cached_input_per_1m": 0.5,
+        "category": "chatgpt"
+      }
+    },
+    {
+      "provider": "openai",
+      "aliases": [],
+      "deprecated": false,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text",
+        "image"
+      ],
+      "model_id": "chatgpt-image-latest",
+      "display_name": "ChatGPT Image Latest",
+      "context_window": 131072,
+      "max_output_tokens": 32768,
+      "pricing": {
+        "input_per_1m": 5.0,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "supports_vision": true,
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/pricing",
+        "image_input_per_1m": 8.0,
+        "image_cached_input_per_1m": 2.0,
+        "image_output_per_1m": 32.0,
+        "text_input_per_1m": 5.0,
+        "text_cached_input_per_1m": 1.25,
+        "text_output_per_1m": 10.0
+      }
+    },
+    {
+      "provider": "openai",
       "model_id": "gpt-4",
       "display_name": "OpenAI: GPT-4",
       "context_window": 8191,
@@ -148,10 +218,8 @@
     },
     {
       "provider": "openai",
-      "model_id": "gpt-4o-mini-transcribe",
-      "display_name": "GPT-4o Mini Transcribe",
-      "context_window": 32768,
-      "max_output_tokens": 16384,
+      "aliases": [],
+      "deprecated": false,
       "input_modalities": [
         "text",
         "audio"
@@ -159,35 +227,22 @@
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
+      "model_id": "gpt-4o-mini-transcribe",
+      "display_name": "GPT-4o Mini Transcribe",
+      "context_window": 32768,
+      "max_output_tokens": 16384,
       "pricing": {
         "input_per_1m": 1.25,
         "output_per_1m": 5.0,
         "currency": "USD"
       },
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api"
+      "supports_chat_completion": false,
+      "supports_streaming": true
     },
     {
       "provider": "openai",
-      "model_id": "gpt-4o-transcribe",
-      "display_name": "GPT-4o Transcribe",
-      "context_window": 32768,
-      "max_output_tokens": 16384,
+      "aliases": [],
+      "deprecated": false,
       "input_modalities": [
         "text",
         "audio"
@@ -195,70 +250,73 @@
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
+      "model_id": "gpt-4o-transcribe",
+      "display_name": "GPT-4o Transcribe",
+      "context_window": 32768,
+      "max_output_tokens": 16384,
       "pricing": {
         "input_per_1m": 2.5,
         "output_per_1m": 10.0,
         "currency": "USD"
       },
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api"
+      "supports_chat_completion": false,
+      "supports_streaming": true
     },
     {
       "provider": "openai",
-      "model_id": "gpt-5.3-codex",
-      "display_name": "GPT-5.3 Codex",
-      "context_window": 131072,
-      "max_output_tokens": 65536,
+      "aliases": [],
+      "deprecated": false,
+      "input_modalities": [
+        "text",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "model_id": "gpt-4o-transcribe-diarize",
+      "display_name": "GPT-4o Transcribe Diarize",
+      "context_window": 32768,
+      "max_output_tokens": 16384,
+      "pricing": {
+        "input_per_1m": 2.5,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "supports_chat_completion": false,
+      "supports_streaming": true,
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/pricing",
+        "estimated_cost_per_minute": 0.006,
+        "use_case": "transcription_diarization"
+      }
+    },
+    {
+      "provider": "openai",
+      "aliases": [],
+      "deprecated": false,
       "input_modalities": [
         "text"
       ],
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
+      "model_id": "gpt-5.3-codex",
+      "display_name": "GPT-5.3 Codex",
+      "context_window": 131072,
+      "max_output_tokens": 65536,
       "pricing": {
         "input_per_1m": 1.75,
         "output_per_1m": 14.0,
         "currency": "USD"
       },
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api"
+      "supports_function_calling": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true
     },
     {
       "provider": "openai",
-      "model_id": "gpt-5.4",
-      "display_name": "GPT-5.4",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
+      "aliases": [],
+      "deprecated": false,
       "input_modalities": [
         "text",
         "image"
@@ -266,42 +324,29 @@
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2025-07-01",
+      "model_id": "gpt-5.4",
+      "display_name": "GPT-5.4",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
       "pricing": {
         "input_per_1m": 2.5,
         "output_per_1m": 15.0,
         "currency": "USD"
       },
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "reasoning_effort_values": [
-        "none",
-        "low",
-        "medium",
-        "high",
-        "xhigh"
-      ]
+      "supports_reasoning": true,
+      "supports_reasoning_effort": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "knowledge_cutoff": "2025-07-01"
     },
     {
       "provider": "openai",
-      "model_id": "gpt-5.4-mini",
-      "display_name": "GPT-5.4 Mini",
-      "context_window": 524288,
-      "max_output_tokens": 65536,
+      "aliases": [],
+      "deprecated": false,
       "input_modalities": [
         "text",
         "image"
@@ -309,41 +354,62 @@
       "output_modalities": [
         "text"
       ],
+      "model_id": "gpt-5.4-cyber",
+      "display_name": "GPT-5.4 Cyber",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      },
+      "supports_vision": true,
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
       "supports_chat_completion": true,
       "supports_responses_api": true,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2025-07-01",
+      "supports_reasoning": true,
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/pricing",
+        "category": "cyber",
+        "note": "Pricing not publicly listed on pricing page"
+      }
+    },
+    {
+      "provider": "openai",
+      "aliases": [],
+      "deprecated": false,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "model_id": "gpt-5.4-mini",
+      "display_name": "GPT-5.4 Mini",
+      "context_window": 524288,
+      "max_output_tokens": 65536,
       "pricing": {
         "input_per_1m": 0.75,
         "output_per_1m": 4.5,
         "currency": "USD"
       },
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "reasoning_effort_values": [
-        "none",
-        "low",
-        "medium",
-        "high"
-      ]
+      "supports_reasoning": true,
+      "supports_reasoning_effort": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "knowledge_cutoff": "2025-07-01"
     },
     {
       "provider": "openai",
-      "model_id": "gpt-5.4-nano",
-      "display_name": "GPT-5.4 Nano",
-      "context_window": 262144,
-      "max_output_tokens": 32768,
+      "aliases": [],
+      "deprecated": false,
       "input_modalities": [
         "text",
         "image"
@@ -351,41 +417,29 @@
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2025-07-01",
+      "model_id": "gpt-5.4-nano",
+      "display_name": "GPT-5.4 Nano",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
       "pricing": {
         "input_per_1m": 0.2,
         "output_per_1m": 1.25,
         "currency": "USD"
       },
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "reasoning_effort_values": [
-        "none",
-        "low",
-        "medium",
-        "high"
-      ]
+      "supports_reasoning": true,
+      "supports_reasoning_effort": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "knowledge_cutoff": "2025-07-01"
     },
     {
       "provider": "openai",
-      "model_id": "gpt-5.4-pro",
-      "display_name": "GPT-5.4 Pro",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
+      "aliases": [],
+      "deprecated": false,
       "input_modalities": [
         "text",
         "image"
@@ -393,42 +447,29 @@
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2025-07-01",
+      "model_id": "gpt-5.4-pro",
+      "display_name": "GPT-5.4 Pro",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
       "pricing": {
         "input_per_1m": 30.0,
         "output_per_1m": 180.0,
         "currency": "USD"
       },
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "reasoning_effort_values": [
-        "none",
-        "low",
-        "medium",
-        "high",
-        "xhigh"
-      ]
+      "supports_reasoning": true,
+      "supports_reasoning_effort": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "knowledge_cutoff": "2025-07-01"
     },
     {
       "provider": "openai",
-      "model_id": "gpt-5.5",
-      "display_name": "GPT-5.5",
-      "context_window": 1048576,
-      "max_output_tokens": 131072,
+      "aliases": [],
+      "deprecated": false,
       "input_modalities": [
         "text",
         "image"
@@ -436,42 +477,29 @@
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2025-10-01",
+      "model_id": "gpt-5.5",
+      "display_name": "GPT-5.5",
+      "context_window": 1048576,
+      "max_output_tokens": 131072,
       "pricing": {
         "input_per_1m": 5.0,
         "output_per_1m": 30.0,
         "currency": "USD"
       },
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "reasoning_effort_values": [
-        "none",
-        "low",
-        "medium",
-        "high",
-        "xhigh"
-      ]
+      "supports_reasoning": true,
+      "supports_reasoning_effort": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "knowledge_cutoff": "2025-10-01"
     },
     {
       "provider": "openai",
-      "model_id": "gpt-5.5-pro",
-      "display_name": "GPT-5.5 Pro",
-      "context_window": 1048576,
-      "max_output_tokens": 131072,
+      "aliases": [],
+      "deprecated": false,
       "input_modalities": [
         "text",
         "image"
@@ -479,42 +507,62 @@
       "output_modalities": [
         "text"
       ],
+      "model_id": "gpt-5.5-cyber",
+      "display_name": "GPT-5.5 Cyber",
+      "context_window": 1048576,
+      "max_output_tokens": 131072,
+      "pricing": {
+        "input_per_1m": 12.5,
+        "output_per_1m": 75.0,
+        "currency": "USD"
+      },
+      "supports_vision": true,
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
       "supports_chat_completion": true,
       "supports_responses_api": true,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2025-10-01",
+      "supports_reasoning": true,
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/pricing",
+        "cached_input_per_1m": 1.25,
+        "category": "cyber"
+      }
+    },
+    {
+      "provider": "openai",
+      "aliases": [],
+      "deprecated": false,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "model_id": "gpt-5.5-pro",
+      "display_name": "GPT-5.5 Pro",
+      "context_window": 1048576,
+      "max_output_tokens": 131072,
       "pricing": {
         "input_per_1m": 30.0,
         "output_per_1m": 180.0,
         "currency": "USD"
       },
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "reasoning_effort_values": [
-        "none",
-        "low",
-        "medium",
-        "high",
-        "xhigh"
-      ]
+      "supports_reasoning": true,
+      "supports_reasoning_effort": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "knowledge_cutoff": "2025-10-01"
     },
     {
       "provider": "openai",
-      "model_id": "gpt-5.6-luna",
-      "display_name": "GPT-5.6 Luna",
-      "context_window": 1048576,
-      "max_output_tokens": 131072,
+      "aliases": [],
+      "deprecated": false,
       "input_modalities": [
         "text",
         "image"
@@ -522,43 +570,31 @@
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2026-02-16",
+      "model_id": "gpt-5.6-luna",
+      "display_name": "GPT-5.6 Luna",
+      "context_window": 1048576,
+      "max_output_tokens": 131072,
       "pricing": {
         "input_per_1m": 1.0,
         "output_per_1m": 6.0,
         "currency": "USD"
       },
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "reasoning_effort_values": [
-        "none",
-        "low",
-        "medium",
-        "high",
-        "xhigh",
-        "max"
-      ]
+      "supports_reasoning": true,
+      "supports_reasoning_effort": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "knowledge_cutoff": "2026-02-16"
     },
     {
       "provider": "openai",
-      "model_id": "gpt-5.6-sol",
-      "display_name": "GPT-5.6 Sol",
-      "context_window": 1048576,
-      "max_output_tokens": 131072,
+      "aliases": [
+        "gpt-5.6"
+      ],
+      "deprecated": false,
       "input_modalities": [
         "text",
         "image"
@@ -566,45 +602,29 @@
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2026-02-16",
+      "model_id": "gpt-5.6-sol",
+      "display_name": "GPT-5.6 Sol",
+      "context_window": 1048576,
+      "max_output_tokens": 131072,
       "pricing": {
         "input_per_1m": 5.0,
         "output_per_1m": 30.0,
         "currency": "USD"
       },
-      "deprecated": false,
-      "aliases": [
-        "gpt-5.6"
-      ],
-      "license_type": "api",
-      "reasoning_effort_values": [
-        "none",
-        "low",
-        "medium",
-        "high",
-        "xhigh",
-        "max"
-      ]
+      "supports_reasoning": true,
+      "supports_reasoning_effort": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "knowledge_cutoff": "2026-02-16"
     },
     {
       "provider": "openai",
-      "model_id": "gpt-5.6-terra",
-      "display_name": "GPT-5.6 Terra",
-      "context_window": 1048576,
-      "max_output_tokens": 131072,
+      "aliases": [],
+      "deprecated": false,
       "input_modalities": [
         "text",
         "image"
@@ -612,36 +632,229 @@
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2026-02-16",
+      "model_id": "gpt-5.6-terra",
+      "display_name": "GPT-5.6 Terra",
+      "context_window": 1048576,
+      "max_output_tokens": 131072,
       "pricing": {
         "input_per_1m": 2.5,
         "output_per_1m": 15.0,
         "currency": "USD"
       },
-      "deprecated": false,
+      "supports_reasoning": true,
+      "supports_reasoning_effort": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "knowledge_cutoff": "2026-02-16"
+    },
+    {
+      "provider": "openai",
       "aliases": [],
-      "license_type": "api",
-      "reasoning_effort_values": [
-        "none",
-        "low",
-        "medium",
-        "high",
-        "xhigh",
-        "max"
-      ]
+      "deprecated": false,
+      "input_modalities": [
+        "text",
+        "audio"
+      ],
+      "output_modalities": [
+        "text",
+        "audio"
+      ],
+      "model_id": "gpt-audio-1.5",
+      "display_name": "GPT Audio 1.5",
+      "context_window": 131072,
+      "max_output_tokens": 16384,
+      "pricing": {
+        "input_per_1m": 4.0,
+        "output_per_1m": 16.0,
+        "currency": "USD"
+      },
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/pricing",
+        "category": "audio"
+      }
+    },
+    {
+      "provider": "openai",
+      "aliases": [],
+      "deprecated": false,
+      "input_modalities": [
+        "text",
+        "audio"
+      ],
+      "output_modalities": [
+        "text",
+        "audio"
+      ],
+      "model_id": "gpt-audio-mini",
+      "display_name": "GPT Audio Mini",
+      "context_window": 131072,
+      "max_output_tokens": 16384,
+      "pricing": {
+        "input_per_1m": 0.6,
+        "output_per_1m": 2.4,
+        "currency": "USD"
+      },
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/pricing",
+        "category": "audio"
+      }
+    },
+    {
+      "provider": "openai",
+      "aliases": [],
+      "deprecated": false,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text",
+        "image"
+      ],
+      "model_id": "gpt-image-1",
+      "display_name": "GPT Image 1",
+      "context_window": 131072,
+      "max_output_tokens": 32768,
+      "pricing": {
+        "input_per_1m": 5.0,
+        "output_per_1m": 40.0,
+        "currency": "USD"
+      },
+      "supports_vision": true,
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/pricing",
+        "image_input_per_1m": 10.0,
+        "image_cached_input_per_1m": 2.5,
+        "image_output_per_1m": 40.0,
+        "text_input_per_1m": 5.0,
+        "text_cached_input_per_1m": 1.25
+      }
+    },
+    {
+      "provider": "openai",
+      "aliases": [],
+      "deprecated": false,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text",
+        "image"
+      ],
+      "model_id": "gpt-image-1-mini",
+      "display_name": "GPT Image 1 Mini",
+      "context_window": 131072,
+      "max_output_tokens": 32768,
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 8.0,
+        "currency": "USD"
+      },
+      "supports_vision": true,
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/pricing",
+        "image_input_per_1m": 2.5,
+        "image_cached_input_per_1m": 0.25,
+        "image_output_per_1m": 8.0,
+        "text_input_per_1m": 2.0,
+        "text_cached_input_per_1m": 0.2
+      }
+    },
+    {
+      "provider": "openai",
+      "aliases": [],
+      "deprecated": false,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text",
+        "image"
+      ],
+      "model_id": "gpt-image-1.5",
+      "display_name": "GPT Image 1.5",
+      "context_window": 131072,
+      "max_output_tokens": 32768,
+      "pricing": {
+        "input_per_1m": 5.0,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "supports_vision": true,
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/pricing",
+        "image_input_per_1m": 8.0,
+        "image_cached_input_per_1m": 2.0,
+        "image_output_per_1m": 32.0,
+        "text_input_per_1m": 5.0,
+        "text_cached_input_per_1m": 1.25,
+        "text_output_per_1m": 10.0,
+        "note": "Text output tokens include model reasoning tokens"
+      }
+    },
+    {
+      "provider": "openai",
+      "aliases": [],
+      "deprecated": false,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text",
+        "image"
+      ],
+      "model_id": "gpt-image-2",
+      "display_name": "GPT Image 2",
+      "context_window": 131072,
+      "max_output_tokens": 32768,
+      "pricing": {
+        "input_per_1m": 5.0,
+        "output_per_1m": 30.0,
+        "currency": "USD"
+      },
+      "supports_vision": true,
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/pricing",
+        "image_input_per_1m": 8.0,
+        "image_cached_input_per_1m": 2.0,
+        "image_output_per_1m": 30.0,
+        "text_input_per_1m": 5.0,
+        "text_cached_input_per_1m": 1.25,
+        "batch_image_input_per_1m": 4.0,
+        "batch_image_output_per_1m": 15.0,
+        "batch_text_input_per_1m": 2.5
+      }
     },
     {
       "provider": "openai",
@@ -719,10 +932,8 @@
     },
     {
       "provider": "openai",
-      "model_id": "gpt-realtime-2.1",
-      "display_name": "GPT-Realtime 2.1",
-      "context_window": 131072,
-      "max_output_tokens": 16384,
+      "aliases": [],
+      "deprecated": false,
       "input_modalities": [
         "text",
         "image",
@@ -732,35 +943,25 @@
         "text",
         "audio"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
+      "model_id": "gpt-realtime-2.1",
+      "display_name": "GPT-Realtime 2.1",
+      "context_window": 131072,
+      "max_output_tokens": 16384,
       "pricing": {
         "input_per_1m": 4.0,
         "output_per_1m": 24.0,
         "currency": "USD"
       },
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api"
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning": true
     },
     {
       "provider": "openai",
-      "model_id": "gpt-realtime-2.1-mini",
-      "display_name": "GPT-Realtime 2.1 Mini",
-      "context_window": 131072,
-      "max_output_tokens": 16384,
+      "aliases": [],
+      "deprecated": false,
       "input_modalities": [
         "text",
         "image",
@@ -770,28 +971,74 @@
         "text",
         "audio"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
+      "model_id": "gpt-realtime-2.1-mini",
+      "display_name": "GPT-Realtime 2.1 Mini",
+      "context_window": 131072,
+      "max_output_tokens": 16384,
       "pricing": {
         "input_per_1m": 0.6,
         "output_per_1m": 2.4,
         "currency": "USD"
       },
-      "deprecated": false,
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning": true
+    },
+    {
+      "provider": "openai",
       "aliases": [],
-      "license_type": "api"
+      "deprecated": false,
+      "input_modalities": [
+        "audio"
+      ],
+      "output_modalities": [
+        "audio"
+      ],
+      "model_id": "gpt-realtime-translate",
+      "display_name": "GPT Realtime Translate",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "supports_chat_completion": false,
+      "supports_streaming": true,
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/pricing",
+        "price_per_minute": 0.034,
+        "billing_unit": "per_minute"
+      }
+    },
+    {
+      "provider": "openai",
+      "aliases": [],
+      "deprecated": false,
+      "input_modalities": [
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "model_id": "gpt-realtime-whisper",
+      "display_name": "GPT Realtime Whisper",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "supports_chat_completion": false,
+      "supports_streaming": true,
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/pricing",
+        "price_per_minute": 0.017,
+        "billing_unit": "per_minute"
+      }
     },
     {
       "provider": "openai",
@@ -835,6 +1082,35 @@
         "medium",
         "high"
       ]
+    },
+    {
+      "provider": "openai",
+      "aliases": [],
+      "deprecated": false,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "model_id": "omni-moderation-latest",
+      "display_name": "Omni Moderation Latest",
+      "context_window": 32768,
+      "max_output_tokens": 0,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "supports_chat_completion": false,
+      "supports_streaming": false,
+      "supports_vision": true,
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/pricing",
+        "category": "moderation",
+        "note": "Free"
+      }
     },
     {
       "provider": "openai",
@@ -3562,6 +3838,124 @@
         "medium",
         "high"
       ]
+    },
+    {
+      "provider": "openai",
+      "aliases": [],
+      "deprecated": false,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "video"
+      ],
+      "model_id": "sora-2",
+      "display_name": "Sora 2",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "supports_chat_completion": false,
+      "supports_streaming": false,
+      "supports_vision": true,
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/pricing",
+        "price_per_second_720p": 0.1,
+        "batch_price_per_second_720p": 0.05,
+        "billing_unit": "per_second"
+      }
+    },
+    {
+      "provider": "openai",
+      "aliases": [],
+      "deprecated": false,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "video"
+      ],
+      "model_id": "sora-2-pro",
+      "display_name": "Sora 2 Pro",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "supports_chat_completion": false,
+      "supports_streaming": false,
+      "supports_vision": true,
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/pricing",
+        "price_per_second_720p": 0.3,
+        "price_per_second_1024p": 0.5,
+        "price_per_second_1080p": 0.7,
+        "batch_price_per_second_720p": 0.15,
+        "batch_price_per_second_1024p": 0.25,
+        "batch_price_per_second_1080p": 0.35,
+        "billing_unit": "per_second"
+      }
+    },
+    {
+      "provider": "openai",
+      "aliases": [],
+      "deprecated": false,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embedding"
+      ],
+      "model_id": "text-embedding-3-large",
+      "display_name": "Text Embedding 3 Large",
+      "context_window": 8191,
+      "max_output_tokens": 0,
+      "pricing": {
+        "input_per_1m": 0.13,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "supports_chat_completion": false,
+      "supports_streaming": false,
+      "supports_function_calling": false,
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/pricing",
+        "category": "embedding"
+      }
+    },
+    {
+      "provider": "openai",
+      "aliases": [],
+      "deprecated": false,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embedding"
+      ],
+      "model_id": "text-embedding-3-small",
+      "display_name": "Text Embedding 3 Small",
+      "context_window": 8191,
+      "max_output_tokens": 0,
+      "pricing": {
+        "input_per_1m": 0.02,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "supports_chat_completion": false,
+      "supports_streaming": false,
+      "supports_function_calling": false,
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/pricing",
+        "category": "embedding"
+      }
     },
     {
       "provider": "openai",

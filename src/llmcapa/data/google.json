@@ -152,7 +152,11 @@
         "output_per_1m": 0.4,
         "currency": "USD"
       },
-      "license_type": "api"
+      "license_type": "api",
+      "extra": {
+        "shutdown_date": "2026-06-01",
+        "source": "https://ai.google.dev/gemini-api/docs/pricing"
+      }
     },
     {
       "provider": "google",
@@ -192,7 +196,11 @@
         "output_per_1m": 0.3,
         "currency": "USD"
       },
-      "license_type": "api"
+      "license_type": "api",
+      "extra": {
+        "shutdown_date": "2026-06-01",
+        "source": "https://ai.google.dev/gemini-api/docs/pricing"
+      }
     },
     {
       "provider": "google",
@@ -747,6 +755,46 @@
     },
     {
       "provider": "google",
+      "model_id": "gemini-3.1-flash-tts-preview",
+      "display_name": "Gemini 3.1 Flash TTS Preview",
+      "context_window": 131072,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "audio"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 1.0,
+        "output_per_1m": 20.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "extra": {
+        "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "api": "tts"
+      }
+    },
+    {
+      "provider": "google",
       "model_id": "gemini-3.1-pro-preview",
       "display_name": "Gemini 3.1 Pro (Preview)",
       "context_window": 1048576,
@@ -788,7 +836,14 @@
         "low",
         "medium",
         "high"
-      ]
+      ],
+      "extra": {
+        "long_context_threshold": 200000,
+        "long_context_input_per_1m": 4.0,
+        "long_context_output_per_1m": 18.0,
+        "note": "≤200k $2/$12; >200k $4/$18",
+        "source": "https://ai.google.dev/gemini-api/docs/pricing"
+      }
     },
     {
       "provider": "google",
@@ -833,7 +888,13 @@
         "low",
         "medium",
         "high"
-      ]
+      ],
+      "extra": {
+        "long_context_threshold": 200000,
+        "long_context_input_per_1m": 4.0,
+        "long_context_output_per_1m": 18.0,
+        "source": "https://ai.google.dev/gemini-api/docs/pricing"
+      }
     },
     {
       "provider": "google",
@@ -879,6 +940,48 @@
         "medium",
         "high"
       ]
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-3.5-live-translate-preview",
+      "display_name": "Gemini 3.5 Live Translate Preview",
+      "context_window": 1048576,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "audio"
+      ],
+      "output_modalities": [
+        "text",
+        "audio"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 3.5,
+        "output_per_1m": 21.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "extra": {
+        "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "api": "live-translate"
+      }
     },
     {
       "provider": "google",
@@ -954,6 +1057,51 @@
       "deprecated": false,
       "aliases": [],
       "license_type": "api"
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-omni-flash-preview",
+      "display_name": "Gemini Omni Flash Preview",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "audio"
+      ],
+      "output_modalities": [
+        "text",
+        "video"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 1.5,
+        "output_per_1m": 9.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "extra": {
+        "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "video_output_per_1m": 17.5,
+        "note": "text $1.5/$9; video output $17.50/1M"
+      }
     },
     {
       "provider": "google",
@@ -2529,7 +2677,6 @@
         "image"
       ],
       "output_modalities": [
-        "text",
         "audio"
       ],
       "supports_function_calling": false,
@@ -2537,7 +2684,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": false,
-      "supports_chat_completion": true,
+      "supports_chat_completion": false,
       "supports_responses_api": false,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
@@ -2555,7 +2702,12 @@
       "aliases": [
         "google/lyria-3-clip-preview"
       ],
-      "license_type": "free"
+      "license_type": "free",
+      "extra": {
+        "price_per_song": 0.04,
+        "unit": "song",
+        "source": "https://ai.google.dev/gemini-api/docs/pricing"
+      }
     },
     {
       "provider": "google",
@@ -2568,7 +2720,6 @@
         "image"
       ],
       "output_modalities": [
-        "text",
         "audio"
       ],
       "supports_function_calling": false,
@@ -2576,7 +2727,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": false,
-      "supports_chat_completion": true,
+      "supports_chat_completion": false,
       "supports_responses_api": false,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
@@ -2594,7 +2745,12 @@
       "aliases": [
         "google/lyria-3-pro-preview"
       ],
-      "license_type": "free"
+      "license_type": "free",
+      "extra": {
+        "price_per_song": 0.08,
+        "unit": "song",
+        "source": "https://ai.google.dev/gemini-api/docs/pricing"
+      }
     },
     {
       "provider": "google",
@@ -2637,7 +2793,6 @@
         "image"
       ],
       "output_modalities": [
-        "text",
         "audio"
       ],
       "supports_function_calling": false,
@@ -2645,7 +2800,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": false,
-      "supports_chat_completion": true,
+      "supports_chat_completion": false,
       "supports_responses_api": false,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
@@ -2661,7 +2816,12 @@
       },
       "deprecated": false,
       "aliases": [],
-      "license_type": "free"
+      "license_type": "free",
+      "extra": {
+        "price_per_song": 0.04,
+        "unit": "song",
+        "source": "https://ai.google.dev/gemini-api/docs/pricing"
+      }
     },
     {
       "provider": "google",
@@ -2674,7 +2834,6 @@
         "image"
       ],
       "output_modalities": [
-        "text",
         "audio"
       ],
       "supports_function_calling": false,
@@ -2682,7 +2841,7 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": false,
-      "supports_chat_completion": true,
+      "supports_chat_completion": false,
       "supports_responses_api": false,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
@@ -2698,7 +2857,12 @@
       },
       "deprecated": false,
       "aliases": [],
-      "license_type": "free"
+      "license_type": "free",
+      "extra": {
+        "price_per_song": 0.08,
+        "unit": "song",
+        "source": "https://ai.google.dev/gemini-api/docs/pricing"
+      }
     },
     {
       "provider": "google",

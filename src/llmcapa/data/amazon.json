@@ -2,8 +2,8 @@
   "models": [
     {
       "provider": "amazon",
-      "model_id": "amazon/nova-2-lite-v1",
-      "display_name": "Amazon: Nova 2 Lite",
+      "model_id": "nova-2-lite-v1",
+      "display_name": "Amazon Nova 2 Lite",
       "context_window": 1000000,
       "max_output_tokens": 65535,
       "input_modalities": [
@@ -28,102 +28,45 @@
       "supports_google_api": false,
       "supports_fim": false,
       "tokenizer_name": "",
-      "knowledge_cutoff": null,
+      "knowledge_cutoff": "2025-10",
+      "deprecated": false,
+      "aliases": [
+        "amazon/nova-2-lite-v1",
+        "amazon.nova-2-lite-v1:0",
+        "amazon.nova-2-lite-v1"
+      ],
+      "license_type": "api",
       "pricing": {
         "input_per_1m": 0.3,
         "output_per_1m": 2.5,
         "currency": "USD"
       },
-      "deprecated": false,
-      "aliases": [
-        "amazon/nova-2-lite-v1"
-      ],
-      "license_type": "api"
+      "extra": {
+        "source": "https://aws.amazon.com/bedrock/pricing/",
+        "nova_pricing": "https://aws.amazon.com/nova/pricing/",
+        "price_api": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json",
+        "region": "US East (N. Virginia) on-demand standard",
+        "cache_hit_per_1m": 0.075,
+        "cache_hit_note": "75% less than on-demand input (official)",
+        "batch_input_per_1m": 0.15,
+        "batch_output_per_1m": 1.25,
+        "geo_input_per_1m": 0.33,
+        "geo_output_per_1m": 2.75,
+        "inference": "global_cross_region",
+        "modalities_note": "text/image/video/file input; text output"
+      }
     },
     {
       "provider": "amazon",
-      "model_id": "amazon/nova-lite-v1",
-      "display_name": "Amazon: Nova Lite 1.0",
-      "context_window": 300000,
-      "max_output_tokens": 5120,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2024-10-31",
-      "pricing": {
-        "input_per_1m": 0.06,
-        "output_per_1m": 0.24,
-        "currency": "USD"
-      },
-      "deprecated": false,
-      "aliases": [
-        "amazon/nova-lite-v1"
-      ],
-      "license_type": "api"
-    },
-    {
-      "provider": "amazon",
-      "model_id": "amazon/nova-micro-v1",
-      "display_name": "Amazon: Nova Micro 1.0",
-      "context_window": 128000,
-      "max_output_tokens": 5120,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2024-10-31",
-      "pricing": {
-        "input_per_1m": 0.035,
-        "output_per_1m": 0.14,
-        "currency": "USD"
-      },
-      "deprecated": false,
-      "aliases": [
-        "amazon/nova-micro-v1"
-      ],
-      "license_type": "api"
-    },
-    {
-      "provider": "amazon",
-      "model_id": "amazon/nova-premier-v1",
-      "display_name": "Amazon: Nova Premier 1.0",
+      "model_id": "nova-2-pro-v1",
+      "display_name": "Amazon Nova 2 Pro (Preview)",
       "context_window": 1000000,
-      "max_output_tokens": 32000,
+      "max_output_tokens": 65535,
       "input_modalities": [
         "text",
-        "image"
+        "image",
+        "video",
+        "file"
       ],
       "output_modalities": [
         "text"
@@ -132,7 +75,7 @@
       "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": true,
-      "supports_reasoning": false,
+      "supports_reasoning": true,
       "supports_chat_completion": true,
       "supports_responses_api": false,
       "supports_reasoning_effort": false,
@@ -141,62 +84,40 @@
       "supports_google_api": false,
       "supports_fim": false,
       "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 2.5,
-        "output_per_1m": 12.5,
-        "currency": "USD"
-      },
+      "knowledge_cutoff": "2025-10",
       "deprecated": false,
       "aliases": [
-        "amazon/nova-premier-v1"
+        "amazon/nova-2-pro-v1",
+        "amazon.nova-2-pro-v1:0",
+        "amazon.nova-2-pro-v1"
       ],
-      "license_type": "api"
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 1.25,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://aws.amazon.com/bedrock/pricing/",
+        "nova_pricing": "https://aws.amazon.com/nova/pricing/",
+        "price_api": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json",
+        "region": "US East (N. Virginia) on-demand standard",
+        "cache_hit_per_1m": 0.3125,
+        "cache_hit_note": "75% less than on-demand input (official)",
+        "batch_input_per_1m": 0.625,
+        "batch_output_per_1m": 5.0,
+        "geo_input_per_1m": 1.375,
+        "geo_output_per_1m": 11.0,
+        "inference": "global_cross_region",
+        "availability": "preview"
+      }
     },
     {
       "provider": "amazon",
-      "model_id": "amazon/nova-pro-v1",
-      "display_name": "Amazon: Nova Pro 1.0",
-      "context_window": 300000,
-      "max_output_tokens": 5120,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2024-10-31",
-      "pricing": {
-        "input_per_1m": 0.8,
-        "output_per_1m": 3.2,
-        "currency": "USD"
-      },
-      "deprecated": false,
-      "aliases": [
-        "amazon/nova-pro-v1"
-      ],
-      "license_type": "api"
-    },
-    {
-      "provider": "amazon",
-      "model_id": "nova-2-lite-v1",
-      "display_name": "Amazon Nova 2 Lite",
+      "model_id": "nova-2-omni-v1",
+      "display_name": "Amazon Nova 2 Omni (Preview)",
       "context_window": 1000000,
-      "max_output_tokens": 64000,
+      "max_output_tokens": 65535,
       "input_modalities": [
         "text",
         "image",
@@ -208,14 +129,13 @@
         "text",
         "image",
         "video",
-        "embedding",
         "speech"
       ],
       "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": true,
-      "supports_reasoning": false,
+      "supports_reasoning": true,
       "supports_chat_completion": true,
       "supports_responses_api": false,
       "supports_reasoning_effort": false,
@@ -225,16 +145,33 @@
       "supports_fim": false,
       "tokenizer_name": "",
       "knowledge_cutoff": "2025-10",
-      "pricing": {
-        "input_per_1m": 0.33,
-        "output_per_1m": 2.75,
-        "currency": "USD"
-      },
       "deprecated": false,
       "aliases": [
-        "amazon.nova-2-lite-v1:0"
+        "amazon/nova-2-omni-v1",
+        "amazon.nova-2-omni-v1:0",
+        "amazon.nova-2-omni-v1"
       ],
-      "license_type": "api"
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.3,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://aws.amazon.com/bedrock/pricing/",
+        "nova_pricing": "https://aws.amazon.com/nova/pricing/",
+        "price_api": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json",
+        "region": "US East (N. Virginia) on-demand standard",
+        "cache_hit_per_1m": 0.075,
+        "cache_hit_note": "75% less than on-demand input (official)",
+        "batch_input_per_1m": 0.15,
+        "batch_output_per_1m": 1.25,
+        "geo_input_per_1m": 0.3,
+        "geo_output_per_1m": 2.8,
+        "inference": "global_cross_region",
+        "availability": "preview",
+        "modalities_note": "omni multimodal; primary pricing is text tokens"
+      }
     },
     {
       "provider": "amazon",
@@ -244,22 +181,17 @@
       "max_output_tokens": 64000,
       "input_modalities": [
         "text",
-        "image",
-        "video",
         "audio",
         "speech"
       ],
       "output_modalities": [
         "text",
-        "image",
-        "video",
-        "embedding",
         "speech"
       ],
       "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_json_mode": false,
       "supports_streaming": true,
-      "supports_vision": true,
+      "supports_vision": false,
       "supports_reasoning": true,
       "supports_chat_completion": true,
       "supports_responses_api": false,
@@ -270,107 +202,46 @@
       "supports_fim": false,
       "tokenizer_name": "",
       "knowledge_cutoff": "2025-10",
+      "deprecated": false,
+      "aliases": [
+        "amazon/nova-2-sonic-v1",
+        "amazon.nova-2-sonic-v1:0",
+        "amazon.nova-2-sonic-v1"
+      ],
+      "license_type": "api",
       "pricing": {
         "input_per_1m": 0.33,
         "output_per_1m": 2.75,
         "currency": "USD"
       },
-      "deprecated": false,
-      "aliases": [
-        "amazon.nova-2-sonic-v1:0"
-      ],
-      "license_type": "api"
-    },
-    {
-      "provider": "amazon",
-      "model_id": "nova-canvas-v1",
-      "display_name": "Amazon Nova Canvas",
-      "context_window": 1,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "image"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "amazon.nova-canvas-v1:0"
-      ],
-      "license_type": "license"
-    },
-    {
-      "provider": "amazon",
-      "model_id": "nova-lite-v1",
-      "display_name": "Amazon Nova Lite",
-      "context_window": 300000,
-      "max_output_tokens": 5000,
-      "input_modalities": [
-        "text",
-        "image",
-        "video"
-      ],
-      "output_modalities": [
-        "text",
-        "image",
-        "embedding"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2024-10",
-      "pricing": {
-        "input_per_1m": 0.06,
-        "output_per_1m": 0.24,
-        "currency": "USD"
-      },
-      "deprecated": false,
-      "aliases": [
-        "amazon.nova-lite-v1:0"
-      ],
-      "license_type": "api"
+      "extra": {
+        "source": "https://aws.amazon.com/bedrock/pricing/",
+        "nova_pricing": "https://aws.amazon.com/nova/pricing/",
+        "price_api": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json",
+        "region": "US East (N. Virginia) on-demand standard",
+        "cache_hit_per_1m": 0.0825,
+        "cache_hit_note": "75% less than on-demand input (official)",
+        "speech_input_per_1m": 3.0,
+        "speech_output_per_1m": 12.0,
+        "text_input_per_1m": 0.33,
+        "text_output_per_1m": 2.75,
+        "primary_pricing": "text tokens; speech rates in extra"
+      }
     },
     {
       "provider": "amazon",
       "model_id": "nova-micro-v1",
       "display_name": "Amazon Nova Micro",
       "context_window": 128000,
-      "max_output_tokens": 5000,
+      "max_output_tokens": 5120,
       "input_modalities": [
-        "text",
-        "audio"
+        "text"
       ],
       "output_modalities": [
-        "text",
-        "embedding"
+        "text"
       ],
       "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": false,
@@ -382,37 +253,50 @@
       "supports_google_api": false,
       "supports_fim": false,
       "tokenizer_name": "",
-      "knowledge_cutoff": "2024-10",
+      "knowledge_cutoff": "2024-10-31",
+      "deprecated": false,
+      "aliases": [
+        "amazon/nova-micro-v1",
+        "amazon.nova-micro-v1:0",
+        "amazon.nova-micro-v1"
+      ],
+      "license_type": "api",
       "pricing": {
         "input_per_1m": 0.035,
         "output_per_1m": 0.14,
         "currency": "USD"
       },
-      "deprecated": false,
-      "aliases": [
-        "amazon.nova-micro-v1:0"
-      ],
-      "license_type": "api"
+      "extra": {
+        "source": "https://aws.amazon.com/bedrock/pricing/",
+        "nova_pricing": "https://aws.amazon.com/nova/pricing/",
+        "price_api": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json",
+        "region": "US East (N. Virginia) on-demand standard",
+        "cache_hit_per_1m": 0.00875,
+        "cache_hit_note": "75% less than on-demand input (official)",
+        "batch_input_per_1m": 0.0175,
+        "batch_output_per_1m": 0.07
+      }
     },
     {
       "provider": "amazon",
-      "model_id": "nova-multimodal-embeddings-v1",
-      "display_name": "Amazon Nova Multimodal Embeddings",
-      "context_window": 8192,
-      "max_output_tokens": 0,
+      "model_id": "nova-lite-v1",
+      "display_name": "Amazon Nova Lite",
+      "context_window": 300000,
+      "max_output_tokens": 5120,
       "input_modalities": [
         "text",
-        "image"
+        "image",
+        "video"
       ],
       "output_modalities": [
-        "embedding"
+        "text"
       ],
-      "supports_function_calling": false,
+      "supports_function_calling": true,
       "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": false,
-      "supports_chat_completion": false,
+      "supports_chat_completion": true,
       "supports_responses_api": false,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
@@ -420,35 +304,99 @@
       "supports_google_api": false,
       "supports_fim": false,
       "tokenizer_name": "",
-      "knowledge_cutoff": null,
+      "knowledge_cutoff": "2024-10-31",
       "deprecated": false,
       "aliases": [
-        "amazon.nova-multimodal-embeddings-v1:0"
+        "amazon/nova-lite-v1",
+        "amazon.nova-lite-v1:0",
+        "amazon.nova-lite-v1"
       ],
-      "license_type": "license"
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.06,
+        "output_per_1m": 0.24,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://aws.amazon.com/bedrock/pricing/",
+        "nova_pricing": "https://aws.amazon.com/nova/pricing/",
+        "price_api": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json",
+        "region": "US East (N. Virginia) on-demand standard",
+        "cache_hit_per_1m": 0.015,
+        "cache_hit_note": "75% less than on-demand input (official)",
+        "batch_input_per_1m": 0.03,
+        "batch_output_per_1m": 0.12
+      }
+    },
+    {
+      "provider": "amazon",
+      "model_id": "nova-pro-v1",
+      "display_name": "Amazon Nova Pro",
+      "context_window": 300000,
+      "max_output_tokens": 5120,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-10-31",
+      "deprecated": false,
+      "aliases": [
+        "amazon/nova-pro-v1",
+        "amazon.nova-pro-v1:0",
+        "amazon.nova-pro-v1"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.8,
+        "output_per_1m": 3.2,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://aws.amazon.com/bedrock/pricing/",
+        "nova_pricing": "https://aws.amazon.com/nova/pricing/",
+        "price_api": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json",
+        "region": "US East (N. Virginia) on-demand standard",
+        "cache_hit_per_1m": 0.2,
+        "cache_hit_note": "75% less than on-demand input (official)",
+        "batch_input_per_1m": 0.4,
+        "batch_output_per_1m": 1.6,
+        "latency_optimized_input_per_1m": 1.0,
+        "latency_optimized_output_per_1m": 4.0
+      }
     },
     {
       "provider": "amazon",
       "model_id": "nova-premier-v1",
       "display_name": "Amazon Nova Premier",
       "context_window": 1000000,
-      "max_output_tokens": 25000,
+      "max_output_tokens": 32000,
       "input_modalities": [
         "text",
         "image",
-        "video",
-        "audio",
-        "speech"
+        "video"
       ],
       "output_modalities": [
-        "text",
-        "image",
-        "video",
-        "embedding",
-        "speech"
+        "text"
       ],
       "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
@@ -461,91 +409,28 @@
       "supports_fim": false,
       "tokenizer_name": "",
       "knowledge_cutoff": "2024-10",
+      "deprecated": false,
+      "aliases": [
+        "amazon/nova-premier-v1",
+        "amazon.nova-premier-v1:0",
+        "amazon.nova-premier-v1"
+      ],
+      "license_type": "api",
       "pricing": {
         "input_per_1m": 2.5,
         "output_per_1m": 12.5,
         "currency": "USD"
       },
-      "deprecated": false,
-      "aliases": [
-        "amazon.nova-premier-v1:0"
-      ],
-      "license_type": "api"
-    },
-    {
-      "provider": "amazon",
-      "model_id": "nova-pro-v1",
-      "display_name": "Amazon Nova Pro",
-      "context_window": 300000,
-      "max_output_tokens": 5000,
-      "input_modalities": [
-        "text",
-        "image",
-        "video",
-        "audio"
-      ],
-      "output_modalities": [
-        "text",
-        "image",
-        "embedding"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2024-10",
-      "pricing": {
-        "input_per_1m": 0.8,
-        "output_per_1m": 3.2,
-        "currency": "USD"
-      },
-      "deprecated": false,
-      "aliases": [
-        "amazon.nova-pro-v1:0"
-      ],
-      "license_type": "api"
-    },
-    {
-      "provider": "amazon",
-      "model_id": "nova-reel-v1",
-      "display_name": "Amazon Nova Reel",
-      "context_window": 1,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "video"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "amazon.nova-reel-v1:0"
-      ],
-      "license_type": "license"
+      "extra": {
+        "source": "https://aws.amazon.com/bedrock/pricing/",
+        "nova_pricing": "https://aws.amazon.com/nova/pricing/",
+        "price_api": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json",
+        "region": "US East (N. Virginia) on-demand standard",
+        "cache_hit_per_1m": 0.625,
+        "cache_hit_note": "75% less than on-demand input (official)",
+        "batch_input_per_1m": 1.25,
+        "batch_output_per_1m": 6.25
+      }
     },
     {
       "provider": "amazon",
@@ -576,53 +461,36 @@
       "supports_fim": false,
       "tokenizer_name": "",
       "knowledge_cutoff": "2025-01",
+      "deprecated": false,
+      "aliases": [
+        "amazon/nova-sonic-v1",
+        "amazon.nova-sonic-v1:0",
+        "amazon.nova-sonic-v1"
+      ],
+      "license_type": "api",
       "pricing": {
         "input_per_1m": 0.06,
         "output_per_1m": 0.24,
         "currency": "USD"
       },
-      "deprecated": false,
-      "aliases": [
-        "amazon.nova-sonic-v1:0"
-      ],
-      "license_type": "api"
+      "extra": {
+        "source": "https://aws.amazon.com/bedrock/pricing/",
+        "nova_pricing": "https://aws.amazon.com/nova/pricing/",
+        "price_api": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json",
+        "region": "US East (N. Virginia) on-demand standard",
+        "cache_hit_per_1m": 0.015,
+        "cache_hit_note": "75% less than on-demand input (official)",
+        "speech_input_per_1m": 3.4,
+        "speech_output_per_1m": 13.6,
+        "text_input_per_1m": 0.06,
+        "text_output_per_1m": 0.24,
+        "primary_pricing": "text tokens; speech rates in extra"
+      }
     },
     {
       "provider": "amazon",
-      "model_id": "titan-embed-text-v2",
-      "display_name": "Amazon Titan Text Embeddings V2",
-      "context_window": 8192,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "embedding"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "amazon.titan-embed-text-v2:0"
-      ],
-      "license_type": "license"
-    },
-    {
-      "provider": "amazon",
-      "model_id": "titan-image-generator-v1-v2",
-      "display_name": "Amazon Titan Image Generator G1 v2",
+      "model_id": "nova-canvas-v1",
+      "display_name": "Amazon Nova Canvas",
       "context_window": 1,
       "max_output_tokens": 0,
       "input_modalities": [
@@ -634,7 +502,7 @@
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
-      "supports_streaming": true,
+      "supports_streaming": false,
       "supports_vision": true,
       "supports_reasoning": false,
       "supports_chat_completion": false,
@@ -648,14 +516,72 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "amazon.titan-image-generator-v2:0"
+        "amazon/nova-canvas-v1",
+        "amazon.nova-canvas-v1:0",
+        "amazon.nova-canvas-v1"
       ],
-      "license_type": "license"
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://aws.amazon.com/bedrock/pricing/",
+        "nova_pricing": "https://aws.amazon.com/nova/pricing/",
+        "price_api": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json",
+        "region": "US East (N. Virginia) on-demand standard",
+        "unit": "image",
+        "price_per_image_std_le_1024": 0.04,
+        "price_per_image_premium_le_1024": 0.06,
+        "note": "≤1024 standard $0.04 / premium $0.06 per image (US East)"
+      }
     },
     {
       "provider": "amazon",
-      "model_id": "titan-multimodal-embeddings-v1",
-      "display_name": "Amazon Titan Multimodal Embeddings G1",
+      "model_id": "nova-reel-v1",
+      "display_name": "Amazon Nova Reel",
+      "context_window": 1,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "video"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "amazon/nova-reel-v1",
+        "amazon.nova-reel-v1:0",
+        "amazon.nova-reel-v1"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://aws.amazon.com/bedrock/pricing/",
+        "nova_pricing": "https://aws.amazon.com/nova/pricing/",
+        "price_api": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json",
+        "region": "US East (N. Virginia) on-demand standard",
+        "unit": "second",
+        "price_per_second_720p": 0.08,
+        "note": "720p $0.08/sec (US East)"
+      }
+    },
+    {
+      "provider": "amazon",
+      "model_id": "nova-multimodal-embeddings-v1",
+      "display_name": "Amazon Nova Multimodal Embeddings",
       "context_window": 8192,
       "max_output_tokens": 0,
       "input_modalities": [
@@ -667,7 +593,7 @@
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
-      "supports_streaming": true,
+      "supports_streaming": false,
       "supports_vision": true,
       "supports_reasoning": false,
       "supports_chat_completion": false,
@@ -681,83 +607,26 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "amazon.titan-multimodal-embeddings-v1:0"
+        "amazon/nova-multimodal-embeddings-v1",
+        "amazon.nova-multimodal-embeddings-v1:0",
+        "amazon.nova-multimodal-embeddings-v1"
       ],
-      "license_type": "license"
-    },
-    {
-      "provider": "amazon",
-      "model_id": "titan-text-express-v1",
-      "display_name": "Amazon Titan Text Express",
-      "context_window": 42000,
-      "max_output_tokens": 8000,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2023-12",
+      "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.2,
-        "output_per_1m": 0.6,
+        "input_per_1m": 0.135,
+        "output_per_1m": null,
         "currency": "USD"
       },
-      "deprecated": false,
-      "aliases": [
-        "amazon.titan-text-express-v1"
-      ],
-      "license_type": "api"
-    },
-    {
-      "provider": "amazon",
-      "model_id": "titan-text-lite-v1",
-      "display_name": "Amazon Titan Text Lite",
-      "context_window": 42000,
-      "max_output_tokens": 4000,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2023-12",
-      "pricing": {
-        "input_per_1m": 0.3,
-        "output_per_1m": 0.4,
-        "currency": "USD"
-      },
-      "deprecated": false,
-      "aliases": [
-        "amazon.titan-text-lite-v1"
-      ],
-      "license_type": "api"
+      "extra": {
+        "source": "https://aws.amazon.com/bedrock/pricing/",
+        "nova_pricing": "https://aws.amazon.com/nova/pricing/",
+        "price_api": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json",
+        "region": "US East (N. Virginia) on-demand standard",
+        "unit": "token_and_image",
+        "text_input_per_1m": 0.135,
+        "price_per_image": 0.06,
+        "note": "text $0.135/1M tokens; image $0.06/image (US East)"
+      }
     },
     {
       "provider": "amazon",
@@ -785,16 +654,316 @@
       "supports_fim": false,
       "tokenizer_name": "",
       "knowledge_cutoff": "2023-12",
+      "deprecated": false,
+      "aliases": [
+        "amazon/titan-text-premier-v1",
+        "amazon.titan-text-premier-v1:0",
+        "amazon.titan-text-premier-v1"
+      ],
+      "license_type": "api",
       "pricing": {
         "input_per_1m": 0.5,
         "output_per_1m": 1.5,
         "currency": "USD"
       },
+      "extra": {
+        "source": "https://aws.amazon.com/bedrock/pricing/",
+        "nova_pricing": "https://aws.amazon.com/nova/pricing/",
+        "price_api": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json",
+        "region": "US East (N. Virginia) on-demand standard",
+        "cache_hit_per_1m": 0.125,
+        "cache_hit_note": "75% less than on-demand input (official)"
+      }
+    },
+    {
+      "provider": "amazon",
+      "model_id": "titan-text-express-v1",
+      "display_name": "Amazon Titan Text Express",
+      "context_window": 42000,
+      "max_output_tokens": 8000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2023-12",
       "deprecated": false,
       "aliases": [
-        "amazon.titan-text-premier-v1:0"
+        "amazon/titan-text-express-v1",
+        "amazon.titan-text-express-v1:0",
+        "amazon.titan-text-express-v1"
       ],
-      "license_type": "api"
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.2,
+        "output_per_1m": 0.6,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://aws.amazon.com/bedrock/pricing/",
+        "nova_pricing": "https://aws.amazon.com/nova/pricing/",
+        "price_api": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json",
+        "region": "US East (N. Virginia) on-demand standard",
+        "cache_hit_per_1m": 0.05,
+        "cache_hit_note": "75% less than on-demand input (official)"
+      }
+    },
+    {
+      "provider": "amazon",
+      "model_id": "titan-text-lite-v1",
+      "display_name": "Amazon Titan Text Lite",
+      "context_window": 42000,
+      "max_output_tokens": 4000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2023-12",
+      "deprecated": false,
+      "aliases": [
+        "amazon/titan-text-lite-v1",
+        "amazon.titan-text-lite-v1:0",
+        "amazon.titan-text-lite-v1"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.2,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://aws.amazon.com/bedrock/pricing/",
+        "nova_pricing": "https://aws.amazon.com/nova/pricing/",
+        "price_api": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json",
+        "region": "US East (N. Virginia) on-demand standard",
+        "cache_hit_per_1m": 0.0375,
+        "cache_hit_note": "75% less than on-demand input (official)",
+        "note": "corrected from prior catalog $0.30/$0.40"
+      }
+    },
+    {
+      "provider": "amazon",
+      "model_id": "titan-embed-text-v2",
+      "display_name": "Amazon Titan Text Embeddings V2",
+      "context_window": 8192,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embedding"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "amazon/titan-embed-text-v2",
+        "amazon.titan-embed-text-v2:0",
+        "amazon.titan-embed-text-v2"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.02,
+        "output_per_1m": null,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://aws.amazon.com/bedrock/pricing/",
+        "nova_pricing": "https://aws.amazon.com/nova/pricing/",
+        "price_api": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json",
+        "region": "US East (N. Virginia) on-demand standard",
+        "unit": "token",
+        "text_input_per_1m": 0.02,
+        "note": "Titan Embed Text V2 $0.02/1M tokens"
+      }
+    },
+    {
+      "provider": "amazon",
+      "model_id": "titan-embed-text-v1",
+      "display_name": "Amazon Titan Text Embeddings G1",
+      "context_window": 8192,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embedding"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "amazon/titan-embed-text-v1",
+        "amazon.titan-embed-text-v1:0",
+        "amazon.titan-embed-text-v1"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.1,
+        "output_per_1m": null,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://aws.amazon.com/bedrock/pricing/",
+        "nova_pricing": "https://aws.amazon.com/nova/pricing/",
+        "price_api": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json",
+        "region": "US East (N. Virginia) on-demand standard",
+        "unit": "token",
+        "text_input_per_1m": 0.1,
+        "note": "Titan Embed Text G1 $0.10/1M tokens"
+      }
+    },
+    {
+      "provider": "amazon",
+      "model_id": "titan-multimodal-embeddings-v1",
+      "display_name": "Amazon Titan Multimodal Embeddings G1",
+      "context_window": 8192,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "embedding"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "amazon/titan-multimodal-embeddings-v1",
+        "amazon.titan-multimodal-embeddings-v1:0",
+        "amazon.titan-multimodal-embeddings-v1"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.0008,
+        "output_per_1m": null,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://aws.amazon.com/bedrock/pricing/",
+        "nova_pricing": "https://aws.amazon.com/nova/pricing/",
+        "price_api": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json",
+        "region": "US East (N. Virginia) on-demand standard",
+        "unit": "token_and_image",
+        "text_input_per_1m": 0.0008,
+        "price_per_image": 6e-05,
+        "note": "Titan Multimodal Embeddings: text ~$0.0008/1M; image ~$0.00006/image (US East; verify on Bedrock pricing)"
+      }
+    },
+    {
+      "provider": "amazon",
+      "model_id": "titan-image-generator-v2",
+      "display_name": "Amazon Titan Image Generator G1 v2",
+      "context_window": 1,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "image"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "amazon/titan-image-generator-v2",
+        "amazon.titan-image-generator-v2:0",
+        "amazon.titan-image-generator-v2",
+        "titan-image-generator-v1-v2"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://aws.amazon.com/bedrock/pricing/",
+        "nova_pricing": "https://aws.amazon.com/nova/pricing/",
+        "price_api": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json",
+        "region": "US East (N. Virginia) on-demand standard",
+        "unit": "image",
+        "price_per_image_std_512": 0.008,
+        "price_per_image_std_1024": 0.01,
+        "price_per_image_premium_512": 0.01,
+        "price_per_image_premium_1024": 0.012,
+        "note": "Titan Image Generator v2 approximate US East rates"
+      }
     }
   ]
 }

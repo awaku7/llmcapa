@@ -1,110 +1,11 @@
 {
   "models": [
     {
-      "provider": "customer-cloud",
-      "model_id": "cc-gov-llm",
-      "display_name": "Customer Cloud CC Gov-LLM",
-      "context_window": 128000,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2026-01",
-      "deprecated": false,
-      "aliases": [
-        "customer-cloud/cc-gov-llm",
-        "cc-gov-llm"
-      ],
-      "license_type": "free"
-    },
-    {
-      "provider": "nec",
-      "model_id": "cotomi-v3",
-      "display_name": "NEC cotomi v3",
-      "context_window": 128000,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2025-07",
-      "deprecated": false,
-      "aliases": [
-        "nec/cotomi-v3",
-        "cotomi-v3"
-      ],
-      "license_type": "free"
-    },
-    {
-      "provider": "elyza",
-      "model_id": "llama-3.1-elyza-jp-70b",
-      "display_name": "ELYZA Llama-3.1-ELYZA-JP-70B",
-      "context_window": 128000,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2024-07",
-      "deprecated": false,
-      "aliases": [
-        "elyza/llama-3.1-elyza-jp-70b",
-        "llama-3.1-elyza-jp-70b"
-      ],
-      "license_type": "free"
-    },
-    {
       "provider": "pfn",
-      "model_id": "plamo-2.0-prime",
-      "display_name": "PFN PLaMo 2.0 Prime",
-      "context_window": 32000,
-      "max_output_tokens": 4096,
+      "model_id": "plamo-3.0-prime",
+      "display_name": "PFN PLaMo 3.0 Prime",
+      "context_window": 262144,
+      "max_output_tokens": 20000,
       "input_modalities": [
         "text"
       ],
@@ -115,33 +16,103 @@
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
-      "supports_reasoning": false,
+      "supports_reasoning": true,
       "supports_chat_completion": true,
       "supports_responses_api": false,
-      "supports_reasoning_effort": false,
+      "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
       "tokenizer_name": "",
-      "knowledge_cutoff": "2025-07",
+      "knowledge_cutoff": "2026-06",
+      "deprecated": false,
+      "aliases": [
+        "pfn/plamo-3.0-prime",
+        "plamo-3-prime",
+        "plamo3-prime",
+        "PLaMo-3.0-Prime"
+      ],
+      "license_type": "api",
       "pricing": {
         "input_per_1m": 0.4,
-        "output_per_1m": 1.6,
+        "output_per_1m": 1.67,
         "currency": "USD"
       },
-      "deprecated": false,
-      "aliases": [
-        "pfn/plamo-2.0-prime",
-        "plamo-2.0-prime"
+      "reasoning_effort_values": [
+        "none",
+        "medium"
       ],
-      "license_type": "api"
+      "extra": {
+        "aggregator": "japanese",
+        "native_provider": "pfn",
+        "source": "https://plamo.preferredai.jp/api",
+        "press": "https://www.preferred.jp/ja/news/pr20260622/",
+        "tech_blog": "https://tech.preferred.jp/ja/blog/plamo-3-0-prime-release/",
+        "base_url": "https://api.platform.preferredai.jp/v1",
+        "model_version": "PLaMo 3.0 Prime",
+        "ga_date": "2026-06-22",
+        "full_scratch": true,
+        "openai_compatible": true,
+        "features": [
+          "reasoning_toggle",
+          "non_reasoning",
+          "tool_calling",
+          "structured_output",
+          "json_mode",
+          "zdr_standard_plus",
+          "on_prem",
+          "bedrock_marketplace",
+          "snowflake"
+        ],
+        "reasoning_effort": [
+          "none",
+          "medium"
+        ],
+        "reasoning_effort_note": "only none|medium accepted; high/low → HTTP 422",
+        "reasoning_cost_note": "third-party: latency ~6–17×, tokens ~12–35× when reasoning",
+        "pricing_jpy_per_1m": {
+          "input": 60.0,
+          "output": 250.0,
+          "plan": "standard",
+          "note": "≤128K Input/Output unit price; 128K+ same rate during GA campaign period"
+        },
+        "plans": {
+          "free": {
+            "input_jpy": 0,
+            "output_jpy": 0,
+            "status": "preparing",
+            "limits": "rate/volume limited"
+          },
+          "standard": {
+            "input_jpy": 60.0,
+            "output_jpy": 250.0,
+            "zdr": true,
+            "no_training_on_inputs": true
+          },
+          "provider": {
+            "input_jpy": "custom",
+            "output_jpy": "custom",
+            "reasoning_full_text": true,
+            "priority": true
+          }
+        },
+        "campaign": {
+          "new_signup_credit_tokens": 10000000,
+          "through": "2026-07-31",
+          "credit_valid_days": 30,
+          "io_ratio_assumed": "4:1"
+        },
+        "currency_note": "primary pricing USD shell ≈¥60.0/¥250.0 at ~150 JPY/USD; exact bill is JPY on Standard plan",
+        "gennai_selected": true,
+        "params_note": "flagship closed weights (Prime); base open separately"
+      }
     },
     {
       "provider": "pfn",
       "model_id": "plamo-2.2-prime",
       "display_name": "PFN PLaMo 2.2 Prime",
-      "context_window": 32000,
+      "context_window": 32768,
       "max_output_tokens": 8192,
       "input_modalities": [
         "text"
@@ -163,17 +134,353 @@
       "supports_fim": false,
       "tokenizer_name": "",
       "knowledge_cutoff": "2026-03",
+      "deprecated": true,
+      "aliases": [
+        "pfn/plamo-2.2-prime"
+      ],
+      "license_type": "api",
       "pricing": {
         "input_per_1m": 0.4,
         "output_per_1m": 1.6,
         "currency": "USD"
       },
+      "extra": {
+        "aggregator": "japanese",
+        "native_provider": "pfn",
+        "source": "https://plamo.preferredai.jp/api",
+        "status": "superseded_by_plamo_3_0_prime",
+        "superseded_by": "plamo-3.0-prime",
+        "ga_note": "2026-01-28 class; 3.0 GA 2026-06-22",
+        "pricing_jpy_per_1m": {
+          "input": 60.0,
+          "output": 250.0
+        },
+        "features": [
+          "reasoning",
+          "openai_compatible"
+        ]
+      }
+    },
+    {
+      "provider": "pfn",
+      "model_id": "plamo-2.0-prime",
+      "display_name": "PFN PLaMo 2.0 Prime",
+      "context_window": 32768,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-07",
+      "deprecated": true,
+      "aliases": [
+        "pfn/plamo-2.0-prime"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.4,
+        "output_per_1m": 1.6,
+        "currency": "USD"
+      },
+      "extra": {
+        "aggregator": "japanese",
+        "native_provider": "pfn",
+        "source": "https://plamo.preferredai.jp/api",
+        "status": "superseded_by_plamo_3_0_prime",
+        "superseded_by": "plamo-3.0-prime",
+        "params": "31B",
+        "gennai_selected_as": "plamo-2.0-prime",
+        "nikkei_award": "2025 日経優秀製品・サービス賞 最優秀賞",
+        "pricing_jpy_per_1m": {
+          "input": 60.0,
+          "output": 250.0
+        }
+      }
+    },
+    {
+      "provider": "softbank",
+      "model_id": "sarashina3-mini",
+      "display_name": "SoftBank Sarashina3 mini",
+      "context_window": 128000,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2026-06",
       "deprecated": false,
       "aliases": [
-        "pfn/plamo-2.2-prime",
-        "plamo-2.2-prime"
+        "softbank/sarashina3-mini",
+        "sarashina-3-mini",
+        "sb-intuitions/sarashina3-mini"
       ],
-      "license_type": "api"
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "aggregator": "japanese",
+        "native_provider": "softbank",
+        "source": "https://www.softbank.jp/biz/services/ai/cloud-pf-type-a/",
+        "press": "https://www.sbintuitions.co.jp/news/press/2026/06/30/sarashina3-cloud-pf/",
+        "tech_blog": "https://www.sbintuitions.co.jp/blog/entry/2026/06/30/sarashina3-mini-nano/",
+        "legacy_api": "https://www.softbank.jp/business/service/ai/sarashina-api/",
+        "channel": "cloud_pf_type_a",
+        "available_from": "2026-06-30",
+        "developer": "SB Intuitions",
+        "full_scratch": true,
+        "pretrain_tokens": "30T+",
+        "model_class": "instruct_non_reasoning",
+        "features": [
+          "chat_completions",
+          "tool_use_agent",
+          "math",
+          "coding",
+          "instruction_following"
+        ],
+        "deployment": {
+          "dedicated": "monthly_fixed_gpu",
+          "on_demand": "payg_shared_gpu"
+        },
+        "pricing_note": "Cloud PF Type A: Dedicated monthly fixed / On-Demand payg; per-token table not public — contact SoftBank",
+        "gennai_selected": true,
+        "series": "Sarashina3"
+      }
+    },
+    {
+      "provider": "softbank",
+      "model_id": "sarashina3-nano",
+      "display_name": "SoftBank Sarashina3 nano",
+      "context_window": 128000,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2026-06",
+      "deprecated": false,
+      "aliases": [
+        "softbank/sarashina3-nano",
+        "sarashina-3-nano",
+        "sb-intuitions/sarashina3-nano"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "aggregator": "japanese",
+        "native_provider": "softbank",
+        "source": "https://www.softbank.jp/biz/services/ai/cloud-pf-type-a/",
+        "press": "https://www.sbintuitions.co.jp/news/press/2026/06/30/sarashina3-cloud-pf/",
+        "tech_blog": "https://www.sbintuitions.co.jp/blog/entry/2026/06/30/sarashina3-mini-nano/",
+        "channel": "cloud_pf_type_a",
+        "available_from": "2026-06-30",
+        "developer": "SB Intuitions",
+        "full_scratch": true,
+        "model_class": "instruct_lightweight",
+        "features": [
+          "chat_completions",
+          "high_throughput",
+          "extraction",
+          "classification",
+          "summarization"
+        ],
+        "pricing_note": "Cloud PF Type A quote; optimized for bulk simple tasks",
+        "series": "Sarashina3"
+      }
+    },
+    {
+      "provider": "softbank",
+      "model_id": "sarashina3-guard",
+      "display_name": "SoftBank Sarashina3 guard",
+      "context_window": 32768,
+      "max_output_tokens": 1024,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2026-06",
+      "deprecated": false,
+      "aliases": [
+        "softbank/sarashina3-guard"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "aggregator": "japanese",
+        "native_provider": "softbank",
+        "source": "https://www.softbank.jp/biz/services/ai/cloud-pf-type-a/",
+        "press": "https://www.sbintuitions.co.jp/news/press/2026/06/30/sarashina3-cloud-pf/",
+        "channel": "cloud_pf_type_a",
+        "available_from": "2026-06-30",
+        "developer": "SB Intuitions",
+        "model_class": "guardrail",
+        "features": [
+          "harmful_category_detection",
+          "input_output_filter",
+          "no_text_generation"
+        ],
+        "pricing_note": "Cloud PF Type A quote",
+        "series": "Sarashina3"
+      }
+    },
+    {
+      "provider": "softbank",
+      "model_id": "sarashina3-embedding",
+      "display_name": "SoftBank Sarashina3 embedding",
+      "context_window": 8192,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embedding"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2026-06",
+      "deprecated": false,
+      "aliases": [
+        "softbank/sarashina3-embedding"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "aggregator": "japanese",
+        "native_provider": "softbank",
+        "source": "https://www.softbank.jp/biz/services/ai/cloud-pf-type-a/",
+        "press": "https://www.sbintuitions.co.jp/news/press/2026/06/30/sarashina3-cloud-pf/",
+        "channel": "cloud_pf_type_a",
+        "available_from": "2026-06-30",
+        "developer": "SB Intuitions",
+        "model_class": "embedding",
+        "features": [
+          "embeddings_api",
+          "task_type_switch_7",
+          "dimension_truncation_robust"
+        ],
+        "pricing_note": "Cloud PF Type A quote",
+        "series": "Sarashina3"
+      }
+    },
+    {
+      "provider": "softbank",
+      "model_id": "sarashina3-rerank",
+      "display_name": "SoftBank Sarashina3 rerank",
+      "context_window": 8192,
+      "max_output_tokens": 1024,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2026-06",
+      "deprecated": false,
+      "aliases": [
+        "softbank/sarashina3-rerank"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "aggregator": "japanese",
+        "native_provider": "softbank",
+        "source": "https://www.softbank.jp/biz/services/ai/cloud-pf-type-a/",
+        "press": "https://www.sbintuitions.co.jp/news/press/2026/06/30/sarashina3-cloud-pf/",
+        "channel": "cloud_pf_type_a",
+        "available_from": "2026-06-30",
+        "developer": "SB Intuitions",
+        "model_class": "reranker",
+        "features": [
+          "rerank_api",
+          "rag_precision",
+          "task_type_switch_5",
+          "japanese_instruction"
+        ],
+        "pricing_note": "Cloud PF Type A quote",
+        "series": "Sarashina3"
+      }
     },
     {
       "provider": "softbank",
@@ -188,7 +495,7 @@
         "text"
       ],
       "supports_function_calling": true,
-      "supports_json_mode": false,
+      "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": false,
@@ -201,45 +508,29 @@
       "supports_fim": false,
       "tokenizer_name": "",
       "knowledge_cutoff": "2025-05",
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "softbank/sarashina2-mini",
-        "sarashina2-mini"
+        "sarashina-2-mini"
       ],
-      "license_type": "free"
-    },
-    {
-      "provider": "fujitsu",
-      "model_id": "takane-32b",
-      "display_name": "Fujitsu Takane 32B",
-      "context_window": 128000,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2025-10",
-      "deprecated": false,
-      "aliases": [
-        "fujitsu/takane-32b",
-        "takane-32b"
-      ],
-      "license_type": "free"
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "aggregator": "japanese",
+        "native_provider": "softbank",
+        "source": "https://www.softbank.jp/business/service/ai/sarashina-api/",
+        "status": "migrating_to_cloud_pf_type_a",
+        "superseded_by": "sarashina3-mini",
+        "new_signup_closed": "2026-06-16",
+        "developer": "SB Intuitions",
+        "features": [
+          "chat_completions",
+          "embeddings_api_sarashina2_embedding",
+          "guard_sarashina2_guard"
+        ],
+        "pricing_note": "legacy quote / annual credit; prefer Sarashina3",
+        "gennai_selected_as": "sarashina2-mini"
+      }
     },
     {
       "provider": "ntt",
@@ -271,10 +562,296 @@
       "deprecated": false,
       "aliases": [
         "ntt/tsuzumi-2",
-        "tsuzumi-2",
-        "tsuzumi2"
+        "tsuzumi2",
+        "nttdata/tsuzumi-2",
+        "nttdata-tsuzumi-2-instruct"
       ],
-      "license_type": "free"
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "aggregator": "japanese",
+        "native_provider": "ntt",
+        "source": "https://www.nttdata.com/jp/ja/lineup/tsuzumi/",
+        "rd": "https://www.rd.ntt/research/LLM_tsuzumi.html",
+        "azure_marketplace": "https://marketplace.microsoft.com/en-us/product/1681106214127.nttdata-tsuzumi-2-instruct-offer",
+        "params": "~30B",
+        "full_scratch": true,
+        "single_gpu": true,
+        "domains": [
+          "finance",
+          "government",
+          "medical",
+          "rag",
+          "doc_qa"
+        ],
+        "vision_announced": "2026-05-19",
+        "channels": [
+          "on_prem",
+          "private_cloud",
+          "ntt_group_b2b",
+          "azure_marketplace_managed_compute"
+        ],
+        "azure_pricing": {
+          "model": "managed_compute_not_pure_token",
+          "gpu_hour_usd": 0.76,
+          "meters": [
+            "paygo-surcharge-a100-gpu",
+            "paygo-surcharge-h100-gpu"
+          ],
+          "secondary_token_table_per_1m_usd": {
+            "input": 4.0,
+            "output": 1100.0,
+            "source": "third_party_summary_of_azure_listing",
+            "note": "treat as secondary; Marketplace emphasizes GPU-hour + 'price varies'"
+          }
+        },
+        "contact": "nttd_tsuzumi@hml.nttdata.co.jp",
+        "gennai_selected": true,
+        "pricing_note": "B2B quote / on-prem; Azure = managed GPU-hour (~$0.76/GPU-h) not pure token PAYG"
+      }
+    },
+    {
+      "provider": "nec",
+      "model_id": "cotomi-v3",
+      "display_name": "NEC cotomi v3",
+      "context_window": 128000,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-07",
+      "deprecated": false,
+      "aliases": [
+        "nec/cotomi-v3",
+        "cotomi_v3",
+        "cotomi3"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "aggregator": "japanese",
+        "native_provider": "nec",
+        "source": "https://jpn.nec.com/LLM/cotomi.html",
+        "source_note": "official page may return Akamai Access Denied; specs from GENNAI materials + sakura AI Engine channel",
+        "params_estimate": "~13B class (series history)",
+        "features": [
+          "keigo_specialty",
+          "domain_terminology",
+          "ai_agent",
+          "mcp_native",
+          "webarena_agent_eval"
+        ],
+        "webarena_score_claimed": 0.804,
+        "power_vs_v2": "approx_half",
+        "channels": [
+          "nec_enterprise",
+          "on_prem",
+          "sakura_ai_engine"
+        ],
+        "sakura_ai_engine": {
+          "free_calls_per_month": 3000,
+          "overage": "payg_undisclosed"
+        },
+        "gennai_selected": true,
+        "pricing_note": "enterprise quote; sakura AI Engine free tier 3,000 calls/mo",
+        "related_provider_file": "sakura.json"
+      }
+    },
+    {
+      "provider": "elyza",
+      "model_id": "llama-3.1-elyza-jp-70b",
+      "display_name": "ELYZA Llama-3.1-ELYZA-JP-70B",
+      "context_window": 128000,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-07",
+      "deprecated": false,
+      "aliases": [
+        "elyza/llama-3.1-elyza-jp-70b",
+        "Llama-3.1-ELYZA-JP-70B",
+        "elyza-jp-70b"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "aggregator": "japanese",
+        "native_provider": "elyza",
+        "source": "https://elyza.ai/",
+        "base_model": "Meta Llama 3.1 70B",
+        "params": "70B",
+        "origin": "additional_japanese_sft_on_llama_not_full_scratch",
+        "applicant": "KDDI + ELYZA joint (源内)",
+        "features": [
+          "long_context_128k",
+          "japanese_instruction_following",
+          "general_purpose_70b"
+        ],
+        "related_products": [
+          "ELYZA-Shortcut-1.0-Qwen-32B",
+          "ELYZA-LLM-Diffusion",
+          "ELYZA Works"
+        ],
+        "channels": [
+          "enterprise_api_quote",
+          "demo_free",
+          "elyza_works"
+        ],
+        "gennai_selected": true,
+        "pricing_note": "enterprise inquiry; public demo free",
+        "license_base": "Llama 3.1 Community License (base weights)"
+      }
+    },
+    {
+      "provider": "fujitsu",
+      "model_id": "takane-32b",
+      "display_name": "Fujitsu Takane 32B",
+      "context_window": 128000,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-10",
+      "deprecated": false,
+      "aliases": [
+        "fujitsu/takane-32b",
+        "takane",
+        "Takane-32B"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "aggregator": "japanese",
+        "native_provider": "fujitsu",
+        "source": "https://www.fujitsu.com/global/about/resources/news/",
+        "kozuchi": "Fujitsu Kozuchi / Enterprise AI Factory",
+        "partner": "Cohere Inc.",
+        "params": "32B",
+        "origin": "cohere_based_japanese_enterprise_not_full_scratch",
+        "features": [
+          "admin_document_processing",
+          "1bit_quantization",
+          "jglue_strong",
+          "private_deployment"
+        ],
+        "quantization": {
+          "memory_reduction_claimed": "94%",
+          "speedup_claimed": "3x",
+          "accuracy_retention_claimed": "89%"
+        },
+        "channels": [
+          "fujitsu_kozuchi",
+          "enterprise_on_prem",
+          "private_cloud"
+        ],
+        "gennai_selected": true,
+        "pricing_note": "enterprise quote only via Fujitsu"
+      }
+    },
+    {
+      "provider": "customer-cloud",
+      "model_id": "cc-gov-llm",
+      "display_name": "Customer Cloud CC Gov-LLM",
+      "context_window": 128000,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2026-01",
+      "deprecated": false,
+      "aliases": [
+        "customer-cloud/cc-gov-llm",
+        "cc_gov_llm",
+        "gov-llm"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "aggregator": "japanese",
+        "native_provider": "customer-cloud",
+        "source": "https://customer-cloud.co.jp/",
+        "focus": "government_local_llm_security",
+        "full_scratch_claimed": true,
+        "features": [
+          "air_gapped_local",
+          "no_external_cloud_dependency",
+          "admin_docs",
+          "citizen_response",
+          "policy_support"
+        ],
+        "channels": [
+          "on_prem_local",
+          "government_contract"
+        ],
+        "gennai_selected": true,
+        "pricing_note": "government / enterprise contract; not public API",
+        "license_type_note": "deployed_local_not_public_api"
+      }
     }
   ]
 }

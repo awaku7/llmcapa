@@ -4,16 +4,17 @@
 
 ## 特徴
 
-- **包括的な同梱データ**: OpenAI、Anthropic、Google (Gemini)、Microsoft (Phi)、Amazon (Nova/Titan)、Meta (Llama)、Mistral、Qwen、DeepSeek、xAI (Grok)、NVIDIA、MoonshotAI (Kimi)、zhipu-ai (GLM)、OpenRouter、および日本の国内モデル（デジタル庁の「GENNAI」プラットフォームで採用されているNTT tsuzumi、PFN PLaMo、ELYZA、SoftBank、NEC、Fujitsuなど）のオフライン機能データを同梱しています。
+- **包括的な同梱データ**: OpenAI、Anthropic、Google (Gemini)、Microsoft (Phi)、Amazon (Nova/Titan)、Meta (Llama)、Mistral、Qwen、DeepSeek、xAI (Grok)、NVIDIA、MoonshotAI (Kimi)、zhipu-ai (GLM)、Sakana AI (Fugu)、**Azure AI Foundry**、Novita AI、OpenRouter、**HuggingFace（人気モデル 2,675）**、および日本の国内モデル（デジタル庁の「GENNAI」プラットフォームで採用されているNTT tsuzumi、PFN PLaMo、ELYZA、SoftBank、NEC、Fujitsuなど）のオフライン機能データを同梱しています。
 - **実行時依存関係ゼロ**: Python標準ライブラリのみで動作します。外部パッケージ（`pytest` や `build` など）は開発・テスト用のみです。
-- **エイリアス解決**: エイリアスやプロバイダー固有の名前を自動的に解決します（例: `gpt-4o-2024-08-06` -> `gpt-4o`、`gemini-1.5-pro-preview-0409` -> `gemini-1.5-pro`）。
+- **エイリアス解決**: モデルのエイリアスやプロバイダー固有の名前を自動的に解決します（例: `gpt-4o-2024-08-06` -> `gpt-4o`、`gemini-1.5-pro-preview-0409` -> `gemini-1.5-pro`）。
+- **プロバイダーエイリアス**: プロバイダー引数は一般的な別名と正規化形式を受け付けます（例: `grok`/`x-ai` → `xai`、`bedrock` → `amazon`、`vertexai`/`gemini` → `google`、`azure` → `azure-openai`、`hf` → `huggingface`、`alibaba`/`dashscope` → `qwen`、`lm-studio` → `lmstudio`）。区切り文字 `_. ` は `-` として扱われます。
 - **高度な機能クエリ**: `vision`、`multimodal`、`chat_completion`、`responses_api`、`reasoning_effort`、`thinking_budget`、および特定の入力/出力モダリティ（例: `image_input`、`image_output`、`audio_input`）のサポート状況を確認できます。
 - **高いパフォーマンス**: 評価された機能チェックは、冗長な計算を避けるためにメモ化（内部キャッシュ）されます。
 - **コスト見積もり**: 入力および出力トークン数に基づいてAPIコストを見積もります。
 - **代替モデルチェッカー**: コンテキストウィンドウと必要な機能に基づいて、あるモデルを別のモデルで安全に代替できるかどうかを確認します。
 - **トークナイザーマッピング**: モデルの機能から直接トークナイザー名（例: `o200k_base`）にアクセスできます。
 - **拡張性**: 独自のローカルJSONモデル定義をロードできます。
-- **Ollamaサポート**: **1,638のOllamaモデル**（236ベースモデル×全サイズバリアント）の機能データを収録。codegemma、llama、qwen、mistral、deepseek、gemma、phi など、ローカル推論向けモデルをカバーしています。
+- **Ollama & HuggingFace サポート**: **1,638のOllamaモデル**および**2,675の人気HuggingFaceモデル**（236ベースモデル×全サイズバリアント）の機能データを収録。codegemma、llama、qwen、mistral、deepseek、gemma、phi など、ローカル推論向けモデルをカバーしています。
 - **FIM（Fill-in-the-Middle）サポート**: `cap.supports('fim')` でコード補完（FIM）対応を確認可能。codegemma、codellama、starcoder2、deepseek-coder、qwen2.5-coder などに対応。
 - **CLI同梱**: ターミナルから直接モデルの機能を照会・一覧表示できます。
 
@@ -38,6 +39,8 @@ import llmcapa
 
 # モデルの機能を取得（大文字小文字を区別せず、エイリアスも解決されます）
 cap = llmcapa.get("gpt-4o")
+# プロバイダーエイリアス: grok→xai, bedrock→amazon, alibaba→qwen, lm-studio→lmstudio, ...
+# cap = llmcapa.get("grok-4", provider="grok")
 print(cap.context_window)       # 128000
 print(cap.max_output_tokens)    # 16384
 print(cap.tokenizer_name)       # "o200k_base"
@@ -128,6 +131,68 @@ print(claude.supports(Feature.LLMC_FEAT_THINKING_BUDGET))   # True
 ```
 
 
+
+### 推論努力（Reasoning Effort）の値
+
+特定モデルがサポートする有効な `reasoning_effort` 値の一覧を取得します:
+
+```python
+cap = llmcapa.get("gpt-5.5")
+print(cap.get_reasoning_effort_values())
+# ['none', 'minimal', 'low', 'medium', 'high', 'xhigh']
+
+cap2 = llmcapa.get("o1")
+print(cap2.get_reasoning_effort_values())
+# ['none', 'low', 'medium', 'high']
+
+# reasoning_effort 非対応モデルは空リストを返す
+cap3 = llmcapa.get("gpt-4o")
+print(cap3.get_reasoning_effort_values())
+# []
+```
+
+### 思考バジェット（Thinking Budget）の値
+
+`thinking_budget` をサポートするモデルについて、有効な値の情報を取得します:
+
+```python
+cap = llmcapa.get("claude-sonnet-4-20250501")
+print(cap.get_thinking_budget_values())
+# {'type': 'token_range', 'min': 1024, 'max': 128000}
+
+cap2 = llmcapa.get("deepseek-r1")
+print(cap2.get_thinking_budget_values())
+# {'type': 'token_range', 'min': 1024, 'max': 8192}
+
+# thinking_budget 非対応モデルは空 dict を返す
+cap3 = llmcapa.get("gpt-4o")
+print(cap3.get_thinking_budget_values())
+# {}
+```
+
+### Sakana Fugu（マルチエージェント・オーケストレーション）
+
+Sakana AI の Fugu は、単一モデルとして提示されるマルチエージェント・オーケストレーションシステムです。フロンティアモデルを動的に協調させ、複雑なタスクに取り組みます。llmcapa は Fugu と Fugu Ultra の両方の機能データを同梱しています。
+
+```python
+import llmcapa
+
+# Fugu モデルの検索（大文字小文字非区別、エイリアス解決）
+fugu = llmcapa.get("fugu")
+print(fugu.context_window)       # 272000
+print(fugu.max_output_tokens)    # 128000
+print(fugu.supports("vision"))   # True（text+image 入力）
+print(fugu.pricing)              # {'input_per_1m': 5.0, 'output_per_1m': 30.0, ...}
+
+fugu_ultra = llmcapa.get("fugu-ultra")
+print(fugu_ultra.context_window) # 1000000（1M トークン）
+print(fugu_ultra.pricing)        # {'input_per_1m': 5.0, 'output_per_1m': 30.0, ...}
+
+# Sakana モデル一覧
+for cap in llmcapa.list_models(provider="sakana"):
+    print(cap.model_id, cap.context_window)
+```
+
 ### FIM（Fill-in-the-Middle）サポート
 
 モデルがコード補完（FIM）に対応しているか確認できます：
@@ -159,10 +224,9 @@ print(cap.supports(Feature.LLMC_FEAT_FIM))  # True
 for c in llmcapa.list_models(provider="anthropic"):
     print(c.model_id, c.context_window)
 
-# 機能条件を指定してモデルを検索
-# 検索時はproviderが必須
+# プレフィックス検索（provider は任意。エイリアス可）
 search_results = llmcapa.search("codegemma", provider="ollama")
-
+search_results = llmcapa.search("gpt-4o")  # 全プロバイダー
 big_reasoning_models = llmcapa.find(
     supports_reasoning=True,
     min_context_window=200000
@@ -183,6 +247,53 @@ cap = llmcapa.get("meta-llama/llama-3.3-70b-instruct")
 print(cap.context_window)  # 131072
 print(cap.pricing)         # {'input_per_1m': 0.1, 'output_per_1m': 0.32, 'currency': 'USD'}
 ```
+
+
+### Novita AI（同梱プロバイダー）
+
+Novita AI は、200以上のオープンソース／独自モデルを単一 API で提供するクラウドプラットフォームです。llmcapa は DeepSeek、Qwen、Meta Llama、GLM、Gemini などを含む 136 の Novita AI モデルの機能データ（Novita 固有の価格設定付き）を同梱しています。
+
+`provider="novita"` で Novita AI モデルにスコープを絞れます:
+
+```python
+import llmcapa
+
+# provider スコープで Novita AI モデルを検索
+cap = llmcapa.get("deepseek/deepseek-v3.2", provider="novita")
+print(cap.context_window)  # 163840
+print(cap.pricing)         # {'input_per_1m': 0.0269, 'output_per_1m': 0.04, 'currency': 'USD'}
+
+cap = llmcapa.get("qwen/qwen3.7-max", provider="novita")
+print(cap.context_window)  # 1000000
+
+# Novita AI モデル一覧
+for c in llmcapa.list_models(provider="novita"):
+    print(c.model_id, c.context_window, c.pricing)
+
+# Novita を含む全プロバイダー
+print(llmcapa.providers())
+# ['...', 'novita', '...']
+```
+
+### オンデマンドでの HuggingFace 連携（キャッシュ更新）
+
+`fetch_huggingface()` を使うと、HuggingFace API から人気モデルをオンデマンドで取得・登録できます。ダウンロード数の多い text-generation / image-text-to-text モデルを取得し、基本的な機能を登録して `~/.llmcapa/huggingface_cache.json` にローカルキャッシュします。
+
+```python
+# 上位 100 の HuggingFace モデルを動的に取得・登録
+count = llmcapa.fetch_huggingface()
+print(f"Registered {count} models from HuggingFace!")
+
+# HuggingFace モデル ID で検索
+cap = llmcapa.get("deepseek-ai/DeepSeek-V4-Flash")
+print(cap.context_window)   # 4096（推定。HF API では正確な値が取れない場合あり）
+print(cap.supports_vision)  # False（text-generation パイプライン）
+
+# 取得件数を変更
+count = llmcapa.fetch_huggingface(limit=200)
+```
+
+> **Note**: HuggingFace の一覧 API はコンテキストウィンドウ、価格、詳細な機能データを提供しません。登録されるモデルのコンテキストウィンドウはモデルファミリーに基づく推定値です（例: Llama 3: 8K、Qwen3: 128K）。同梱の `huggingface.json` には、改善されたコンテキスト推定付きの人気 text-generation モデル 2,675 件が含まれます。正確な仕様が必要な場合は、各モデルの公式ドキュメントを参照してください。
 
 ### トークン数のカウント（スタンドアロン）
 

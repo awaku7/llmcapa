@@ -34,10 +34,18 @@ class Registry:
         "deepseek": ["deepseek-ai"],
         "meta": ["meta-llama"],
         "mistral": ["mistralai"],
-        "xai": ["x-ai"],
+        # Product / SDK / OpenRouter-style names commonly used by clients
+        "xai": ["x-ai", "grok"],
+        "anthropic": ["claude"],
+        "google": ["gemini", "vertexai", "vertex-ai"],
+        "azure-openai": ["azure"],
+        "zhipu": ["zai", "z-ai"],
+        "moonshotai": ["moonshot", "kimi"],
         "amazon": ["bedrock"],
         "xiaomi": ["mimo"],
         "huggingface": ["hf"],
+        "qwen": ["alibaba", "dashscope"],
+        "lmstudio": ["lm-studio", "lm_studio"],
     }
 
     @staticmethod
@@ -46,6 +54,20 @@ class Registry:
         normalized = name.lower().strip()
         normalized = re.sub(r'[_. \t]+', '-', normalized)
         return normalized
+
+    def _matching_providers(self, provider: str) -> set:
+        """Return the set of provider names equivalent to *provider*.
+
+        Includes the normalized input, the canonical registry name, and all
+        configured aliases (e.g. ``grok`` / ``x-ai`` → ``xai``).
+        """
+        p = self._normalize_provider(provider)
+        matching = {p}
+        for canonical, aliases in self._provider_aliases.items():
+            if p == canonical or p in aliases:
+                matching.add(canonical)
+                matching.update(aliases)
+        return matching
 
     # ------------------------------------------------------------------
     # loading
@@ -492,15 +514,7 @@ class Registry:
         self._ensure_loaded()
         if provider is not None:
             # Scoped lookup: search only within the given provider
-            p = self._normalize_provider(provider)
-            # Collect matching provider names (canonical + aliases)
-            matching_providers = {p}
-            for canonical, aliases in self._provider_aliases.items():
-                if p == canonical:
-                    matching_providers.update(aliases)
-                elif p in aliases:
-                    matching_providers.add(canonical)
-                    matching_providers.update(a for a in aliases if a != p)
+            matching_providers = self._matching_providers(provider)
             for prov in matching_providers:
                 prov_index = self._by_provider.get(prov)
                 if prov_index is not None:
@@ -520,9 +534,9 @@ class Registry:
         # If model_id contains a "/" and the prefix matches a known provider,
         # try a scoped lookup first to avoid false matches.
         if "/" in model_id:
-            prefix = model_id.split("/", 1)[0].lower().strip()
-            bare = model_id.split("/", 1)[1]
-            if prefix in self._by_provider:
+            prefix, bare = model_id.split("/", 1)
+            # Resolve provider aliases (e.g. grok/..., claude/..., azure/...)
+            if any(p in self._by_provider for p in self._matching_providers(prefix)):
                 try:
                     return self.get(bare, provider=prefix)
                 except ModelNotFoundError:
@@ -541,15 +555,7 @@ class Registry:
         """Return capabilities, optionally filtered by provider."""
         self._ensure_loaded()
         if provider is not None:
-            p = self._normalize_provider(provider)
-            # Collect matching provider names (canonical + aliases)
-            matching_providers = {p}
-            for canonical, aliases in self._provider_aliases.items():
-                if p == canonical:
-                    matching_providers.update(aliases)
-                elif p in aliases:
-                    matching_providers.add(canonical)
-                    matching_providers.update(a for a in aliases if a != p)
+            matching_providers = self._matching_providers(provider)
             result: List[Capability] = []
             for prov in matching_providers:
                 idx = self._by_provider.get(prov)
@@ -618,25 +624,30 @@ class Registry:
     def search(
         self,
         prefix: str,
-        provider: str,
+        provider: Optional[str] = None,
         include_deprecated: bool = False,
         limit: Optional[int] = None,
     ) -> List[Capability]:
         """Search models by prefix matching on model_id, display_name, or aliases.
 
         Case-insensitive prefix search. Results are sorted by (provider, model_id).
+        When *provider* is given, uses the provider-scoped index (same alias
+        resolution as ``list_models`` / ``get``) so aggregator and native
+        entries are both visible.
         """
         self._ensure_loaded()
         prefix_lower = prefix.strip().lower()
         if not prefix_lower:
             return []
 
+        # Provider-scoped candidates via list_models so first-registered-wins
+        # flat index does not hide same-id models under other providers.
+        candidates = self.list_models(
+            provider=provider,
+            include_deprecated=include_deprecated,
+        )
         result = []
-        for cap in self._models.values():
-            if provider is not None and cap.provider.lower() != provider.lower():
-                continue
-            if not include_deprecated and cap.deprecated:
-                continue
+        for cap in candidates:
             # Check model_id
             if cap.model_id.lower().startswith(prefix_lower):
                 result.append(cap)

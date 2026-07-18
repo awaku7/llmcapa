@@ -18,7 +18,7 @@ from .models import Capability, Feature, ReasoningEffort
 from .registry import Registry, ModelNotFoundError, default_registry
 from .tokenizer import count_tokens, count_messages_tokens
 
-__version__ = "0.3.2"
+__version__ = "0.4.1"
 
 __all__ = [
     "Capability",
@@ -84,7 +84,7 @@ def find_model(model_id: str) -> List[tuple[str, Capability]]:
 
 def search(
     prefix: str,
-    provider: str,
+    provider: Optional[str] = None,
     include_deprecated: bool = False,
     limit: Optional[int] = None,
 ) -> List[Capability]:

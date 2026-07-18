@@ -41,6 +41,58 @@ llmcapa/
 
 ---
 
+
+---
+
+## プロバイダーエイリアスと正規化
+
+`get()`、`list_models()`、`search()` は、ルックアップ前にプロバイダー名を正規化し、エイリアスを解決します。
+
+### 正規化
+1. 小文字化
+2. 区切り文字 `_. \t` を `-` に統一（例: `azure_openai` → `azure-openai`、`X AI` → `x-ai`）
+
+### 組み込みエイリアス（`Registry._provider_aliases`）
+
+| 正規プロバイダー名 | 受け付けるエイリアス |
+|---|---|
+| `deepseek` | `deepseek-ai` |
+| `meta` | `meta-llama` |
+| `mistral` | `mistralai` |
+| `xai` | `x-ai`, `grok` |
+| `anthropic` | `claude` |
+| `google` | `gemini`, `vertexai`, `vertex-ai` |
+| `azure-openai` | `azure` |
+| `zhipu` | `zai`, `z-ai` |
+| `moonshotai` | `moonshot`, `kimi` |
+| `amazon` | `bedrock` |
+| `xiaomi` | `mimo` |
+| `huggingface` | `hf` |
+| `qwen` | `alibaba`, `dashscope` |
+| `lmstudio` | `lm-studio`, `lm_studio` |
+
+例:
+
+```python
+import llmcapa
+
+# いずれも同じプロバイダーカタログに解決される
+llmcapa.list_models(provider="grok")
+llmcapa.list_models(provider="x-ai")
+llmcapa.list_models(provider="xai")
+
+llmcapa.get("claude-sonnet-4", provider="claude")   # → anthropic
+llmcapa.search("gpt-4o", provider="azure")          # → azure-openai
+```
+
+新しいエイリアスを追加する場合は `src/llmcapa/registry.py` の `_provider_aliases` を更新し、`tests/test_registry.py` にテストを追加してください。
+
+### `search(provider=None)`
+
+- `provider` は **任意**（0.4.0 以降）。
+- 省略時は flat な `_models` ではなく `list_models` / `_by_provider` 経由で全プロバイダーを走査するため、複数プロバイダーに存在する同一 model id も保持されます。
+- 指定時は `list_models` / `get` と同じエイリアス・正規化パスを使います。
+
 ## 新しいプロバイダーの追加
 
 新しいモデルプロバイダー（例: `cohere`）を追加する場合:
@@ -188,3 +240,21 @@ python -m build
 | `supports_reasoning_effort` | `supported_parameters` | `"reasoning"` が存在すれば `True` |
 | `pricing` | `pricing` | `prompt` と `completion` のレートを100万トークンあたりのレートに変換 |
 | `aliases` | `id` | 小文字に変換された `id` がエイリアスとして追加されます |
+
+
+---
+
+## HuggingFace マッピング詳細
+
+`fetch_huggingface()` が呼び出されると、HuggingFace API のモデルスキーマは以下のように `Capability` データクラスにマッピングされます:
+
+| 機能フィールド | HuggingFace API フィールド | マッピングロジック / フォールバック |
+|---|---|---|
+| `model_id` | `modelId` | `_id` にフォールバック |
+| `display_name` | `modelId` | モデル ID と同一 |
+| `context_window` | `cardData.model_data.context_window` / `config.max_position_embeddings` | デフォルト `4096` |
+| `max_output_tokens` | `cardData.model_data.max_output_tokens` | デフォルト `2048` |
+| `input_modalities` | `pipeline_tag` | `image-text-to-text` の場合 `["text", "image"]`、それ以外は `["text"]` |
+| `supports_vision` | `pipeline_tag` | パイプラインが `image-text-to-text` または `visual-question-answering` なら `True` |
+| `supports_chat_completion` | `pipeline_tag` | `text-generation` または `image-text-to-text` なら `True` |
+
