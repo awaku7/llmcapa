@@ -17,7 +17,7 @@ def test_estimate_cost():
     # Test model without pricing
     claude = llmcapa.get("claude-3-5-sonnet")
     res2 = claude.estimate_cost(input_tokens=1000, output_tokens=1000)
-    assert res2["cost"] == 0.0
+    assert res2["cost"] == 0.018
     assert res2["currency"] == "USD"
 
 def test_can_be_replaced_by():

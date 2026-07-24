@@ -2,9 +2,375 @@
   "models": [
     {
       "provider": "lmstudio",
-      "model_id": "granite-4.1",
-      "display_name": "IBM Granite 4.1",
-      "context_window": 128000,
+      "model_id": "allenai/olmo-3-32b-think",
+      "display_name": "olmo-3-32b-think",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "allenai/olmo-3-7b",
+      "display_name": "olmo-3-7b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "allenai/olmo-3-7b-think",
+      "display_name": "olmo-3-7b-think",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "allenai/olmocr-2-7b",
+      "display_name": "olmocr-2-7b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "baidu/ernie-4.5-21b-a3b",
+      "display_name": "ernie-4.5-21b-a3b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "bytedance/seed-oss-36b",
+      "display_name": "seed-oss-36b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "deepseek/deepseek-r1-0528-qwen3-8b",
+      "display_name": "deepseek-r1-0528-qwen3-8b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "mit"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "deepseek/deepseek-r1-distill-llama-70b",
+      "display_name": "deepseek-r1-distill-llama-70b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "mit"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "deepseek/deepseek-r1-distill-llama-8b",
+      "display_name": "deepseek-r1-distill-llama-8b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "mit"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "deepseek/deepseek-r1-distill-qwen-14b",
+      "display_name": "deepseek-r1-distill-qwen-14b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "mit"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "deepseek/deepseek-r1-distill-qwen-32b",
+      "display_name": "deepseek-r1-distill-qwen-32b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "mit"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "deepseek/deepseek-r1-distill-qwen-7b",
+      "display_name": "deepseek-r1-distill-qwen-7b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "mit"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "essentialai/rnj-1",
+      "display_name": "rnj-1",
+      "context_window": 8192,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "google/functiongemma-270m",
+      "display_name": "functiongemma-270m",
+      "context_window": 32768,
       "max_output_tokens": 8192,
       "input_modalities": [
         "text"
@@ -17,27 +383,23 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "ibm/granite-4.1",
-        "ibm/granite-4.1-8b",
-        "ibm/granite-4.1-3b",
-        "ibm/granite-4.1-30b",
-        "granite-4.1-8b",
-        "granite-4.1-3b",
-        "granite-4.1-30b"
-      ],
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
       "supports_fim": false,
-      "supports_responses_api": false,
       "license_type": "free"
     },
     {
       "provider": "lmstudio",
-      "model_id": "nemotron-3-omni",
-      "display_name": "NVIDIA Nemotron 3 Nano Omni",
+      "model_id": "google/gemma-3-12b",
+      "display_name": "gemma-3-12b",
       "context_window": 131072,
-      "max_output_tokens": 32768,
+      "max_output_tokens": 8192,
       "input_modalities": [
         "text",
         "image"
@@ -50,27 +412,205 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_multimodal": true,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "nvidia/nemotron-3-omni",
-        "nemotron-3-nano-omni",
-        "nvidia/nemotron-3-nano-omni"
-      ],
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
       "supports_fim": false,
-      "supports_responses_api": false,
       "license_type": "free"
     },
     {
       "provider": "lmstudio",
-      "model_id": "gemma-4",
-      "display_name": "Google Gemma 4",
-      "context_window": 256000,
-      "max_output_tokens": 65536,
+      "model_id": "google/gemma-3-1b",
+      "display_name": "gemma-3-1b",
+      "context_window": 131072,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "google/gemma-3-270m",
+      "display_name": "gemma-3-270m",
+      "context_window": 131072,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "google/gemma-3-27b",
+      "display_name": "gemma-3-27b",
+      "context_window": 131072,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "google/gemma-3-4b",
+      "display_name": "gemma-3-4b",
+      "context_window": 131072,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "google/gemma-3n-e2b",
+      "display_name": "gemma-3n-e2b",
+      "context_window": 32768,
+      "max_output_tokens": 8192,
       "input_modalities": [
         "text",
         "image",
+        "video",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "google/gemma-3n-e4b",
+      "display_name": "gemma-3n-e4b",
+      "context_window": 32768,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "google/gemma-4-12b",
+      "display_name": "gemma-4-12b",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
         "audio"
       ],
       "output_modalities": [
@@ -81,563 +621,414 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_multimodal": true,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "google/gemma-4",
-        "google/gemma-4-e2b",
-        "google/gemma-4-e4b",
-        "google/gemma-4-12b",
-        "google/gemma-4-26b-a4b",
-        "google/gemma-4-31b",
-        "gemma-4-e2b",
-        "gemma-4-e4b",
-        "gemma-4-12b",
-        "gemma-4-26b-a4b",
-        "gemma-4-31b"
-      ],
-      "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "free"
-    },
-    {
-      "provider": "lmstudio",
-      "model_id": "nemotron-3",
-      "display_name": "NVIDIA Nemotron 3",
-      "context_window": 1000000,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "nvidia/nemotron-3",
-        "nvidia/nemotron-3-30b",
-        "nemotron-3-30b"
-      ],
-      "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "free"
-    },
-    {
-      "provider": "lmstudio",
-      "model_id": "lfm2-24b-a2b",
-      "display_name": "Liquid LFM2-24B-A2B",
-      "context_window": 32768,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "liquid/lfm2-24b-a2b"
-      ],
-      "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "license"
-    },
-    {
-      "provider": "lmstudio",
-      "model_id": "glm-4.7",
-      "display_name": "Zhipu GLM-4.7",
-      "context_window": 128000,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "zhipu/glm-4.7",
-        "glm-4.7-30b",
-        "zhipu/glm-4.7-30b"
-      ],
-      "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "free"
-    },
-    {
-      "provider": "lmstudio",
-      "model_id": "functiongemma",
-      "display_name": "Google FunctionGemma",
-      "context_window": 8192,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "google/functiongemma"
-      ],
-      "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "free"
-    },
-    {
-      "provider": "lmstudio",
-      "model_id": "glm-4.6v-flash",
-      "display_name": "Zhipu GLM-4.6V-Flash",
-      "context_window": 128000,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "zhipu/glm-4.6v-flash",
-        "glm-4.6v-flash-9b",
-        "zhipu/glm-4.6v-flash-9b"
-      ],
-      "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "free"
-    },
-    {
-      "provider": "lmstudio",
-      "model_id": "rnj-1",
-      "display_name": "Essential AI Rnj-1",
-      "context_window": 32768,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "essential/rnj-1",
-        "rnj-1-8b",
-        "essential/rnj-1-8b"
-      ],
-      "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "free"
-    },
-    {
-      "provider": "lmstudio",
-      "model_id": "olmo-3",
-      "display_name": "Ai2 Olmo 3",
-      "context_window": 131072,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "olmo3",
-        "ai2/olmo-3",
-        "olmo-3-7b",
-        "olmo-3-32b",
-        "olmo/olmo3",
-        "olmo/olmo-3-7b",
-        "olmo/olmo-3-32b",
-        "olmo/olmo-3"
-      ],
-      "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "free"
-    },
-    {
-      "provider": "lmstudio",
-      "model_id": "olmocr-2",
-      "display_name": "Allen AI olmOCR 2",
-      "context_window": 131072,
-      "max_output_tokens": 4096,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "olmocr2",
-        "allen/olmocr-2",
-        "allen/olmocr2"
-      ],
-      "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "free"
-    },
-    {
-      "provider": "lmstudio",
-      "model_id": "minimax-m2",
-      "display_name": "MiniMax M2",
-      "context_window": 1048576,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "minimax/m2",
-        "m2",
-        "minimax/minimax-m2"
-      ],
-      "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "free"
-    },
-    {
-      "provider": "lmstudio",
-      "model_id": "gpt-oss-safeguard",
-      "display_name": "OpenAI GPT-OSS Safeguard",
-      "context_window": 131072,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "openai/gpt-oss-safeguard",
-        "openai/gpt-oss-safeguard-20b",
-        "openai/gpt-oss-safeguard-120b"
-      ],
-      "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "free"
-    },
-    {
-      "provider": "lmstudio",
-      "model_id": "granite-4.0",
-      "display_name": "IBM Granite 4.0",
-      "context_window": 128000,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "ibm/granite-4.0",
-        "granite-4",
-        "granite-4-3b",
-        "granite-4-7b",
-        "granite-4-32b",
-        "ibm/granite-4",
-        "ibm/granite-4-3b",
-        "ibm/granite-4-7b",
-        "ibm/granite-4-32b"
-      ],
-      "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "free"
-    },
-    {
-      "provider": "lmstudio",
-      "model_id": "seed-oss",
-      "display_name": "ByteDance Seed-OSS",
-      "context_window": 131072,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "bytedance/seed-oss",
-        "seed-oss-36b",
-        "bytedance/seed-oss-36b"
-      ],
-      "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "license"
-    },
-    {
-      "provider": "lmstudio",
-      "model_id": "gpt-oss",
-      "display_name": "OpenAI GPT-OSS",
-      "context_window": 131072,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_reasoning_effort": true,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "openai/gpt-oss",
-        "openai/gpt-oss-20b",
-        "openai/gpt-oss-120b"
-      ],
-      "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "free",
-      "reasoning_effort_values": [
-        "none",
-        "low",
-        "medium",
-        "high"
-      ]
-    },
-    {
-      "provider": "lmstudio",
-      "model_id": "ernie-4.5",
-      "display_name": "Baidu Ernie 4.5",
-      "context_window": 128000,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "baidu/ernie-4.5",
-        "ernie-4.5-21b",
-        "baidu/ernie-4.5-21b"
-      ],
-      "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "license"
-    },
-    {
-      "provider": "lmstudio",
-      "model_id": "lfm2",
-      "display_name": "Liquid LFM2",
-      "context_window": 32768,
-      "max_output_tokens": 4096,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "liquid/lfm2",
-        "lfm2-350m",
-        "lfm2-700m",
-        "lfm2-1.2b",
-        "liquid/lfm2-350m",
-        "liquid/lfm2-700m",
-        "liquid/lfm2-1.2b"
-      ],
-      "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "license"
-    },
-    {
-      "provider": "lmstudio",
-      "model_id": "devstral",
-      "display_name": "Mistral Devstral",
-      "context_window": 128000,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "mistral/devstral",
-        "devstral-24b",
-        "mistral/devstral-24b"
-      ],
-      "supports_fim": true,
-      "supports_responses_api": false,
-      "license_type": "license"
-    },
-    {
-      "provider": "lmstudio",
-      "model_id": "gemma-3n",
-      "display_name": "Google Gemma 3n",
-      "context_window": 32768,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "google/gemma-3n",
-        "gemma-3n-4.5b",
-        "gemma-3n-6.9b",
-        "google/gemma-3n-4.5b",
-        "google/gemma-3n-6.9b"
-      ],
-      "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "free"
-    },
-    {
-      "provider": "lmstudio",
-      "model_id": "mistral-7b",
-      "display_name": "Mistral 7B",
-      "context_window": 32768,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "mistralai/mistral-7b",
-        "mistral-7b-instruct",
-        "mistral/mistral-7b-instruct",
-        "mistral/mistral-7b"
-      ],
-      "extra": {
-        "param_count": "7B"
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
       },
+      "aliases": [],
+      "deprecated": false,
       "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "free"
+      "license_type": "apache-2.0"
     },
     {
       "provider": "lmstudio",
-      "model_id": "deepseek-r1-distill",
-      "display_name": "DeepSeek R1 Distill (Qwen)",
-      "context_window": 131072,
-      "max_output_tokens": 65536,
+      "model_id": "google/gemma-4-12b-qat",
+      "display_name": "gemma-4-12b-qat",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "google/gemma-4-26b-a4b",
+      "display_name": "gemma-4-26b-a4b",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "google/gemma-4-26b-a4b-qat",
+      "display_name": "gemma-4-26b-a4b-qat",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "google/gemma-4-31b",
+      "display_name": "gemma-4-31b",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "google/gemma-4-31b-qat",
+      "display_name": "gemma-4-31b-qat",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "google/gemma-4-e2b",
+      "display_name": "gemma-4-e2b",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "google/gemma-4-e2b-qat",
+      "display_name": "gemma-4-e2b-qat",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "google/gemma-4-e4b",
+      "display_name": "gemma-4-e4b",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "google/gemma-4-e4b-qat",
+      "display_name": "gemma-4-e4b-qat",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "ibm/granite-4-h-micro",
+      "display_name": "granite-4-h-micro",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "ibm/granite-4-h-small",
+      "display_name": "granite-4-h-small",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "ibm/granite-4-h-tiny",
+      "display_name": "granite-4-h-tiny",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "ibm/granite-4-micro",
+      "display_name": "granite-4-micro",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "ibm/granite-4.1-30b",
+      "display_name": "granite-4.1-30b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
       "input_modalities": [
         "text"
       ],
@@ -649,104 +1040,22 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "deepseek-r1-distill-qwen",
-        "deepseek-r1-distill-7b",
-        "deepseek-r1-distill-8b",
-        "deepseek-r1-distill-14b",
-        "deepseek-r1-distill-32b",
-        "deepseek-r1-distill-70b",
-        "deepseek/deepseek-r1-distill-qwen",
-        "deepseek/deepseek-r1-distill-7b",
-        "deepseek/deepseek-r1-distill-8b",
-        "deepseek/deepseek-r1-distill-14b",
-        "deepseek/deepseek-r1-distill-32b",
-        "deepseek/deepseek-r1-distill-70b",
-        "deepseek/deepseek-r1-distill"
-      ],
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
       "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "free"
+      "license_type": "apache-2.0"
     },
     {
       "provider": "lmstudio",
-      "model_id": "gemma-3",
-      "display_name": "Google Gemma 3",
-      "context_window": 32768,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "google/gemma-3",
-        "gemma-3-270m",
-        "gemma-3-1b",
-        "gemma-3-4b",
-        "gemma-3-12b",
-        "gemma-3-27b",
-        "google/gemma-3-270m",
-        "google/gemma-3-1b",
-        "google/gemma-3-4b",
-        "google/gemma-3-12b",
-        "google/gemma-3-27b"
-      ],
-      "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "free"
-    },
-    {
-      "provider": "lmstudio",
-      "model_id": "qwen2.5-vl",
-      "display_name": "Qwen2.5-VL",
-      "context_window": 131072,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "qwen/qwen2.5-vl",
-        "qwen2.5-vl-3b",
-        "qwen2.5-vl-7b",
-        "qwen2.5-vl-32b",
-        "qwen2.5-vl-72b",
-        "qwen/qwen2.5-vl-3b",
-        "qwen/qwen2.5-vl-7b",
-        "qwen/qwen2.5-vl-32b",
-        "qwen/qwen2.5-vl-72b"
-      ],
-      "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "free"
-    },
-    {
-      "provider": "lmstudio",
-      "model_id": "granite-4.1-guardian",
-      "display_name": "IBM Granite Guardian 4.1",
-      "context_window": 128000,
+      "model_id": "ibm/granite-4.1-3b",
+      "display_name": "granite-4.1-3b",
+      "context_window": 4096,
       "max_output_tokens": 8192,
       "input_modalities": [
         "text"
@@ -759,105 +1068,22 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "ibm/granite-4.1-guardian",
-        "granite-4.1-guardian"
-      ],
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
       "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "free"
+      "license_type": "apache-2.0"
     },
     {
       "provider": "lmstudio",
-      "model_id": "medgemma-1.5",
-      "display_name": "Google MedGemma 1.5",
-      "context_window": 32768,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "google/medgemma-1.5",
-        "medgemma-1.5-4b"
-      ],
-      "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "free"
-    },
-    {
-      "provider": "lmstudio",
-      "model_id": "translategemma",
-      "display_name": "Google TranslateGemma",
-      "context_window": 32768,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "google/translategemma",
-        "translategemma-4b",
-        "translategemma-12b",
-        "translategemma-27b"
-      ],
-      "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "free"
-    },
-    {
-      "provider": "lmstudio",
-      "model_id": "glm-ocr",
-      "display_name": "Zhipu GLM-OCR",
-      "context_window": 131072,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "zhipu/glm-ocr"
-      ],
-      "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "free"
-    },
-    {
-      "provider": "lmstudio",
-      "model_id": "lfm2.5",
-      "display_name": "Liquid LFM2.5",
-      "context_window": 32768,
+      "model_id": "ibm/granite-4.1-8b",
+      "display_name": "granite-4.1-8b",
+      "context_window": 4096,
       "max_output_tokens": 8192,
       "input_modalities": [
         "text"
@@ -870,21 +1096,962 @@
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "liquid/lfm2.5",
-        "lfm2.5-8b-a1b"
-      ],
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
       "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "license"
+      "license_type": "apache-2.0"
     },
     {
       "provider": "lmstudio",
-      "model_id": "minicpm-v4.6",
-      "display_name": "MiniCPM-V 4.6",
-      "context_window": 32768,
+      "model_id": "liquid/lfm2-1.2b",
+      "display_name": "lfm2-1.2b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "liquid/lfm2-24b-a2b",
+      "display_name": "lfm2-24b-a2b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "liquid/lfm2-350m",
+      "display_name": "lfm2-350m",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "liquid/lfm2-700m",
+      "display_name": "lfm2-700m",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "microsoft/phi-4",
+      "display_name": "phi-4",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "mit"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "microsoft/phi-4-mini",
+      "display_name": "phi-4-mini",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "mit"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "microsoft/phi-4-mini-reasoning",
+      "display_name": "phi-4-mini-reasoning",
+      "context_window": 131072,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "mit"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "microsoft/phi-4-reasoning",
+      "display_name": "phi-4-reasoning",
+      "context_window": 131072,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "mit"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "microsoft/phi-4-reasoning-plus",
+      "display_name": "phi-4-reasoning-plus",
+      "context_window": 131072,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "mit"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "minimax/minimax-m2",
+      "display_name": "minimax-m2",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "mit"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "mistralai/codestral-22b-v0.1",
+      "display_name": "codestral-22b-v0.1",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "mistralai/devstral-2-2512",
+      "display_name": "devstral-2-2512",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "mistralai/devstral-small-2-2512",
+      "display_name": "devstral-small-2-2512",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "mistralai/devstral-small-2505",
+      "display_name": "devstral-small-2505",
+      "context_window": 131072,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "mistralai/devstral-small-2507",
+      "display_name": "devstral-small-2507",
+      "context_window": 131072,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "mistralai/magistral-small",
+      "display_name": "magistral-small",
+      "context_window": 131072,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "mistralai/magistral-small-2509",
+      "display_name": "magistral-small-2509",
+      "context_window": 131072,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "mistralai/ministral-3-14b",
+      "display_name": "ministral-3-14b",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "mistralai/ministral-3-14b-reasoning",
+      "display_name": "ministral-3-14b-reasoning",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "mistralai/ministral-3-3b",
+      "display_name": "ministral-3-3b",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "mistralai/ministral-3-3b-reasoning",
+      "display_name": "ministral-3-3b-reasoning",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "mistralai/ministral-3-8b",
+      "display_name": "ministral-3-8b",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "mistralai/ministral-3-8b-reasoning",
+      "display_name": "ministral-3-8b-reasoning",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "mistralai/mistral-7b-instruct-v0.3",
+      "display_name": "mistral-7b-instruct-v0.3",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "mistralai/mistral-nemo-instruct-2407",
+      "display_name": "mistral-nemo-instruct-2407",
+      "context_window": 131072,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "mistralai/mistral-small-3.2",
+      "display_name": "mistral-small-3.2",
+      "context_window": 131072,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "nvidia/nemotron-3-nano",
+      "display_name": "nemotron-3-nano",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "nvidia/nemotron-3-nano-omni",
+      "display_name": "nemotron-3-nano-omni",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "nvidia/nemotron-3-super",
+      "display_name": "nemotron-3-super",
+      "context_window": 1048576,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "openai/gpt-oss-120b",
+      "display_name": "gpt-oss-120b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "openai/gpt-oss-20b",
+      "display_name": "gpt-oss-20b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "openai/gpt-oss-safeguard-120b",
+      "display_name": "gpt-oss-safeguard-120b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "openai/gpt-oss-safeguard-20b",
+      "display_name": "gpt-oss-safeguard-20b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen2.5-vl-32b",
+      "display_name": "qwen2.5-vl-32b",
+      "context_window": 131072,
       "max_output_tokens": 8192,
       "input_modalities": [
         "text",
@@ -894,26 +2061,27 @@
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "openbmb/minicpm-v4.6",
-        "minicpm-v4.6-1b"
-      ],
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
       "supports_fim": false,
-      "supports_responses_api": false,
       "license_type": "free"
     },
     {
       "provider": "lmstudio",
-      "model_id": "minicpm-v4.5",
-      "display_name": "MiniCPM-V 4.5",
-      "context_window": 32768,
+      "model_id": "qwen/qwen2.5-vl-3b",
+      "display_name": "qwen2.5-vl-3b",
+      "context_window": 131072,
       "max_output_tokens": 8192,
       "input_modalities": [
         "text",
@@ -923,27 +2091,686 @@
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "openbmb/minicpm-v4.5",
-        "minicpm-v4.5-8b"
-      ],
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
       "supports_fim": false,
-      "supports_responses_api": false,
       "license_type": "free"
     },
     {
       "provider": "lmstudio",
-      "model_id": "minimax-m3",
-      "display_name": "MiniMax M3",
-      "context_window": 1000000,
-      "max_output_tokens": 65536,
+      "model_id": "qwen/qwen2.5-vl-72b",
+      "display_name": "qwen2.5-vl-72b",
+      "context_window": 131072,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen2.5-vl-7b",
+      "display_name": "qwen2.5-vl-7b",
+      "context_window": 131072,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3-14b",
+      "display_name": "qwen3-14b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3-235b-a22b",
+      "display_name": "qwen3-235b-a22b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3-235b-a22b-2507",
+      "display_name": "qwen3-235b-a22b-2507",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3-235b-a22b-thinking-2507",
+      "display_name": "qwen3-235b-a22b-thinking-2507",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3-30b-a3b",
+      "display_name": "qwen3-30b-a3b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3-30b-a3b-2507",
+      "display_name": "qwen3-30b-a3b-2507",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3-30b-a3b-thinking-2507",
+      "display_name": "qwen3-30b-a3b-thinking-2507",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3-32b",
+      "display_name": "qwen3-32b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3-4b",
+      "display_name": "qwen3-4b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3-4b-2507",
+      "display_name": "qwen3-4b-2507",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3-4b-thinking-2507",
+      "display_name": "qwen3-4b-thinking-2507",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3-8b",
+      "display_name": "qwen3-8b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3-coder-30b",
+      "display_name": "qwen3-coder-30b",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3-coder-480b",
+      "display_name": "qwen3-coder-480b",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3-coder-next",
+      "display_name": "qwen3-coder-next",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3-next-80b",
+      "display_name": "qwen3-next-80b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3-vl-2b",
+      "display_name": "qwen3-vl-2b",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3-vl-30b",
+      "display_name": "qwen3-vl-30b",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3-vl-32b",
+      "display_name": "qwen3-vl-32b",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3-vl-4b",
+      "display_name": "qwen3-vl-4b",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3-vl-8b",
+      "display_name": "qwen3-vl-8b",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "free"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3.5-27b",
+      "display_name": "qwen3.5-27b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
       "input_modalities": [
         "text",
         "image"
@@ -956,16 +2783,247 @@
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": null,
-      "aliases": [
-        "minimax/m3",
-        "minimax-m3",
-        "minimax/minimax-m3"
-      ],
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
       "supports_fim": false,
-      "supports_responses_api": false,
-      "license_type": "free"
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3.5-2b",
+      "display_name": "qwen3.5-2b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3.5-35b-a3b",
+      "display_name": "qwen3.5-35b-a3b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3.5-4b",
+      "display_name": "qwen3.5-4b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3.5-9b",
+      "display_name": "qwen3.5-9b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3.6-27b",
+      "display_name": "qwen3.6-27b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "qwen/qwen3.6-35b-a3b",
+      "display_name": "qwen3.6-35b-a3b",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "apache-2.0"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "zai-org/glm-4.6v-flash",
+      "display_name": "glm-4.6v-flash",
+      "context_window": 131072,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "mit"
+    },
+    {
+      "provider": "lmstudio",
+      "model_id": "zai-org/glm-4.7-flash",
+      "display_name": "glm-4.7-flash",
+      "context_window": 4096,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "2024-01-01",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "supports_fim": false,
+      "license_type": "mit"
     }
   ]
 }
