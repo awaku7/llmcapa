@@ -15,14 +15,15 @@ from __future__ import annotations
 
 import json
 import shutil
+import ssl
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-WORKDIR = Path(r"F:\KAIHATSU\llmcapa")
+WORKDIR = Path(r"C:\KAIHATSU\llmcapa")
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "openrouter.json"
-INSTALLED = Path(r"F:\Python314\Lib\site-packages\llmcapa\data\openrouter.json")
+INSTALLED = Path(r"C:\Users\ukawahrf\AppData\Local\Programs\Python\Python314\Lib\site-packages\llmcapa\data\openrouter.json")
 LOG = WORKDIR / "provider_update_log.md"
 SCRATCH = WORKDIR / "_scratch_openrouter_models.json"
 API_URL = "https://openrouter.ai/api/v1/models"
@@ -151,7 +152,8 @@ def fetch_models() -> list[dict]:
                 "Accept": "application/json",
             },
         )
-        with urllib.request.urlopen(req, timeout=90) as resp:
+        ctx = ssl._create_unverified_context()
+        with urllib.request.urlopen(req, timeout=90, context=ctx) as resp:
             data = json.load(resp)
         models = data.get("data") or data
         if not isinstance(models, list) or not models:

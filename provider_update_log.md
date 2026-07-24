@@ -622,3 +622,20 @@
 - OpenRouter: `moonshotai/kimi-k3` priced $3/$15
 - Install data copies under site-packages synced by provider update scripts
 - Timestamp: 2026-07-18 06:59 UTC
+
+## OpenRouter refresh (2026-07-24)
+
+### Source
+- API: `https://openrouter.ai/api/v1/models` (live → `_scratch_openrouter_models.json`)
+- Docs: https://openrouter.ai/docs
+- Apply: `scripts/_update_openrouter.py`
+
+### Result
+- openrouter.json: **343** models (active=343, deprecated=0, priced=320, free=18, dynamic=5, extra=343)
+- vision=181, reasoning=215, tools=272, cache_pricing=182
+- native providers: 53 (top: [('openai', 67), ('qwen', 47), ('google', 30), ('mistralai', 19), ('anthropic', 15), ('z-ai', 12), ('deepseek', 11), ('nvidia', 10), ('meta-llama', 8), ('minimax', 8)])
+- Pricing: API per-token ×1e6 → USD/1M; router prompt=-1 → catalog -1000000.0
+- Cache: input_cache_read/write(/1h) in extra when present
+- Synthetic `~*/…-latest` aliases retained (9)
+- Replaced thin 14-model placeholder catalog
+- Install copy synced
