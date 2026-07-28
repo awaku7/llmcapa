@@ -46,6 +46,8 @@ class Registry:
         "huggingface": ["hf"],
         "qwen": ["alibaba", "dashscope"],
         "lmstudio": ["lm-studio", "lm_studio"],
+        "together": ["together-ai", "togethercomputer"],
+        "vercel": ["vercel-ai-gateway", "vercel-gateway", "ai-gateway"],
     }
 
     @staticmethod

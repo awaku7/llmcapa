@@ -59,6 +59,7 @@ any SSR (Server-Side Rendering) limitations and known issues.
 | NVIDIA | API | None |
 | Novita | API | None |
 | Qwen | Web scraping | None |
+| Together AI | Web scraping | None |
 
 ---
 

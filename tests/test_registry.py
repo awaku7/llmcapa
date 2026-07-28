@@ -51,7 +51,7 @@ def test_no_duplicate_model_ids():
         # Aggregator/reseller files (novita, openrouter) may intentionally
         # overlap with native provider data; the registry uses
         # first-registered-wins for unqualified lookups.
-        if fname in ("novita.json", "openrouter.json", "azure_foundry.json", "lmstudio.json", "ollama.json", "huggingface.json", "sakura.json"):
+        if fname in ("novita.json", "openrouter.json", "azure_foundry.json", "lmstudio.json", "ollama.json", "huggingface.json", "sakura.json", "together.json", "vercel.json"):
             continue
         assert mid not in seen, f"duplicate model_id {mid} in {fname} and {seen[mid]}"
         seen[mid] = fname
@@ -98,7 +98,7 @@ def test_list_by_provider():
 def test_list_novita():
     models = llmcapa.list_models(provider="novita")
     assert all(c.provider.lower() == "novita" for c in models)
-    assert len(models) >= 100
+    assert len(models) >= 60
 
 
 def test_find():
@@ -308,3 +308,20 @@ def test_data_from_bundled_json_not_hardcoded() -> None:
     hf_models = reg.list_models(provider="huggingface")
     assert len(hf_models) > 1  # now contains real models from HF API
     assert any(m.model_id == "huggingface-default" for m in hf_models), "huggingface-default should be in HF models"
+
+
+
+def test_together_provider():
+    import llmcapa
+    # together が providers リストに含まれる
+    provs = llmcapa.providers()
+    assert "together" in provs, "together should be in providers list"
+
+    # プロバイダーエイリアスで検索
+    for alias in ("together", "together-ai", "togethercomputer"):
+        models = llmcapa.list_models(provider=alias)
+        assert all(c.provider == "together" for c in models)
+
+    # 全モデル数
+    all_models = llmcapa.list_models(provider="together")
+    assert len(all_models) >= 90, "should have 90+ together models"

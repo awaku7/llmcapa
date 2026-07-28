@@ -1,3 +1,19 @@
+## Together AI (2026-07-26)
+
+### Source
+- Official Together AI Docs: https://docs.together.ai/docs/serverless-models
+- Method: Playwright (headless browser) for JavaScript-rendered docs page
+- Categories: chat, image generation, video generation, audio, embedding
+
+### Models Updated
+98 models total (chat=21, image=29, video=38, audio=9, embedding=1)
+
+### Notes
+- Rebuilt from scratch (previously 0 models)
+- Covers all major model families available via Together API
+- No pricing data included (requires API key for pricing endpoint)
+- Install copy synced
+
 # Provider Update Log
 
 ## OpenAI (2026-06-15)
@@ -638,4 +654,93 @@
 - Cache: input_cache_read/write(/1h) in extra when present
 - Synthetic `~*/…-latest` aliases retained (9)
 - Replaced thin 14-model placeholder catalog
+- Install copy synced
+
+## Bulk Update via OpenRouter API (2026-07-26)
+
+### Source
+- OpenRouter API: https://openrouter.ai/api/v1/models
+- Method: fetch_openrouter(cache_ttl=0) via llmcapa
+
+### Models Updated
+- amazon: 19 models
+- anthropic: 30 models
+- deepseek: 9 models
+- google: 106 models
+- meta: 24 models
+- microsoft: 83 models
+- mistral: 63 models
+- moonshot: 11 models
+- novita: 65 models
+- nvidia: 118 models
+- openai: 109 models
+- openrouter: 16 models
+- qwen: 135 models
+- sakana: 2 models
+- xai: 7 models
+- xiaomi: 11 models
+
+### Notes
+- All provider data refreshed from OpenRouter API (accurate pricing, context windows, capabilities)
+- Provider parameter is now required for search() to avoid cross-provider ambiguity
+- Ollama data (1,638 models) preserved as local-only (not available via OpenRouter)
+- Japanese domestic providers (NTT, ELYZA, SoftBank, NEC, Fujitsu, PFN) preserved from previous bundled data
+- LMStudio catalog preserved from previous bundled data
+
+## Japanese (multi-vendor) refresh (2026-07-26)
+
+### Source
+- PLaMo API: https://plamo.preferredai.jp/api
+- PLaMo PR GA: https://www.preferred.jp/ja/news/pr20260622/
+- PLaMo blog: https://tech.preferred.jp/ja/blog/plamo-3-0-prime-release/
+- Cloud PF Type A: https://www.softbank.jp/biz/services/ai/cloud-pf-type-a/
+- Sarashina3 blog: https://www.sbintuitions.co.jp/blog/entry/2026/06/30/sarashina3-mini-nano/
+- tsuzumi 2: https://www.nttdata.com/jp/ja/lineup/tsuzumi/
+- Azure tsuzumi: https://marketplace.microsoft.com/en-us/product/1681106214127.nttdata-tsuzumi-2-instruct-offer
+- GENNAI / 7-model synthesis: https://ai-revolution.co.jp/media/japan-llm-7-comparison/
+- Scratch: `_scratch_jp_*.html`, `_scratch_jp_plamo_api3.html`
+- Apply: `scripts/_update_japanese.py`
+
+### Result
+- japanese.json: **14** models (active=11, deprecated=3, priced=3, extra=14)
+- Providers: {'pfn': 3, 'softbank': 6, 'ntt': 1, 'nec': 1, 'elyza': 1, 'fujitsu': 1, 'customer-cloud': 1}
+- PFN: plamo-3.0-prime GA 256K, Standard ¥60/¥250 (USD shell $0.4/$1.67); 2.0/2.2 deprecated
+- SoftBank: Sarashina3 mini/nano/guard/embedding/rerank on Cloud PF Type A (2026-06-30); sarashina2-mini deprecated
+- NTT tsuzumi-2: vision + Azure GPU-hour (~$0.76/h); secondary token $4/$1100
+- NEC cotomi-v3 / ELYZA 70B / Fujitsu Takane 32B / CC Gov-LLM: enterprise quote, 源内 selected
+- sakura kept separate (sakura.json) — next refresh
+- Install copy synced
+
+## Sakura (さくらのAI Engine) refresh (2026-07-26)
+
+### Source
+- Product: https://ai.sakura.ad.jp/sakura-ai/ai-engine/
+- Closed models manual: https://manual.sakura.ad.jp/cloud/ai-engine/06-closed-model.html
+- Playground: https://playground.aipf.sakura.ad.jp/
+- Scratch: `_scratch_sakura_ai_engine.html`
+- Apply: `scripts/_update_sakura.py`
+
+### Result
+- sakura.json: **26** models (active=26, deprecated=0, priced=14, extra=26)
+- Tiers: {'standard': 15, 'closed': 2, 'public_preview': 8, 'alias_default': 1}
+- Standard chat: gpt-oss-120b ¥0.15/0.75 per 10k (USD shell $0.10/$0.50); Qwen3-Coder 480B/30B; llm-jp-3.1
+- Preview: Kimi-K2.6 (Anthropic Messages), Qwen3.6-35B, gemma-4-31B-it (2026-06-30), Phi-4 mini/mm, Qwen3-VL, Qwen3-0.6B-cpu, Qwen3-Embedding-4B
+- Closed (application): PLaMo 2.0-31B, cotomi v3
+- Also: whisper, e5-large, VOICEVOX×8, RAG document meter
+- Free tier 3,000 chat req/mo; tax-included JPY official
+- Replaced placeholder sakura-default with full catalog (default alias → gpt-oss-120b)
+- Install copy synced
+
+## MiniMax refresh (2026-07-26)
+
+### Source
+- Models: https://platform.minimax.io/docs/guides/models-intro
+- PayGO: https://platform.minimax.io/docs/guides/pricing-paygo
+- Chat enum: https://platform.minimax.io/docs/api-reference/text-chat
+- Apply: `scripts/_update_minimax.py`
+
+### Result
+- minimax.json: **16** models (active=16, token-priced=10)
+- Text: MiniMax-M3 $0.30/$1.20 ≤512k (perm 50% off; >512k $0.60/$2.40); M2.7 $0.30/$1.20; highspeed $0.60/$2.40
+- Specialty: speech-2.8 (hd $100/M chars, turbo $60), Hailuo 2.3, music-3.0 $0.15/track, image-01 $0.0035
 - Install copy synced
