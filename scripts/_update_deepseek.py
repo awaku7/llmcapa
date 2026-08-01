@@ -46,6 +46,7 @@ def base(
     function_calling: bool = True,
     json_mode: bool = True,
     anthropic_api: bool = True,
+    responses_api: bool = False,
 ) -> dict:
     aliases = list(aliases or [])
     or_id = f"deepseek/{model_id}"
@@ -66,7 +67,7 @@ def base(
         "supports_vision": False,
         "supports_reasoning": reasoning,
         "supports_chat_completion": True,
-        "supports_responses_api": False,
+        "supports_responses_api": responses_api,
         "supports_reasoning_effort": effort,
         "supports_thinking_budget": False,
         "supports_anthropic_api": anthropic_api,
@@ -166,6 +167,7 @@ def build() -> list[dict]:
             effort=True,
             effort_values=["high", "max"],
             fim=True,
+            responses_api=True,
         )
     )
     models.append(

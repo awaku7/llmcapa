@@ -17,13 +17,13 @@ try:
         page = context.new_page()
         
         # Try xAI API docs
-        page.goto("https://docs.x.ai/docs/models", wait_until="networkidle", timeout=30000)
+        page.goto("https://docs.x.ai/docs/models", wait_until="domcontentloaded", timeout=30000)
         page.wait_for_timeout(3000)
         t = page.inner_text("body")
         
         if "blocked" in t.lower()[:500] or len(t) < 500:
             # Try console.x.ai pricing
-            page.goto("https://console.x.ai/", wait_until="networkidle", timeout=30000)
+            page.goto("https://console.x.ai/", wait_until="domcontentloaded", timeout=30000)
             page.wait_for_timeout(3000)
             t = page.inner_text("body")
         

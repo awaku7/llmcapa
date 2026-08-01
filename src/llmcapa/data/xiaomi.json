@@ -2,8 +2,8 @@
   "models": [
     {
       "provider": "xiaomi",
-      "model_id": "mimo-v2-flash",
-      "display_name": "Xiaomi MiMo-V2-Flash",
+      "model_id": "mimo-v2.5-pro",
+      "display_name": "Xiaomi MiMo-V2.5-Pro",
       "context_window": 1000000,
       "max_output_tokens": 128000,
       "input_modalities": [
@@ -12,11 +12,11 @@
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
-      "supports_reasoning": false,
+      "supports_reasoning": true,
       "supports_chat_completion": true,
       "supports_responses_api": true,
       "supports_reasoning_effort": false,
@@ -24,117 +24,45 @@
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
-      "license_type": "api",
       "tokenizer_name": "",
       "knowledge_cutoff": null,
-      "deprecated": true,
+      "deprecated": false,
       "aliases": [
-        "xiaomi/mimo-v2-flash",
-        "mimo/mimo-v2-flash"
-      ]
-    },
-    {
-      "provider": "xiaomi",
-      "model_id": "mimo-v2-omni",
-      "display_name": "Xiaomi MiMo-V2-Omni",
-      "context_window": 1000000,
-      "max_output_tokens": 128000,
-      "input_modalities": [
-        "text",
-        "image",
-        "audio",
-        "video"
+        "xiaomi/mimo-v2.5-pro",
+        "mimo/mimo-v2.5-pro"
       ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
       "license_type": "api",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": true,
-      "aliases": [
-        "xiaomi/mimo-v2-omni",
-        "mimo/mimo-v2-omni"
-      ]
-    },
-    {
-      "provider": "xiaomi",
-      "model_id": "mimo-v2-pro",
-      "display_name": "Xiaomi MiMo-V2-Pro",
-      "context_window": 1000000,
-      "max_output_tokens": 128000,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "api",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": true,
-      "aliases": [
-        "xiaomi/mimo-v2-pro",
-        "mimo/mimo-v2-pro"
-      ]
-    },
-    {
-      "provider": "xiaomi",
-      "model_id": "mimo-v2-tts",
-      "display_name": "Xiaomi MiMo-V2-TTS",
-      "context_window": 8192,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "speech",
-        "audio"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "api",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": true,
-      "aliases": [
-        "xiaomi/mimo-v2-tts",
-        "mimo/mimo-v2-tts"
-      ]
+      "extra": {
+        "source_pricing": "https://mimo.mi.com/docs/en-US/price/pay-as-you-go",
+        "source_models": "https://mimo.mi.com/docs/en-US/quick-start/summary/model",
+        "region": "overseas",
+        "cached_input_per_1m": 0.0036,
+        "cache_miss_input_per_1m": 0.435,
+        "cny_pricing": {
+          "cache_hit_per_1m": 0.025,
+          "cache_miss_per_1m": 3.0,
+          "output_per_1m": 6.0,
+          "currency": "CNY"
+        },
+        "rpm": 100,
+        "tpm": 10000000,
+        "capabilities": [
+          "text_generation",
+          "deep_thinking",
+          "streaming",
+          "function_call",
+          "structured_output",
+          "web_search"
+        ],
+        "web_search_overseas_per_1000": 5.0,
+        "web_search_cny_per_1000": 34.0,
+        "official_table": "cache_hit=$0.0036 cache_miss=$0.435 output=$0.87"
+      },
+      "pricing": {
+        "input_per_1m": 0.435,
+        "output_per_1m": 0.87,
+        "currency": "USD"
+      }
     },
     {
       "provider": "xiaomi",
@@ -163,95 +91,46 @@
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
-      "license_type": "api",
       "tokenizer_name": "",
       "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 0.14,
-        "output_per_1m": 0.28,
-        "currency": "USD"
-      },
       "deprecated": false,
       "aliases": [
         "xiaomi/mimo-v2.5",
         "mimo/mimo-v2.5"
-      ]
-    },
-    {
-      "provider": "xiaomi",
-      "model_id": "mimo-v2.5-asr",
-      "display_name": "Xiaomi MiMo-V2.5-ASR",
-      "context_window": 8192,
-      "max_output_tokens": 2000,
-      "input_modalities": [
-        "audio"
       ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
       "license_type": "api",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
+      "extra": {
+        "source_pricing": "https://mimo.mi.com/docs/en-US/price/pay-as-you-go",
+        "source_models": "https://mimo.mi.com/docs/en-US/quick-start/summary/model",
+        "region": "overseas",
+        "cached_input_per_1m": 0.0028,
+        "cache_miss_input_per_1m": 0.14,
+        "cny_pricing": {
+          "cache_hit_per_1m": 0.02,
+          "cache_miss_per_1m": 1.0,
+          "output_per_1m": 2.0,
+          "currency": "CNY"
+        },
+        "rpm": 100,
+        "tpm": 10000000,
+        "capabilities": [
+          "text_generation",
+          "full_modal_understanding",
+          "deep_thinking",
+          "streaming",
+          "function_call",
+          "structured_output",
+          "web_search"
+        ],
+        "web_search_overseas_per_1000": 5.0,
+        "web_search_cny_per_1000": 34.0,
+        "official_table": "cache_hit=$0.0028 cache_miss=$0.14 output=$0.28"
       },
-      "deprecated": false,
-      "aliases": [
-        "xiaomi/mimo-v2.5-asr",
-        "mimo/mimo-v2.5-asr"
-      ]
-    },
-    {
-      "provider": "xiaomi",
-      "model_id": "mimo-v2.5-pro",
-      "display_name": "Xiaomi MiMo-V2.5-Pro",
-      "context_window": 1000000,
-      "max_output_tokens": 128000,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "api",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.435,
-        "output_per_1m": 0.87,
+        "input_per_1m": 0.14,
+        "output_per_1m": 0.28,
         "currency": "USD"
-      },
-      "deprecated": false,
-      "aliases": [
-        "xiaomi/mimo-v2.5-pro",
-        "mimo/mimo-v2.5-pro"
-      ]
+      }
     },
     {
       "provider": "xiaomi",
@@ -277,19 +156,78 @@
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
-      "license_type": "api",
       "tokenizer_name": "",
       "knowledge_cutoff": "2024-12",
-      "pricing": {
-        "input_per_1m": 1.305,
-        "output_per_1m": 2.61,
-        "currency": "USD"
-      },
       "deprecated": false,
       "aliases": [
         "xiaomi/mimo-v2.5-pro-ultraspeed",
         "mimo/mimo-v2.5-pro-ultraspeed"
-      ]
+      ],
+      "license_type": "api",
+      "extra": {
+        "source_pricing": "https://mimo.mi.com/docs/en-US/price/pay-as-you-go",
+        "source_models": "https://mimo.mi.com/docs/en-US/quick-start/summary/model",
+        "status": "closed_beta",
+        "approx_output_tps": 1000,
+        "note": "Closed beta extended; deprecation dates announced per resource"
+      },
+      "pricing": {
+        "input_per_1m": 1.305,
+        "output_per_1m": 2.61,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "xiaomi",
+      "model_id": "mimo-v2.5-asr",
+      "display_name": "Xiaomi MiMo-V2.5-ASR",
+      "context_window": 8192,
+      "max_output_tokens": 2000,
+      "input_modalities": [
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "xiaomi/mimo-v2.5-asr",
+        "mimo/mimo-v2.5-asr"
+      ],
+      "license_type": "api",
+      "extra": {
+        "source_pricing": "https://mimo.mi.com/docs/en-US/price/pay-as-you-go",
+        "source_models": "https://mimo.mi.com/docs/en-US/quick-start/summary/model",
+        "region": "overseas",
+        "price_per_hour": 0.074,
+        "price_unit": "hour",
+        "cny_pricing": {
+          "per_hour": 0.5,
+          "currency": "CNY"
+        },
+        "rpm": 100,
+        "tpm": 10000,
+        "official_table": "overseas $0.074/h; mainland ¥0.5/h"
+      },
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      }
     },
     {
       "provider": "xiaomi",
@@ -316,19 +254,30 @@
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
-      "license_type": "free",
       "tokenizer_name": "",
       "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
       "deprecated": false,
       "aliases": [
         "xiaomi/mimo-v2.5-tts",
         "mimo/mimo-v2.5-tts"
-      ]
+      ],
+      "license_type": "free",
+      "extra": {
+        "source_pricing": "https://mimo.mi.com/docs/en-US/price/pay-as-you-go",
+        "source_models": "https://mimo.mi.com/docs/en-US/quick-start/summary/model",
+        "pricing_status": "free_limited_time",
+        "capabilities": [
+          "speech_synthesis"
+        ],
+        "rpm": 100,
+        "tpm": 10000000,
+        "note": "Official pay-as-you-go: free for a limited time (CN + overseas)"
+      },
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      }
     },
     {
       "provider": "xiaomi",
@@ -355,19 +304,31 @@
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
-      "license_type": "free",
       "tokenizer_name": "",
       "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
       "deprecated": false,
       "aliases": [
         "xiaomi/mimo-v2.5-tts-voiceclone",
         "mimo/mimo-v2.5-tts-voiceclone"
-      ]
+      ],
+      "license_type": "free",
+      "extra": {
+        "source_pricing": "https://mimo.mi.com/docs/en-US/price/pay-as-you-go",
+        "source_models": "https://mimo.mi.com/docs/en-US/quick-start/summary/model",
+        "pricing_status": "free_limited_time",
+        "capabilities": [
+          "speech_synthesis",
+          "timbre_cloning"
+        ],
+        "rpm": 100,
+        "tpm": 10000000,
+        "note": "Official pay-as-you-go: free for a limited time (CN + overseas)"
+      },
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      }
     },
     {
       "provider": "xiaomi",
@@ -394,19 +355,191 @@
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
-      "license_type": "free",
       "tokenizer_name": "",
       "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
       "deprecated": false,
       "aliases": [
         "xiaomi/mimo-v2.5-tts-voicedesign",
         "mimo/mimo-v2.5-tts-voicedesign"
-      ]
+      ],
+      "license_type": "free",
+      "extra": {
+        "source_pricing": "https://mimo.mi.com/docs/en-US/price/pay-as-you-go",
+        "source_models": "https://mimo.mi.com/docs/en-US/quick-start/summary/model",
+        "pricing_status": "free_limited_time",
+        "capabilities": [
+          "speech_synthesis",
+          "timbre_design"
+        ],
+        "rpm": 100,
+        "tpm": 10000000,
+        "note": "Official pay-as-you-go: free for a limited time (CN + overseas)"
+      },
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "xiaomi",
+      "model_id": "mimo-v2-pro",
+      "display_name": "Xiaomi MiMo-V2-Pro",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [
+        "xiaomi/mimo-v2-pro",
+        "mimo/mimo-v2-pro"
+      ],
+      "license_type": "api",
+      "extra": {
+        "source_pricing": "https://mimo.mi.com/docs/en-US/price/pay-as-you-go",
+        "source_models": "https://mimo.mi.com/docs/en-US/quick-start/summary/model",
+        "deprecated_on": "2026-06-30",
+        "migration": "mimo-v2.5 series"
+      }
+    },
+    {
+      "provider": "xiaomi",
+      "model_id": "mimo-v2-omni",
+      "display_name": "Xiaomi MiMo-V2-Omni",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [
+        "xiaomi/mimo-v2-omni",
+        "mimo/mimo-v2-omni"
+      ],
+      "license_type": "api",
+      "extra": {
+        "source_pricing": "https://mimo.mi.com/docs/en-US/price/pay-as-you-go",
+        "source_models": "https://mimo.mi.com/docs/en-US/quick-start/summary/model",
+        "deprecated_on": "2026-06-30",
+        "migration": "mimo-v2.5 series"
+      }
+    },
+    {
+      "provider": "xiaomi",
+      "model_id": "mimo-v2-flash",
+      "display_name": "Xiaomi MiMo-V2-Flash",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [
+        "xiaomi/mimo-v2-flash",
+        "mimo/mimo-v2-flash"
+      ],
+      "license_type": "api",
+      "extra": {
+        "source_pricing": "https://mimo.mi.com/docs/en-US/price/pay-as-you-go",
+        "source_models": "https://mimo.mi.com/docs/en-US/quick-start/summary/model",
+        "deprecated_on": "2026-06-30",
+        "migration": "mimo-v2.5 series"
+      }
+    },
+    {
+      "provider": "xiaomi",
+      "model_id": "mimo-v2-tts",
+      "display_name": "Xiaomi MiMo-V2-TTS",
+      "context_window": 8192,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "speech",
+        "audio"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [
+        "xiaomi/mimo-v2-tts",
+        "mimo/mimo-v2-tts"
+      ],
+      "license_type": "api",
+      "extra": {
+        "source_pricing": "https://mimo.mi.com/docs/en-US/price/pay-as-you-go",
+        "source_models": "https://mimo.mi.com/docs/en-US/quick-start/summary/model",
+        "deprecated_on": "2026-06-30",
+        "migration": "mimo-v2.5 series"
+      }
     }
   ]
 }

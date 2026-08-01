@@ -2,45 +2,8 @@
   "models": [
     {
       "provider": "novita",
-      "model_id": "Sao10K/L3-8B-Stheno-v3.2",
-      "display_name": "Novita AI: L3 8B Stheno V3.2",
-      "context_window": 8192,
-      "max_output_tokens": 32000,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "api",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 0.05,
-        "output_per_1m": 0.05,
-        "currency": "USD"
-      },
-      "deprecated": false,
-      "aliases": [
-        "l3-8b-stheno-v3.2"
-      ]
-    },
-    {
-      "provider": "novita",
       "model_id": "baichuan/baichuan-m2-32b",
-      "display_name": "Novita AI: BaiChuan M2 32B",
+      "display_name": "BaiChuan M2 32B",
       "context_window": 131072,
       "max_output_tokens": 131072,
       "input_modalities": [
@@ -65,8 +28,8 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.07,
-        "output_per_1m": 0.07,
+        "input_per_1m": 0.007,
+        "output_per_1m": 0.007,
         "currency": "USD"
       },
       "deprecated": false,
@@ -77,7 +40,7 @@
     {
       "provider": "novita",
       "model_id": "baidu/cobuddy",
-      "display_name": "Novita AI: CoBuddy",
+      "display_name": "CoBuddy",
       "context_window": 131072,
       "max_output_tokens": 65536,
       "input_modalities": [
@@ -102,10 +65,9 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.28,
-        "output_per_1m": 1.13,
-        "currency": "USD",
-        "input_cache_read_per_1m": 0.07
+        "input_per_1m": 0.028,
+        "output_per_1m": 0.113,
+        "currency": "USD"
       },
       "deprecated": false,
       "aliases": [
@@ -120,8 +82,45 @@
     },
     {
       "provider": "novita",
+      "model_id": "baidu/ernie-4.5-21B-a3b",
+      "display_name": "ERNIE 4.5 21B A3B",
+      "context_window": 120000,
+      "max_output_tokens": 8000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.007,
+        "output_per_1m": 0.028,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "baidu/ernie-4.5-21b-a3b"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
       "model_id": "baidu/ernie-4.5-21B-a3b-thinking",
-      "display_name": "Novita AI: ERNIE-4.5-21B-A3B-Thinking",
+      "display_name": "ERNIE-4.5-21B-A3B-Thinking",
       "context_window": 131072,
       "max_output_tokens": 65536,
       "input_modalities": [
@@ -146,11 +145,11 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.07,
-        "output_per_1m": 0.28,
+        "input_per_1m": 0.007,
+        "output_per_1m": 0.028,
         "currency": "USD"
       },
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "ernie-4.5-21b-a3b-thinking"
       ],
@@ -164,7 +163,7 @@
     {
       "provider": "novita",
       "model_id": "baidu/ernie-4.5-300b-a47b-paddle",
-      "display_name": "Novita AI: ERNIE 4.5 300B A47B",
+      "display_name": "ERNIE 4.5 300B A47B",
       "context_window": 123000,
       "max_output_tokens": 12000,
       "input_modalities": [
@@ -189,11 +188,11 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.28,
-        "output_per_1m": 1.1,
+        "input_per_1m": 0.028,
+        "output_per_1m": 0.11,
         "currency": "USD"
       },
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "ernie-4.5-300b-a47b-paddle"
       ]
@@ -201,7 +200,7 @@
     {
       "provider": "novita",
       "model_id": "baidu/ernie-4.5-vl-28b-a3b",
-      "display_name": "Novita AI: ERNIE 4.5 VL 28B A3B",
+      "display_name": "ERNIE 4.5 VL 28B A3B",
       "context_window": 30000,
       "max_output_tokens": 8000,
       "input_modalities": [
@@ -227,11 +226,11 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.14,
-        "output_per_1m": 0.56,
+        "input_per_1m": 0.014,
+        "output_per_1m": 0.056,
         "currency": "USD"
       },
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "ernie-4.5-vl-28b-a3b"
       ],
@@ -245,7 +244,7 @@
     {
       "provider": "novita",
       "model_id": "baidu/ernie-4.5-vl-28b-a3b-thinking",
-      "display_name": "Novita AI: ERNIE-4.5-VL-28B-A3B-Thinking",
+      "display_name": "ERNIE-4.5-VL-28B-A3B-Thinking",
       "context_window": 131072,
       "max_output_tokens": 65536,
       "input_modalities": [
@@ -272,11 +271,11 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.39,
-        "output_per_1m": 0.39,
+        "input_per_1m": 0.039,
+        "output_per_1m": 0.039,
         "currency": "USD"
       },
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "ernie-4.5-vl-28b-a3b-thinking"
       ],
@@ -290,7 +289,7 @@
     {
       "provider": "novita",
       "model_id": "baidu/ernie-4.5-vl-424b-a47b",
-      "display_name": "Novita AI: ERNIE 4.5 VL 424B A47B",
+      "display_name": "ERNIE 4.5 VL 424B A47B",
       "context_window": 123000,
       "max_output_tokens": 16000,
       "input_modalities": [
@@ -316,8 +315,8 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.42,
-        "output_per_1m": 1.25,
+        "input_per_1m": 0.042,
+        "output_per_1m": 0.125,
         "currency": "USD"
       },
       "deprecated": false,
@@ -371,7 +370,7 @@
     {
       "provider": "novita",
       "model_id": "deepseek/deepseek-ocr",
-      "display_name": "Novita AI: DeepSeek-OCR",
+      "display_name": "DeepSeek-OCR",
       "context_window": 8192,
       "max_output_tokens": 8192,
       "input_modalities": [
@@ -397,8 +396,8 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.03,
-        "output_per_1m": 0.03,
+        "input_per_1m": 0.003,
+        "output_per_1m": 0.003,
         "currency": "USD"
       },
       "deprecated": false,
@@ -409,7 +408,7 @@
     {
       "provider": "novita",
       "model_id": "deepseek/deepseek-ocr-2",
-      "display_name": "Novita AI: DeepSeek-OCR 2",
+      "display_name": "DeepSeek-OCR 2",
       "context_window": 8192,
       "max_output_tokens": 8192,
       "input_modalities": [
@@ -435,8 +434,8 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.03,
-        "output_per_1m": 0.03,
+        "input_per_1m": 0.003,
+        "output_per_1m": 0.003,
         "currency": "USD"
       },
       "deprecated": false,
@@ -447,7 +446,7 @@
     {
       "provider": "novita",
       "model_id": "deepseek/deepseek-prover-v2-671b",
-      "display_name": "Novita AI: Deepseek Prover V2 671B",
+      "display_name": "Deepseek Prover V2 671B",
       "context_window": 160000,
       "max_output_tokens": 160000,
       "input_modalities": [
@@ -472,19 +471,241 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.7,
-        "output_per_1m": 2.5,
+        "input_per_1m": 0.07,
+        "output_per_1m": 0.25,
         "currency": "USD"
       },
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "deepseek-prover-v2-671b"
       ]
     },
     {
       "provider": "novita",
+      "model_id": "deepseek/deepseek-r1",
+      "display_name": "DeepSeek R1",
+      "context_window": 64000,
+      "max_output_tokens": 16000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.7,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "deepseek/deepseek-r1"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "deepseek/deepseek-r1-0528",
+      "display_name": "DeepSeek R1 0528",
+      "context_window": 163840,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.7,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "deepseek/deepseek-r1-0528"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "deepseek/deepseek-r1-0528-qwen3-8b",
+      "display_name": "DeepSeek R1 0528 Qwen3 8B",
+      "context_window": 128000,
+      "max_output_tokens": 32000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.7,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "deepseek/deepseek-r1-0528-qwen3-8b"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "deepseek/deepseek-r1-distill-llama-70b",
+      "display_name": "DeepSeek R1 Distill LLama 70B",
+      "context_window": 8192,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.7,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "deepseek/deepseek-r1-distill-llama-70b"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "deepseek/deepseek-r1-distill-qwen-14b",
+      "display_name": "DeepSeek R1 Distill Qwen 14B",
+      "context_window": 32768,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.7,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      },
+      "deprecated": true,
+      "aliases": [
+        "deepseek/deepseek-r1-distill-qwen-14b"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "deepseek/deepseek-r1-distill-qwen-32b",
+      "display_name": "DeepSeek R1 Distill Qwen 32B",
+      "context_window": 64000,
+      "max_output_tokens": 32000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.7,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      },
+      "deprecated": true,
+      "aliases": [
+        "deepseek/deepseek-r1-distill-qwen-32b"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
       "model_id": "deepseek/deepseek-r1-turbo",
-      "display_name": "Novita AI: DeepSeek R1 (Turbo)\t",
+      "display_name": "DeepSeek R1 (Turbo)\t",
       "context_window": 64000,
       "max_output_tokens": 16000,
       "input_modalities": [
@@ -529,7 +750,7 @@
     {
       "provider": "novita",
       "model_id": "deepseek/deepseek-r1/community",
-      "display_name": "Novita AI: DeepSeek R1",
+      "display_name": "DeepSeek R1",
       "context_window": 64000,
       "max_output_tokens": 8000,
       "input_modalities": [
@@ -574,7 +795,7 @@
     {
       "provider": "novita",
       "model_id": "deepseek/deepseek-v3-0324",
-      "display_name": "Novita AI: DeepSeek V3 0324",
+      "display_name": "DeepSeek V3 0324",
       "context_window": 163840,
       "max_output_tokens": 65536,
       "input_modalities": [
@@ -611,7 +832,7 @@
     {
       "provider": "novita",
       "model_id": "deepseek/deepseek-v3-turbo",
-      "display_name": "Novita AI: DeepSeek V3 (Turbo)\t",
+      "display_name": "DeepSeek V3 (Turbo)\t",
       "context_window": 64000,
       "max_output_tokens": 16000,
       "input_modalities": [
@@ -647,8 +868,119 @@
     },
     {
       "provider": "novita",
+      "model_id": "deepseek/deepseek-v3.1",
+      "display_name": "DeepSeek V3.1",
+      "context_window": 131072,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.27,
+        "output_per_1m": 1.12,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "deepseek/deepseek-v3.1"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "deepseek/deepseek-v3.1-terminus",
+      "display_name": "Deepseek V3.1 Terminus",
+      "context_window": 131072,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.27,
+        "output_per_1m": 1.12,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "deepseek/deepseek-v3.1-terminus"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "deepseek/deepseek-v3.2",
+      "display_name": "Deepseek V3.2",
+      "context_window": 163840,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.269,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "deepseek/deepseek-v3.2"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
       "model_id": "deepseek/deepseek-v3.2-exp",
-      "display_name": "Novita AI: Deepseek V3.2 Exp",
+      "display_name": "Deepseek V3.2 Exp",
       "context_window": 163840,
       "max_output_tokens": 65536,
       "input_modalities": [
@@ -693,7 +1025,7 @@
     {
       "provider": "novita",
       "model_id": "deepseek/deepseek-v3/community",
-      "display_name": "Novita AI: DeepSeek V3",
+      "display_name": "DeepSeek V3",
       "context_window": 64000,
       "max_output_tokens": 8000,
       "input_modalities": [
@@ -729,8 +1061,119 @@
     },
     {
       "provider": "novita",
+      "model_id": "deepseek/deepseek-v4-flash",
+      "display_name": "Deepseek V4 Flash",
+      "context_window": 1048576,
+      "max_output_tokens": 393216,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.14,
+        "output_per_1m": 0.28,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "deepseek/deepseek-v4-flash"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "deepseek/deepseek-v4-flash-0731",
+      "display_name": "Deepseek V4 Flash0731",
+      "context_window": 1048576,
+      "max_output_tokens": 393216,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.14,
+        "output_per_1m": 0.28,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "deepseek/deepseek-v4-flash-0731"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "deepseek/deepseek-v4-pro",
+      "display_name": "Deepseek V4 Pro",
+      "context_window": 1048576,
+      "max_output_tokens": 393216,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 1.6,
+        "output_per_1m": 3.2,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "deepseek/deepseek-v4-pro"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
       "model_id": "deepseek/deepseek_v3",
-      "display_name": "Novita AI: DeepSeek V3",
+      "display_name": "DeepSeek V3",
       "context_window": 64000,
       "max_output_tokens": 16000,
       "input_modalities": [
@@ -755,8 +1198,8 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.89,
-        "output_per_1m": 0.89,
+        "input_per_1m": 0.089,
+        "output_per_1m": 0.089,
         "currency": "USD"
       },
       "deprecated": false,
@@ -840,8 +1283,160 @@
     },
     {
       "provider": "novita",
+      "model_id": "google/gemma-3-12b-it",
+      "display_name": "Gemma3 12B",
+      "context_window": 131072,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.005,
+        "output_per_1m": 0.01,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemma-3-12b-it"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "google/gemma-3-27b-it",
+      "display_name": "Gemma 3 27B",
+      "context_window": 98304,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.0119,
+        "output_per_1m": 0.02,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemma-3-27b-it"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "google/gemma-4-26b-a4b-it",
+      "display_name": "Gemma 4 26B A4B",
+      "context_window": 262144,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.13,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemma-4-26b-a4b-it"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "google/gemma-4-31b-it",
+      "display_name": "Gemma 4 31B",
+      "context_window": 262144,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.14,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "google/gemma-4-31b-it"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
       "model_id": "gryphe/mythomax-l2-13b",
-      "display_name": "Novita AI: Mythomax L2 13B",
+      "display_name": "Mythomax L2 13B",
       "context_window": 4096,
       "max_output_tokens": 3200,
       "input_modalities": [
@@ -866,8 +1461,8 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.09,
-        "output_per_1m": 0.09,
+        "input_per_1m": 0.009,
+        "output_per_1m": 0.009,
         "currency": "USD"
       },
       "deprecated": false,
@@ -878,7 +1473,7 @@
     {
       "provider": "novita",
       "model_id": "inclusionai/ling-2.6-1t",
-      "display_name": "Novita AI: Ling-2.6-1T",
+      "display_name": "Ling-2.6-1T",
       "context_window": 262144,
       "max_output_tokens": 32768,
       "input_modalities": [
@@ -903,10 +1498,9 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.3,
-        "output_per_1m": 2.5,
-        "currency": "USD",
-        "input_cache_read_per_1m": 0.06
+        "input_per_1m": 0.03,
+        "output_per_1m": 0.25,
+        "currency": "USD"
       },
       "deprecated": false,
       "aliases": [
@@ -916,7 +1510,7 @@
     {
       "provider": "novita",
       "model_id": "inclusionai/ling-2.6-flash",
-      "display_name": "Novita AI: Ling-2.6-flash",
+      "display_name": "Ling-2.6-flash",
       "context_window": 262144,
       "max_output_tokens": 32768,
       "input_modalities": [
@@ -941,10 +1535,9 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.1,
-        "output_per_1m": 0.3,
-        "currency": "USD",
-        "input_cache_read_per_1m": 0.02
+        "input_per_1m": 0.01,
+        "output_per_1m": 0.03,
+        "currency": "USD"
       },
       "deprecated": false,
       "aliases": [
@@ -953,8 +1546,45 @@
     },
     {
       "provider": "novita",
+      "model_id": "inclusionai/ling-3.0-flash",
+      "display_name": "Ling-3.0-flash",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "inclusionai/ling-3.0-flash"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
       "model_id": "inclusionai/ring-2.6-1t",
-      "display_name": "Novita AI: Ring-2.6-1T",
+      "display_name": "Ring-2.6-1T",
       "context_window": 262144,
       "max_output_tokens": 65536,
       "input_modalities": [
@@ -979,10 +1609,9 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.3,
-        "output_per_1m": 2.5,
-        "currency": "USD",
-        "input_cache_read_per_1m": 0.06
+        "input_per_1m": 0.03,
+        "output_per_1m": 0.25,
+        "currency": "USD"
       },
       "deprecated": false,
       "aliases": [
@@ -998,7 +1627,7 @@
     {
       "provider": "novita",
       "model_id": "kwaipilot/kat-coder-pro",
-      "display_name": "Novita AI: Kat Coder Pro",
+      "display_name": "Kat Coder Pro",
       "context_window": 256000,
       "max_output_tokens": 128000,
       "input_modalities": [
@@ -1023,10 +1652,9 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.3,
-        "output_per_1m": 1.2,
-        "currency": "USD",
-        "input_cache_read_per_1m": 0.06
+        "input_per_1m": 0.03,
+        "output_per_1m": 0.12,
+        "currency": "USD"
       },
       "deprecated": false,
       "aliases": [
@@ -1036,7 +1664,7 @@
     {
       "provider": "novita",
       "model_id": "meta-llama/llama-3-70b-instruct",
-      "display_name": "Novita AI: Llama3 70B Instruct",
+      "display_name": "Llama3 70B Instruct",
       "context_window": 8192,
       "max_output_tokens": 8000,
       "input_modalities": [
@@ -1061,11 +1689,11 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.51,
-        "output_per_1m": 0.74,
+        "input_per_1m": 0.051,
+        "output_per_1m": 0.074,
         "currency": "USD"
       },
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "llama-3-70b-instruct"
       ]
@@ -1073,7 +1701,7 @@
     {
       "provider": "novita",
       "model_id": "meta-llama/llama-3-8b-instruct",
-      "display_name": "Novita AI: Llama 3 8B Instruct",
+      "display_name": "Llama 3 8B Instruct",
       "context_window": 8192,
       "max_output_tokens": 8192,
       "input_modalities": [
@@ -1098,19 +1726,243 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.04,
-        "output_per_1m": 0.04,
+        "input_per_1m": 0.004,
+        "output_per_1m": 0.004,
         "currency": "USD"
       },
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "llama-3-8b-instruct"
       ]
     },
     {
       "provider": "novita",
+      "model_id": "meta-llama/llama-3.1-8b-instruct",
+      "display_name": "Llama 3.1 8B Instruct",
+      "context_window": 16384,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.02,
+        "output_per_1m": 0.05,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "meta-llama/llama-3.1-8b-instruct"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "meta-llama/llama-3.2-1b-instruct",
+      "display_name": "Llama 3.2 1B Instruct\t",
+      "context_window": 131000,
+      "max_output_tokens": 32000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.002,
+        "output_per_1m": 0.002,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "meta-llama/llama-3.2-1b-instruct"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "meta-llama/llama-3.2-3b-instruct",
+      "display_name": "Llama 3.2 3B Instruct",
+      "context_window": 32768,
+      "max_output_tokens": 32000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.003,
+        "output_per_1m": 0.005,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "meta-llama/llama-3.2-3b-instruct"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "meta-llama/llama-3.3-70b-instruct",
+      "display_name": "Llama 3.3 70B Instruct",
+      "context_window": 6000,
+      "max_output_tokens": 120000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.135,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "meta-llama/llama-3.3-70b-instruct"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "meta-llama/llama-4-maverick-17b-128e-instruct-fp8",
+      "display_name": "Llama 4 Maverick Instruct",
+      "context_window": 1048576,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.27,
+        "output_per_1m": 0.85,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "meta-llama/llama-4-maverick-17b-128e-instruct-fp8"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "meta-llama/llama-4-scout-17b-16e-instruct",
+      "display_name": "Llama 4 Scout Instruct",
+      "context_window": 131072,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.18,
+        "output_per_1m": 0.59,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "meta-llama/llama-4-scout-17b-16e-instruct"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
       "model_id": "microsoft/wizardlm-2-8x22b",
-      "display_name": "Novita AI: Wizardlm 2 8x22B",
+      "display_name": "Wizardlm 2 8x22B",
       "context_window": 65535,
       "max_output_tokens": 8000,
       "input_modalities": [
@@ -1135,8 +1987,8 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.62,
-        "output_per_1m": 0.62,
+        "input_per_1m": 0.062,
+        "output_per_1m": 0.062,
         "currency": "USD"
       },
       "deprecated": false,
@@ -1146,10 +1998,84 @@
     },
     {
       "provider": "novita",
+      "model_id": "mindai/macaron-v1-tall",
+      "display_name": "Macaron V1 Tall",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "mindai/macaron-v1-tall"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "mindai/macaron-v1-venti",
+      "display_name": "Macaron V1 Venti",
+      "context_window": 1048576,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "mindai/macaron-v1-venti"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
       "model_id": "minimax/m2-her",
-      "display_name": "Novita AI: M2-her",
+      "display_name": "M2-her",
       "context_window": 32000,
-      "max_output_tokens": 0,
+      "max_output_tokens": 2048,
       "input_modalities": [
         "text"
       ],
@@ -1183,8 +2109,119 @@
     },
     {
       "provider": "novita",
+      "model_id": "minimax/minimax-m2",
+      "display_name": "MiniMax-M2",
+      "context_window": 204800,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.03,
+        "output_per_1m": 0.12,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "minimax/minimax-m2"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "minimax/minimax-m2.1",
+      "display_name": "Minimax M2.1",
+      "context_window": 204800,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.03,
+        "output_per_1m": 0.12,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "minimax/minimax-m2.1"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "minimax/minimax-m2.5",
+      "display_name": "MiniMax M2.5",
+      "context_window": 204800,
+      "max_output_tokens": 131100,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.3,
+        "output_per_1m": 1.2,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "minimax/minimax-m2.5"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
       "model_id": "minimax/minimax-m2.5-highspeed",
-      "display_name": "Novita AI: MiniMax M2.5-highspeed",
+      "display_name": "MiniMax M2.5-highspeed",
       "context_window": 204800,
       "max_output_tokens": 131100,
       "input_modalities": [
@@ -1225,8 +2262,121 @@
     },
     {
       "provider": "novita",
+      "model_id": "minimax/minimax-m2.7",
+      "display_name": "MiniMax M2.7",
+      "context_window": 204800,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.3,
+        "output_per_1m": 1.2,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "minimax/minimax-m2.7"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "minimax/minimax-m2.7-highspeed",
+      "display_name": "MiniMax M2.7-highspeed",
+      "context_window": 204800,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.3,
+        "output_per_1m": 1.2,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "minimax/minimax-m2.7-highspeed"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "minimax/minimax-m3",
+      "display_name": "MiniMax M3",
+      "context_window": 1000000,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.3,
+        "output_per_1m": 1.2,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "minimax/minimax-m3"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
       "model_id": "minimaxai/minimax-m1-80k",
-      "display_name": "Novita AI: MiniMax M1",
+      "display_name": "MiniMax M1",
       "context_window": 1000000,
       "max_output_tokens": 40000,
       "input_modalities": [
@@ -1251,8 +2401,8 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.55,
-        "output_per_1m": 2.2,
+        "input_per_1m": 0.055,
+        "output_per_1m": 0.22,
         "currency": "USD"
       },
       "deprecated": false,
@@ -1293,8 +2443,8 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.004,
-        "output_per_1m": 0.017,
+        "input_per_1m": 0.04,
+        "output_per_1m": 0.17,
         "currency": "USD"
       },
       "deprecated": false,
@@ -1304,8 +2454,275 @@
     },
     {
       "provider": "novita",
+      "model_id": "moonshotai/kimi-k2-0905",
+      "display_name": "Kimi K2 0905",
+      "context_window": 262144,
+      "max_output_tokens": 100352,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.06,
+        "output_per_1m": 0.25,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "moonshotai/kimi-k2-0905"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "moonshotai/kimi-k2-instruct",
+      "display_name": "Kimi K2 Instruct",
+      "context_window": 131072,
+      "max_output_tokens": 100352,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.057,
+        "output_per_1m": 0.23,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "moonshotai/kimi-k2-instruct"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "moonshotai/kimi-k2-thinking",
+      "display_name": "Kimi K2 Thinking",
+      "context_window": 262144,
+      "max_output_tokens": 100352,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.06,
+        "output_per_1m": 0.25,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "moonshotai/kimi-k2-thinking"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "moonshotai/kimi-k2.5",
+      "display_name": "Kimi K2.5",
+      "context_window": 262144,
+      "max_output_tokens": 262144,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.6,
+        "output_per_1m": 3.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "moonshotai/kimi-k2.5"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "moonshotai/kimi-k2.6",
+      "display_name": "Kimi K2.6",
+      "context_window": 262144,
+      "max_output_tokens": 262144,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.8,
+        "output_per_1m": 3.4,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "moonshotai/kimi-k2.6"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "moonshotai/kimi-k2.7-code",
+      "display_name": "Kimi K2.7 Code",
+      "context_window": 262144,
+      "max_output_tokens": 262144,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.95,
+        "output_per_1m": 4.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "moonshotai/kimi-k2.7-code"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "moonshotai/kimi-k3",
+      "display_name": "Kimi K3",
+      "context_window": 1048576,
+      "max_output_tokens": 1048576,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.3,
+        "output_per_1m": 1.5,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "moonshotai/kimi-k3"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
       "model_id": "nex-agi/nex-n2-pro",
-      "display_name": "Novita AI: Nex-N2-Pro",
+      "display_name": "Nex-N2-Pro",
       "context_window": 262144,
       "max_output_tokens": 262144,
       "input_modalities": [
@@ -1335,7 +2752,7 @@
         "output_per_1m": 0.0,
         "currency": "USD"
       },
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "nex-n2-pro"
       ],
@@ -1349,7 +2766,7 @@
     {
       "provider": "novita",
       "model_id": "nousresearch/hermes-2-pro-llama-3-8b",
-      "display_name": "Novita AI: Hermes 2 Pro Llama 3 8B",
+      "display_name": "Hermes 2 Pro Llama 3 8B",
       "context_window": 8192,
       "max_output_tokens": 8192,
       "input_modalities": [
@@ -1374,8 +2791,8 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.14,
-        "output_per_1m": 0.14,
+        "input_per_1m": 0.014,
+        "output_per_1m": 0.014,
         "currency": "USD"
       },
       "deprecated": false,
@@ -1386,7 +2803,7 @@
     {
       "provider": "novita",
       "model_id": "nousresearch/nous-hermes-llama2-13b",
-      "display_name": "Novita AI: Nous Hermes Llama2 13B",
+      "display_name": "Nous Hermes Llama2 13B",
       "context_window": 4096,
       "max_output_tokens": 32768,
       "input_modalities": [
@@ -1411,19 +2828,132 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.17,
-        "output_per_1m": 0.17,
+        "input_per_1m": 0.017,
+        "output_per_1m": 0.017,
         "currency": "USD"
       },
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "nous-hermes-llama2-13b"
       ]
     },
     {
       "provider": "novita",
+      "model_id": "nvidia/nemotron-3-nano-30b-a3b",
+      "display_name": "Nemotron 3 Nano 30B A3B",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.005,
+        "output_per_1m": 0.02,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "nvidia/nemotron-3-nano-30b-a3b"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "openai/gpt-oss-120b",
+      "display_name": "OpenAI GPT OSS 120B",
+      "context_window": 131072,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.005,
+        "output_per_1m": 0.025,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "openai/gpt-oss-120b"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "openai/gpt-oss-20b",
+      "display_name": "OpenAI: GPT OSS 20B",
+      "context_window": 131072,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.004,
+        "output_per_1m": 0.015,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "openai/gpt-oss-20b"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
       "model_id": "openchat/openchat-7b",
-      "display_name": "Novita AI: OpenChat 7B",
+      "display_name": "OpenChat 7B",
       "context_window": 4096,
       "max_output_tokens": 4096,
       "input_modalities": [
@@ -1448,19 +2978,57 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.06,
-        "output_per_1m": 0.06,
+        "input_per_1m": 0.006,
+        "output_per_1m": 0.006,
         "currency": "USD"
       },
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "openchat-7b"
       ]
     },
     {
       "provider": "novita",
+      "model_id": "paddlepaddle/paddleocr-vl",
+      "display_name": "PaddleOCR-VL",
+      "context_window": 16384,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.002,
+        "output_per_1m": 0.002,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "paddlepaddle/paddleocr-vl"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
       "model_id": "qwen/qwen-2-7b-instruct",
-      "display_name": "Novita AI: Qwen 2 7B Instruct",
+      "display_name": "Qwen 2 7B Instruct",
       "context_window": 32768,
       "max_output_tokens": 32768,
       "input_modalities": [
@@ -1485,11 +3053,11 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.054,
-        "output_per_1m": 0.054,
+        "input_per_1m": 0.0054,
+        "output_per_1m": 0.0054,
         "currency": "USD"
       },
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "qwen-2-7b-instruct"
       ]
@@ -1497,7 +3065,7 @@
     {
       "provider": "novita",
       "model_id": "qwen/qwen-2-vl-72b-instruct",
-      "display_name": "Novita AI: Qwen 2 VL 72B Instruct",
+      "display_name": "Qwen 2 VL 72B Instruct",
       "context_window": 32768,
       "max_output_tokens": 120000,
       "input_modalities": [
@@ -1522,19 +3090,56 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.45,
-        "output_per_1m": 0.45,
+        "input_per_1m": 0.045,
+        "output_per_1m": 0.045,
         "currency": "USD"
       },
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "qwen-2-vl-72b-instruct"
       ]
     },
     {
       "provider": "novita",
+      "model_id": "qwen/qwen-2.5-72b-instruct",
+      "display_name": "Qwen 2.5 72B Instruct",
+      "context_window": 32000,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.038,
+        "output_per_1m": 0.04,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "qwen/qwen-2.5-72b-instruct"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
       "model_id": "qwen/qwen-mt-plus",
-      "display_name": "Novita AI: Qwen MT Plus",
+      "display_name": "Qwen MT Plus",
       "context_window": 16384,
       "max_output_tokens": 8192,
       "input_modalities": [
@@ -1559,8 +3164,8 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.25,
-        "output_per_1m": 0.75,
+        "input_per_1m": 0.025,
+        "output_per_1m": 0.075,
         "currency": "USD"
       },
       "deprecated": false,
@@ -1570,8 +3175,121 @@
     },
     {
       "provider": "novita",
+      "model_id": "qwen/qwen2.5-7b-instruct",
+      "display_name": "Qwen2.5 7B Instruct",
+      "context_window": 32000,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.007,
+        "output_per_1m": 0.007,
+        "currency": "USD"
+      },
+      "deprecated": true,
+      "aliases": [
+        "qwen/qwen2.5-7b-instruct"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "qwen/qwen2.5-vl-72b-instruct",
+      "display_name": "Qwen2.5 VL 72B Instruct",
+      "context_window": 32768,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.08,
+        "output_per_1m": 0.08,
+        "currency": "USD"
+      },
+      "deprecated": true,
+      "aliases": [
+        "qwen/qwen2.5-vl-72b-instruct"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "qwen/qwen3-235b-a22b-fp8",
+      "display_name": "Qwen3 235B A22B",
+      "context_window": 40960,
+      "max_output_tokens": 20000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.09,
+        "output_per_1m": 0.58,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "qwen/qwen3-235b-a22b-fp8"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
       "model_id": "qwen/qwen3-235b-a22b-instruct-2507",
-      "display_name": "Novita AI: Qwen3 235B A22B Instruct 2507",
+      "display_name": "Qwen3 235B A22B Instruct 2507",
       "context_window": 131072,
       "max_output_tokens": 16384,
       "input_modalities": [
@@ -1607,8 +3325,82 @@
     },
     {
       "provider": "novita",
+      "model_id": "qwen/qwen3-235b-a22b-thinking-2507",
+      "display_name": "Qwen3 235B A22b Thinking 2507",
+      "context_window": 131072,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.09,
+        "output_per_1m": 0.58,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "qwen/qwen3-235b-a22b-thinking-2507"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "qwen/qwen3-30b-a3b-fp8",
+      "display_name": "Qwen3 30B A3B",
+      "context_window": 40960,
+      "max_output_tokens": 20000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.009,
+        "output_per_1m": 0.045,
+        "currency": "USD"
+      },
+      "deprecated": true,
+      "aliases": [
+        "qwen/qwen3-30b-a3b-fp8"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
       "model_id": "qwen/qwen3-32b-fp8",
-      "display_name": "Novita AI: Qwen3 32B",
+      "display_name": "Qwen3 32B",
       "context_window": 40960,
       "max_output_tokens": 20000,
       "input_modalities": [
@@ -1633,11 +3425,11 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.1,
-        "output_per_1m": 0.45,
+        "input_per_1m": 0.01,
+        "output_per_1m": 0.045,
         "currency": "USD"
       },
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "qwen3-32b-fp8"
       ],
@@ -1650,8 +3442,119 @@
     },
     {
       "provider": "novita",
+      "model_id": "qwen/qwen3-4b-fp8",
+      "display_name": "Qwen3 4B",
+      "context_window": 128000,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.003,
+        "output_per_1m": 0.003,
+        "currency": "USD"
+      },
+      "deprecated": true,
+      "aliases": [
+        "qwen/qwen3-4b-fp8"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "qwen/qwen3-8b-fp8",
+      "display_name": "Qwen3 8B",
+      "context_window": 128000,
+      "max_output_tokens": 20000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.0035,
+        "output_per_1m": 0.0138,
+        "currency": "USD"
+      },
+      "deprecated": true,
+      "aliases": [
+        "qwen/qwen3-8b-fp8"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "qwen/qwen3-coder-30b-a3b-instruct",
+      "display_name": "Qwen3 Coder 30b A3B Instruct",
+      "context_window": 160000,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.07,
+        "output_per_1m": 0.27,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "qwen/qwen3-coder-30b-a3b-instruct"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
       "model_id": "qwen/qwen3-coder-480b-a35b-instruct",
-      "display_name": "Novita AI: Qwen3 Coder 480B A35B Instruct",
+      "display_name": "Qwen3 Coder 480B A35B Instruct",
       "context_window": 262144,
       "max_output_tokens": 65536,
       "input_modalities": [
@@ -1687,8 +3590,156 @@
     },
     {
       "provider": "novita",
+      "model_id": "qwen/qwen3-coder-next",
+      "display_name": "Qwen3 Coder Next",
+      "context_window": 262144,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.2,
+        "output_per_1m": 1.5,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "qwen/qwen3-coder-next"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "qwen/qwen3-max",
+      "display_name": "Qwen3 Max",
+      "context_window": 262144,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.211,
+        "output_per_1m": 0.845,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "qwen/qwen3-max"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "qwen/qwen3-next-80b-a3b-instruct",
+      "display_name": "Qwen3 Next 80B A3B Instruct",
+      "context_window": 131072,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.15,
+        "output_per_1m": 1.5,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "qwen/qwen3-next-80b-a3b-instruct"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "qwen/qwen3-next-80b-a3b-thinking",
+      "display_name": "Qwen3 Next 80B A3B Thinking",
+      "context_window": 131072,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.15,
+        "output_per_1m": 1.5,
+        "currency": "USD"
+      },
+      "deprecated": true,
+      "aliases": [
+        "qwen/qwen3-next-80b-a3b-thinking"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
       "model_id": "qwen/qwen3-omni-30b-a3b-instruct",
-      "display_name": "Novita AI: Qwen3 Omni 30B A3B Instruct",
+      "display_name": "Qwen3 Omni 30B A3B Instruct",
       "context_window": 65536,
       "max_output_tokens": 16384,
       "input_modalities": [
@@ -1717,8 +3768,8 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.25,
-        "output_per_1m": 0.97,
+        "input_per_1m": 0.025,
+        "output_per_1m": 0.097,
         "currency": "USD"
       },
       "deprecated": false,
@@ -1729,7 +3780,7 @@
     {
       "provider": "novita",
       "model_id": "qwen/qwen3-omni-30b-a3b-thinking",
-      "display_name": "Novita AI: Qwen3 Omni 30B A3B Thinking",
+      "display_name": "Qwen3 Omni 30B A3B Thinking",
       "context_window": 65536,
       "max_output_tokens": 16384,
       "input_modalities": [
@@ -1757,8 +3808,8 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.25,
-        "output_per_1m": 0.97,
+        "input_per_1m": 0.025,
+        "output_per_1m": 0.097,
         "currency": "USD"
       },
       "deprecated": false,
@@ -1774,8 +3825,359 @@
     },
     {
       "provider": "novita",
+      "model_id": "qwen/qwen3-vl-235b-a22b-instruct",
+      "display_name": "Qwen3 VL 235B A22B Instruct",
+      "context_window": 131072,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.98,
+        "output_per_1m": 3.95,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "qwen/qwen3-vl-235b-a22b-instruct"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "qwen/qwen3-vl-235b-a22b-thinking",
+      "display_name": "Qwen3 VL 235B A22B Thinking",
+      "context_window": 131072,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.98,
+        "output_per_1m": 3.95,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "qwen/qwen3-vl-235b-a22b-thinking"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "qwen/qwen3-vl-30b-a3b-instruct",
+      "display_name": "qwen/qwen3-vl-30b-a3b-instruct",
+      "context_window": 131072,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text",
+        "video",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.02,
+        "output_per_1m": 0.07,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "qwen/qwen3-vl-30b-a3b-instruct"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "qwen/qwen3-vl-30b-a3b-thinking",
+      "display_name": "qwen/qwen3-vl-30b-a3b-thinking",
+      "context_window": 131072,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.02,
+        "output_per_1m": 0.1,
+        "currency": "USD"
+      },
+      "deprecated": true,
+      "aliases": [
+        "qwen/qwen3-vl-30b-a3b-thinking"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "qwen/qwen3-vl-8b-instruct",
+      "display_name": "qwen/qwen3-vl-8b-instruct",
+      "context_window": 131072,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.008,
+        "output_per_1m": 0.05,
+        "currency": "USD"
+      },
+      "deprecated": true,
+      "aliases": [
+        "qwen/qwen3-vl-8b-instruct"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "qwen/qwen3.5-122b-a10b",
+      "display_name": "Qwen3.5-122B-A10B",
+      "context_window": 262144,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.4,
+        "output_per_1m": 3.2,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "qwen/qwen3.5-122b-a10b"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "qwen/qwen3.5-27b",
+      "display_name": "Qwen3.5-27B",
+      "context_window": 262144,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.3,
+        "output_per_1m": 2.4,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "qwen/qwen3.5-27b"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "qwen/qwen3.5-35b-a3b",
+      "display_name": "Qwen3.5-35B-A3B",
+      "context_window": 262144,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.25,
+        "output_per_1m": 2.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "qwen/qwen3.5-35b-a3b"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "qwen/qwen3.5-397b-a17b",
+      "display_name": "Qwen3.5-397B-A17B",
+      "context_window": 262144,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.6,
+        "output_per_1m": 3.6,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "qwen/qwen3.5-397b-a17b"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
       "model_id": "qwen/qwen3.5-plus",
-      "display_name": "Novita AI: Qwen3.5-Plus",
+      "display_name": "Qwen3.5-Plus",
       "context_window": 1000000,
       "max_output_tokens": 65536,
       "input_modalities": [
@@ -1819,8 +4221,162 @@
     },
     {
       "provider": "novita",
+      "model_id": "qwen/qwen3.6-27b",
+      "display_name": "Qwen3.6-27B",
+      "context_window": 262144,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.6,
+        "output_per_1m": 3.6,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "qwen/qwen3.6-27b"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "qwen/qwen3.6-35b-a3b",
+      "display_name": "Qwen3.6-35B-A3B",
+      "context_window": 262144,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.0248,
+        "output_per_1m": 0.1485,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "qwen/qwen3.6-35b-a3b"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "qwen/qwen3.6-plus",
+      "display_name": "Qwen3.6-Plus",
+      "context_window": 1000000,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "qwen/qwen3.6-plus"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "qwen/qwen3.7-max",
+      "display_name": "Qwen3.7-Max",
+      "context_window": 1000000,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 1.25,
+        "output_per_1m": 3.75,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "qwen/qwen3.7-max"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
       "model_id": "sao10k/l3-70b-euryale-v2.1",
-      "display_name": "Novita AI: L3 70B Euryale V2.1\t",
+      "display_name": "L3 70B Euryale V2.1\t",
       "context_window": 8192,
       "max_output_tokens": 8192,
       "input_modalities": [
@@ -1845,8 +4401,8 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 1.48,
-        "output_per_1m": 1.48,
+        "input_per_1m": 0.148,
+        "output_per_1m": 0.148,
         "currency": "USD"
       },
       "deprecated": false,
@@ -1857,7 +4413,7 @@
     {
       "provider": "novita",
       "model_id": "sao10k/l3-8b-lunaris",
-      "display_name": "Novita AI: Sao10k L3 8B Lunaris\t",
+      "display_name": "Sao10k L3 8B Lunaris\t",
       "context_window": 8192,
       "max_output_tokens": 8192,
       "input_modalities": [
@@ -1882,8 +4438,8 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.05,
-        "output_per_1m": 0.05,
+        "input_per_1m": 0.005,
+        "output_per_1m": 0.005,
         "currency": "USD"
       },
       "deprecated": false,
@@ -1893,8 +4449,45 @@
     },
     {
       "provider": "novita",
+      "model_id": "Sao10K/L3-8B-Stheno-v3.2",
+      "display_name": "L3 8B Stheno V3.2",
+      "context_window": 8192,
+      "max_output_tokens": 32000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.005,
+        "output_per_1m": 0.005,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "l3-8b-stheno-v3.2"
+      ]
+    },
+    {
+      "provider": "novita",
       "model_id": "sao10k/l31-70b-euryale-v2.2",
-      "display_name": "Novita AI: L31 70B Euryale V2.2",
+      "display_name": "L31 70B Euryale V2.2",
       "context_window": 8192,
       "max_output_tokens": 8192,
       "input_modalities": [
@@ -1919,8 +4512,8 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 1.48,
-        "output_per_1m": 1.48,
+        "input_per_1m": 0.148,
+        "output_per_1m": 0.148,
         "currency": "USD"
       },
       "deprecated": false,
@@ -1937,7 +4530,7 @@
     {
       "provider": "novita",
       "model_id": "stepfun/step-3.7-flash",
-      "display_name": "Novita AI: Step 3.7 Flash",
+      "display_name": "Step 3.7 Flash",
       "context_window": 262144,
       "max_output_tokens": 256000,
       "input_modalities": [
@@ -1964,10 +4557,9 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.2,
-        "output_per_1m": 1.15,
-        "currency": "USD",
-        "input_cache_read_per_1m": 0.04
+        "input_per_1m": 0.02,
+        "output_per_1m": 0.115,
+        "currency": "USD"
       },
       "deprecated": false,
       "aliases": [
@@ -1983,7 +4575,7 @@
     {
       "provider": "novita",
       "model_id": "teknium/openhermes-2.5-mistral-7b",
-      "display_name": "Novita AI: Openhermes2.5 Mistral 7B",
+      "display_name": "Openhermes2.5 Mistral 7B",
       "context_window": 4096,
       "max_output_tokens": 8000,
       "input_modalities": [
@@ -2008,11 +4600,11 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.17,
-        "output_per_1m": 0.17,
+        "input_per_1m": 0.017,
+        "output_per_1m": 0.017,
         "currency": "USD"
       },
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "openhermes-2.5-mistral-7b"
       ]
@@ -2020,7 +4612,7 @@
     {
       "provider": "novita",
       "model_id": "tencent/hy3",
-      "display_name": "Novita AI: Hy3",
+      "display_name": "Hy3",
       "context_window": 262144,
       "max_output_tokens": 262144,
       "input_modalities": [
@@ -2045,8 +4637,8 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
+        "input_per_1m": 0.014,
+        "output_per_1m": 0.058,
         "currency": "USD"
       },
       "deprecated": false,
@@ -2063,7 +4655,7 @@
     {
       "provider": "novita",
       "model_id": "thudm/glm-4-32b-0414",
-      "display_name": "Novita AI: GLM-4-32B-0414",
+      "display_name": "GLM-4-32B-0414",
       "context_window": 32000,
       "max_output_tokens": 32000,
       "input_modalities": [
@@ -2088,8 +4680,8 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.55,
-        "output_per_1m": 1.66,
+        "input_per_1m": 0.055,
+        "output_per_1m": 0.166,
         "currency": "USD"
       },
       "deprecated": false,
@@ -2100,7 +4692,7 @@
     {
       "provider": "novita",
       "model_id": "xiaomimimo/mimo-v2-flash",
-      "display_name": "Novita AI: XiaomiMiMo/MiMo-V2-Flash",
+      "display_name": "XiaomiMiMo/MiMo-V2-Flash",
       "context_window": 262144,
       "max_output_tokens": 32000,
       "input_modalities": [
@@ -2125,12 +4717,11 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.11,
-        "output_per_1m": 0.33,
-        "currency": "USD",
-        "input_cache_read_per_1m": 0.024
+        "input_per_1m": 0.011,
+        "output_per_1m": 0.033,
+        "currency": "USD"
       },
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "mimo-v2-flash"
       ],
@@ -2144,7 +4735,7 @@
     {
       "provider": "novita",
       "model_id": "xiaomimimo/mimo-v2-pro",
-      "display_name": "Novita AI: XiaomiMiMo/MiMo-V2-Pro",
+      "display_name": "XiaomiMiMo/MiMo-V2-Pro",
       "context_window": 1048576,
       "max_output_tokens": 131072,
       "input_modalities": [
@@ -2169,12 +4760,11 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 2.0,
-        "output_per_1m": 6.0,
-        "currency": "USD",
-        "input_cache_read_per_1m": 0.4
+        "input_per_1m": 0.2,
+        "output_per_1m": 0.6,
+        "currency": "USD"
       },
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "mimo-v2-pro"
       ],
@@ -2187,8 +4777,47 @@
     },
     {
       "provider": "novita",
+      "model_id": "xiaomimimo/mimo-v2.5",
+      "display_name": "XiaomiMiMo/MiMo-V2.5",
+      "context_window": 1048576,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.168,
+        "output_per_1m": 0.336,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "xiaomimimo/mimo-v2.5"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
       "model_id": "xiaomimimo/mimo-v2.5-pro",
-      "display_name": "Novita AI: XiaomiMiMo/MiMo-V2.5-Pro",
+      "display_name": "XiaomiMiMo/MiMo-V2.5-Pro",
       "context_window": 1048576,
       "max_output_tokens": 131072,
       "input_modalities": [
@@ -2231,7 +4860,7 @@
     {
       "provider": "novita",
       "model_id": "zai-org/autoglm-phone-9b-multilingual",
-      "display_name": "Novita AI: AutoGLM-Phone-9B-Multilingual",
+      "display_name": "AutoGLM-Phone-9B-Multilingual",
       "context_window": 65536,
       "max_output_tokens": 65536,
       "input_modalities": [
@@ -2257,8 +4886,8 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 0.035,
-        "output_per_1m": 0.138,
+        "input_per_1m": 0.0035,
+        "output_per_1m": 0.0138,
         "currency": "USD"
       },
       "deprecated": false,
@@ -2268,8 +4897,121 @@
     },
     {
       "provider": "novita",
+      "model_id": "zai-org/glm-4.5",
+      "display_name": "GLM-4.5",
+      "context_window": 131072,
+      "max_output_tokens": 98304,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.06,
+        "output_per_1m": 0.22,
+        "currency": "USD"
+      },
+      "deprecated": true,
+      "aliases": [
+        "zai-org/glm-4.5"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "zai-org/glm-4.5-air",
+      "display_name": "zai-org/glm-4.5-air",
+      "context_window": 131072,
+      "max_output_tokens": 98304,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.013,
+        "output_per_1m": 0.085,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "zai-org/glm-4.5-air"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "zai-org/glm-4.5v",
+      "display_name": "GLM 4.5V",
+      "context_window": 65536,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "video",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.06,
+        "output_per_1m": 0.18,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "zai-org/glm-4.5v"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
       "model_id": "zai-org/glm-4.6",
-      "display_name": "Novita AI: GLM 4.6",
+      "display_name": "GLM 4.6",
       "context_window": 204800,
       "max_output_tokens": 131072,
       "input_modalities": [
@@ -2312,7 +5054,7 @@
     {
       "provider": "novita",
       "model_id": "zai-org/glm-4.6v",
-      "display_name": "Novita AI: GLM 4.6V",
+      "display_name": "GLM 4.6V",
       "context_window": 131072,
       "max_output_tokens": 32768,
       "input_modalities": [
@@ -2357,7 +5099,7 @@
     {
       "provider": "novita",
       "model_id": "zai-org/glm-4.7",
-      "display_name": "Novita AI: GLM-4.7",
+      "display_name": "GLM-4.7",
       "context_window": 204800,
       "max_output_tokens": 131072,
       "input_modalities": [
@@ -2399,8 +5141,45 @@
     },
     {
       "provider": "novita",
+      "model_id": "zai-org/glm-4.7-flash",
+      "display_name": "GLM-4.7-Flash",
+      "context_window": 200000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.07,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "zai-org/glm-4.7-flash"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
       "model_id": "zai-org/glm-4.7-h",
-      "display_name": "Novita AI: GLM-4.7",
+      "display_name": "GLM-4.7",
       "context_window": 204800,
       "max_output_tokens": 131072,
       "input_modalities": [
@@ -2443,7 +5222,7 @@
     {
       "provider": "novita",
       "model_id": "zai-org/glm-5",
-      "display_name": "Novita AI: GLM-5",
+      "display_name": "GLM-5",
       "context_window": 202800,
       "max_output_tokens": 131072,
       "input_modalities": [
@@ -2486,7 +5265,7 @@
     {
       "provider": "novita",
       "model_id": "zai-org/glm-5-turbo",
-      "display_name": "Novita AI: GLM-5-Turbo",
+      "display_name": "GLM-5-Turbo",
       "context_window": 202800,
       "max_output_tokens": 131072,
       "input_modalities": [
@@ -2529,7 +5308,7 @@
     {
       "provider": "novita",
       "model_id": "zai-org/glm-5.1",
-      "display_name": "Novita AI: GLM-5.1",
+      "display_name": "GLM-5.1",
       "context_window": 204800,
       "max_output_tokens": 131072,
       "input_modalities": [
@@ -2571,8 +5350,45 @@
     },
     {
       "provider": "novita",
+      "model_id": "zai-org/glm-5.2",
+      "display_name": "GLM 5.2",
+      "context_window": 1048576,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 1.4,
+        "output_per_1m": 4.4,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "zai-org/glm-5.2"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
       "model_id": "zai-org/glm-5v-turbo",
-      "display_name": "Novita AI: GLM-5V-Turbo",
+      "display_name": "GLM-5V-Turbo",
       "context_window": 204800,
       "max_output_tokens": 131072,
       "input_modalities": [

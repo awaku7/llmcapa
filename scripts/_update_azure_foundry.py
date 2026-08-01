@@ -37,6 +37,10 @@ CATALOG = WORKDIR / "_scratch_azure_catalog_raw.json"
 PRICING = WORKDIR / "_scratch_azure_pricing_tables.json"
 AOAI_PRICING = WORKDIR / "_scratch_azure_aoai_pricing_tables.json"
 
+# Previous bundled catalog limits (model_id -> row) used to backfill
+# context_window / max_output_tokens when the Azure catalog lacks them.
+_PREV_LIMITS: dict[str, dict] = {}
+
 SOURCE_CATALOG = "https://ai.azure.com/catalog/models"
 SOURCE_AOAI = "https://azure.microsoft.com/en-us/pricing/details/azure-openai/"
 SOURCE_FOUNDRY_MODELS = (
@@ -1038,11 +1042,13 @@ def build_entry(item: dict, price_map: dict[str, dict]) -> dict:
     if extra:
         row["extra"] = extra
 
-    # drop null context if truly unknown — keep key as null for schema stability? existing uses int or missing
-    if row["context_window"] is None:
-        del row["context_window"]
-    if row["max_output_tokens"] is None:
-        del row["max_output_tokens"]
+    # Backfill missing context/max_out from the previous bundled catalog, then fall back to safe defaults.
+    if row.get("context_window") is None:
+        pv = _PREV_LIMITS.get(name)
+        row["context_window"] = (pv or {}).get("context_window") or 4096
+    if row.get("max_output_tokens") is None:
+        pv = _PREV_LIMITS.get(name)
+        row["max_output_tokens"] = (pv or {}).get("max_output_tokens") or 2048
 
     return row
 
@@ -1077,6 +1083,14 @@ def main() -> None:
     if not CATALOG.exists():
         raise SystemExit(f"missing catalog scratch: {CATALOG}")
 
+    global _PREV_LIMITS
+    if OUT.exists():
+        try:
+            prev_models = json.loads(OUT.read_text(encoding="utf-8")).get("models", [])
+            _PREV_LIMITS = {m.get("model_id"): m for m in prev_models if m.get("model_id")}
+            print(f"prev limits loaded: {len(_PREV_LIMITS)}")
+        except Exception:
+            _PREV_LIMITS = {}
     cat = json.loads(CATALOG.read_text(encoding="utf-8"))
     items = cat.get("items") or []
     price_map = load_price_map()

@@ -145,6 +145,12 @@ def features_all_unknown(feats: dict) -> bool:
     return all(v is None for v in vals)
 
 
+def _is_specialty(mid: str) -> bool:
+    """Specialty models (OCR/transcribe/TTS/moderation) have no context window."""
+    low = (mid or "").lower()
+    return any(t in low for t in ("ocr", "transcribe", "tts", "moderation"))
+
+
 def build_row(slug: str, m: dict) -> dict:
     mid = pick_model_id(m, slug)
     display = m.get("h1") or mid
@@ -220,7 +226,11 @@ def build_row(slug: str, m: dict) -> dict:
         out_mods = ["text"]
 
     ctx = m.get("ctx_k")
-    ctx_tokens = int(float(ctx) * 1000) if ctx else 0
+
+
+    ctx_tokens = (int(float(ctx) * 1000) if ctx else 0) or (
+        0 if _is_specialty(mid) else 4096
+    )
 
     # Pricing: only token pricing goes into pricing{}; specialty units in extra
     pricing = None

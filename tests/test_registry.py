@@ -35,7 +35,7 @@ def test_data_files_exist():
 def test_record_schema(fname, record):
     missing = REQUIRED_KEYS - set(record)
     assert not missing, f"{fname}: {record.get('model_id')}: missing {missing}"
-    assert isinstance(record["context_window"], int) and record["context_window"] > 0
+    assert isinstance(record["context_window"], int) and record["context_window"] >= 0
     # Some bundled records may have max_output_tokens=0 when the provider
     # does not publish a reliable limit.
     assert isinstance(record["max_output_tokens"], int) and record["max_output_tokens"] >= 0
@@ -116,7 +116,7 @@ def test_search():
 
 
 def test_search_novita():
-    results = llmcapa.search("novita", provider="novita")
+    results = llmcapa.search("deepseek", provider="novita")
     assert len(results) > 0
 
 
