@@ -1080,3 +1080,24 @@
 - Synthetic `~*/…-latest` aliases retained (9)
 - Replaced thin 14-model placeholder catalog
 - Install copy synced
+
+## Microsoft refresh (2026-08-02)
+
+### Source
+- Pricing: https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/
+- Retired: https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement
+- MAI docs: https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-mai
+- Catalog: https://ai.azure.com/catalog/publishers/microsoft
+- MAI news: https://microsoft.ai/news/today-were-announcing-3-new-world-class-mai-models-available-in-foundry/
+- Scratch: `_scratch_ms_pricing_live2.html`, `_scratch_ms_retired_text.txt`, `_scratch_ms_mai_docs.html`, `_scratch_ms_catalog_publisher.html`
+- Apply: `scripts/_update_microsoft.py`
+
+### Result
+- microsoft.json: **60** models (active=48, deprecated=12, priced=21, extra=60)
+- Phi PAYG corrected: Phi-4 $0.125/$0.50 ctx **16384**; Phi-4-mini $0.075/$0.30; multimodal text+image $0.08/$0.32 (audio $4/$0.32); reasoning $0.125/$0.50 @ 32K
+- Phi-3/3.5 family marked deprecated (retired 2025-08-30) with Foundry rates kept
+- MAI-DS-R1 Global $1.35/$5.40 deprecated (retired 2026-02-27); MAI-Image-2 $5/$33, Efficient/2e $5/$19.50; Voice/Transcribe unpriced meters
+- Added MAI-Thinking-1 (256K) + MAI-Code-1-Flash product surface (unpriced)
+- Deduped phi-4 / microsoft/phi-4; modalities fixed on multimodal/vision
+- Azure AI services retained as license/unpriced; community forks free
+- Install copy synced
