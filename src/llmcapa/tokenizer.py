@@ -298,7 +298,7 @@ def _count_messages_gemini(
         with warnings.catch_warnings():
             warnings.filterwarnings(
                 "ignore",
-                message=r"builtin type SwigPy.*|builtin type swigvarlink.*|The SDK's local tokenizer implementation is experimental.*",
+                message=r"builtin type SwigPy.*|builtin type swigvarlink.*",
                 category=Warning,
             )
             result = tokenizer.count_tokens(contents)
@@ -424,7 +424,7 @@ def _count_gemini(text: str, model_id: str) -> Optional[int]:
         with warnings.catch_warnings():
             warnings.filterwarnings(
                 "ignore",
-                message=r"builtin type SwigPy.*|builtin type swigvarlink.*|The SDK's local tokenizer implementation is experimental.*",
+                message=r"builtin type SwigPy.*|builtin type swigvarlink.*",
                 category=Warning,
             )
             result = tz.count_tokens(text)
