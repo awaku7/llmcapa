@@ -185,7 +185,33 @@ def main():
             unique.append(m)
     print(f"Unique models: {len(unique)}")
 
-    output = {"models": unique}
+    fallback = {
+        "provider": "huggingface",
+        "model_id": "huggingface-default",
+        "display_name": "HuggingFace Inference API (default fallback)",
+        "context_window": 4096,
+        "max_output_tokens": 1024,
+        "input_modalities": ["text"],
+        "output_modalities": ["text"],
+        "supports_function_calling": False,
+        "supports_json_mode": False,
+        "supports_streaming": True,
+        "supports_vision": False,
+        "supports_reasoning": False,
+        "supports_chat_completion": True,
+        "supports_responses_api": False,
+        "supports_reasoning_effort": False,
+        "supports_thinking_budget": False,
+        "supports_anthropic_api": False,
+        "supports_google_api": False,
+        "supports_fim": False,
+        "license_type": "unknown",
+        "tokenizer_name": "",
+        "knowledge_cutoff": None,
+        "deprecated": False,
+        "aliases": [],
+    }
+    output = {"models": [fallback] + unique}
 
     if save:
         proj_root = Path(__file__).resolve().parent.parent

@@ -1154,3 +1154,64 @@
 - Lyria-3 clip/pro: $0.04 / $0.08 per song (extra)
 - Deprecations: gemini-2.0-flash* shut 2026-06-01; Imagen 4 2026-08-17; Veo 3/2 2026-06-30
 - Install copy synced
+
+## Mistral refresh (2026-08-02) — quality pass
+
+### Fixes
+- Voxtral Mini chat vs pure-transcribe classification (no longer force all non-small Voxtral to transcribe)
+- Voxtral Small token pricing: use 3-amount cards as audio/min + input/output token
+- Research cards with null feature flags default to chat=True (mathstral/next/mamba/7b)
+- pick_model_id accepts open-* ids (e.g. open-codestral-mamba)
+
+### Result
+- mistral.json: **62** models (active=19, deprecated=43, token-priced=12)
+- Install copy synced
+- Skipped 404 slugs: none
+
+## Qwen / Alibaba Model Studio refresh (2026-08-02)
+
+### Source
+- Pricing: https://www.alibabacloud.com/help/en/model-studio/model-pricing
+- Apply: `scripts/_update_qwen.py`
+
+### Result
+- qwen.json: **135** models (active=131, token-priced=36)
+- Added bare Model Studio IDs: qwen3.7-max/plus, qwen3.6-flash/plus/max-preview, qwen3.5-*, qwen-plus/flash/max, qwen3-max
+- List prices (intl): qwen3.7-max $2.5/$7.5 (promo $1.25/$3.75); qwen3.7-plus $0.4/$1.6; qwen3.6-flash $0.25/$1.5
+- Media: qwen-image-2.0-pro / wan2.7-image-pro $0.075/image; happyhorse-1.1-t2v ~$0.14/s 720p
+- OpenRouter `qwen/...` entries kept; alibaba_list_pricing annotated in extra
+- Install copy synced
+
+## Moonshot / Kimi refresh (2026-08-02)
+
+### Source
+- Official: https://platform.kimi.ai/docs/pricing/chat + chat-k27-code / chat-k26 / chat-k25 (Playwright live)
+- Apply: `scripts/_update_moonshot.py`
+
+### Result
+- moonshot.json: **11** models (active=8, deprecated=3, priced=11)
+- **Kimi K3**: $3/$15 @1M; cache hit $0.30 (fixed cache_miss mapping)
+- **K2.7 Code**: $0.95/$4.00; cache hit $0.19 (was $1.0/$4.4)
+- **K2.7 Code HighSpeed** added: $1.90/$8.00; cache hit $0.38
+- **K2.6**: $0.95/$4.00; cache hit $0.16
+- **K2.5**: $0.60/$3.00; cache hit $0.10 (was $0.57/$2.85)
+- Multimodal (image+video) for K3 / K2.7 Code / K2.6 / K2.5
+- Install copy synced
+
+## NVIDIA NIM refresh (2026-08-02)
+
+### Source
+- Catalog: https://build.nvidia.com/models
+- Model pages: nemotron-3-ultra / super / nano (Playwright live)
+- Docs: https://docs.api.nvidia.com/nim/reference/llm-apis
+- Apply: `scripts/_update_nvidia.py`
+
+### Result
+- nvidia.json: **120** models (active=120, priced=19)
+- **nemotron-3-ultra-550b-a55b**: $0.50/$2.20 (Deep Infra); partners $0.41–$0.90 in
+- **nemotron-3-super-120b-a12b**: $0.20/$0.80 (Bitdeer/CoreWeave)
+- **nemotron-3-nano-30b-a3b**: $0.05/$0.20
+- Free endpoint twins synced; omni / embed / cosmos3-nano* added
+- Free NVIDIA trial endpoints remain available for evaluation
+- Install copy synced
+- Changes: updated:nvidia/nemotron-3-ultra-550b-a55b, updated:nvidia/nemotron-3-super-120b-a12b, updated:nvidia/nemotron-3-nano-30b-a3b, updated:nvidia/nemotron-3-nano-omni-30b-a3b-reasoning, updated:nvidia/nemotron-3-embed-1b, updated:nvidia/nemotron-3.5-content-safety, updated:nvidia/cosmos3-nano, updated:nvidia/cosmos3-nano-reasoner, synced_free:nvidia/nemotron-3-ultra-550b-a55b:free, synced_free:nvidia/nemotron-3-super-120b-a12b:free, synced_free:nvidia/nemotron-3-nano-30b-a3b:free
