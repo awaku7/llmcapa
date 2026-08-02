@@ -575,8 +575,8 @@
       "context_window": 1048576,
       "max_output_tokens": 131072,
       "pricing": {
-        "input_per_1m": 1.0,
-        "output_per_1m": 6.0,
+        "input_per_1m": 0.2,
+        "output_per_1m": 1.2,
         "currency": "USD"
       },
       "supports_reasoning": true,
@@ -587,7 +587,11 @@
       "supports_vision": true,
       "supports_responses_api": true,
       "supports_chat_completion": true,
-      "knowledge_cutoff": "2026-02-16"
+      "knowledge_cutoff": "2026-02-16",
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/pricing",
+        "cached_input_per_1m": 0.02
+      }
     },
     {
       "provider": "openai",
@@ -637,8 +641,8 @@
       "context_window": 1048576,
       "max_output_tokens": 131072,
       "pricing": {
-        "input_per_1m": 2.5,
-        "output_per_1m": 15.0,
+        "input_per_1m": 2.0,
+        "output_per_1m": 12.0,
         "currency": "USD"
       },
       "supports_reasoning": true,
@@ -649,7 +653,11 @@
       "supports_vision": true,
       "supports_responses_api": true,
       "supports_chat_completion": true,
-      "knowledge_cutoff": "2026-02-16"
+      "knowledge_cutoff": "2026-02-16",
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/pricing",
+        "cached_input_per_1m": 0.2
+      }
     },
     {
       "provider": "openai",
@@ -2984,8 +2992,8 @@
       "tokenizer_name": "",
       "knowledge_cutoff": "2026-02-16",
       "pricing": {
-        "input_per_1m": 1.0,
-        "output_per_1m": 6.0,
+        "input_per_1m": 0.2,
+        "output_per_1m": 1.2,
         "currency": "USD"
       },
       "deprecated": false,
@@ -2999,7 +3007,11 @@
         "high",
         "xhigh",
         "max"
-      ]
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/pricing",
+        "cached_input_per_1m": 0.02
+      }
     },
     {
       "provider": "openai",
@@ -3172,8 +3184,8 @@
       "tokenizer_name": "",
       "knowledge_cutoff": "2026-02-16",
       "pricing": {
-        "input_per_1m": 2.5,
-        "output_per_1m": 15.0,
+        "input_per_1m": 2.0,
+        "output_per_1m": 12.0,
         "currency": "USD"
       },
       "deprecated": false,
@@ -3187,7 +3199,11 @@
         "high",
         "xhigh",
         "max"
-      ]
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/pricing",
+        "cached_input_per_1m": 0.2
+      }
     },
     {
       "provider": "openai",
