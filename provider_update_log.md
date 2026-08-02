@@ -1128,3 +1128,16 @@
 - Sonic speech/text dual rates in extra; Canvas/Reel/Embeddings priced
 - Titan Lite corrected to $0.15/$0.20; dual aliases amazon/* + amazon.*:0
 - Install copy synced
+
+## Anthropic refresh (2026-08-02)
+
+### Source
+- Overview + pricing Playwright: `_scratch_anthropic_overview_live3.html`, `_scratch_anthropic_pricing_live3.html`
+- Docs: https://platform.claude.com/docs/en/about-claude/models/overview / https://platform.claude.com/docs/en/about-claude/pricing
+- Apply: `scripts/_update_anthropic.py`
+
+### Result
+- anthropic.json: **17** models (active=10, deprecated=7, priced=17)
+- New: Fable 5 / Mythos 5 $10/$50; Opus 4.8 $5/$25; Sonnet 5 intro $2/$10→$3/$15; Haiku 4.5 $1/$5
+- Cache pricing (5m/1h/hit) + batch in extra; OpenRouter aliases deduped
+- Install copy synced
