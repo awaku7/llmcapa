@@ -17,10 +17,10 @@ Message format follows the agentcli internal format (unified across providers):
 from __future__ import annotations
 
 import json
+import warnings
 from typing import Any, Dict, List, Optional
 
 from .registry import default_registry
-
 
 # ---------------------------------------------------------------------------
 # Public API
@@ -135,7 +135,9 @@ def _extract_tool_calls_text(msg: Dict[str, Any]) -> str:
 
 
 def _has_tiktoken_tokenizer(cap: Any) -> bool:
-    tokenizer = (cap.tokenizer_name or "").lower() if hasattr(cap, "tokenizer_name") else ""
+    tokenizer = (
+        (cap.tokenizer_name or "").lower() if hasattr(cap, "tokenizer_name") else ""
+    )
     return any(k in tokenizer for k in ["o200k", "cl100k", "p50k", "r50k"])
 
 
@@ -143,7 +145,9 @@ def _get_encoding(cap: Any) -> Any:
     """Return a tiktoken encoding for the given capability, or None."""
     import tiktoken
 
-    tokenizer_name = (cap.tokenizer_name or "").lower() if hasattr(cap, "tokenizer_name") else ""
+    tokenizer_name = (
+        (cap.tokenizer_name or "").lower() if hasattr(cap, "tokenizer_name") else ""
+    )
     model_id = cap.model_id if hasattr(cap, "model_id") else ""
 
     if tokenizer_name:
@@ -215,13 +219,21 @@ def _count_messages_chatml(messages: List[Dict[str, Any]], cap: Any) -> Optional
 # ---------------------------------------------------------------------------
 
 
-def _count_messages_gemini(messages: List[Dict[str, Any]], model_id: str) -> Optional[int]:
+def _count_messages_gemini(
+    messages: List[Dict[str, Any]], model_id: str
+) -> Optional[int]:
     """Count tokens using Google's LocalTokenizer with Content objects.
 
     Handles both content-list parts and agentcli-style tool_calls/function_call keys.
     """
     try:
-        from google.genai import local_tokenizer, types
+        with warnings.catch_warnings():
+            warnings.filterwarnings(
+                "ignore",
+                message=r"builtin type SwigPy.*|builtin type swigvarlink.*|'_UnionGenericAlias' is deprecated",
+                category=DeprecationWarning,
+            )
+            from google.genai import local_tokenizer, types
 
         tokenizer = local_tokenizer.LocalTokenizer(model_name=model_id)
         contents: List[types.Content] = []
@@ -252,18 +264,22 @@ def _count_messages_gemini(messages: List[Dict[str, Any]], model_id: str) -> Opt
                     elif part.get("type") == "function_call":
                         fc = part.get("function_call") or part
                         parts_list.append(
-                            types.Part(function_call=types.FunctionCall(
-                                name=fc.get("name", ""),
-                                args=fc.get("arguments", {}),
-                            ))
+                            types.Part(
+                                function_call=types.FunctionCall(
+                                    name=fc.get("name", ""),
+                                    args=fc.get("arguments", {}),
+                                )
+                            )
                         )
                     elif part.get("type") == "function_response":
                         fr = part.get("function_response") or part
                         parts_list.append(
-                            types.Part(function_response=types.FunctionResponse(
-                                name=fr.get("name", ""),
-                                response=fr.get("response", {}),
-                            ))
+                            types.Part(
+                                function_response=types.FunctionResponse(
+                                    name=fr.get("name", ""),
+                                    response=fr.get("response", {}),
+                                )
+                            )
                         )
 
             # Agentcli-style tool_calls on assistant messages
@@ -279,7 +295,13 @@ def _count_messages_gemini(messages: List[Dict[str, Any]], model_id: str) -> Opt
         if not contents:
             return 0
 
-        result = tokenizer.count_tokens(contents)
+        with warnings.catch_warnings():
+            warnings.filterwarnings(
+                "ignore",
+                message=r"builtin type SwigPy.*|builtin type swigvarlink.*|The SDK's local tokenizer implementation is experimental.*",
+                category=Warning,
+            )
+            result = tokenizer.count_tokens(contents)
         return result.total_tokens
     except Exception:
         return None
@@ -290,7 +312,9 @@ def _count_messages_gemini(messages: List[Dict[str, Any]], model_id: str) -> Opt
 # ---------------------------------------------------------------------------
 
 
-def _count_messages_anthropic(messages: List[Dict[str, Any]], cap: Any) -> Optional[int]:
+def _count_messages_anthropic(
+    messages: List[Dict[str, Any]], cap: Any
+) -> Optional[int]:
     """Count tokens by formatting messages in Anthropic's format and approximating
     with tiktoken cl100k_base.
 
@@ -357,7 +381,9 @@ def _count_for_cap(text: str, cap: Any) -> int:
     """Dispatch to the appropriate token counter based on provider/capability."""
     provider = cap.provider.lower() if hasattr(cap, "provider") else ""
     model_id = cap.model_id if hasattr(cap, "model_id") else ""
-    tokenizer = (cap.tokenizer_name or "").lower() if hasattr(cap, "tokenizer_name") else ""
+    tokenizer = (
+        (cap.tokenizer_name or "").lower() if hasattr(cap, "tokenizer_name") else ""
+    )
 
     # Google Gemini
     if provider == "google" or "gemini" in tokenizer or "gemini" in model_id.lower():
@@ -386,10 +412,22 @@ def _count_for_cap(text: str, cap: Any) -> int:
 
 def _count_gemini(text: str, model_id: str) -> Optional[int]:
     try:
-        from google.genai import local_tokenizer
+        with warnings.catch_warnings():
+            warnings.filterwarnings(
+                "ignore",
+                message=r"builtin type SwigPy.*|builtin type swigvarlink.*|'_UnionGenericAlias' is deprecated",
+                category=DeprecationWarning,
+            )
+            from google.genai import local_tokenizer
 
         tz = local_tokenizer.LocalTokenizer(model_name=model_id)
-        result = tz.count_tokens(text)
+        with warnings.catch_warnings():
+            warnings.filterwarnings(
+                "ignore",
+                message=r"builtin type SwigPy.*|builtin type swigvarlink.*|The SDK's local tokenizer implementation is experimental.*",
+                category=Warning,
+            )
+            result = tz.count_tokens(text)
         return result.total_tokens
     except Exception:
         return None
