@@ -1101,3 +1101,13 @@
 - Deduped phi-4 / microsoft/phi-4; modalities fixed on multimodal/vision
 - Azure AI services retained as license/unpriced; community forks free
 - Install copy synced
+
+## azure_foundry — 2026-08-02 09:12 UTC
+
+- Catalog: chat-completion filter via Playwright paginate (`_scratch_azure_catalog_raw.json`, n=767 unique names=767)
+- Pricing: AOAI + Foundry partner pages (`_scratch_azure_pricing_tables.json`), price_keys=134
+- Output: n=767 priced=104 maas_or_paygo=200 extra=702
+- Providers (top): huggingface=427, foundry-local=91, azure-foundry=76, azure-openai=34, fireworks=33, microsoft=26, meta=16, nvidia=12, mistral=11, deepseek=8, xai=7, moonshot=3
+- Sources: https://ai.azure.com/catalog/models ; https://azure.microsoft.com/en-us/pricing/details/azure-openai/ ; https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/*
+- Script: `scripts/_update_azure_foundry.py` (+ `scripts/_scrape_azure_foundry_full.py`)
+- Installed copy: `F:\Python314\Lib\site-packages\llmcapa\data\azure_foundry.json`
