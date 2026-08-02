@@ -1111,3 +1111,20 @@
 - Sources: https://ai.azure.com/catalog/models ; https://azure.microsoft.com/en-us/pricing/details/azure-openai/ ; https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/*
 - Script: `scripts/_update_azure_foundry.py` (+ `scripts/_scrape_azure_foundry_full.py`)
 - Installed copy: `F:\Python314\Lib\site-packages\llmcapa\data\azure_foundry.json`
+
+## Amazon Nova / Bedrock refresh (2026-08-02)
+
+### Source
+- Bedrock pricing: https://aws.amazon.com/bedrock/pricing/
+- Nova pricing: https://aws.amazon.com/nova/pricing/
+- Metered unit map: https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json
+- Scratch: `_scratch_amazon_nova_pricing_live.html`
+- Apply: `scripts/_update_amazon.py`
+
+### Result
+- amazon.json: **19** models (active=19, deprecated=0, priced=18)
+- Nova 2 Lite Global $0.30/$2.50 (geo $0.33/$2.75); Nova 2 Pro Preview $1.25/$10; Nova 2 Omni Preview $0.30/$2.50
+- Nova 1.0: Micro $0.035/$0.14, Lite $0.06/$0.24, Pro $0.80/$3.20 (+latency-opt $1/$4), Premier $2.50/$12.50
+- Sonic speech/text dual rates in extra; Canvas/Reel/Embeddings priced
+- Titan Lite corrected to $0.15/$0.20; dual aliases amazon/* + amazon.*:0
+- Install copy synced
