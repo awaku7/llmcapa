@@ -1215,3 +1215,14 @@
 - Free NVIDIA trial endpoints remain available for evaluation
 - Install copy synced
 - Changes: updated:nvidia/nemotron-3-ultra-550b-a55b, updated:nvidia/nemotron-3-super-120b-a12b, updated:nvidia/nemotron-3-nano-30b-a3b, updated:nvidia/nemotron-3-nano-omni-30b-a3b-reasoning, updated:nvidia/nemotron-3-embed-1b, updated:nvidia/nemotron-3.5-content-safety, updated:nvidia/cosmos3-nano, updated:nvidia/cosmos3-nano-reasoner, synced_free:nvidia/nemotron-3-ultra-550b-a55b:free, synced_free:nvidia/nemotron-3-super-120b-a12b:free, synced_free:nvidia/nemotron-3-nano-30b-a3b:free
+
+## Together AI pricing scrape (2026-08-02)
+
+### Source
+- Public pricing page: https://www.together.ai/pricing
+- Apply: `scripts/_update_together.py`
+
+### Result
+- Scraped 28 serverless text-model rows from the public pricing table.
+- Updated 18 existing Together catalog entries with input/output USD per 1M token pricing.
+- API `/v1/models` was not used because it requires authentication; no API key was collected or stored.
