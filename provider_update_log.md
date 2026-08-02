@@ -1141,3 +1141,16 @@
 - New: Fable 5 / Mythos 5 $10/$50; Opus 4.8 $5/$25; Sonnet 5 intro $2/$10→$3/$15; Haiku 4.5 $1/$5
 - Cache pricing (5m/1h/hit) + batch in extra; OpenRouter aliases deduped
 - Install copy synced
+
+## Google refresh (2026-08-02)
+
+### Source
+- Pricing: https://ai.google.dev/gemini-api/docs/pricing
+- Apply: `scripts/_update_google.py`
+
+### Result
+- google.json: **76** models (active=70, token-priced=52)
+- Inserted: gemini-3.5-live-translate-preview, gemini-omni-flash-preview, gemini-3.1-flash-tts-preview
+- Lyria-3 clip/pro: $0.04 / $0.08 per song (extra)
+- Deprecations: gemini-2.0-flash* shut 2026-06-01; Imagen 4 2026-08-17; Veo 3/2 2026-06-30
+- Install copy synced
