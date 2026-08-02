@@ -1063,3 +1063,20 @@
 - mistral.json: **62** models (active=19, deprecated=43, token-priced=12)
 - Install copy synced
 - Skipped 404 slugs: none
+
+## OpenRouter refresh (2026-08-02)
+
+### Source
+- API: `https://openrouter.ai/api/v1/models` (live → `_scratch_openrouter_models.json`)
+- Docs: https://openrouter.ai/docs
+- Apply: `scripts/_update_openrouter.py`
+
+### Result
+- openrouter.json: **337** models (active=337, deprecated=0, priced=315, free=17, dynamic=5, extra=337)
+- vision=180, reasoning=216, tools=271, cache_pricing=183
+- native providers: 52 (top: [('openai', 60), ('qwen', 48), ('google', 30), ('mistralai', 18), ('anthropic', 17), ('deepseek', 12), ('z-ai', 12), ('nvidia', 10), ('meta-llama', 8), ('minimax', 8)])
+- Pricing: API per-token ×1e6 → USD/1M; router prompt=-1 → catalog -1000000.0
+- Cache: input_cache_read/write(/1h) in extra when present
+- Synthetic `~*/…-latest` aliases retained (9)
+- Replaced thin 14-model placeholder catalog
+- Install copy synced

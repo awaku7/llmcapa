@@ -910,6 +910,112 @@
     },
     {
       "provider": "openrouter",
+      "model_id": "~deepseek/deepseek-v4-flash-latest",
+      "display_name": "DeepSeek V4 Flash Latest",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Router",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "deepseek-v4-flash-latest",
+        "openrouter/~deepseek/deepseek-v4-flash-latest"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.09,
+        "output_per_1m": 0.18,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "~deepseek",
+        "canonical_slug": "~deepseek/deepseek-v4-flash-latest",
+        "modality": "text->text",
+        "tokenizer": "Router",
+        "top_provider": {
+          "context_length": 1048576,
+          "max_completion_tokens": 65536,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "logit_bias",
+          "logprobs",
+          "max_tokens",
+          "min_p",
+          "presence_penalty",
+          "reasoning",
+          "reasoning_effort",
+          "repetition_penalty",
+          "response_format",
+          "seed",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_a",
+          "top_k",
+          "top_logprobs",
+          "top_p"
+        ],
+        "created": "2026-08-01",
+        "description": "This model always redirects to the latest model in the DeepSeek V4 Flash family.",
+        "cache_read_per_1m": 0.018,
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "max",
+            "high",
+            "low"
+          ],
+          "default_effort": "high"
+        },
+        "links": {
+          "details": "/api/v1/models/~deepseek/deepseek-v4-flash-latest/endpoints"
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "reasoning_effort"
+        ]
+      },
+      "reasoning_effort_values": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ]
+    },
+    {
+      "provider": "openrouter",
       "model_id": "~google/gemini-flash-latest",
       "display_name": "Google Gemini Flash Latest",
       "context_window": 1048576,
@@ -6421,7 +6527,7 @@
       "model_id": "deepseek/deepseek-v4-flash-0731",
       "display_name": "DeepSeek: DeepSeek V4 Flash 0731",
       "context_window": 1048576,
-      "max_output_tokens": 384000,
+      "max_output_tokens": 65536,
       "input_modalities": [
         "text"
       ],
@@ -6450,8 +6556,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.14,
-        "output_per_1m": 0.28,
+        "input_per_1m": 0.09,
+        "output_per_1m": 0.18,
         "currency": "USD"
       },
       "extra": {
@@ -6466,7 +6572,7 @@
         "tokenizer": "DeepSeek",
         "top_provider": {
           "context_length": 1048576,
-          "max_completion_tokens": 384000,
+          "max_completion_tokens": 65536,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -6487,13 +6593,14 @@
           "temperature",
           "tool_choice",
           "tools",
+          "top_a",
           "top_k",
           "top_logprobs",
           "top_p"
         ],
         "created": "2026-07-31",
         "description": "DeepSeek V4 Flash 0731 is a sparse mixture-of-experts model from DeepSeek, with 13B active parameters out of 284B total. This re-post-trained revision is suited for coding, reasoning, and agent workflows.",
-        "cache_read_per_1m": 0.0028,
+        "cache_read_per_1m": 0.018,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -8602,7 +8709,7 @@
           "details": "/api/v1/models/google/gemini-3.6-flash-20260721/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 8,
+          "design_arena": 9,
           "artificial_analysis": 1
         },
         "features": [
@@ -16331,7 +16438,7 @@
         "top_provider": {
           "context_length": 16385,
           "max_completion_tokens": 4096,
-          "is_moderated": false
+          "is_moderated": true
         },
         "supported_parameters": [
           "frequency_penalty",
@@ -16486,7 +16593,7 @@
         "top_provider": {
           "context_length": 8191,
           "max_completion_tokens": 4096,
-          "is_moderated": false
+          "is_moderated": true
         },
         "supported_parameters": [
           "frequency_penalty",
@@ -20877,7 +20984,7 @@
       "license_type": "api",
       "pricing": {
         "input_per_1m": 0.03,
-        "output_per_1m": 0.14,
+        "output_per_1m": 0.13,
         "currency": "USD"
       },
       "extra": {
@@ -20919,6 +21026,7 @@
         ],
         "created": "2025-08-05",
         "description": "gpt-oss-20b is an open-weight 21B parameter model released by OpenAI under the Apache 2.0 license. It uses a Mixture-of-Experts (MoE) architecture with 3.6B active parameters per forward pass, optimized for...",
+        "cache_read_per_1m": 0.03,
         "reasoning_meta": {
           "mandatory": true,
           "supported_efforts": [
@@ -30632,7 +30740,7 @@
       "model_id": "z-ai/glm-5.2",
       "display_name": "Z.ai: GLM 5.2",
       "context_window": 1048576,
-      "max_output_tokens": 128000,
+      "max_output_tokens": 131072,
       "input_modalities": [
         "text"
       ],
@@ -30661,8 +30769,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 1.12,
-        "output_per_1m": 3.52,
+        "input_per_1m": 0.2856,
+        "output_per_1m": 0.8976,
         "currency": "USD"
       },
       "extra": {
@@ -30676,8 +30784,8 @@
         "modality": "text->text",
         "tokenizer": "Other",
         "top_provider": {
-          "context_length": 1024000,
-          "max_completion_tokens": 128000,
+          "context_length": 1048576,
+          "max_completion_tokens": 131072,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -30705,7 +30813,7 @@
         ],
         "created": "2026-06-16",
         "description": "GLM 5.2 is a large-scale reasoning model from Z.ai. It supports text input and output with a 1M-token context window, and is suited for long-horizon agent workflows, project-level software engineering,...",
-        "cache_read_per_1m": 0.208,
+        "cache_read_per_1m": 0.05304,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
