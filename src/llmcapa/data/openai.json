@@ -468,7 +468,9 @@
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "aliases": [
+        "gpt-5.5-2026-04-23"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text",
@@ -507,6 +509,40 @@
       "output_modalities": [
         "text"
       ],
+      "model_id": "gpt-5.5-2026-04-23",
+      "display_name": "gpt-5.5-2026-04-23",
+      "context_window": 1048576,
+      "max_output_tokens": 131072,
+      "pricing": {
+        "input_per_1m": 5.0,
+        "output_per_1m": 30.0,
+        "currency": "USD"
+      },
+      "supports_reasoning": true,
+      "supports_reasoning_effort": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "knowledge_cutoff": "2025-10-01",
+      "extra": {
+        "snapshot_of": "gpt-5.5",
+        "source": "https://github.com/gh640/openai-models-ja"
+      }
+    },
+    {
+      "provider": "openai",
+      "aliases": [],
+      "deprecated": false,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
       "model_id": "gpt-5.5-cyber",
       "display_name": "GPT-5.5 Cyber",
       "context_window": 1048576,
@@ -531,7 +567,9 @@
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "aliases": [
+        "gpt-5.5-pro-2026-04-23"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text",
@@ -558,6 +596,40 @@
       "supports_responses_api": true,
       "supports_chat_completion": true,
       "knowledge_cutoff": "2025-10-01"
+    },
+    {
+      "provider": "openai",
+      "aliases": [],
+      "deprecated": false,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "model_id": "gpt-5.5-pro-2026-04-23",
+      "display_name": "gpt-5.5-pro-2026-04-23",
+      "context_window": 1048576,
+      "max_output_tokens": 131072,
+      "pricing": {
+        "input_per_1m": 30.0,
+        "output_per_1m": 180.0,
+        "currency": "USD"
+      },
+      "supports_reasoning": true,
+      "supports_reasoning_effort": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "knowledge_cutoff": "2025-10-01",
+      "extra": {
+        "snapshot_of": "gpt-5.5-pro",
+        "source": "https://github.com/gh640/openai-models-ja"
+      }
     },
     {
       "provider": "openai",
@@ -653,6 +725,42 @@
     },
     {
       "provider": "openai",
+      "model_id": "gpt-audio",
+      "display_name": "GPT Audio",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "audio"
+      ],
+      "output_modalities": [
+        "text",
+        "audio"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_realtime": false,
+      "supports_audio_input": true,
+      "supports_audio_output": true,
+      "pricing": {
+        "input_per_1m": 2.5,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "extra": {
+        "source": "https://github.com/gh640/openai-models-ja",
+        "category": "realtime_audio"
+      }
+    },
+    {
+      "provider": "openai",
       "aliases": [],
       "deprecated": false,
       "input_modalities": [
@@ -703,9 +811,11 @@
       "supports_chat_completion": true,
       "supports_streaming": true,
       "extra": {
-        "source": "https://developers.openai.com/api/docs/pricing",
+        "source": "https://github.com/gh640/openai-models-ja",
         "category": "audio"
-      }
+      },
+      "supports_audio_input": true,
+      "supports_audio_output": true
     },
     {
       "provider": "openai",
@@ -819,7 +929,9 @@
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "aliases": [
+        "gpt-image-2-2026-04-21"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text",
@@ -854,6 +966,81 @@
         "batch_image_input_per_1m": 4.0,
         "batch_image_output_per_1m": 15.0,
         "batch_text_input_per_1m": 2.5
+      }
+    },
+    {
+      "provider": "openai",
+      "aliases": [],
+      "deprecated": false,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text",
+        "image"
+      ],
+      "model_id": "gpt-image-2-2026-04-21",
+      "display_name": "gpt-image-2-2026-04-21",
+      "context_window": 131072,
+      "max_output_tokens": 32768,
+      "pricing": {
+        "input_per_1m": 5.0,
+        "output_per_1m": 30.0,
+        "currency": "USD"
+      },
+      "supports_vision": true,
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "extra": {
+        "source": "https://github.com/gh640/openai-models-ja",
+        "image_input_per_1m": 8.0,
+        "image_cached_input_per_1m": 2.0,
+        "image_output_per_1m": 30.0,
+        "text_input_per_1m": 5.0,
+        "text_cached_input_per_1m": 1.25,
+        "batch_image_input_per_1m": 4.0,
+        "batch_image_output_per_1m": 15.0,
+        "batch_text_input_per_1m": 2.5,
+        "snapshot_of": "gpt-image-2"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-live-transcribe",
+      "display_name": "GPT Live Transcribe",
+      "context_window": 16000,
+      "max_output_tokens": 2000,
+      "input_modalities": [
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_realtime": true,
+      "supports_audio_input": true,
+      "supports_audio_output": false,
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "extra": {
+        "source": "https://github.com/gh640/openai-models-ja",
+        "category": "realtime_audio",
+        "price_per_minute": 0.017
       }
     },
     {
@@ -932,6 +1119,117 @@
     },
     {
       "provider": "openai",
+      "model_id": "gpt-realtime",
+      "display_name": "GPT-Realtime",
+      "context_window": 32000,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text",
+        "image",
+        "audio"
+      ],
+      "output_modalities": [
+        "text",
+        "audio"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_realtime": true,
+      "supports_audio_input": true,
+      "supports_audio_output": true,
+      "pricing": {
+        "input_per_1m": 4.0,
+        "output_per_1m": 16.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "extra": {
+        "source": "https://github.com/gh640/openai-models-ja",
+        "category": "realtime_audio"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-realtime-1.5",
+      "display_name": "GPT-Realtime 1.5",
+      "context_window": 32000,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text",
+        "image",
+        "audio"
+      ],
+      "output_modalities": [
+        "text",
+        "audio"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_realtime": true,
+      "supports_audio_input": true,
+      "supports_audio_output": true,
+      "pricing": {
+        "input_per_1m": 4.0,
+        "output_per_1m": 16.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "extra": {
+        "source": "https://github.com/gh640/openai-models-ja",
+        "category": "realtime_audio"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-realtime-2",
+      "display_name": "GPT-Realtime 2",
+      "context_window": 128000,
+      "max_output_tokens": 32000,
+      "input_modalities": [
+        "text",
+        "image",
+        "audio"
+      ],
+      "output_modalities": [
+        "text",
+        "audio"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_realtime": true,
+      "supports_audio_input": true,
+      "supports_audio_output": true,
+      "pricing": {
+        "input_per_1m": 4.0,
+        "output_per_1m": 24.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "extra": {
+        "source": "https://github.com/gh640/openai-models-ja",
+        "category": "realtime_audio"
+      }
+    },
+    {
+      "provider": "openai",
       "aliases": [],
       "deprecated": false,
       "input_modalities": [
@@ -990,6 +1288,43 @@
     },
     {
       "provider": "openai",
+      "model_id": "gpt-realtime-mini",
+      "display_name": "GPT-Realtime Mini",
+      "context_window": 32000,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text",
+        "image",
+        "audio"
+      ],
+      "output_modalities": [
+        "text",
+        "audio"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_realtime": true,
+      "supports_audio_input": true,
+      "supports_audio_output": true,
+      "pricing": {
+        "input_per_1m": 0.6,
+        "output_per_1m": 2.4,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "extra": {
+        "source": "https://github.com/gh640/openai-models-ja",
+        "category": "realtime_audio"
+      }
+    },
+    {
+      "provider": "openai",
       "aliases": [],
       "deprecated": false,
       "input_modalities": [
@@ -1043,6 +1378,42 @@
         "billing_unit": "per_minute"
       },
       "supports_realtime": true
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-transcribe",
+      "display_name": "GPT Transcribe",
+      "context_window": 16000,
+      "max_output_tokens": 2000,
+      "input_modalities": [
+        "text",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_realtime": true,
+      "supports_audio_input": true,
+      "supports_audio_output": false,
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "extra": {
+        "source": "https://github.com/gh640/openai-models-ja",
+        "category": "realtime_audio",
+        "price_per_minute": 0.0045
+      }
     },
     {
       "provider": "openai",
