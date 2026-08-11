@@ -1,0 +1,80 @@
+{
+  "models": [
+    {
+      "provider": "rekaai",
+      "model_id": "rekaai/reka-edge",
+      "display_name": "Reka Edge",
+      "context_window": 16384,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "image",
+        "text",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "rekaai/reka-edge"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.09999999999999999,
+        "output_per_1m": 0.09999999999999999,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "rekaai",
+      "model_id": "rekaai/reka-flash-3",
+      "display_name": "Reka Flash 3",
+      "context_window": 65536,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": "2025-01-31",
+      "deprecated": false,
+      "aliases": [
+        "rekaai/reka-flash-3"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.09999999999999999,
+        "output_per_1m": 0.19999999999999998,
+        "currency": "USD"
+      }
+    }
+  ]
+}

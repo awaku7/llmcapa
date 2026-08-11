@@ -1,10 +1,10 @@
 {
   "models": [
     {
-      "provider": "sakana",
-      "model_id": "sakana-namazu",
-      "display_name": "Sakana Namazu",
-      "context_window": 262144,
+      "provider": "perplexity",
+      "model_id": "perplexity/sonar",
+      "display_name": "Perplexity: Sonar",
+      "context_window": 127072,
       "max_output_tokens": 0,
       "input_modalities": [
         "text",
@@ -13,140 +13,14 @@
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": true,
-      "supports_reasoning": true,
+      "supports_reasoning": false,
       "supports_chat_completion": true,
       "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "api",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 0.95,
-        "output_per_1m": 4.0,
-        "currency": "USD",
-        "cached_input_per_1m": 0.15
-      },
-      "deprecated": false,
-      "aliases": [
-        "sakana-namazu",
-        "namazu"
-      ]
-    },
-    {
-      "provider": "sakana",
-      "model_id": "sakana/fugu",
-      "display_name": "Sakana Fugu",
-      "context_window": 272000,
-      "max_output_tokens": 128000,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "api",
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2026-06",
-      "pricing": {
-        "input_per_1m": 5.0,
-        "output_per_1m": 30.0,
-        "currency": "USD",
-        "cached_input_per_1m": 0.5
-      },
-      "deprecated": false,
-      "aliases": [
-        "sakana/fugu",
-        "fugu",
-        "sakana/fugu-20260615"
-      ],
-      "reasoning_effort_values": [
-        "high",
-        "xhigh",
-        "max"
-      ]
-    },
-    {
-      "provider": "sakana",
-      "model_id": "sakana/fugu-cyber",
-      "display_name": "Sakana: Fugu Cyber",
-      "context_window": 1000000,
-      "max_output_tokens": 128000,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "api",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 6.0,
-        "output_per_1m": 36.0,
-        "currency": "USD",
-        "cached_input_per_1m": 0.6
-      },
-      "deprecated": false,
-      "aliases": [
-        "sakana/fugu-cyber",
-        "fugu-cyber-v1.0"
-      ]
-    },
-    {
-      "provider": "sakana",
-      "model_id": "sakana/fugu-ultra",
-      "display_name": "Sakana: Fugu Ultra",
-      "context_window": 1000000,
-      "max_output_tokens": 128000,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
@@ -155,37 +29,35 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "sakana/fugu-ultra"
+        "perplexity/sonar"
       ],
       "license_type": "unknown",
       "pricing": {
-        "input_per_1m": 5.0,
-        "output_per_1m": 30.0,
+        "input_per_1m": 1.0,
+        "output_per_1m": 1.0,
         "currency": "USD"
       }
     },
     {
-      "provider": "sakana",
-      "model_id": "sakana/sakana-namazu",
-      "display_name": "Sakana: Sakana Namazu",
-      "context_window": 262144,
-      "max_output_tokens": 65536,
+      "provider": "perplexity",
+      "model_id": "perplexity/sonar-deep-research",
+      "display_name": "Perplexity: Sonar Deep Research",
+      "context_window": 128000,
+      "max_output_tokens": 0,
       "input_modalities": [
-        "text",
-        "image",
-        "file"
+        "text"
       ],
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
       "supports_streaming": true,
-      "supports_vision": true,
+      "supports_vision": false,
       "supports_reasoning": true,
       "supports_chat_completion": true,
       "supports_responses_api": false,
-      "supports_reasoning_effort": true,
+      "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
@@ -194,12 +66,126 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "sakana/sakana-namazu"
+        "perplexity/sonar-deep-research"
       ],
       "license_type": "unknown",
       "pricing": {
-        "input_per_1m": 0.95,
-        "output_per_1m": 4.0,
+        "input_per_1m": 2.0,
+        "output_per_1m": 8.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "perplexity",
+      "model_id": "perplexity/sonar-pro",
+      "display_name": "Perplexity: Sonar Pro",
+      "context_window": 200000,
+      "max_output_tokens": 8000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "perplexity/sonar-pro"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 3.0,
+        "output_per_1m": 15.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "perplexity",
+      "model_id": "perplexity/sonar-pro-search",
+      "display_name": "Perplexity: Sonar Pro Search",
+      "context_window": 200000,
+      "max_output_tokens": 8000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "perplexity/sonar-pro-search"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 3.0,
+        "output_per_1m": 15.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "perplexity",
+      "model_id": "perplexity/sonar-reasoning-pro",
+      "display_name": "Perplexity: Sonar Reasoning Pro",
+      "context_window": 128000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "perplexity/sonar-reasoning-pro"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 8.0,
         "currency": "USD"
       }
     }

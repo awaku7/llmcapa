@@ -2,6 +2,99 @@
   "models": [
     {
       "provider": "mistral",
+      "model_id": "codestral-2405",
+      "display_name": "Codestral",
+      "context_window": 32000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": true,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 1.0,
+        "output_per_1m": 3.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://docs.mistral.ai/models/model-cards/codestral-24-05",
+        "card_slug": "codestral-24-05",
+        "version": "24.05",
+        "release_date": "May 29, 2024",
+        "retirement_date": "6/16/2025",
+        "replacement": "Codestral",
+        "description": "Our first cutting-edge language model for coding and FIM, released under the MNPL license."
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "codestral-2501",
+      "display_name": "Codestral",
+      "context_window": 4096,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": true,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 1.0,
+        "output_per_1m": 3.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://docs.mistral.ai/models/model-cards/codestral-25-01",
+        "card_slug": "codestral-25-01",
+        "version": "25.01",
+        "release_date": "January 13, 2025",
+        "license_badge": "premier",
+        "retirement_date": "11/30/2025",
+        "replacement": "Codestral",
+        "description": "Our cutting-edge language model for coding. Codestral specializes in low-latency, high-frequency tasks such as fill-in-the-middle (FIM), code correction and test generation.",
+        "supports_batching": true,
+        "supports_prefix": true,
+        "supports_predicted_outputs": true,
+        "supports_document_qna": true
+      }
+    },
+    {
+      "provider": "mistral",
       "model_id": "codestral-2508",
       "display_name": "Codestral",
       "context_window": 128000,
@@ -95,916 +188,6 @@
         "description": "Our state-of-the-art semantic for extracting representation of code extracts",
         "supports_embeddings": true,
         "supports_batching": true
-      }
-    },
-    {
-      "provider": "mistral",
-      "model_id": "labs-leanstral-1-5",
-      "display_name": "Leanstral 1.5",
-      "context_window": 256000,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "pricing": {
-        "currency": "USD",
-        "input_per_1m": 0.0
-      },
-      "extra": {
-        "source": "https://docs.mistral.ai/models/model-cards/leanstral-1-5",
-        "card_slug": "leanstral-1-5",
-        "version": "1.5",
-        "release_date": "June 30, 2026",
-        "description": "An updated Lean 4 formal proof engineering model optimised for automated theorem proving and autoformalization. 119B total parameters, 6.5B active.",
-        "supports_agents": true
-      }
-    },
-    {
-      "provider": "mistral",
-      "model_id": "mathstral-7b-0-1",
-      "display_name": "Mathstral 7B",
-      "context_window": 32000,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://docs.mistral.ai/models/model-cards/mathstral-7b-0-1",
-        "card_slug": "mathstral-7b-0-1",
-        "version": "0.1",
-        "release_date": "July 16, 2024",
-        "replacement": "Mistral Small 4",
-        "description": "A math dedicated model for research purposes under an open license."
-      }
-    },
-    {
-      "provider": "mistral",
-      "model_id": "ministral-14b-2512",
-      "display_name": "Ministral 3 14B",
-      "context_window": 256000,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "pricing": {
-        "currency": "USD",
-        "input_per_1m": 0.2,
-        "output_per_1m": 0.2
-      },
-      "extra": {
-        "source": "https://docs.mistral.ai/models/model-cards/ministral-3-14b-25-12",
-        "card_slug": "ministral-3-14b-25-12",
-        "version": "25.12",
-        "release_date": "December 2, 2025",
-        "alias_count": "1",
-        "description": "Ministral 3 14B is the largest model in the Ministral 3 family, offering state-of-the-art capabilities and performance comparable to its larger Mistral Small 3.2 24B counterpart. Optimized for local deployment, it delivers high performance across diverse hardware, including local setups.",
-        "supports_batching": true,
-        "supports_prefix": true,
-        "supports_document_qna": true
-      }
-    },
-    {
-      "provider": "mistral",
-      "model_id": "ministral-3b-2512",
-      "display_name": "Ministral 3 3B",
-      "context_window": 256000,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.04,
-        "output_per_1m": 0.04,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://docs.mistral.ai/models/model-cards/ministral-3-3b-25-12",
-        "card_slug": "ministral-3-3b-25-12",
-        "version": "25.12",
-        "release_date": "December 2, 2025",
-        "alias_count": "1",
-        "description": "Ministral 3 3B is the smallest and most efficient model in the Ministral 3 family, offering robust language and vision capabilities in a compact package. Designed for edge deployment, it delivers high performance across diverse hardware, including local setups.",
-        "supports_batching": true,
-        "supports_prefix": true,
-        "supports_document_qna": true
-      }
-    },
-    {
-      "provider": "mistral",
-      "model_id": "ministral-8b-2512",
-      "display_name": "Ministral 3 8B",
-      "context_window": 256000,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "pricing": {
-        "currency": "USD",
-        "input_per_1m": 0.15,
-        "output_per_1m": 0.15
-      },
-      "extra": {
-        "source": "https://docs.mistral.ai/models/model-cards/ministral-3-8b-25-12",
-        "card_slug": "ministral-3-8b-25-12",
-        "version": "25.12",
-        "release_date": "December 2, 2025",
-        "alias_count": "1",
-        "description": "Ministral 3 8B is a powerful and efficient model in the Ministral 3 family, offering best-in-class text and vision capabilities. Built for edge deployment, it delivers high performance across diverse hardware, including local setups.",
-        "supports_batching": true,
-        "supports_prefix": true,
-        "supports_document_qna": true
-      }
-    },
-    {
-      "provider": "mistral",
-      "model_id": "mistral-embed-2312",
-      "display_name": "Mistral Embed",
-      "context_window": 8000,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": false,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "mistral-embed"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "currency": "USD",
-        "input_per_1m": 0.1
-      },
-      "extra": {
-        "source": "https://docs.mistral.ai/models/model-cards/mistral-embed-23-12",
-        "card_slug": "mistral-embed-23-12",
-        "version": "23.12",
-        "release_date": "December 11, 2023",
-        "license_badge": "premier",
-        "alias_count": "1",
-        "description": "Our state-of-the-art semantic for extracting representation of code extracts",
-        "supports_embeddings": true,
-        "supports_batching": true
-      }
-    },
-    {
-      "provider": "mistral",
-      "model_id": "mistral-large-2512",
-      "display_name": "Mistral Large 3",
-      "context_window": 256000,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "mistral-large-latest",
-        "mistral-large"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 2.0,
-        "output_per_1m": 6.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://docs.mistral.ai/models/model-cards/mistral-large-3-25-12",
-        "card_slug": "mistral-large-3-25-12",
-        "version": "25.12",
-        "release_date": "December 2, 2025",
-        "alias_count": "1",
-        "description": "Mistral Large 3, is a state-of-the-art, open-weight, general-purpose multimodal model with a granular Mixture-of-Experts architecture. It features 41B active parameters and 675B total parameters.",
-        "supports_batching": true,
-        "supports_prefix": true,
-        "supports_agents": true,
-        "supports_built_in_tools": true,
-        "supports_document_qna": true
-      }
-    },
-    {
-      "provider": "mistral",
-      "model_id": "mistral-medium-3-5",
-      "display_name": "Mistral Medium 3.5",
-      "context_window": 256000,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "mistral-medium-latest",
-        "mistral-medium"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 1.0,
-        "output_per_1m": 3.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://docs.mistral.ai/models/model-cards/mistral-medium-3-5-26-04",
-        "card_slug": "mistral-medium-3-5-26-04",
-        "version": "26.04",
-        "release_date": "April 28, 2026",
-        "alias_count": "2",
-        "description": "Our frontier-class multimodal model optimized for agentic and coding use cases. Released as open weights under a Modified MIT license.",
-        "supports_batching": true,
-        "supports_prefix": true,
-        "supports_agents": true,
-        "supports_built_in_tools": true,
-        "supports_predicted_outputs": true,
-        "supports_document_qna": true
-      }
-    },
-    {
-      "provider": "mistral",
-      "model_id": "mistral-moderation-2603",
-      "display_name": "Mistral Moderation 2",
-      "context_window": 128000,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": false,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "mistral-moderation-latest",
-        "mistral-moderation"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "currency": "USD",
-        "input_per_1m": 0.0
-      },
-      "extra": {
-        "source": "https://docs.mistral.ai/models/model-cards/mistral-moderation-26-03",
-        "card_slug": "mistral-moderation-26-03",
-        "version": "26.03",
-        "release_date": "March 1, 2026",
-        "license_badge": "premier",
-        "description": "Our latest moderation model with 128k context window and jailbreaking detection. Strong performance on complex multilingual data including long multi-turn conversations.",
-        "supports_moderation": true,
-        "supports_batching": true
-      }
-    },
-    {
-      "provider": "mistral",
-      "model_id": "mistral-next",
-      "display_name": "Mistral Next",
-      "context_window": 4096,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://docs.mistral.ai/models/model-cards/mistral-next",
-        "card_slug": "mistral-next",
-        "version": "1.0",
-        "release_date": "February 26, 2024",
-        "license_badge": "premier",
-        "replacement": "Mistral Large 3",
-        "description": "A prototype model, designed to be brief and concise."
-      }
-    },
-    {
-      "provider": "mistral",
-      "model_id": "mistral-ocr-2512",
-      "display_name": "OCR 3",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": false,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://docs.mistral.ai/models/model-cards/ocr-3-25-12",
-        "card_slug": "ocr-3-25-12",
-        "version": "25.12",
-        "release_date": "December 18, 2025",
-        "license_badge": "premier",
-        "description": "Our OCR service powering our Document AI stack that enables our users to extract interleaved text and images. OCR 4 is available as the newer model. OCR 3 remains available for existing integrations and production workloads.",
-        "price_per_m_pages": 2.0,
-        "price_per_m_pages_annotation": 3.0,
-        "supports_batching": true,
-        "supports_ocr_annotations": true
-      }
-    },
-    {
-      "provider": "mistral",
-      "model_id": "mistral-ocr-4-0",
-      "display_name": "OCR 4",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": false,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "mistral-ocr-latest",
-        "mistral-ocr"
-      ],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://docs.mistral.ai/models/model-cards/ocr-4-0",
-        "card_slug": "ocr-4-0",
-        "version": "4.0",
-        "release_date": "June 23, 2026",
-        "license_badge": "premier",
-        "alias_count": "2",
-        "description": "Our latest OCR service powering our Document AI stack, with native paragraph-level bounding box extraction and structural block labels.",
-        "price_per_m_pages": 4.0,
-        "price_per_m_pages_annotation": 5.0,
-        "supports_batching": true,
-        "supports_ocr_annotations": true,
-        "supports_bbox_extraction": true
-      }
-    },
-    {
-      "provider": "mistral",
-      "model_id": "mistral-small-2603",
-      "display_name": "Mistral Small 4",
-      "context_window": 256000,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "mistral-small-latest",
-        "mistral-small"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.2,
-        "output_per_1m": 0.6,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://docs.mistral.ai/models/model-cards/mistral-small-4-0-26-03",
-        "card_slug": "mistral-small-4-0-26-03",
-        "version": "26.03",
-        "release_date": "March 16, 2026",
-        "alias_count": "1",
-        "description": "Our powerful hybrid model unifying instruct, reasoning, and coding capabilities in a single model. 119B parameters with 6.5B active.",
-        "supports_batching": true,
-        "supports_prefix": true,
-        "supports_agents": true,
-        "supports_built_in_tools": true,
-        "supports_predicted_outputs": true,
-        "supports_document_qna": true
-      }
-    },
-    {
-      "provider": "mistral",
-      "model_id": "shieldstral-1-0",
-      "display_name": "Shieldstral 1.0",
-      "context_window": 32000,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://docs.mistral.ai/models/model-cards/shieldstral-1-0",
-        "card_slug": "shieldstral-1-0",
-        "version": "1.0",
-        "release_date": "August 4, 2026",
-        "description": "A compact multimodal moderation model for prompt moderation, response moderation, prompt-response pair classification, refusal detection, and safety filtering across text and image inputs. It uses natural-language policy questions and returns a yes or no classification."
-      }
-    },
-    {
-      "provider": "mistral",
-      "model_id": "voxtral-mini-transcribe-2602",
-      "display_name": "Voxtral Mini Transcribe 2",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "audio"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://docs.mistral.ai/models/model-cards/voxtral-mini-transcribe-26-02",
-        "card_slug": "voxtral-mini-transcribe-26-02",
-        "version": "26.02",
-        "release_date": "February 4, 2026",
-        "license_badge": "premier",
-        "alias_count": "1",
-        "description": "An efficient audio input model, pre-trained and optimized for transcription purposes only.",
-        "price_per_min": 0.003,
-        "supports_transcription": true
-      }
-    },
-    {
-      "provider": "mistral",
-      "model_id": "voxtral-mini-transcribe-realtime-2602",
-      "display_name": "Voxtral Mini Transcribe Realtime",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "audio"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://docs.mistral.ai/models/model-cards/voxtral-mini-transcribe-realtime-26-02",
-        "card_slug": "voxtral-mini-transcribe-realtime-26-02",
-        "version": "26.02",
-        "release_date": "February 4, 2026",
-        "alias_count": "1",
-        "description": "An efficient audio input model, pre-trained and optimized for live transcription purposes only.",
-        "price_per_min": 0.006,
-        "supports_transcription": true
-      },
-      "supports_realtime": true
-    },
-    {
-      "provider": "mistral",
-      "model_id": "voxtral-mini-tts-2603",
-      "display_name": "Voxtral TTS",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "audio"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://docs.mistral.ai/models/model-cards/voxtral-tts-26-03",
-        "card_slug": "voxtral-tts-26-03",
-        "version": "26.03",
-        "release_date": "March 23, 2026",
-        "alias_count": "1",
-        "description": "Our state-of-the-art text-to-speech model with zero-shot voice cloning. Supports 9 languages, streaming with ~90ms time-to-first-audio, and no transcript required for voice prompts.",
-        "tts_price": 16.0,
-        "tts_input_price": 0.0,
-        "supports_tts": true
-      }
-    },
-    {
-      "provider": "mistral",
-      "model_id": "voxtral-small-2507",
-      "display_name": "Voxtral Small",
-      "context_window": 32000,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "audio"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "pricing": {
-        "currency": "USD",
-        "input_per_1m": 0.1,
-        "output_per_1m": 0.3
-      },
-      "extra": {
-        "source": "https://docs.mistral.ai/models/model-cards/voxtral-small-25-07",
-        "card_slug": "voxtral-small-25-07",
-        "version": "25.07",
-        "release_date": "July 15, 2025",
-        "alias_count": "1",
-        "description": "Our first model with audio input capabilities for instruct use cases.",
-        "audio_price_per_min": 0.004,
-        "supports_batching": true,
-        "supports_prefix": true,
-        "supports_document_qna": true
-      }
-    },
-    {
-      "provider": "mistral",
-      "model_id": "codestral-2405",
-      "display_name": "Codestral",
-      "context_window": 32000,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": true,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": true,
-      "aliases": [],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 1.0,
-        "output_per_1m": 3.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://docs.mistral.ai/models/model-cards/codestral-24-05",
-        "card_slug": "codestral-24-05",
-        "version": "24.05",
-        "release_date": "May 29, 2024",
-        "retirement_date": "6/16/2025",
-        "replacement": "Codestral",
-        "description": "Our first cutting-edge language model for coding and FIM, released under the MNPL license."
-      }
-    },
-    {
-      "provider": "mistral",
-      "model_id": "codestral-2501",
-      "display_name": "Codestral",
-      "context_window": 4096,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": true,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": true,
-      "aliases": [],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 1.0,
-        "output_per_1m": 3.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://docs.mistral.ai/models/model-cards/codestral-25-01",
-        "card_slug": "codestral-25-01",
-        "version": "25.01",
-        "release_date": "January 13, 2025",
-        "license_badge": "premier",
-        "retirement_date": "11/30/2025",
-        "replacement": "Codestral",
-        "description": "Our cutting-edge language model for coding. Codestral specializes in low-latency, high-frequency tasks such as fill-in-the-middle (FIM), code correction and test generation.",
-        "supports_batching": true,
-        "supports_prefix": true,
-        "supports_predicted_outputs": true,
-        "supports_document_qna": true
       }
     },
     {
@@ -1223,6 +406,48 @@
         "supports_batching": true,
         "supports_prefix": true,
         "supports_document_qna": true
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "labs-leanstral-1-5",
+      "display_name": "Leanstral 1.5",
+      "context_window": 256000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "currency": "USD",
+        "input_per_1m": 0.0
+      },
+      "extra": {
+        "source": "https://docs.mistral.ai/models/model-cards/leanstral-1-5",
+        "card_slug": "leanstral-1-5",
+        "version": "1.5",
+        "release_date": "June 30, 2026",
+        "description": "An updated Lean 4 formal proof engineering model optimised for automated theorem proving and autoformalization. 119B total parameters, 6.5B active.",
+        "supports_agents": true
       }
     },
     {
@@ -1579,6 +804,124 @@
     },
     {
       "provider": "mistral",
+      "model_id": "mathstral-7b-0-1",
+      "display_name": "Mathstral 7B",
+      "context_window": 32000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://docs.mistral.ai/models/model-cards/mathstral-7b-0-1",
+        "card_slug": "mathstral-7b-0-1",
+        "version": "0.1",
+        "release_date": "July 16, 2024",
+        "replacement": "Mistral Small 4",
+        "description": "A math dedicated model for research purposes under an open license."
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "ministral-14b-2512",
+      "display_name": "Ministral 3 14B",
+      "context_window": 256000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "currency": "USD",
+        "input_per_1m": 0.2,
+        "output_per_1m": 0.2
+      },
+      "extra": {
+        "source": "https://docs.mistral.ai/models/model-cards/ministral-3-14b-25-12",
+        "card_slug": "ministral-3-14b-25-12",
+        "version": "25.12",
+        "release_date": "December 2, 2025",
+        "alias_count": "1",
+        "description": "Ministral 3 14B is the largest model in the Ministral 3 family, offering state-of-the-art capabilities and performance comparable to its larger Mistral Small 3.2 24B counterpart. Optimized for local deployment, it delivers high performance across diverse hardware, including local setups.",
+        "supports_batching": true,
+        "supports_prefix": true,
+        "supports_document_qna": true
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "Ministral-3B",
+      "display_name": "Ministral 3B",
+      "context_window": 131072,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Mistral",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "ministral-3b"
+      ],
+      "license_type": "open"
+    },
+    {
+      "provider": "mistral",
       "model_id": "ministral-3b-2410",
       "display_name": "Ministral 3B",
       "context_window": 4096,
@@ -1628,6 +971,53 @@
     },
     {
       "provider": "mistral",
+      "model_id": "ministral-3b-2512",
+      "display_name": "Ministral 3 3B",
+      "context_window": 256000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.04,
+        "output_per_1m": 0.04,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://docs.mistral.ai/models/model-cards/ministral-3-3b-25-12",
+        "card_slug": "ministral-3-3b-25-12",
+        "version": "25.12",
+        "release_date": "December 2, 2025",
+        "alias_count": "1",
+        "description": "Ministral 3 3B is the smallest and most efficient model in the Ministral 3 family, offering robust language and vision capabilities in a compact package. Designed for edge deployment, it delivers high performance across diverse hardware, including local setups.",
+        "supports_batching": true,
+        "supports_prefix": true,
+        "supports_document_qna": true
+      }
+    },
+    {
+      "provider": "mistral",
       "model_id": "ministral-8b-2410",
       "display_name": "Ministral 8B",
       "context_window": 4096,
@@ -1665,6 +1055,53 @@
         "deprecation_date": "12/2/2025",
         "replacement": "Ministral 3 8B",
         "description": "Powerful edge model with extremely high performance/price ratio. Learn more in our blog post",
+        "supports_batching": true,
+        "supports_prefix": true,
+        "supports_document_qna": true
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "ministral-8b-2512",
+      "display_name": "Ministral 3 8B",
+      "context_window": 256000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "currency": "USD",
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.15
+      },
+      "extra": {
+        "source": "https://docs.mistral.ai/models/model-cards/ministral-3-8b-25-12",
+        "card_slug": "ministral-3-8b-25-12",
+        "version": "25.12",
+        "release_date": "December 2, 2025",
+        "alias_count": "1",
+        "description": "Ministral 3 8B is a powerful and efficient model in the Ministral 3 family, offering best-in-class text and vision capabilities. Built for edge deployment, it delivers high performance across diverse hardware, including local setups.",
         "supports_batching": true,
         "supports_prefix": true,
         "supports_document_qna": true
@@ -1756,6 +1193,53 @@
         "retirement_date": "3/30/2025",
         "replacement": "Ministral 3 8B",
         "description": "An update to our first open model with better context."
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "mistral-embed-2312",
+      "display_name": "Mistral Embed",
+      "context_window": 8000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mistral-embed"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "currency": "USD",
+        "input_per_1m": 0.1
+      },
+      "extra": {
+        "source": "https://docs.mistral.ai/models/model-cards/mistral-embed-23-12",
+        "card_slug": "mistral-embed-23-12",
+        "version": "23.12",
+        "release_date": "December 11, 2023",
+        "license_badge": "premier",
+        "alias_count": "1",
+        "description": "Our state-of-the-art semantic for extracting representation of code extracts",
+        "supports_embeddings": true,
+        "supports_batching": true
       }
     },
     {
@@ -1897,6 +1381,91 @@
         "supports_predicted_outputs": true,
         "supports_document_qna": true
       }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "mistral-large-2512",
+      "display_name": "Mistral Large 3",
+      "context_window": 256000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mistral-large-latest",
+        "mistral-large"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 6.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://docs.mistral.ai/models/model-cards/mistral-large-3-25-12",
+        "card_slug": "mistral-large-3-25-12",
+        "version": "25.12",
+        "release_date": "December 2, 2025",
+        "alias_count": "1",
+        "description": "Mistral Large 3, is a state-of-the-art, open-weight, general-purpose multimodal model with a granular Mixture-of-Experts architecture. It features 41B active parameters and 675B total parameters.",
+        "supports_batching": true,
+        "supports_prefix": true,
+        "supports_agents": true,
+        "supports_built_in_tools": true,
+        "supports_document_qna": true
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "Mistral-Large-3",
+      "display_name": "Mistral Large 3",
+      "context_window": 262144,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Mistral",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mistral-large-3"
+      ],
+      "license_type": "open"
     },
     {
       "provider": "mistral",
@@ -2050,6 +1619,59 @@
     },
     {
       "provider": "mistral",
+      "model_id": "mistral-medium-3-5",
+      "display_name": "Mistral Medium 3.5",
+      "context_window": 256000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mistral-medium-latest",
+        "mistral-medium"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 1.0,
+        "output_per_1m": 3.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://docs.mistral.ai/models/model-cards/mistral-medium-3-5-26-04",
+        "card_slug": "mistral-medium-3-5-26-04",
+        "version": "26.04",
+        "release_date": "April 28, 2026",
+        "alias_count": "2",
+        "description": "Our frontier-class multimodal model optimized for agentic and coding use cases. Released as open weights under a Modified MIT license.",
+        "supports_batching": true,
+        "supports_prefix": true,
+        "supports_agents": true,
+        "supports_built_in_tools": true,
+        "supports_predicted_outputs": true,
+        "supports_document_qna": true
+      }
+    },
+    {
+      "provider": "mistral",
       "model_id": "mistral-moderation-2411",
       "display_name": "Mistral Moderation",
       "context_window": 0,
@@ -2089,6 +1711,93 @@
         "description": "Our moderation service that enables our users to detect harmful text content",
         "supports_moderation": true,
         "supports_batching": true
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "mistral-moderation-2603",
+      "display_name": "Mistral Moderation 2",
+      "context_window": 128000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mistral-moderation-latest",
+        "mistral-moderation"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "currency": "USD",
+        "input_per_1m": 0.0
+      },
+      "extra": {
+        "source": "https://docs.mistral.ai/models/model-cards/mistral-moderation-26-03",
+        "card_slug": "mistral-moderation-26-03",
+        "version": "26.03",
+        "release_date": "March 1, 2026",
+        "license_badge": "premier",
+        "description": "Our latest moderation model with 128k context window and jailbreaking detection. Strong performance on complex multilingual data including long multi-turn conversations.",
+        "supports_moderation": true,
+        "supports_batching": true
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "mistral-next",
+      "display_name": "Mistral Next",
+      "context_window": 4096,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://docs.mistral.ai/models/model-cards/mistral-next",
+        "card_slug": "mistral-next",
+        "version": "1.0",
+        "release_date": "February 26, 2024",
+        "license_badge": "premier",
+        "replacement": "Mistral Large 3",
+        "description": "A prototype model, designed to be brief and concise."
       }
     },
     {
@@ -2171,6 +1880,97 @@
         "deprecation_date": "2/27/2026",
         "replacement": "OCR 4",
         "description": "Our OCR service powering our Document AI stack that enables our users to extract interleaved text and images",
+        "supports_batching": true,
+        "supports_ocr_annotations": true,
+        "supports_bbox_extraction": true
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "mistral-ocr-2512",
+      "display_name": "OCR 3",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://docs.mistral.ai/models/model-cards/ocr-3-25-12",
+        "card_slug": "ocr-3-25-12",
+        "version": "25.12",
+        "release_date": "December 18, 2025",
+        "license_badge": "premier",
+        "description": "Our OCR service powering our Document AI stack that enables our users to extract interleaved text and images. OCR 4 is available as the newer model. OCR 3 remains available for existing integrations and production workloads.",
+        "price_per_m_pages": 2.0,
+        "price_per_m_pages_annotation": 3.0,
+        "supports_batching": true,
+        "supports_ocr_annotations": true
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "mistral-ocr-4-0",
+      "display_name": "OCR 4",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mistral-ocr-latest",
+        "mistral-ocr"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://docs.mistral.ai/models/model-cards/ocr-4-0",
+        "card_slug": "ocr-4-0",
+        "version": "4.0",
+        "release_date": "June 23, 2026",
+        "license_badge": "premier",
+        "alias_count": "2",
+        "description": "Our latest OCR service powering our Document AI stack, with native paragraph-level bounding box extraction and structural block labels.",
+        "price_per_m_pages": 4.0,
+        "price_per_m_pages_annotation": 5.0,
         "supports_batching": true,
         "supports_ocr_annotations": true,
         "supports_bbox_extraction": true
@@ -2462,6 +2262,748 @@
         "supports_built_in_tools": true,
         "supports_predicted_outputs": true,
         "supports_document_qna": true
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "mistral-small-2603",
+      "display_name": "Mistral Small 4",
+      "context_window": 256000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mistral-small-latest",
+        "mistral-small"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.2,
+        "output_per_1m": 0.6,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://docs.mistral.ai/models/model-cards/mistral-small-4-0-26-03",
+        "card_slug": "mistral-small-4-0-26-03",
+        "version": "26.03",
+        "release_date": "March 16, 2026",
+        "alias_count": "1",
+        "description": "Our powerful hybrid model unifying instruct, reasoning, and coding capabilities in a single model. 119B parameters with 6.5B active.",
+        "supports_batching": true,
+        "supports_prefix": true,
+        "supports_agents": true,
+        "supports_built_in_tools": true,
+        "supports_predicted_outputs": true,
+        "supports_document_qna": true
+      }
+    },
+    {
+      "provider": "mistralai",
+      "model_id": "mistralai/codestral-2508",
+      "display_name": "Mistral: Codestral 2508",
+      "context_window": 256000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Mistral",
+      "knowledge_cutoff": "2025-03-31",
+      "deprecated": false,
+      "aliases": [
+        "mistralai/codestral-2508"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.3,
+        "output_per_1m": 0.8999999999999999,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "mistralai",
+      "model_id": "mistralai/ministral-14b-2512",
+      "display_name": "Mistral: Ministral 3 14B 2512",
+      "context_window": 262144,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Mistral",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mistralai/ministral-14b-2512"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.19999999999999998,
+        "output_per_1m": 0.19999999999999998,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "mistralai",
+      "model_id": "mistralai/ministral-3b-2512",
+      "display_name": "Mistral: Ministral 3 3B 2512",
+      "context_window": 131072,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Mistral",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mistralai/ministral-3b-2512",
+        "Ministral-3B"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.09999999999999999,
+        "output_per_1m": 0.09999999999999999,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "mistralai",
+      "model_id": "mistralai/ministral-8b-2512",
+      "display_name": "Mistral: Ministral 3 8B 2512",
+      "context_window": 262144,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Mistral",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mistralai/ministral-8b-2512"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.15,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "mistralai",
+      "model_id": "mistralai/mistral-large",
+      "display_name": "Mistral Large",
+      "context_window": 128000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Mistral",
+      "knowledge_cutoff": "2024-11-30",
+      "deprecated": false,
+      "aliases": [
+        "mistralai/mistral-large"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 6.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "mistralai",
+      "model_id": "mistralai/mistral-large-2407",
+      "display_name": "Mistral Large 2407",
+      "context_window": 131072,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Mistral",
+      "knowledge_cutoff": "2024-03-31",
+      "deprecated": false,
+      "aliases": [
+        "mistralai/mistral-large-2407"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 6.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "mistralai",
+      "model_id": "mistralai/mistral-large-2512",
+      "display_name": "Mistral: Mistral Large 3 2512",
+      "context_window": 262144,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Mistral",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mistralai/mistral-large-2512",
+        "Mistral-Large-3"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.5,
+        "output_per_1m": 1.5,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "mistralai",
+      "model_id": "mistralai/mistral-medium-3",
+      "display_name": "Mistral: Mistral Medium 3",
+      "context_window": 131072,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Mistral",
+      "knowledge_cutoff": "2025-03-31",
+      "deprecated": false,
+      "aliases": [
+        "mistralai/mistral-medium-3"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.39999999999999997,
+        "output_per_1m": 2.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "mistralai",
+      "model_id": "mistralai/mistral-medium-3-5",
+      "display_name": "Mistral: Mistral Medium 3.5",
+      "context_window": 262144,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Mistral",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mistralai/mistral-medium-3-5"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 1.5,
+        "output_per_1m": 7.5,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "mistralai",
+      "model_id": "mistralai/mistral-medium-3.1",
+      "display_name": "Mistral: Mistral Medium 3.1",
+      "context_window": 131072,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Mistral",
+      "knowledge_cutoff": "2025-06-30",
+      "deprecated": false,
+      "aliases": [
+        "mistralai/mistral-medium-3.1"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.39999999999999997,
+        "output_per_1m": 2.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "mistralai",
+      "model_id": "mistralai/mistral-nemo",
+      "display_name": "Mistral: Mistral Nemo",
+      "context_window": 131072,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Mistral",
+      "knowledge_cutoff": "2024-04-30",
+      "deprecated": false,
+      "aliases": [
+        "mistralai/mistral-nemo"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.019000000000000003,
+        "output_per_1m": 0.03,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "mistralai",
+      "model_id": "mistralai/mistral-saba",
+      "display_name": "Mistral: Saba",
+      "context_window": 32768,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Mistral",
+      "knowledge_cutoff": "2024-09-30",
+      "deprecated": false,
+      "aliases": [
+        "mistralai/mistral-saba"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.19999999999999998,
+        "output_per_1m": 0.6,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "mistralai",
+      "model_id": "mistralai/mistral-small-24b-instruct-2501",
+      "display_name": "Mistral: Mistral Small 3",
+      "context_window": 32768,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Mistral",
+      "knowledge_cutoff": "2023-10-31",
+      "deprecated": false,
+      "aliases": [
+        "mistralai/mistral-small-24b-instruct-2501"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.049999999999999996,
+        "output_per_1m": 0.08,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "mistralai",
+      "model_id": "mistralai/mistral-small-2603",
+      "display_name": "Mistral: Mistral Small 4",
+      "context_window": 262144,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Mistral",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mistralai/mistral-small-2603"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.6,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "mistralai",
+      "model_id": "mistralai/mistral-small-3.1-24b-instruct",
+      "display_name": "Mistral: Mistral Small 3.1 24B",
+      "context_window": 128000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Mistral",
+      "knowledge_cutoff": "2023-10-31",
+      "deprecated": false,
+      "aliases": [
+        "mistralai/mistral-small-3.1-24b-instruct"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.351,
+        "output_per_1m": 0.5549999999999999,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "mistralai",
+      "model_id": "mistralai/mistral-small-3.2-24b-instruct",
+      "display_name": "Mistral: Mistral Small 3.2 24B",
+      "context_window": 256000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "image",
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Mistral",
+      "knowledge_cutoff": "2023-10-31",
+      "deprecated": false,
+      "aliases": [
+        "mistralai/mistral-small-3.2-24b-instruct"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.09375,
+        "output_per_1m": 0.25,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "mistralai",
+      "model_id": "mistralai/mixtral-8x22b-instruct",
+      "display_name": "Mistral: Mixtral 8x22B Instruct",
+      "context_window": 65536,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Mistral",
+      "knowledge_cutoff": "2024-01-31",
+      "deprecated": false,
+      "aliases": [
+        "mistralai/mixtral-8x22b-instruct"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 6.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "mistralai",
+      "model_id": "mistralai/voxtral-small-24b-2507",
+      "display_name": "Mistral: Voxtral Small 24B 2507",
+      "context_window": 32000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "audio",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Mistral",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mistralai/voxtral-small-24b-2507"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.09999999999999999,
+        "output_per_1m": 0.3,
+        "currency": "USD"
       }
     },
     {
@@ -2780,6 +3322,44 @@
     },
     {
       "provider": "mistral",
+      "model_id": "shieldstral-1-0",
+      "display_name": "Shieldstral 1.0",
+      "context_window": 32000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://docs.mistral.ai/models/model-cards/shieldstral-1-0",
+        "card_slug": "shieldstral-1-0",
+        "version": "1.0",
+        "release_date": "August 4, 2026",
+        "description": "A compact multimodal moderation model for prompt moderation, response moderation, prompt-response pair classification, refusal detection, and safety filtering across text and image inputs. It uses natural-language policy questions and returns a yes or no classification."
+      }
+    },
+    {
+      "provider": "mistral",
       "model_id": "voxtral-mini-2507",
       "display_name": "Voxtral Mini",
       "context_window": 4096,
@@ -2863,6 +3443,180 @@
         "replacement": "Voxtral Mini Transcribe 2",
         "description": "An efficient audio input model, pre-trained and optimized for transcription purposes only.",
         "supports_transcription": true
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "voxtral-mini-transcribe-2602",
+      "display_name": "Voxtral Mini Transcribe 2",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://docs.mistral.ai/models/model-cards/voxtral-mini-transcribe-26-02",
+        "card_slug": "voxtral-mini-transcribe-26-02",
+        "version": "26.02",
+        "release_date": "February 4, 2026",
+        "license_badge": "premier",
+        "alias_count": "1",
+        "description": "An efficient audio input model, pre-trained and optimized for transcription purposes only.",
+        "price_per_min": 0.003,
+        "supports_transcription": true
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "voxtral-mini-transcribe-realtime-2602",
+      "display_name": "Voxtral Mini Transcribe Realtime",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://docs.mistral.ai/models/model-cards/voxtral-mini-transcribe-realtime-26-02",
+        "card_slug": "voxtral-mini-transcribe-realtime-26-02",
+        "version": "26.02",
+        "release_date": "February 4, 2026",
+        "alias_count": "1",
+        "description": "An efficient audio input model, pre-trained and optimized for live transcription purposes only.",
+        "price_per_min": 0.006,
+        "supports_transcription": true
+      },
+      "supports_realtime": true
+    },
+    {
+      "provider": "mistral",
+      "model_id": "voxtral-mini-tts-2603",
+      "display_name": "Voxtral TTS",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "audio"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://docs.mistral.ai/models/model-cards/voxtral-tts-26-03",
+        "card_slug": "voxtral-tts-26-03",
+        "version": "26.03",
+        "release_date": "March 23, 2026",
+        "alias_count": "1",
+        "description": "Our state-of-the-art text-to-speech model with zero-shot voice cloning. Supports 9 languages, streaming with ~90ms time-to-first-audio, and no transcript required for voice prompts.",
+        "tts_price": 16.0,
+        "tts_input_price": 0.0,
+        "supports_tts": true
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "voxtral-small-2507",
+      "display_name": "Voxtral Small",
+      "context_window": 32000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "currency": "USD",
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.3
+      },
+      "extra": {
+        "source": "https://docs.mistral.ai/models/model-cards/voxtral-small-25-07",
+        "card_slug": "voxtral-small-25-07",
+        "version": "25.07",
+        "release_date": "July 15, 2025",
+        "alias_count": "1",
+        "description": "Our first model with audio input capabilities for instruct use cases.",
+        "audio_price_per_min": 0.004,
+        "supports_batching": true,
+        "supports_prefix": true,
+        "supports_document_qna": true
       }
     }
   ]

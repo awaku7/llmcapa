@@ -1,3 +1,17 @@
+
+## OpenRouter Catalog Refresh (2026-08-11)
+
+### Source
+- OpenRouter model catalog: https://openrouter.ai/api/v1/models
+- Snapshot: 402 model records
+
+### Updates
+- Added Cohere catalog (`command-a`, `command-r7b-12-2024`, Command R variants, and North Mini Code).
+- Refreshed native catalogs with current OpenRouter records and pricing metadata.
+- Added catalogs for additional OpenRouter providers, including AI21, Cohere, Perplexity, Upstage, Writer, and others.
+- Added compatibility aliases for Llama 3.2/4, Mistral Large 3, Ministral 3B, and `cohere-command-a`.
+- Deduplicated case-insensitive model IDs while retaining curated local provider data.
+
 ## DeepSeek (2026-08-01)
 
 ### Update

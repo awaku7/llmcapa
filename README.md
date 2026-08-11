@@ -4,7 +4,7 @@ Lookup capabilities (context window, modalities, supported features) of various 
 
 ## Features
 
-- **Comprehensive Bundled Data**: Offline capability data for OpenAI, Anthropic, Google (Gemini), Microsoft (Phi), Amazon (Nova/Titan), Meta (Llama), Mistral, Qwen, DeepSeek, xAI (Grok), NVIDIA, MoonshotAI (Kimi), zhipu-ai (GLM), Sakana AI (Fugu), **Azure AI Foundry**, Novita AI, **Together AI (98 models)**, OpenRouter, **HuggingFace (2,675 popular models)**, and Japanese domestic models (NTT tsuzumi, PFN PLaMo, ELYZA, SoftBank, NEC, Fujitsu, etc. adopted by the Digital Agency's "GENNAI" platform).
+- **Comprehensive Bundled Data**: Offline capability data for OpenAI, Anthropic, Google (Gemini), Microsoft (Phi), Amazon (Nova/Titan), Meta (Llama), Mistral, Cohere (Command), Qwen, DeepSeek, xAI (Grok), NVIDIA, MoonshotAI (Kimi), zhipu-ai (GLM), Sakana AI (Fugu), **Azure AI Foundry**, Novita AI, **Together AI (98 models)**, OpenRouter, **HuggingFace (2,675 popular models)**, and Japanese domestic models (NTT tsuzumi, PFN PLaMo, ELYZA, SoftBank, NEC, Fujitsu, etc. adopted by the Digital Agency's "GENNAI" platform).
 - **Zero Runtime Dependencies**: Built entirely on the Python standard library.
 - **Alias Resolution**: Automatically resolves model aliases and provider-specific names (e.g., `gpt-4o-2024-08-06` -> `gpt-4o`, `gemini-1.5-pro-preview-0409` -> `gemini-1.5-pro`).
 - **Provider Aliases**: Provider arguments accept common aliases and normalized forms (e.g., `grok`/`x-ai` → `xai`, `bedrock` → `amazon`, `vertexai`/`gemini` → `google`, `azure` → `azure-openai`, `hf` → `huggingface`, `alibaba`/`dashscope` → `qwen`, `lm-studio` → `lmstudio`). Separators `_. ` are treated as `-`.
@@ -217,7 +217,6 @@ for cap in llmcapa.list_models(provider="sakana"):
     print(cap.model_id, cap.context_window)
 ```
 
-
 ### FIM (Fill-in-the-Middle) Support
 
 Check if a model supports code infilling / Fill-in-the-Middle completion:
@@ -369,6 +368,7 @@ llmcapa.load_extra("my_models.json")
 ```
 
 `my_models.json` format:
+
 ```json
 {
   "models": [

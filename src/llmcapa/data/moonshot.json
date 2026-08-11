@@ -2,9 +2,140 @@
   "models": [
     {
       "provider": "moonshot",
-      "model_id": "kimi-k3",
-      "display_name": "Kimi K3",
-      "context_window": 1048576,
+      "model_id": "kimi-k2",
+      "display_name": "Kimi K2",
+      "context_window": 131072,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "moonshotai/kimi-k2",
+        "moonshot/kimi-k2",
+        "kimi/kimi-k2"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.57,
+        "output_per_1m": 2.3,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://platform.kimi.ai/docs/pricing/chat",
+        "status": "legacy-k2-family"
+      }
+    },
+    {
+      "provider": "moonshot",
+      "model_id": "kimi-k2-0905",
+      "display_name": "Kimi K2 0905",
+      "context_window": 262144,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "moonshotai/kimi-k2-0905",
+        "moonshot/kimi-k2-0905",
+        "kimi/kimi-k2-0905"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.6,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://platform.kimi.ai/docs/pricing/chat",
+        "status": "legacy-k2-family"
+      }
+    },
+    {
+      "provider": "moonshot",
+      "model_id": "kimi-k2-thinking",
+      "display_name": "Kimi K2 Thinking",
+      "context_window": 262144,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "moonshotai/kimi-k2-thinking",
+        "moonshot/kimi-k2-thinking",
+        "kimi/kimi-k2-thinking"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.6,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://platform.kimi.ai/docs/pricing/chat",
+        "cached_input_per_1m": 0.15,
+        "cache_miss_input_per_1m": 0.6,
+        "status": "legacy-k2-family"
+      }
+    },
+    {
+      "provider": "moonshot",
+      "model_id": "kimi-k2.5",
+      "display_name": "Kimi K2.5",
+      "context_window": 262144,
       "max_output_tokens": 0,
       "input_modalities": [
         "text",
@@ -30,26 +161,68 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "kimi-latest",
-        "moonshotai/kimi-k3",
-        "moonshotai/kimi-latest",
-        "moonshot/kimi-k3",
-        "kimi/kimi-k3"
+        "moonshotai/kimi-k2.5",
+        "moonshot/kimi-k2.5",
+        "kimi/kimi-k2.5"
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 3.0,
-        "output_per_1m": 15.0,
+        "input_per_1m": 0.6,
+        "output_per_1m": 3.0,
         "currency": "USD"
       },
       "extra": {
         "source": "https://platform.kimi.ai/docs/pricing/chat",
-        "cached_input_per_1m": 0.3,
-        "cache_miss_input_per_1m": 3.0,
-        "flagship": true,
-        "params": "2.8T",
-        "note": "Always reasons; tool_choice + dynamically loaded tools; reasoning_effort=max",
-        "official_table": "cache_hit=$0.30 cache_miss=$3.00 output=$15.00 @1M ctx"
+        "cached_input_per_1m": 0.1,
+        "cache_miss_input_per_1m": 0.6,
+        "official_table": "cache_hit=$0.10 cache_miss=$0.60 output=$3.00 @256k"
+      }
+    },
+    {
+      "provider": "moonshot",
+      "model_id": "kimi-k2.6",
+      "display_name": "Kimi K2.6",
+      "context_window": 262144,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "moonshotai/kimi-k2.6",
+        "moonshot/kimi-k2.6",
+        "kimi/kimi-k2.6"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.95,
+        "output_per_1m": 4.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://platform.kimi.ai/docs/pricing/chat",
+        "cached_input_per_1m": 0.16,
+        "cache_miss_input_per_1m": 0.95,
+        "official_table": "cache_hit=$0.16 cache_miss=$0.95 output=$4.00 @256k"
       }
     },
     {
@@ -153,9 +326,9 @@
     },
     {
       "provider": "moonshot",
-      "model_id": "kimi-k2.6",
-      "display_name": "Kimi K2.6",
-      "context_window": 262144,
+      "model_id": "kimi-k3",
+      "display_name": "Kimi K3",
+      "context_window": 1048576,
       "max_output_tokens": 0,
       "input_modalities": [
         "text",
@@ -181,206 +354,33 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "moonshotai/kimi-k2.6",
-        "moonshot/kimi-k2.6",
-        "kimi/kimi-k2.6"
+        "kimi-latest",
+        "moonshotai/kimi-k3",
+        "moonshotai/kimi-latest",
+        "moonshot/kimi-k3",
+        "kimi/kimi-k3"
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.95,
-        "output_per_1m": 4.0,
+        "input_per_1m": 3.0,
+        "output_per_1m": 15.0,
         "currency": "USD"
       },
       "extra": {
         "source": "https://platform.kimi.ai/docs/pricing/chat",
-        "cached_input_per_1m": 0.16,
-        "cache_miss_input_per_1m": 0.95,
-        "official_table": "cache_hit=$0.16 cache_miss=$0.95 output=$4.00 @256k"
+        "cached_input_per_1m": 0.3,
+        "cache_miss_input_per_1m": 3.0,
+        "flagship": true,
+        "params": "2.8T",
+        "note": "Always reasons; tool_choice + dynamically loaded tools; reasoning_effort=max",
+        "official_table": "cache_hit=$0.30 cache_miss=$3.00 output=$15.00 @1M ctx"
       }
     },
     {
       "provider": "moonshot",
-      "model_id": "kimi-k2.5",
-      "display_name": "Kimi K2.5",
-      "context_window": 262144,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "moonshotai/kimi-k2.5",
-        "moonshot/kimi-k2.5",
-        "kimi/kimi-k2.5"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.6,
-        "output_per_1m": 3.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://platform.kimi.ai/docs/pricing/chat",
-        "cached_input_per_1m": 0.1,
-        "cache_miss_input_per_1m": 0.6,
-        "official_table": "cache_hit=$0.10 cache_miss=$0.60 output=$3.00 @256k"
-      }
-    },
-    {
-      "provider": "moonshot",
-      "model_id": "kimi-k2-thinking",
-      "display_name": "Kimi K2 Thinking",
-      "context_window": 262144,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "moonshotai/kimi-k2-thinking",
-        "moonshot/kimi-k2-thinking",
-        "kimi/kimi-k2-thinking"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.6,
-        "output_per_1m": 2.5,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://platform.kimi.ai/docs/pricing/chat",
-        "cached_input_per_1m": 0.15,
-        "cache_miss_input_per_1m": 0.6,
-        "status": "legacy-k2-family"
-      }
-    },
-    {
-      "provider": "moonshot",
-      "model_id": "kimi-k2-0905",
-      "display_name": "Kimi K2 0905",
-      "context_window": 262144,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "moonshotai/kimi-k2-0905",
-        "moonshot/kimi-k2-0905",
-        "kimi/kimi-k2-0905"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.6,
-        "output_per_1m": 2.5,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://platform.kimi.ai/docs/pricing/chat",
-        "status": "legacy-k2-family"
-      }
-    },
-    {
-      "provider": "moonshot",
-      "model_id": "kimi-k2",
-      "display_name": "Kimi K2",
+      "model_id": "moonshot-v1-128k",
+      "display_name": "Moonshot V1 128K",
       "context_window": 131072,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "moonshotai/kimi-k2",
-        "moonshot/kimi-k2",
-        "kimi/kimi-k2"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.57,
-        "output_per_1m": 2.3,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://platform.kimi.ai/docs/pricing/chat",
-        "status": "legacy-k2-family"
-      }
-    },
-    {
-      "provider": "moonshot",
-      "model_id": "moonshot-v1-8k",
-      "display_name": "Moonshot V1 8K",
-      "context_window": 8192,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -404,14 +404,14 @@
       "knowledge_cutoff": null,
       "deprecated": true,
       "aliases": [
-        "moonshotai/moonshot-v1-8k",
-        "moonshot/moonshot-v1-8k",
-        "kimi/moonshot-v1-8k"
+        "moonshotai/moonshot-v1-128k",
+        "moonshot/moonshot-v1-128k",
+        "kimi/moonshot-v1-128k"
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.2,
-        "output_per_1m": 2.0,
+        "input_per_1m": 2.0,
+        "output_per_1m": 5.0,
         "currency": "USD"
       },
       "extra": {
@@ -464,9 +464,9 @@
     },
     {
       "provider": "moonshot",
-      "model_id": "moonshot-v1-128k",
-      "display_name": "Moonshot V1 128K",
-      "context_window": 131072,
+      "model_id": "moonshot-v1-8k",
+      "display_name": "Moonshot V1 8K",
+      "context_window": 8192,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -490,19 +490,320 @@
       "knowledge_cutoff": null,
       "deprecated": true,
       "aliases": [
-        "moonshotai/moonshot-v1-128k",
-        "moonshot/moonshot-v1-128k",
-        "kimi/moonshot-v1-128k"
+        "moonshotai/moonshot-v1-8k",
+        "moonshot/moonshot-v1-8k",
+        "kimi/moonshot-v1-8k"
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 2.0,
-        "output_per_1m": 5.0,
+        "input_per_1m": 0.2,
+        "output_per_1m": 2.0,
         "currency": "USD"
       },
       "extra": {
         "source": "https://platform.kimi.ai/docs/pricing/chat",
         "status": "legacy-v1"
+      }
+    },
+    {
+      "provider": "moonshotai",
+      "model_id": "moonshotai/kimi-k2",
+      "display_name": "MoonshotAI: Kimi K2 0711",
+      "context_window": 131072,
+      "max_output_tokens": 100352,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": "2024-12-31",
+      "deprecated": false,
+      "aliases": [
+        "moonshotai/kimi-k2"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.5700000000000001,
+        "output_per_1m": 2.3,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "moonshotai",
+      "model_id": "moonshotai/kimi-k2-0905",
+      "display_name": "MoonshotAI: Kimi K2 0905",
+      "context_window": 262144,
+      "max_output_tokens": 100352,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": "2024-12-31",
+      "deprecated": false,
+      "aliases": [
+        "moonshotai/kimi-k2-0905"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.6,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "moonshotai",
+      "model_id": "moonshotai/kimi-k2-thinking",
+      "display_name": "MoonshotAI: Kimi K2 Thinking",
+      "context_window": 262144,
+      "max_output_tokens": 100352,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "moonshotai/kimi-k2-thinking"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.6,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "moonshotai",
+      "model_id": "moonshotai/kimi-k2.5",
+      "display_name": "MoonshotAI: Kimi K2.5",
+      "context_window": 262144,
+      "max_output_tokens": 262144,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "moonshotai/kimi-k2.5"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.5700000000000001,
+        "output_per_1m": 2.8499999999999996,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "moonshotai",
+      "model_id": "moonshotai/kimi-k2.6",
+      "display_name": "MoonshotAI: Kimi K2.6",
+      "context_window": 262144,
+      "max_output_tokens": 262144,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "moonshotai/kimi-k2.6"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.95,
+        "output_per_1m": 4.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "moonshotai",
+      "model_id": "moonshotai/kimi-k2.7-code",
+      "display_name": "MoonshotAI: Kimi K2.7 Code",
+      "context_window": 262144,
+      "max_output_tokens": 262144,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "moonshotai/kimi-k2.7-code"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.7,
+        "output_per_1m": 3.5,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "moonshotai",
+      "model_id": "moonshotai/kimi-k2.7-code:batch",
+      "display_name": "MoonshotAI: Kimi K2.7 Code (batch)",
+      "context_window": 262144,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "moonshotai/kimi-k2.7-code:batch"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.475,
+        "output_per_1m": 2.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "moonshotai",
+      "model_id": "moonshotai/kimi-k3",
+      "display_name": "MoonshotAI: Kimi K3",
+      "context_window": 1048576,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "moonshotai/kimi-k3"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 3.0,
+        "output_per_1m": 15.0,
+        "currency": "USD"
       }
     }
   ]

@@ -1,6 +1,620 @@
 {
   "models": [
     {
+      "provider": "meta-llama",
+      "model_id": "Llama-3.2-90B-Vision-Instruct",
+      "display_name": "Llama 3.2 90B Vision Instruct",
+      "context_window": 128000,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Llama3",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "llama-3.2-90b-vision-instruct"
+      ],
+      "license_type": "open"
+    },
+    {
+      "provider": "meta-llama",
+      "model_id": "meta-llama/llama-3.1-70b-instruct",
+      "display_name": "Meta: Llama 3.1 70B Instruct",
+      "context_window": 131072,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Llama3",
+      "knowledge_cutoff": "2023-12-31",
+      "deprecated": false,
+      "aliases": [
+        "meta-llama/llama-3.1-70b-instruct"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.39999999999999997,
+        "output_per_1m": 0.39999999999999997,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "meta-llama",
+      "model_id": "meta-llama/llama-3.1-8b-instruct",
+      "display_name": "Meta: Llama 3.1 8B Instruct",
+      "context_window": 131072,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Llama3",
+      "knowledge_cutoff": "2023-12-31",
+      "deprecated": false,
+      "aliases": [
+        "meta-llama/llama-3.1-8b-instruct"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.049999999999999996,
+        "output_per_1m": 0.08,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "meta-llama",
+      "model_id": "meta-llama/Llama-3.2-11B-Vision-Instruct",
+      "display_name": "meta-llama/Llama-3.2-11B-Vision-Instruct",
+      "context_window": 4096,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "unknown",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "meta-llama/llama-3.2-11b-vision-instruct"
+      ]
+    },
+    {
+      "provider": "meta-llama",
+      "model_id": "meta-llama/llama-3.2-1b-instruct",
+      "display_name": "Meta: Llama 3.2 1B Instruct",
+      "context_window": 60000,
+      "max_output_tokens": 60000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Llama3",
+      "knowledge_cutoff": "2023-12-31",
+      "deprecated": false,
+      "aliases": [
+        "meta-llama/llama-3.2-1b-instruct"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.027,
+        "output_per_1m": 0.201,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "meta-llama",
+      "model_id": "meta-llama/llama-3.2-3b-instruct",
+      "display_name": "Meta: Llama 3.2 3B Instruct",
+      "context_window": 131072,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Llama3",
+      "knowledge_cutoff": "2023-12-31",
+      "deprecated": false,
+      "aliases": [
+        "meta-llama/llama-3.2-3b-instruct"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.049999999999999996,
+        "output_per_1m": 0.33,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "meta-llama",
+      "model_id": "meta-llama/Llama-3.2-90B-Vision-Instruct",
+      "display_name": "meta-llama/Llama-3.2-90B-Vision-Instruct",
+      "context_window": 4096,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "unknown",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "meta-llama/llama-3.2-90b-vision-instruct"
+      ]
+    },
+    {
+      "provider": "meta-llama",
+      "model_id": "meta-llama/llama-3.3-70b-instruct",
+      "display_name": "Meta: Llama 3.3 70B Instruct",
+      "context_window": 131072,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Llama3",
+      "knowledge_cutoff": "2023-12-31",
+      "deprecated": false,
+      "aliases": [
+        "meta-llama/llama-3.3-70b-instruct"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.09999999999999999,
+        "output_per_1m": 0.32,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "meta-llama",
+      "model_id": "meta-llama/llama-4-maverick",
+      "display_name": "Meta: Llama 4 Maverick",
+      "context_window": 1048576,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Llama4",
+      "knowledge_cutoff": "2024-08-31",
+      "deprecated": false,
+      "aliases": [
+        "meta-llama/llama-4-maverick",
+        "Llama-4-Maverick-17B-128E"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.19999999999999998,
+        "output_per_1m": 0.696,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "meta-llama",
+      "model_id": "meta-llama/Llama-4-Maverick-17B-128E-Instruct",
+      "display_name": "meta-llama/Llama-4-Maverick-17B-128E-Instruct",
+      "context_window": 4096,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "unknown",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "meta-llama/llama-4-maverick-17b-128e-instruct"
+      ]
+    },
+    {
+      "provider": "meta-llama",
+      "model_id": "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
+      "display_name": "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
+      "context_window": 4096,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "unknown",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "meta-llama/llama-4-maverick-17b-128e-instruct-fp8"
+      ]
+    },
+    {
+      "provider": "meta-llama",
+      "model_id": "meta-llama/llama-4-scout",
+      "display_name": "Meta: Llama 4 Scout",
+      "context_window": 1310720,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Llama4",
+      "knowledge_cutoff": "2024-08-31",
+      "deprecated": false,
+      "aliases": [
+        "meta-llama/llama-4-scout",
+        "Llama-4-Scout-17B-16E"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.09999999999999999,
+        "output_per_1m": 0.3,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "meta-llama",
+      "model_id": "meta-llama/Llama-4-Scout-17B-16E-Instruct",
+      "display_name": "meta-llama/Llama-4-Scout-17B-16E-Instruct",
+      "context_window": 4096,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "unknown",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "meta-llama/llama-4-scout-17b-16e-instruct"
+      ]
+    },
+    {
+      "provider": "meta-llama",
+      "model_id": "meta-llama/Llama-Guard-4-12B",
+      "display_name": "meta-llama/Llama-Guard-4-12B",
+      "context_window": 4096,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "unknown",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "meta-llama/llama-guard-4-12b"
+      ]
+    },
+    {
+      "provider": "meta",
+      "model_id": "meta/muse-glimmer-30b",
+      "display_name": "Meta: Muse Glimmer 30B",
+      "context_window": 131072,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "meta/muse-glimmer-30b"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.35,
+        "output_per_1m": 1.5,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "meta",
+      "model_id": "meta/muse-spark-1.1",
+      "display_name": "Meta: Muse Spark 1.1",
+      "context_window": 1048576,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "file",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "meta/muse-spark-1.1"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 1.25,
+        "output_per_1m": 4.25,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "meta",
+      "model_id": "meta/muse-spark-1.2",
+      "display_name": "Meta: Muse Spark 1.2",
+      "context_window": 1048576,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "file",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "meta/muse-spark-1.2"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 1.25,
+        "output_per_1m": 4.25,
+        "currency": "USD"
+      }
+    },
+    {
       "provider": "meta",
       "model_id": "muse-spark-1.1",
       "display_name": "Muse Spark 1.1",
@@ -72,204 +686,6 @@
         ],
         "note": "Meta Model API unified pricing for all models; only muse-spark-1.1 listed as available today"
       }
-    },
-    {
-      "provider": "meta-llama",
-      "model_id": "meta-llama/Llama-3.2-11B-Vision-Instruct",
-      "display_name": "meta-llama/Llama-3.2-11B-Vision-Instruct",
-      "context_window": 4096,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "unknown",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "meta-llama/llama-3.2-11b-vision-instruct"
-      ]
-    },
-    {
-      "provider": "meta-llama",
-      "model_id": "meta-llama/Llama-3.2-90B-Vision-Instruct",
-      "display_name": "meta-llama/Llama-3.2-90B-Vision-Instruct",
-      "context_window": 4096,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "unknown",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "meta-llama/llama-3.2-90b-vision-instruct"
-      ]
-    },
-    {
-      "provider": "meta-llama",
-      "model_id": "meta-llama/Llama-4-Maverick-17B-128E-Instruct",
-      "display_name": "meta-llama/Llama-4-Maverick-17B-128E-Instruct",
-      "context_window": 4096,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "unknown",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "meta-llama/llama-4-maverick-17b-128e-instruct"
-      ]
-    },
-    {
-      "provider": "meta-llama",
-      "model_id": "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
-      "display_name": "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
-      "context_window": 4096,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "unknown",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "meta-llama/llama-4-maverick-17b-128e-instruct-fp8"
-      ]
-    },
-    {
-      "provider": "meta-llama",
-      "model_id": "meta-llama/Llama-4-Scout-17B-16E-Instruct",
-      "display_name": "meta-llama/Llama-4-Scout-17B-16E-Instruct",
-      "context_window": 4096,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "unknown",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "meta-llama/llama-4-scout-17b-16e-instruct"
-      ]
-    },
-    {
-      "provider": "meta-llama",
-      "model_id": "meta-llama/Llama-Guard-4-12B",
-      "display_name": "meta-llama/Llama-Guard-4-12B",
-      "context_window": 4096,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "unknown",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "meta-llama/llama-guard-4-12b"
-      ]
     }
   ]
 }
