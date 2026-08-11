@@ -34,6 +34,10 @@ class Feature(str, Enum):
     LLMC_FEAT_VIDEO_OUTPUT = "video_output"
     # Transport / API modes
     LLMC_FEAT_REALTIME = "realtime"
+    LLMC_FEAT_FILE_INPUT = "file_input"
+    LLMC_FEAT_SPEECH_INPUT = "speech_input"
+    LLMC_FEAT_SPEECH_OUTPUT = "speech_output"
+    LLMC_FEAT_EMBEDDING_OUTPUT = "embedding_output"
 
 
 
@@ -113,6 +117,11 @@ class Capability:
         attr = f"supports_{feature}"
         if hasattr(self, attr):
             return bool(getattr(self, attr))
+        if feature == "file_input":
+            # PDF and other document subtypes are file inputs.
+            return "file" in self.input_modalities or "pdf" in self.input_modalities
+        if feature == "embedding_output":
+            return "embedding" in self.output_modalities or "embeddings" in self.output_modalities
         if feature.endswith("_input"):
             return feature[:-6] in self.input_modalities
         if feature.endswith("_output"):
@@ -130,7 +139,8 @@ class Capability:
         standard_features = [
             "vision", "function_calling", "json_mode", "streaming",
             "reasoning", "chat_completion", "responses_api",
-            "reasoning_effort", "thinking_budget", "fim", "realtime"
+            "reasoning_effort", "thinking_budget", "fim", "realtime",
+            "file_input", "speech_input", "speech_output", "embedding_output"
         ]
         # Gather input/output modalities
         for mod in self.input_modalities:
