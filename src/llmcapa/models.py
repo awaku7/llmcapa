@@ -69,7 +69,6 @@ class Capability:
     supports_vision: bool = False
     supports_reasoning: bool = False
     supports_chat_completion: bool = True
-    supports_realtime: bool = False
     supports_responses_api: bool = False
     supports_reasoning_effort: bool = False
     supports_thinking_budget: bool = False
@@ -85,6 +84,8 @@ class Capability:
     reasoning_effort_values: Optional[List[str]] = None
     thinking_budget_values: Optional[Dict[str, Any]] = None
     extra: Dict[str, Any] = field(default_factory=dict)
+    # Kept at the end to preserve positional-constructor compatibility.
+    supports_realtime: bool = False
 
     def supports(self, feature: Feature | str) -> bool:
         """Return True if the model supports the given feature.
