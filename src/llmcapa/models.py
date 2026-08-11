@@ -32,6 +32,8 @@ class Feature(str, Enum):
     LLMC_FEAT_IMAGE_OUTPUT = "image_output"
     LLMC_FEAT_AUDIO_OUTPUT = "audio_output"
     LLMC_FEAT_VIDEO_OUTPUT = "video_output"
+    # Transport / API modes
+    LLMC_FEAT_REALTIME = "realtime"
 
 
 
@@ -63,6 +65,7 @@ class Capability:
     supports_vision: bool = False
     supports_reasoning: bool = False
     supports_chat_completion: bool = True
+    supports_realtime: bool = False
     supports_responses_api: bool = False
     supports_reasoning_effort: bool = False
     supports_thinking_budget: bool = False
@@ -127,7 +130,7 @@ class Capability:
         standard_features = [
             "vision", "function_calling", "json_mode", "streaming",
             "reasoning", "chat_completion", "responses_api",
-            "reasoning_effort", "thinking_budget", "fim"
+            "reasoning_effort", "thinking_budget", "fim", "realtime"
         ]
         # Gather input/output modalities
         for mod in self.input_modalities:
@@ -291,7 +294,7 @@ class Capability:
             features_to_check = [
                 "vision", "function_calling", "json_mode", "streaming",
                 "reasoning", "chat_completion", "responses_api",
-                "reasoning_effort", "thinking_budget", "fim", "image_output",
+                "reasoning_effort", "thinking_budget", "fim", "realtime", "image_output",
                 "audio_output", "video_output"
             ]
             required_features = [f for f in features_to_check if self.supports(f)]
