@@ -2,8 +2,90 @@
   "models": [
     {
       "provider": "xai",
-      "model_id": "grok-build-0.1",
-      "display_name": "Grok Build 0.1",
+      "model_id": "grok-3",
+      "display_name": "grok-3",
+      "context_window": 131072,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [
+        "x-ai/grok-3"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.3,
+        "output_per_1m": 1.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "note": "legacy; not listed on current docs.x.ai models primary table",
+        "source": "retained from prior catalog"
+      }
+    },
+    {
+      "provider": "xai",
+      "model_id": "grok-3-mini",
+      "display_name": "grok-3-mini",
+      "context_window": 131072,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [
+        "x-ai/grok-3-mini"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.3,
+        "output_per_1m": 1.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "note": "legacy; not listed on current docs.x.ai models primary table",
+        "source": "retained from prior catalog"
+      }
+    },
+    {
+      "provider": "xai",
+      "model_id": "grok-4",
+      "display_name": "grok-4",
       "context_window": 256000,
       "max_output_tokens": 0,
       "input_modalities": [
@@ -27,26 +109,155 @@
       "supports_fim": false,
       "tokenizer_name": "",
       "knowledge_cutoff": null,
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
-        "grok-code-fast-1",
-        "grok-code-fast",
-        "grok-code-fast-1-0825",
-        "x-ai/grok-build-0.1"
+        "x-ai/grok-4"
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 1.0,
+        "input_per_1m": 3.0,
+        "output_per_1m": 15.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "note": "legacy; not listed on current docs.x.ai models primary table",
+        "source": "retained from prior catalog"
+      }
+    },
+    {
+      "provider": "xai",
+      "model_id": "grok-4-1-fast-non-reasoning",
+      "display_name": "grok-4-1-fast-non-reasoning",
+      "context_window": 131072,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [
+        "x-ai/grok-4-1-fast-non-reasoning"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.5,
         "output_per_1m": 2.0,
         "currency": "USD"
       },
       "extra": {
-        "source": "https://docs.x.ai/developers/models",
+        "note": "legacy; not listed on current docs.x.ai models primary table",
+        "source": "retained from prior catalog"
+      }
+    },
+    {
+      "provider": "xai",
+      "model_id": "grok-4-1-fast-reasoning",
+      "display_name": "grok-4-1-fast-reasoning",
+      "context_window": 131072,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [
+        "x-ai/grok-4-1-fast-reasoning"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.5,
+        "output_per_1m": 2.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "note": "legacy; not listed on current docs.x.ai models primary table",
+        "source": "retained from prior catalog"
+      }
+    },
+    {
+      "provider": "xai",
+      "model_id": "grok-4.20-0309-non-reasoning",
+      "display_name": "Grok 4.20 Non-Reasoning",
+      "context_window": 1000000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "grok-4.20-non-reasoning",
+        "grok-4.20-non-reasoning-latest",
+        "grok-4.20-beta-non-reasoning",
+        "grok-4.20-beta-latest-non-reasoning",
+        "grok-4.20-experimental-beta-0304-non-reasoning",
+        "grok-4.20-experimental-beta-non-reasoning-latest",
+        "grok-4.20-beta-0309-non-reasoning",
+        "grok-4.20-non-reasoning-gv2",
+        "x-ai/grok-4.20-0309-non-reasoning"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 1.25,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://docs.x.ai/developers/models/grok-4.20-0309-non-reasoning",
         "cached_input_per_1m": 0.2,
         "long_context_threshold_tokens": 200000,
-        "long_input_per_1m": 2.0,
+        "long_input_per_1m": 2.5,
         "long_cached_input_per_1m": 0.4,
-        "long_output_per_1m": 4.0,
+        "long_output_per_1m": 5.0,
         "batch_discount": 0.2,
         "regions": [
           "us-east-1"
@@ -302,9 +513,9 @@
     },
     {
       "provider": "xai",
-      "model_id": "grok-4.20-0309-non-reasoning",
-      "display_name": "Grok 4.20 Non-Reasoning",
-      "context_window": 1000000,
+      "model_id": "grok-build-0.1",
+      "display_name": "Grok Build 0.1",
+      "context_window": 256000,
       "max_output_tokens": 0,
       "input_modalities": [
         "text",
@@ -317,7 +528,7 @@
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
-      "supports_reasoning": false,
+      "supports_reasoning": true,
       "supports_chat_completion": true,
       "supports_responses_api": false,
       "supports_reasoning_effort": false,
@@ -329,29 +540,24 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "grok-4.20-non-reasoning",
-        "grok-4.20-non-reasoning-latest",
-        "grok-4.20-beta-non-reasoning",
-        "grok-4.20-beta-latest-non-reasoning",
-        "grok-4.20-experimental-beta-0304-non-reasoning",
-        "grok-4.20-experimental-beta-non-reasoning-latest",
-        "grok-4.20-beta-0309-non-reasoning",
-        "grok-4.20-non-reasoning-gv2",
-        "x-ai/grok-4.20-0309-non-reasoning"
+        "grok-code-fast-1",
+        "grok-code-fast",
+        "grok-code-fast-1-0825",
+        "x-ai/grok-build-0.1"
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 1.25,
-        "output_per_1m": 2.5,
+        "input_per_1m": 1.0,
+        "output_per_1m": 2.0,
         "currency": "USD"
       },
       "extra": {
-        "source": "https://docs.x.ai/developers/models/grok-4.20-0309-non-reasoning",
+        "source": "https://docs.x.ai/developers/models",
         "cached_input_per_1m": 0.2,
         "long_context_threshold_tokens": 200000,
-        "long_input_per_1m": 2.5,
+        "long_input_per_1m": 2.0,
         "long_cached_input_per_1m": 0.4,
-        "long_output_per_1m": 5.0,
+        "long_output_per_1m": 4.0,
         "batch_discount": 0.2,
         "regions": [
           "us-east-1"
@@ -535,90 +741,6 @@
     },
     {
       "provider": "xai",
-      "model_id": "grok-voice-agent",
-      "display_name": "Grok Voice Agent",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "audio",
-        "text"
-      ],
-      "output_modalities": [
-        "audio",
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": null,
-        "output_per_1m": null,
-        "currency": "USD"
-      },
-      "extra": {
-        "price_per_hour": 3.0,
-        "unit": "hour",
-        "source": "https://docs.x.ai/developers/models",
-        "api": "voice-agent"
-      }
-    },
-    {
-      "provider": "xai",
-      "model_id": "grok-tts",
-      "display_name": "Grok Text to Speech",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "audio"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": null,
-        "output_per_1m": null,
-        "currency": "USD"
-      },
-      "extra": {
-        "price_per_1m_chars": 15.0,
-        "unit": "1m_chars",
-        "source": "https://docs.x.ai/developers/models",
-        "api": "tts"
-      }
-    },
-    {
-      "provider": "xai",
       "model_id": "grok-stt-batch",
       "display_name": "Grok Speech to Text (Batch)",
       "context_window": 0,
@@ -701,22 +823,22 @@
     },
     {
       "provider": "xai",
-      "model_id": "grok-3",
-      "display_name": "grok-3",
-      "context_window": 131072,
+      "model_id": "grok-tts",
+      "display_name": "Grok Text to Speech",
+      "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
       ],
       "output_modalities": [
-        "text"
+        "audio"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": false,
-      "supports_chat_completion": true,
+      "supports_chat_completion": false,
       "supports_responses_api": false,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
@@ -725,39 +847,41 @@
       "supports_fim": false,
       "tokenizer_name": "",
       "knowledge_cutoff": null,
-      "deprecated": true,
-      "aliases": [
-        "x-ai/grok-3"
-      ],
+      "deprecated": false,
+      "aliases": [],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.3,
-        "output_per_1m": 1.5,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "extra": {
-        "note": "legacy; not listed on current docs.x.ai models primary table",
-        "source": "retained from prior catalog"
+        "price_per_1m_chars": 15.0,
+        "unit": "1m_chars",
+        "source": "https://docs.x.ai/developers/models",
+        "api": "tts"
       }
     },
     {
       "provider": "xai",
-      "model_id": "grok-3-mini",
-      "display_name": "grok-3-mini",
-      "context_window": 131072,
+      "model_id": "grok-voice-agent",
+      "display_name": "Grok Voice Agent",
+      "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
+        "audio",
         "text"
       ],
       "output_modalities": [
+        "audio",
         "text"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": false,
-      "supports_chat_completion": true,
+      "supports_chat_completion": false,
       "supports_responses_api": false,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
@@ -766,30 +890,31 @@
       "supports_fim": false,
       "tokenizer_name": "",
       "knowledge_cutoff": null,
-      "deprecated": true,
-      "aliases": [
-        "x-ai/grok-3-mini"
-      ],
+      "deprecated": false,
+      "aliases": [],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.3,
-        "output_per_1m": 1.5,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "extra": {
-        "note": "legacy; not listed on current docs.x.ai models primary table",
-        "source": "retained from prior catalog"
+        "price_per_hour": 3.0,
+        "unit": "hour",
+        "source": "https://docs.x.ai/developers/models",
+        "api": "voice-agent"
       }
     },
     {
       "provider": "xai",
-      "model_id": "grok-4",
-      "display_name": "grok-4",
-      "context_window": 256000,
+      "model_id": "x-ai/grok-4.20",
+      "display_name": "SpaceXAI: Grok 4.20",
+      "context_window": 2000000,
       "max_output_tokens": 0,
       "input_modalities": [
         "text",
-        "image"
+        "image",
+        "file"
       ],
       "output_modalities": [
         "text"
@@ -806,31 +931,201 @@
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": true,
+      "tokenizer_name": "Grok",
+      "knowledge_cutoff": "2025-09",
+      "deprecated": false,
       "aliases": [
-        "x-ai/grok-4"
+        "x-ai/grok-4.20-20260309",
+        "x-ai/grok-4.20",
+        "grok-4.20",
+        "openrouter/x-ai/grok-4.20"
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 3.0,
-        "output_per_1m": 15.0,
+        "input_per_1m": 1.25,
+        "output_per_1m": 2.5,
         "currency": "USD"
       },
       "extra": {
-        "note": "legacy; not listed on current docs.x.ai models primary table",
-        "source": "retained from prior catalog"
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "x-ai",
+        "canonical_slug": "x-ai/grok-4.20-20260309",
+        "modality": "text+image+file->text",
+        "tokenizer": "Grok",
+        "top_provider": {
+          "context_length": 2000000,
+          "max_completion_tokens": null,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "include_reasoning",
+          "logprobs",
+          "max_tokens",
+          "reasoning",
+          "response_format",
+          "seed",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_logprobs",
+          "top_p"
+        ],
+        "created": "2026-03-31",
+        "description": "Grok 4.20 is a reasoning model from SpaceXAI with industry-leading speed and agentic tool calling capabilities. It combines the lowest hallucination rate on the market with strict prompt adherance, delivering...",
+        "cache_read_per_1m": 0.2,
+        "web_search_per_request_usd": 0.005,
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.0000025",
+            "completion": "0.000005",
+            "input_cache_read": "0.0000004"
+          }
+        ],
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": false
+        },
+        "links": {
+          "details": "/api/v1/models/x-ai/grok-4.20-20260309/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 14
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "vision",
+          "file_input"
+        ]
       }
     },
     {
       "provider": "xai",
-      "model_id": "grok-4-1-fast-reasoning",
-      "display_name": "grok-4-1-fast-reasoning",
-      "context_window": 131072,
+      "model_id": "x-ai/grok-4.20-multi-agent",
+      "display_name": "SpaceXAI: Grok 4.20 Multi-Agent",
+      "context_window": 2000000,
       "max_output_tokens": 0,
       "input_modalities": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output_modalities": [
         "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Grok",
+      "knowledge_cutoff": "2025-09",
+      "deprecated": false,
+      "aliases": [
+        "openrouter/x-ai/grok-4.20-multi-agent",
+        "grok-4.20-multi-agent",
+        "x-ai/grok-4.20-multi-agent",
+        "x-ai/grok-4.20-multi-agent-20260309"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 1.25,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "x-ai",
+        "canonical_slug": "x-ai/grok-4.20-multi-agent-20260309",
+        "modality": "text+image+file->text",
+        "tokenizer": "Grok",
+        "top_provider": {
+          "context_length": 2000000,
+          "max_completion_tokens": null,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "include_reasoning",
+          "logprobs",
+          "max_tokens",
+          "reasoning",
+          "reasoning_effort",
+          "response_format",
+          "seed",
+          "structured_outputs",
+          "temperature",
+          "top_logprobs",
+          "top_p"
+        ],
+        "created": "2026-03-31",
+        "description": "Grok 4.20 Multi-Agent is a variant of SpaceXAI’s Grok 4.20 designed for collaborative, agent-based workflows. Multiple agents operate in parallel to conduct deep research, coordinate tool use, and synthesize information...",
+        "cache_read_per_1m": 0.2,
+        "web_search_per_request_usd": 0.005,
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.0000025",
+            "completion": "0.000005",
+            "input_cache_read": "0.0000004"
+          }
+        ],
+        "reasoning_meta": {
+          "mandatory": true,
+          "default_enabled": true,
+          "supported_efforts": [
+            "xhigh",
+            "high",
+            "medium",
+            "low"
+          ],
+          "default_effort": "medium"
+        },
+        "links": {
+          "details": "/api/v1/models/x-ai/grok-4.20-multi-agent-20260309/endpoints"
+        },
+        "features": [
+          "structured_outputs",
+          "reasoning",
+          "reasoning_effort",
+          "vision",
+          "file_input"
+        ]
+      },
+      "reasoning_effort_values": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ]
+    },
+    {
+      "provider": "xai",
+      "model_id": "x-ai/grok-4.3",
+      "display_name": "SpaceXAI: Grok 4.3",
+      "context_window": 1000000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image",
+        "file"
       ],
       "output_modalities": [
         "text"
@@ -838,7 +1133,248 @@
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
-      "supports_vision": false,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Grok",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "grok-4.3",
+        "x-ai/grok-4.3-20260430",
+        "openrouter/x-ai/grok-4.3",
+        "x-ai/grok-4.3"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 1.25,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "x-ai",
+        "canonical_slug": "x-ai/grok-4.3-20260430",
+        "modality": "text+image+file->text",
+        "tokenizer": "Grok",
+        "top_provider": {
+          "context_length": 1000000,
+          "max_completion_tokens": null,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "logprobs",
+          "max_tokens",
+          "presence_penalty",
+          "reasoning",
+          "reasoning_effort",
+          "response_format",
+          "seed",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_logprobs",
+          "top_p"
+        ],
+        "created": "2026-04-30",
+        "description": "Grok 4.3 is a reasoning model from SpaceXAI. It accepts text and image inputs with text output, and is suited for agentic workflows, instruction-following tasks, and applications requiring high factual...",
+        "cache_read_per_1m": 0.2,
+        "web_search_per_request_usd": 0.005,
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.0000025",
+            "completion": "0.000005",
+            "input_cache_read": "0.0000004"
+          }
+        ],
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "high",
+            "medium",
+            "low",
+            "none"
+          ],
+          "default_effort": "low"
+        },
+        "links": {
+          "details": "/api/v1/models/x-ai/grok-4.3-20260430/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 21,
+          "artificial_analysis": 1
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "reasoning_effort",
+          "vision",
+          "file_input"
+        ]
+      },
+      "reasoning_effort_values": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ]
+    },
+    {
+      "provider": "xai",
+      "model_id": "x-ai/grok-4.5",
+      "display_name": "SpaceXAI: Grok 4.5",
+      "context_window": 500000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Grok",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "x-ai/grok-4.5",
+        "openrouter/x-ai/grok-4.5",
+        "x-ai/grok-4.5-20260708",
+        "grok-4.5"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 6.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "x-ai",
+        "canonical_slug": "x-ai/grok-4.5-20260708",
+        "modality": "text+image+file->text",
+        "tokenizer": "Grok",
+        "top_provider": {
+          "context_length": 500000,
+          "max_completion_tokens": null,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "logprobs",
+          "max_tokens",
+          "presence_penalty",
+          "reasoning",
+          "reasoning_effort",
+          "response_format",
+          "seed",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_logprobs",
+          "top_p"
+        ],
+        "created": "2026-07-08",
+        "description": "Grok 4.5 is SpaceXAI's smartest model with frontier performance on coding, knowledge work, and STEM.",
+        "cache_read_per_1m": 0.3,
+        "web_search_per_request_usd": 0.005,
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.000004",
+            "completion": "0.000012",
+            "input_cache_read": "0.0000006"
+          }
+        ],
+        "reasoning_meta": {
+          "mandatory": true,
+          "default_enabled": true,
+          "supported_efforts": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "default_effort": "high"
+        },
+        "links": {
+          "details": "/api/v1/models/x-ai/grok-4.5-20260708/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 16,
+          "artificial_analysis": 1
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "reasoning_effort",
+          "vision",
+          "file_input"
+        ]
+      },
+      "reasoning_effort_values": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ]
+    },
+    {
+      "provider": "xai",
+      "model_id": "x-ai/grok-build-0.1",
+      "display_name": "SpaceXAI: Grok Build 0.1",
+      "context_window": 256000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
       "supports_reasoning": true,
       "supports_chat_completion": true,
       "supports_responses_api": false,
@@ -847,62 +1383,81 @@
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
-      "tokenizer_name": "",
+      "tokenizer_name": "Grok",
       "knowledge_cutoff": null,
-      "deprecated": true,
+      "deprecated": false,
       "aliases": [
-        "x-ai/grok-4-1-fast-reasoning"
+        "openrouter/x-ai/grok-build-0.1",
+        "x-ai/grok-build-0.1-20260520",
+        "x-ai/grok-build-0.1",
+        "grok-build-0.1"
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.5,
+        "input_per_1m": 1.0,
         "output_per_1m": 2.0,
         "currency": "USD"
       },
       "extra": {
-        "note": "legacy; not listed on current docs.x.ai models primary table",
-        "source": "retained from prior catalog"
-      }
-    },
-    {
-      "provider": "xai",
-      "model_id": "grok-4-1-fast-non-reasoning",
-      "display_name": "grok-4-1-fast-non-reasoning",
-      "context_window": 131072,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": true,
-      "aliases": [
-        "x-ai/grok-4-1-fast-non-reasoning"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.5,
-        "output_per_1m": 2.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "note": "legacy; not listed on current docs.x.ai models primary table",
-        "source": "retained from prior catalog"
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "x-ai",
+        "canonical_slug": "x-ai/grok-build-0.1-20260520",
+        "modality": "text+image+file->text",
+        "tokenizer": "Grok",
+        "top_provider": {
+          "context_length": 256000,
+          "max_completion_tokens": null,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "logprobs",
+          "max_tokens",
+          "presence_penalty",
+          "reasoning",
+          "response_format",
+          "seed",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_logprobs",
+          "top_p"
+        ],
+        "created": "2026-05-20",
+        "description": "Grok Build 0.1 is SpaceXAI’s fast coding model trained specifically for agentic software engineering workflows. It supports text and image inputs with text output, and is optimized for interactive coding...",
+        "cache_read_per_1m": 0.2,
+        "web_search_per_request_usd": 0.005,
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.000002",
+            "completion": "0.000004",
+            "input_cache_read": "0.0000004"
+          }
+        ],
+        "reasoning_meta": {
+          "mandatory": true
+        },
+        "links": {
+          "details": "/api/v1/models/x-ai/grok-build-0.1-20260520/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 0,
+          "artificial_analysis": 1
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "vision",
+          "file_input"
+        ]
       }
     }
   ]

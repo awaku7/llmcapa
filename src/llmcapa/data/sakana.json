@@ -2,6 +2,46 @@
   "models": [
     {
       "provider": "sakana",
+      "model_id": "sakana-namazu",
+      "display_name": "Sakana Namazu",
+      "context_window": 262144,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.95,
+        "output_per_1m": 4.0,
+        "currency": "USD",
+        "cached_input_per_1m": 0.15
+      },
+      "deprecated": false,
+      "aliases": [
+        "sakana-namazu",
+        "namazu"
+      ]
+    },
+    {
+      "provider": "sakana",
       "model_id": "sakana/fugu",
       "display_name": "Sakana Fugu",
       "context_window": 272000,
@@ -44,12 +84,47 @@
         "high",
         "xhigh",
         "max"
+      ]
+    },
+    {
+      "provider": "sakana",
+      "model_id": "sakana/fugu-cyber",
+      "display_name": "Sakana: Fugu Cyber",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image"
       ],
-      "extra": {
-        "source": "https://sakana.ai/fugu/",
-        "note": "Priced at the standard rate of the underlying model(s); single blended rate, never stacked",
-        "long_context_threshold_tokens": 272000
-      }
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 6.0,
+        "output_per_1m": 36.0,
+        "currency": "USD",
+        "cached_input_per_1m": 0.6
+      },
+      "deprecated": false,
+      "aliases": [
+        "sakana/fugu-cyber",
+        "fugu-cyber-v1.0"
+      ]
     },
     {
       "provider": "sakana",
@@ -96,34 +171,27 @@
         "high",
         "xhigh",
         "max"
-      ],
-      "extra": {
-        "long_context_threshold_tokens": 272000,
-        "long_input_per_1m": 10.0,
-        "long_output_per_1m": 45.0,
-        "long_cached_input_per_1m": 1.0,
-        "source": "https://sakana.ai/fugu/",
-        "note": "Fixed pricing for fugu-ultra-v1.1 and v1.0 (formerly fugu-ultra-20260615)"
-      }
+      ]
     },
     {
       "provider": "sakana",
-      "model_id": "sakana/fugu-cyber",
-      "display_name": "Sakana: Fugu Cyber",
-      "context_window": 1000000,
-      "max_output_tokens": 128000,
+      "model_id": "sakana/sakana-namazu",
+      "display_name": "Sakana: Sakana Namazu",
+      "context_window": 262144,
+      "max_output_tokens": 65536,
       "input_modalities": [
         "text",
-        "image"
+        "image",
+        "file"
       ],
       "output_modalities": [
         "text"
       ],
       "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": true,
-      "supports_reasoning": true,
+      "supports_reasoning": false,
       "supports_chat_completion": true,
       "supports_responses_api": false,
       "supports_reasoning_effort": true,
@@ -131,28 +199,18 @@
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
+      "license_type": "unknown",
       "tokenizer_name": "",
       "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.95,
+        "output_per_1m": 4.0,
+        "currency": "USD"
+      },
       "deprecated": false,
       "aliases": [
-        "sakana/fugu-cyber",
-        "fugu-cyber-v1.0"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 6.0,
-        "output_per_1m": 36.0,
-        "currency": "USD",
-        "cached_input_per_1m": 0.6
-      },
-      "extra": {
-        "long_context_threshold_tokens": 272000,
-        "long_input_per_1m": 12.0,
-        "long_output_per_1m": 54.0,
-        "long_cached_input_per_1m": 1.2,
-        "source": "https://sakana.ai/fugu/",
-        "note": "Specialized for cybersecurity; fixed pricing for fugu-cyber-v1.0 (Token Plan only)"
-      }
+        "sakana/sakana-namazu"
+      ]
     }
   ]
 }

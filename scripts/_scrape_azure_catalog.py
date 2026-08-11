@@ -43,7 +43,8 @@ def _api_item_to_entry(item: dict) -> dict:
     display = props.get("displayName", "") or name
 
     # Determine modalities from inference tasks
-    tasks = annotations.get("systemCatalogData", {}).get("inferenceTasks", [])
+    system_catalog = annotations.get("systemCatalogData") or {}
+    tasks = system_catalog.get("inferenceTasks") or []
     input_mods = ["text"]
     output_mods = ["text"]
     supports_vision = False
