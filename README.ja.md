@@ -8,7 +8,7 @@
 - **実行時依存関係ゼロ**: Python標準ライブラリのみで動作します。外部パッケージ（`pytest` や `build` など）は開発・テスト用のみです。
 - **エイリアス解決**: モデルのエイリアスやプロバイダー固有の名前を自動的に解決します（例: `gpt-4o-2024-08-06` -> `gpt-4o`、`gemini-1.5-pro-preview-0409` -> `gemini-1.5-pro`）。
 - **プロバイダーエイリアス**: プロバイダー引数は一般的な別名と正規化形式を受け付けます（例: `grok`/`x-ai` → `xai`、`bedrock` → `amazon`、`vertexai`/`gemini` → `google`、`azure` → `azure-openai`、`hf` → `huggingface`、`alibaba`/`dashscope` → `qwen`、`lm-studio` → `lmstudio`）。区切り文字 `_. ` は `-` として扱われます。
-- **高度な機能クエリ**: `vision`、`multimodal`、`chat_completion`、`responses_api`、`reasoning_effort`、`thinking_budget`、および特定の入力/出力モダリティ（例: `image_input`、`image_output`、`audio_input`）のサポート状況を確認できます。
+- **高度な機能クエリ**: `vision`、`multimodal`、`chat_completion`、`responses_api`、`realtime`、`reasoning_effort`、`thinking_budget`、および特定の入力/出力モダリティ（例: `image_input`、`audio_input`、`file_input`、`speech_input`、`embedding_output`）のサポート状況を確認できます。PDFは`file_input`のサブタイプとして扱われます。
 - **高いパフォーマンス**: 評価された機能チェックは、冗長な計算を避けるためにメモ化（内部キャッシュ）されます。
 - **コスト見積もり**: 入力および出力トークン数に基づいてAPIコストを見積もります。
 - **代替モデルチェッカー**: コンテキストウィンドウと必要な機能に基づいて、あるモデルを別のモデルで安全に代替できるかどうかを確認します。
@@ -112,6 +112,32 @@ gemini = llmcapa.get("gemini-3.5-flash")
 print(gemini.supports(Feature.LLMC_FEAT_MULTIMODAL))    # True (複数のモダリティをサポート)
 print(gemini.supports(Feature.LLMC_FEAT_AUDIO_INPUT))   # True
 print(gemini.supports(Feature.LLMC_FEAT_IMAGE_OUTPUT))  # False
+```
+
+### Realtimeと追加モダリティの確認
+
+`Feature` EnumでRealtime API、ファイル、音声（Speech）、埋め込み出力を確認できます。PDFはファイル入力のサブタイプです。
+
+```python
+from llmcapa import Feature
+
+realtime = llmcapa.get("gpt-realtime-2")
+print(realtime.supports(Feature.LLMC_FEAT_REALTIME))       # True
+print(realtime.supports(Feature.LLMC_FEAT_SPEECH_INPUT))  # True
+print(realtime.supports(Feature.LLMC_FEAT_SPEECH_OUTPUT)) # True
+
+pdf_model = llmcapa.get("muse-spark-1.1", provider="meta")
+print(pdf_model.supports(Feature.LLMC_FEAT_FILE_INPUT))    # True
+
+embedding = llmcapa.get("text-embedding-3-large", provider="openai")
+print(embedding.supports(Feature.LLMC_FEAT_EMBEDDING_OUTPUT)) # True
+```
+
+`bedrock`はAmazon、`vertexai`/`vertex-ai`/`gemini`はGoogleへ解決されます。
+
+```python
+nova = llmcapa.get("nova-sonic-v1", provider="bedrock")
+gemini_live = llmcapa.get("gemini-3.1-flash-live-preview", provider="vertexai")
 ```
 
 ### 推論（Reasoning）と思考（Thinking）の確認

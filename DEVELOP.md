@@ -150,6 +150,15 @@ def test_providers():
 
 To add a new capability/feature flag (e.g., `supports_structured_outputs`):
 
+The standard `Feature` enum also includes Realtime and extended modalities:
+
+- `LLMC_FEAT_REALTIME`
+- `LLMC_FEAT_FILE_INPUT` (file inputs, including PDF as a subtype)
+- `LLMC_FEAT_SPEECH_INPUT` / `LLMC_FEAT_SPEECH_OUTPUT`
+- `LLMC_FEAT_EMBEDDING_OUTPUT` (normalizes `embedding` and `embeddings`)
+
+PDF is intentionally evaluated as `file_input` rather than having a separate enum member.
+
 ### 1. Update the Dataclass
 Open `src/llmcapa/models.py` and add the new field to the `Capability` dataclass with a default value:
 

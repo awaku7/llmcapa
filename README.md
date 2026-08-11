@@ -8,7 +8,7 @@ Lookup capabilities (context window, modalities, supported features) of various 
 - **Zero Runtime Dependencies**: Built entirely on the Python standard library.
 - **Alias Resolution**: Automatically resolves model aliases and provider-specific names (e.g., `gpt-4o-2024-08-06` -> `gpt-4o`, `gemini-1.5-pro-preview-0409` -> `gemini-1.5-pro`).
 - **Provider Aliases**: Provider arguments accept common aliases and normalized forms (e.g., `grok`/`x-ai` → `xai`, `bedrock` → `amazon`, `vertexai`/`gemini` → `google`, `azure` → `azure-openai`, `hf` → `huggingface`, `alibaba`/`dashscope` → `qwen`, `lm-studio` → `lmstudio`). Separators `_. ` are treated as `-`.
-- **Advanced Feature Queries**: Check support for `vision`, `multimodal`, `chat_completion`, `responses_api`, `reasoning_effort`, `thinking_budget`, and specific input/output modalities (e.g., `image_input`, `image_output`, `audio_input`).
+- **Advanced Feature Queries**: Check support for `vision`, `multimodal`, `chat_completion`, `responses_api`, `realtime`, `reasoning_effort`, `thinking_budget`, and specific input/output modalities (e.g., `image_input`, `audio_input`, `file_input`, `speech_input`, `embedding_output`). PDF is treated as a subtype of `file_input`.
 - **High Performance**: Evaluated feature checks are cached internally using memoization to avoid redundant calculations.
 - **Cost Estimation**: Estimate API costs based on input and output token counts.
 - **Drop-in Replacement Checker**: Check if a model can be safely replaced by another model based on context window and required features.
@@ -112,6 +112,32 @@ gemini = llmcapa.get("gemini-3.5-flash")
 print(gemini.supports(Feature.LLMC_FEAT_MULTIMODAL))    # True (supports multiple modalities)
 print(gemini.supports(Feature.LLMC_FEAT_AUDIO_INPUT))   # True
 print(gemini.supports(Feature.LLMC_FEAT_IMAGE_OUTPUT))  # False
+```
+
+### Realtime and Additional Modality Checks
+
+Use the `Feature` enum to query Realtime APIs, file inputs, speech input/output, and embedding outputs. PDF is treated as a subtype of `file_input`.
+
+```python
+from llmcapa import Feature
+
+realtime = llmcapa.get("gpt-realtime-2")
+print(realtime.supports(Feature.LLMC_FEAT_REALTIME))        # True
+print(realtime.supports(Feature.LLMC_FEAT_SPEECH_INPUT))   # True
+print(realtime.supports(Feature.LLMC_FEAT_SPEECH_OUTPUT))  # True
+
+pdf_model = llmcapa.get("muse-spark-1.1", provider="meta")
+print(pdf_model.supports(Feature.LLMC_FEAT_FILE_INPUT))     # True
+
+embedding = llmcapa.get("text-embedding-3-large", provider="openai")
+print(embedding.supports(Feature.LLMC_FEAT_EMBEDDING_OUTPUT))  # True
+```
+
+`bedrock` resolves to Amazon, while `vertexai`/`vertex-ai`/`gemini` resolve to Google.
+
+```python
+nova = llmcapa.get("nova-sonic-v1", provider="bedrock")
+gemini_live = llmcapa.get("gemini-3.1-flash-live-preview", provider="vertexai")
 ```
 
 ### Reasoning & Thinking Checks

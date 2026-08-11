@@ -152,6 +152,15 @@ def test_providers():
 
 新しい機能フラグ（例: `supports_structured_outputs`）を追加する場合:
 
+現在の標準Feature Enumには、Realtimeと追加モダリティも含まれます:
+
+- `LLMC_FEAT_REALTIME`
+- `LLMC_FEAT_FILE_INPUT`（PDFを含むファイル系入力）
+- `LLMC_FEAT_SPEECH_INPUT` / `LLMC_FEAT_SPEECH_OUTPUT`
+- `LLMC_FEAT_EMBEDDING_OUTPUT`（`embedding` / `embeddings` の表記揺れを吸収）
+
+PDFは独立したFeature Enumではなく、`file_input`のサブタイプとして評価されます。
+
 ### 1. データクラスの更新
 `src/llmcapa/models.py` を開き、`Capability` データクラスにデフォルト値を持つ新しいフィールドを追加します:
 
