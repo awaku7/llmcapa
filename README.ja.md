@@ -415,7 +415,7 @@ llmcapa.supports_computer_environment("claude-opus-4-5", "desktop", provider="an
 - `native=True`: プロバイダーがネイティブComputer Tool/APIを提供する場合。例えばAnthropicでは、対応モデルに `computer_20251124` または `computer_20250124` と対応するベータヘッダーを使用します。
 - `native=False`: 外部のComputer Runtimeや独自ツールハーネスを組み合わせて利用できる場合。プロバイダーのネイティブComputer Toolを、その接続経路が提供していることを意味しません。QwenのVisual Agent、ローカルモデル、OpenRouter経由のカスタムツール利用などが該当します。
 
-`tool_version` は正規化したComputer Toolバージョン、`tool_type` はプロバイダー/APIに渡す値、`beta_header` は必要なリクエストヘッダーまたはリクエスト項目です。モデルのバージョンとComputer Toolのバージョンは分けて管理します。
+`tool_version` は正規化したComputer Toolバージョン、`tool_type` はプロバイダー/APIに渡す値、`beta_header` は必要なリクエストヘッダーまたはリクエスト項目です。`checked_at` には対応情報を確認した日付を記録します。モデルのバージョンとComputer Toolのバージョンは分けて管理します。
 
 `llmcapa` は対応状況のメタデータだけを提供します。スクリーンショット取得、マウス・キーボード操作、エージェントループ、サンドボックス化、高リスク操作のユーザー確認はアプリケーション側の責任です。
 
@@ -436,6 +436,14 @@ assert openai.computer_use.tool_type == "computer"
 ```
 
 OpenRouterなどのゲートウェイは、直接のプロバイダー経路とは分けて管理します。汎用Tool Callingとカスタムハーネスを組み合わせることはできますが、プロバイダーのネイティブComputer Toolと自動的に同一視しません。
+
+### Computer Useの置換判定
+
+モデル置換時にComputer Useの互換性も要求する場合は、明示的に指定します。置換判定では、単なる `supports("computer_use")` の真偽値ではなく、プロバイダー/API固有のtool type、tool version、対応環境、アクションを比較します。
+
+```python
+source.can_be_replaced_by(target, required_features=["vision", "computer_use"])
+```
 
 ## 開発
 

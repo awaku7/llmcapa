@@ -415,7 +415,7 @@ llmcapa.supports_computer_environment("claude-opus-4-5", "desktop", provider="an
 - `native=True`: the provider exposes a native Computer Tool/API. For example, Anthropic uses `computer_20251124` or `computer_20250124` with the corresponding beta header.
 - `native=False`: the model can be used with an external Computer Runtime or custom tool harness, but the provider does not expose a native Computer Tool through this route. This applies to examples such as Qwen visual agents, local models, and OpenRouter custom tool calling.
 
-`tool_version` is the normalized Computer Tool version. `tool_type` is the provider/API value, and `beta_header` is the optional request header or body field. Model version and Computer Tool version are tracked separately.
+`tool_version` is the normalized Computer Tool version. `tool_type` is the provider/API value, and `beta_header` is the optional request header or body field. `checked_at` records when the support information was verified. Model version and Computer Tool version are tracked separately.
 
 `llmcapa` only reports capability metadata. The application remains responsible for screenshots, mouse/keyboard execution, the agent loop, isolation, and human confirmation for high-impact actions.
 
@@ -436,6 +436,14 @@ assert openai.computer_use.tool_type == "computer"
 ```
 
 OpenRouter and similar gateways are represented separately from direct provider routes. Generic tool calling can be combined with a custom harness, but it should not automatically be treated as the provider's native Computer Tool.
+
+### Computer Use replacement checks
+
+When checking model replacement, request Computer Use explicitly. The replacement check compares the provider/API-specific tool contract, including tool type, tool version, environments, and actions; `supports("computer_use")` alone is not treated as cross-provider compatibility.
+
+```python
+source.can_be_replaced_by(target, required_features=["vision", "computer_use"])
+```
 
 ## Development
 

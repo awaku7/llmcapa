@@ -74,6 +74,29 @@ class ComputerUseCapability:
     beta_header: Optional[str] = None
     enable_zoom: bool = False
     source_url: Optional[str] = None
+    checked_at: Optional[str] = None
+
+    def is_compatible_with(self, other: "ComputerUseCapability") -> bool:
+        """Return whether *other* can replace this Computer Use capability.
+
+        Computer Use is provider/API-specific. A generic ``supported`` flag is
+        therefore insufficient for replacement checks.
+        """
+        if not self.supported or not other.supported:
+            return False
+        if self.native != other.native:
+            return False
+        if self.api_type != other.api_type:
+            return False
+        if self.tool_type != other.tool_type:
+            return False
+        if self.tool_version != other.tool_version:
+            return False
+        if self.requires_beta and self.beta_header != other.beta_header:
+            return False
+        if not self.environments.issubset(other.environments):
+            return False
+        return self.actions.issubset(other.actions)
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "ComputerUseCapability":
@@ -357,6 +380,12 @@ class Capability:
             required_features = [f for f in features_to_check if self.supports(f)]
 
         for feature in required_features:
+            if feature == "computer_use":
+                if self.computer_use is None or other.computer_use is None:
+                    return False
+                if not self.computer_use.is_compatible_with(other.computer_use):
+                    return False
+                continue
             if not other.supports(feature):
                 return False
         return True

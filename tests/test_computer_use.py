@@ -52,3 +52,58 @@ def test_public_computer_use_helpers(monkeypatch):
     assert llmcapa.supports_computer_action("model", "zoom", "test") is False
     assert llmcapa.supports_computer_environment("model", "browser", "test") is True
     assert llmcapa.supports_computer_environment("model", "desktop", "test") is False
+
+
+def test_computer_use_checked_at_round_trip():
+    cap = ComputerUseCapability(
+        supported=True,
+        native=True,
+        tool_type="computer_20251124",
+        tool_version="2025-11-24",
+        checked_at="2026-08-15",
+    )
+    restored = ComputerUseCapability.from_dict(cap.to_dict())
+    assert restored.checked_at == "2026-08-15"
+
+
+def test_computer_use_replacement_is_provider_specific():
+    source = Capability(
+        provider="anthropic",
+        model_id="source",
+        computer_use=ComputerUseCapability(
+            supported=True,
+            native=True,
+            api_type="messages",
+            tool_type="computer_20251124",
+            tool_version="2025-11-24",
+            environments=frozenset({"desktop"}),
+            actions=frozenset({"screenshot", "left_click"}),
+        ),
+    )
+    same = Capability(
+        provider="anthropic",
+        model_id="same",
+        computer_use=ComputerUseCapability(
+            supported=True,
+            native=True,
+            api_type="messages",
+            tool_type="computer_20251124",
+            tool_version="2025-11-24",
+            environments=frozenset({"desktop", "browser"}),
+            actions=frozenset({"screenshot", "left_click", "zoom"}),
+        ),
+    )
+    different_provider = Capability(
+        provider="openai",
+        model_id="different",
+        computer_use=ComputerUseCapability(
+            supported=True,
+            native=True,
+            api_type="responses",
+            tool_type="computer",
+            environments=frozenset({"desktop"}),
+            actions=frozenset({"screenshot", "click"}),
+        ),
+    )
+    assert source.can_be_replaced_by(same, ["computer_use"]) is True
+    assert source.can_be_replaced_by(different_provider, ["computer_use"]) is False
