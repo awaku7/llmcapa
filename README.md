@@ -439,10 +439,14 @@ OpenRouter and similar gateways are represented separately from direct provider 
 
 ### Computer Use replacement checks
 
-When checking model replacement, request Computer Use explicitly. The replacement check compares the provider/API-specific tool contract, including tool type, tool version, environments, and actions; `supports("computer_use")` alone is not treated as cross-provider compatibility.
+When checking model replacement, request Computer Use explicitly. The replacement check compares the provider/API-specific tool contract, including the tool/schema type, environments, and actions; tool versions are metadata and are not used as a compatibility gate. `supports("computer_use")` alone is not treated as cross-provider compatibility.
 
 ```python
-source.can_be_replaced_by(target, required_features=["vision", "computer_use"])
+source.can_be_replaced_by(
+    target,
+    required_features=["vision"],
+    required_actions=["screenshot", "left_click", "type"],
+)
 ```
 
 ## Development

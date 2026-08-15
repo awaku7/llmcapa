@@ -88,9 +88,10 @@ class ComputerUseCapability:
             return False
         if self.api_type != other.api_type:
             return False
+        # ``tool_type`` identifies the action/schema family. ``tool_version``
+        # is metadata and must not be used as a compatibility gate: a newer
+        # version may add actions while retaining the required action subset.
         if self.tool_type != other.tool_type:
-            return False
-        if self.tool_version != other.tool_version:
             return False
         if self.requires_beta and self.beta_header != other.beta_header:
             return False
@@ -359,12 +360,19 @@ class Capability:
         cost = ((input_tokens * in_rate) + (output_tokens * out_rate)) / 1000000.0
         return {"cost": cost, "currency": currency}
 
-    def can_be_replaced_by(self, other: "Capability", required_features: Optional[List[str]] = None) -> bool:
+    def can_be_replaced_by(
+        self,
+        other: "Capability",
+        required_features: Optional[List[str]] = None,
+        required_actions: Optional[List[str]] = None,
+    ) -> bool:
         """Check if this model can be replaced by another model.
 
         The other model must have a context window at least as large as this model,
         and must support all specified required_features (or all features this model supports
-        if required_features is None).
+        if required_features is None). ``required_actions`` explicitly requires
+        Computer Use actions on the replacement model and is evaluated against
+        the provider/API-specific Computer Use capability.
         """
         if other.context_window < self.context_window:
             return False
@@ -388,6 +396,13 @@ class Capability:
                 continue
             if not other.supports(feature):
                 return False
+
+        if required_actions is not None:
+            if other.computer_use is None or not other.computer_use.supported:
+                return False
+            if not set(required_actions).issubset(other.computer_use.actions):
+                return False
+
         return True
 
     def get_reasoning_effort_values(self) -> List[str]:

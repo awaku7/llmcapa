@@ -107,3 +107,143 @@ def test_computer_use_replacement_is_provider_specific():
     )
     assert source.can_be_replaced_by(same, ["computer_use"]) is True
     assert source.can_be_replaced_by(different_provider, ["computer_use"]) is False
+
+
+def test_computer_use_required_actions_in_replacement():
+    source = Capability(
+        provider="test",
+        model_id="source",
+        context_window=100,
+    )
+    target = Capability(
+        provider="test",
+        model_id="target",
+        context_window=100,
+        computer_use=ComputerUseCapability(
+            supported=True,
+            native=False,
+            actions=frozenset({"screenshot", "left_click", "type"}),
+        ),
+    )
+    assert source.can_be_replaced_by(
+        target,
+        required_actions=["screenshot", "left_click", "type"],
+    ) is True
+    assert source.can_be_replaced_by(
+        target,
+        required_actions=["screenshot", "zoom"],
+    ) is False
+
+
+def test_computer_use_tool_version_is_metadata_not_compatibility_gate():
+    source = ComputerUseCapability(
+        supported=True,
+        native=True,
+        api_type="messages",
+        tool_type="computer",
+        tool_version="2025-01-24",
+        environments=frozenset({"desktop"}),
+        actions=frozenset({"screenshot", "left_click"}),
+    )
+    target = ComputerUseCapability(
+        supported=True,
+        native=True,
+        api_type="messages",
+        tool_type="computer",
+        tool_version="2025-11-24",
+        environments=frozenset({"desktop"}),
+        actions=frozenset({"screenshot", "left_click", "type"}),
+    )
+    assert source.is_compatible_with(target) is True
+
+
+def test_computer_use_cross_provider_compatibility_is_not_assumed():
+    common_actions = frozenset({"screenshot", "left_click", "type"})
+    claude = ComputerUseCapability(
+        supported=True,
+        native=True,
+        provider="anthropic",
+        model="claude-sonnet-4-6",
+        api_type="messages",
+        tool_type="computer_20251124",
+        tool_version="2025-11-24",
+        environments=frozenset({"desktop"}),
+        actions=common_actions,
+    )
+    gemini = ComputerUseCapability(
+        supported=True,
+        native=True,
+        provider="google",
+        model="gemini-3.6-flash",
+        api_type="generate_content",
+        tool_type="computer_use",
+        environments=frozenset({"desktop", "browser", "mobile"}),
+        actions=common_actions,
+    )
+    openai = ComputerUseCapability(
+        supported=True,
+        native=True,
+        provider="openai",
+        model="gpt-5.4",
+        api_type="responses",
+        tool_type="computer",
+        environments=frozenset({"desktop", "browser"}),
+        actions=common_actions,
+    )
+
+    assert claude.is_compatible_with(gemini) is False
+    assert gemini.is_compatible_with(claude) is False
+    assert claude.is_compatible_with(openai) is False
+    assert openai.is_compatible_with(claude) is False
+    assert gemini.is_compatible_with(openai) is False
+    assert openai.is_compatible_with(gemini) is False
+
+
+def test_can_be_replaced_by_rejects_cross_provider_computer_use():
+    source = Capability(
+        provider="anthropic",
+        model_id="claude-sonnet-4-6",
+        computer_use=ComputerUseCapability(
+            supported=True,
+            native=True,
+            provider="anthropic",
+            api_type="messages",
+            tool_type="computer_20251124",
+            environments=frozenset({"desktop"}),
+            actions=frozenset({"screenshot", "left_click", "type"}),
+        ),
+    )
+    targets = [
+        Capability(
+            provider="google",
+            model_id="gemini-3.6-flash",
+            computer_use=ComputerUseCapability(
+                supported=True,
+                native=True,
+                provider="google",
+                api_type="generate_content",
+                tool_type="computer_use",
+                environments=frozenset({"desktop", "browser"}),
+                actions=frozenset({"screenshot", "left_click", "type"}),
+            ),
+        ),
+        Capability(
+            provider="openai",
+            model_id="gpt-5.4",
+            computer_use=ComputerUseCapability(
+                supported=True,
+                native=True,
+                provider="openai",
+                api_type="responses",
+                tool_type="computer",
+                environments=frozenset({"desktop", "browser"}),
+                actions=frozenset({"screenshot", "left_click", "type"}),
+            ),
+        ),
+    ]
+
+    for target in targets:
+        assert source.can_be_replaced_by(
+            target,
+            required_features=["computer_use"],
+        ) is False
