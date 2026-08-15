@@ -122,6 +122,7 @@ def test_computer_use_required_actions_in_replacement():
         computer_use=ComputerUseCapability(
             supported=True,
             native=False,
+            environments=frozenset({"browser"}),
             actions=frozenset({"screenshot", "left_click", "type"}),
         ),
     )
@@ -129,6 +130,16 @@ def test_computer_use_required_actions_in_replacement():
         target,
         required_actions=["screenshot", "left_click", "type"],
     ) is True
+    assert source.can_be_replaced_by(
+        target,
+        required_actions=["screenshot", "left_click", "type"],
+        required_environment="browser",
+    ) is True
+    assert source.can_be_replaced_by(
+        target,
+        required_actions=["screenshot", "left_click", "type"],
+        required_environment="desktop",
+    ) is False
     assert source.can_be_replaced_by(
         target,
         required_actions=["screenshot", "zoom"],
@@ -247,3 +258,22 @@ def test_can_be_replaced_by_rejects_cross_provider_computer_use():
             target,
             required_features=["computer_use"],
         ) is False
+
+
+def test_required_environment_prevents_mobile_desktop_mismatch():
+    source = Capability(provider="test", model_id="source")
+    mobile_target = Capability(
+        provider="test",
+        model_id="mobile-target",
+        computer_use=ComputerUseCapability(
+            supported=True,
+            native=False,
+            environments=frozenset({"mobile"}),
+            actions=frozenset({"screenshot", "left_click", "type"}),
+        ),
+    )
+    assert source.can_be_replaced_by(
+        mobile_target,
+        required_actions=["screenshot", "left_click", "type"],
+        required_environment="desktop",
+    ) is False

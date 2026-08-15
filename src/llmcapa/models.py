@@ -365,6 +365,7 @@ class Capability:
         other: "Capability",
         required_features: Optional[List[str]] = None,
         required_actions: Optional[List[str]] = None,
+        required_environment: Optional[str] = None,
     ) -> bool:
         """Check if this model can be replaced by another model.
 
@@ -372,7 +373,10 @@ class Capability:
         and must support all specified required_features (or all features this model supports
         if required_features is None). ``required_actions`` explicitly requires
         Computer Use actions on the replacement model and is evaluated against
-        the provider/API-specific Computer Use capability.
+        the provider/API-specific Computer Use capability. ``required_actions``
+        is currently applicable to Computer Use only. ``required_environment``
+        additionally requires the replacement capability to support that
+        execution environment.
         """
         if other.context_window < self.context_window:
             return False
@@ -397,10 +401,16 @@ class Capability:
             if not other.supports(feature):
                 return False
 
-        if required_actions is not None:
+        if required_actions is not None or required_environment is not None:
             if other.computer_use is None or not other.computer_use.supported:
                 return False
+
+        if required_actions is not None:
             if not set(required_actions).issubset(other.computer_use.actions):
+                return False
+
+        if required_environment is not None:
+            if required_environment not in other.computer_use.environments:
                 return False
 
         return True

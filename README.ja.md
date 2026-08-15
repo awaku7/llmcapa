@@ -439,13 +439,14 @@ OpenRouterなどのゲートウェイは、直接のプロバイダー経路と�
 
 ### Computer Useの置換判定
 
-モデル置換時にComputer Useの互換性も要求する場合は、明示的に指定します。置換判定では、単なる `supports("computer_use")` の真偽値ではなく、プロバイダー/API固有のtool type（schema）、対応環境、アクションを比較します。tool versionはメタデータとして扱い、互換性の判定条件にはしません。
+モデル置換時にComputer Useの互換性も要求する場合は、明示的に指定します。置換判定では、単なる `supports("computer_use")` の真偽値ではなく、プロバイダー/API固有のtool type（schema）、対応環境、アクションを比較します。tool versionはメタデータとして扱い、互換性の判定条件にはしません。`required_actions` は現在Computer Use専用です。
 
 ```python
 source.can_be_replaced_by(
     target,
     required_features=["vision"],
     required_actions=["screenshot", "left_click", "type"],
+    required_environment="desktop",
 )
 ```
 
