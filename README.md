@@ -384,6 +384,59 @@ llmcapa.load_extra("my_models.json")
 }
 ```
 
+## Computer Use / CUA Capabilities
+
+`llmcapa` can describe whether a model supports Computer Use (CUA) without executing computer actions itself. The capability is optional, so existing model records and callers remain compatible.
+
+```python
+import llmcapa
+
+cap = llmcapa.get("claude-opus-4-5", provider="anthropic")
+computer = cap.computer_use
+
+if computer and computer.supported:
+    print(computer.native)
+    print(computer.tool_type)
+    print(computer.tool_version)
+    print(computer.beta_header)
+    print(sorted(computer.actions))
+```
+
+Convenience checks are also available:
+
+```python
+llmcapa.supports_computer_use("claude-opus-4-5", provider="anthropic")
+llmcapa.supports_computer_action("claude-opus-4-5", "zoom", provider="anthropic")
+llmcapa.supports_computer_environment("claude-opus-4-5", "desktop", provider="anthropic")
+```
+
+### Native and custom-harness support
+
+- `native=True`: the provider exposes a native Computer Tool/API. For example, Anthropic uses `computer_20251124` or `computer_20250124` with the corresponding beta header.
+- `native=False`: the model can be used with an external Computer Runtime or custom tool harness, but the provider does not expose a native Computer Tool through this route. This applies to examples such as Qwen visual agents, local models, and OpenRouter custom tool calling.
+
+`tool_version` is the normalized Computer Tool version. `tool_type` is the provider/API value, and `beta_header` is the optional request header or body field. Model version and Computer Tool version are tracked separately.
+
+`llmcapa` only reports capability metadata. The application remains responsible for screenshots, mouse/keyboard execution, the agent loop, isolation, and human confirmation for high-impact actions.
+
+### Examples of registered routes
+
+```python
+# Direct Anthropic API
+anthropic = llmcapa.get("claude-opus-4-5", provider="anthropic")
+assert anthropic.computer_use.tool_type == "computer_20251124"
+
+# Amazon Bedrock-hosted Claude
+bedrock = llmcapa.get("us.anthropic.claude-opus-4-7", provider="amazon")
+assert bedrock.computer_use.tool_type == "computer_20251124"
+
+# OpenAI Responses API
+openai = llmcapa.get("gpt-5.4", provider="openai")
+assert openai.computer_use.tool_type == "computer"
+```
+
+OpenRouter and similar gateways are represented separately from direct provider routes. Generic tool calling can be combined with a custom harness, but it should not automatically be treated as the provider's native Computer Tool.
+
 ## Development
 
 For details on how to extend the library, add new providers, or implement new feature flags, please refer to the [DEVELOP.md](DEVELOP.md) guide.

@@ -156,8 +156,6 @@ print(claude.supports(Feature.LLMC_FEAT_REASONING_EFFORT))  # False
 print(claude.supports(Feature.LLMC_FEAT_THINKING_BUDGET))   # True
 ```
 
-
-
 ### 推論努力（Reasoning Effort）の値
 
 特定モデルがサポートする有効な `reasoning_effort` 値の一覧を取得します:
@@ -274,7 +272,6 @@ print(cap.context_window)  # 131072
 print(cap.pricing)         # {'input_per_1m': 0.1, 'output_per_1m': 0.32, 'currency': 'USD'}
 ```
 
-
 ### Novita AI（同梱プロバイダー）
 
 Novita AI は、200以上のオープンソース／独自モデルを単一 API で提供するクラウドプラットフォームです。llmcapa は DeepSeek、Qwen、Meta Llama、GLM、Gemini などを含む 136 の Novita AI モデルの機能データ（Novita 固有の価格設定付き）を同梱しています。
@@ -371,6 +368,7 @@ llmcapa.load_extra("my_models.json")
 ```
 
 `my_models.json` のフォーマット:
+
 ```json
 {
   "models": [
@@ -385,6 +383,59 @@ llmcapa.load_extra("my_models.json")
   ]
 }
 ```
+
+## Computer Use / CUA capability
+
+`llmcapa` は、モデルが Computer Use（CUA）に対応しているかをメタデータとして確認できます。Computer Useの操作自体は実行しません。`computer_use` はオプション項目なので、既存のモデル定義や利用コードとの互換性を維持できます。
+
+```python
+import llmcapa
+
+cap = llmcapa.get("claude-opus-4-5", provider="anthropic")
+computer = cap.computer_use
+
+if computer and computer.supported:
+    print(computer.native)
+    print(computer.tool_type)
+    print(computer.tool_version)
+    print(computer.beta_header)
+    print(sorted(computer.actions))
+```
+
+簡易判定用のAPIも利用できます。
+
+```python
+llmcapa.supports_computer_use("claude-opus-4-5", provider="anthropic")
+llmcapa.supports_computer_action("claude-opus-4-5", "zoom", provider="anthropic")
+llmcapa.supports_computer_environment("claude-opus-4-5", "desktop", provider="anthropic")
+```
+
+### ネイティブ対応とカスタムハーネス対応
+
+- `native=True`: プロバイダーがネイティブComputer Tool/APIを提供する場合。例えばAnthropicでは、対応モデルに `computer_20251124` または `computer_20250124` と対応するベータヘッダーを使用します。
+- `native=False`: 外部のComputer Runtimeや独自ツールハーネスを組み合わせて利用できる場合。プロバイダーのネイティブComputer Toolを、その接続経路が提供していることを意味しません。QwenのVisual Agent、ローカルモデル、OpenRouter経由のカスタムツール利用などが該当します。
+
+`tool_version` は正規化したComputer Toolバージョン、`tool_type` はプロバイダー/APIに渡す値、`beta_header` は必要なリクエストヘッダーまたはリクエスト項目です。モデルのバージョンとComputer Toolのバージョンは分けて管理します。
+
+`llmcapa` は対応状況のメタデータだけを提供します。スクリーンショット取得、マウス・キーボード操作、エージェントループ、サンドボックス化、高リスク操作のユーザー確認はアプリケーション側の責任です。
+
+### 登録済み経路の例
+
+```python
+# Anthropic APIへ直接接続
+anthropic = llmcapa.get("claude-opus-4-5", provider="anthropic")
+assert anthropic.computer_use.tool_type == "computer_20251124"
+
+# Amazon Bedrock経由のClaude
+bedrock = llmcapa.get("us.anthropic.claude-opus-4-7", provider="amazon")
+assert bedrock.computer_use.tool_type == "computer_20251124"
+
+# OpenAI Responses API
+openai = llmcapa.get("gpt-5.4", provider="openai")
+assert openai.computer_use.tool_type == "computer"
+```
+
+OpenRouterなどのゲートウェイは、直接のプロバイダー経路とは分けて管理します。汎用Tool Callingとカスタムハーネスを組み合わせることはできますが、プロバイダーのネイティブComputer Toolと自動的に同一視しません。
 
 ## 開発
 
