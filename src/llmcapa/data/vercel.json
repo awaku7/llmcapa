@@ -22983,7 +22983,36 @@
         "version": 1
       },
       "context_window": 4096,
-      "max_output_tokens": 2048
+      "max_output_tokens": 2048,
+      "computer_use": {
+        "supported": true,
+        "native": false,
+        "provider": "vercel",
+        "model": "opengvlab-scalecua-32b",
+        "api_type": "custom_harness",
+        "tool_type": "custom_computer_harness",
+        "tool_version": null,
+        "status": "preview",
+        "environments": [
+          "browser",
+          "desktop",
+          "mobile"
+        ],
+        "actions": [
+          "screenshot",
+          "click",
+          "double_click",
+          "drag",
+          "move",
+          "scroll",
+          "keypress",
+          "type",
+          "wait"
+        ],
+        "requires_beta": false,
+        "enable_zoom": false,
+        "source_url": "https://github.com/OpenGVLab/ScaleCUA"
+      }
     },
     {
       "provider": "vercel",

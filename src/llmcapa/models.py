@@ -38,6 +38,10 @@ class Feature(str, Enum):
     LLMC_FEAT_SPEECH_INPUT = "speech_input"
     LLMC_FEAT_SPEECH_OUTPUT = "speech_output"
     LLMC_FEAT_EMBEDDING_OUTPUT = "embedding_output"
+    # Additional output modalities. Video input/output are defined above.
+    LLMC_FEAT_EMBEDDINGS_OUTPUT = "embedding_output"  # plural alias
+    LLMC_FEAT_RERANK = "rerank"
+    LLMC_FEAT_RERANK_OUTPUT = "rerank_output"
 
 
 
@@ -50,6 +54,42 @@ class ReasoningEffort(str, Enum):
     LLMC_EFFORT_HIGH = "high"
     LLMC_EFFORT_XHIGH = "xhigh"
     LLMC_EFFORT_MAX = "max"
+
+
+@dataclass(frozen=True)
+class ComputerUseCapability:
+    """Normalized Computer Use / CUA capability information."""
+
+    supported: bool
+    native: bool
+    provider: str = ""
+    model: str = ""
+    api_type: Optional[str] = None
+    tool_type: Optional[str] = None
+    tool_version: Optional[str] = None
+    status: str = "unknown"
+    environments: frozenset[str] = field(default_factory=frozenset)
+    actions: frozenset[str] = field(default_factory=frozenset)
+    requires_beta: bool = False
+    beta_header: Optional[str] = None
+    enable_zoom: bool = False
+    source_url: Optional[str] = None
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> "ComputerUseCapability":
+        """Create a capability from JSON-compatible data."""
+        values = dict(data)
+        for key in ("environments", "actions"):
+            value = values.get(key)
+            values[key] = frozenset(value or ())
+        return cls(**values)
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Return a JSON-compatible representation."""
+        result = asdict(self)
+        result["environments"] = sorted(self.environments)
+        result["actions"] = sorted(self.actions)
+        return result
 
 
 @dataclass(frozen=True)
@@ -86,6 +126,8 @@ class Capability:
     extra: Dict[str, Any] = field(default_factory=dict)
     # Kept at the end to preserve positional-constructor compatibility.
     supports_realtime: bool = False
+    # Appended after all existing fields for positional compatibility.
+    computer_use: Optional[ComputerUseCapability] = None
 
     def supports(self, feature: Feature | str) -> bool:
         """Return True if the model supports the given feature.
@@ -94,7 +136,8 @@ class Capability:
         "function_calling", "streaming", "reasoning",
         "chat_completion", "responses_api", "multimodal",
         "reasoning_effort", "thinking_budget", "fim",
-        or an input modality such as "image", "audio".
+        or a modality such as "image", "audio", "video", "embedding", or
+        "rerank".
 
         Also accepts `Feature` enum members (e.g., `Feature.LLMC_FEATURE_VISION`).
         """
@@ -115,6 +158,8 @@ class Capability:
         return res
 
     def _eval_supports(self, feature: str) -> bool:
+        if feature == "computer_use":
+            return bool(self.computer_use and self.computer_use.supported)
         attr = f"supports_{feature}"
         if hasattr(self, attr):
             return bool(getattr(self, attr))
@@ -141,7 +186,8 @@ class Capability:
             "vision", "function_calling", "json_mode", "streaming",
             "reasoning", "chat_completion", "responses_api",
             "reasoning_effort", "thinking_budget", "fim", "realtime",
-            "file_input", "speech_input", "speech_output", "embedding_output"
+            "file_input", "speech_input", "speech_output", "embedding_output",
+            "computer_use"
         ]
         # Gather input/output modalities
         for mod in self.input_modalities:
@@ -375,6 +421,10 @@ class Capability:
             d.pop("reasoning_effort_values", None)
         if d.get("thinking_budget_values") is None:
             d.pop("thinking_budget_values", None)
+        if self.computer_use is None:
+            d.pop("computer_use", None)
+        else:
+            d["computer_use"] = self.computer_use.to_dict()
         # Exclude internal cache from dict representation
         d.pop("_supports_cache", None)
         return d
@@ -393,6 +443,11 @@ class Capability:
                 # Normalize None to empty list for list-typed fields
                 if key in _list_fields and value is None:
                     kwargs[key] = []
+                elif key == "computer_use" and value is not None:
+                    kwargs[key] = (
+                        value if isinstance(value, ComputerUseCapability)
+                        else ComputerUseCapability.from_dict(value)
+                    )
                 else:
                     kwargs[key] = value
             else:

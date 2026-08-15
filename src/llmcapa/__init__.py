@@ -14,14 +14,15 @@ from __future__ import annotations
 from typing import List, Optional, Union
 from pathlib import Path
 
-from .models import Capability, Feature, ReasoningEffort
+from .models import Capability, ComputerUseCapability, Feature, ReasoningEffort
 from .registry import Registry, ModelNotFoundError, default_registry
 from .tokenizer import count_tokens, count_messages_tokens
 
-__version__ = "0.5.1"
+__version__ = "0.5.5"
 
 __all__ = [
     "Capability",
+    "ComputerUseCapability",
     "Feature",
     "ReasoningEffort",
     "Registry",
@@ -36,6 +37,10 @@ __all__ = [
     "fetch_openrouter",
     "fetch_huggingface",
     "register",
+    "supports_computer_use",
+    "get_computer_use_capability",
+    "supports_computer_action",
+    "supports_computer_environment",
     "default_registry",
     "count_tokens",
     "count_messages_tokens",
@@ -100,8 +105,13 @@ def load_extra(path: Union[str, Path]) -> int:
     return default_registry().load_extra(path)
 
 
-def fetch_openrouter(cache_ttl: Optional[int] = None) -> int:
-    """Fetch all models dynamically from OpenRouter API and register them."""
+def fetch_openrouter(cache_ttl: int = 86400) -> int:
+    """Fetch all models dynamically from OpenRouter API and register them.
+
+    Args:
+        cache_ttl: Cache lifetime in seconds (default 24 hours). Pass 0 to
+                   force a refresh from OpenRouter.
+    """
     return default_registry().fetch_openrouter(cache_ttl)
 
 
@@ -125,3 +135,37 @@ def fetch_huggingface(
 def register(cap: Capability) -> None:
     """Register (or override) a Capability in the default registry."""
     default_registry().register(cap)
+
+
+def get_computer_use_capability(
+    model_id: str,
+    provider: Optional[str] = None,
+) -> Optional[ComputerUseCapability]:
+    """Return Computer Use capability, or ``None`` when it is unknown."""
+    return get(model_id, provider).computer_use
+
+
+def supports_computer_use(model_id: str, provider: Optional[str] = None) -> bool:
+    """Return whether a model is explicitly registered as supporting CUA."""
+    cap = get_computer_use_capability(model_id, provider)
+    return bool(cap and cap.supported)
+
+
+def supports_computer_action(
+    model_id: str,
+    action: str,
+    provider: Optional[str] = None,
+) -> bool:
+    """Return whether a registered Computer Use capability supports *action*."""
+    cap = get_computer_use_capability(model_id, provider)
+    return bool(cap and cap.supported and action in cap.actions)
+
+
+def supports_computer_environment(
+    model_id: str,
+    environment: str,
+    provider: Optional[str] = None,
+) -> bool:
+    """Return whether a registered capability supports *environment*."""
+    cap = get_computer_use_capability(model_id, provider)
+    return bool(cap and cap.supported and environment in cap.environments)

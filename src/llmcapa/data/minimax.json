@@ -2,129 +2,6 @@
   "models": [
     {
       "provider": "minimax",
-      "model_id": "Hailuo-2.3",
-      "display_name": "Hailuo 2.3",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "video"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "api",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "reasoning_effort_values": null,
-      "thinking_budget_values": null,
-      "extra": {
-        "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
-        "price_per_clip_range_usd": [
-          0.28,
-          0.56
-        ],
-        "unit": "clip",
-        "note": "varies by resolution/duration",
-        "api": "video"
-      }
-    },
-    {
-      "provider": "minimax",
-      "model_id": "Hailuo-2.3-Fast",
-      "display_name": "Hailuo 2.3 Fast",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "video"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "api",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "reasoning_effort_values": null,
-      "thinking_budget_values": null,
-      "extra": {
-        "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
-        "unit": "clip",
-        "note": "faster/cheaper tier vs Hailuo 2.3",
-        "api": "video"
-      }
-    },
-    {
-      "provider": "minimax",
-      "model_id": "image-01",
-      "display_name": "Image-01",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "image"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "api",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "reasoning_effort_values": null,
-      "thinking_budget_values": null,
-      "extra": {
-        "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
-        "price_per_image": 0.0035,
-        "unit": "image",
-        "api": "image"
-      }
-    },
-    {
-      "provider": "minimax",
       "model_id": "minimax-01",
       "display_name": "MiniMax-01",
       "context_window": 1000192,
@@ -574,340 +451,125 @@
     },
     {
       "provider": "minimax",
-      "model_id": "minimax/minimax-01",
-      "display_name": "MiniMax: MiniMax-01",
-      "context_window": 1000192,
-      "max_output_tokens": 1000192,
+      "model_id": "Hailuo-2.3",
+      "display_name": "Hailuo 2.3",
+      "context_window": 0,
+      "max_output_tokens": 0,
       "input_modalities": [
         "text",
         "image"
       ],
       "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": "2024-03-31",
-      "deprecated": false,
-      "aliases": [
-        "minimax/minimax-01"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.19999999999999998,
-        "output_per_1m": 1.1,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "minimax",
-      "model_id": "minimax/minimax-m1",
-      "display_name": "MiniMax: MiniMax M1",
-      "context_window": 1000000,
-      "max_output_tokens": 40000,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": "2024-06-30",
-      "deprecated": false,
-      "aliases": [
-        "minimax/minimax-m1"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.55,
-        "output_per_1m": 2.2,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "minimax",
-      "model_id": "minimax/minimax-m2",
-      "display_name": "MiniMax: MiniMax M2",
-      "context_window": 204800,
-      "max_output_tokens": 131072,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "minimax/minimax-m2"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.255,
-        "output_per_1m": 1.02,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "minimax",
-      "model_id": "minimax/minimax-m2-her",
-      "display_name": "MiniMax: MiniMax M2-her",
-      "context_window": 65536,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "minimax/minimax-m2-her"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.3,
-        "output_per_1m": 1.2,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "minimax",
-      "model_id": "minimax/minimax-m2.1",
-      "display_name": "MiniMax: MiniMax M2.1",
-      "context_window": 204800,
-      "max_output_tokens": 131072,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "minimax/minimax-m2.1"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.3,
-        "output_per_1m": 1.2,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "minimax",
-      "model_id": "minimax/minimax-m2.5",
-      "display_name": "MiniMax: MiniMax M2.5",
-      "context_window": 204800,
-      "max_output_tokens": 196608,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "minimax/minimax-m2.5"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.22,
-        "output_per_1m": 0.8999999999999999,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "minimax",
-      "model_id": "minimax/minimax-m2.7",
-      "display_name": "MiniMax: MiniMax M2.7",
-      "context_window": 204800,
-      "max_output_tokens": 131072,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "minimax/minimax-m2.7"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.3,
-        "output_per_1m": 1.2,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "minimax",
-      "model_id": "minimax/minimax-m3",
-      "display_name": "MiniMax: MiniMax M3",
-      "context_window": 1048576,
-      "max_output_tokens": 512000,
-      "input_modalities": [
-        "text",
-        "image",
         "video"
       ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
       "supports_responses_api": false,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
-      "tokenizer_name": "Other",
+      "license_type": "api",
+      "tokenizer_name": "",
       "knowledge_cutoff": null,
+      "pricing": null,
       "deprecated": false,
-      "aliases": [
-        "minimax/minimax-m3"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.3,
-        "output_per_1m": 1.2,
-        "currency": "USD"
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "thinking_budget_values": null,
+      "extra": {
+        "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
+        "price_per_clip_range_usd": [
+          0.28,
+          0.56
+        ],
+        "unit": "clip",
+        "note": "varies by resolution/duration",
+        "api": "video"
       }
     },
     {
       "provider": "minimax",
-      "model_id": "minimax/minimax-m3:batch",
-      "display_name": "MiniMax: MiniMax M3 (batch)",
-      "context_window": 524288,
+      "model_id": "Hailuo-2.3-Fast",
+      "display_name": "Hailuo 2.3 Fast",
+      "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
         "text",
-        "image",
-        "video"
+        "image"
       ],
       "output_modalities": [
-        "text"
+        "video"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
       "supports_responses_api": false,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
-      "tokenizer_name": "Other",
+      "license_type": "api",
+      "tokenizer_name": "",
       "knowledge_cutoff": null,
+      "pricing": null,
       "deprecated": false,
-      "aliases": [
-        "minimax/minimax-m3:batch"
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "thinking_budget_values": null,
+      "extra": {
+        "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
+        "unit": "clip",
+        "note": "faster/cheaper tier vs Hailuo 2.3",
+        "api": "video"
+      }
+    },
+    {
+      "provider": "minimax",
+      "model_id": "image-01",
+      "display_name": "Image-01",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
       ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.15,
-        "output_per_1m": 0.6,
-        "currency": "USD"
+      "output_modalities": [
+        "image"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "thinking_budget_values": null,
+      "extra": {
+        "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
+        "price_per_image": 0.0035,
+        "unit": "image",
+        "api": "image"
       }
     },
     {

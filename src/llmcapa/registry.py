@@ -48,6 +48,8 @@ class Registry:
         "lmstudio": ["lm-studio", "lm_studio"],
         "together": ["together-ai", "togethercomputer"],
         "vercel": ["vercel-ai-gateway", "vercel-gateway", "ai-gateway"],
+        # llama.cpp is a local inference backend, kept distinct from Ollama.
+        "llama-cpp": ["llama", "llama_cpp"],
     }
 
     @staticmethod
@@ -114,7 +116,7 @@ class Registry:
                     model_id = r.get("id")
                     if not model_id:
                         continue
-                    self.register(self._map_openrouter_record(r))
+                    self.register(self._map_openrouter_record(r), overwrite=True)
             except Exception:
                 pass
 
@@ -141,7 +143,7 @@ class Registry:
         text = Path(path).read_text(encoding="utf-8")
         return self._load_json_text(text)
 
-    def register(self, cap: Capability) -> None:
+    def register(self, cap: Capability, overwrite: bool = False) -> None:
         """Register a single Capability.
 
         The *flat* model_id -> Capability mapping uses **first-registered-wins**
@@ -156,7 +158,7 @@ class Registry:
 
         # First-registered-wins for the flat model_id index.
         # Also skip if key is already claimed as an alias for another model.
-        if key not in self._models and key not in self._alias_index:
+        if overwrite or (key not in self._models and key not in self._alias_index):
             self._models[key] = cap
             self._alias_index[key] = key
             for alias in cap.aliases:
@@ -166,7 +168,7 @@ class Registry:
         # Provider-scoped index: always register (no first-wins here)
         if prov not in self._by_provider:
             self._by_provider[prov] = {}
-        if key not in self._by_provider[prov]:
+        if overwrite or key not in self._by_provider[prov]:
             self._by_provider[prov][key] = cap
 
     def _map_openrouter_record(self, r: dict) -> Capability:
@@ -212,6 +214,8 @@ class Registry:
             supports_function_calling=supports_fc,
             supports_streaming=True,
             supports_chat_completion=True,
+            supports_responses_api=True,
+            supports_reasoning=bool(r.get("reasoning")),
             supports_vision="image" in input_mods,
             supports_json_mode="json_mode" in supported_params or "response_format" in supported_params,
             supports_reasoning_effort="reasoning" in supported_params or "reasoning_effort" in supported_params,

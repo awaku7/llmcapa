@@ -2,349 +2,6 @@
   "models": [
     {
       "provider": "deepseek",
-      "model_id": "deepseek-r1",
-      "display_name": "DeepSeek R1",
-      "context_window": 65536,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": true,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2024-07",
-      "deprecated": true,
-      "aliases": [
-        "deepseek/deepseek-r1",
-        "deepseek-r1:671b"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.55,
-        "output_per_1m": 2.19,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://api-docs.deepseek.com/updates/",
-        "updates": "https://api-docs.deepseek.com/updates/",
-        "thinking_mode": "https://api-docs.deepseek.com/guides/thinking_mode/",
-        "base_url": "https://api.deepseek.com",
-        "base_url_anthropic": "https://api.deepseek.com/anthropic",
-        "status": "superseded",
-        "note": "Original R1 (2025-01-20); upgraded to R1-0528 on 2025-05-28. Historical rates vary by host; official API now V4."
-      }
-    },
-    {
-      "provider": "deepseek",
-      "model_id": "deepseek-r1-0528",
-      "display_name": "DeepSeek R1 0528",
-      "context_window": 131072,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": true,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2025-05",
-      "deprecated": true,
-      "aliases": [
-        "deepseek/deepseek-r1-0528"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.55,
-        "output_per_1m": 2.19,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://api-docs.deepseek.com/updates/",
-        "updates": "https://api-docs.deepseek.com/updates/",
-        "thinking_mode": "https://api-docs.deepseek.com/guides/thinking_mode/",
-        "base_url": "https://api.deepseek.com",
-        "base_url_anthropic": "https://api.deepseek.com/anthropic",
-        "status": "superseded_by_v3.1_thinking",
-        "note": "deepseek-reasoner upgraded to R1-0528 on 2025-05-28."
-      }
-    },
-    {
-      "provider": "deepseek",
-      "model_id": "deepseek-r1-distill",
-      "display_name": "DeepSeek R1 Distill (Qwen/Llama family)",
-      "context_window": 131072,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2024-07",
-      "deprecated": false,
-      "aliases": [
-        "deepseek-r1-distill-qwen",
-        "deepseek-r1-distill-7b",
-        "deepseek-r1-distill-8b",
-        "deepseek-r1-distill-14b",
-        "deepseek-r1-distill-32b",
-        "deepseek-r1-distill-70b",
-        "deepseek/deepseek-r1-distill-qwen",
-        "deepseek/deepseek-r1-distill-7b",
-        "deepseek/deepseek-r1-distill-8b",
-        "deepseek/deepseek-r1-distill-14b",
-        "deepseek/deepseek-r1-distill-32b",
-        "deepseek/deepseek-r1-distill-70b",
-        "deepseek/deepseek-r1-distill"
-      ],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://huggingface.co/deepseek-ai",
-        "updates": "https://api-docs.deepseek.com/updates/",
-        "thinking_mode": "https://api-docs.deepseek.com/guides/thinking_mode/",
-        "base_url": "https://api.deepseek.com",
-        "base_url_anthropic": "https://api.deepseek.com/anthropic",
-        "status": "open_weight",
-        "note": "Distilled open-weight variants (1.5B–70B). Not served on official DeepSeek API; host-dependent pricing.",
-        "license_type_note": "open_weight"
-      }
-    },
-    {
-      "provider": "deepseek",
-      "model_id": "deepseek-v3",
-      "display_name": "DeepSeek V3",
-      "context_window": 131072,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": true,
-      "supports_google_api": false,
-      "supports_fim": true,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2024-07",
-      "deprecated": true,
-      "aliases": [
-        "deepseek/deepseek-v3",
-        "deepseek/deepseek-chat-v3-0324",
-        "deepseek-v3-0324"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.27,
-        "output_per_1m": 1.1,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://api-docs.deepseek.com/updates/",
-        "updates": "https://api-docs.deepseek.com/updates/",
-        "thinking_mode": "https://api-docs.deepseek.com/guides/thinking_mode/",
-        "base_url": "https://api.deepseek.com",
-        "base_url_anthropic": "https://api.deepseek.com/anthropic",
-        "status": "superseded",
-        "note": "V3 (2024-12-26) then V3-0324 (2025-03-24)."
-      }
-    },
-    {
-      "provider": "deepseek",
-      "model_id": "deepseek-v3.1",
-      "display_name": "DeepSeek V3.1",
-      "context_window": 131072,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": true,
-      "supports_google_api": false,
-      "supports_fim": true,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2025-05",
-      "deprecated": true,
-      "aliases": [
-        "deepseek/deepseek-v3.1",
-        "deepseek/deepseek-v3.1-terminus",
-        "deepseek/deepseek-chat-v3.1",
-        "deepseek-chat-v3.1"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.27,
-        "output_per_1m": 1.1,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://api-docs.deepseek.com/updates/",
-        "updates": "https://api-docs.deepseek.com/updates/",
-        "thinking_mode": "https://api-docs.deepseek.com/guides/thinking_mode/",
-        "base_url": "https://api.deepseek.com",
-        "base_url_anthropic": "https://api.deepseek.com/anthropic",
-        "status": "superseded",
-        "note": "Hybrid thinking; later Terminus 2025-09-22.",
-        "aliases_historical": [
-          "deepseek/deepseek-v3.1-terminus",
-          "deepseek/deepseek-chat-v3.1"
-        ]
-      }
-    },
-    {
-      "provider": "deepseek",
-      "model_id": "deepseek-v3.2",
-      "display_name": "DeepSeek V3.2",
-      "context_window": 131072,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": true,
-      "supports_google_api": false,
-      "supports_fim": true,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2025-07",
-      "deprecated": true,
-      "aliases": [
-        "deepseek/deepseek-v3.2",
-        "deepseek-chat-v3.2"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.28,
-        "output_per_1m": 0.42,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://api-docs.deepseek.com/updates/",
-        "updates": "https://api-docs.deepseek.com/updates/",
-        "thinking_mode": "https://api-docs.deepseek.com/guides/thinking_mode/",
-        "base_url": "https://api.deepseek.com",
-        "base_url_anthropic": "https://api.deepseek.com/anthropic",
-        "status": "superseded_by_v4",
-        "note": "Was served as deepseek-chat / deepseek-reasoner from 2025-12-01 until V4 cutover 2026-04-24. Last public rates approximate; verify archives.",
-        "cache_hit_per_1m": 0.028
-      }
-    },
-    {
-      "provider": "deepseek",
-      "model_id": "deepseek-v3.2-speciale",
-      "display_name": "DeepSeek V3.2 Speciale",
-      "context_window": 131072,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": true,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2025-07",
-      "deprecated": true,
-      "aliases": [
-        "deepseek/deepseek-v3.2-speciale"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.28,
-        "output_per_1m": 0.42,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://api-docs.deepseek.com/updates/",
-        "updates": "https://api-docs.deepseek.com/updates/",
-        "thinking_mode": "https://api-docs.deepseek.com/guides/thinking_mode/",
-        "base_url": "https://api.deepseek.com",
-        "base_url_anthropic": "https://api.deepseek.com/anthropic",
-        "status": "expired",
-        "note": "Temporary endpoint https://api.deepseek.com/v3.2_speciale_expires_on_20251215 until 2025-12-15 15:59 UTC; same pricing as V3.2; no tool calls."
-      }
-    },
-    {
-      "provider": "deepseek",
       "model_id": "deepseek-v4-flash",
       "display_name": "DeepSeek V4 Flash",
       "context_window": 1048576,
@@ -492,46 +149,9 @@
     },
     {
       "provider": "deepseek",
-      "model_id": "deepseek/deepseek-chat",
-      "display_name": "DeepSeek: DeepSeek V3",
-      "context_window": 163840,
-      "max_output_tokens": 16000,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "DeepSeek",
-      "knowledge_cutoff": "2024-07-31",
-      "deprecated": false,
-      "aliases": [
-        "deepseek/deepseek-chat"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.2574,
-        "output_per_1m": 1.0287,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "deepseek",
-      "model_id": "deepseek/deepseek-chat-v3-0324",
-      "display_name": "DeepSeek: DeepSeek V3 0324",
-      "context_window": 163840,
+      "model_id": "deepseek-v3.2",
+      "display_name": "DeepSeek V3.2",
+      "context_window": 131072,
       "max_output_tokens": 65536,
       "input_modalities": [
         "text"
@@ -543,144 +163,284 @@
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": true,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-07",
+      "deprecated": true,
+      "aliases": [
+        "deepseek/deepseek-v3.2",
+        "deepseek-chat-v3.2"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.28,
+        "output_per_1m": 0.42,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://api-docs.deepseek.com/updates/",
+        "updates": "https://api-docs.deepseek.com/updates/",
+        "thinking_mode": "https://api-docs.deepseek.com/guides/thinking_mode/",
+        "base_url": "https://api.deepseek.com",
+        "base_url_anthropic": "https://api.deepseek.com/anthropic",
+        "status": "superseded_by_v4",
+        "note": "Was served as deepseek-chat / deepseek-reasoner from 2025-12-01 until V4 cutover 2026-04-24. Last public rates approximate; verify archives.",
+        "cache_hit_per_1m": 0.028
+      }
+    },
+    {
+      "provider": "deepseek",
+      "model_id": "deepseek-v3.2-speciale",
+      "display_name": "DeepSeek V3.2 Speciale",
+      "context_window": 131072,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-07",
+      "deprecated": true,
+      "aliases": [
+        "deepseek/deepseek-v3.2-speciale"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.28,
+        "output_per_1m": 0.42,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://api-docs.deepseek.com/updates/",
+        "updates": "https://api-docs.deepseek.com/updates/",
+        "thinking_mode": "https://api-docs.deepseek.com/guides/thinking_mode/",
+        "base_url": "https://api.deepseek.com",
+        "base_url_anthropic": "https://api.deepseek.com/anthropic",
+        "status": "expired",
+        "note": "Temporary endpoint https://api.deepseek.com/v3.2_speciale_expires_on_20251215 until 2025-12-15 15:59 UTC; same pricing as V3.2; no tool calls."
+      }
+    },
+    {
+      "provider": "deepseek",
+      "model_id": "deepseek-v3.1",
+      "display_name": "DeepSeek V3.1",
+      "context_window": 131072,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": true,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-05",
+      "deprecated": true,
+      "aliases": [
+        "deepseek/deepseek-v3.1",
+        "deepseek/deepseek-v3.1-terminus",
+        "deepseek/deepseek-chat-v3.1",
+        "deepseek-chat-v3.1"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.27,
+        "output_per_1m": 1.1,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://api-docs.deepseek.com/updates/",
+        "updates": "https://api-docs.deepseek.com/updates/",
+        "thinking_mode": "https://api-docs.deepseek.com/guides/thinking_mode/",
+        "base_url": "https://api.deepseek.com",
+        "base_url_anthropic": "https://api.deepseek.com/anthropic",
+        "status": "superseded",
+        "note": "Hybrid thinking; later Terminus 2025-09-22.",
+        "aliases_historical": [
+          "deepseek/deepseek-v3.1-terminus",
+          "deepseek/deepseek-chat-v3.1"
+        ]
+      }
+    },
+    {
+      "provider": "deepseek",
+      "model_id": "deepseek-r1",
+      "display_name": "DeepSeek R1",
+      "context_window": 65536,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-07",
+      "deprecated": true,
+      "aliases": [
+        "deepseek/deepseek-r1",
+        "deepseek-r1:671b"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.55,
+        "output_per_1m": 2.19,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://api-docs.deepseek.com/updates/",
+        "updates": "https://api-docs.deepseek.com/updates/",
+        "thinking_mode": "https://api-docs.deepseek.com/guides/thinking_mode/",
+        "base_url": "https://api.deepseek.com",
+        "base_url_anthropic": "https://api.deepseek.com/anthropic",
+        "status": "superseded",
+        "note": "Original R1 (2025-01-20); upgraded to R1-0528 on 2025-05-28. Historical rates vary by host; official API now V4."
+      }
+    },
+    {
+      "provider": "deepseek",
+      "model_id": "deepseek-r1-0528",
+      "display_name": "DeepSeek R1 0528",
+      "context_window": 131072,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-05",
+      "deprecated": true,
+      "aliases": [
+        "deepseek/deepseek-r1-0528"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.55,
+        "output_per_1m": 2.19,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://api-docs.deepseek.com/updates/",
+        "updates": "https://api-docs.deepseek.com/updates/",
+        "thinking_mode": "https://api-docs.deepseek.com/guides/thinking_mode/",
+        "base_url": "https://api.deepseek.com",
+        "base_url_anthropic": "https://api.deepseek.com/anthropic",
+        "status": "superseded_by_v3.1_thinking",
+        "note": "deepseek-reasoner upgraded to R1-0528 on 2025-05-28."
+      }
+    },
+    {
+      "provider": "deepseek",
+      "model_id": "deepseek-v3",
+      "display_name": "DeepSeek V3",
+      "context_window": 131072,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": true,
       "supports_responses_api": false,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
+      "supports_anthropic_api": true,
       "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "DeepSeek",
-      "knowledge_cutoff": "2024-07-31",
-      "deprecated": false,
+      "supports_fim": true,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-07",
+      "deprecated": true,
       "aliases": [
-        "deepseek/deepseek-chat-v3-0324"
+        "deepseek/deepseek-v3",
+        "deepseek/deepseek-chat-v3-0324",
+        "deepseek-v3-0324"
       ],
-      "license_type": "unknown",
+      "license_type": "api",
       "pricing": {
         "input_per_1m": 0.27,
-        "output_per_1m": 1.12,
+        "output_per_1m": 1.1,
         "currency": "USD"
+      },
+      "extra": {
+        "source": "https://api-docs.deepseek.com/updates/",
+        "updates": "https://api-docs.deepseek.com/updates/",
+        "thinking_mode": "https://api-docs.deepseek.com/guides/thinking_mode/",
+        "base_url": "https://api.deepseek.com",
+        "base_url_anthropic": "https://api.deepseek.com/anthropic",
+        "status": "superseded",
+        "note": "V3 (2024-12-26) then V3-0324 (2025-03-24)."
       }
     },
     {
       "provider": "deepseek",
-      "model_id": "deepseek/deepseek-chat-v3.1",
-      "display_name": "DeepSeek: DeepSeek V3.1",
-      "context_window": 163840,
+      "model_id": "deepseek-r1-distill",
+      "display_name": "DeepSeek R1 Distill (Qwen/Llama family)",
+      "context_window": 131072,
       "max_output_tokens": 32768,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "DeepSeek",
-      "knowledge_cutoff": "2025-03-31",
-      "deprecated": false,
-      "aliases": [
-        "deepseek/deepseek-chat-v3.1"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.25,
-        "output_per_1m": 0.95,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "deepseek",
-      "model_id": "deepseek/deepseek-r1",
-      "display_name": "DeepSeek: R1",
-      "context_window": 163840,
-      "max_output_tokens": 16000,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "DeepSeek",
-      "knowledge_cutoff": "2024-07-31",
-      "deprecated": false,
-      "aliases": [
-        "deepseek/deepseek-r1"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.7,
-        "output_per_1m": 2.5,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "deepseek",
-      "model_id": "deepseek/deepseek-r1-0528",
-      "display_name": "DeepSeek: R1 0528",
-      "context_window": 163840,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "DeepSeek",
-      "knowledge_cutoff": "2025-03-31",
-      "deprecated": false,
-      "aliases": [
-        "deepseek/deepseek-r1-0528"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.5,
-        "output_per_1m": 2.1500000000000004,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "deepseek",
-      "model_id": "deepseek/deepseek-r1-distill-llama-70b",
-      "display_name": "DeepSeek: R1 Distill Llama 70B",
-      "context_window": 8192,
-      "max_output_tokens": 8192,
       "input_modalities": [
         "text"
       ],
@@ -699,239 +459,35 @@
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
-      "tokenizer_name": "Llama3",
-      "knowledge_cutoff": "2024-07-31",
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-07",
       "deprecated": false,
       "aliases": [
-        "deepseek/deepseek-r1-distill-llama-70b"
+        "deepseek-r1-distill-qwen",
+        "deepseek-r1-distill-7b",
+        "deepseek-r1-distill-8b",
+        "deepseek-r1-distill-14b",
+        "deepseek-r1-distill-32b",
+        "deepseek-r1-distill-70b",
+        "deepseek/deepseek-r1-distill-qwen",
+        "deepseek/deepseek-r1-distill-7b",
+        "deepseek/deepseek-r1-distill-8b",
+        "deepseek/deepseek-r1-distill-14b",
+        "deepseek/deepseek-r1-distill-32b",
+        "deepseek/deepseek-r1-distill-70b",
+        "deepseek/deepseek-r1-distill"
       ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.7999999999999999,
-        "output_per_1m": 0.7999999999999999,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "deepseek",
-      "model_id": "deepseek/deepseek-v3.1-terminus",
-      "display_name": "DeepSeek: DeepSeek V3.1 Terminus",
-      "context_window": 163840,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "DeepSeek",
-      "knowledge_cutoff": "2025-03-31",
-      "deprecated": false,
-      "aliases": [
-        "deepseek/deepseek-v3.1-terminus"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.27,
-        "output_per_1m": 1.0,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "deepseek",
-      "model_id": "deepseek/deepseek-v3.2",
-      "display_name": "DeepSeek: DeepSeek V3.2",
-      "context_window": 163840,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "DeepSeek",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "deepseek/deepseek-v3.2"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.26899999999999996,
-        "output_per_1m": 0.39999999999999997,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "deepseek",
-      "model_id": "deepseek/deepseek-v3.2-exp",
-      "display_name": "DeepSeek: DeepSeek V3.2 Exp",
-      "context_window": 163840,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "DeepSeek",
-      "knowledge_cutoff": "2025-07-31",
-      "deprecated": false,
-      "aliases": [
-        "deepseek/deepseek-v3.2-exp"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.27,
-        "output_per_1m": 0.41,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "deepseek",
-      "model_id": "deepseek/deepseek-v4-flash",
-      "display_name": "DeepSeek: DeepSeek V4 Flash 0423",
-      "context_window": 1048576,
-      "max_output_tokens": 393216,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "DeepSeek",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "deepseek/deepseek-v4-flash"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.14,
-        "output_per_1m": 0.28,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "deepseek",
-      "model_id": "deepseek/deepseek-v4-flash-0731",
-      "display_name": "DeepSeek: DeepSeek V4 Flash 0731",
-      "context_window": 1048576,
-      "max_output_tokens": 384000,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "DeepSeek",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "deepseek/deepseek-v4-flash-0731"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.08,
-        "output_per_1m": 0.18,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "deepseek",
-      "model_id": "deepseek/deepseek-v4-pro",
-      "display_name": "DeepSeek: DeepSeek V4 Pro",
-      "context_window": 1048576,
-      "max_output_tokens": 393216,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "DeepSeek",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "deepseek/deepseek-v4-pro"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.6512,
-        "output_per_1m": 1.3024,
-        "currency": "USD"
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://huggingface.co/deepseek-ai",
+        "updates": "https://api-docs.deepseek.com/updates/",
+        "thinking_mode": "https://api-docs.deepseek.com/guides/thinking_mode/",
+        "base_url": "https://api.deepseek.com",
+        "base_url_anthropic": "https://api.deepseek.com/anthropic",
+        "status": "open_weight",
+        "note": "Distilled open-weight variants (1.5B–70B). Not served on official DeepSeek API; host-dependent pricing.",
+        "license_type_note": "open_weight"
       }
     }
   ]

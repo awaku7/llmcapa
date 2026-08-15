@@ -2,6 +2,1582 @@
   "models": [
     {
       "provider": "microsoft",
+      "model_id": "Phi-4",
+      "display_name": "Phi-4",
+      "context_window": 16384,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-06",
+      "deprecated": false,
+      "aliases": [
+        "phi-4",
+        "microsoft/phi-4"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.125,
+        "output_per_1m": 0.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "deployment": "foundry_serverless_payg",
+        "currency": "USD",
+        "finetune_train_per_1m": 3.0,
+        "finetune_host_per_hour": 0.8,
+        "foundry_pricing_context_listed": "128K",
+        "context_note": "Use 16K from model card/catalog; Foundry pricing table lists 128K incorrectly",
+        "params": "14B"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-4-mini-instruct",
+      "display_name": "Phi-4 mini instruct",
+      "context_window": 128000,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "phi-4-mini-instruct",
+        "phi-4-mini",
+        "Phi-4-mini",
+        "microsoft/phi-4-mini-instruct"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.075,
+        "output_per_1m": 0.3,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "deployment": "foundry_serverless_payg",
+        "currency": "USD",
+        "finetune_train_per_1m": 3.0,
+        "finetune_host_per_hour": 0.8,
+        "foundry_row": "Phi-4-mini",
+        "params": "3.8B"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-4-multimodal-instruct",
+      "display_name": "Phi-4 multimodal instruct",
+      "context_window": 128000,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text",
+        "image",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "phi-4-multimodal-instruct",
+        "phi-4-multimodal",
+        "microsoft/phi-4-multimodal-instruct"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.08,
+        "output_per_1m": 0.32,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "deployment": "foundry_serverless_payg",
+        "currency": "USD",
+        "audio_input_per_1m": 4.0,
+        "audio_output_per_1m": 0.32,
+        "text_image_input_per_1m": 0.08,
+        "text_image_output_per_1m": 0.32,
+        "primary_pricing": "text+image tokens; audio rates in extra",
+        "foundry_rows": [
+          "Phi-4-multimodal, text and image",
+          "Phi-4-multimodal, audio"
+        ]
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-4-mini-reasoning",
+      "display_name": "Phi-4 mini reasoning",
+      "context_window": 128000,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "phi-4-mini-reasoning",
+        "microsoft/phi-4-mini-reasoning"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.075,
+        "output_per_1m": 0.3,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "deployment": "foundry_serverless_payg",
+        "currency": "USD",
+        "foundry_row": "Phi-4-mini-reasoning"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-4-reasoning",
+      "display_name": "Phi-4 reasoning",
+      "context_window": 32768,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "phi-4-reasoning",
+        "microsoft/phi-4-reasoning"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.125,
+        "output_per_1m": 0.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "deployment": "foundry_serverless_payg",
+        "currency": "USD",
+        "foundry_row": "Phi-4-reasoning",
+        "foundry_context": "32K"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-4-reasoning-plus",
+      "display_name": "Phi-4 reasoning plus",
+      "context_window": 32768,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "phi-4-reasoning-plus",
+        "microsoft-phi-4-reasoning-plus",
+        "microsoft/phi-4-reasoning-plus"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.125,
+        "output_per_1m": 0.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "deployment": "foundry_serverless_payg",
+        "currency": "USD",
+        "foundry_row": "Phi-4-reasoning-plus",
+        "foundry_context": "32K",
+        "catalog_context_alt": 128000,
+        "params": "14B"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-4-mini-flash-reasoning",
+      "display_name": "Phi-4 mini flash reasoning",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "microsoft/phi-4-mini-flash-reasoning",
+        "phi-4-mini-flash-reasoning"
+      ],
+      "license_type": "free",
+      "pricing": null,
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "category": "open_weight_or_community",
+        "pricing_note": "weights / community; host-dependent pricing",
+        "foundry_payg": false,
+        "family": "phi-4"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-4-Reasoning-Vision-15B",
+      "display_name": "Phi-4 Reasoning Vision 15B",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "microsoft/phi-4-reasoning-vision-15b",
+        "phi-4-reasoning-vision-15b"
+      ],
+      "license_type": "free",
+      "pricing": null,
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "category": "open_weight_or_community",
+        "pricing_note": "weights / community; host-dependent pricing",
+        "foundry_payg": false,
+        "family": "phi-4",
+        "params": "15B"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-4-mini-reasoning-onnx",
+      "display_name": "Phi-4 mini reasoning (ONNX)",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "microsoft/phi-4-mini-reasoning-onnx",
+        "phi-4-mini-reasoning-onnx"
+      ],
+      "license_type": "free",
+      "pricing": null,
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "category": "open_weight_or_community",
+        "pricing_note": "weights / community; host-dependent pricing",
+        "foundry_payg": false,
+        "runtime": "onnx",
+        "family": "phi-4"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-4-reasoning-plus-onnx",
+      "display_name": "Phi-4 reasoning plus (ONNX)",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "microsoft/phi-4-reasoning-plus-onnx",
+        "phi-4-reasoning-plus-onnx"
+      ],
+      "license_type": "free",
+      "pricing": null,
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "category": "open_weight_or_community",
+        "pricing_note": "weights / community; host-dependent pricing",
+        "foundry_payg": false,
+        "runtime": "onnx",
+        "family": "phi-4"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-3-mini-4k-instruct",
+      "display_name": "Phi-3 mini 4k instruct",
+      "context_window": 4096,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [
+        "phi-3-mini-4k-instruct",
+        "microsoft/phi-3-mini-4k-instruct"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.13,
+        "output_per_1m": 0.52,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "deployment": "foundry_serverless_payg",
+        "currency": "USD",
+        "finetune_train_per_1m": 3.0,
+        "finetune_host_per_hour": 0.8,
+        "replacement": "Phi-4-mini-instruct",
+        "retirement_date": "2025-08-30"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-3-mini-128k-instruct",
+      "display_name": "Phi-3 mini 128k instruct",
+      "context_window": 128000,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [
+        "phi-3-mini-128k-instruct",
+        "microsoft/phi-3-mini-128k-instruct"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.13,
+        "output_per_1m": 0.52,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "deployment": "foundry_serverless_payg",
+        "currency": "USD",
+        "finetune_train_per_1m": 3.0,
+        "finetune_host_per_hour": 0.8,
+        "replacement": "Phi-4-mini-instruct",
+        "retirement_date": "2025-08-30"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-3-small-8k-instruct",
+      "display_name": "Phi-3 small 8k instruct",
+      "context_window": 8192,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [
+        "phi-3-small-8k-instruct",
+        "microsoft/phi-3-small-8k-instruct"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.6,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "deployment": "foundry_serverless_payg",
+        "currency": "USD",
+        "replacement": "Phi-4-mini-instruct",
+        "retirement_date": "2025-08-30"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-3-small-128k-instruct",
+      "display_name": "Phi-3 small 128k instruct",
+      "context_window": 128000,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [
+        "phi-3-small-128k-instruct",
+        "microsoft/phi-3-small-128k-instruct"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.6,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "deployment": "foundry_serverless_payg",
+        "currency": "USD",
+        "replacement": "Phi-4-mini-instruct",
+        "retirement_date": "2025-08-30"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-3-medium-4k-instruct",
+      "display_name": "Phi-3 medium 4k instruct",
+      "context_window": 4096,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [
+        "phi-3-medium-4k-instruct",
+        "microsoft/phi-3-medium-4k-instruct"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.17,
+        "output_per_1m": 0.68,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "deployment": "foundry_serverless_payg",
+        "currency": "USD",
+        "finetune_train_per_1m": 3.0,
+        "finetune_host_per_hour": 0.8,
+        "replacement": "Phi-4",
+        "retirement_date": "2025-08-30"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-3-medium-128k-instruct",
+      "display_name": "Phi-3 medium 128k instruct",
+      "context_window": 128000,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [
+        "phi-3-medium-128k-instruct",
+        "microsoft/phi-3-medium-128k-instruct"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.17,
+        "output_per_1m": 0.68,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "deployment": "foundry_serverless_payg",
+        "currency": "USD",
+        "finetune_train_per_1m": 3.0,
+        "finetune_host_per_hour": 0.8,
+        "replacement": "Phi-4",
+        "retirement_date": "2025-08-30"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-3.5-mini-instruct",
+      "display_name": "Phi-3.5 mini instruct",
+      "context_window": 131072,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [
+        "phi-3.5-mini-instruct",
+        "microsoft/phi-3.5-mini-instruct"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.13,
+        "output_per_1m": 0.52,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "deployment": "foundry_serverless_payg",
+        "currency": "USD",
+        "finetune_train_per_1m": 3.0,
+        "finetune_host_per_hour": 0.8,
+        "replacement": "Phi-4-mini-instruct",
+        "retirement_date": "2025-08-30"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-3.5-MoE-instruct",
+      "display_name": "Phi-3.5 MoE instruct",
+      "context_window": 128000,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [
+        "phi-3.5-moe-instruct",
+        "microsoft/phi-3.5-moe-instruct"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.16,
+        "output_per_1m": 0.64,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "deployment": "foundry_serverless_payg",
+        "currency": "USD",
+        "finetune_train_per_1m": 3.0,
+        "finetune_host_per_hour": 0.8,
+        "replacement": "Phi-4-mini-instruct",
+        "retirement_date": "2025-08-30"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-3.5-vision-instruct",
+      "display_name": "Phi-3.5 vision instruct",
+      "context_window": 131072,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [
+        "phi-3.5-vision-instruct",
+        "microsoft/phi-3.5-vision-instruct"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.13,
+        "output_per_1m": 0.52,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "deployment": "foundry_serverless_payg",
+        "currency": "USD",
+        "replacement": "Phi-4-mini-instruct",
+        "retirement_date": "2025-08-30",
+        "pricing_note": "No separate vision row on Foundry Microsoft table; aligned to Phi-3.5-mini PAYG when historically sold"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-3-vision-128k-instruct",
+      "display_name": "Phi-3 vision 128k instruct",
+      "context_window": 128000,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [
+        "phi-3-vision-128k-instruct",
+        "microsoft/phi-3-vision-128k-instruct"
+      ],
+      "license_type": "free",
+      "pricing": null,
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "deployment": "foundry_serverless_payg",
+        "currency": "USD",
+        "replacement": "Phi-4-multimodal-instruct",
+        "retirement_date": "2025-08-30",
+        "pricing_note": "open-weight / catalog; no current PAYG row"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "phi-3-mini-instruct",
+      "display_name": "Phi-3 mini instruct (legacy id)",
+      "context_window": 128000,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [
+        "Phi-3-mini-instruct",
+        "microsoft/phi-3-mini-instruct"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.13,
+        "output_per_1m": 0.52,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "deployment": "foundry_serverless_payg",
+        "currency": "USD",
+        "finetune_train_per_1m": 3.0,
+        "finetune_host_per_hour": 0.8,
+        "replacement": "Phi-4-mini-instruct",
+        "retirement_date": "2025-08-30",
+        "maps_to": "Phi-3-mini-128k-instruct"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "MAI-DS-R1",
+      "display_name": "MAI-DS-R1",
+      "context_window": 163840,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-07",
+      "deprecated": true,
+      "aliases": [
+        "mai-ds-r1",
+        "microsoft/mai-ds-r1"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 1.35,
+        "output_per_1m": 5.4,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "deployment": "foundry_serverless_payg",
+        "global_input_per_1m": 1.35,
+        "global_output_per_1m": 5.4,
+        "regional_input_per_1m": 1.485,
+        "regional_output_per_1m": 5.94,
+        "ptu_min": 100,
+        "ptu_hourly": 1.0,
+        "retirement_date": "2026-02-27",
+        "replacement": "Any DeepSeek model available in the Model catalog",
+        "primary_pricing": "Global PAYG"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "MAI-Image-2",
+      "display_name": "MAI Image 2",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "image"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mai-image-2",
+        "microsoft/mai-image-2"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 5.0,
+        "output_per_1m": 33.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "mai_docs": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-mai",
+        "foundry_row": "MAI-Image-2 Global",
+        "prompt_context_tokens_max": 32000,
+        "availability": "preview",
+        "apis": [
+          "mai/v1/images/generations"
+        ]
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "MAI-Image-2e",
+      "display_name": "MAI Image 2e (Efficient)",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "image"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mai-image-2e",
+        "MAI-Image-2-Efficient",
+        "mai-image-2-efficient",
+        "microsoft/mai-image-2e"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 5.0,
+        "output_per_1m": 19.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "mai_docs": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-mai",
+        "foundry_row": "MAI-Image-2-Efficient Global",
+        "prompt_context_tokens_max": 32000,
+        "availability": "preview",
+        "apis": [
+          "mai/v1/images/generations"
+        ]
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "MAI-Image-2.5",
+      "display_name": "MAI Image 2.5",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "image"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mai-image-2.5",
+        "microsoft/mai-image-2.5"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 5.0,
+        "output_per_1m": 33.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "mai_docs": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-mai",
+        "mai_news": "https://microsoft.ai/news/today-were-announcing-3-new-world-class-mai-models-available-in-foundry/",
+        "pricing_note": "Foundry Microsoft table lists MAI-Image-2 Global $5/$33; 2.5 not yet a separate row — primary aligned to Image-2. OpenRouter Azure effective ~$5/$47 observed.",
+        "openrouter_list_input_per_1m": 5.0,
+        "prompt_context_tokens_max": 32000,
+        "availability": "preview",
+        "apis": [
+          "mai/v1/images/generations",
+          "mai/v1/images/edits"
+        ],
+        "model_version_example": "2026-06-02"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "MAI-Image-2.5-Flash",
+      "display_name": "MAI Image 2.5 Flash",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "image"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mai-image-2.5-flash",
+        "microsoft/mai-image-2.5-flash"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 5.0,
+        "output_per_1m": 19.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "mai_docs": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-mai",
+        "pricing_note": "No separate Foundry row; aligned to MAI-Image-2-Efficient Global $5/$19.50 as flash/efficient tier proxy",
+        "prompt_context_tokens_max": 32000,
+        "availability": "preview",
+        "apis": [
+          "mai/v1/images/generations",
+          "mai/v1/images/edits"
+        ]
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "MAI-Voice-1",
+      "display_name": "MAI Voice 1",
+      "context_window": 25000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "audio"
+      ],
+      "output_modalities": [
+        "text",
+        "audio"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mai-voice-1",
+        "microsoft/mai-voice-1"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://ai.azure.com/catalog/publishers/microsoft",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "mai_news": "https://microsoft.ai/news/today-were-announcing-3-new-world-class-mai-models-available-in-foundry/",
+        "category": "speech_tts",
+        "pricing_note": "not on Foundry Microsoft token table; Azure Speech metered"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "MAI-Voice-2",
+      "display_name": "MAI Voice 2",
+      "context_window": 25000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "audio"
+      ],
+      "output_modalities": [
+        "text",
+        "audio"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mai-voice-2",
+        "microsoft/mai-voice-2"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://ai.azure.com/catalog/publishers/microsoft",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "mai_news": "https://microsoft.ai/news/today-were-announcing-3-new-world-class-mai-models-available-in-foundry/",
+        "category": "speech_tts",
+        "pricing_note": "not on Foundry Microsoft token table; OpenRouter lists ~$22/M characters (Azure Speech)",
+        "openrouter_approx_per_1m_chars": 22.0,
+        "output_formats": [
+          "mp3",
+          "pcm_24khz"
+        ]
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "MAI-Transcribe-1",
+      "display_name": "MAI Transcribe 1",
+      "context_window": 25000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mai-transcribe-1",
+        "microsoft/mai-transcribe-1"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://ai.azure.com/catalog/publishers/microsoft",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "mai_news": "https://microsoft.ai/news/today-were-announcing-3-new-world-class-mai-models-available-in-foundry/",
+        "category": "speech_stt",
+        "pricing_note": "not on Foundry Microsoft token table; duration-based"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "MAI-Transcribe-1.5",
+      "display_name": "MAI Transcribe 1.5",
+      "context_window": 25000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mai-transcribe-1.5",
+        "microsoft/mai-transcribe-1.5"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://ai.azure.com/catalog/publishers/microsoft",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "mai_news": "https://microsoft.ai/news/today-were-announcing-3-new-world-class-mai-models-available-in-foundry/",
+        "category": "speech_stt",
+        "pricing_note": "not on Foundry Microsoft token table; OpenRouter ~$0.36/hour duration billing (Azure Speech fast transcription)",
+        "openrouter_approx_per_hour": 0.36,
+        "locales": "100+ BCP-47"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "MAI-Thinking-1",
+      "display_name": "MAI Thinking 1",
+      "context_window": 256000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mai-thinking-1",
+        "microsoft/mai-thinking-1"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://ai.azure.com/catalog/publishers/microsoft",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "mai_news": "https://microsoft.ai/news/today-were-announcing-3-new-world-class-mai-models-available-in-foundry/",
+        "params": "35B",
+        "pricing_note": "announced; no Foundry Microsoft PAYG row yet",
+        "availability": "product_surface"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "MAI-Code-1-Flash",
+      "display_name": "MAI Code 1 Flash",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mai-code-1-flash",
+        "microsoft/mai-code-1-flash"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://microsoft.ai/news/today-were-announcing-3-new-world-class-mai-models-available-in-foundry/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "pricing_note": "announced for Copilot/VS Code; no Foundry PAYG row yet",
+        "availability": "product_surface",
+        "use_case": "coding_agent"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "model-router",
+      "display_name": "Model Router",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "Model-Router",
+        "microsoft/model-router"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://ai.azure.com/catalog/publishers/microsoft",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "category": "router",
+        "pricing_note": "routes to underlying Foundry models; billed at target model rates"
+      }
+    },
+    {
+      "provider": "microsoft",
       "model_id": "Azure-AI-Content-Safety",
       "display_name": "Azure AI Content Safety",
       "context_window": 128000,
@@ -467,48 +2043,6 @@
     },
     {
       "provider": "microsoft",
-      "model_id": "Azure-Speech-Speech-to-text",
-      "display_name": "Azure Speech to text",
-      "context_window": 25000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "audio"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "microsoft/azure-speech-speech-to-text",
-        "azure-speech-speech-to-text"
-      ],
-      "license_type": "license",
-      "pricing": null,
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "category": "azure_ai_service",
-        "pricing_note": "metered Azure AI service; not Foundry token PAYG",
-        "family": "speech"
-      }
-    },
-    {
-      "provider": "microsoft",
       "model_id": "Azure-Speech-Speech-Translation",
       "display_name": "Azure Speech Translation",
       "context_window": 128000,
@@ -538,6 +2072,48 @@
       "aliases": [
         "microsoft/azure-speech-speech-translation",
         "azure-speech-speech-translation"
+      ],
+      "license_type": "license",
+      "pricing": null,
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "category": "azure_ai_service",
+        "pricing_note": "metered Azure AI service; not Foundry token PAYG",
+        "family": "speech"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Azure-Speech-Speech-to-text",
+      "display_name": "Azure Speech to text",
+      "context_window": 25000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "microsoft/azure-speech-speech-to-text",
+        "azure-speech-speech-to-text"
       ],
       "license_type": "license",
       "pricing": null,
@@ -764,1902 +2340,6 @@
     },
     {
       "provider": "microsoft",
-      "model_id": "ba2han-llama-phi-3-dora",
-      "display_name": "ba2han llama phi-3 dora",
-      "context_window": 128000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "microsoft/ba2han-llama-phi-3-dora"
-      ],
-      "license_type": "free",
-      "pricing": null,
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "category": "open_weight_or_community",
-        "pricing_note": "weights / community; host-dependent pricing",
-        "upstream_family": "phi"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "localai-io-localai-functioncall-phi-4-v0.3",
-      "display_name": "LocalAI functioncall Phi-4 v0.3",
-      "context_window": 16384,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "microsoft/localai-io-localai-functioncall-phi-4-v0.3"
-      ],
-      "license_type": "free",
-      "pricing": null,
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "category": "open_weight_or_community",
-        "pricing_note": "weights / community; host-dependent pricing",
-        "upstream_family": "phi"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "MAI-Code-1-Flash",
-      "display_name": "MAI Code 1 Flash",
-      "context_window": 128000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "mai-code-1-flash",
-        "microsoft/mai-code-1-flash"
-      ],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://microsoft.ai/news/today-were-announcing-3-new-world-class-mai-models-available-in-foundry/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "pricing_note": "announced for Copilot/VS Code; no Foundry PAYG row yet",
-        "availability": "product_surface",
-        "use_case": "coding_agent"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "MAI-DS-R1",
-      "display_name": "MAI-DS-R1",
-      "context_window": 163840,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2024-07",
-      "deprecated": true,
-      "aliases": [
-        "mai-ds-r1",
-        "microsoft/mai-ds-r1"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 1.35,
-        "output_per_1m": 5.4,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "deployment": "foundry_serverless_payg",
-        "global_input_per_1m": 1.35,
-        "global_output_per_1m": 5.4,
-        "regional_input_per_1m": 1.485,
-        "regional_output_per_1m": 5.94,
-        "ptu_min": 100,
-        "ptu_hourly": 1.0,
-        "retirement_date": "2026-02-27",
-        "replacement": "Any DeepSeek model available in the Model catalog",
-        "primary_pricing": "Global PAYG"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "MAI-Image-2",
-      "display_name": "MAI Image 2",
-      "context_window": 128000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "image"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "mai-image-2",
-        "microsoft/mai-image-2"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 5.0,
-        "output_per_1m": 33.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "mai_docs": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-mai",
-        "foundry_row": "MAI-Image-2 Global",
-        "prompt_context_tokens_max": 32000,
-        "availability": "preview",
-        "apis": [
-          "mai/v1/images/generations"
-        ]
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "MAI-Image-2.5",
-      "display_name": "MAI Image 2.5",
-      "context_window": 128000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "image"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "mai-image-2.5",
-        "microsoft/mai-image-2.5"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 5.0,
-        "output_per_1m": 33.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "mai_docs": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-mai",
-        "mai_news": "https://microsoft.ai/news/today-were-announcing-3-new-world-class-mai-models-available-in-foundry/",
-        "pricing_note": "Foundry Microsoft table lists MAI-Image-2 Global $5/$33; 2.5 not yet a separate row — primary aligned to Image-2. OpenRouter Azure effective ~$5/$47 observed.",
-        "openrouter_list_input_per_1m": 5.0,
-        "prompt_context_tokens_max": 32000,
-        "availability": "preview",
-        "apis": [
-          "mai/v1/images/generations",
-          "mai/v1/images/edits"
-        ],
-        "model_version_example": "2026-06-02"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "MAI-Image-2.5-Flash",
-      "display_name": "MAI Image 2.5 Flash",
-      "context_window": 128000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "image"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "mai-image-2.5-flash",
-        "microsoft/mai-image-2.5-flash"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 5.0,
-        "output_per_1m": 19.5,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "mai_docs": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-mai",
-        "pricing_note": "No separate Foundry row; aligned to MAI-Image-2-Efficient Global $5/$19.50 as flash/efficient tier proxy",
-        "prompt_context_tokens_max": 32000,
-        "availability": "preview",
-        "apis": [
-          "mai/v1/images/generations",
-          "mai/v1/images/edits"
-        ]
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "MAI-Image-2e",
-      "display_name": "MAI Image 2e (Efficient)",
-      "context_window": 128000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "image"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "mai-image-2e",
-        "MAI-Image-2-Efficient",
-        "mai-image-2-efficient",
-        "microsoft/mai-image-2e"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 5.0,
-        "output_per_1m": 19.5,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "mai_docs": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-mai",
-        "foundry_row": "MAI-Image-2-Efficient Global",
-        "prompt_context_tokens_max": 32000,
-        "availability": "preview",
-        "apis": [
-          "mai/v1/images/generations"
-        ]
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "MAI-Thinking-1",
-      "display_name": "MAI Thinking 1",
-      "context_window": 256000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "mai-thinking-1",
-        "microsoft/mai-thinking-1"
-      ],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://ai.azure.com/catalog/publishers/microsoft",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "mai_news": "https://microsoft.ai/news/today-were-announcing-3-new-world-class-mai-models-available-in-foundry/",
-        "params": "35B",
-        "pricing_note": "announced; no Foundry Microsoft PAYG row yet",
-        "availability": "product_surface"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "MAI-Transcribe-1",
-      "display_name": "MAI Transcribe 1",
-      "context_window": 25000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "audio"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "mai-transcribe-1",
-        "microsoft/mai-transcribe-1"
-      ],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://ai.azure.com/catalog/publishers/microsoft",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "mai_news": "https://microsoft.ai/news/today-were-announcing-3-new-world-class-mai-models-available-in-foundry/",
-        "category": "speech_stt",
-        "pricing_note": "not on Foundry Microsoft token table; duration-based"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "MAI-Transcribe-1.5",
-      "display_name": "MAI Transcribe 1.5",
-      "context_window": 25000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "audio"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "mai-transcribe-1.5",
-        "microsoft/mai-transcribe-1.5"
-      ],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://ai.azure.com/catalog/publishers/microsoft",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "mai_news": "https://microsoft.ai/news/today-were-announcing-3-new-world-class-mai-models-available-in-foundry/",
-        "category": "speech_stt",
-        "pricing_note": "not on Foundry Microsoft token table; OpenRouter ~$0.36/hour duration billing (Azure Speech fast transcription)",
-        "openrouter_approx_per_hour": 0.36,
-        "locales": "100+ BCP-47"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "MAI-Voice-1",
-      "display_name": "MAI Voice 1",
-      "context_window": 25000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text",
-        "audio"
-      ],
-      "output_modalities": [
-        "text",
-        "audio"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "mai-voice-1",
-        "microsoft/mai-voice-1"
-      ],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://ai.azure.com/catalog/publishers/microsoft",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "mai_news": "https://microsoft.ai/news/today-were-announcing-3-new-world-class-mai-models-available-in-foundry/",
-        "category": "speech_tts",
-        "pricing_note": "not on Foundry Microsoft token table; Azure Speech metered"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "MAI-Voice-2",
-      "display_name": "MAI Voice 2",
-      "context_window": 25000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text",
-        "audio"
-      ],
-      "output_modalities": [
-        "text",
-        "audio"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "mai-voice-2",
-        "microsoft/mai-voice-2"
-      ],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://ai.azure.com/catalog/publishers/microsoft",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "mai_news": "https://microsoft.ai/news/today-were-announcing-3-new-world-class-mai-models-available-in-foundry/",
-        "category": "speech_tts",
-        "pricing_note": "not on Foundry Microsoft token table; OpenRouter lists ~$22/M characters (Azure Speech)",
-        "openrouter_approx_per_1m_chars": 22.0,
-        "output_formats": [
-          "mp3",
-          "pcm_24khz"
-        ]
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "microsoft/phi-4",
-      "display_name": "Microsoft: Phi 4",
-      "context_window": 16384,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": "2024-06-30",
-      "deprecated": false,
-      "aliases": [
-        "microsoft/phi-4"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.07,
-        "output_per_1m": 0.14,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "microsoft/wizardlm-2-8x22b",
-      "display_name": "WizardLM-2 8x22B",
-      "context_window": 65535,
-      "max_output_tokens": 8000,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Mistral",
-      "knowledge_cutoff": "2024-04-30",
-      "deprecated": false,
-      "aliases": [
-        "microsoft/wizardlm-2-8x22b"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.62,
-        "output_per_1m": 0.62,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "model-router",
-      "display_name": "Model Router",
-      "context_window": 128000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "Model-Router",
-        "microsoft/model-router"
-      ],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://ai.azure.com/catalog/publishers/microsoft",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "category": "router",
-        "pricing_note": "routes to underlying Foundry models; billed at target model rates"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "Phi-3-medium-128k-instruct",
-      "display_name": "Phi-3 medium 128k instruct",
-      "context_window": 128000,
-      "max_output_tokens": 4096,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": true,
-      "aliases": [
-        "phi-3-medium-128k-instruct",
-        "microsoft/phi-3-medium-128k-instruct"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.17,
-        "output_per_1m": 0.68,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "deployment": "foundry_serverless_payg",
-        "currency": "USD",
-        "finetune_train_per_1m": 3.0,
-        "finetune_host_per_hour": 0.8,
-        "replacement": "Phi-4",
-        "retirement_date": "2025-08-30"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "Phi-3-medium-4k-instruct",
-      "display_name": "Phi-3 medium 4k instruct",
-      "context_window": 4096,
-      "max_output_tokens": 4096,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": true,
-      "aliases": [
-        "phi-3-medium-4k-instruct",
-        "microsoft/phi-3-medium-4k-instruct"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.17,
-        "output_per_1m": 0.68,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "deployment": "foundry_serverless_payg",
-        "currency": "USD",
-        "finetune_train_per_1m": 3.0,
-        "finetune_host_per_hour": 0.8,
-        "replacement": "Phi-4",
-        "retirement_date": "2025-08-30"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "Phi-3-mini-128k-instruct",
-      "display_name": "Phi-3 mini 128k instruct",
-      "context_window": 128000,
-      "max_output_tokens": 4096,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": true,
-      "aliases": [
-        "phi-3-mini-128k-instruct",
-        "microsoft/phi-3-mini-128k-instruct"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.13,
-        "output_per_1m": 0.52,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "deployment": "foundry_serverless_payg",
-        "currency": "USD",
-        "finetune_train_per_1m": 3.0,
-        "finetune_host_per_hour": 0.8,
-        "replacement": "Phi-4-mini-instruct",
-        "retirement_date": "2025-08-30"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "Phi-3-mini-4k-instruct",
-      "display_name": "Phi-3 mini 4k instruct",
-      "context_window": 4096,
-      "max_output_tokens": 4096,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": true,
-      "aliases": [
-        "phi-3-mini-4k-instruct",
-        "microsoft/phi-3-mini-4k-instruct"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.13,
-        "output_per_1m": 0.52,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "deployment": "foundry_serverless_payg",
-        "currency": "USD",
-        "finetune_train_per_1m": 3.0,
-        "finetune_host_per_hour": 0.8,
-        "replacement": "Phi-4-mini-instruct",
-        "retirement_date": "2025-08-30"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "phi-3-mini-instruct",
-      "display_name": "Phi-3 mini instruct (legacy id)",
-      "context_window": 128000,
-      "max_output_tokens": 4096,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": true,
-      "aliases": [
-        "Phi-3-mini-instruct",
-        "microsoft/phi-3-mini-instruct"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.13,
-        "output_per_1m": 0.52,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "deployment": "foundry_serverless_payg",
-        "currency": "USD",
-        "finetune_train_per_1m": 3.0,
-        "finetune_host_per_hour": 0.8,
-        "replacement": "Phi-4-mini-instruct",
-        "retirement_date": "2025-08-30",
-        "maps_to": "Phi-3-mini-128k-instruct"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "Phi-3-small-128k-instruct",
-      "display_name": "Phi-3 small 128k instruct",
-      "context_window": 128000,
-      "max_output_tokens": 4096,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": true,
-      "aliases": [
-        "phi-3-small-128k-instruct",
-        "microsoft/phi-3-small-128k-instruct"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.15,
-        "output_per_1m": 0.6,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "deployment": "foundry_serverless_payg",
-        "currency": "USD",
-        "replacement": "Phi-4-mini-instruct",
-        "retirement_date": "2025-08-30"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "Phi-3-small-8k-instruct",
-      "display_name": "Phi-3 small 8k instruct",
-      "context_window": 8192,
-      "max_output_tokens": 4096,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": true,
-      "aliases": [
-        "phi-3-small-8k-instruct",
-        "microsoft/phi-3-small-8k-instruct"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.15,
-        "output_per_1m": 0.6,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "deployment": "foundry_serverless_payg",
-        "currency": "USD",
-        "replacement": "Phi-4-mini-instruct",
-        "retirement_date": "2025-08-30"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "Phi-3-vision-128k-instruct",
-      "display_name": "Phi-3 vision 128k instruct",
-      "context_window": 128000,
-      "max_output_tokens": 4096,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": true,
-      "aliases": [
-        "phi-3-vision-128k-instruct",
-        "microsoft/phi-3-vision-128k-instruct"
-      ],
-      "license_type": "free",
-      "pricing": null,
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "deployment": "foundry_serverless_payg",
-        "currency": "USD",
-        "replacement": "Phi-4-multimodal-instruct",
-        "retirement_date": "2025-08-30",
-        "pricing_note": "open-weight / catalog; no current PAYG row"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "Phi-3.5-mini-instruct",
-      "display_name": "Phi-3.5 mini instruct",
-      "context_window": 131072,
-      "max_output_tokens": 4096,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": true,
-      "aliases": [
-        "phi-3.5-mini-instruct",
-        "microsoft/phi-3.5-mini-instruct"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.13,
-        "output_per_1m": 0.52,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "deployment": "foundry_serverless_payg",
-        "currency": "USD",
-        "finetune_train_per_1m": 3.0,
-        "finetune_host_per_hour": 0.8,
-        "replacement": "Phi-4-mini-instruct",
-        "retirement_date": "2025-08-30"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "Phi-3.5-MoE-instruct",
-      "display_name": "Phi-3.5 MoE instruct",
-      "context_window": 128000,
-      "max_output_tokens": 4096,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": true,
-      "aliases": [
-        "phi-3.5-moe-instruct",
-        "microsoft/phi-3.5-moe-instruct"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.16,
-        "output_per_1m": 0.64,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "deployment": "foundry_serverless_payg",
-        "currency": "USD",
-        "finetune_train_per_1m": 3.0,
-        "finetune_host_per_hour": 0.8,
-        "replacement": "Phi-4-mini-instruct",
-        "retirement_date": "2025-08-30"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "Phi-3.5-vision-instruct",
-      "display_name": "Phi-3.5 vision instruct",
-      "context_window": 131072,
-      "max_output_tokens": 4096,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": true,
-      "aliases": [
-        "phi-3.5-vision-instruct",
-        "microsoft/phi-3.5-vision-instruct"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.13,
-        "output_per_1m": 0.52,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "deployment": "foundry_serverless_payg",
-        "currency": "USD",
-        "replacement": "Phi-4-mini-instruct",
-        "retirement_date": "2025-08-30",
-        "pricing_note": "No separate vision row on Foundry Microsoft table; aligned to Phi-3.5-mini PAYG when historically sold"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "Phi-4",
-      "display_name": "Phi-4",
-      "context_window": 16384,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2024-06",
-      "deprecated": false,
-      "aliases": [
-        "phi-4",
-        "microsoft/phi-4"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.125,
-        "output_per_1m": 0.5,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "deployment": "foundry_serverless_payg",
-        "currency": "USD",
-        "finetune_train_per_1m": 3.0,
-        "finetune_host_per_hour": 0.8,
-        "foundry_pricing_context_listed": "128K",
-        "context_note": "Use 16K from model card/catalog; Foundry pricing table lists 128K incorrectly",
-        "params": "14B"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "Phi-4-mini-flash-reasoning",
-      "display_name": "Phi-4 mini flash reasoning",
-      "context_window": 128000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "microsoft/phi-4-mini-flash-reasoning",
-        "phi-4-mini-flash-reasoning"
-      ],
-      "license_type": "free",
-      "pricing": null,
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "category": "open_weight_or_community",
-        "pricing_note": "weights / community; host-dependent pricing",
-        "foundry_payg": false,
-        "family": "phi-4"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "Phi-4-mini-instruct",
-      "display_name": "Phi-4 mini instruct",
-      "context_window": 128000,
-      "max_output_tokens": 4096,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "phi-4-mini-instruct",
-        "phi-4-mini",
-        "Phi-4-mini",
-        "microsoft/phi-4-mini-instruct"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.075,
-        "output_per_1m": 0.3,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "deployment": "foundry_serverless_payg",
-        "currency": "USD",
-        "finetune_train_per_1m": 3.0,
-        "finetune_host_per_hour": 0.8,
-        "foundry_row": "Phi-4-mini",
-        "params": "3.8B"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "Phi-4-mini-reasoning",
-      "display_name": "Phi-4 mini reasoning",
-      "context_window": 128000,
-      "max_output_tokens": 4096,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "phi-4-mini-reasoning",
-        "microsoft/phi-4-mini-reasoning"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.075,
-        "output_per_1m": 0.3,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "deployment": "foundry_serverless_payg",
-        "currency": "USD",
-        "foundry_row": "Phi-4-mini-reasoning"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "Phi-4-mini-reasoning-onnx",
-      "display_name": "Phi-4 mini reasoning (ONNX)",
-      "context_window": 128000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "microsoft/phi-4-mini-reasoning-onnx",
-        "phi-4-mini-reasoning-onnx"
-      ],
-      "license_type": "free",
-      "pricing": null,
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "category": "open_weight_or_community",
-        "pricing_note": "weights / community; host-dependent pricing",
-        "foundry_payg": false,
-        "runtime": "onnx",
-        "family": "phi-4"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "Phi-4-multimodal-instruct",
-      "display_name": "Phi-4 multimodal instruct",
-      "context_window": 128000,
-      "max_output_tokens": 4096,
-      "input_modalities": [
-        "text",
-        "image",
-        "audio"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "phi-4-multimodal-instruct",
-        "phi-4-multimodal",
-        "microsoft/phi-4-multimodal-instruct"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.08,
-        "output_per_1m": 0.32,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "deployment": "foundry_serverless_payg",
-        "currency": "USD",
-        "audio_input_per_1m": 4.0,
-        "audio_output_per_1m": 0.32,
-        "text_image_input_per_1m": 0.08,
-        "text_image_output_per_1m": 0.32,
-        "primary_pricing": "text+image tokens; audio rates in extra",
-        "foundry_rows": [
-          "Phi-4-multimodal, text and image",
-          "Phi-4-multimodal, audio"
-        ]
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "Phi-4-reasoning",
-      "display_name": "Phi-4 reasoning",
-      "context_window": 32768,
-      "max_output_tokens": 4096,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "phi-4-reasoning",
-        "microsoft/phi-4-reasoning"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.125,
-        "output_per_1m": 0.5,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "deployment": "foundry_serverless_payg",
-        "currency": "USD",
-        "foundry_row": "Phi-4-reasoning",
-        "foundry_context": "32K"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "Phi-4-reasoning-plus",
-      "display_name": "Phi-4 reasoning plus",
-      "context_window": 32768,
-      "max_output_tokens": 4096,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "phi-4-reasoning-plus",
-        "microsoft-phi-4-reasoning-plus",
-        "microsoft/phi-4-reasoning-plus"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.125,
-        "output_per_1m": 0.5,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "deployment": "foundry_serverless_payg",
-        "currency": "USD",
-        "foundry_row": "Phi-4-reasoning-plus",
-        "foundry_context": "32K",
-        "catalog_context_alt": 128000,
-        "params": "14B"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "Phi-4-reasoning-plus-onnx",
-      "display_name": "Phi-4 reasoning plus (ONNX)",
-      "context_window": 128000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "microsoft/phi-4-reasoning-plus-onnx",
-        "phi-4-reasoning-plus-onnx"
-      ],
-      "license_type": "free",
-      "pricing": null,
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "category": "open_weight_or_community",
-        "pricing_note": "weights / community; host-dependent pricing",
-        "foundry_payg": false,
-        "runtime": "onnx",
-        "family": "phi-4"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "Phi-4-Reasoning-Vision-15B",
-      "display_name": "Phi-4 Reasoning Vision 15B",
-      "context_window": 128000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "microsoft/phi-4-reasoning-vision-15b",
-        "phi-4-reasoning-vision-15b"
-      ],
-      "license_type": "free",
-      "pricing": null,
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "category": "open_weight_or_community",
-        "pricing_note": "weights / community; host-dependent pricing",
-        "foundry_payg": false,
-        "family": "phi-4",
-        "params": "15B"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "sreenington-phi-3-mini-4k-instruct-awq",
-      "display_name": "sreenington Phi-3 mini 4k AWQ",
-      "context_window": 4096,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "microsoft/sreenington-phi-3-mini-4k-instruct-awq"
-      ],
-      "license_type": "free",
-      "pricing": null,
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "category": "open_weight_or_community",
-        "pricing_note": "weights / community; host-dependent pricing",
-        "upstream_family": "phi"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "third-intellect-phi-3-mini-4k-instruct-orca-math-word-problems-200k-model-16bit",
-      "display_name": "third-intellect Phi-3 mini orca-math 16bit",
-      "context_window": 4096,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "microsoft/third-intellect-phi-3-mini-4k-instruct-orca-math-word-problems-200k-model-16bit"
-      ],
-      "license_type": "free",
-      "pricing": null,
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "category": "open_weight_or_community",
-        "pricing_note": "weights / community; host-dependent pricing",
-        "upstream_family": "phi"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "unsloth-phi-3-medium-4k-instruct",
-      "display_name": "Unsloth Phi-3 medium 4k instruct",
-      "context_window": 4096,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "microsoft/unsloth-phi-3-medium-4k-instruct"
-      ],
-      "license_type": "free",
-      "pricing": null,
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "category": "open_weight_or_community",
-        "pricing_note": "weights / community; host-dependent pricing",
-        "upstream_family": "phi"
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "unsloth-phi-3.5-mini-instruct",
-      "display_name": "Unsloth Phi-3.5 mini instruct",
-      "context_window": 128000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "microsoft/unsloth-phi-3.5-mini-instruct"
-      ],
-      "license_type": "free",
-      "pricing": null,
-      "extra": {
-        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
-        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
-        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
-        "category": "open_weight_or_community",
-        "pricing_note": "weights / community; host-dependent pricing",
-        "upstream_family": "phi"
-      }
-    },
-    {
-      "provider": "microsoft",
       "model_id": "unsloth-phi-4",
       "display_name": "Unsloth Phi-4",
       "context_window": 16384,
@@ -2742,6 +2422,129 @@
     },
     {
       "provider": "microsoft",
+      "model_id": "unsloth-phi-3.5-mini-instruct",
+      "display_name": "Unsloth Phi-3.5 mini instruct",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "microsoft/unsloth-phi-3.5-mini-instruct"
+      ],
+      "license_type": "free",
+      "pricing": null,
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "category": "open_weight_or_community",
+        "pricing_note": "weights / community; host-dependent pricing",
+        "upstream_family": "phi"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "unsloth-phi-3-medium-4k-instruct",
+      "display_name": "Unsloth Phi-3 medium 4k instruct",
+      "context_window": 4096,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "microsoft/unsloth-phi-3-medium-4k-instruct"
+      ],
+      "license_type": "free",
+      "pricing": null,
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "category": "open_weight_or_community",
+        "pricing_note": "weights / community; host-dependent pricing",
+        "upstream_family": "phi"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "sreenington-phi-3-mini-4k-instruct-awq",
+      "display_name": "sreenington Phi-3 mini 4k AWQ",
+      "context_window": 4096,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "microsoft/sreenington-phi-3-mini-4k-instruct-awq"
+      ],
+      "license_type": "free",
+      "pricing": null,
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "category": "open_weight_or_community",
+        "pricing_note": "weights / community; host-dependent pricing",
+        "upstream_family": "phi"
+      }
+    },
+    {
+      "provider": "microsoft",
       "model_id": "vonjack-phi-3-mini-4k-instruct-llamafied",
       "display_name": "vonjack Phi-3 mini 4k llamafied",
       "context_window": 4096,
@@ -2769,6 +2572,129 @@
       "deprecated": false,
       "aliases": [
         "microsoft/vonjack-phi-3-mini-4k-instruct-llamafied"
+      ],
+      "license_type": "free",
+      "pricing": null,
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "category": "open_weight_or_community",
+        "pricing_note": "weights / community; host-dependent pricing",
+        "upstream_family": "phi"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "ba2han-llama-phi-3-dora",
+      "display_name": "ba2han llama phi-3 dora",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "microsoft/ba2han-llama-phi-3-dora"
+      ],
+      "license_type": "free",
+      "pricing": null,
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "category": "open_weight_or_community",
+        "pricing_note": "weights / community; host-dependent pricing",
+        "upstream_family": "phi"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "third-intellect-phi-3-mini-4k-instruct-orca-math-word-problems-200k-model-16bit",
+      "display_name": "third-intellect Phi-3 mini orca-math 16bit",
+      "context_window": 4096,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "microsoft/third-intellect-phi-3-mini-4k-instruct-orca-math-word-problems-200k-model-16bit"
+      ],
+      "license_type": "free",
+      "pricing": null,
+      "extra": {
+        "source": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+        "retired_docs": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement",
+        "catalog": "https://ai.azure.com/catalog/publishers/microsoft",
+        "category": "open_weight_or_community",
+        "pricing_note": "weights / community; host-dependent pricing",
+        "upstream_family": "phi"
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "localai-io-localai-functioncall-phi-4-v0.3",
+      "display_name": "LocalAI functioncall Phi-4 v0.3",
+      "context_window": 16384,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "microsoft/localai-io-localai-functioncall-phi-4-v0.3"
       ],
       "license_type": "free",
       "pricing": null,
