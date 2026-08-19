@@ -1,6 +1,6 @@
 """Build mistral.json from Playwright scrape (_scratch_mistral_scrape_full.json).
 
-Source: https://docs.mistral.ai/models/overview + model-cards/*
+Source: https://docs.mistral.ai/models + direct model pages (/models/<slug>)
 Shape: xai-style Capability JSON with pricing + extra.source
 """
 from __future__ import annotations

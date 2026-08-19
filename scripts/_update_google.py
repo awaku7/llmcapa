@@ -20,7 +20,9 @@ SOURCE = "https://ai.google.dev/gemini-api/docs/pricing"
 
 # model_id -> (input_per_1m, output_per_1m, context_window)
 GOOGLE_PRICES: dict[str, tuple[float, float, int]] = {
+    "gemini-3.7-flash": (0.75, 3.75, 1_048_576),
     "gemini-3.5-flash": (1.5, 9.0, 1_048_576),
+    "gemini-3.5-flash-lite": (0.3, 2.5, 1_048_576),
     "gemini-3.5-live-translate-preview": (3.5, 21.0, 1_048_576),
     "gemini-3.1-flash-lite": (0.25, 1.5, 1_048_576),
     "gemini-3.1-flash-lite-preview": (0.25, 1.5, 1_048_576),
@@ -47,6 +49,13 @@ GOOGLE_PRICES: dict[str, tuple[float, float, int]] = {
     "gemini-2.0-flash-lite": (0.075, 0.3, 1_048_576),
     "gemini-1.5-pro": (1.25, 10.0, 2_097_152),
     "gemini-1.5-flash": (0.075, 0.3, 1_048_576),
+}
+
+# Image output is priced separately from text output on the official pricing
+# page. Keep text-token rates in ``pricing`` and record image rates in ``extra``.
+IMAGE_OUTPUT_PRICES = {
+    "gemini-3.1-flash-image": 60.0,
+    "gemini-3.1-flash-lite-image": 30.0,
 }
 
 # Long-context tier for Pro models (≤200k vs >200k) stored in extra
@@ -112,6 +121,40 @@ DEPRECATIONS = {
 
 # Templates for models that must be inserted if missing
 NEW_MODEL_TEMPLATES: dict[str, dict] = {
+    "gemini-3.7-flash": {
+        "display_name": "Gemini 3.7 Flash",
+        "input_modalities": ["text", "image", "audio", "video"],
+        "output_modalities": ["text"],
+        "supports_function_calling": True,
+        "supports_json_mode": True,
+        "supports_vision": True,
+        "supports_reasoning": True,
+        "supports_chat_completion": True,
+        "max_output_tokens": 65_536,
+        "extra": {
+            "source": SOURCE,
+            "pricing_note": "$0.75/$3.75 through 2026-12-31; $1.50/$7.50 from 2027-01-01",
+        },
+    },
+    "gemini-3.5-flash-lite": {
+        "display_name": "Gemini 3.5 Flash-Lite",
+        "input_modalities": ["text", "image", "audio", "video"],
+        "output_modalities": ["text"],
+        "supports_function_calling": True,
+        "supports_json_mode": True,
+        "supports_vision": True,
+        "supports_reasoning": True,
+        "supports_chat_completion": True,
+        "max_output_tokens": 65_536,
+        "extra": {
+            "source": SOURCE,
+            "batch_pricing": {
+                "input_per_1m": 0.15,
+                "output_per_1m": 1.25,
+                "currency": "USD",
+            },
+        },
+    },
     "gemini-3.5-live-translate-preview": {
         "display_name": "Gemini 3.5 Live Translate Preview",
         "input_modalities": ["text", "audio"],
@@ -251,6 +294,18 @@ def main() -> None:
             m["output_modalities"] = ["audio"]
         specialty += 1
 
+    # Separate image-output pricing for Nano Banana models.
+    for mid, image_price in IMAGE_OUTPUT_PRICES.items():
+        if mid not in by_id:
+            continue
+        extra = by_id[mid].get("extra") or {}
+        extra.update({
+            "source": SOURCE,
+            "image_output_per_1m": image_price,
+            "image_output_currency": "USD",
+        })
+        by_id[mid]["extra"] = extra
+
     # Deprecations
     for m in models:
         mid = m["model_id"]
@@ -300,7 +355,7 @@ def main() -> None:
 
 ### Result
 - google.json: **{len(models)}** models (active={active}, token-priced={priced})
-- Inserted: gemini-3.5-live-translate-preview, gemini-omni-flash-preview, gemini-3.1-flash-tts-preview
+- Inserted: gemini-3.7-flash, gemini-3.5-flash-lite, gemini-3.5-live-translate-preview, gemini-omni-flash-preview, gemini-3.1-flash-tts-preview
 - Lyria-3 clip/pro: $0.04 / $0.08 per song (extra)
 - Deprecations: gemini-2.0-flash* shut 2026-06-01; Imagen 4 2026-08-17; Veo 3/2 2026-06-30
 - Install copy synced

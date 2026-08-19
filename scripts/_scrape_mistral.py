@@ -10,8 +10,10 @@ from playwright.sync_api import sync_playwright
 WORKDIR = Path(r"F:\KAIHATSU\llmcapa")
 OUT = WORKDIR / "_scratch_mistral_scrape_full.json"
 OVERVIEW_OUT = WORKDIR / "_scratch_mistral_overview.json"
-BASE = "https://docs.mistral.ai/models/model-cards/"
-OVERVIEW = "https://docs.mistral.ai/models/overview"
+# The documentation site currently redirects /models/overview to /models and
+# model cards are linked directly as /models/<slug>.
+BASE = "https://docs.mistral.ai/models/"
+OVERVIEW = "https://docs.mistral.ai/models"
 
 EXTRACT_JS = r"""
 () => {
@@ -137,9 +139,21 @@ EXTRACT_JS = r"""
 OVERVIEW_JS = r"""
 () => {
   const text = document.body.innerText || '';
-  const links = Array.from(document.querySelectorAll('a[href*="/models/model-cards/"]'))
-    .map(a => ({href: a.getAttribute('href'), text: (a.innerText||'').trim()}));
-  const slugs = [...new Set(links.map(l => (l.href||'').split('/').filter(Boolean).pop()).filter(Boolean))];
+  const ignored = new Set([
+    'models', 'overview', 'model-selection-guide', 'model-cards',
+    'legacy', 'deprecated', 'pricing'
+  ]);
+  const links = Array.from(document.querySelectorAll('a[href]'))
+    .map(a => ({href: a.getAttribute('href'), text: (a.innerText||'').trim()}))
+    .filter(l => {
+      try {
+        const u = new URL(l.href, location.origin);
+        return u.origin === location.origin && /^\/models\/[^/]+\/?$/.test(u.pathname);
+      } catch (_) { return false; }
+    });
+  const slugs = [...new Set(links
+    .map(l => (l.href||'').split('?')[0].split('#')[0].split('/').filter(Boolean).pop())
+    .filter(s => s && !ignored.has(s.toLowerCase())))];
   const lines = text.split(/\n/).map(l => l.trim()).filter(Boolean);
   const idx = lines.findIndex(l => /legacy|deprecated/i.test(l));
   const chunk = idx >= 0 ? lines.slice(idx, idx + 400) : lines.slice(-200);

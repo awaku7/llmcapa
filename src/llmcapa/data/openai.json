@@ -72,6 +72,71 @@
     },
     {
       "provider": "openai",
+      "model_id": "computer-use-preview",
+      "display_name": "OpenAI: Computer Use Preview",
+      "context_window": 8192,
+      "max_output_tokens": 1024,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": false,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2023-10-01",
+      "pricing": {
+        "input_per_1m": 3.0,
+        "output_per_1m": 12.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "openai",
+        "model": "computer-use-preview",
+        "api_type": "responses",
+        "tool_type": "computer_use_preview",
+        "tool_version": "2025-03-11",
+        "status": "preview",
+        "environments": [
+          "browser",
+          "desktop"
+        ],
+        "actions": [
+          "screenshot",
+          "click",
+          "double_click",
+          "drag",
+          "move",
+          "scroll",
+          "keypress",
+          "type",
+          "wait"
+        ],
+        "requires_beta": false,
+        "enable_zoom": false,
+        "source_url": "https://developers.openai.com/api/docs/models/computer-use-preview",
+        "checked_at": "2026-08-15"
+      }
+    },
+    {
+      "provider": "openai",
       "model_id": "gpt-4",
       "display_name": "OpenAI: GPT-4",
       "context_window": 8191,
@@ -340,36 +405,7 @@
       "supports_vision": true,
       "supports_responses_api": true,
       "supports_chat_completion": true,
-      "knowledge_cutoff": "2025-07-01",
-      "computer_use": {
-        "supported": true,
-        "native": true,
-        "provider": "openai",
-        "model": "gpt-5.4",
-        "api_type": "responses",
-        "tool_type": "computer",
-        "tool_version": null,
-        "status": "ga",
-        "environments": [
-          "browser",
-          "desktop"
-        ],
-        "actions": [
-          "screenshot",
-          "click",
-          "double_click",
-          "drag",
-          "move",
-          "scroll",
-          "keypress",
-          "type",
-          "wait"
-        ],
-        "requires_beta": false,
-        "enable_zoom": false,
-        "source_url": "https://developers.openai.com/api/docs/guides/tools-computer-use",
-        "checked_at": "2026-08-15"
-      }
+      "knowledge_cutoff": "2025-07-01"
     },
     {
       "provider": "openai",
@@ -5679,71 +5715,6 @@
       "knowledge_cutoff": null,
       "deprecated": true,
       "aliases": []
-    },
-    {
-      "provider": "openai",
-      "model_id": "computer-use-preview",
-      "display_name": "OpenAI: Computer Use Preview",
-      "context_window": 8192,
-      "max_output_tokens": 1024,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": false,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": false,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "api",
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2023-10-01",
-      "pricing": {
-        "input_per_1m": 3.0,
-        "output_per_1m": 12.0,
-        "currency": "USD"
-      },
-      "deprecated": false,
-      "aliases": [],
-      "computer_use": {
-        "supported": true,
-        "native": true,
-        "provider": "openai",
-        "model": "computer-use-preview",
-        "api_type": "responses",
-        "tool_type": "computer_use_preview",
-        "tool_version": "2025-03-11",
-        "status": "preview",
-        "environments": [
-          "browser",
-          "desktop"
-        ],
-        "actions": [
-          "screenshot",
-          "click",
-          "double_click",
-          "drag",
-          "move",
-          "scroll",
-          "keypress",
-          "type",
-          "wait"
-        ],
-        "requires_beta": false,
-        "enable_zoom": false,
-        "source_url": "https://developers.openai.com/api/docs/models/computer-use-preview",
-        "checked_at": "2026-08-15"
-      }
     }
   ]
 }

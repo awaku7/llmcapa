@@ -539,6 +539,10 @@
         "enable_zoom": false,
         "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/computer-use",
         "checked_at": "2026-08-15"
+      },
+      "extra": {
+        "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "checked_at": "2026-08-19"
       }
     },
     {
@@ -658,7 +662,13 @@
         "low",
         "medium",
         "high"
-      ]
+      ],
+      "extra": {
+        "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "checked_at": "2026-08-19",
+        "image_output_per_1m": 60.0,
+        "image_output_currency": "USD"
+      }
     },
     {
       "provider": "google",
@@ -703,7 +713,11 @@
         "low",
         "medium",
         "high"
-      ]
+      ],
+      "extra": {
+        "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "checked_at": "2026-08-19"
+      }
     },
     {
       "provider": "google",
@@ -746,7 +760,13 @@
         "low",
         "medium",
         "high"
-      ]
+      ],
+      "extra": {
+        "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "checked_at": "2026-08-19",
+        "image_output_per_1m": 30.0,
+        "image_output_currency": "USD"
+      }
     },
     {
       "provider": "google",
@@ -875,7 +895,8 @@
         "long_context_input_per_1m": 4.0,
         "long_context_output_per_1m": 18.0,
         "note": "≤200k $2/$12; >200k $4/$18",
-        "source": "https://ai.google.dev/gemini-api/docs/pricing"
+        "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "checked_at": "2026-08-19"
       }
     },
     {
@@ -972,7 +993,11 @@
         "low",
         "medium",
         "high"
-      ]
+      ],
+      "extra": {
+        "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "checked_at": "2026-08-19"
+      }
     },
     {
       "provider": "google",
@@ -1006,7 +1031,12 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "deprecated": false,
-      "aliases": []
+      "aliases": [],
+      "pricing": {
+        "input_per_1m": 0.3,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      }
     },
     {
       "provider": "google",
@@ -1046,7 +1076,9 @@
       "aliases": [],
       "supports_realtime": true,
       "extra": {
-        "realtime_api": true
+        "realtime_api": true,
+        "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "checked_at": "2026-08-19"
       }
     },
     {
@@ -1110,6 +1142,58 @@
         "enable_zoom": false,
         "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/computer-use",
         "checked_at": "2026-08-15"
+      },
+      "pricing": {
+        "input_per_1m": 0.75,
+        "output_per_1m": 3.75,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "checked_at": "2026-08-19"
+      }
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-3.7-flash",
+      "display_name": "Gemini 3.7 Flash",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "pricing": {
+        "input_per_1m": 0.75,
+        "output_per_1m": 3.75,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "checked_at": "2026-08-19",
+        "pricing_note": "$0.75/$3.75 through 2026-12-31; $1.50/$7.50 from 2027-01-01"
       }
     },
     {

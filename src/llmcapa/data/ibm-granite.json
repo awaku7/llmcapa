@@ -3,7 +3,7 @@
     {
       "provider": "ibm-granite",
       "model_id": "ibm-granite/granite-4.0-h-micro",
-      "display_name": "IBM: Granite 4.0 Micro",
+      "display_name": "IBM: Granite 4.0 H Micro",
       "context_window": 131000,
       "max_output_tokens": 131000,
       "input_modalities": [
@@ -30,11 +30,46 @@
       "aliases": [
         "ibm-granite/granite-4.0-h-micro"
       ],
-      "license_type": "unknown",
+      "license_type": "open",
       "pricing": {
         "input_per_1m": 0.017,
         "output_per_1m": 0.112,
         "currency": "USD"
+      },
+      "extra": {
+        "official_source": "https://www.ibm.com/granite/docs/models/granite",
+        "official_source_checked_at": "2026-08-19",
+        "official_spec_refresh": "parsed",
+        "license": "Apache 2.0",
+        "architecture": "hybrid Mamba-2/Transformer Mixture-of-Experts",
+        "granite_4_0_family": {
+          "granite-4.0-h-small": {
+            "parameters": "32B total / 9B activated"
+          },
+          "granite-4.0-h-tiny": {
+            "parameters": "7B total / 1B activated"
+          },
+          "granite-4.0-h-micro": {
+            "parameters": "3B total"
+          },
+          "granite-4.0-micro": {
+            "parameters": "3B total"
+          },
+          "granite-4.0-h-1b": {
+            "parameters": "1.5B"
+          },
+          "granite-4.0-1b": {
+            "parameters": "1B"
+          },
+          "granite-4.0-h-350m": {
+            "parameters": "350M"
+          },
+          "granite-4.0-350m": {
+            "parameters": "350M"
+          }
+        },
+        "pricing_status": "not specified on IBM Granite model page",
+        "context_status": "not specified on IBM Granite model page"
       }
     },
     {
@@ -72,6 +107,11 @@
         "input_per_1m": 0.049999999999999996,
         "output_per_1m": 0.09999999999999999,
         "currency": "USD"
+      },
+      "extra": {
+        "official_source": "https://www.ibm.com/granite/docs/",
+        "official_source_checked_at": "2026-08-19",
+        "official_spec_refresh": "pending_provider_parser"
       }
     }
   ]

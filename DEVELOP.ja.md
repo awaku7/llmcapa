@@ -267,3 +267,14 @@ python -m build
 | `supports_vision` | `pipeline_tag` | パイプラインが `image-text-to-text` または `visual-question-answering` なら `True` |
 | `supports_chat_completion` | `pipeline_tag` | `text-generation` または `image-text-to-text` なら `True` |
 
+
+
+## データ更新ポリシー
+
+プロバイダー別のモデルデータを更新する際は、データの出所を混同しないこと。
+
+- `openrouter.json` には OpenRouter から取得したモデルデータだけを格納する。
+- OpenRouter のデータを、他プロバイダーのデータファイル（`google.json`、`anthropic.json` など）へ流用・上書きしてはならない。
+- 他プロバイダーのデータは、原則として各プロバイダーの公式 API、公式ドキュメント、または当該プロバイダー専用の更新スクリプトから取得する。
+- 複数プロバイダーを更新する場合も、プロバイダーごとに取得・内容確認・差分確認を行う。一括処理で OpenRouter データを他プロバイダーへ配布してはならない。
+- 更新前に既存の未コミット変更を確認し、必要に応じてバックアップを作成する。
