@@ -45,6 +45,35 @@
         "version": "2025-03-11",
         "maas_or_paygo": true,
         "summary": "computer-use-preview is the model for Computer Use Agent for use in Responses API. You can use computer-use-preview model to get instructions to control a browser on your computer screen and take action on a user's behalf."
+      },
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "azure-foundry",
+        "model": "computer-use-preview",
+        "api_type": "responses",
+        "tool_type": "computer",
+        "tool_version": null,
+        "status": "preview",
+        "environments": [
+          "browser",
+          "desktop"
+        ],
+        "actions": [
+          "screenshot",
+          "click",
+          "double_click",
+          "drag",
+          "move",
+          "scroll",
+          "keypress",
+          "type",
+          "wait"
+        ],
+        "requires_beta": false,
+        "enable_zoom": false,
+        "source_url": "https://learn.microsoft.com/en-us/azure/foundry-classic/openai/how-to/computer-use",
+        "checked_at": "2026-08-15"
       }
     },
     {
@@ -1161,6 +1190,35 @@
         "summary": "GPT‑5.5 is OpenAI’s most capable frontier model, built to deliver faster, more reliable results for complex professional work.",
         "long_context": true,
         "context_window": 1050000
+      },
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "azure-foundry",
+        "model": "gpt-5.5",
+        "api_type": "responses",
+        "tool_type": "computer",
+        "tool_version": "latest",
+        "status": "ga",
+        "environments": [
+          "browser",
+          "desktop"
+        ],
+        "actions": [
+          "screenshot",
+          "click",
+          "double_click",
+          "drag",
+          "move",
+          "scroll",
+          "keypress",
+          "type",
+          "wait"
+        ],
+        "requires_beta": false,
+        "enable_zoom": false,
+        "source_url": "https://developers.openai.com/api/docs/guides/tools-computer-use",
+        "checked_at": "2026-08-15"
       }
     },
     {
@@ -10707,6 +10765,34 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Multimodal web agent for browser-based task automation."
+      },
+      "computer_use": {
+        "supported": true,
+        "native": false,
+        "provider": "azure-foundry",
+        "model": "Fara1.5-27B",
+        "api_type": "custom_harness",
+        "tool_type": "fara_actions",
+        "tool_version": null,
+        "status": "preview",
+        "environments": [
+          "browser"
+        ],
+        "actions": [
+          "screenshot",
+          "click",
+          "double_click",
+          "drag",
+          "move",
+          "scroll",
+          "keypress",
+          "type",
+          "wait"
+        ],
+        "requires_beta": false,
+        "enable_zoom": false,
+        "source_url": "https://www.microsoft.com/en-us/research/articles/fara1-5-computer-use-agent/",
+        "checked_at": "2026-08-15"
       }
     },
     {
@@ -10749,6 +10835,34 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Multimodal web agent for browser-based task automation."
+      },
+      "computer_use": {
+        "supported": true,
+        "native": false,
+        "provider": "azure-foundry",
+        "model": "Fara1.5-4B",
+        "api_type": "custom_harness",
+        "tool_type": "fara_actions",
+        "tool_version": null,
+        "status": "preview",
+        "environments": [
+          "browser"
+        ],
+        "actions": [
+          "screenshot",
+          "click",
+          "double_click",
+          "drag",
+          "move",
+          "scroll",
+          "keypress",
+          "type",
+          "wait"
+        ],
+        "requires_beta": false,
+        "enable_zoom": false,
+        "source_url": "https://www.microsoft.com/en-us/research/articles/fara1-5-computer-use-agent/",
+        "checked_at": "2026-08-15"
       }
     },
     {
@@ -10788,6 +10902,34 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Multimodal web agent for browser-based task automation."
+      },
+      "computer_use": {
+        "supported": true,
+        "native": false,
+        "provider": "azure-foundry",
+        "model": "Fara1.5-9B",
+        "api_type": "custom_harness",
+        "tool_type": "fara_actions",
+        "tool_version": null,
+        "status": "preview",
+        "environments": [
+          "browser"
+        ],
+        "actions": [
+          "screenshot",
+          "click",
+          "double_click",
+          "drag",
+          "move",
+          "scroll",
+          "keypress",
+          "type",
+          "wait"
+        ],
+        "requires_beta": false,
+        "enable_zoom": false,
+        "source_url": "https://www.microsoft.com/en-us/research/articles/fara1-5-computer-use-agent/",
+        "checked_at": "2026-08-15"
       }
     },
     {
@@ -13261,6 +13403,35 @@
         "pricing_match_key": "gpt-5.4",
         "long_context": true,
         "context_window": 1050000
+      },
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "azure-foundry",
+        "model": "gpt-5.4",
+        "api_type": "responses",
+        "tool_type": "computer",
+        "tool_version": "latest",
+        "status": "ga",
+        "environments": [
+          "browser",
+          "desktop"
+        ],
+        "actions": [
+          "screenshot",
+          "click",
+          "double_click",
+          "drag",
+          "move",
+          "scroll",
+          "keypress",
+          "type",
+          "wait"
+        ],
+        "requires_beta": false,
+        "enable_zoom": false,
+        "source_url": "https://developers.openai.com/api/docs/guides/tools-computer-use",
+        "checked_at": "2026-08-15"
       }
     },
     {
@@ -13453,6 +13624,35 @@
           "currency": "USD"
         },
         "pricing_match_key": "gpt-5.6-luna"
+      },
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "azure-foundry",
+        "model": "gpt-5.6-luna",
+        "api_type": "responses",
+        "tool_type": "computer",
+        "tool_version": "latest",
+        "status": "ga",
+        "environments": [
+          "browser",
+          "desktop"
+        ],
+        "actions": [
+          "screenshot",
+          "click",
+          "double_click",
+          "drag",
+          "move",
+          "scroll",
+          "keypress",
+          "type",
+          "wait"
+        ],
+        "requires_beta": false,
+        "enable_zoom": false,
+        "source_url": "https://developers.openai.com/api/docs/guides/tools-computer-use",
+        "checked_at": "2026-08-15"
       }
     },
     {
@@ -13508,6 +13708,35 @@
           "currency": "USD"
         },
         "pricing_match_key": "gpt-5.6-sol"
+      },
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "azure-foundry",
+        "model": "gpt-5.6-sol",
+        "api_type": "responses",
+        "tool_type": "computer",
+        "tool_version": "latest",
+        "status": "ga",
+        "environments": [
+          "browser",
+          "desktop"
+        ],
+        "actions": [
+          "screenshot",
+          "click",
+          "double_click",
+          "drag",
+          "move",
+          "scroll",
+          "keypress",
+          "type",
+          "wait"
+        ],
+        "requires_beta": false,
+        "enable_zoom": false,
+        "source_url": "https://developers.openai.com/api/docs/guides/tools-computer-use",
+        "checked_at": "2026-08-15"
       }
     },
     {
@@ -13557,6 +13786,35 @@
           "currency": "USD"
         },
         "pricing_match_key": "gpt-5.6-terra"
+      },
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "azure-foundry",
+        "model": "gpt-5.6-terra",
+        "api_type": "responses",
+        "tool_type": "computer",
+        "tool_version": "latest",
+        "status": "ga",
+        "environments": [
+          "browser",
+          "desktop"
+        ],
+        "actions": [
+          "screenshot",
+          "click",
+          "double_click",
+          "drag",
+          "move",
+          "scroll",
+          "keypress",
+          "type",
+          "wait"
+        ],
+        "requires_beta": false,
+        "enable_zoom": false,
+        "source_url": "https://developers.openai.com/api/docs/guides/tools-computer-use",
+        "checked_at": "2026-08-15"
       }
     },
     {
@@ -15232,7 +15490,40 @@
       "license_type": "open-source",
       "aliases": [
         "azure-foundry/claude-opus-5"
-      ]
+      ],
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "azure-foundry",
+        "model": "claude-opus-5",
+        "api_type": "messages",
+        "tool_type": "computer_20251124",
+        "tool_version": "20251124",
+        "status": "beta",
+        "environments": [
+          "desktop"
+        ],
+        "actions": [
+          "screenshot",
+          "left_click",
+          "type",
+          "key",
+          "cursor_position",
+          "left_click_drag",
+          "right_click",
+          "middle_click",
+          "double_click",
+          "triple_click",
+          "scroll",
+          "wait",
+          "zoom"
+        ],
+        "requires_beta": true,
+        "enable_zoom": false,
+        "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
+        "checked_at": "2026-08-15",
+        "beta_header": "computer-use-2025-11-24"
+      }
     },
     {
       "provider": "azure-foundry",
@@ -15288,7 +15579,40 @@
       "license_type": "open-source",
       "aliases": [
         "azure-foundry/claude-sonnet-5"
-      ]
+      ],
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "azure-foundry",
+        "model": "claude-sonnet-5",
+        "api_type": "messages",
+        "tool_type": "computer_20251124",
+        "tool_version": "20251124",
+        "status": "beta",
+        "environments": [
+          "desktop"
+        ],
+        "actions": [
+          "screenshot",
+          "left_click",
+          "type",
+          "key",
+          "cursor_position",
+          "left_click_drag",
+          "right_click",
+          "middle_click",
+          "double_click",
+          "triple_click",
+          "scroll",
+          "wait",
+          "zoom"
+        ],
+        "requires_beta": true,
+        "enable_zoom": false,
+        "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
+        "checked_at": "2026-08-15",
+        "beta_header": "computer-use-2025-11-24"
+      }
     },
     {
       "provider": "azure-foundry",
@@ -58579,6 +58903,36 @@
         ],
         "deployment_options": "MaaP",
         "version": 1
+      },
+      "computer_use": {
+        "supported": true,
+        "native": false,
+        "provider": "azure-foundry",
+        "model": "hcompany-holo1.5-3b",
+        "api_type": "custom_harness",
+        "tool_type": "holo_actions",
+        "tool_version": null,
+        "status": "preview",
+        "environments": [
+          "browser",
+          "desktop",
+          "mobile"
+        ],
+        "actions": [
+          "screenshot",
+          "click",
+          "double_click",
+          "drag",
+          "move",
+          "scroll",
+          "keypress",
+          "type",
+          "wait"
+        ],
+        "requires_beta": false,
+        "enable_zoom": false,
+        "source_url": "https://hcompany.ai/holo1-5-open-foundation-models-for-computer-use-agents",
+        "checked_at": "2026-08-15"
       }
     },
     {
@@ -58618,6 +58972,36 @@
         ],
         "deployment_options": "MaaP",
         "version": 1
+      },
+      "computer_use": {
+        "supported": true,
+        "native": false,
+        "provider": "azure-foundry",
+        "model": "hcompany-holo1.5-7b",
+        "api_type": "custom_harness",
+        "tool_type": "holo_actions",
+        "tool_version": null,
+        "status": "preview",
+        "environments": [
+          "browser",
+          "desktop",
+          "mobile"
+        ],
+        "actions": [
+          "screenshot",
+          "click",
+          "double_click",
+          "drag",
+          "move",
+          "scroll",
+          "keypress",
+          "type",
+          "wait"
+        ],
+        "requires_beta": false,
+        "enable_zoom": false,
+        "source_url": "https://hcompany.ai/holo1-5-open-foundation-models-for-computer-use-agents",
+        "checked_at": "2026-08-15"
       }
     },
     {
@@ -58657,6 +59041,36 @@
         ],
         "deployment_options": "MaaP",
         "version": 1
+      },
+      "computer_use": {
+        "supported": true,
+        "native": false,
+        "provider": "azure-foundry",
+        "model": "hcompany-holo2-4b",
+        "api_type": "custom_harness",
+        "tool_type": "holo_actions",
+        "tool_version": null,
+        "status": "preview",
+        "environments": [
+          "browser",
+          "desktop",
+          "mobile"
+        ],
+        "actions": [
+          "screenshot",
+          "click",
+          "double_click",
+          "drag",
+          "move",
+          "scroll",
+          "keypress",
+          "type",
+          "wait"
+        ],
+        "requires_beta": false,
+        "enable_zoom": false,
+        "source_url": "https://hcompany.ai/holo1-5-open-foundation-models-for-computer-use-agents",
+        "checked_at": "2026-08-15"
       }
     },
     {
@@ -58696,6 +59110,36 @@
         ],
         "deployment_options": "MaaP",
         "version": 1
+      },
+      "computer_use": {
+        "supported": true,
+        "native": false,
+        "provider": "azure-foundry",
+        "model": "hcompany-holo2-8b",
+        "api_type": "custom_harness",
+        "tool_type": "holo_actions",
+        "tool_version": null,
+        "status": "preview",
+        "environments": [
+          "browser",
+          "desktop",
+          "mobile"
+        ],
+        "actions": [
+          "screenshot",
+          "click",
+          "double_click",
+          "drag",
+          "move",
+          "scroll",
+          "keypress",
+          "type",
+          "wait"
+        ],
+        "requires_beta": false,
+        "enable_zoom": false,
+        "source_url": "https://hcompany.ai/holo1-5-open-foundation-models-for-computer-use-agents",
+        "checked_at": "2026-08-15"
       }
     },
     {
@@ -82291,6 +82735,34 @@
         ],
         "deployment_options": "MaaP",
         "version": 1
+      },
+      "computer_use": {
+        "supported": true,
+        "native": false,
+        "provider": "azure-foundry",
+        "model": "microsoft-fara-7b",
+        "api_type": "custom_harness",
+        "tool_type": "fara_actions",
+        "tool_version": null,
+        "status": "preview",
+        "environments": [
+          "browser"
+        ],
+        "actions": [
+          "screenshot",
+          "click",
+          "double_click",
+          "drag",
+          "move",
+          "scroll",
+          "keypress",
+          "type",
+          "wait"
+        ],
+        "requires_beta": false,
+        "enable_zoom": false,
+        "source_url": "https://www.microsoft.com/en-us/research/blog/fara-7b-an-efficient-agentic-model-for-computer-use/",
+        "checked_at": "2026-08-15"
       }
     },
     {

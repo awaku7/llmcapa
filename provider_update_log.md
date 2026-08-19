@@ -2296,3 +2296,11 @@
 - OpenRouter: live official API refreshed `openrouter.json` with 415 models.
 - Hugging Face: official API refreshed `huggingface.json` with 2,906 popular text-generation models.
 - Other provider JSON files were not populated from either catalog.
+
+## Computer Use metadata reconciliation and version bump (2026-08-19)
+
+- Restored 38 Computer Use metadata records present in PyPI 0.5.8 but missing from the local provider records.
+- Providers reconciled: Anthropic, Azure Foundry, OpenAI, and OpenRouter.
+- Video modality fields were already present locally and were not changed.
+- Bumped package version to 0.5.9.
+- OpenRouter data was not used to populate other providers.
