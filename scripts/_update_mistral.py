@@ -11,10 +11,10 @@ import shutil
 from datetime import datetime
 from pathlib import Path
 
-WORKDIR = Path(r"F:\KAIHATSU\llmcapa")
+WORKDIR = Path(__file__).resolve().parents[1]
 SCRAPE = WORKDIR / "_scratch_mistral_scrape_full.json"
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "mistral.json"
-INSTALLED = Path(r"F:\Python314\Lib\site-packages\llmcapa\data\mistral.json")
+INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "mistral.json"
 LOG = WORKDIR / "provider_update_log.md"
 
 # Known multimodal (vision) families on Mistral API (chat + image)

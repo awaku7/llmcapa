@@ -12,9 +12,9 @@ from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
 
-WORKDIR = Path(r"F:\KAIHATSU\llmcapa")
+WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "google.json"
-INSTALLED = Path(r"F:\Python314\Lib\site-packages\llmcapa\data\google.json")
+INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "google.json"
 LOG = WORKDIR / "provider_update_log.md"
 SOURCE = "https://ai.google.dev/gemini-api/docs/pricing"
 

@@ -2304,3 +2304,220 @@
 - Video modality fields were already present locally and were not changed.
 - Bumped package version to 0.5.9.
 - OpenRouter data was not used to populate other providers.
+
+## Aion Labs official refresh (2026-08-21)
+
+- Source: https://www.aionlabs.ai/docs/models/
+- Parsed official context, max output, reasoning flag, and USD pricing for 5 Aion records, including expired Aion 2.5.
+- OpenRouter was not used.
+
+## Baidu Qianfan official refresh (2026-08-21)
+
+- Source: https://cloud.baidu.com/doc/qianfan/index.html
+- Parsed official featured model catalog metadata for 1 existing Baidu record(s).
+- No pricing/context values were inferred because the official pricing page is separate and was not reliably exposed in this pass.
+- OpenRouter was not used.
+
+## Cohere official model-page refresh (2026-08-21)
+
+- Source: https://docs.cohere.com/docs/models
+- Official model pages checked: 4
+- Provenance entries changed: 4
+- Numeric capability fields preserved unless an explicit parser rule exists.
+- OpenRouter was not used.
+
+## Hugging Face official organization refresh (2026-08-21)
+
+
+- Source: official Hugging Face organization APIs (`huggingface.co/api/models`).
+- Recorded provider organization model catalogs only; no prices or capabilities were inferred.
+- OpenRouter was not used.
+
+- anthracite-org: 0 record(s), failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1082)>
+- cognitivecomputations: 0 record(s), failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1082)>
+- deepcogito: 0 record(s), failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1082)>
+- gryphe: 0 record(s), failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1082)>
+- inclusionai: 0 record(s), failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1082)>
+- kwaipilot: 0 record(s), failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1082)>
+- mancer: 0 record(s), failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1082)>
+- meituan: 0 record(s), failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1082)>
+- nex-agi: 0 record(s), failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1082)>
+- perceptron: 0 record(s), failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1082)>
+- sao10k: 0 record(s), failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1082)>
+- thedrummer: 0 record(s), failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1082)>
+- undi95: 0 record(s), failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1082)>
+
+## IBM Granite official refresh (2026-08-21)
+
+- Source: https://www.ibm.com/granite/docs/models/granite
+- Updated: 1 existing Granite 4.0 H Micro record(s).
+- Recorded IBM's Apache 2.0 license and official Granite 4.0 family/architecture metadata.
+- IBM's page does not specify API pricing or context windows; those values were not inferred or overwritten.
+- OpenRouter was not used.
+
+## Tencent Hunyuan official refresh (2026-08-21)
+
+- Source: https://cloud.tencent.com/document/product/1729/97731
+- Parsed official Hunyuan-a13b pricing: CNY 0.5/2.0 per 1M input/output tokens.
+- Existing context/capability fields were preserved; other Tencent model prices were not inferred.
+- OpenRouter was not used.
+
+## Upstage official model refresh (2026-08-21)
+
+- Source: https://console.upstage.ai/docs/models/solar-pro-4
+- Checked: 1; updated: 1
+- Solar Pro 4: 512K context, 128K max output, $0.30/$1.20 per 1M tokens, cached $0.06.
+- OpenRouter was not used.
+
+## OpenAI (2026-08-21)
+
+### Source
+- Official OpenAI API Documentation: https://developers.openai.com/api/docs/models
+- Pricing page: https://developers.openai.com/api/docs/pricing
+- Method: Playwright (headless browser) for JavaScript-rendered pages
+
+### Models Updated
+155 models total
+
+### Changes
+- Flagship: GPT-5.6 Sol/Terra/Luna, GPT-5.5(+Pro), GPT-5.4(+Mini/Nano/Pro)
+- Image: gpt-image-2 / 1.5 / 1-mini / 1, chatgpt-image-latest (token pricing + batch)
+- Video: sora-2 ($0.10/s 720p), sora-2-pro ($0.30–$0.70/s)
+- Realtime: 2.1/mini modality rates; translate $0.034/min; whisper $0.017/min
+- Audio: gpt-audio-1.5 / mini; transcribe + diarize
+- Specialized: chat-latest, gpt-5.4-cyber, gpt-5.5-cyber ($12.5/$75)
+- Embeddings + omni-moderation-latest (free)
+- Preserved legacy openai/* OpenRouter-style aliases from prior catalog
+
+## Reka AI official refresh (2026-08-21)
+
+- Source: https://docs.reka.ai/chat/models
+- Parsed official public baseline models: reka-flash and reka-edge-2603.
+- Updated provenance/availability metadata for 2 existing Reka records; numeric pricing/context values were not inferred.
+- OpenRouter was not used.
+
+## Hugging Face official organization refresh (2026-08-21)
+
+
+- Source: official Hugging Face organization APIs (`huggingface.co/api/models`).
+- Recorded provider organization model catalogs only; no prices or capabilities were inferred.
+- OpenRouter was not used.
+
+- anthracite-org: 0 record(s), failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1082)>
+- cognitivecomputations: 0 record(s), failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1082)>
+- deepcogito: 0 record(s), failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1082)>
+- gryphe: 0 record(s), failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1082)>
+- inclusionai: 0 record(s), failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1082)>
+- kwaipilot: 0 record(s), failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1082)>
+- mancer: 0 record(s), failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1082)>
+- meituan: 0 record(s), failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1082)>
+- nex-agi: 0 record(s), failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1082)>
+- perceptron: 0 record(s), failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1082)>
+- sao10k: 0 record(s), failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1082)>
+- thedrummer: 0 record(s), failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1082)>
+- undi95: 0 record(s), failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1082)>
+
+## ByteDance/Seed official refresh (2026-08-21)
+
+- Source: https://docs.volcengine.com/docs/82379/1544106?lang=zh
+- Parsed official CNY video-token pricing for 5 existing Seedance records.
+- Resolution/input-video dependent prices remain in `extra`; no FX conversion or invented context window was applied.
+- OpenRouter was not used.
+
+## StepFun official refresh (2026-08-21)
+
+- Source: https://platform.stepfun.ai/docs/en/guides/pricing/details
+- Updated: 2 models (Step 3.5 Flash and Step 3.7 Flash).
+- OpenRouter was not used.
+
+## Hugging Face official organization refresh (2026-08-21)
+
+
+- Source: official Hugging Face organization APIs (`huggingface.co/api/models`).
+- Recorded provider organization model catalogs only; no prices or capabilities were inferred.
+- OpenRouter was not used.
+
+- anthracite-org: 1 record(s), updated
+- cognitivecomputations: 0 record(s), empty
+- deepcogito: 1 record(s), updated
+- gryphe: 1 record(s), updated
+- inclusionai: 5 record(s), updated
+- kwaipilot: 3 record(s), updated
+- mancer: 0 record(s), empty
+- meituan: 1 record(s), updated
+- nex-agi: 0 record(s), empty
+- perceptron: 0 record(s), empty
+- sao10k: 3 record(s), updated
+- thedrummer: 4 record(s), updated
+- undi95: 0 record(s), empty
+
+## xAI refresh (2026-08-21)
+
+### Source
+- ListModels: `_scratch_xai_listmodels_parsed.json`
+- Docs: https://docs.x.ai/developers/models (+ pricing / Voice / Imagine)
+- Apply: `scripts/_update_xai.py`
+
+### Result
+- xai.json: **14** models (active=9, deprecated=5, token-priced=6)
+- Text: grok-4.5 $2/$6 @500k (cache $0.5, long $4); grok-4.3 / 4.20 family $1.25/$2.5 @1M (cache $0.2, long $2.5)
+- Imagine + Voice specialty entries included
+- Install copy synced
+
+## Reka AI official refresh (2026-08-21)
+
+- Source: https://docs.reka.ai/chat/models
+- Parsed official public baseline models: reka-flash and reka-edge-2603.
+- Updated provenance/availability metadata for 2 existing Reka records; numeric pricing/context values were not inferred.
+- OpenRouter was not used.
+
+## Baidu Qianfan official refresh (2026-08-21)
+
+- Source: https://cloud.baidu.com/doc/qianfan/index.html
+- Parsed official featured model catalog metadata for 1 existing Baidu record(s).
+- No pricing/context values were inferred because the official pricing page is separate and was not reliably exposed in this pass.
+- OpenRouter was not used.
+
+## ByteDance/Seed official refresh (2026-08-21)
+
+- Source: https://docs.volcengine.com/docs/82379/1544106?lang=zh
+- Parsed official CNY video-token pricing for 5 existing Seedance records.
+- Resolution/input-video dependent prices remain in `extra`; no FX conversion or invented context window was applied.
+- OpenRouter was not used.
+
+## Cohere official model-page refresh (2026-08-21)
+
+- Source: https://docs.cohere.com/docs/models
+- Official model pages checked: 4
+- Provenance entries changed: 0
+- Numeric capability fields preserved unless an explicit parser rule exists.
+- OpenRouter was not used.
+
+## IBM Granite official refresh (2026-08-21)
+
+- Source: https://www.ibm.com/granite/docs/models/granite
+- Updated: 1 existing Granite 4.0 H Micro record(s).
+- Recorded IBM's Apache 2.0 license and official Granite 4.0 family/architecture metadata.
+- IBM's page does not specify API pricing or context windows; those values were not inferred or overwritten.
+- OpenRouter was not used.
+
+## Tencent Hunyuan official refresh (2026-08-21)
+
+- Source: https://cloud.tencent.com/document/product/1729/97731
+- Parsed official Hunyuan-a13b pricing: CNY 0.5/2.0 per 1M input/output tokens.
+- Existing context/capability fields were preserved; other Tencent model prices were not inferred.
+- OpenRouter was not used.
+
+## Unresolved catalog sources checked (2026-08-21)
+
+
+- OpenRouter was not used.
+- No provider JSON was replaced with gateway data or inferred specifications.
+
+- cognitivecomputations: official_source_reachable=True, result=1
+- mancer: official_source_reachable=True, result=1
+- nex-agi: official_source_reachable=True, result=2
+- perceptron: official_source_reachable=True, result=1
+- undi95: official_source_reachable=True, result=1
+- llama_cpp: official_source_reachable=True, result=1634
+- lmstudio: official_source_reachable=True, result=105

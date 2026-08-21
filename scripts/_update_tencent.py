@@ -7,7 +7,7 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "tencent.json"
-INSTALLED = Path(r"F:\Python314\Lib\site-packages\llmcapa\data\tencent.json")
+INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "tencent.json"
 LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://cloud.tencent.com/document/product/1729/97731"
 RULES = {"tencent/hunyuan-a13b-instruct": (0.5, 2.0, "Hunyuan-a13b")}

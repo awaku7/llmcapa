@@ -7,7 +7,7 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "rekaai.json"
-INSTALLED = Path(r"F:\Python314\Lib\site-packages\llmcapa\data\rekaai.json")
+INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "rekaai.json"
 LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://docs.reka.ai/chat/models"
 PUBLIC = ["reka-flash", "reka-edge-2603"]

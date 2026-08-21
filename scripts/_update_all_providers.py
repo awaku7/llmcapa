@@ -41,8 +41,8 @@ PROVIDER_FILES = {
     "sakana": "sakana.json",
 }
 
-DATA_DIR = r"F:\KAIHATSU\llmcapa\src\llmcapa\data"
-INSTALLED_DIR = r"F:\Python314\Lib\site-packages\llmcapa\data"
+DATA_DIR = str(Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data")
+INSTALLED_DIR = str(Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data")
 
 print("Step 1: Fetching OpenRouter models...", flush=True)
 
@@ -134,7 +134,7 @@ print("  All JSON files copied to installed package", flush=True)
 
 # Update provider_update_log.md
 today = date.today().strftime("%Y-%m-%d")
-log_path = r"F:\KAIHATSU\llmcapa\provider_update_log.md"
+log_path = str(Path(__file__).resolve().parents[1] / "provider_update_log.md")
 log_entry = f"""
 ## Bulk Update via OpenRouter API ({today})
 

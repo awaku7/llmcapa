@@ -45,35 +45,6 @@
         "version": "2025-03-11",
         "maas_or_paygo": true,
         "summary": "computer-use-preview is the model for Computer Use Agent for use in Responses API. You can use computer-use-preview model to get instructions to control a browser on your computer screen and take action on a user's behalf."
-      },
-      "computer_use": {
-        "supported": true,
-        "native": true,
-        "provider": "azure-foundry",
-        "model": "computer-use-preview",
-        "api_type": "responses",
-        "tool_type": "computer",
-        "tool_version": null,
-        "status": "preview",
-        "environments": [
-          "browser",
-          "desktop"
-        ],
-        "actions": [
-          "screenshot",
-          "click",
-          "double_click",
-          "drag",
-          "move",
-          "scroll",
-          "keypress",
-          "type",
-          "wait"
-        ],
-        "requires_beta": false,
-        "enable_zoom": false,
-        "source_url": "https://learn.microsoft.com/en-us/azure/foundry-classic/openai/how-to/computer-use",
-        "checked_at": "2026-08-15"
       }
     },
     {
@@ -1190,35 +1161,6 @@
         "summary": "GPT‑5.5 is OpenAI’s most capable frontier model, built to deliver faster, more reliable results for complex professional work.",
         "long_context": true,
         "context_window": 1050000
-      },
-      "computer_use": {
-        "supported": true,
-        "native": true,
-        "provider": "azure-foundry",
-        "model": "gpt-5.5",
-        "api_type": "responses",
-        "tool_type": "computer",
-        "tool_version": "latest",
-        "status": "ga",
-        "environments": [
-          "browser",
-          "desktop"
-        ],
-        "actions": [
-          "screenshot",
-          "click",
-          "double_click",
-          "drag",
-          "move",
-          "scroll",
-          "keypress",
-          "type",
-          "wait"
-        ],
-        "requires_beta": false,
-        "enable_zoom": false,
-        "source_url": "https://developers.openai.com/api/docs/guides/tools-computer-use",
-        "checked_at": "2026-08-15"
       }
     },
     {
@@ -3550,7 +3492,7 @@
       "supports_reasoning": null,
       "knowledge_cutoff": "",
       "azure_type": "Messages",
-      "azure_lifecycle": "Preview",
+      "azure_lifecycle": "GA",
       "source": "azure_foundry",
       "supports_responses_api": false,
       "license_type": "api",
@@ -4716,6 +4658,49 @@
       }
     },
     {
+      "provider": "deepseek",
+      "model_id": "DeepSeek-V4-Flash-0731",
+      "display_name": "DeepSeek-V4-Flash-0731",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "Preview",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "deepseek-v4-flash-0731",
+        "deepseek/DeepSeek-V4-Flash-0731"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maas-inference"
+        ],
+        "azure_offers": [
+          "standard-paygo"
+        ],
+        "deployment_options": "ServerlessMaaS,UnifiedEndpointMaaS,Serverless API",
+        "version": "2026-07-31",
+        "maas_or_paygo": true,
+        "summary": "DeepSeek-V4-Flash-0731 is the official release of DeepSeek-V4-Flash, superseding the preview version, with substantially enhanced agentic capabilities.",
+        "long_context": true,
+        "context_window": 1000000
+      }
+    },
+    {
       "provider": "domyn",
       "model_id": "Domyn-Large",
       "display_name": "Domyn Large",
@@ -4833,6 +4818,47 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Sovereign European MoE LLM with 3B active parameters, delivering 8B-16B dense model performance with native Italian and EU AI Act compliance."
+      }
+    },
+    {
+      "provider": "fireworks",
+      "model_id": "FW-DeepSeek-V4-Flash-0731",
+      "display_name": "DeepSeek V4 Flash 0731",
+      "context_window": 1048576,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "fw-deepseek-v4-flash-0731",
+        "fireworks/FW-DeepSeek-V4-Flash-0731"
+      ],
+      "extra": {
+        "azure_offers": [
+          "PTU",
+          "standard-paygo"
+        ],
+        "deployment_options": "UnifiedEndpointMaaS,Serverless API",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "DeepSeek V4 Flash 0731 is the official 304B-parameter release of DeepSeek V4 Flash, with a 1M-token context window, DSpark speculative decoding, and substantially enhanced agentic capabilities.",
+        "long_context": true,
+        "context_window": 1048576
       }
     },
     {
@@ -5275,6 +5301,47 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Nemotron 3 Ultra NVFP4 is a frontier-scale Mixture-of-Experts language model from NVIDIA with approximately 550B total parameters and 55B active parameters, a hybrid Mamba-2 and LatentMoE architecture, configurable reasoning, function calling, and a 262,14",
+        "long_context": true,
+        "context_window": 262144
+      }
+    },
+    {
+      "provider": "fireworks",
+      "model_id": "FW-Nemotron-Lightning-3.5-30B-A3B",
+      "display_name": "Nemotron Lightning 3.5 30B A3B",
+      "context_window": 262144,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "fw-nemotron-lightning-3.5-30b-a3b",
+        "fireworks/FW-Nemotron-Lightning-3.5-30B-A3B"
+      ],
+      "extra": {
+        "azure_offers": [
+          "PTU",
+          "standard-paygo"
+        ],
+        "deployment_options": "UnifiedEndpointMaaS,Serverless API",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "Nemotron Lightning 3.5 30B A3B is a 30B-parameter Mixture-of-Experts language model from NVIDIA with 3B active parameters, a hybrid Mamba-Transformer architecture, configurable reasoning, Multi-Token Prediction, function calling, and a 262,144-token Firewo",
         "long_context": true,
         "context_window": 262144
       }
@@ -6060,6 +6127,48 @@
     },
     {
       "provider": "huggingface",
+      "model_id": "dbmdz--bert-base-german-cased",
+      "display_name": "bert-base-german-cased",
+      "context_window": 512,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Fill mask",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "dbmdz-bert-base-german-cased",
+        "huggingface/dbmdz--bert-base-german-cased"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "deployment_options": "MaaP,Managed Compute",
+        "version": 3,
+        "maas_or_paygo": true,
+        "summary": "German cased BERT masked language model for text infilling."
+      }
+    },
+    {
+      "provider": "huggingface",
       "model_id": "deepreinforce-ai--ornith-1.0-397b",
       "display_name": "Ornith-1.0-397B",
       "context_window": 262144,
@@ -6836,15 +6945,15 @@
     },
     {
       "provider": "huggingface",
-      "model_id": "lodestones--chroma1-hd",
-      "display_name": "Chroma1-HD",
-      "context_window": 4096,
+      "model_id": "ltg--norbert2",
+      "display_name": "norbert2",
+      "context_window": 512,
       "max_output_tokens": 2048,
       "input_modalities": [
         "text"
       ],
       "output_modalities": [
-        "image"
+        "text"
       ],
       "supports_chat_completion": false,
       "supports_function_calling": false,
@@ -6853,14 +6962,14 @@
       "supports_vision": false,
       "supports_reasoning": null,
       "knowledge_cutoff": "",
-      "azure_type": "Image generation",
+      "azure_type": "Fill mask",
       "azure_lifecycle": "GA",
       "source": "azure_foundry",
       "supports_responses_api": false,
-      "license_type": "open-source",
+      "license_type": "custom",
       "aliases": [
-        "lodestones-chroma1-hd",
-        "huggingface/lodestones--chroma1-hd"
+        "ltg-norbert2",
+        "huggingface/ltg--norbert2"
       ],
       "extra": {
         "deployment_types": [
@@ -6871,9 +6980,9 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 3,
+        "version": 5,
         "maas_or_paygo": true,
-        "summary": "Chroma1-HD text-to-image diffusion model for high-detail image generation."
+        "summary": "NorBERT2 masked language model for Norwegian text infilling."
       }
     },
     {
@@ -7709,6 +7818,50 @@
     },
     {
       "provider": "huggingface",
+      "model_id": "nvidia--nvidia-nemotron-3.5-lightning-30b-a3b-bf16",
+      "display_name": "NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16",
+      "context_window": 262144,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "nvidia-nvidia-nemotron-3.5-lightning-30b-a3b-bf16",
+        "huggingface/nvidia--nvidia-nemotron-3.5-lightning-30b-a3b-bf16"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "deployment_options": "MaaP,Managed Compute",
+        "version": 2,
+        "maas_or_paygo": true,
+        "summary": "Full-precision Nemotron 3.5 Lightning 30B reference model for customization and domain adaptation.",
+        "long_context": true,
+        "context_window": 262144
+      }
+    },
+    {
+      "provider": "huggingface",
       "model_id": "nvidia--nvidia-nemotron-3.5-lightning-30b-a3b-nvfp4",
       "display_name": "NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4",
       "context_window": 262144,
@@ -7876,6 +8029,49 @@
         "version": 3,
         "maas_or_paygo": true,
         "summary": "Whisper large model for multilingual speech recognition and transcription."
+      }
+    },
+    {
+      "provider": "huggingface",
+      "model_id": "openai--whisper-large-v3-turbo",
+      "display_name": "whisper-large-v3-turbo",
+      "context_window": 4096,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Automatic speech recognition",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "supports_audio_input": true,
+      "aliases": [
+        "openai-whisper-large-v3-turbo",
+        "huggingface/openai--whisper-large-v3-turbo"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "deployment_options": "MaaP,Managed Compute",
+        "version": 3,
+        "maas_or_paygo": true,
+        "summary": "Fast Whisper large-v3 Turbo model for multilingual speech recognition."
       }
     },
     {
@@ -8848,6 +9044,52 @@
     },
     {
       "provider": "huggingface",
+      "model_id": "qwen--qwen3.5-4b",
+      "display_name": "Qwen3.5-4B",
+      "context_window": 262144,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "qwen-qwen3.5-4b",
+        "huggingface/qwen--qwen3.5-4b"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "deployment_options": "MaaP,Managed Compute",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "Qwen3.5 4B multimodal model for visual reasoning, OCR, and long-context generation.",
+        "long_context": true,
+        "context_window": 262144
+      }
+    },
+    {
+      "provider": "huggingface",
       "model_id": "qwen--qwen3.5-9b",
       "display_name": "Qwen3.5-9B",
       "context_window": 262144,
@@ -9111,6 +9353,48 @@
         "summary": "FP8 dynamic Gemma 4 instruction model for multimodal chat, reasoning, and tool calling.",
         "long_context": true,
         "context_window": 262144
+      }
+    },
+    {
+      "provider": "huggingface",
+      "model_id": "sentence-transformers--all-minilm-l6-v2",
+      "display_name": "all-MiniLM-L6-v2",
+      "context_window": 512,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embeddings"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Embeddings",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "sentence-transformers-all-minilm-l6-v2",
+        "huggingface/sentence-transformers--all-minilm-l6-v2"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "deployment_options": "MaaP,Managed Compute",
+        "version": 3,
+        "maas_or_paygo": true,
+        "summary": "384-dimensional English sentence embedding model for semantic search, clustering, and sentence similarity."
       }
     },
     {
@@ -9448,7 +9732,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 2,
+        "version": 3,
         "maas_or_paygo": true,
         "summary": "Quantized 1T MoE multimodal coding-agent model with efficient thinking for software tasks.",
         "long_context": true,
@@ -9789,6 +10073,104 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Specialist 2.6B LLM for single-step retrosynthesis, fine-tuned from LFM2-2.6B on the 36M-reaction ChemCensor-verified CREED dataset; outperforms LLMs and conventional single-step retrosynthesis models on out-of-domain plausibility benchmark"
+      }
+    },
+    {
+      "provider": "meta",
+      "model_id": "Llama-3.2-11B-Vision-Instruct",
+      "display_name": "Llama-3.2-11B-Vision-Instruct",
+      "context_window": 128000,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text",
+        "image",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "Retired",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "supports_audio_input": true,
+      "deprecated": true,
+      "aliases": [
+        "llama-3.2-11b-vision-instruct",
+        "meta/Llama-3.2-11B-Vision-Instruct"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "maas-inference"
+        ],
+        "azure_offers": [
+          "standard-paygo",
+          "VM"
+        ],
+        "deployment_options": "UnifiedEndpointMaaS, MaaP, ServerlessMaaS",
+        "inference_retirement_date": "2026-06-13T00:00:00Z",
+        "inference_deprecation_date": "2026-03-13T00:00:00Z",
+        "version": 6,
+        "maas_or_paygo": true,
+        "summary": "Excels in image reasoning capabilities on high-res images for visual understanding apps."
+      }
+    },
+    {
+      "provider": "meta",
+      "model_id": "Llama-3.2-90B-Vision-Instruct",
+      "display_name": "Llama-3.2-90B-Vision-Instruct",
+      "context_window": 128000,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text",
+        "image",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "Retired",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "supports_audio_input": true,
+      "deprecated": true,
+      "aliases": [
+        "llama-3.2-90b-vision-instruct",
+        "meta/Llama-3.2-90B-Vision-Instruct"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "maas-inference"
+        ],
+        "azure_offers": [
+          "standard-paygo",
+          "VM"
+        ],
+        "deployment_options": "UnifiedEndpointMaaS, MaaP, ServerlessMaaS",
+        "inference_retirement_date": "2026-06-13T00:00:00Z",
+        "inference_deprecation_date": "2026-03-13T00:00:00Z",
+        "version": 5,
+        "maas_or_paygo": true,
+        "summary": "Advanced image reasoning capabilities for visual understanding agentic apps."
       }
     },
     {
@@ -10682,8 +11064,8 @@
         "azure_offers": [
           "standard-paygo"
         ],
-        "deployment_options": "UnifiedEndpointMaaS",
-        "version": 2,
+        "deployment_options": "UnifiedEndpointMaaS,Serverless API",
+        "version": 1,
         "maas_or_paygo": true,
         "summary": "The CXRReportGen Premium model is built on Qwen2.5-VL-7B-Instruct and is designed to help applications interpret complex chest X-ray imaging studies and generate radiology-style findings and impression."
       }
@@ -10765,34 +11147,6 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Multimodal web agent for browser-based task automation."
-      },
-      "computer_use": {
-        "supported": true,
-        "native": false,
-        "provider": "azure-foundry",
-        "model": "Fara1.5-27B",
-        "api_type": "custom_harness",
-        "tool_type": "fara_actions",
-        "tool_version": null,
-        "status": "preview",
-        "environments": [
-          "browser"
-        ],
-        "actions": [
-          "screenshot",
-          "click",
-          "double_click",
-          "drag",
-          "move",
-          "scroll",
-          "keypress",
-          "type",
-          "wait"
-        ],
-        "requires_beta": false,
-        "enable_zoom": false,
-        "source_url": "https://www.microsoft.com/en-us/research/articles/fara1-5-computer-use-agent/",
-        "checked_at": "2026-08-15"
       }
     },
     {
@@ -10835,34 +11189,6 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Multimodal web agent for browser-based task automation."
-      },
-      "computer_use": {
-        "supported": true,
-        "native": false,
-        "provider": "azure-foundry",
-        "model": "Fara1.5-4B",
-        "api_type": "custom_harness",
-        "tool_type": "fara_actions",
-        "tool_version": null,
-        "status": "preview",
-        "environments": [
-          "browser"
-        ],
-        "actions": [
-          "screenshot",
-          "click",
-          "double_click",
-          "drag",
-          "move",
-          "scroll",
-          "keypress",
-          "type",
-          "wait"
-        ],
-        "requires_beta": false,
-        "enable_zoom": false,
-        "source_url": "https://www.microsoft.com/en-us/research/articles/fara1-5-computer-use-agent/",
-        "checked_at": "2026-08-15"
       }
     },
     {
@@ -10902,34 +11228,6 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Multimodal web agent for browser-based task automation."
-      },
-      "computer_use": {
-        "supported": true,
-        "native": false,
-        "provider": "azure-foundry",
-        "model": "Fara1.5-9B",
-        "api_type": "custom_harness",
-        "tool_type": "fara_actions",
-        "tool_version": null,
-        "status": "preview",
-        "environments": [
-          "browser"
-        ],
-        "actions": [
-          "screenshot",
-          "click",
-          "double_click",
-          "drag",
-          "move",
-          "scroll",
-          "keypress",
-          "type",
-          "wait"
-        ],
-        "requires_beta": false,
-        "enable_zoom": false,
-        "source_url": "https://www.microsoft.com/en-us/research/articles/fara1-5-computer-use-agent/",
-        "checked_at": "2026-08-15"
       }
     },
     {
@@ -10972,6 +11270,45 @@
         "version": "2026-06-19",
         "maas_or_paygo": true,
         "summary": "Built for creatives, delivering enhanced photorealism at scale."
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "MAI-Voice-2-Flash",
+      "display_name": "MAI-Voice-2-Flash",
+      "context_window": 4096,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "audio"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Text to speech,Audio generation",
+      "azure_lifecycle": "Preview",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "supports_audio_output": true,
+      "aliases": [
+        "mai-voice-2-flash",
+        "microsoft/MAI-Voice-2-Flash"
+      ],
+      "extra": {
+        "azure_offers": [
+          "standard-paygo"
+        ],
+        "deployment_options": "UnifiedEndpointMaaS",
+        "version": "2026-07-22",
+        "maas_or_paygo": true,
+        "summary": "MAI-Voice-2-Flash is a text-to-speech (TTS) model built for ultra-fast, low-latency generation. It delivers high-fidelity, natural, and expressive speech across 15 languages, while being optimized for real-time responsiveness for voice agents, assistants, "
       }
     },
     {
@@ -11086,8 +11423,8 @@
         "azure_offers": [
           "standard-paygo"
         ],
-        "deployment_options": "UnifiedEndpointMaaS",
-        "version": 2,
+        "deployment_options": "UnifiedEndpointMaaS,Serverless API",
+        "version": 1,
         "maas_or_paygo": true,
         "summary": "A multimodal foundation model that generalizes across various medical imaging modalities, anatomies, locations, severities, and types of medical data, producing high-quality image embeddings for retrieval, search, comparison, classification, and tagging ta"
       }
@@ -11954,6 +12291,44 @@
       }
     },
     {
+      "provider": "ntt-data",
+      "model_id": "tsuzumi2",
+      "display_name": "tsuzumi 2",
+      "context_window": 4096,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "ntt-data/tsuzumi2"
+      ],
+      "extra": {
+        "azure_offers": [
+          "VM",
+          "VM-withSurcharge"
+        ],
+        "deployment_options": "MaaP",
+        "version": 3,
+        "maas_or_paygo": true,
+        "summary": "tsuzumi 2 is the next-generation large language model developed by NTT Laboratories, offering enhanced performance in both Japanese and English while maintaining its lightweight design."
+      }
+    },
+    {
       "provider": "nvidia",
       "model_id": "NVIDIA-Nemotron-3-Content-Safety-NIM-microservice",
       "display_name": "NVIDIA Nemotron 3 Content Safety NIM microservice",
@@ -12106,44 +12481,6 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Nemotron-3-Ultra-550B-A55B is a frontier-scale large language model (LLM) trained by NVIDIA, designed to deliver strong agentic, reasoning, and conversational capabilities. It is optimized for the most demanding workloads, including complex multi-step agen"
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "NVIDIA-Nemotron-Content-Safety-Reasoning-4B-NIM-microservice",
-      "display_name": "NVIDIA Nemotron Content Safety Reasoning 4B NIM microservice",
-      "context_window": 4096,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": false,
-      "supports_function_calling": false,
-      "supports_json_mode": null,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "knowledge_cutoff": "",
-      "azure_type": "Text classification",
-      "azure_lifecycle": "GA",
-      "source": "azure_foundry",
-      "supports_responses_api": false,
-      "license_type": "custom",
-      "aliases": [
-        "nvidia-nemotron-content-safety-reasoning-4b-nim-microservice",
-        "nvidia/NVIDIA-Nemotron-Content-Safety-Reasoning-4B-NIM-microservice"
-      ],
-      "extra": {
-        "azure_offers": [
-          "VM",
-          "VM-withSurcharge"
-        ],
-        "deployment_options": "MaaP",
-        "version": 1,
-        "maas_or_paygo": true
       }
     },
     {
@@ -12881,6 +13218,44 @@
     },
     {
       "provider": "voyage-ai",
+      "model_id": "voyage-code-4",
+      "display_name": "voyage-code-4 Embedding Model",
+      "context_window": 32000,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Embeddings",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "voyage-ai/voyage-code-4"
+      ],
+      "extra": {
+        "azure_offers": [
+          "VM",
+          "VM-withSurcharge"
+        ],
+        "deployment_options": "MaaP",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "Code embedding model built for coding agents and code search. 32K context length."
+      }
+    },
+    {
+      "provider": "voyage-ai",
       "model_id": "voyage-context-4",
       "display_name": "voyage-context-4 Embedding Model",
       "context_window": 32000,
@@ -13403,35 +13778,6 @@
         "pricing_match_key": "gpt-5.4",
         "long_context": true,
         "context_window": 1050000
-      },
-      "computer_use": {
-        "supported": true,
-        "native": true,
-        "provider": "azure-foundry",
-        "model": "gpt-5.4",
-        "api_type": "responses",
-        "tool_type": "computer",
-        "tool_version": "latest",
-        "status": "ga",
-        "environments": [
-          "browser",
-          "desktop"
-        ],
-        "actions": [
-          "screenshot",
-          "click",
-          "double_click",
-          "drag",
-          "move",
-          "scroll",
-          "keypress",
-          "type",
-          "wait"
-        ],
-        "requires_beta": false,
-        "enable_zoom": false,
-        "source_url": "https://developers.openai.com/api/docs/guides/tools-computer-use",
-        "checked_at": "2026-08-15"
       }
     },
     {
@@ -13605,54 +13951,25 @@
         "azure-foundry/gpt-5.6-luna"
       ],
       "pricing": {
-        "input_per_1m": 1.0,
-        "output_per_1m": 6.0,
+        "input_per_1m": 0.2,
+        "output_per_1m": 1.2,
         "currency": "USD",
-        "cached_input_per_1m": 0.1
+        "cached_input_per_1m": 0.02
       },
       "extra": {
         "pricing_data_zone": {
-          "cached_input_per_1m": 0.11,
-          "input_per_1m": 1.1,
-          "output_per_1m": 6.6,
+          "cached_input_per_1m": 0.03,
+          "input_per_1m": 0.22,
+          "output_per_1m": 1.32,
           "currency": "USD"
         },
         "pricing_long_context": {
-          "cached_input_per_1m": 0.2,
-          "input_per_1m": 2.0,
-          "output_per_1m": 9.0,
+          "cached_input_per_1m": 0.04,
+          "input_per_1m": 0.4,
+          "output_per_1m": 1.8,
           "currency": "USD"
         },
         "pricing_match_key": "gpt-5.6-luna"
-      },
-      "computer_use": {
-        "supported": true,
-        "native": true,
-        "provider": "azure-foundry",
-        "model": "gpt-5.6-luna",
-        "api_type": "responses",
-        "tool_type": "computer",
-        "tool_version": "latest",
-        "status": "ga",
-        "environments": [
-          "browser",
-          "desktop"
-        ],
-        "actions": [
-          "screenshot",
-          "click",
-          "double_click",
-          "drag",
-          "move",
-          "scroll",
-          "keypress",
-          "type",
-          "wait"
-        ],
-        "requires_beta": false,
-        "enable_zoom": false,
-        "source_url": "https://developers.openai.com/api/docs/guides/tools-computer-use",
-        "checked_at": "2026-08-15"
       }
     },
     {
@@ -13708,35 +14025,6 @@
           "currency": "USD"
         },
         "pricing_match_key": "gpt-5.6-sol"
-      },
-      "computer_use": {
-        "supported": true,
-        "native": true,
-        "provider": "azure-foundry",
-        "model": "gpt-5.6-sol",
-        "api_type": "responses",
-        "tool_type": "computer",
-        "tool_version": "latest",
-        "status": "ga",
-        "environments": [
-          "browser",
-          "desktop"
-        ],
-        "actions": [
-          "screenshot",
-          "click",
-          "double_click",
-          "drag",
-          "move",
-          "scroll",
-          "keypress",
-          "type",
-          "wait"
-        ],
-        "requires_beta": false,
-        "enable_zoom": false,
-        "source_url": "https://developers.openai.com/api/docs/guides/tools-computer-use",
-        "checked_at": "2026-08-15"
       }
     },
     {
@@ -13767,54 +14055,25 @@
         "azure-foundry/gpt-5.6-terra"
       ],
       "pricing": {
-        "input_per_1m": 2.5,
-        "output_per_1m": 15.0,
+        "input_per_1m": 2.0,
+        "output_per_1m": 12.0,
         "currency": "USD",
-        "cached_input_per_1m": 0.25
+        "cached_input_per_1m": 0.2
       },
       "extra": {
         "pricing_long_context": {
-          "cached_input_per_1m": 0.5,
-          "input_per_1m": 5.0,
-          "output_per_1m": 22.5,
+          "cached_input_per_1m": 0.4,
+          "input_per_1m": 4.0,
+          "output_per_1m": 18.0,
           "currency": "USD"
         },
         "pricing_priority": {
-          "cached_input_per_1m": 0.5,
-          "input_per_1m": 5.0,
-          "output_per_1m": 30.0,
+          "cached_input_per_1m": 0.4,
+          "input_per_1m": 4.0,
+          "output_per_1m": 24.0,
           "currency": "USD"
         },
         "pricing_match_key": "gpt-5.6-terra"
-      },
-      "computer_use": {
-        "supported": true,
-        "native": true,
-        "provider": "azure-foundry",
-        "model": "gpt-5.6-terra",
-        "api_type": "responses",
-        "tool_type": "computer",
-        "tool_version": "latest",
-        "status": "ga",
-        "environments": [
-          "browser",
-          "desktop"
-        ],
-        "actions": [
-          "screenshot",
-          "click",
-          "double_click",
-          "drag",
-          "move",
-          "scroll",
-          "keypress",
-          "type",
-          "wait"
-        ],
-        "requires_beta": false,
-        "enable_zoom": false,
-        "source_url": "https://developers.openai.com/api/docs/guides/tools-computer-use",
-        "checked_at": "2026-08-15"
       }
     },
     {
@@ -15490,40 +15749,7 @@
       "license_type": "open-source",
       "aliases": [
         "azure-foundry/claude-opus-5"
-      ],
-      "computer_use": {
-        "supported": true,
-        "native": true,
-        "provider": "azure-foundry",
-        "model": "claude-opus-5",
-        "api_type": "messages",
-        "tool_type": "computer_20251124",
-        "tool_version": "20251124",
-        "status": "beta",
-        "environments": [
-          "desktop"
-        ],
-        "actions": [
-          "screenshot",
-          "left_click",
-          "type",
-          "key",
-          "cursor_position",
-          "left_click_drag",
-          "right_click",
-          "middle_click",
-          "double_click",
-          "triple_click",
-          "scroll",
-          "wait",
-          "zoom"
-        ],
-        "requires_beta": true,
-        "enable_zoom": false,
-        "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-08-15",
-        "beta_header": "computer-use-2025-11-24"
-      }
+      ]
     },
     {
       "provider": "azure-foundry",
@@ -15579,40 +15805,7 @@
       "license_type": "open-source",
       "aliases": [
         "azure-foundry/claude-sonnet-5"
-      ],
-      "computer_use": {
-        "supported": true,
-        "native": true,
-        "provider": "azure-foundry",
-        "model": "claude-sonnet-5",
-        "api_type": "messages",
-        "tool_type": "computer_20251124",
-        "tool_version": "20251124",
-        "status": "beta",
-        "environments": [
-          "desktop"
-        ],
-        "actions": [
-          "screenshot",
-          "left_click",
-          "type",
-          "key",
-          "cursor_position",
-          "left_click_drag",
-          "right_click",
-          "middle_click",
-          "double_click",
-          "triple_click",
-          "scroll",
-          "wait",
-          "zoom"
-        ],
-        "requires_beta": true,
-        "enable_zoom": false,
-        "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-08-15",
-        "beta_header": "computer-use-2025-11-24"
-      }
+      ]
     },
     {
       "provider": "azure-foundry",
@@ -16842,46 +17035,6 @@
           "VM"
         ],
         "version": 3
-      }
-    },
-    {
-      "provider": "azureml",
-      "model_id": "projecte-aina-aguila-7b",
-      "display_name": "projecte-aina-aguila-7b",
-      "context_window": 4096,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": false,
-      "supports_function_calling": false,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": null,
-      "knowledge_cutoff": "",
-      "azure_type": "Text generation",
-      "azure_lifecycle": "Retired",
-      "source": "azure_foundry",
-      "supports_responses_api": false,
-      "license_type": "open-source",
-      "deprecated": true,
-      "aliases": [
-        "azureml/projecte-aina-aguila-7b"
-      ],
-      "extra": {
-        "deployment_types": [
-          "maap-inference"
-        ],
-        "azure_offers": [
-          "VM"
-        ],
-        "inference_retirement_date": "2026-09-15T00:00:00Z",
-        "inference_deprecation_date": "2026-07-15T00:00:00Z",
-        "version": 2
       }
     },
     {
@@ -18156,6 +18309,45 @@
     },
     {
       "provider": "foundry-local",
+      "model_id": "mistralai-Devstral-Small-2507",
+      "display_name": "mistralai-Devstral-Small-2507",
+      "context_window": 4096,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "mistralai-devstral-small-2507",
+        "foundry-local/mistralai-Devstral-Small-2507"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 4
+      }
+    },
+    {
+      "provider": "foundry-local",
       "model_id": "mistralai-Magistral-Small-2506",
       "display_name": "mistralai-Magistral-Small-2506",
       "context_window": 4096,
@@ -19116,45 +19308,6 @@
       "aliases": [
         "nvidia-nvidia-nemotron-3-nano-30b-a3b-nvfp4",
         "foundry-local/nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-NVFP4"
-      ],
-      "extra": {
-        "deployment_types": [
-          "maap-inference",
-          "batch-enabled"
-        ],
-        "azure_offers": [
-          "VM"
-        ],
-        "version": 1
-      }
-    },
-    {
-      "provider": "foundry-local",
-      "model_id": "nvidia-NVIDIA-Nemotron-3-Nano-4B-BF16",
-      "display_name": "nvidia-NVIDIA-Nemotron-3-Nano-4B-BF16",
-      "context_window": 4096,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_function_calling": false,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": null,
-      "knowledge_cutoff": "",
-      "azure_type": "Chat completion",
-      "azure_lifecycle": "GA",
-      "source": "azure_foundry",
-      "supports_responses_api": false,
-      "license_type": "open-source",
-      "aliases": [
-        "nvidia-nvidia-nemotron-3-nano-4b-bf16",
-        "foundry-local/nvidia-NVIDIA-Nemotron-3-Nano-4B-BF16"
       ],
       "extra": {
         "deployment_types": [
@@ -58903,36 +59056,6 @@
         ],
         "deployment_options": "MaaP",
         "version": 1
-      },
-      "computer_use": {
-        "supported": true,
-        "native": false,
-        "provider": "azure-foundry",
-        "model": "hcompany-holo1.5-3b",
-        "api_type": "custom_harness",
-        "tool_type": "holo_actions",
-        "tool_version": null,
-        "status": "preview",
-        "environments": [
-          "browser",
-          "desktop",
-          "mobile"
-        ],
-        "actions": [
-          "screenshot",
-          "click",
-          "double_click",
-          "drag",
-          "move",
-          "scroll",
-          "keypress",
-          "type",
-          "wait"
-        ],
-        "requires_beta": false,
-        "enable_zoom": false,
-        "source_url": "https://hcompany.ai/holo1-5-open-foundation-models-for-computer-use-agents",
-        "checked_at": "2026-08-15"
       }
     },
     {
@@ -58972,36 +59095,6 @@
         ],
         "deployment_options": "MaaP",
         "version": 1
-      },
-      "computer_use": {
-        "supported": true,
-        "native": false,
-        "provider": "azure-foundry",
-        "model": "hcompany-holo1.5-7b",
-        "api_type": "custom_harness",
-        "tool_type": "holo_actions",
-        "tool_version": null,
-        "status": "preview",
-        "environments": [
-          "browser",
-          "desktop",
-          "mobile"
-        ],
-        "actions": [
-          "screenshot",
-          "click",
-          "double_click",
-          "drag",
-          "move",
-          "scroll",
-          "keypress",
-          "type",
-          "wait"
-        ],
-        "requires_beta": false,
-        "enable_zoom": false,
-        "source_url": "https://hcompany.ai/holo1-5-open-foundation-models-for-computer-use-agents",
-        "checked_at": "2026-08-15"
       }
     },
     {
@@ -59041,36 +59134,6 @@
         ],
         "deployment_options": "MaaP",
         "version": 1
-      },
-      "computer_use": {
-        "supported": true,
-        "native": false,
-        "provider": "azure-foundry",
-        "model": "hcompany-holo2-4b",
-        "api_type": "custom_harness",
-        "tool_type": "holo_actions",
-        "tool_version": null,
-        "status": "preview",
-        "environments": [
-          "browser",
-          "desktop",
-          "mobile"
-        ],
-        "actions": [
-          "screenshot",
-          "click",
-          "double_click",
-          "drag",
-          "move",
-          "scroll",
-          "keypress",
-          "type",
-          "wait"
-        ],
-        "requires_beta": false,
-        "enable_zoom": false,
-        "source_url": "https://hcompany.ai/holo1-5-open-foundation-models-for-computer-use-agents",
-        "checked_at": "2026-08-15"
       }
     },
     {
@@ -59110,36 +59173,6 @@
         ],
         "deployment_options": "MaaP",
         "version": 1
-      },
-      "computer_use": {
-        "supported": true,
-        "native": false,
-        "provider": "azure-foundry",
-        "model": "hcompany-holo2-8b",
-        "api_type": "custom_harness",
-        "tool_type": "holo_actions",
-        "tool_version": null,
-        "status": "preview",
-        "environments": [
-          "browser",
-          "desktop",
-          "mobile"
-        ],
-        "actions": [
-          "screenshot",
-          "click",
-          "double_click",
-          "drag",
-          "move",
-          "scroll",
-          "keypress",
-          "type",
-          "wait"
-        ],
-        "requires_beta": false,
-        "enable_zoom": false,
-        "source_url": "https://hcompany.ai/holo1-5-open-foundation-models-for-computer-use-agents",
-        "checked_at": "2026-08-15"
       }
     },
     {
@@ -82735,34 +82768,6 @@
         ],
         "deployment_options": "MaaP",
         "version": 1
-      },
-      "computer_use": {
-        "supported": true,
-        "native": false,
-        "provider": "azure-foundry",
-        "model": "microsoft-fara-7b",
-        "api_type": "custom_harness",
-        "tool_type": "fara_actions",
-        "tool_version": null,
-        "status": "preview",
-        "environments": [
-          "browser"
-        ],
-        "actions": [
-          "screenshot",
-          "click",
-          "double_click",
-          "drag",
-          "move",
-          "scroll",
-          "keypress",
-          "type",
-          "wait"
-        ],
-        "requires_beta": false,
-        "enable_zoom": false,
-        "source_url": "https://www.microsoft.com/en-us/research/blog/fara-7b-an-efficient-agentic-model-for-computer-use/",
-        "checked_at": "2026-08-15"
       }
     },
     {
@@ -134451,6 +134456,45 @@
     },
     {
       "provider": "meta",
+      "model_id": "Llama-3.2-1B",
+      "display_name": "Llama-3.2-1B",
+      "context_window": 4096,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Text generation",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "llama-3.2-1b",
+        "meta/Llama-3.2-1B"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "deployment_options": "MaaP",
+        "version": 5
+      }
+    },
+    {
+      "provider": "meta",
       "model_id": "Llama-3.2-1B-Instruct",
       "display_name": "Llama-3.2-1B-Instruct",
       "context_window": 4096,
@@ -135466,6 +135510,46 @@
         "deployment_options": "MaaP",
         "version": 5,
         "summary": "Muse is a World and Human Action Model (WHAM), a generative model of gameplay (visuals and/or controller actions)."
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-4-mini-flash-reasoning",
+      "display_name": "Phi-4-mini-flash-reasoning",
+      "context_window": 32768,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "phi-4-mini-flash-reasoning",
+        "microsoft/Phi-4-mini-flash-reasoning"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "deployment_options": "MaaP",
+        "version": 1,
+        "summary": "State-of-the-art open-weight reasoning model."
       }
     },
     {
@@ -136826,6 +136910,42 @@
     },
     {
       "provider": "nvidia",
+      "model_id": "Mixtral-8x7B-Instruct-v0.1-NIM-microservice",
+      "display_name": "Mixtral-8x7B-Instruct-v0.1-NIM-microservice",
+      "context_window": 4096,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "mixtral-8x7b-instruct-v0.1-nim-microservice",
+        "nvidia/Mixtral-8x7B-Instruct-v0.1-NIM-microservice"
+      ],
+      "extra": {
+        "azure_offers": [
+          "VM-withSurcharge",
+          "VM"
+        ],
+        "version": 2
+      }
+    },
+    {
+      "provider": "nvidia",
       "model_id": "NVIDIA-Nemotron-Nano-12B-v2-VL-NIM-microservice",
       "display_name": "NVIDIA Nemotron Nano 12B v2 VL NIM microservice",
       "context_window": 4096,
@@ -137090,6 +137210,45 @@
           "VM"
         ],
         "version": 1
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Nemotron-3-8B-Chat-SteerLM",
+      "display_name": "Nemotron-3-8B-Chat-SteerLM",
+      "context_window": 4096,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Text generation",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "nemotron-3-8b-chat-steerlm",
+        "nvidia/Nemotron-3-8B-Chat-SteerLM"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 2
       }
     },
     {

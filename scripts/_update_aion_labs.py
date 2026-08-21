@@ -7,7 +7,7 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "aion-labs.json"
-INSTALLED = Path(r"F:\Python314\Lib\site-packages\llmcapa\data\aion-labs.json")
+INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "aion-labs.json"
 LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://www.aionlabs.ai/docs/models/"
 RULES = {

@@ -15,9 +15,9 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
-WORKDIR = Path(r"F:\KAIHATSU\llmcapa")
+WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "anthropic.json"
-INSTALLED = Path(r"F:\Python314\Lib\site-packages\llmcapa\data\anthropic.json")
+INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "anthropic.json"
 LOG = WORKDIR / "provider_update_log.md"
 SOURCE_OVERVIEW = "https://platform.claude.com/docs/en/about-claude/models/overview"
 SOURCE_PRICING = "https://platform.claude.com/docs/en/about-claude/pricing"

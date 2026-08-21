@@ -18,9 +18,9 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
-WORKDIR = Path(r"F:\KAIHATSU\llmcapa")
+WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "amazon.json"
-INSTALLED = Path(r"F:\Python314\Lib\site-packages\llmcapa\data\amazon.json")
+INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "amazon.json"
 LOG = WORKDIR / "provider_update_log.md"
 SOURCE_BEDROCK = "https://aws.amazon.com/bedrock/pricing/"
 SOURCE_NOVA = "https://aws.amazon.com/nova/pricing/"

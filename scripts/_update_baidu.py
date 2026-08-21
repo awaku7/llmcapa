@@ -7,7 +7,7 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "baidu.json"
-INSTALLED = Path(r"F:\Python314\Lib\site-packages\llmcapa\data\baidu.json")
+INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "baidu.json"
 LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://cloud.baidu.com/doc/qianfan/index.html"
 FEATURED = ["ERNIE 5.1", "ERNIE 5.0-正式版", "ERNIE 4.5 Turbo", "ERNIE 4.5 Turbo VL", "ERNIE X1 Turbo", "ERNIE X1.1", "PaddleOCR-VL", "PP-StructureV3"]

@@ -17,9 +17,9 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
-WORKDIR = Path(r"F:\KAIHATSU\llmcapa")
+WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "deepseek.json"
-INSTALLED = Path(r"F:\Python314\Lib\site-packages\llmcapa\data\deepseek.json")
+INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "deepseek.json"
 LOG = WORKDIR / "provider_update_log.md"
 SOURCE_PRICING = "https://api-docs.deepseek.com/quick_start/pricing/"
 SOURCE_UPDATES = "https://api-docs.deepseek.com/updates/"

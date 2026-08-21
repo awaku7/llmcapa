@@ -17,9 +17,9 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
-WORKDIR = Path(r"F:\KAIHATSU\llmcapa")
+WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "sakura.json"
-INSTALLED = Path(r"F:\Python314\Lib\site-packages\llmcapa\data\sakura.json")
+INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "sakura.json"
 LOG = WORKDIR / "provider_update_log.md"
 
 SRC = "https://ai.sakura.ad.jp/sakura-ai/ai-engine/"

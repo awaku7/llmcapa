@@ -132,3 +132,58 @@ def test_openrouter_cache(tmp_path, monkeypatch):
     # Since we modified the cache file to only have 1 model, only that model should be registered from OpenRouter
     # (along with other bundled models)
     assert reg3.get("x-ai/grok-build-0.1") is not None
+
+
+def test_structured_output_capabilities_are_independent_and_nullable():
+    unknown = Capability(provider="custom", model_id="unknown")
+    assert unknown.supports_json_mode is None
+    assert unknown.supports_json_schema is None
+    assert unknown.supports("json_schema") is None
+
+    json_only = Capability(
+        provider="deepseek",
+        model_id="json-only",
+        supports_json_mode=True,
+        supports_json_schema=False,
+    )
+    assert json_only.supports("json_mode") is True
+    assert json_only.supports("json_schema") is False
+    assert json_only.features() and "json_schema" not in json_only.features()
+
+    schema = Capability(
+        provider="openai",
+        model_id="schema-model",
+        supports_json_mode=True,
+        supports_json_schema=True,
+    )
+    assert schema.supports("json_schema") is True
+    assert "json_schema" in schema.features()
+
+
+def test_structured_output_lookup_is_provider_scoped():
+    llmcapa.register(Capability(
+        provider="structured-a",
+        model_id="same-model",
+        supports_json_mode=True,
+        supports_json_schema=True,
+    ))
+    llmcapa.register(Capability(
+        provider="structured-b",
+        model_id="same-model",
+        supports_json_mode=True,
+        supports_json_schema=False,
+    ))
+    assert llmcapa.supports_json_schema("same-model", "structured-a") is True
+    assert llmcapa.supports_json_schema("same-model", "structured-b") is False
+
+
+def test_capability_roundtrip_preserves_json_schema():
+    cap = Capability(
+        provider="test",
+        model_id="schema-roundtrip",
+        supports_json_mode=None,
+        supports_json_schema=True,
+    )
+    restored = Capability.from_dict(cap.to_dict())
+    assert restored.supports_json_mode is None
+    assert restored.supports_json_schema is True

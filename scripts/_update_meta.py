@@ -13,9 +13,9 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
-WORKDIR = Path(r"F:\KAIHATSU\llmcapa")
+WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "meta.json"
-INSTALLED_DIR = Path(r"F:\Python314\Lib\site-packages\llmcapa\data")
+INSTALLED_DIR = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data"
 LOG = WORKDIR / "provider_update_log.md"
 SOURCE_MODELS = "https://ai.developer.meta.com/docs/getting-started/models"
 SOURCE_PRICE = "https://ai.developer.meta.com/docs/getting-started/pricing-rate-limits"

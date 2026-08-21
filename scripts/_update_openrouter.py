@@ -21,9 +21,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-WORKDIR = Path(r"F:\KAIHATSU\llmcapa")
+WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "openrouter.json"
-INSTALLED = Path(r"F:\Python314\Lib\site-packages\llmcapa\data\openrouter.json")
+INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "openrouter.json"
 LOG = WORKDIR / "provider_update_log.md"
 SCRATCH = WORKDIR / "_scratch_openrouter_models.json"
 API_URL = "https://openrouter.ai/api/v1/models"

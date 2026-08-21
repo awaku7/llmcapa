@@ -1,5 +1,6 @@
 """Update openai.json with scraped data and update provider_update_log.md."""
 import json, re
+from pathlib import Path
 from datetime import date
 
 # ── Parsed OpenAI model data from scraped pages ──
@@ -565,7 +566,7 @@ SPECIALIZED_MODELS = {
 }
 
 # ── Read current openai.json ──
-path = r"F:\KAIHATSU\llmcapa\src\llmcapa\data\openai.json"
+path = str(Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "openai.json")
 with open(path, encoding="utf-8") as f:
     current = json.load(f)
 
@@ -639,13 +640,11 @@ with open(path, "w", encoding="utf-8") as f:
 
 print(f"openai.json: {len(updated)} models (flagship={len(FLAGSHIP_MODELS)}, specialized={len(SPECIALIZED_MODELS)}, deprecated preserved)", flush=True)
 
-# ── Copy to installed package ──
-import shutil
-shutil.copy2(path, r"F:\Python314\Lib\site-packages\llmcapa\data\openai.json")
-print("Installed package updated", flush=True)
+# The output path is already the repository catalog; no separate installed
+# package copy is performed by the portable updater.
 
 # ── Update provider_update_log.md ──
-log_path = r"F:\KAIHATSU\llmcapa\provider_update_log.md"
+log_path = str(Path(__file__).resolve().parents[1] / "provider_update_log.md")
 today = date.today().strftime("%Y-%m-%d")
 log_entry = f"""
 ## OpenAI ({today})

@@ -1,8 +1,9 @@
 """Update novita.json with official pricing from Novita website (Playwright)."""
 import json, os, re
+from pathlib import Path
 
-DATA = r"F:\KAIHATSU\llmcapa\src\llmcapa\data"
-INSTALLED = r"F:\Python314\Lib\site-packages\llmcapa\data"
+DATA = str(Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data")
+INSTALLED = str(Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data")
 
 # Novita official pricing (scraped from https://novita.ai/pricing)
 # Format: (model_id_substring, input_price, output_price)

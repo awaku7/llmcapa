@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import json
 import os
-import re
 import sys
 import urllib.request
 from pathlib import Path
@@ -12,16 +11,6 @@ from urllib.parse import quote
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "src" / "llmcapa" / "data"
 SNAPSHOT = ROOT / "_scratch_openrouter_models.json"
-
-# OpenRouter prefixes which are represented by an existing canonical catalog.
-CANONICAL_FILES = {
-    "anthropic": "anthropic.json", "deepseek": "deepseek.json", "google": "google.json",
-    "meta": "meta.json", "meta-llama": "meta.json", "mistralai": "mistral.json",
-    "qwen": "qwen.json", "x-ai": "xai.json", "openai": "openai.json",
-    "amazon": "amazon.json", "microsoft": "microsoft.json", "nvidia": "nvidia.json",
-    "novita": "novita.json", "moonshotai": "moonshot.json", "xiaomi": "xiaomi.json",
-    "sakana": "sakana.json",
-}
 
 # Known client-facing names used by uag and compatibility tests.
 ALIASES = {
@@ -54,6 +43,7 @@ def map_record(r: dict) -> dict:
         "output_modalities": arch.get("output_modalities") or ["text"],
         "supports_function_calling": bool({"tools", "function_calling"} & params),
         "supports_json_mode": bool({"response_format", "structured_outputs", "json_mode"} & params),
+        "supports_json_schema": True if "structured_outputs" in params else None,
         "supports_streaming": True,
         "supports_vision": "image" in (arch.get("input_modalities") or []),
         "supports_reasoning": bool({"reasoning", "include_reasoning"} & params),
@@ -155,31 +145,8 @@ def main() -> None:
             if web_record["id"] not in api_ids:
                 grouped[prefix].append(map_record(web_record))
 
-    # Add the latest snapshot to canonical files, retaining curated local records.
+    # Keep provider catalogs isolated; only the OpenRouter aggregate is refreshed.
     updates: dict[str, int] = {}
-    for prefix, entries in grouped.items():
-        filename = CANONICAL_FILES.get(prefix)
-        if filename is None:
-            filename = re.sub(r"[^A-Za-z0-9_.-]", "-", prefix) + ".json"
-        path = DATA_DIR / filename
-        if path.exists():
-            payload = json.loads(path.read_text(encoding="utf-8"))
-            existing = payload.get("models", payload if isinstance(payload, list) else [])
-        else:
-            existing = []
-        # Deduplicate case-insensitively because multiple OpenRouter prefixes
-        # can map to the same canonical file (for example meta/meta-llama).
-        by_id = {
-            e.get("model_id").lower(): e
-            for e in existing
-            if e.get("model_id")
-        }
-        for entry in entries:
-            # Prefer the latest snapshot for exact OpenRouter IDs.
-            by_id[entry["model_id"].lower()] = entry
-        merged = sorted(by_id.values(), key=lambda e: e["model_id"].lower())
-        path.write_text(json.dumps({"models": merged}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        updates[filename] = len(merged)
 
     # Keep the aggregate OpenRouter catalog in sync with the public frontend
     # catalog as well. This includes models visible on /models that are not
@@ -192,6 +159,11 @@ def main() -> None:
         for e in openrouter_existing
         if e.get("model_id")
     }
+    # The API snapshot is authoritative for exact IDs; frontend-only records
+    # are then added as a fallback.
+    for entries in grouped.values():
+        for entry in entries:
+            openrouter_by_id[entry["model_id"].lower()] = entry
     for web_record in load_web_models():
         entry = map_record(web_record)
         openrouter_by_id.setdefault(entry["model_id"].lower(), entry)
@@ -202,42 +174,6 @@ def main() -> None:
     )
     updates["openrouter.json"] = len(openrouter_merged)
 
-    # Add stable aliases for records which are not currently listed by OpenRouter.
-    meta_path = DATA_DIR / "meta.json"
-    meta = json.loads(meta_path.read_text(encoding="utf-8"))["models"]
-    meta.append({
-        "provider": "meta-llama", "model_id": "Llama-3.2-90B-Vision-Instruct",
-        "display_name": "Llama 3.2 90B Vision Instruct", "context_window": 128000,
-        "max_output_tokens": 4096, "input_modalities": ["text", "image"], "output_modalities": ["text"],
-        "supports_function_calling": False, "supports_json_mode": True, "supports_streaming": True,
-        "supports_vision": True, "supports_reasoning": False, "supports_chat_completion": True,
-        "supports_responses_api": True, "supports_reasoning_effort": False, "supports_thinking_budget": False,
-        "supports_anthropic_api": False, "supports_google_api": False, "supports_fim": False,
-        "tokenizer_name": "Llama3", "knowledge_cutoff": None, "deprecated": False,
-        "aliases": ["llama-3.2-90b-vision-instruct"], "license_type": "open",
-    })
-    # Ensure no duplicate manual entry on reruns.
-    seen = set()
-    meta = [e for e in meta if not (e.get("model_id") in seen or seen.add(e.get("model_id")))]
-    meta_path.write_text(json.dumps({"models": sorted(meta, key=lambda e: e["model_id"].lower())}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-
-    mistral_path = DATA_DIR / "mistral.json"
-    mistral = json.loads(mistral_path.read_text(encoding="utf-8"))["models"]
-    for model_id, display, ctx, vision, fc in [
-        ("Mistral-Large-3", "Mistral Large 3", 262144, True, True),
-        ("Ministral-3B", "Ministral 3B", 131072, False, True),
-    ]:
-        if not any(e.get("model_id") == model_id for e in mistral):
-            mistral.append({"provider": "mistral", "model_id": model_id, "display_name": display,
-                "context_window": ctx, "max_output_tokens": 4096, "input_modalities": ["text", "image"] if vision else ["text"],
-                "output_modalities": ["text"], "supports_function_calling": fc, "supports_json_mode": True,
-                "supports_streaming": True, "supports_vision": vision, "supports_reasoning": False,
-                "supports_chat_completion": True, "supports_responses_api": True, "supports_reasoning_effort": False,
-                "supports_thinking_budget": False, "supports_anthropic_api": False, "supports_google_api": False,
-                "supports_fim": False, "tokenizer_name": "Mistral", "knowledge_cutoff": None,
-                "deprecated": False, "aliases": [model_id.lower()], "license_type": "open"})
-    mistral_path.write_text(json.dumps({"models": sorted(mistral, key=lambda e: e["model_id"].lower())}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    updates["meta.json"] = len(meta); updates["mistral.json"] = len(mistral)
     print(json.dumps(updates, ensure_ascii=False, sort_keys=True))
 
 

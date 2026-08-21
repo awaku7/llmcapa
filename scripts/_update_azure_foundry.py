@@ -29,9 +29,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-WORKDIR = Path(r"F:\KAIHATSU\llmcapa")
+WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "azure_foundry.json"
-INSTALLED = Path(r"F:\Python314\Lib\site-packages\llmcapa\data\azure_foundry.json")
+INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "azure_foundry.json"
 LOG = WORKDIR / "provider_update_log.md"
 CATALOG = WORKDIR / "_scratch_azure_catalog_raw.json"
 PRICING = WORKDIR / "_scratch_azure_pricing_tables.json"

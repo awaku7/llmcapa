@@ -7,7 +7,7 @@ from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
-WORKDIR = Path(r"F:\KAIHATSU\llmcapa")
+WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "_scratch_mistral_scrape_full.json"
 OVERVIEW_OUT = WORKDIR / "_scratch_mistral_overview.json"
 # The documentation site currently redirects /models/overview to /models and

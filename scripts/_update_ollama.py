@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "ollama.json"
-INSTALLED = Path(r"F:/Python314/Lib/site-packages/llmcapa/data/ollama.json")
+INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "ollama.json"
 URL = "https://ollama.com/api/tags"
 
 

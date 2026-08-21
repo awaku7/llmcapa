@@ -12,7 +12,7 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "bytedance.json"
-INSTALLED = Path(r"F:\Python314\Lib\site-packages\llmcapa\data\bytedance.json")
+INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "bytedance.json"
 LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://docs.volcengine.com/docs/82379/1544106?lang=zh"
 

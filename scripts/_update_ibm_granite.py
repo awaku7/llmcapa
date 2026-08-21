@@ -12,7 +12,7 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "ibm-granite.json"
-INSTALLED = Path(r"F:\Python314\Lib\site-packages\llmcapa\data\ibm-granite.json")
+INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "ibm-granite.json"
 LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://www.ibm.com/granite/docs/models/granite"
 

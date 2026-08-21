@@ -12,10 +12,10 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
-WORKDIR = Path(r"F:\KAIHATSU\llmcapa")
+WORKDIR = Path(__file__).resolve().parents[1]
 LISTMODELS = WORKDIR / "_scratch_xai_listmodels_parsed.json"
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "xai.json"
-INSTALLED = Path(r"F:\Python314\Lib\site-packages\llmcapa\data\xai.json")
+INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "xai.json"
 LOG = WORKDIR / "provider_update_log.md"
 SOURCE = "https://docs.x.ai/developers/models"
 
@@ -423,8 +423,7 @@ def main() -> None:
     OUT.parent.mkdir(parents=True, exist_ok=True)
     payload = {"models": models}
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    if INSTALLED.parent.exists():
-        shutil.copy2(OUT, INSTALLED)
+    # The portable updater writes directly to the repository catalog.
 
     active = sum(1 for m in models if not m.get("deprecated"))
     deprecated = sum(1 for m in models if m.get("deprecated"))

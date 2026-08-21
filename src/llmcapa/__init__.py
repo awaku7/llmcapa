@@ -18,7 +18,7 @@ from .models import Capability, ComputerUseCapability, Feature, ReasoningEffort
 from .registry import Registry, ModelNotFoundError, default_registry
 from .tokenizer import count_tokens, count_messages_tokens
 
-__version__ = "0.5.9"
+__version__ = "0.5.10"
 
 __all__ = [
     "Capability",
@@ -37,6 +37,8 @@ __all__ = [
     "fetch_openrouter",
     "fetch_huggingface",
     "register",
+    "supports_json_mode",
+    "supports_json_schema",
     "supports_computer_use",
     "get_computer_use_capability",
     "supports_computer_action",
@@ -135,6 +137,20 @@ def fetch_huggingface(
 def register(cap: Capability) -> None:
     """Register (or override) a Capability in the default registry."""
     default_registry().register(cap)
+
+
+def supports_json_mode(model_id: str, provider: Optional[str] = None) -> Optional[bool]:
+    """Return JSON Object mode support for ``provider + model_id``.
+
+    ``None`` means that the catalog has no verified information; it is not
+    treated as equivalent to ``False``.
+    """
+    return get(model_id, provider).supports_json_mode
+
+
+def supports_json_schema(model_id: str, provider: Optional[str] = None) -> Optional[bool]:
+    """Return native JSON Schema support for ``provider + model_id``."""
+    return get(model_id, provider).supports_json_schema
 
 
 def get_computer_use_capability(

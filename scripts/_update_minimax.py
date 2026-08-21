@@ -13,9 +13,9 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
-WORKDIR = Path(r"F:\KAIHATSU\llmcapa")
+WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "minimax.json"
-INSTALLED = Path(r"F:\Python314\Lib\site-packages\llmcapa\data\minimax.json")
+INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "minimax.json"
 LOG = WORKDIR / "provider_update_log.md"
 SOURCE_PRICING = "https://platform.minimax.io/docs/guides/pricing-paygo"
 SOURCE_MODELS = "https://platform.minimax.io/docs/guides/models-intro"

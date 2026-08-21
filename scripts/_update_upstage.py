@@ -13,7 +13,7 @@ from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "upstage.json"
-INSTALLED = Path(r"F:\Python314\Lib\site-packages\llmcapa\data\upstage.json")
+INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "upstage.json"
 LOG = ROOT / "provider_update_log.md"
 
 RULES = {

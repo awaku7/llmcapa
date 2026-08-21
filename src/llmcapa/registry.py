@@ -217,7 +217,14 @@ class Registry:
             supports_responses_api=True,
             supports_reasoning=bool(r.get("reasoning")),
             supports_vision="image" in input_mods,
-            supports_json_mode="json_mode" in supported_params or "response_format" in supported_params,
+            supports_json_mode=(
+                "json_mode" in supported_params
+                or "response_format" in supported_params
+                or "structured_outputs" in supported_params
+            ),
+            supports_json_schema=(
+                True if "structured_outputs" in supported_params else None
+            ),
             supports_reasoning_effort="reasoning" in supported_params or "reasoning_effort" in supported_params,
             supports_thinking_budget="thinking" in supported_params or "thinking_budget" in supported_params,
             knowledge_cutoff=r.get("knowledge_cutoff"),

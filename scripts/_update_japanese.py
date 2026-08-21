@@ -25,9 +25,9 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
-WORKDIR = Path(r"F:\KAIHATSU\llmcapa")
+WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "japanese.json"
-INSTALLED = Path(r"F:\Python314\Lib\site-packages\llmcapa\data\japanese.json")
+INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "japanese.json"
 LOG = WORKDIR / "provider_update_log.md"
 
 # ---- canonical sources -------------------------------------------------

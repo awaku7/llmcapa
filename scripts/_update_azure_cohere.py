@@ -1,8 +1,9 @@
 """Update azure_foundry.json with official Azure pricing and add Cohere pricing."""
 import json, os, shutil
+from pathlib import Path
 
-DATA = r"F:\KAIHATSU\llmcapa\src\llmcapa\data"
-INSTALLED = r"F:\Python314\Lib\site-packages\llmcapa\data"
+DATA = str(Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data")
+INSTALLED = str(Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data")
 
 # 1. Azure OpenAI official pricing (from azure.microsoft.com)
 AZURE_PRICES = {

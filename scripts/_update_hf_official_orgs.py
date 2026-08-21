@@ -13,7 +13,7 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data"
-INSTALLED = Path(r"F:\Python314\Lib\site-packages\llmcapa\data")
+INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data"
 LOG = ROOT / "provider_update_log.md"
 ORGS = {
     "anthracite-org": "anthracite-org", "cognitivecomputations": "cognitivecomputations",

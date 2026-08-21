@@ -128,7 +128,9 @@ class Capability:
     input_modalities: List[str] = field(default_factory=lambda: ["text"])
     output_modalities: List[str] = field(default_factory=lambda: ["text"])
     supports_function_calling: bool = False
-    supports_json_mode: bool = False
+    # ``None`` means that the capability is unknown. JSON object mode and
+    # JSON Schema support are intentionally tracked independently.
+    supports_json_mode: Optional[bool] = None
     supports_streaming: bool = True
     supports_vision: bool = False
     supports_reasoning: bool = False
@@ -152,12 +154,14 @@ class Capability:
     supports_realtime: bool = False
     # Appended after all existing fields for positional compatibility.
     computer_use: Optional[ComputerUseCapability] = None
+    # Appended after all existing fields for positional compatibility.
+    supports_json_schema: Optional[bool] = None
 
-    def supports(self, feature: Feature | str) -> bool:
+    def supports(self, feature: Feature | str) -> Optional[bool]:
         """Return True if the model supports the given feature.
 
         Accepts short names such as "vision", "json_mode",
-        "function_calling", "streaming", "reasoning",
+        "function_calling", "json_schema", "streaming", "reasoning",
         "chat_completion", "responses_api", "multimodal",
         "reasoning_effort", "thinking_budget", "fim",
         or a modality such as "image", "audio", "video", "embedding", or
@@ -181,12 +185,13 @@ class Capability:
         cache[feature_str] = res
         return res
 
-    def _eval_supports(self, feature: str) -> bool:
+    def _eval_supports(self, feature: str) -> Optional[bool]:
         if feature == "computer_use":
             return bool(self.computer_use and self.computer_use.supported)
         attr = f"supports_{feature}"
         if hasattr(self, attr):
-            return bool(getattr(self, attr))
+            value = getattr(self, attr)
+            return value if value is None or isinstance(value, bool) else bool(value)
         if feature == "file_input":
             # PDF and other document subtypes are file inputs.
             return "file" in self.input_modalities or "pdf" in self.input_modalities
@@ -207,7 +212,7 @@ class Capability:
     def features(self) -> List[str]:
         """Return a sorted list of all standard and custom features supported by this model."""
         standard_features = [
-            "vision", "function_calling", "json_mode", "streaming",
+            "vision", "function_calling", "json_mode", "json_schema", "streaming",
             "reasoning", "chat_completion", "responses_api",
             "reasoning_effort", "thinking_budget", "fim", "realtime",
             "file_input", "speech_input", "speech_output", "embedding_output",
@@ -233,7 +238,7 @@ class Capability:
         # Filter unique and supported features
         supported = set()
         for f in standard_features:
-            if self.supports(f):
+            if self.supports(f) is True:
                 supported.add(f)
         return sorted(list(supported))
 
@@ -384,7 +389,7 @@ class Capability:
         if required_features is None:
             # Check all standard features supported by this model
             features_to_check = [
-                "vision", "function_calling", "json_mode", "streaming",
+                "vision", "function_calling", "json_mode", "json_schema", "streaming",
                 "reasoning", "chat_completion", "responses_api",
                 "reasoning_effort", "thinking_budget", "fim", "realtime", "image_output",
                 "audio_output", "video_output"
@@ -475,6 +480,8 @@ class Capability:
             d.pop("reasoning_effort_values", None)
         if d.get("thinking_budget_values") is None:
             d.pop("thinking_budget_values", None)
+        if self.supports_json_schema is None:
+            d.pop("supports_json_schema", None)
         if self.computer_use is None:
             d.pop("computer_use", None)
         else:

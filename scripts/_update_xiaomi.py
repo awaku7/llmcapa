@@ -13,9 +13,9 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
-WORKDIR = Path(r"F:\KAIHATSU\llmcapa")
+WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "xiaomi.json"
-INSTALLED_DIR = Path(r"F:\Python314\Lib\site-packages\llmcapa\data")
+INSTALLED_DIR = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data"
 LOG = WORKDIR / "provider_update_log.md"
 SOURCE_PRICE = "https://mimo.mi.com/docs/en-US/price/pay-as-you-go"
 SOURCE_MODELS = "https://mimo.mi.com/docs/en-US/quick-start/summary/model"
