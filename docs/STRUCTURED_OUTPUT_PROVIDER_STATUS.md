@@ -27,10 +27,13 @@ python scripts/_update_structured_output_providers.py --insecure
 | ByteDance Seed | 6 | 8 | Volcengine Ark Chat API の `response_format` / `json_schema` |
 | llama.cpp | 1,634 | 1,634 | LM Studio OpenAI 互換 Structured Output API。モデル単位の実装は実行環境依存 |
 | LM Studio | 105 | 105 | `/v1/chat/completions` の `response_format.type=json_schema` |
+| Morph | 10 | 12 | Fast Modelsの公式カタログ。Fast Applyの`morph-v3-*`は別カテゴリ |
 | Ollama | 1,653 | 1,653 | ローカル Ollama API の `format` JSON Schema 対応。Ollama Cloud は非対応 |
 | OpenRouter | 346 | 563 | API の `supported_parameters` に `structured_outputs` があるモデル |
 | Perplexity | 5 | 7 | Sonar API の `response_format` / `json_schema` |
 | Sakana AI | 5 | 5 | Chat Completions / Responses API の `json_object` / `json_schema` |
+| Inception | 1 | 1 | Mercury 2 Chat Completions の `response_format.type=json_schema` |
+| Writer | 1 | 1 | Palmyra X4/X5 Chat API の `response_format.json_schema` |
 
 ## JSON Mode は確認済みだが JSON Schema は未確定
 
@@ -72,18 +75,28 @@ Vercel AI SDK / AI Gateway の公式ドキュメントで以下を確認済み:
 - AllenAI
 - Arcee AI
 - CognitiveComputations
-- Inception
-- Morph
 - NousResearch
 - Poolside
 - Relace
 - Thinking Machines
-- Writer
 - Mancer
 - Nex-AGI
 - Perceptron
 - Undi95
 - Hugging Face 集約カタログ
+
+### 追加確認した公式サイト
+
+以下の公式サイトは到達確認済み。ただし、今回の確認ではモデル出力APIのJSON Schema対応を明記した根拠がないため、フラグは変更していない。
+
+| プロバイダー | 公式URL | 確認結果 |
+|---|---|---|
+| AI21 | https://docs.ai21.com/docs/overview | Jamba APIモデル（`jamba-large` / `jamba-mini`等）を追加。`json_object`のみ、JSON Schemaは未確認 |
+| Arcee AI | https://docs.arcee.ai/ | API公開モデル`trinity-mini` / `trinity-large-preview`を追加。Structured Outputsは`json_object`のみ |
+| AllenAI | https://docs.allenai.org/ | モデル・データセット文書。推論APIのJSON Schemaは未確認 |
+| Poolside | https://docs.poolside.ai/ | `laguna-m-1`を追加。API例はChat Completions・Tools等で、`response_format` / JSON Schemaは未確認 |
+| Relace | https://docs.relace.ai/docs/introduction | OpenAPIはKimi K3限定の `json_object`。JSON Schemaは未確認 |
+| Thinking Machines | https://thinkingmachines.ai/ | 企業・研究情報。公開APIのJSON Schema仕様は未確認 |
 
 ### AI21 の補足
 
