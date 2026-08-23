@@ -6,9 +6,10 @@ Sources (Playwright):
 - https://api-docs.deepseek.com/guides/thinking_mode/
 - _scratch_deepseek_pricing_live.html
 
-Active API models (2026-04-24+): deepseek-v4-flash, deepseek-v4-pro.
-Legacy deepseek-chat / deepseek-reasoner map to v4-flash non-thinking /
-thinking until 2026-07-24 15:59 UTC, then discontinued.
+Active API models (2026-08-21): deepseek-v4-flash,
+deepseek-v4-pro, and deepseek-v4-flash-vision-exp.
+Legacy deepseek-chat / deepseek-reasoner are historical aliases; DeepSeek
+discontinued them after 2026-07-24 15:59 UTC.
 """
 from __future__ import annotations
 
@@ -47,6 +48,9 @@ def base(
     json_mode: bool = True,
     anthropic_api: bool = True,
     responses_api: bool = False,
+    input_modalities: list[str] | None = None,
+    output_modalities: list[str] | None = None,
+    vision: bool = False,
 ) -> dict:
     aliases = list(aliases or [])
     or_id = f"deepseek/{model_id}"
@@ -59,12 +63,12 @@ def base(
         "display_name": display,
         "context_window": ctx,
         "max_output_tokens": max_out,
-        "input_modalities": ["text"],
-        "output_modalities": ["text"],
+        "input_modalities": input_modalities or ["text"],
+        "output_modalities": output_modalities or ["text"],
         "supports_function_calling": function_calling,
         "supports_json_mode": json_mode,
         "supports_streaming": True,
-        "supports_vision": False,
+        "supports_vision": vision,
         "supports_reasoning": reasoning,
         "supports_chat_completion": True,
         "supports_responses_api": responses_api,
@@ -138,16 +142,18 @@ def build() -> list[dict]:
             display="DeepSeek V4 Flash",
             ctx=1_048_576,
             max_out=393_216,  # 384K
-            pricing={"input": 0.14, "output": 0.28},
+            pricing={"input": 0.44, "output": 1.32},
             extra=cache_extra(
-                0.0028,
+                0.014,
                 concurrency=2500,
                 notes={
-                    "model_version": "DeepSeek-V4-Flash",
+                    "model_version": "DeepSeek-V4-Flash-0731",
+                    "pricing_period": "peak",
+                    "off_peak": {"input": 0.22, "output": 0.66, "cache_hit": 0.007},
                     "thinking_default": "enabled",
                     "thinking_toggle": {"type": "enabled|disabled"},
-                    "reasoning_effort": ["high", "max"],
-                    "legacy_aliases_until": "2026-07-24T15:59:00Z",
+                    "reasoning_effort": ["low", "high", "max"],
+                    "legacy_aliases_discontinued": "2026-07-24T15:59:00Z",
                     "legacy_map": {
                         "deepseek-chat": "non-thinking mode of deepseek-v4-flash",
                         "deepseek-reasoner": "thinking mode of deepseek-v4-flash",
@@ -165,7 +171,7 @@ def build() -> list[dict]:
             knowledge_cutoff="2025-12",
             reasoning=True,
             effort=True,
-            effort_values=["high", "max"],
+            effort_values=["low", "high", "max"],
             fim=True,
             responses_api=True,
         )
@@ -176,15 +182,17 @@ def build() -> list[dict]:
             display="DeepSeek V4 Pro",
             ctx=1_048_576,
             max_out=393_216,
-            pricing={"input": 0.435, "output": 0.87},
+            pricing={"input": 1.32, "output": 3.96},
             extra=cache_extra(
-                0.003625,
+                0.044,
                 concurrency=500,
                 notes={
-                    "model_version": "DeepSeek-V4-Pro",
+                    "model_version": "DeepSeek-V4-Pro-0813",
+                    "pricing_period": "peak",
+                    "off_peak": {"input": 0.66, "output": 1.98, "cache_hit": 0.022},
                     "thinking_default": "enabled",
                     "thinking_toggle": {"type": "enabled|disabled"},
-                    "reasoning_effort": ["high", "max"],
+                    "reasoning_effort": ["low", "high", "max"],
                 },
             ),
             aliases=[
@@ -194,12 +202,44 @@ def build() -> list[dict]:
             knowledge_cutoff="2025-12",
             reasoning=True,
             effort=True,
-            effort_values=["high", "max"],
+            effort_values=["low", "high", "max"],
             fim=True,
+            responses_api=True,
         )
     )
 
     # =====================================================================
+    # Experimental multimodal API (2026-08-21)
+    # =====================================================================
+    models.append(
+        base(
+            model_id="deepseek-v4-flash-vision-exp",
+            display="DeepSeek V4 Flash Vision Exp",
+            ctx=1_048_576,
+            max_out=393_216,
+            pricing={"input": 0.44, "output": 1.32},
+            extra=cache_extra(
+                0.014,
+                concurrency=2500,
+                notes={
+                    "model_version": "DeepSeek-V4-Flash-Vision-Exp",
+                    "pricing_period": "peak",
+                    "off_peak": {"input": 0.22, "output": 0.66, "cache_hit": 0.007},
+                    "experimental": True,
+                },
+            ),
+            aliases=["deepseek/deepseek-v4-flash-vision-exp"],
+            knowledge_cutoff="2025-12",
+            reasoning=True,
+            effort=True,
+            effort_values=["low", "high", "max"],
+            input_modalities=["text", "image"],
+            vision=True,
+            responses_api=True,
+            fim=False,
+        )
+    )
+
     # Historical API generations (deprecated; last known public rates)
     # =====================================================================
     models.append(
@@ -430,7 +470,7 @@ def main() -> None:
     OUT.write_text(
         json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
-    if INSTALLED.parent.exists():
+    if INSTALLED.parent.exists() and OUT.resolve() != INSTALLED.resolve():
         shutil.copy2(OUT, INSTALLED)
 
     active = sum(1 for m in models if not m.get("deprecated"))
@@ -474,9 +514,9 @@ def main() -> None:
         f"### Result\n"
         f"- deepseek.json: **{len(models)}** models "
         f"(active={active}, deprecated={deprecated}, priced={priced})\n"
-        f"- Active: V4 Flash $0.14/$0.28 (cache hit $0.0028); "
-        f"V4 Pro $0.435/$0.87 (cache hit $0.003625); 1M ctx / 384K max out\n"
-        f"- Legacy deepseek-chat/reasoner → v4-flash until 2026-07-24\n"
+        f"- Active: V4 Flash $0.44/$1.32 peak (cache hit $0.014), "
+        f"V4 Pro $1.32/$3.96 peak (cache hit $0.044), V4 Flash Vision Exp $0.44/$1.32 peak; 1M ctx / 384K max out\n"
+        f"- Legacy deepseek-chat/reasoner discontinued 2026-07-24; aliases retained for compatibility\n"
         f"- Historical V3.x/R1 kept as deprecated; distill open-weight unpriced\n"
         f"- Removed Azure/NPU catalog pollution from deepseek provider\n"
         f"- Install copy synced\n"

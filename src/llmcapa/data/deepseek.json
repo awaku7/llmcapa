@@ -37,11 +37,12 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.14,
-        "output_per_1m": 0.28,
+        "input_per_1m": 0.44,
+        "output_per_1m": 1.32,
         "currency": "USD"
       },
       "reasoning_effort_values": [
+        "low",
         "high",
         "max"
       ],
@@ -51,7 +52,7 @@
         "thinking_mode": "https://api-docs.deepseek.com/guides/thinking_mode/",
         "base_url": "https://api.deepseek.com",
         "base_url_anthropic": "https://api.deepseek.com/anthropic",
-        "cache_hit_per_1m": 0.0028,
+        "cache_hit_per_1m": 0.014,
         "cache_miss_note": "primary pricing.input_per_1m is cache-miss rate",
         "features": [
           "json_output",
@@ -62,16 +63,23 @@
           "anthropic_api"
         ],
         "concurrency_limit": 2500,
-        "model_version": "DeepSeek-V4-Flash",
+        "model_version": "DeepSeek-V4-Flash-0731",
+        "pricing_period": "peak",
+        "off_peak": {
+          "input": 0.22,
+          "output": 0.66,
+          "cache_hit": 0.007
+        },
         "thinking_default": "enabled",
         "thinking_toggle": {
           "type": "enabled|disabled"
         },
         "reasoning_effort": [
+          "low",
           "high",
           "max"
         ],
-        "legacy_aliases_until": "2026-07-24T15:59:00Z",
+        "legacy_aliases_discontinued": "2026-07-24T15:59:00Z",
         "legacy_map": {
           "deepseek-chat": "non-thinking mode of deepseek-v4-flash",
           "deepseek-reasoner": "thinking mode of deepseek-v4-flash"
@@ -96,7 +104,7 @@
       "supports_vision": false,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": true,
       "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": true,
@@ -111,11 +119,12 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.435,
-        "output_per_1m": 0.87,
+        "input_per_1m": 1.32,
+        "output_per_1m": 3.96,
         "currency": "USD"
       },
       "reasoning_effort_values": [
+        "low",
         "high",
         "max"
       ],
@@ -125,7 +134,7 @@
         "thinking_mode": "https://api-docs.deepseek.com/guides/thinking_mode/",
         "base_url": "https://api.deepseek.com",
         "base_url_anthropic": "https://api.deepseek.com/anthropic",
-        "cache_hit_per_1m": 0.003625,
+        "cache_hit_per_1m": 0.044,
         "cache_miss_note": "primary pricing.input_per_1m is cache-miss rate",
         "features": [
           "json_output",
@@ -136,15 +145,91 @@
           "anthropic_api"
         ],
         "concurrency_limit": 500,
-        "model_version": "DeepSeek-V4-Pro",
+        "model_version": "DeepSeek-V4-Pro-0813",
+        "pricing_period": "peak",
+        "off_peak": {
+          "input": 0.66,
+          "output": 1.98,
+          "cache_hit": 0.022
+        },
         "thinking_default": "enabled",
         "thinking_toggle": {
           "type": "enabled|disabled"
         },
         "reasoning_effort": [
+          "low",
           "high",
           "max"
         ]
+      }
+    },
+    {
+      "provider": "deepseek",
+      "model_id": "deepseek-v4-flash-vision-exp",
+      "display_name": "DeepSeek V4 Flash Vision Exp",
+      "context_window": 1048576,
+      "max_output_tokens": 393216,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-12",
+      "deprecated": false,
+      "aliases": [
+        "deepseek/deepseek-v4-flash-vision-exp"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.44,
+        "output_per_1m": 1.32,
+        "currency": "USD"
+      },
+      "reasoning_effort_values": [
+        "low",
+        "high",
+        "max"
+      ],
+      "extra": {
+        "source": "https://api-docs.deepseek.com/quick_start/pricing/",
+        "updates": "https://api-docs.deepseek.com/updates/",
+        "thinking_mode": "https://api-docs.deepseek.com/guides/thinking_mode/",
+        "base_url": "https://api.deepseek.com",
+        "base_url_anthropic": "https://api.deepseek.com/anthropic",
+        "cache_hit_per_1m": 0.014,
+        "cache_miss_note": "primary pricing.input_per_1m is cache-miss rate",
+        "features": [
+          "json_output",
+          "tool_calls",
+          "chat_prefix_completion_beta",
+          "fim_completion_beta_non_thinking_only",
+          "thinking_mode_toggle",
+          "anthropic_api"
+        ],
+        "concurrency_limit": 2500,
+        "model_version": "DeepSeek-V4-Flash-Vision-Exp",
+        "pricing_period": "peak",
+        "off_peak": {
+          "input": 0.22,
+          "output": 0.66,
+          "cache_hit": 0.007
+        },
+        "experimental": true
       }
     },
     {

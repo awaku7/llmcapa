@@ -367,7 +367,8 @@ def main() -> None:
         encoding="utf-8",
     )
     if INSTALLED_DIR.exists():
-        shutil.copy2(OUT, INSTALLED_DIR / OUT.name)
+        if OUT.resolve() != (INSTALLED_DIR / OUT.name).resolve():
+            shutil.copy2(OUT, INSTALLED_DIR / OUT.name)
 
     active = sum(1 for m in models if not m.get("deprecated"))
     priced = sum(

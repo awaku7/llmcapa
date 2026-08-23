@@ -69,6 +69,7 @@ with open(path, "w", encoding="utf-8") as f:
 
 # Copy to installed
 import shutil
-shutil.copy2(path, os.path.join(INSTALLED, "novita.json"))
+if os.path.abspath(path) != os.path.abspath(os.path.join(INSTALLED, "novita.json")):
+    shutil.copy2(path, os.path.join(INSTALLED, "novita.json"))
 
 print(f"novita.json: {updated} models updated with official pricing", flush=True)

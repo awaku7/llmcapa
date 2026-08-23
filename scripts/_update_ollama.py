@@ -57,7 +57,7 @@ def main() -> None:
             models[name] = entry(raw, models.get(name))
     result = {"models": sorted(models.values(), key=lambda m: m.get("model_id", "").lower())}
     DATA.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    if INSTALLED.parent.exists():
+    if INSTALLED.parent.exists() and DATA.resolve() != INSTALLED.resolve():
         shutil.copy2(DATA, INSTALLED)
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     log = ROOT / "provider_update_log.md"

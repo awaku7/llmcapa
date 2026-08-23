@@ -2521,3 +2521,117 @@
 - undi95: official_source_reachable=True, result=1
 - llama_cpp: official_source_reachable=True, result=1634
 - lmstudio: official_source_reachable=True, result=105
+
+## DeepSeek refresh (2026-08-23)
+
+### Source
+- Pricing: https://api-docs.deepseek.com/quick_start/pricing/
+- Change log: https://api-docs.deepseek.com/updates/
+- Thinking mode: https://api-docs.deepseek.com/guides/thinking_mode/
+- Scratch: `_scratch_deepseek_pricing_live.html`
+- Apply: `scripts/_update_deepseek.py`
+
+### Result
+- deepseek.json: **10** models (active=4, deprecated=6, priced=9)
+- Active: V4 Flash $0.44/$1.32 peak (cache hit $0.014), V4 Pro $1.32/$3.96 peak (cache hit $0.044), V4 Flash Vision Exp $0.44/$1.32 peak; 1M ctx / 384K max out
+- Legacy deepseek-chat/reasoner discontinued 2026-07-24; aliases retained for compatibility
+- Historical V3.x/R1 kept as deprecated; distill open-weight unpriced
+- Removed Azure/NPU catalog pollution from deepseek provider
+- Install copy synced
+
+## OpenRouter refresh (2026-08-23)
+
+### Source
+- API: `https://openrouter.ai/api/v1/models` (live → `_scratch_openrouter_models.json`)
+- Docs: https://openrouter.ai/docs
+- Apply: `scripts/_update_openrouter.py`
+
+### Result
+- openrouter.json: **422** models (active=422, deprecated=0, priced=395, free=22, dynamic=5, extra=422)
+- vision=250, reasoning=292, tools=352, cache_pricing=250
+- native providers: 53 (top: [('openai', 93), ('qwen', 51), ('google', 41), ('anthropic', 28), ('mistralai', 19), ('z-ai', 15), ('deepseek', 14), ('nvidia', 13), ('minimax', 9), ('meta-llama', 8)])
+- Pricing: API per-token ×1e6 → USD/1M; router prompt=-1 → catalog -1000000.0
+- Cache: input_cache_read/write(/1h) in extra when present
+- Synthetic `~*/…-latest` aliases retained (9)
+- Replaced thin 14-model placeholder catalog
+- Install copy synced
+
+## azure_foundry — 2026-08-23 04:03 UTC
+
+- Catalog: chat-completion filter via Playwright paginate (`_scratch_azure_catalog_raw.json`, n=3517 unique names=3517)
+- Pricing: AOAI + Foundry partner pages (`_scratch_azure_pricing_tables.json`), price_keys=134
+- Output: n=3517 priced=111 maas_or_paygo=305 extra=3497
+- Providers (top): huggingface=3003, foundry-local=92, microsoft=73, azure-foundry=51, azure-openai=49, nvidia=35, meta=34, fireworks=33, azureml=27, mistral=17, voyage-ai=9, cohere=6
+- Sources: https://ai.azure.com/catalog/models ; https://azure.microsoft.com/en-us/pricing/details/azure-openai/ ; https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/*
+- Script: `scripts/_update_azure_foundry.py` (+ `scripts/_scrape_azure_foundry_full.py`)
+- Installed copy: `F:\KAIHATSU\llmcapa\src\llmcapa\data\azure_foundry.json`
+
+## NVIDIA NIM refresh (2026-08-23)
+
+### Source
+- Catalog: https://build.nvidia.com/models
+- Model pages: nemotron-3-ultra / super / nano (Playwright live)
+- Docs: https://docs.api.nvidia.com/nim/reference/llm-apis
+- Apply: `scripts/_update_nvidia.py`
+
+### Result
+- nvidia.json: **74** models (active=74, priced=21)
+- **nemotron-3-ultra-550b-a55b**: $0.50/$2.20 (Deep Infra); partners $0.41–$0.90 in
+- **nemotron-3-super-120b-a12b**: $0.20/$0.80 (Bitdeer/CoreWeave)
+- **nemotron-3-nano-30b-a3b**: $0.05/$0.20
+- Free endpoint twins synced; omni / embed / cosmos3-nano* added
+- Free NVIDIA trial endpoints remain available for evaluation
+- Install copy synced
+- Changes: updated:nvidia/nemotron-3-ultra-550b-a55b, updated:nvidia/nemotron-3-super-120b-a12b, updated:nvidia/nemotron-3-nano-30b-a3b, updated:nvidia/nemotron-3-nano-omni-30b-a3b-reasoning, updated:nvidia/nemotron-3-embed-1b, updated:nvidia/nemotron-3.5-content-safety, updated:nvidia/cosmos3-nano, updated:nvidia/cosmos3-nano-reasoner, synced_free:nvidia/nemotron-3-ultra-550b-a55b:free, synced_free:nvidia/nemotron-3-super-120b-a12b:free, synced_free:nvidia/nemotron-3-nano-30b-a3b:free
+
+## Ollama refresh (2026-08-23)
+
+- Source: https://ollama.com/api/tags
+- Live tags merged: 19
+- Historical bundled entries preserved: 1653
+
+## OpenAI (2026-08-23)
+
+### Source
+- Official OpenAI API Documentation: https://developers.openai.com/api/docs/models
+- Pricing page: https://developers.openai.com/api/docs/pricing
+- Method: Playwright (headless browser) for JavaScript-rendered pages
+
+### Models Updated
+155 models total
+
+### Changes
+- Flagship: GPT-5.6 Sol/Terra/Luna, GPT-5.5(+Pro), GPT-5.4(+Mini/Nano/Pro)
+- Image: gpt-image-2 / 1.5 / 1-mini / 1, chatgpt-image-latest (token pricing + batch)
+- Video: sora-2 ($0.10/s 720p), sora-2-pro ($0.30–$0.70/s)
+- Realtime: 2.1/mini modality rates; translate $0.034/min; whisper $0.017/min
+- Audio: gpt-audio-1.5 / mini; transcribe + diarize
+- Specialized: chat-latest, gpt-5.4-cyber, gpt-5.5-cyber ($12.5/$75)
+- Embeddings + omni-moderation-latest (free)
+- Preserved legacy openai/* OpenRouter-style aliases from prior catalog
+
+## Google refresh (2026-08-23)
+
+### Source
+- Pricing: https://ai.google.dev/gemini-api/docs/pricing
+- Apply: `scripts/_update_google.py`
+
+### Result
+- google.json: **92** models (active=86, token-priced=70)
+- Inserted: gemini-3.7-flash, gemini-3.5-flash-lite, gemini-3.5-live-translate-preview, gemini-omni-flash-preview, gemini-3.1-flash-tts-preview
+- Lyria-3 clip/pro: $0.04 / $0.08 per song (extra)
+- Deprecations: gemini-2.0-flash* shut 2026-06-01; Imagen 4 2026-08-17; Veo 3/2 2026-06-30
+- Install copy synced
+
+## Anthropic refresh (2026-08-23)
+
+### Source
+- Overview + pricing Playwright: `_scratch_anthropic_overview_live3.html`, `_scratch_anthropic_pricing_live3.html`
+- Docs: https://platform.claude.com/docs/en/about-claude/models/overview / https://platform.claude.com/docs/en/about-claude/pricing
+- Apply: `scripts/_update_anthropic.py`
+
+### Result
+- anthropic.json: **17** models (active=10, deprecated=7, priced=17)
+- New: Fable 5 / Mythos 5 $10/$50; Opus 4.8 $5/$25; Sonnet 5 intro $2/$10→$3/$15; Haiku 4.5 $1/$5
+- Cache pricing (5m/1h/hit) + batch in extra; OpenRouter aliases deduped
+- Install copy synced

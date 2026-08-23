@@ -1140,7 +1140,8 @@ def main() -> None:
     text = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
     OUT.write_text(text, encoding="utf-8")
     INSTALLED.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(OUT, INSTALLED)
+    if OUT.resolve() != INSTALLED.resolve():
+        shutil.copy2(OUT, INSTALLED)
 
     # stats
     from collections import Counter
