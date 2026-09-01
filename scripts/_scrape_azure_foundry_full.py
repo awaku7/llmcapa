@@ -15,6 +15,12 @@ import re
 import sys
 from pathlib import Path
 
+# Windows consoles may default to CP932; scraper diagnostics can contain Unicode.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="backslashreplace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="backslashreplace")
+
 try:
     from playwright.async_api import async_playwright
 except ImportError:

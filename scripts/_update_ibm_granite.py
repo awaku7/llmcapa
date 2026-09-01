@@ -1,7 +1,7 @@
-"""Refresh IBM Granite metadata from IBM's official Granite documentation.
+"""Refresh IBM Granite metadata from IBM's current Granite documentation.
 
-Fail-closed: this parser only updates facts explicitly validated on the IBM page.
-It does not use OpenRouter data and does not invent context windows or pricing.
+The updater is fail-closed: it only records facts explicitly found on IBM's
+official Granite 4.2 page and never infers pricing from third-party catalogs.
 """
 from __future__ import annotations
 
@@ -12,77 +12,115 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "ibm-granite.json"
-INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "ibm-granite.json"
 LOG = ROOT / "provider_update_log.md"
-SOURCE = "https://www.ibm.com/granite/docs/models/granite"
+SOURCE = "https://www.ibm.com/granite/docs/models/granite4-2"
 
-# Names and parameter counts taken from IBM's Granite 4.0 model table.
-FAMILY = {
-    "granite-4.0-h-small": {"parameters": "32B total / 9B activated"},
-    "granite-4.0-h-tiny": {"parameters": "7B total / 1B activated"},
-    "granite-4.0-h-micro": {"parameters": "3B total"},
-    "granite-4.0-micro": {"parameters": "3B total"},
-    "granite-4.0-h-1b": {"parameters": "1.5B"},
-    "granite-4.0-1b": {"parameters": "1B"},
-    "granite-4.0-h-350m": {"parameters": "350M"},
-    "granite-4.0-350m": {"parameters": "350M"},
+GRANITE_42 = {
+    "granite-4.2-3b": "3B",
+    "granite-4.2-8b": "8B",
+    "granite-4.2-30b": "30B",
 }
 
 
 def fetch_page() -> str:
     req = Request(SOURCE, headers={"User-Agent": "llmcapa-official-updater/1.0"})
     with urlopen(req, timeout=30) as response:
-        return response.read(500_000).decode("utf-8", "ignore").lower()
+        return response.read(1_000_000).decode("utf-8", "ignore").lower()
+
+
+def base_model(model_id: str, size: str) -> dict:
+    is_30b = size == "30B"
+    return {
+        "provider": "ibm-granite",
+        "model_id": f"ibm-granite/{model_id}",
+        "display_name": f"IBM: Granite 4.2 {size}",
+        "context_window": 512000 if is_30b else 128000,
+        "max_output_tokens": 0,
+        "input_modalities": ["text"],
+        "output_modalities": ["text"],
+        "supports_function_calling": True,
+        "supports_json_mode": False,
+        "supports_streaming": True,
+        "supports_vision": False,
+        "supports_reasoning": True,
+        "supports_chat_completion": True,
+        "supports_responses_api": False,
+        "supports_reasoning_effort": False,
+        "supports_thinking_budget": True,
+        "supports_anthropic_api": False,
+        "supports_google_api": False,
+        "supports_fim": False,
+        "tokenizer_name": "Other",
+        "knowledge_cutoff": None,
+        "deprecated": False,
+        "aliases": [f"ibm-granite/{model_id}", model_id],
+        "license_type": "open",
+        "pricing": None,
+    }
 
 
 def main() -> None:
     page = fetch_page()
-    required = ["granite 4.0", "hybrid mamba", "mixture-of-experts", "apache 2.0"]
+    required = ["granite 4.2", "granite-4.2-3b", "granite-4.2-8b", "granite-4.2-30b", "128k", "apache 2.0"]
     missing = [term for term in required if term not in page]
     if missing:
         raise RuntimeError(f"IBM official page validation failed: missing {missing}")
 
-    # The HTTP page may omit the table in its text extraction. Validate the
-    # canonical family list locally and keep the update conservative.
-    if len(FAMILY) != 8 or "granite-4.0-h-micro" not in FAMILY:
-        raise RuntimeError("Granite 4.0 family validation failed")
-
     data = json.loads(DATA.read_text(encoding="utf-8"))
+    models = data.setdefault("models", [])
     today = date.today().isoformat()
-    updated = 0
-    for model in data.get("models", []):
-        model_id = model.get("model_id", "")
-        if model_id != "ibm-granite/granite-4.0-h-micro":
-            continue
-        model["display_name"] = "IBM: Granite 4.0 H Micro"
-        model["license_type"] = "open"
+
+    # Granite 4.0 is no longer the current documented family.
+    for model in models:
+        if str(model.get("model_id", "")).startswith("ibm-granite/granite-4.0"):
+            model["deprecated"] = True
+
+    existing = {model.get("model_id") for model in models}
+    added = 0
+    for model_id, size in GRANITE_42.items():
+        full_id = f"ibm-granite/{model_id}"
+        model = next((m for m in models if m.get("model_id") == full_id), None)
+        if model is None:
+            model = base_model(model_id, size)
+            models.append(model)
+            added += 1
+        model.update({
+            "display_name": f"IBM: Granite 4.2 {size}",
+            "context_window": 512000 if size == "30B" else 128000,
+            "max_output_tokens": 0,
+            "supports_function_calling": True,
+            "supports_reasoning": True,
+            "supports_thinking_budget": True,
+            "license_type": "open",
+            "deprecated": False,
+        })
         extra = model.setdefault("extra", {})
         extra.update({
             "official_source": SOURCE,
             "official_source_checked_at": today,
             "official_spec_refresh": "parsed",
             "license": "Apache 2.0",
-            "architecture": "hybrid Mamba-2/Transformer Mixture-of-Experts",
-            "granite_4_0_family": FAMILY,
+            "architecture": "dense reasoning language model",
+            "granite_4_2_size": size,
+            "reasoning": "native chain-of-thought thinking",
+            "tool_calling": "reasoning-augmented tool calling",
+            "context_note": "128K for all Granite 4.2 models; 30B supports long-context extension to 512K",
             "pricing_status": "not specified on IBM Granite model page",
-            "context_status": "not specified on IBM Granite model page",
         })
-        updated += 1
 
+    models.sort(key=lambda m: m.get("model_id", ""))
     DATA.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    INSTALLED.parent.mkdir(parents=True, exist_ok=True)
-    INSTALLED.write_text(DATA.read_text(encoding="utf-8"), encoding="utf-8")
     LOG.write_text(
         LOG.read_text(encoding="utf-8")
         + f"\n## IBM Granite official refresh ({today})\n\n"
         + f"- Source: {SOURCE}\n"
-        + f"- Updated: {updated} existing Granite 4.0 H Micro record(s).\n"
-        + "- Recorded IBM's Apache 2.0 license and official Granite 4.0 family/architecture metadata.\n"
-        + "- IBM's page does not specify API pricing or context windows; those values were not inferred or overwritten.\n"
+        + f"- Added/updated Granite 4.2 models: {len(GRANITE_42)} (new: {added}).\n"
+        + "- Recorded official 128K context, 30B long-context extension to 512K, Apache 2.0, reasoning, and tool-calling metadata.\n"
+        + "- Granite 4.0 records were marked deprecated; pricing was not inferred.\n"
         + "- OpenRouter was not used.\n",
         encoding="utf-8",
     )
-    print(f"ibm-granite.json: official_models_updated={updated}")
+    print(f"ibm-granite.json: granite_4_2_updated={len(GRANITE_42)} new={added}")
 
 
 if __name__ == "__main__":

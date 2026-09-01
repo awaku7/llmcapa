@@ -422,7 +422,8 @@ def main() -> None:
 
     payload = {"models": rows}
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    shutil.copy2(OUT, INSTALLED)
+    if OUT.resolve() != INSTALLED.resolve():
+        shutil.copy2(OUT, INSTALLED)
 
     n = len(rows)
     n_price = sum(1 for r in rows if r.get("pricing"))

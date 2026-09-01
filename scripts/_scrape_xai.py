@@ -1,5 +1,11 @@
 """Playwright: scrape xAI Grok pricing (with stealth)."""
 import sys, json, traceback
+
+# Windows consoles may default to CP932; scraper payloads can contain Unicode.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="backslashreplace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="backslashreplace")
 try:
     from playwright.sync_api import sync_playwright
 except ImportError:

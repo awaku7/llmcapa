@@ -852,7 +852,7 @@ def main() -> None:
     OUT.write_text(
         json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
-    if INSTALLED.parent.exists():
+    if INSTALLED.parent.exists() and OUT.resolve() != INSTALLED.resolve():
         shutil.copy2(OUT, INSTALLED)
 
     active = sum(1 for m in models if not m.get("deprecated"))

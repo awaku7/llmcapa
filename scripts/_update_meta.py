@@ -102,7 +102,7 @@ def main() -> None:
         json.dumps({"models": models}, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-    if INSTALLED_DIR.exists():
+    if INSTALLED_DIR.exists() and OUT.resolve() != (INSTALLED_DIR / OUT.name).resolve():
         shutil.copy2(OUT, INSTALLED_DIR / OUT.name)
 
     active = sum(1 for m in models if not m.get("deprecated"))
