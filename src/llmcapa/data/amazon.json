@@ -53,7 +53,15 @@
         "geo_input_per_1m": 0.33,
         "geo_output_per_1m": 2.75,
         "inference": "global_cross_region",
-        "modalities_note": "text/image/video/file input; text output"
+        "modalities_note": "text/image/video/file input; text output",
+        "endpoints": [
+          {
+            "base_url": "https://bedrock-runtime.{region}.amazonaws.com",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.aws.amazon.com/bedrock/"
+          }
+        ]
       }
     },
     {
@@ -109,7 +117,15 @@
         "geo_input_per_1m": 1.375,
         "geo_output_per_1m": 11.0,
         "inference": "global_cross_region",
-        "availability": "preview"
+        "availability": "preview",
+        "endpoints": [
+          {
+            "base_url": "https://bedrock-runtime.{region}.amazonaws.com",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.aws.amazon.com/bedrock/"
+          }
+        ]
       }
     },
     {
@@ -170,7 +186,15 @@
         "geo_output_per_1m": 2.8,
         "inference": "global_cross_region",
         "availability": "preview",
-        "modalities_note": "omni multimodal; primary pricing is text tokens"
+        "modalities_note": "omni multimodal; primary pricing is text tokens",
+        "endpoints": [
+          {
+            "base_url": "https://bedrock-runtime.{region}.amazonaws.com",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.aws.amazon.com/bedrock/"
+          }
+        ]
       }
     },
     {
@@ -225,7 +249,15 @@
         "speech_output_per_1m": 12.0,
         "text_input_per_1m": 0.33,
         "text_output_per_1m": 2.75,
-        "primary_pricing": "text tokens; speech rates in extra"
+        "primary_pricing": "text tokens; speech rates in extra",
+        "endpoints": [
+          {
+            "base_url": "https://bedrock-runtime.{region}.amazonaws.com",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.aws.amazon.com/bedrock/"
+          }
+        ]
       }
     },
     {
@@ -274,7 +306,15 @@
         "cache_hit_per_1m": 0.00875,
         "cache_hit_note": "75% less than on-demand input (official)",
         "batch_input_per_1m": 0.0175,
-        "batch_output_per_1m": 0.07
+        "batch_output_per_1m": 0.07,
+        "endpoints": [
+          {
+            "base_url": "https://bedrock-runtime.{region}.amazonaws.com",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.aws.amazon.com/bedrock/"
+          }
+        ]
       }
     },
     {
@@ -325,7 +365,15 @@
         "cache_hit_per_1m": 0.015,
         "cache_hit_note": "75% less than on-demand input (official)",
         "batch_input_per_1m": 0.03,
-        "batch_output_per_1m": 0.12
+        "batch_output_per_1m": 0.12,
+        "endpoints": [
+          {
+            "base_url": "https://bedrock-runtime.{region}.amazonaws.com",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.aws.amazon.com/bedrock/"
+          }
+        ]
       }
     },
     {
@@ -378,7 +426,15 @@
         "batch_input_per_1m": 0.4,
         "batch_output_per_1m": 1.6,
         "latency_optimized_input_per_1m": 1.0,
-        "latency_optimized_output_per_1m": 4.0
+        "latency_optimized_output_per_1m": 4.0,
+        "endpoints": [
+          {
+            "base_url": "https://bedrock-runtime.{region}.amazonaws.com",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.aws.amazon.com/bedrock/"
+          }
+        ]
       }
     },
     {
@@ -429,7 +485,15 @@
         "cache_hit_per_1m": 0.625,
         "cache_hit_note": "75% less than on-demand input (official)",
         "batch_input_per_1m": 1.25,
-        "batch_output_per_1m": 6.25
+        "batch_output_per_1m": 6.25,
+        "endpoints": [
+          {
+            "base_url": "https://bedrock-runtime.{region}.amazonaws.com",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.aws.amazon.com/bedrock/"
+          }
+        ]
       }
     },
     {
@@ -484,7 +548,15 @@
         "speech_output_per_1m": 13.6,
         "text_input_per_1m": 0.06,
         "text_output_per_1m": 0.24,
-        "primary_pricing": "text tokens; speech rates in extra"
+        "primary_pricing": "text tokens; speech rates in extra",
+        "endpoints": [
+          {
+            "base_url": "https://bedrock-runtime.{region}.amazonaws.com",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.aws.amazon.com/bedrock/"
+          }
+        ]
       }
     },
     {
@@ -530,7 +602,15 @@
         "unit": "image",
         "price_per_image_std_le_1024": 0.04,
         "price_per_image_premium_le_1024": 0.06,
-        "note": "≤1024 standard $0.04 / premium $0.06 per image (US East)"
+        "note": "≤1024 standard $0.04 / premium $0.06 per image (US East)",
+        "endpoints": [
+          {
+            "base_url": "https://bedrock-runtime.{region}.amazonaws.com",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.aws.amazon.com/bedrock/"
+          }
+        ]
       }
     },
     {
@@ -575,7 +655,15 @@
         "region": "US East (N. Virginia) on-demand standard",
         "unit": "second",
         "price_per_second_720p": 0.08,
-        "note": "720p $0.08/sec (US East)"
+        "note": "720p $0.08/sec (US East)",
+        "endpoints": [
+          {
+            "base_url": "https://bedrock-runtime.{region}.amazonaws.com",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.aws.amazon.com/bedrock/"
+          }
+        ]
       }
     },
     {
@@ -625,7 +713,15 @@
         "unit": "token_and_image",
         "text_input_per_1m": 0.135,
         "price_per_image": 0.06,
-        "note": "text $0.135/1M tokens; image $0.06/image (US East)"
+        "note": "text $0.135/1M tokens; image $0.06/image (US East)",
+        "endpoints": [
+          {
+            "base_url": "https://bedrock-runtime.{region}.amazonaws.com",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.aws.amazon.com/bedrock/"
+          }
+        ]
       }
     },
     {
@@ -672,7 +768,15 @@
         "price_api": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json",
         "region": "US East (N. Virginia) on-demand standard",
         "cache_hit_per_1m": 0.125,
-        "cache_hit_note": "75% less than on-demand input (official)"
+        "cache_hit_note": "75% less than on-demand input (official)",
+        "endpoints": [
+          {
+            "base_url": "https://bedrock-runtime.{region}.amazonaws.com",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.aws.amazon.com/bedrock/"
+          }
+        ]
       }
     },
     {
@@ -719,7 +823,15 @@
         "price_api": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json",
         "region": "US East (N. Virginia) on-demand standard",
         "cache_hit_per_1m": 0.05,
-        "cache_hit_note": "75% less than on-demand input (official)"
+        "cache_hit_note": "75% less than on-demand input (official)",
+        "endpoints": [
+          {
+            "base_url": "https://bedrock-runtime.{region}.amazonaws.com",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.aws.amazon.com/bedrock/"
+          }
+        ]
       }
     },
     {
@@ -767,7 +879,15 @@
         "region": "US East (N. Virginia) on-demand standard",
         "cache_hit_per_1m": 0.0375,
         "cache_hit_note": "75% less than on-demand input (official)",
-        "note": "corrected from prior catalog $0.30/$0.40"
+        "note": "corrected from prior catalog $0.30/$0.40",
+        "endpoints": [
+          {
+            "base_url": "https://bedrock-runtime.{region}.amazonaws.com",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.aws.amazon.com/bedrock/"
+          }
+        ]
       }
     },
     {
@@ -815,7 +935,15 @@
         "region": "US East (N. Virginia) on-demand standard",
         "unit": "token",
         "text_input_per_1m": 0.02,
-        "note": "Titan Embed Text V2 $0.02/1M tokens"
+        "note": "Titan Embed Text V2 $0.02/1M tokens",
+        "endpoints": [
+          {
+            "base_url": "https://bedrock-runtime.{region}.amazonaws.com",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.aws.amazon.com/bedrock/"
+          }
+        ]
       }
     },
     {
@@ -863,7 +991,15 @@
         "region": "US East (N. Virginia) on-demand standard",
         "unit": "token",
         "text_input_per_1m": 0.1,
-        "note": "Titan Embed Text G1 $0.10/1M tokens"
+        "note": "Titan Embed Text G1 $0.10/1M tokens",
+        "endpoints": [
+          {
+            "base_url": "https://bedrock-runtime.{region}.amazonaws.com",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.aws.amazon.com/bedrock/"
+          }
+        ]
       }
     },
     {
@@ -913,7 +1049,15 @@
         "unit": "token_and_image",
         "text_input_per_1m": 0.0008,
         "price_per_image": 6e-05,
-        "note": "Titan Multimodal Embeddings: text ~$0.0008/1M; image ~$0.00006/image (US East; verify on Bedrock pricing)"
+        "note": "Titan Multimodal Embeddings: text ~$0.0008/1M; image ~$0.00006/image (US East; verify on Bedrock pricing)",
+        "endpoints": [
+          {
+            "base_url": "https://bedrock-runtime.{region}.amazonaws.com",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.aws.amazon.com/bedrock/"
+          }
+        ]
       }
     },
     {
@@ -962,7 +1106,15 @@
         "price_per_image_std_1024": 0.01,
         "price_per_image_premium_512": 0.01,
         "price_per_image_premium_1024": 0.012,
-        "note": "Titan Image Generator v2 approximate US East rates"
+        "note": "Titan Image Generator v2 approximate US East rates",
+        "endpoints": [
+          {
+            "base_url": "https://bedrock-runtime.{region}.amazonaws.com",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.aws.amazon.com/bedrock/"
+          }
+        ]
       }
     }
   ]

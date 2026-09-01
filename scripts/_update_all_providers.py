@@ -43,7 +43,6 @@ PROVIDER_SCRIPTS = {
     "rekaai": "_update_rekaai.py",
     "sakura": "_update_sakura.py",
     "stepfun": "_update_stepfun.py",
-    "structured-output": "_update_structured_output_providers.py",
     "tencent": "_update_tencent.py",
     "together": "_update_together.py",
     "uncovered-official": "_update_uncovered_official.py",

@@ -3006,3 +3006,82 @@
 - Updated Grok 4.6: 500K context, $2/$6 per 1M tokens, configurable reasoning, knowledge cutoff 2026-02-01.
 - Confirmed current Imagine/Voice pricing metadata; Grok Imagine Image 2.0 is recorded as the current official model name without inventing a new API slug.
 - OpenRouter was not used.
+
+## Official API endpoint metadata (2026-09-01)
+
+- Sources: provider official documentation; OpenRouter was not used.
+- deepseek: 10 models -> `https://api.deepseek.com`
+- qwen: 99 models -> `https://dashscope.aliyuncs.com/compatible-mode/v1`
+- moonshot: 11 models -> `https://api.moonshot.cn/v1`
+- z-ai: 14 models -> `https://open.bigmodel.cn/api/paas/v4`
+- minimax: 16 models -> `https://api.minimax.io/v1`
+- baidu: 1 models -> `https://qianfan.baidubce.com/v2`
+- tencent: 3 models -> `https://api.hunyuan.cloud.tencent.com/v1`
+- bytedance: 6 models -> `https://ark.cn-beijing.volces.com/api/v3`
+- xiaomi: 11 models -> `https://api.xiaomimimo.com/v1`
+- siliconflow: 17 models -> `https://api.siliconflow.cn/v1`
+- groq: 38 models -> `https://api.groq.com/openai/v1`
+- cerebras: 1 models -> `https://api.cerebras.ai/v1`
+- fireworks: 236 models -> `https://api.fireworks.ai/inference/v1`
+- sambanova: 1 models -> `https://api.sambanova.ai/v1`
+- novita: 151 models -> `https://api.novita.ai/v3/openai`
+- openai: 155 models -> `https://api.openai.com/v1`
+- anthropic: 17 models -> `https://api.anthropic.com/v1`
+- google: 92 models -> `https://generativelanguage.googleapis.com/v1beta`
+- xai: 14 models -> `https://api.x.ai/v1`
+- mistral: 65 models -> `https://api.mistral.ai/v1`
+- cohere: 9 models -> `https://api.cohere.com/v2`
+- amazon: 19 models -> `https://bedrock-runtime.{region}.amazonaws.com`
+- microsoft: 60 models -> `https://{resource-name}.openai.azure.com/openai/v1`
+- nvidia: 74 models -> `https://integrate.api.nvidia.com/v1`
+- together: 98 models -> `https://api.together.xyz/v1`
+- perplexity: 7 models -> `https://api.perplexity.ai`
+- upstage: 2 models -> `https://api.upstage.ai/v1`
+- writer: 1 models -> `https://api.writer.com/v1`
+- ai21: 4 models -> `https://api.ai21.com/studio/v1`
+- rekaai: 2 models -> `https://api.reka.ai/v1`
+- huggingface: 2903 models -> `https://router.huggingface.co/v1`
+- ollama: 1655 models -> `http://localhost:11434/v1`
+- lmstudio: 105 models -> `http://localhost:1234/v1`
+- vertex-ai: 4254 models -> `https://{location}-aiplatform.googleapis.com/v1/projects/{project}/locations/{location}/publishers/google/models`
+- openrouter: 420 models -> `https://openrouter.ai/api/v1`
+- sakana: 5 models -> `https://api.sakana.ai`
+- vercel: 1343 models -> `https://ai-gateway.vercel.sh/v1`
+- azure_foundry: 1717 models -> `https://{resource-name}.services.ai.azure.com/openai/v1`
+- relace: 4 models -> `https://models.relace.ai`
+
+## Cerebras refresh (2026-09-01)
+
+- Source: https://inference-docs.cerebras.ai/models/overview
+- Discovery: Playwright-rendered official catalog table
+- Result: 2 public models
+- OpenRouter was not used.
+
+## Emerging provider official-page refresh (2026-09-01)
+- Public official documentation pages scraped; API keys and OpenRouter were not used.
+- groq: 55 model IDs scraped from https://console.groq.com/docs/models
+- cerebras: 1 model IDs scraped from https://inference-docs.cerebras.ai/models/overview
+- fireworks: 287 model IDs scraped from https://fireworks.ai/models
+- sambanova: 6 model IDs scraped from https://docs.sambanova.ai/docs/en/models/sambacloud-models
+- siliconflow: 18 model IDs scraped from https://docs.siliconflow.com/en/userguide/quickstart
+
+## ThaiLLM refresh (2026-09-01)
+
+- Source: https://thaillm.or.th/
+- Discovery: Playwright-rendered official landing page
+- Result: 4 published ThaiLLM foundation models
+- OpenRouter was not used.
+
+## Vertex AI / Model Garden SDK refresh (2026-09-01)
+
+- Source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/models
+- Discovery: `vertexai.model_garden.list_deployable_models(list_hf_models=True)`
+- OpenRouter was not used; `google.json` was not modified.
+- Result: 4960 SDK-listed deployable Model Garden models. Detailed limits/pricing remain unknown where the SDK does not expose them.
+
+## Vertex AI / Model Garden SDK refresh (2026-09-01)
+
+- Source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/models
+- Discovery: `vertexai.model_garden.list_deployable_models(list_hf_models=True)`
+- OpenRouter was not used; `google.json` was not modified.
+- Result: 4960 SDK-listed deployable Model Garden models. Detailed limits/pricing remain unknown where the SDK does not expose them.

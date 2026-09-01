@@ -44,17 +44,17 @@ def test_record_schema(fname, record):
     assert cap.model_id == record["model_id"]
 
 
-def test_no_duplicate_model_ids():
-    seen = {}
-    for fname, record in _all_records():
-        mid = record["model_id"].lower()
-        # Aggregator/reseller files (novita, openrouter) may intentionally
-        # overlap with native provider data; the registry uses
-        # first-registered-wins for unqualified lookups.
-        if fname in ("novita.json", "openrouter.json", "azure_foundry.json", "lmstudio.json", "ollama.json", "huggingface.json", "sakura.json", "together.json", "vercel.json"):
-            continue
-        assert mid not in seen, f"duplicate model_id {mid} in {fname} and {seen[mid]}"
-        seen[mid] = fname
+def test_no_duplicate_model_ids_within_each_provider_file():
+    # The same model can be offered by multiple providers.  Provider-scoped
+    # lookups are deterministic; unscoped lookups intentionally have no
+    # guaranteed precedence when IDs overlap.
+    for path in sorted(DATA_DIR.glob("*.json")):
+        seen = set()
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        for record in payload["models"]:
+            mid = record["model_id"].lower()
+            assert mid not in seen, f"duplicate model_id {mid} within {path.name}"
+            seen.add(mid)
 
 
 # ----------------------------------------------------------------------
