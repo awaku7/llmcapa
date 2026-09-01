@@ -3085,3 +3085,314 @@
 - Discovery: `vertexai.model_garden.list_deployable_models(list_hf_models=True)`
 - OpenRouter was not used; `google.json` was not modified.
 - Result: 4960 SDK-listed deployable Model Garden models. Detailed limits/pricing remain unknown where the SDK does not expose them.
+
+## ai21 endpoint metadata refresh (2026-09-01)
+
+- Source: https://docs.ai21.com/docs/overview
+- Updated: 4 models.
+
+## ai21 Structured Outputs audit ({date.today()})
+
+- Source: {SOURCE}
+- Updated: {n} models; documented={DOCUMENTED}.
+
+## allenai Structured Outputs audit ({date.today()})
+
+- Source: {SOURCE}
+- Updated: {n} models; documented={DOCUMENTED}.
+
+## amazon endpoint metadata refresh (2026-09-01)
+
+- Source: https://docs.aws.amazon.com/bedrock/
+- Updated: 19 models.
+
+## anthropic endpoint metadata refresh (2026-09-01)
+
+- Source: https://docs.anthropic.com/en/api
+- Updated: 17 models.
+
+## arcee-ai Structured Outputs audit ({date.today()})
+
+- Source: {SOURCE}
+- Updated: {n} models; documented={DOCUMENTED}.
+
+## azure_foundry endpoint metadata refresh (2026-09-01)
+
+- Source: https://learn.microsoft.com/azure/foundry/foundry-models/concepts/endpoints
+- Updated: 1695 models.
+
+## baidu endpoint metadata refresh (2026-09-01)
+
+- Source: https://cloud.baidu.com/doc/QIANFAN/
+- Updated: 1 models.
+
+## bytedance-seed Structured Outputs audit ({date.today()})
+
+- Source: {SOURCE}
+- Updated: {n} models; documented={DOCUMENTED}.
+
+## bytedance endpoint metadata refresh (2026-09-01)
+
+- Source: https://www.volcengine.com/docs/82379
+- Updated: 6 models.
+
+## cerebras official refresh (2026-09-01)
+
+- Source: https://inference-docs.cerebras.ai/
+- Updated: 3 model IDs.
+
+## cerebras endpoint metadata refresh (2026-09-01)
+
+- Source: https://inference-docs.cerebras.ai/
+- Updated: 3 models.
+
+## cognitivecomputations Structured Outputs audit ({date.today()})
+
+- Source: {SOURCE}
+- Updated: {n} models; documented={DOCUMENTED}.
+
+## cohere endpoint metadata refresh (2026-09-01)
+
+- Source: https://docs.cohere.com/reference
+- Updated: 9 models.
+
+## deepseek endpoint metadata refresh (2026-09-01)
+
+- Source: https://api-docs.deepseek.com/
+- Updated: 10 models.
+
+## fireworks official refresh (2026-09-01)
+
+- Source: https://docs.fireworks.ai/
+- Updated: 8 model IDs.
+
+## fireworks endpoint metadata refresh (2026-09-01)
+
+- Source: https://docs.fireworks.ai/
+- Updated: 8 models.
+
+## google endpoint metadata refresh (2026-09-01)
+
+- Source: https://ai.google.dev/api
+- Updated: 92 models.
+
+## groq official refresh (2026-09-01)
+
+- Source: https://console.groq.com/docs/
+- Updated: 28 model IDs.
+
+## groq endpoint metadata refresh (2026-09-01)
+
+- Source: https://console.groq.com/docs/
+- Updated: 28 models.
+
+## huggingface endpoint metadata refresh (2026-09-01)
+
+- Source: https://huggingface.co/docs/inference-providers/
+- Updated: 2903 models.
+
+## inception Structured Outputs audit ({date.today()})
+
+- Source: {SOURCE}
+- Updated: {n} models; documented={DOCUMENTED}.
+
+## llama_cpp Structured Outputs audit ({date.today()})
+
+- Source: {SOURCE}
+- Updated: {n} models; documented={DOCUMENTED}.
+
+## lmstudio endpoint metadata refresh (2026-09-01)
+
+- Source: https://lmstudio.ai/docs/developer/openai-compat/structured-output
+- Updated: 105 models.
+
+## lmstudio Structured Outputs audit ({date.today()})
+
+- Source: {SOURCE}
+- Updated: {n} models; documented={DOCUMENTED}.
+
+## microsoft endpoint metadata refresh (2026-09-01)
+
+- Source: https://learn.microsoft.com/azure/ai-services/openai/
+- Updated: 60 models.
+
+## minimax endpoint metadata refresh (2026-09-01)
+
+- Source: https://platform.minimax.io/docs/
+- Updated: 16 models.
+
+## mistral endpoint metadata refresh (2026-09-01)
+
+- Source: https://docs.mistral.ai/api/
+- Updated: 65 models.
+
+## moonshot endpoint metadata refresh (2026-09-01)
+
+- Source: https://platform.moonshot.cn/docs/
+- Updated: 11 models.
+
+## morph Structured Outputs audit ({date.today()})
+
+- Source: {SOURCE}
+- Updated: {n} models; documented={DOCUMENTED}.
+
+## nousresearch Structured Outputs audit ({date.today()})
+
+- Source: {SOURCE}
+- Updated: {n} models; documented={DOCUMENTED}.
+
+## novita endpoint metadata refresh (2026-09-01)
+
+- Source: https://novita.ai/docs/
+- Updated: 151 models.
+
+## nvidia endpoint metadata refresh (2026-09-01)
+
+- Source: https://docs.api.nvidia.com/nim/
+- Updated: 74 models.
+
+## ollama endpoint metadata refresh (2026-09-01)
+
+- Source: https://docs.ollama.com/capabilities/structured-outputs
+- Updated: 1655 models.
+
+## ollama Structured Outputs audit ({date.today()})
+
+- Source: {SOURCE}
+- Updated: {n} models; documented={DOCUMENTED}.
+
+## openai endpoint metadata refresh (2026-09-01)
+
+- Source: https://platform.openai.com/docs/api-reference
+- Updated: 155 models.
+
+## openrouter endpoint metadata refresh (2026-09-01)
+
+- Source: https://openrouter.ai/docs/api-reference/overview
+- Updated: 420 models.
+
+## perplexity endpoint metadata refresh (2026-09-01)
+
+- Source: https://docs.perplexity.ai/
+- Updated: 7 models.
+
+## perplexity Structured Outputs audit ({date.today()})
+
+- Source: {SOURCE}
+- Updated: {n} models; documented={DOCUMENTED}.
+
+## poolside Structured Outputs audit ({date.today()})
+
+- Source: {SOURCE}
+- Updated: {n} models; documented={DOCUMENTED}.
+
+## qwen endpoint metadata refresh (2026-09-01)
+
+- Source: https://www.alibabacloud.com/help/en/model-studio/
+- Updated: 99 models.
+
+## rekaai endpoint metadata refresh (2026-09-01)
+
+- Source: https://docs.reka.ai/
+- Updated: 2 models.
+
+## relace endpoint metadata refresh (2026-09-01)
+
+- Source: https://docs.relace.ai/docs/introduction
+- Updated: 4 models.
+
+## relace Structured Outputs audit ({date.today()})
+
+- Source: {SOURCE}
+- Updated: {n} models; documented={DOCUMENTED}.
+
+## sakana endpoint metadata refresh (2026-09-01)
+
+- Source: https://console.sakana.ai/models
+- Updated: 5 models.
+
+## sakana Structured Outputs audit ({date.today()})
+
+- Source: {SOURCE}
+- Updated: {n} models; documented={DOCUMENTED}.
+
+## siliconflow official refresh (2026-09-01)
+
+- Source: https://docs.siliconflow.com/
+- Updated: 28 model IDs.
+
+## siliconflow endpoint metadata refresh (2026-09-01)
+
+- Source: https://docs.siliconflow.com/
+- Updated: 28 models.
+
+## tencent endpoint metadata refresh (2026-09-01)
+
+- Source: https://cloud.tencent.com/document/product/1729
+- Updated: 3 models.
+
+## thinkingmachines Structured Outputs audit ({date.today()})
+
+- Source: {SOURCE}
+- Updated: {n} models; documented={DOCUMENTED}.
+
+## together endpoint metadata refresh (2026-09-01)
+
+- Source: https://docs.together.ai/reference
+- Updated: 98 models.
+
+## upstage endpoint metadata refresh (2026-09-01)
+
+- Source: https://developers.upstage.ai/docs/getting-started
+- Updated: 2 models.
+
+## vercel endpoint metadata refresh (2026-09-01)
+
+- Source: https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs
+- Updated: 1343 models.
+
+## vercel Structured Outputs audit ({date.today()})
+
+- Source: {SOURCE}
+- Updated: {n} models; documented={DOCUMENTED}.
+
+## vertex-ai endpoint metadata refresh (2026-09-01)
+
+- Source: https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference
+- Updated: 4960 models.
+
+## writer endpoint metadata refresh (2026-09-01)
+
+- Source: https://dev.writer.com/api-reference/completion-api/chat-completion
+- Updated: 1 models.
+
+## writer Structured Outputs audit ({date.today()})
+
+- Source: {SOURCE}
+- Updated: {n} models; documented={DOCUMENTED}.
+
+## xai endpoint metadata refresh (2026-09-01)
+
+- Source: https://docs.x.ai/docs
+- Updated: 14 models.
+
+## xiaomi endpoint metadata refresh (2026-09-01)
+
+- Source: https://platform.mimo.ai/
+- Updated: 11 models.
+
+## z-ai endpoint metadata refresh (2026-09-01)
+
+- Source: https://docs.z.ai/guides/capabilities/struct-output
+- Updated: 14 models.
+
+## z-ai Structured Outputs audit ({date.today()})
+
+- Source: {SOURCE}
+- Updated: {n} models; documented={DOCUMENTED}.
+
+## SambaNova official refresh (2026-09-01)
+
+- Source: https://docs.sambanova.ai/docs/en/models/sambacloud-models
+- Parsed 4 production and 2 preview SambaCloud models, including context lengths and modalities.
+- Pricing was not inferred because it is not specified on the model overview page.

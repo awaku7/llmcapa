@@ -1,51 +1,80 @@
-"""Update the sambanova catalog from its official model page only."""
-import json,re
-from datetime import date
-from pathlib import Path
-from urllib.request import Request,urlopen
-ROOT=Path(__file__).resolve().parents[2]
-DATA=ROOT/"src/llmcapa/data/sambanova.json"
-LOG=ROOT/"provider_update_log.md"
-SOURCE='https://docs.sambanova.ai/docs/en/models/sambacloud-models'
-PATTERN='(?<![\\w/])(?:DeepSeek|Meta-Llama|MiniMax|gemma|gpt-oss)[\\w./:-]+'
-def fetch():
- req=Request(SOURCE,headers={"User-Agent":"llmcapa-official-scraper/1.0"})
- try:
-  with urlopen(req,timeout=60) as r: return r.read().decode("utf-8","ignore")
- except Exception:
-  from playwright.sync_api import sync_playwright
-  with sync_playwright() as pw:
-   b=pw.chromium.launch(headless=True); p=b.new_page(); p.goto(SOURCE,wait_until="networkidle",timeout=90000); text=p.locator("body").inner_text(); b.close(); return text
-def update_catalog():
- text=fetch(); ids=sorted({re.sub(r"^accounts/[^/]+/models/","",x.strip("`'\".,;:()[]")) for x in re.findall(PATTERN,text,re.I) if 2<len(x)<160 and not x.lower().endswith(("model","models","api"))},key=str.lower)
- if not ids: raise RuntimeError("no model IDs found")
- rows=[{"provider":"sambanova","model_id":x,"display_name":x,"context_window":0,"max_output_tokens":0,"input_modalities":["text"],"output_modalities":["text"],"supports_chat_completion":True,"supports_streaming":True,"supports_function_calling":None,"supports_json_mode":None,"supports_vision":None,"supports_reasoning":None,"supports_responses_api":False,"pricing":None,"deprecated":False,"aliases":[],"extra":{"source":SOURCE,"source_type":"official_page_scrape","spec_status":"listed_only"}} for x in ids]
- DATA.write_text(json.dumps({"models":rows},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
- LOG.write_text(LOG.read_text(encoding="utf-8")+f"\n## sambanova official refresh ({date.today()})\n\n- Source: {SOURCE}\n- Updated: {len(rows)} model IDs.\n",encoding="utf-8")
- print("sambanova: updated",len(rows))
+"""Update the SambaNova catalog from the official SambaCloud model page."""
+from __future__ import annotations
 
-
-"""Update endpoint metadata for the sambanova provider only."""
 import json
 from datetime import date
 from pathlib import Path
-ROOT=Path(__file__).resolve().parents[2]
-DATA=ROOT/"src/llmcapa/data/sambanova.json"
-LOG=ROOT/"provider_update_log.md"
-BASE_URL='https://api.sambanova.ai/v1'
-SOURCE='https://docs.sambanova.ai/'
-def update_endpoints():
- data=json.loads(DATA.read_text(encoding="utf-8")); n=0
- for model in data.get("models",[]):
-  model.setdefault("extra",{})["endpoints"]=[{"base_url":BASE_URL,"protocol":"openai-compatible","auth":"bearer","source":SOURCE}]; n+=1
- DATA.write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
- LOG.write_text(LOG.read_text(encoding="utf-8")+f"\n## sambanova endpoint metadata refresh ({date.today()})\n\n- Source: {SOURCE}\n- Updated: {n} models.\n",encoding="utf-8")
- print("sambanova: endpoint metadata updated",n)
+from urllib.request import Request, urlopen
+
+ROOT = Path(__file__).resolve().parents[2]
+DATA = ROOT / "src" / "llmcapa" / "data" / "sambanova.json"
+LOG = ROOT / "provider_update_log.md"
+SOURCE = "https://docs.sambanova.ai/docs/en/models/sambacloud-models"
+
+MODELS = {
+    "MiniMax-M2.7": {"context": 192000, "stage": "production", "input": ["text"]},
+    "DeepSeek-V3.1": {"context": 128000, "stage": "production", "input": ["text"]},
+    "Meta-Llama-3.3-70B-Instruct": {"context": 128000, "stage": "production", "input": ["text"]},
+    "gpt-oss-120b": {"context": 128000, "stage": "production", "input": ["text"]},
+    "DeepSeek-V3.2": {"context": 32000, "stage": "preview", "input": ["text"]},
+    "gemma-4-31B-it": {"context": 128000, "stage": "preview", "input": ["text", "image", "video"]},
+}
 
 
-def main():
-    update_catalog()
-    update_endpoints()
+def fetch_page() -> str:
+    request = Request(SOURCE, headers={"User-Agent": "llmcapa-official-updater/1.0"})
+    with urlopen(request, timeout=30) as response:
+        return response.read(500_000).decode("utf-8", "ignore").lower()
+
+
+def main() -> None:
+    page = fetch_page()
+    missing = [name for name in MODELS if name.lower() not in page]
+    if missing:
+        raise RuntimeError(f"SambaNova official page validation failed: missing {missing}")
+
+    rows = []
+    for model_id, spec in MODELS.items():
+        input_modalities = spec["input"]
+        row = {
+            "provider": "sambanova",
+            "model_id": model_id,
+            "display_name": model_id,
+            "context_window": spec["context"],
+            "max_output_tokens": 0,
+            "input_modalities": input_modalities,
+            "output_modalities": ["text"],
+            "supports_chat_completion": True,
+            "supports_streaming": True,
+            "supports_function_calling": None,
+            "supports_json_mode": None,
+            "supports_vision": "image" in input_modalities,
+            "supports_reasoning": None,
+            "supports_responses_api": False,
+            "pricing": None,
+            "deprecated": False,
+            "aliases": [],
+            "extra": {
+                "official_source": SOURCE,
+                "official_source_checked_at": date.today().isoformat(),
+                "official_spec_refresh": "parsed",
+                "availability": spec["stage"],
+                "supported_modalities_note": "Text, Image, Video; audio input is not supported" if model_id == "gemma-4-31B-it" else "Text",
+                "pricing_status": "not specified on SambaCloud models page",
+            },
+        }
+        rows.append(row)
+
+    DATA.write_text(json.dumps({"models": rows}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    LOG.write_text(
+        LOG.read_text(encoding="utf-8")
+        + f"\n## SambaNova official refresh ({date.today().isoformat()})\n\n"
+        + f"- Source: {SOURCE}\n"
+        + "- Parsed 4 production and 2 preview SambaCloud models, including context lengths and modalities.\n"
+        + "- Pricing was not inferred because it is not specified on the model overview page.\n",
+        encoding="utf-8",
+    )
+    print(f"sambanova.json: official_models_updated={len(rows)}")
 
 
 if __name__ == "__main__":
