@@ -2635,3 +2635,20 @@
 - New: Fable 5 / Mythos 5 $10/$50; Opus 4.8 $5/$25; Sonnet 5 intro $2/$10→$3/$15; Haiku 4.5 $1/$5
 - Cache pricing (5m/1h/hit) + batch in extra; OpenRouter aliases deduped
 - Install copy synced
+
+## OpenRouter refresh (2026-09-01)
+
+### Source
+- API: `https://openrouter.ai/api/v1/models` (live → `_scratch_openrouter_models.json`)
+- Docs: https://openrouter.ai/docs
+- Apply: `scripts/_update_openrouter.py`
+
+### Result
+- openrouter.json: **420** models (active=420, deprecated=0, priced=394, free=21, dynamic=5, extra=420)
+- vision=252, reasoning=296, tools=354, cache_pricing=253
+- native providers: 51 (top: [('openai', 89), ('qwen', 53), ('google', 41), ('anthropic', 28), ('mistralai', 20), ('deepseek', 16), ('z-ai', 16), ('minimax', 11), ('nvidia', 10), ('meta-llama', 8)])
+- Pricing: API per-token ×1e6 → USD/1M; router prompt=-1 → catalog -1000000.0
+- Cache: input_cache_read/write(/1h) in extra when present
+- Synthetic `~*/…-latest` aliases retained (9)
+- Replaced thin 14-model placeholder catalog
+- Install copy synced
