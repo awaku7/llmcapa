@@ -2999,3 +2999,10 @@
 - Recorded official 128K context, 30B long-context extension to 512K, Apache 2.0, reasoning, and tool-calling metadata.
 - Granite 4.0 records were marked deprecated; pricing was not inferred.
 - OpenRouter was not used.
+
+## xAI official model refresh (2026-09-01)
+
+- Source: https://docs.x.ai/developers/models
+- Updated Grok 4.6: 500K context, $2/$6 per 1M tokens, configurable reasoning, knowledge cutoff 2026-02-01.
+- Confirmed current Imagine/Voice pricing metadata; Grok Imagine Image 2.0 is recorded as the current official model name without inventing a new API slug.
+- OpenRouter was not used.
