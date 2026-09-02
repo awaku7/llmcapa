@@ -388,12 +388,39 @@ def legacy_row(spec: dict) -> dict:
     }
 
 
+LISTMODELS_FALLBACK = False
+
+
 def load_listmodels() -> list[dict]:
+    global LISTMODELS_FALLBACK
+    LISTMODELS_FALLBACK = False
     raw = json.loads(LISTMODELS.read_text(encoding="utf-8"))
+    # The scraper may return an envelope or an old page-only payload. Refresh
+    # from the official Markdown endpoint when no structured rows are present.
+    if isinstance(raw, dict) and not (raw.get("models") or raw.get("data")):
+        try:
+            from _scrape_xai import fetch, parse
+            raw = parse(fetch())
+            LISTMODELS.write_text(json.dumps(raw, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+        except Exception:
+            raw = []
+    if isinstance(raw, dict):
+        raw = raw.get("models") or raw.get("data") or []
+    if not isinstance(raw, list):
+        raw = []
+    if not raw:
+        LISTMODELS_FALLBACK = True
+        try:
+            existing = json.loads(OUT.read_text(encoding="utf-8")).get("models", [])
+            return []
+        except (OSError, json.JSONDecodeError):
+            return []
     # dedupe by name (payload may repeat)
     seen: set[str] = set()
     out: list[dict] = []
     for e in raw:
+        if not isinstance(e, dict):
+            continue
         name = e.get("name")
         if not name or name in seen:
             continue
@@ -407,7 +434,13 @@ def load_listmodels() -> list[dict]:
 
 def build() -> list[dict]:
     models: list[dict] = []
-    for e in load_listmodels():
+    discovered = load_listmodels()
+    if LISTMODELS_FALLBACK:
+        try:
+            return json.loads(OUT.read_text(encoding="utf-8")).get("models", [])
+        except (OSError, json.JSONDecodeError):
+            return []
+    for e in discovered:
         models.append(text_row(e))
     for s in IMAGINE_MODELS:
         models.append(specialty_row(s))

@@ -93,6 +93,32 @@ llmcapa.search("gpt-4o", provider="azure")          # → azure-openai
 - 省略時は flat な `_models` ではなく `list_models` / `_by_provider` 経由で全プロバイダーを走査するため、複数プロバイダーに存在する同一 model id も保持されます。
 - 指定時は `list_models` / `get` と同じエイリアス・正規化パスを使います。
 
+## カタログ更新スクリプトの方針
+
+プロバイダーのカタログ更新は、プロバイダーごとの公式ソースを使う個別スクリプトで行います。全プロバイダーをOpenRouterのデータで一括置換するスクリプトは使用しません。
+
+### OpenAI
+
+```bash
+python scripts/_update_all_providers.py --provider openai
+# または
+python scripts/_update_openai.py
+```
+
+`_update_openai.py` は `https://developers.openai.com/api/docs/models.md` から詳細ページを動的に発見し、各ページと公式料金ページを解析します。モデル名やエイリアスをスクリプトへハードコードしません。公式ページから取得できない既存のレガシー項目は互換性のため保持します。
+
+### OpenRouter
+
+```bash
+python scripts/update_catalog_from_openrouter.py
+```
+
+これは `openrouter.json` **だけ**を更新します。他プロバイダーのJSONをOpenRouterデータで置き換えません。
+
+### 全ファイル対象の補正処理
+
+`scripts/_postprocess_catalogs.py` は取得処理ではなく、既存JSONの補正・検証用です。モデル発見やプロバイダーカタログの一括取得は行いません。
+
 ## 新しいプロバイダーの追加
 
 新しいモデルプロバイダー（例: `cohere`）を追加する場合:

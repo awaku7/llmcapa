@@ -1,40 +1,80 @@
-"""Playwright: scrape xAI Grok pricing (with stealth)."""
-import sys, json, traceback
+"""Fetch and parse the official xAI model/pricing documentation.
 
-# Windows consoles may default to CP932; scraper payloads can contain Unicode.
-if hasattr(sys.stdout, "reconfigure"):
-    sys.stdout.reconfigure(encoding="utf-8", errors="backslashreplace")
-if hasattr(sys.stderr, "reconfigure"):
-    sys.stderr.reconfigure(encoding="utf-8", errors="backslashreplace")
-try:
-    from playwright.sync_api import sync_playwright
-except ImportError:
-    print('{"error":"playwright not installed"}')
-    sys.exit(1)
+The previous scraper captured the rendered page text but did not produce the
+structured ListModels shape consumed by the updater. This version parses the
+official Markdown endpoint directly and writes a compatible snapshot.
+"""
+from __future__ import annotations
 
-try:
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
-        context = browser.new_context(
-            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            viewport={"width": 1920, "height": 1080},
-            locale="en-US",
-        )
-        page = context.new_page()
-        
-        # Try xAI API docs
-        page.goto("https://docs.x.ai/docs/models", wait_until="domcontentloaded", timeout=30000)
-        page.wait_for_timeout(3000)
-        t = page.inner_text("body")
-        
-        if "blocked" in t.lower()[:500] or len(t) < 500:
-            # Try console.x.ai pricing
-            page.goto("https://console.x.ai/", wait_until="domcontentloaded", timeout=30000)
-            page.wait_for_timeout(3000)
-            t = page.inner_text("body")
-        
-        browser.close()
-        result = {"xai_scraped": True, "text_len": len(t), "text": t[:15000]}
-        print(json.dumps(result, ensure_ascii=False))
-except Exception as e:
-    print(json.dumps({"error": str(e), "traceback": traceback.format_exc()}, ensure_ascii=False))
+import json
+import re
+import ssl
+from pathlib import Path
+from urllib.request import Request, urlopen
+
+ROOT = Path(__file__).resolve().parents[1]
+OUT = ROOT / "_scratch_xai_listmodels_parsed.json"
+SOURCE = "https://docs.x.ai/developers/models.md"
+
+
+def fetch() -> str:
+    req = Request(SOURCE, headers={"User-Agent": "llmcapa-xai-updater/1.0"})
+    with urlopen(req, timeout=30, context=ssl.create_default_context()) as response:
+        return response.read().decode("utf-8")
+
+
+def context_tokens(value: str) -> int:
+    value = value.strip().upper()
+    m = re.search(r"([\d.]+)\s*([KM]?)", value)
+    if not m:
+        return 0
+    n = float(m.group(1))
+    return int(n * (1_000_000 if m.group(2) == "M" else 1_000 if m.group(2) == "K" else 1))
+
+
+def parse(text: str) -> list[dict]:
+    rows = []
+    in_table = False
+    for line in text.splitlines():
+        if line.strip() == "| Model | Context | Input / 1M tokens | Cached input / 1M tokens | Output / 1M tokens |":
+            in_table = True
+            continue
+        if in_table and not line.strip().startswith("|"):
+            if rows:
+                break
+            continue
+        if not in_table or line.strip().startswith("| ---"):
+            continue
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        if len(cells) != 5:
+            continue
+        model = re.sub(r"\s*\([^)]*\)\s*$", "", cells[0]).strip()
+        if not model or model.lower() == "model":
+            continue
+        price = lambda s: float(re.search(r"[\d.]+", s.replace(",", "")).group()) if re.search(r"[\d.]+", s) else None
+        rows.append({
+            "name": model,
+            "inputModalities": [1, 2],
+            "outputModalities": [1],
+            "maxPromptLength": context_tokens(cells[1]),
+            "maxCompletionLength": 0,
+            "promptTextTokenPrice": price(cells[2]),
+            "cachedPromptTokenPrice": price(cells[3]),
+            "completionTextTokenPrice": price(cells[4]),
+        })
+    unique = {}
+    for row in rows:
+        unique.setdefault(row["name"], row)
+    return list(unique.values())
+
+
+def main() -> None:
+    models = parse(fetch())
+    if not models:
+        raise SystemExit("xAI official model table was not found")
+    OUT.write_text(json.dumps(models, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"wrote {OUT}: {len(models)} official text models")
+
+
+if __name__ == "__main__":
+    main()

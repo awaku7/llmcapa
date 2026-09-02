@@ -39,14 +39,13 @@ PROVIDER_SCRIPTS = {
     "novita": "_update_novita_from_api.py",
     "nvidia": "_update_nvidia.py",
     "ollama": "_update_ollama.py",
+    "openai": "_update_openai.py",
     "qwen": "_update_qwen.py",
     "rekaai": "_update_rekaai.py",
     "sakura": "_update_sakura.py",
     "stepfun": "_update_stepfun.py",
     "tencent": "_update_tencent.py",
     "together": "_update_together.py",
-    "uncovered-official": "_update_uncovered_official.py",
-    "unresolved-catalogs": "_update_unresolved_catalogs.py",
     "upstage": "_update_upstage.py",
     "xai": "_update_xai.py",
     "xiaomi": "_update_xiaomi.py",
@@ -54,8 +53,6 @@ PROVIDER_SCRIPTS = {
 
 ALIASES = {
     "ibm": "ibm-granite",
-    "hf-official": "uncovered-official",
-    "huggingface-official": "uncovered-official",
     "azure": "azure-foundry",
     "kimi": "moonshot",
 }

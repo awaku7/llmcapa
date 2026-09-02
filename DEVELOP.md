@@ -91,6 +91,32 @@ When adding a new alias, update `_provider_aliases` in `src/llmcapa/registry.py`
 - When omitted, search iterates all providers via `list_models` / `_by_provider` (not the flat `_models` index), so the same model id under multiple providers is preserved.
 - When provided, the same alias/normalization path as `list_models`/`get` is used.
 
+## Catalog updater policy
+
+Provider catalogs are updated by provider-specific scripts using each provider's official sources. There is no supported script that bulk-replaces all provider catalogs with OpenRouter data.
+
+### OpenAI
+
+```bash
+python scripts/_update_all_providers.py --provider openai
+# or
+python scripts/_update_openai.py
+```
+
+`_update_openai.py` discovers model detail pages from `https://developers.openai.com/api/docs/models.md` and parses those pages plus the official pricing page. Model names and aliases are not hard-coded. Existing records missing from the current official index are retained only as legacy compatibility records.
+
+### OpenRouter
+
+```bash
+python scripts/update_catalog_from_openrouter.py
+```
+
+This updates **only** `openrouter.json`; it does not replace other provider JSON files.
+
+### Cross-file post-processing
+
+`scripts/_postprocess_catalogs.py` performs corrections and validation on existing JSON files. It does not discover models or fetch all providers.
+
 ## Adding a New Provider
 
 To add a new model provider (e.g., `cohere`):

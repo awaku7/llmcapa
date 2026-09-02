@@ -5,7 +5,102 @@
       "model_id": "grok-4.6",
       "display_name": "grok-4.6",
       "context_window": 500000,
-      "max_output_tokens": 131072,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "x-ai/grok-4.6"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 6.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://docs.x.ai/developers/models/grok-4.6",
+        "cached_input_per_1m": 0.5,
+        "regions": [
+          "us-east-1"
+        ]
+      }
+    },
+    {
+      "provider": "xai",
+      "model_id": "grok-4.5",
+      "display_name": "Grok 4.5",
+      "context_window": 500000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2026-02-01",
+      "deprecated": false,
+      "aliases": [
+        "x-ai/grok-4.5"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 6.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://docs.x.ai/developers/models/grok-4.5",
+        "cached_input_per_1m": 0.3,
+        "regions": [
+          "us-east-1"
+        ]
+      },
+      "reasoning_effort_values": [
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    {
+      "provider": "xai",
+      "model_id": "grok-4.3",
+      "display_name": "Grok 4.3",
+      "context_window": 1000000,
+      "max_output_tokens": 0,
       "input_modalities": [
         "text",
         "image"
@@ -29,35 +124,225 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "grok-4.6-latest",
-        "x-ai/grok-4.6"
+        "x-ai/grok-4.3"
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 2.0,
-        "output_per_1m": 6.0,
+        "input_per_1m": 1.25,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://docs.x.ai/developers/models/grok-4.3",
+        "cached_input_per_1m": 0.2,
+        "batch_discount": 0.2,
+        "regions": [
+          "us-east-1"
+        ]
+      },
+      "reasoning_effort_values": [
+        "none",
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    {
+      "provider": "xai",
+      "model_id": "grok-4.20-0309-reasoning",
+      "display_name": "Grok 4.20 Reasoning",
+      "context_window": 1000000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "x-ai/grok-4.20-0309-reasoning"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 1.25,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://docs.x.ai/developers/models/grok-4.20-0309-reasoning",
+        "cached_input_per_1m": 0.2,
+        "batch_discount": 0.2,
+        "regions": [
+          "us-east-1"
+        ]
+      },
+      "reasoning_effort_values": [
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ]
+    },
+    {
+      "provider": "xai",
+      "model_id": "grok-4.20-0309-non-reasoning",
+      "display_name": "Grok 4.20 Non-Reasoning",
+      "context_window": 1000000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "x-ai/grok-4.20-0309-non-reasoning"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 1.25,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://docs.x.ai/developers/models/grok-4.20-0309-non-reasoning",
+        "cached_input_per_1m": 0.2,
+        "batch_discount": 0.2,
+        "regions": [
+          "us-east-1"
+        ]
+      }
+    },
+    {
+      "provider": "xai",
+      "model_id": "grok-build-0.1",
+      "display_name": "Grok Build 0.1",
+      "context_window": 256000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "x-ai/grok-build-0.1"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 1.0,
+        "output_per_1m": 2.0,
         "currency": "USD"
       },
       "extra": {
         "source": "https://docs.x.ai/developers/models",
-        "cached_input_per_1m": 0.5,
+        "cached_input_per_1m": 0.2,
+        "batch_discount": 0.2,
         "regions": [
           "us-east-1"
-        ],
-        "official_source_checked_at": "2026-09-01",
-        "official_spec_refresh": "parsed",
-        "reasoning": "configurable",
-        "knowledge_cutoff": "2026-02-01",
-        "context_window_tokens": 500000,
-        "endpoints": [
-          {
-            "base_url": "https://api.x.ai/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.x.ai/docs"
-          }
         ]
       }
+    },
+    {
+      "provider": "xai",
+      "model_id": "grok-4.20-multi-agent-0309",
+      "display_name": "Grok 4.20 Multi-Agent",
+      "context_window": 1000000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "grok-4.20-multi-agent",
+        "x-ai/grok-4.20-multi-agent-0309"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 1.25,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://docs.x.ai/developers/models/grok-4.20-multi-agent-0309",
+        "cached_input_per_1m": 0.2,
+        "batch_discount": 0.2,
+        "regions": [
+          "us-east-1"
+        ]
+      },
+      "reasoning_effort_values": [
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ]
     },
     {
       "provider": "xai",
@@ -101,17 +386,7 @@
           "1K",
           "2K"
         ],
-        "source": "https://docs.x.ai/developers/models",
-        "official_source_checked_at": "2026-09-01",
-        "official_model_name": "Grok Imagine Image 2.0",
-        "endpoints": [
-          {
-            "base_url": "https://api.x.ai/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.x.ai/docs"
-          }
-        ]
+        "source": "https://docs.x.ai/developers/models"
       }
     },
     {
@@ -153,15 +428,7 @@
         "price_per_image": 0.05,
         "unit": "image",
         "note": "higher quality tier approx; docs list $0.02/image for 1K/2K standard",
-        "source": "https://docs.x.ai/developers/models",
-        "endpoints": [
-          {
-            "base_url": "https://api.x.ai/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.x.ai/docs"
-          }
-        ]
+        "source": "https://docs.x.ai/developers/models"
       }
     },
     {
@@ -207,16 +474,7 @@
           "720p",
           "1080p"
         ],
-        "source": "https://docs.x.ai/developers/models",
-        "official_source_checked_at": "2026-09-01",
-        "endpoints": [
-          {
-            "base_url": "https://api.x.ai/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.x.ai/docs"
-          }
-        ]
+        "source": "https://docs.x.ai/developers/models"
       }
     },
     {
@@ -255,20 +513,10 @@
         "currency": "USD"
       },
       "extra": {
-        "price_per_second": 0.05,
+        "price_per_second": 0.08,
         "unit": "second",
         "note": "1.5 tier retained; docs headline $0.05/sec",
-        "source": "https://docs.x.ai/developers/models",
-        "official_source_checked_at": "2026-09-01",
-        "official_pricing_note": "current docs headline: $0.05/sec",
-        "endpoints": [
-          {
-            "base_url": "https://api.x.ai/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.x.ai/docs"
-          }
-        ]
+        "source": "https://docs.x.ai/developers/models"
       }
     },
     {
@@ -311,16 +559,7 @@
         "price_per_hour": 3.0,
         "unit": "hour",
         "source": "https://docs.x.ai/developers/models",
-        "api": "voice-agent",
-        "official_source_checked_at": "2026-09-01",
-        "endpoints": [
-          {
-            "base_url": "https://api.x.ai/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.x.ai/docs"
-          }
-        ]
+        "api": "voice-agent"
       }
     },
     {
@@ -361,16 +600,7 @@
         "price_per_1m_chars": 15.0,
         "unit": "1m_chars",
         "source": "https://docs.x.ai/developers/models",
-        "api": "tts",
-        "official_source_checked_at": "2026-09-01",
-        "endpoints": [
-          {
-            "base_url": "https://api.x.ai/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.x.ai/docs"
-          }
-        ]
+        "api": "tts"
       }
     },
     {
@@ -411,16 +641,7 @@
         "price_per_hour": 0.1,
         "unit": "hour",
         "source": "https://docs.x.ai/developers/models",
-        "api": "stt-batch",
-        "official_source_checked_at": "2026-09-01",
-        "endpoints": [
-          {
-            "base_url": "https://api.x.ai/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.x.ai/docs"
-          }
-        ]
+        "api": "stt-batch"
       }
     },
     {
@@ -461,16 +682,7 @@
         "price_per_hour": 0.2,
         "unit": "hour",
         "source": "https://docs.x.ai/developers/models",
-        "api": "stt-streaming",
-        "official_source_checked_at": "2026-09-01",
-        "endpoints": [
-          {
-            "base_url": "https://api.x.ai/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.x.ai/docs"
-          }
-        ]
+        "api": "stt-streaming"
       }
     },
     {
@@ -511,15 +723,7 @@
       },
       "extra": {
         "note": "legacy; not listed on current docs.x.ai models primary table",
-        "source": "retained from prior catalog",
-        "endpoints": [
-          {
-            "base_url": "https://api.x.ai/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.x.ai/docs"
-          }
-        ]
+        "source": "retained from prior catalog"
       }
     },
     {
@@ -560,15 +764,7 @@
       },
       "extra": {
         "note": "legacy; not listed on current docs.x.ai models primary table",
-        "source": "retained from prior catalog",
-        "endpoints": [
-          {
-            "base_url": "https://api.x.ai/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.x.ai/docs"
-          }
-        ]
+        "source": "retained from prior catalog"
       }
     },
     {
@@ -610,15 +806,7 @@
       },
       "extra": {
         "note": "legacy; not listed on current docs.x.ai models primary table",
-        "source": "retained from prior catalog",
-        "endpoints": [
-          {
-            "base_url": "https://api.x.ai/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.x.ai/docs"
-          }
-        ]
+        "source": "retained from prior catalog"
       }
     },
     {
@@ -659,15 +847,7 @@
       },
       "extra": {
         "note": "legacy; not listed on current docs.x.ai models primary table",
-        "source": "retained from prior catalog",
-        "endpoints": [
-          {
-            "base_url": "https://api.x.ai/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.x.ai/docs"
-          }
-        ]
+        "source": "retained from prior catalog"
       }
     },
     {
@@ -708,15 +888,7 @@
       },
       "extra": {
         "note": "legacy; not listed on current docs.x.ai models primary table",
-        "source": "retained from prior catalog",
-        "endpoints": [
-          {
-            "base_url": "https://api.x.ai/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.x.ai/docs"
-          }
-        ]
+        "source": "retained from prior catalog"
       }
     }
   ]

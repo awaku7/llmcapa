@@ -10,10 +10,10 @@ any SSR (Server-Side Rendering) limitations and known issues.
 | Item | Detail |
 |---|---|
 | **Data file** | `src/llmcapa/data/openai.json` |
-| **Method** | OpenRouter API (`https://openrouter.ai/api/v1/models`) |
-| **SSR issue** | None. OpenRouter is an API-first service. |
-| **Limitations** | OpenRouter's model list may lag behind OpenAI's latest releases. |
-| **Script** | `scripts/_scrape_openai.py` (via OpenRouter) |
+| **Method** | Official OpenAI model detail pages and pricing page (Markdown endpoints) |
+| **SSR issue** | None. The `.md` documentation endpoints are parsed directly. |
+| **Limitations** | Fields absent from official documentation remain unknown; existing legacy records are preserved. |
+| **Script** | `scripts/_update_openai.py` |
 
 ## Azure AI Foundry (Azure OpenAI + Direct from Azure)
 

@@ -476,8 +476,11 @@ llmcapa tokens gpt-4o --messages '[{"role":"user","content":"Hi"}]'
 # 起動時にローカルJSONファイルから追加モデルをロード
 llmcapa --extra my_models.json show gpt-4o
 
-# 明示的にOpenRouterモデルのキャッシュを取得・更新（キャッシュを強制リフレッシュ）
+# OpenRouterのキャッシュだけを明示的に取得・更新
 llmcapa update
+
+# 開発用: OpenAI公式カタログを動的に再取得
+python scripts/_update_all_providers.py --provider openai
 ```
 
 ## 注意事項

@@ -476,8 +476,11 @@ llmcapa tokens gpt-4o --messages '[{"role":"user","content":"Hi"}]'
 # Load extra model data from a local JSON file on startup
 llmcapa --extra my_models.json show gpt-4o
 
-# Explicitly fetch and update the OpenRouter models cache (forces cache refresh)
+# Explicitly fetch and update the OpenRouter cache only
 llmcapa update
+
+# Development: refresh the OpenAI catalog from official documentation
+python scripts/_update_all_providers.py --provider openai
 
 # Fetch and register popular models from HuggingFace
 llmcapa fetch-hf

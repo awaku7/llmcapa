@@ -2,7 +2,51 @@
   "models": [
     {
       "provider": "openai",
-      "aliases": [],
+      "model_id": "babbage-002",
+      "display_name": "babbage-002",
+      "context_window": 0,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "babbage-002"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/babbage-002.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "babbage-002"
+      },
+      "supports_vision": false,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_responses_api": false,
+      "supports_chat_completion": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Sep 01, 2021",
+      "pricing": {
+        "input_per_1m": 0.4,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "aliases": [
+        "chat-latest"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text",
@@ -13,11 +57,11 @@
       ],
       "model_id": "chat-latest",
       "display_name": "Chat Latest",
-      "context_window": 1048576,
-      "max_output_tokens": 131072,
+      "context_window": 400000,
+      "max_output_tokens": 128000,
       "pricing": {
-        "input_per_1m": 5.0,
-        "output_per_1m": 30.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "supports_vision": true,
@@ -26,9 +70,9 @@
       "supports_streaming": true,
       "supports_chat_completion": true,
       "supports_responses_api": true,
-      "supports_reasoning": true,
+      "supports_reasoning": false,
       "extra": {
-        "source": "https://developers.openai.com/api/docs/pricing",
+        "source": "https://developers.openai.com/api/docs/models/chat-latest.md",
         "cached_input_per_1m": 0.5,
         "category": "chatgpt",
         "endpoints": [
@@ -38,38 +82,85 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
+        ],
+        "default_snapshot": "chat-latest"
+      },
+      "knowledge_cutoff": "Aug 31, 2025"
+    },
+    {
+      "provider": "openai",
+      "model_id": "chatgpt-4o-latest",
+      "display_name": "ChatGPT-4o",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": true,
+      "aliases": [
+        "chatgpt-4o-latest"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/chatgpt-4o-latest.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "chatgpt-4o-latest"
+      },
+      "supports_vision": true,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Oct 01, 2023",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
       }
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "aliases": [
+        "chatgpt-image-latest"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text",
         "image"
       ],
       "output_modalities": [
-        "text",
-        "image"
+        "image",
+        "text"
       ],
       "model_id": "chatgpt-image-latest",
-      "display_name": "ChatGPT Image Latest",
-      "context_window": 131072,
-      "max_output_tokens": 32768,
+      "display_name": "chatgpt-image-latest",
+      "context_window": 0,
+      "max_output_tokens": 0,
       "pricing": {
-        "input_per_1m": 5.0,
-        "output_per_1m": 10.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "supports_vision": true,
       "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
       "extra": {
-        "source": "https://developers.openai.com/api/docs/pricing",
+        "source": "https://developers.openai.com/api/docs/models/chatgpt-image-latest.md",
         "image_input_per_1m": 8.0,
         "image_cached_input_per_1m": 2.0,
         "image_output_per_1m": 32.0,
@@ -83,13 +174,58 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
+        ],
+        "default_snapshot": "chatgpt-image-latest"
+      },
+      "supports_reasoning": false
+    },
+    {
+      "provider": "openai",
+      "model_id": "codex-mini-latest",
+      "display_name": "codex-mini-latest",
+      "context_window": 200000,
+      "max_output_tokens": 100000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "codex-mini-latest"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/codex-mini-latest.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "codex-mini-latest"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Jun 01, 2024",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
       }
     },
     {
       "provider": "openai",
       "model_id": "computer-use-preview",
-      "display_name": "OpenAI: Computer Use Preview",
+      "display_name": "computer-use-preview",
       "context_window": 8192,
       "max_output_tokens": 1024,
       "input_modalities": [
@@ -113,14 +249,16 @@
       "supports_fim": false,
       "license_type": "api",
       "tokenizer_name": "",
-      "knowledge_cutoff": "2023-10-01",
+      "knowledge_cutoff": "Oct 01, 2023",
       "pricing": {
-        "input_per_1m": 3.0,
-        "output_per_1m": 12.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "deprecated": false,
-      "aliases": [],
+      "aliases": [
+        "computer-use-preview-2025-03-11"
+      ],
       "computer_use": {
         "supported": true,
         "native": true,
@@ -158,14 +296,58 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
+        ],
+        "source": "https://developers.openai.com/api/docs/models/computer-use-preview.md",
+        "default_snapshot": "computer-use-preview-2025-03-11"
       }
     },
     {
       "provider": "openai",
-      "model_id": "gpt-4",
-      "display_name": "OpenAI: GPT-4",
-      "context_window": 8191,
+      "model_id": "davinci-002",
+      "display_name": "davinci-002",
+      "context_window": 0,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "davinci-002"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/davinci-002.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "davinci-002"
+      },
+      "supports_vision": false,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_responses_api": false,
+      "supports_chat_completion": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Sep 01, 2021",
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 2.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-3.5-turbo",
+      "display_name": "GPT-3.5 Turbo",
+      "context_window": 16385,
       "max_output_tokens": 4096,
       "input_modalities": [
         "text"
@@ -173,13 +355,57 @@
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
+      "deprecated": false,
+      "aliases": [
+        "gpt-3.5-turbo-0125",
+        "gpt-3.5-turbo-1106",
+        "gpt-3.5-turbo-instruct"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-3.5-turbo.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-3.5-turbo-0125"
+      },
+      "supports_vision": false,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Sep 01, 2021",
+      "pricing": {
+        "input_per_1m": 0.5,
+        "output_per_1m": 1.5,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-4",
+      "display_name": "GPT-4",
+      "context_window": 8192,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": true,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
@@ -187,14 +413,17 @@
       "supports_fim": false,
       "license_type": "api",
       "tokenizer_name": "cl100k_base",
-      "knowledge_cutoff": "2021-09-30",
+      "knowledge_cutoff": "Dec 01, 2023",
       "pricing": {
         "input_per_1m": 30.0,
         "output_per_1m": 60.0,
         "currency": "USD"
       },
-      "deprecated": true,
-      "aliases": [],
+      "deprecated": false,
+      "aliases": [
+        "gpt-4-0613",
+        "gpt-4-0314"
+      ],
       "extra": {
         "endpoints": [
           {
@@ -203,19 +432,106 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
+        ],
+        "source": "https://developers.openai.com/api/docs/models/gpt-4.md",
+        "default_snapshot": "gpt-4-0613"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-4-turbo",
+      "display_name": "GPT-4 Turbo",
+      "context_window": 128000,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-4-turbo-2024-04-09"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-4-turbo.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-4-turbo-2024-04-09"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Dec 01, 2023",
+      "pricing": {
+        "input_per_1m": 10.0,
+        "output_per_1m": 30.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-4-turbo-preview",
+      "display_name": "GPT-4 Turbo Preview",
+      "context_window": 128000,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-4-0125-preview",
+        "gpt-4-1106-vision-preview"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-4-turbo-preview.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-4-0125-preview"
+      },
+      "supports_vision": false,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Dec 01, 2023",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
       }
     },
     {
       "provider": "openai",
       "model_id": "gpt-4.1",
-      "display_name": "OpenAI: GPT-4.1",
+      "display_name": "GPT-4.1",
       "context_window": 1047576,
       "max_output_tokens": 32768,
       "input_modalities": [
-        "image",
         "text",
-        "file"
+        "image"
       ],
       "output_modalities": [
         "text"
@@ -234,14 +550,16 @@
       "supports_fim": false,
       "license_type": "api",
       "tokenizer_name": "",
-      "knowledge_cutoff": "2024-06-30",
+      "knowledge_cutoff": "Jun 01, 2024",
       "pricing": {
         "input_per_1m": 2.0,
         "output_per_1m": 8.0,
         "currency": "USD"
       },
-      "deprecated": true,
-      "aliases": [],
+      "deprecated": false,
+      "aliases": [
+        "gpt-4.1-2025-04-14"
+      ],
       "extra": {
         "endpoints": [
           {
@@ -250,19 +568,20 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
+        ],
+        "source": "https://developers.openai.com/api/docs/models/gpt-4.1.md",
+        "default_snapshot": "gpt-4.1-2025-04-14"
       }
     },
     {
       "provider": "openai",
       "model_id": "gpt-4.1-mini",
-      "display_name": "OpenAI: GPT-4.1 Mini",
+      "display_name": "GPT-4.1 Mini",
       "context_window": 1047576,
       "max_output_tokens": 32768,
       "input_modalities": [
-        "image",
         "text",
-        "file"
+        "image"
       ],
       "output_modalities": [
         "text"
@@ -281,14 +600,16 @@
       "supports_fim": false,
       "license_type": "api",
       "tokenizer_name": "",
-      "knowledge_cutoff": "2024-06-30",
+      "knowledge_cutoff": "Jun 01, 2024",
       "pricing": {
         "input_per_1m": 0.4,
         "output_per_1m": 1.6,
         "currency": "USD"
       },
-      "deprecated": true,
-      "aliases": [],
+      "deprecated": false,
+      "aliases": [
+        "gpt-4.1-mini-2025-04-14"
+      ],
       "extra": {
         "endpoints": [
           {
@@ -297,13 +618,101 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
+        ],
+        "source": "https://developers.openai.com/api/docs/models/gpt-4.1-mini.md",
+        "default_snapshot": "gpt-4.1-mini-2025-04-14"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-4.1-nano",
+      "display_name": "GPT-4.1 nano",
+      "context_window": 1047576,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-4.1-nano-2025-04-14"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-4.1-nano.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-4.1-nano-2025-04-14"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Jun 01, 2024",
+      "pricing": {
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-4.5-preview",
+      "display_name": "GPT-4.5 Preview",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": true,
+      "aliases": [
+        "gpt-4.5-preview-2025-02-27"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-4.5-preview.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-4.5-preview-2025-02-27"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Oct 01, 2023",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
       }
     },
     {
       "provider": "openai",
       "model_id": "gpt-4o",
-      "display_name": "OpenAI: GPT-4o",
+      "display_name": "GPT-4o",
       "context_window": 128000,
       "max_output_tokens": 16384,
       "input_modalities": [
@@ -327,14 +736,18 @@
       "supports_fim": false,
       "license_type": "api",
       "tokenizer_name": "o200k_base",
-      "knowledge_cutoff": "2023-10-31",
+      "knowledge_cutoff": "Oct 01, 2023",
       "pricing": {
         "input_per_1m": 2.5,
         "output_per_1m": 10.0,
         "currency": "USD"
       },
       "deprecated": false,
-      "aliases": [],
+      "aliases": [
+        "gpt-4o-2024-11-20",
+        "gpt-4o-2024-08-06",
+        "gpt-4o-2024-05-13"
+      ],
       "extra": {
         "endpoints": [
           {
@@ -343,31 +756,255 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
+        ],
+        "source": "https://developers.openai.com/api/docs/models/gpt-4o.md",
+        "default_snapshot": "gpt-4o-2024-08-06"
       }
     },
     {
       "provider": "openai",
-      "aliases": [],
-      "deprecated": false,
+      "model_id": "gpt-4o-audio-preview",
+      "display_name": "GPT-4o Audio",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
       "input_modalities": [
         "text",
         "audio"
+      ],
+      "output_modalities": [
+        "text",
+        "audio"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-4o-audio-preview-2025-06-03",
+        "gpt-4o-audio-preview-2024-12-17",
+        "gpt-4o-audio-preview-2024-10-01"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-4o-audio-preview.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-4o-audio-preview-2025-06-03"
+      },
+      "supports_vision": false,
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_responses_api": false,
+      "supports_chat_completion": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Oct 01, 2023",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-4o-mini",
+      "display_name": "GPT-4o Mini",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-4o-mini-2024-07-18"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-4o-mini.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-4o-mini-2024-07-18"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Oct 01, 2023",
+      "pricing": {
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.6,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-4o-mini-audio-preview",
+      "display_name": "GPT-4o Mini Audio",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "audio"
+      ],
+      "output_modalities": [
+        "text",
+        "audio"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-4o-mini-audio-preview-2024-12-17"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-4o-mini-audio-preview.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-4o-mini-audio-preview-2024-12-17"
+      },
+      "supports_vision": false,
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_responses_api": false,
+      "supports_chat_completion": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Oct 01, 2023",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-4o-mini-realtime-preview",
+      "display_name": "GPT-4o Mini Realtime",
+      "context_window": 16000,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text",
+        "audio"
+      ],
+      "output_modalities": [
+        "text",
+        "audio"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-4o-mini-realtime-preview-2024-12-17"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-4o-mini-realtime-preview.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-4o-mini-realtime-preview-2024-12-17"
+      },
+      "supports_vision": false,
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_responses_api": false,
+      "supports_chat_completion": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Oct 01, 2023",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-4o-mini-search-preview",
+      "display_name": "GPT-4o Mini Search Preview",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-4o-mini-search-preview-2025-03-11"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-4o-mini-search-preview.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-4o-mini-search-preview-2025-03-11"
+      },
+      "supports_vision": false,
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": false,
+      "supports_chat_completion": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Oct 01, 2023",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "aliases": [
+        "gpt-4o-mini-transcribe-2025-03-20",
+        "gpt-4o-mini-transcribe-2025-12-15"
+      ],
+      "deprecated": false,
+      "input_modalities": [
+        "audio",
+        "text"
       ],
       "output_modalities": [
         "text"
       ],
       "model_id": "gpt-4o-mini-transcribe",
       "display_name": "GPT-4o Mini Transcribe",
-      "context_window": 32768,
-      "max_output_tokens": 16384,
+      "context_window": 16000,
+      "max_output_tokens": 2000,
       "pricing": {
-        "input_per_1m": 1.25,
-        "output_per_1m": 5.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "supports_chat_completion": false,
-      "supports_streaming": true,
+      "supports_streaming": false,
       "extra": {
         "endpoints": [
           {
@@ -376,31 +1013,171 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
+        ],
+        "source": "https://developers.openai.com/api/docs/models/gpt-4o-mini-transcribe.md",
+        "default_snapshot": "gpt-4o-mini-transcribe-2025-12-15"
+      },
+      "supports_vision": false,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_responses_api": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Jun 01, 2024"
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-4o-mini-tts",
+      "display_name": "GPT-4o Mini TTS",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "audio"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-4o-mini-tts-2025-03-20",
+        "gpt-4o-mini-tts-2025-12-15"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-4o-mini-tts.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-4o-mini-tts-2025-12-15"
+      },
+      "supports_vision": false,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_responses_api": false,
+      "supports_chat_completion": false,
+      "supports_reasoning": false,
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
       }
     },
     {
       "provider": "openai",
-      "aliases": [],
-      "deprecated": false,
+      "model_id": "gpt-4o-realtime-preview",
+      "display_name": "GPT-4o Realtime",
+      "context_window": 32000,
+      "max_output_tokens": 4096,
       "input_modalities": [
         "text",
         "audio"
+      ],
+      "output_modalities": [
+        "text",
+        "audio"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-4o-realtime-preview-2025-06-03",
+        "gpt-4o-realtime-preview-2024-12-17",
+        "gpt-4o-realtime-preview-2024-10-01"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-4o-realtime-preview.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-4o-realtime-preview-2025-06-03"
+      },
+      "supports_vision": false,
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_responses_api": false,
+      "supports_chat_completion": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Oct 01, 2023",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-4o-search-preview",
+      "display_name": "GPT-4o Search Preview",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-4o-search-preview-2025-03-11"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-4o-search-preview.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-4o-search-preview-2025-03-11"
+      },
+      "supports_vision": false,
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": false,
+      "supports_chat_completion": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Oct 01, 2023",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "aliases": [
+        "gpt-4o-transcribe"
+      ],
+      "deprecated": false,
+      "input_modalities": [
+        "audio",
+        "text"
       ],
       "output_modalities": [
         "text"
       ],
       "model_id": "gpt-4o-transcribe",
       "display_name": "GPT-4o Transcribe",
-      "context_window": 32768,
-      "max_output_tokens": 16384,
+      "context_window": 16000,
+      "max_output_tokens": 2000,
       "pricing": {
-        "input_per_1m": 2.5,
-        "output_per_1m": 10.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "supports_chat_completion": false,
-      "supports_streaming": true,
+      "supports_streaming": false,
       "extra": {
         "endpoints": [
           {
@@ -409,12 +1186,22 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
-      }
+        ],
+        "source": "https://developers.openai.com/api/docs/models/gpt-4o-transcribe.md",
+        "default_snapshot": "gpt-4o-transcribe"
+      },
+      "supports_vision": false,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_responses_api": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Jun 01, 2024"
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "aliases": [
+        "gpt-4o-transcribe-diarize"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text",
@@ -425,17 +1212,17 @@
       ],
       "model_id": "gpt-4o-transcribe-diarize",
       "display_name": "GPT-4o Transcribe Diarize",
-      "context_window": 32768,
-      "max_output_tokens": 16384,
+      "context_window": 16000,
+      "max_output_tokens": 2000,
       "pricing": {
-        "input_per_1m": 2.5,
-        "output_per_1m": 10.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "supports_chat_completion": false,
-      "supports_streaming": true,
+      "supports_streaming": false,
       "extra": {
-        "source": "https://developers.openai.com/api/docs/pricing",
+        "source": "https://developers.openai.com/api/docs/models/gpt-4o-transcribe-diarize.md",
         "estimated_cost_per_minute": 0.006,
         "use_case": "transcription_diarization",
         "endpoints": [
@@ -445,30 +1232,728 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
+        ],
+        "default_snapshot": "gpt-4o-transcribe-diarize"
+      },
+      "supports_vision": false,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_responses_api": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Jun 01, 2024"
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-5",
+      "display_name": "GPT-5",
+      "context_window": 400000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-5-2025-08-07"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-5.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-5-2025-08-07"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Sep 30, 2024",
+      "pricing": {
+        "input_per_1m": 1.25,
+        "output_per_1m": 10.0,
+        "currency": "USD"
       }
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "model_id": "gpt-5-chat-latest",
+      "display_name": "GPT-5 Chat",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-5-chat-latest"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-5-chat-latest.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-5-chat-latest"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Sep 30, 2024",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-5-codex",
+      "display_name": "GPT-5-Codex",
+      "context_window": 400000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-5-codex"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-5-codex.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-5-codex"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Sep 30, 2024",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-5-mini",
+      "display_name": "GPT-5 Mini",
+      "context_window": 400000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-5-mini-2025-08-07"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-5-mini.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-5-mini-2025-08-07"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "May 31, 2024",
+      "pricing": {
+        "input_per_1m": 0.25,
+        "output_per_1m": 2.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-5-nano",
+      "display_name": "GPT-5 nano",
+      "context_window": 400000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-5-nano-2025-08-07"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-5-nano.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-5-nano-2025-08-07"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "May 31, 2024",
+      "pricing": {
+        "input_per_1m": 0.05,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-5-pro",
+      "display_name": "GPT-5 Pro",
+      "context_window": 400000,
+      "max_output_tokens": 272000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-5-pro-2025-10-06"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-5-pro.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-5-pro-2025-10-06"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Sep 30, 2024",
+      "pricing": {
+        "input_per_1m": 15.0,
+        "output_per_1m": 120.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-5.1",
+      "display_name": "GPT-5.1",
+      "context_window": 400000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-5.1-2025-11-13"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-5.1.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-5.1-2025-11-13"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Sep 30, 2024",
+      "pricing": {
+        "input_per_1m": 1.25,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-5.1-chat-latest",
+      "display_name": "GPT-5.1 Chat",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-5.1-chat-latest"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-5.1-chat-latest.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-5.1-chat-latest"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Sep 30, 2024",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-5.1-codex",
+      "display_name": "GPT-5.1-Codex",
+      "context_window": 400000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-5.1-codex"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-5.1-codex.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-5.1-codex"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Sep 30, 2024",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-5.1-codex-max",
+      "display_name": "GPT-5.1-Codex-Max",
+      "context_window": 400000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-5.1-codex-max"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-5.1-codex-max.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-5.1-codex-max"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Sep 30, 2024",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-5.1-codex-mini",
+      "display_name": "GPT-5.1-Codex Mini",
+      "context_window": 400000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-5.1-codex-mini"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-5.1-codex-mini.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-5.1-codex-mini"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Sep 30, 2024",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-5.2",
+      "display_name": "GPT-5.2",
+      "context_window": 400000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-5.2-2025-12-11"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-5.2.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-5.2-2025-12-11"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Aug 31, 2025",
+      "pricing": {
+        "input_per_1m": 1.75,
+        "output_per_1m": 14.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-5.2-chat-latest",
+      "display_name": "GPT-5.2 Chat",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": true,
+      "aliases": [
+        "gpt-5.2-chat-latest"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-5.2-chat-latest.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-5.2-chat-latest"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Aug 31, 2025",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-5.2-codex",
+      "display_name": "GPT-5.2-Codex",
+      "context_window": 400000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-5.2-codex"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-5.2-codex.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-5.2-codex"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Aug 31, 2025",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-5.2-pro",
+      "display_name": "GPT-5.2 Pro",
+      "context_window": 400000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-5.2-pro-2025-12-11"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-5.2-pro.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-5.2-pro-2025-12-11"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Aug 31, 2025",
+      "pricing": {
+        "input_per_1m": 21.0,
+        "output_per_1m": 168.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-5.3-chat-latest",
+      "display_name": "GPT-5.3 Chat",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": true,
+      "aliases": [
+        "gpt-5.3-chat-latest"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-5.3-chat-latest.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-5.3-chat-latest"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Aug 31, 2025",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "aliases": [
+        "gpt-5.3-codex"
+      ],
       "deprecated": false,
       "input_modalities": [
-        "text"
+        "text",
+        "image"
       ],
       "output_modalities": [
         "text"
       ],
       "model_id": "gpt-5.3-codex",
-      "display_name": "GPT-5.3 Codex",
-      "context_window": 131072,
-      "max_output_tokens": 65536,
+      "display_name": "GPT-5.3-Codex",
+      "context_window": 400000,
+      "max_output_tokens": 128000,
       "pricing": {
-        "input_per_1m": 1.75,
-        "output_per_1m": 14.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "supports_function_calling": true,
-      "supports_chat_completion": true,
+      "supports_chat_completion": false,
       "supports_responses_api": true,
       "extra": {
         "endpoints": [
@@ -478,12 +1963,21 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
-      }
+        ],
+        "source": "https://developers.openai.com/api/docs/models/gpt-5.3-codex.md",
+        "default_snapshot": "gpt-5.3-codex"
+      },
+      "supports_vision": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Aug 31, 2025"
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "aliases": [
+        "gpt-5.4-2026-03-05"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text",
@@ -494,11 +1988,11 @@
       ],
       "model_id": "gpt-5.4",
       "display_name": "GPT-5.4",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
+      "context_window": 1050000,
+      "max_output_tokens": 128000,
       "pricing": {
-        "input_per_1m": 2.5,
-        "output_per_1m": 15.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "supports_reasoning": true,
@@ -509,7 +2003,7 @@
       "supports_vision": true,
       "supports_responses_api": true,
       "supports_chat_completion": true,
-      "knowledge_cutoff": "2025-07-01",
+      "knowledge_cutoff": "Aug 31, 2025",
       "extra": {
         "endpoints": [
           {
@@ -518,7 +2012,9 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
+        ],
+        "source": "https://developers.openai.com/api/docs/models/gpt-5.4.md",
+        "default_snapshot": "gpt-5.4-2026-03-05"
       }
     },
     {
@@ -564,7 +2060,9 @@
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "aliases": [
+        "gpt-5.4-mini-2026-03-17"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text",
@@ -575,8 +2073,8 @@
       ],
       "model_id": "gpt-5.4-mini",
       "display_name": "GPT-5.4 Mini",
-      "context_window": 524288,
-      "max_output_tokens": 65536,
+      "context_window": 400000,
+      "max_output_tokens": 128000,
       "pricing": {
         "input_per_1m": 0.75,
         "output_per_1m": 4.5,
@@ -590,7 +2088,7 @@
       "supports_vision": true,
       "supports_responses_api": true,
       "supports_chat_completion": true,
-      "knowledge_cutoff": "2025-07-01",
+      "knowledge_cutoff": "Aug 31, 2025",
       "extra": {
         "endpoints": [
           {
@@ -599,12 +2097,16 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
+        ],
+        "source": "https://developers.openai.com/api/docs/models/gpt-5.4-mini.md",
+        "default_snapshot": "gpt-5.4-mini-2026-03-17"
       }
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "aliases": [
+        "gpt-5.4-nano-2026-03-17"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text",
@@ -614,9 +2116,9 @@
         "text"
       ],
       "model_id": "gpt-5.4-nano",
-      "display_name": "GPT-5.4 Nano",
-      "context_window": 262144,
-      "max_output_tokens": 32768,
+      "display_name": "GPT-5.4 nano",
+      "context_window": 400000,
+      "max_output_tokens": 128000,
       "pricing": {
         "input_per_1m": 0.2,
         "output_per_1m": 1.25,
@@ -630,7 +2132,7 @@
       "supports_vision": true,
       "supports_responses_api": true,
       "supports_chat_completion": true,
-      "knowledge_cutoff": "2025-07-01",
+      "knowledge_cutoff": "Aug 31, 2025",
       "extra": {
         "endpoints": [
           {
@@ -639,12 +2141,16 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
+        ],
+        "source": "https://developers.openai.com/api/docs/models/gpt-5.4-nano.md",
+        "default_snapshot": "gpt-5.4-nano-2026-03-17"
       }
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "aliases": [
+        "gpt-5.4-pro-2026-03-05"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text",
@@ -655,22 +2161,22 @@
       ],
       "model_id": "gpt-5.4-pro",
       "display_name": "GPT-5.4 Pro",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
+      "context_window": 1050000,
+      "max_output_tokens": 128000,
       "pricing": {
-        "input_per_1m": 30.0,
-        "output_per_1m": 180.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "supports_reasoning": true,
       "supports_reasoning_effort": true,
       "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_responses_api": true,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": "2025-07-01",
+      "supports_chat_completion": false,
+      "knowledge_cutoff": "Aug 31, 2025",
       "extra": {
         "endpoints": [
           {
@@ -679,12 +2185,16 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
+        ],
+        "source": "https://developers.openai.com/api/docs/models/gpt-5.4-pro.md",
+        "default_snapshot": "gpt-5.4-pro-2026-03-05"
       }
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "aliases": [
+        "gpt-5.5-2026-04-23"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text",
@@ -695,11 +2205,11 @@
       ],
       "model_id": "gpt-5.5",
       "display_name": "GPT-5.5",
-      "context_window": 1048576,
-      "max_output_tokens": 131072,
+      "context_window": 1050000,
+      "max_output_tokens": 128000,
       "pricing": {
-        "input_per_1m": 5.0,
-        "output_per_1m": 30.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "supports_reasoning": true,
@@ -710,7 +2220,7 @@
       "supports_vision": true,
       "supports_responses_api": true,
       "supports_chat_completion": true,
-      "knowledge_cutoff": "2025-10-01",
+      "knowledge_cutoff": "Dec 01, 2025",
       "extra": {
         "endpoints": [
           {
@@ -719,7 +2229,9 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
+        ],
+        "source": "https://developers.openai.com/api/docs/models/gpt-5.5.md",
+        "default_snapshot": "gpt-5.5-2026-04-23"
       }
     },
     {
@@ -807,7 +2319,9 @@
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "aliases": [
+        "gpt-5.5-pro-2026-04-23"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text",
@@ -818,22 +2332,22 @@
       ],
       "model_id": "gpt-5.5-pro",
       "display_name": "GPT-5.5 Pro",
-      "context_window": 1048576,
-      "max_output_tokens": 131072,
+      "context_window": 1050000,
+      "max_output_tokens": 128000,
       "pricing": {
-        "input_per_1m": 30.0,
-        "output_per_1m": 180.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "supports_reasoning": true,
       "supports_reasoning_effort": true,
       "supports_function_calling": true,
       "supports_json_mode": true,
-      "supports_streaming": true,
+      "supports_streaming": false,
       "supports_vision": true,
       "supports_responses_api": true,
-      "supports_chat_completion": true,
-      "knowledge_cutoff": "2025-10-01",
+      "supports_chat_completion": false,
+      "knowledge_cutoff": "Dec 01, 2025",
       "extra": {
         "endpoints": [
           {
@@ -842,7 +2356,9 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
+        ],
+        "source": "https://developers.openai.com/api/docs/models/gpt-5.5-pro.md",
+        "default_snapshot": "gpt-5.5-pro-2026-04-23"
       }
     },
     {
@@ -889,7 +2405,53 @@
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "model_id": "gpt-5.6-cyber",
+      "display_name": "GPT-5.6 Cyber",
+      "context_window": 400000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-5.6-cyber"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-5.6-cyber.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-5.6-cyber",
+        "required_approval": true
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Feb 16, 2026",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "aliases": [
+        "gpt-5.6-luna"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text",
@@ -900,11 +2462,11 @@
       ],
       "model_id": "gpt-5.6-luna",
       "display_name": "GPT-5.6 Luna",
-      "context_window": 1048576,
-      "max_output_tokens": 131072,
+      "context_window": 1050000,
+      "max_output_tokens": 128000,
       "pricing": {
-        "input_per_1m": 1.0,
-        "output_per_1m": 6.0,
+        "input_per_1m": 0.2,
+        "output_per_1m": 1.2,
         "currency": "USD"
       },
       "supports_reasoning": true,
@@ -915,7 +2477,7 @@
       "supports_vision": true,
       "supports_responses_api": true,
       "supports_chat_completion": true,
-      "knowledge_cutoff": "2026-02-16",
+      "knowledge_cutoff": "Feb 16, 2026",
       "extra": {
         "endpoints": [
           {
@@ -924,13 +2486,15 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
+        ],
+        "source": "https://developers.openai.com/api/docs/models/gpt-5.6-luna.md",
+        "default_snapshot": "gpt-5.6-luna"
       }
     },
     {
       "provider": "openai",
       "aliases": [
-        "gpt-5.6"
+        "gpt-5.6-sol"
       ],
       "deprecated": false,
       "input_modalities": [
@@ -942,11 +2506,11 @@
       ],
       "model_id": "gpt-5.6-sol",
       "display_name": "GPT-5.6 Sol",
-      "context_window": 1048576,
-      "max_output_tokens": 131072,
+      "context_window": 1050000,
+      "max_output_tokens": 128000,
       "pricing": {
-        "input_per_1m": 5.0,
-        "output_per_1m": 30.0,
+        "input_per_1m": 4.0,
+        "output_per_1m": 20.0,
         "currency": "USD"
       },
       "supports_reasoning": true,
@@ -957,7 +2521,7 @@
       "supports_vision": true,
       "supports_responses_api": true,
       "supports_chat_completion": true,
-      "knowledge_cutoff": "2026-02-16",
+      "knowledge_cutoff": "Feb 16, 2026",
       "extra": {
         "endpoints": [
           {
@@ -966,12 +2530,16 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
+        ],
+        "source": "https://developers.openai.com/api/docs/models/gpt-5.6-sol.md",
+        "default_snapshot": "gpt-5.6-sol"
       }
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "aliases": [
+        "gpt-5.6-terra"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text",
@@ -982,11 +2550,11 @@
       ],
       "model_id": "gpt-5.6-terra",
       "display_name": "GPT-5.6 Terra",
-      "context_window": 1048576,
-      "max_output_tokens": 131072,
+      "context_window": 1050000,
+      "max_output_tokens": 128000,
       "pricing": {
-        "input_per_1m": 2.5,
-        "output_per_1m": 15.0,
+        "input_per_1m": 2.0,
+        "output_per_1m": 12.0,
         "currency": "USD"
       },
       "supports_reasoning": true,
@@ -997,7 +2565,7 @@
       "supports_vision": true,
       "supports_responses_api": true,
       "supports_chat_completion": true,
-      "knowledge_cutoff": "2026-02-16",
+      "knowledge_cutoff": "Feb 16, 2026",
       "extra": {
         "endpoints": [
           {
@@ -1006,13 +2574,15 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
+        ],
+        "source": "https://developers.openai.com/api/docs/models/gpt-5.6-terra.md",
+        "default_snapshot": "gpt-5.6-terra"
       }
     },
     {
       "provider": "openai",
       "model_id": "gpt-audio",
-      "display_name": "GPT Audio",
+      "display_name": "GPT-Audio",
       "context_window": 128000,
       "max_output_tokens": 16384,
       "input_modalities": [
@@ -1024,7 +2594,7 @@
         "audio"
       ],
       "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": false,
@@ -1034,14 +2604,16 @@
       "supports_audio_input": true,
       "supports_audio_output": true,
       "pricing": {
-        "input_per_1m": 2.5,
-        "output_per_1m": 10.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
-      "aliases": [],
+      "aliases": [
+        "gpt-audio-2025-08-28"
+      ],
       "deprecated": false,
       "extra": {
-        "source": "https://github.com/gh640/openai-models-ja",
+        "source": "https://developers.openai.com/api/docs/models/gpt-audio.md",
         "category": "realtime_audio",
         "endpoints": [
           {
@@ -1050,12 +2622,16 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
-      }
+        ],
+        "default_snapshot": "gpt-audio-2025-08-28"
+      },
+      "knowledge_cutoff": "Oct 01, 2023"
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "aliases": [
+        "gpt-audio-1.5"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text",
@@ -1066,18 +2642,18 @@
         "audio"
       ],
       "model_id": "gpt-audio-1.5",
-      "display_name": "GPT Audio 1.5",
-      "context_window": 131072,
+      "display_name": "GPT-Audio-1.5",
+      "context_window": 128000,
       "max_output_tokens": 16384,
       "pricing": {
-        "input_per_1m": 4.0,
-        "output_per_1m": 16.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "supports_chat_completion": true,
       "supports_streaming": true,
       "extra": {
-        "source": "https://developers.openai.com/api/docs/pricing",
+        "source": "https://developers.openai.com/api/docs/models/gpt-audio-1.5.md",
         "category": "audio",
         "endpoints": [
           {
@@ -1086,12 +2662,22 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
-      }
+        ],
+        "default_snapshot": "gpt-audio-1.5"
+      },
+      "supports_vision": false,
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_responses_api": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Sep 30, 2024"
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "aliases": [
+        "gpt-audio-mini-2025-10-06",
+        "gpt-audio-mini-2025-12-15"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text",
@@ -1102,18 +2688,18 @@
         "audio"
       ],
       "model_id": "gpt-audio-mini",
-      "display_name": "GPT Audio Mini",
-      "context_window": 131072,
+      "display_name": "GPT-Audio Mini",
+      "context_window": 128000,
       "max_output_tokens": 16384,
       "pricing": {
-        "input_per_1m": 0.6,
-        "output_per_1m": 2.4,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "supports_chat_completion": true,
-      "supports_streaming": true,
+      "supports_streaming": false,
       "extra": {
-        "source": "https://developers.openai.com/api/docs/pricing",
+        "source": "https://developers.openai.com/api/docs/models/gpt-audio-mini.md",
         "category": "audio",
         "endpoints": [
           {
@@ -1122,38 +2708,134 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
+        ],
+        "default_snapshot": "gpt-audio-mini-2025-12-15"
+      },
+      "supports_vision": false,
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_responses_api": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Oct 01, 2023"
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-daybreak-blue-latest",
+      "display_name": "Daybreak Blue",
+      "context_window": 1050000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-5.6-sol"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-daybreak-blue-latest.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-5.6-sol",
+        "required_approval": true
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Feb 16, 2026",
+      "pricing": {
+        "input_per_1m": 4.0,
+        "output_per_1m": 20.0,
+        "currency": "USD"
       }
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "model_id": "gpt-daybreak-red-latest",
+      "display_name": "Daybreak Red",
+      "context_window": 400000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-5.6-cyber"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-daybreak-red-latest.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-5.6-cyber",
+        "required_approval": true
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Feb 16, 2026",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "aliases": [
+        "gpt-image-1"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text",
         "image"
       ],
       "output_modalities": [
-        "text",
         "image"
       ],
       "model_id": "gpt-image-1",
-      "display_name": "GPT Image 1",
-      "context_window": 131072,
-      "max_output_tokens": 32768,
+      "display_name": "GPT-Image-1",
+      "context_window": 0,
+      "max_output_tokens": 0,
       "pricing": {
-        "input_per_1m": 5.0,
-        "output_per_1m": 40.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "supports_vision": true,
       "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_chat_completion": true,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_chat_completion": false,
       "supports_responses_api": true,
       "extra": {
-        "source": "https://developers.openai.com/api/docs/pricing",
+        "source": "https://developers.openai.com/api/docs/models/gpt-image-1.md",
         "image_input_per_1m": 10.0,
         "image_cached_input_per_1m": 2.5,
         "image_output_per_1m": 40.0,
@@ -1166,38 +2848,41 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
-      }
+        ],
+        "default_snapshot": "gpt-image-1"
+      },
+      "supports_reasoning": false
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "aliases": [
+        "gpt-image-1-mini"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text",
         "image"
       ],
       "output_modalities": [
-        "text",
         "image"
       ],
       "model_id": "gpt-image-1-mini",
-      "display_name": "GPT Image 1 Mini",
-      "context_window": 131072,
-      "max_output_tokens": 32768,
+      "display_name": "GPT-Image-1 Mini",
+      "context_window": 0,
+      "max_output_tokens": 0,
       "pricing": {
-        "input_per_1m": 2.0,
-        "output_per_1m": 8.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "supports_vision": true,
       "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
       "extra": {
-        "source": "https://developers.openai.com/api/docs/pricing",
+        "source": "https://developers.openai.com/api/docs/models/gpt-image-1-mini.md",
         "image_input_per_1m": 2.5,
         "image_cached_input_per_1m": 0.25,
         "image_output_per_1m": 8.0,
@@ -1210,38 +2895,42 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
-      }
+        ],
+        "default_snapshot": "gpt-image-1-mini"
+      },
+      "supports_reasoning": false
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "aliases": [
+        "gpt-image-1.5-2025-12-16"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text",
         "image"
       ],
       "output_modalities": [
-        "text",
-        "image"
+        "image",
+        "text"
       ],
       "model_id": "gpt-image-1.5",
-      "display_name": "GPT Image 1.5",
-      "context_window": 131072,
-      "max_output_tokens": 32768,
+      "display_name": "GPT-Image-1.5",
+      "context_window": 0,
+      "max_output_tokens": 0,
       "pricing": {
-        "input_per_1m": 5.0,
-        "output_per_1m": 10.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "supports_vision": true,
       "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
       "extra": {
-        "source": "https://developers.openai.com/api/docs/pricing",
+        "source": "https://developers.openai.com/api/docs/models/gpt-image-1.5.md",
         "image_input_per_1m": 8.0,
         "image_cached_input_per_1m": 2.0,
         "image_output_per_1m": 32.0,
@@ -1256,38 +2945,41 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
-      }
+        ],
+        "default_snapshot": "gpt-image-1.5-2025-12-16"
+      },
+      "supports_reasoning": false
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "aliases": [
+        "gpt-image-2-2026-04-21"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text",
         "image"
       ],
       "output_modalities": [
-        "text",
         "image"
       ],
       "model_id": "gpt-image-2",
-      "display_name": "GPT Image 2",
-      "context_window": 131072,
-      "max_output_tokens": 32768,
+      "display_name": "GPT-Image-2",
+      "context_window": 0,
+      "max_output_tokens": 0,
       "pricing": {
-        "input_per_1m": 5.0,
-        "output_per_1m": 30.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "supports_vision": true,
       "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
       "extra": {
-        "source": "https://developers.openai.com/api/docs/pricing",
+        "source": "https://developers.openai.com/api/docs/models/gpt-image-2.md",
         "image_input_per_1m": 8.0,
         "image_cached_input_per_1m": 2.0,
         "image_output_per_1m": 30.0,
@@ -1303,8 +2995,10 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
-      }
+        ],
+        "default_snapshot": "gpt-image-2-2026-04-21"
+      },
+      "supports_reasoning": false
     },
     {
       "provider": "openai",
@@ -1357,11 +3051,12 @@
     {
       "provider": "openai",
       "model_id": "gpt-live-transcribe",
-      "display_name": "GPT Live Transcribe",
-      "context_window": 16000,
-      "max_output_tokens": 2000,
+      "display_name": "GPT-Live-Transcribe",
+      "context_window": 0,
+      "max_output_tokens": 0,
       "input_modalities": [
-        "audio"
+        "audio",
+        "text"
       ],
       "output_modalities": [
         "text"
@@ -1381,10 +3076,12 @@
         "output_per_1m": null,
         "currency": "USD"
       },
-      "aliases": [],
+      "aliases": [
+        "gpt-live-transcribe"
+      ],
       "deprecated": false,
       "extra": {
-        "source": "https://github.com/gh640/openai-models-ja",
+        "source": "https://developers.openai.com/api/docs/models/gpt-live-transcribe.md",
         "category": "realtime_audio",
         "price_per_minute": 0.017,
         "endpoints": [
@@ -1394,7 +3091,8 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
+        ],
+        "default_snapshot": "gpt-live-transcribe"
       }
     },
     {
@@ -1449,6 +3147,90 @@
     },
     {
       "provider": "openai",
+      "model_id": "gpt-oss-120b",
+      "display_name": "gpt-oss-120b",
+      "context_window": 131072,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-oss-120b"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-oss-120b.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-oss-120b"
+      },
+      "supports_vision": false,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Jun 01, 2024",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-oss-20b",
+      "display_name": "gpt-oss-20b",
+      "context_window": 131072,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-oss-20b"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-oss-20b.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-oss-20b"
+      },
+      "supports_vision": false,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Jun 01, 2024",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
       "model_id": "gpt-oss-safeguard",
       "display_name": "OpenAI GPT-OSS Safeguard",
       "context_window": 131072,
@@ -1499,32 +3281,34 @@
       "max_output_tokens": 4096,
       "input_modalities": [
         "text",
-        "image",
-        "audio"
+        "audio",
+        "image"
       ],
       "output_modalities": [
         "text",
         "audio"
       ],
       "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
+      "supports_json_mode": false,
+      "supports_streaming": false,
       "supports_vision": true,
       "supports_reasoning": false,
-      "supports_chat_completion": true,
+      "supports_chat_completion": false,
       "supports_responses_api": false,
       "supports_realtime": true,
       "supports_audio_input": true,
       "supports_audio_output": true,
       "pricing": {
-        "input_per_1m": 4.0,
-        "output_per_1m": 16.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
-      "aliases": [],
+      "aliases": [
+        "gpt-realtime-2025-08-28"
+      ],
       "deprecated": false,
       "extra": {
-        "source": "https://github.com/gh640/openai-models-ja",
+        "source": "https://developers.openai.com/api/docs/models/gpt-realtime.md",
         "category": "realtime_audio",
         "endpoints": [
           {
@@ -1533,43 +3317,47 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
-      }
+        ],
+        "default_snapshot": "gpt-realtime-2025-08-28"
+      },
+      "knowledge_cutoff": "Oct 01, 2023"
     },
     {
       "provider": "openai",
       "model_id": "gpt-realtime-1.5",
-      "display_name": "GPT-Realtime 1.5",
+      "display_name": "GPT-Realtime-1.5",
       "context_window": 32000,
       "max_output_tokens": 4096,
       "input_modalities": [
         "text",
-        "image",
-        "audio"
+        "audio",
+        "image"
       ],
       "output_modalities": [
         "text",
         "audio"
       ],
       "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
+      "supports_json_mode": false,
+      "supports_streaming": false,
       "supports_vision": true,
       "supports_reasoning": false,
-      "supports_chat_completion": true,
+      "supports_chat_completion": false,
       "supports_responses_api": false,
       "supports_realtime": true,
       "supports_audio_input": true,
       "supports_audio_output": true,
       "pricing": {
-        "input_per_1m": 4.0,
-        "output_per_1m": 16.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
-      "aliases": [],
+      "aliases": [
+        "gpt-realtime-1.5"
+      ],
       "deprecated": false,
       "extra": {
-        "source": "https://github.com/gh640/openai-models-ja",
+        "source": "https://developers.openai.com/api/docs/models/gpt-realtime-1.5.md",
         "category": "realtime_audio",
         "endpoints": [
           {
@@ -1578,43 +3366,47 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
-      }
+        ],
+        "default_snapshot": "gpt-realtime-1.5"
+      },
+      "knowledge_cutoff": "Sep 30, 2024"
     },
     {
       "provider": "openai",
       "model_id": "gpt-realtime-2",
-      "display_name": "GPT-Realtime 2",
+      "display_name": "GPT-Realtime-2",
       "context_window": 128000,
       "max_output_tokens": 32000,
       "input_modalities": [
         "text",
-        "image",
-        "audio"
+        "audio",
+        "image"
       ],
       "output_modalities": [
         "text",
         "audio"
       ],
       "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
+      "supports_json_mode": false,
+      "supports_streaming": false,
       "supports_vision": true,
       "supports_reasoning": true,
-      "supports_chat_completion": true,
+      "supports_chat_completion": false,
       "supports_responses_api": false,
       "supports_realtime": true,
       "supports_audio_input": true,
       "supports_audio_output": true,
       "pricing": {
-        "input_per_1m": 4.0,
-        "output_per_1m": 24.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
-      "aliases": [],
+      "aliases": [
+        "gpt-realtime-2"
+      ],
       "deprecated": false,
       "extra": {
-        "source": "https://github.com/gh640/openai-models-ja",
+        "source": "https://developers.openai.com/api/docs/models/gpt-realtime-2.md",
         "category": "realtime_audio",
         "endpoints": [
           {
@@ -1623,29 +3415,33 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
-      }
+        ],
+        "default_snapshot": "gpt-realtime-2"
+      },
+      "knowledge_cutoff": "Sep 30, 2024"
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "aliases": [
+        "gpt-realtime-2.1"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text",
-        "image",
-        "audio"
+        "audio",
+        "image"
       ],
       "output_modalities": [
         "text",
         "audio"
       ],
       "model_id": "gpt-realtime-2.1",
-      "display_name": "GPT-Realtime 2.1",
-      "context_window": 131072,
-      "max_output_tokens": 16384,
+      "display_name": "GPT-Realtime-2.1",
+      "context_window": 128000,
+      "max_output_tokens": 32000,
       "pricing": {
-        "input_per_1m": 4.0,
-        "output_per_1m": 24.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "supports_vision": true,
@@ -1661,29 +3457,36 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
-      }
+        ],
+        "source": "https://developers.openai.com/api/docs/models/gpt-realtime-2.1.md",
+        "default_snapshot": "gpt-realtime-2.1"
+      },
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "knowledge_cutoff": "Sep 30, 2024"
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "aliases": [
+        "gpt-realtime-2.1-mini"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text",
-        "image",
-        "audio"
+        "audio",
+        "image"
       ],
       "output_modalities": [
         "text",
         "audio"
       ],
       "model_id": "gpt-realtime-2.1-mini",
-      "display_name": "GPT-Realtime 2.1 Mini",
-      "context_window": 131072,
-      "max_output_tokens": 16384,
+      "display_name": "GPT-Realtime-2.1 Mini",
+      "context_window": 128000,
+      "max_output_tokens": 32000,
       "pricing": {
-        "input_per_1m": 0.6,
-        "output_per_1m": 2.4,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "supports_vision": true,
@@ -1699,8 +3502,13 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
-      }
+        ],
+        "source": "https://developers.openai.com/api/docs/models/gpt-realtime-2.1-mini.md",
+        "default_snapshot": "gpt-realtime-2.1-mini"
+      },
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "knowledge_cutoff": "Sep 30, 2024"
     },
     {
       "provider": "openai",
@@ -1718,24 +3526,27 @@
         "audio"
       ],
       "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
+      "supports_json_mode": false,
+      "supports_streaming": false,
       "supports_vision": true,
       "supports_reasoning": false,
-      "supports_chat_completion": true,
+      "supports_chat_completion": false,
       "supports_responses_api": false,
       "supports_realtime": true,
       "supports_audio_input": true,
       "supports_audio_output": true,
       "pricing": {
-        "input_per_1m": 0.6,
-        "output_per_1m": 2.4,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
-      "aliases": [],
+      "aliases": [
+        "gpt-realtime-mini-2025-10-06",
+        "gpt-realtime-mini-2025-12-15"
+      ],
       "deprecated": false,
       "extra": {
-        "source": "https://github.com/gh640/openai-models-ja",
+        "source": "https://developers.openai.com/api/docs/models/gpt-realtime-mini.md",
         "category": "realtime_audio",
         "endpoints": [
           {
@@ -1744,32 +3555,37 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
-      }
+        ],
+        "default_snapshot": "gpt-realtime-mini-2025-12-15"
+      },
+      "knowledge_cutoff": "Oct 01, 2023"
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "aliases": [
+        "gpt-realtime-translate"
+      ],
       "deprecated": false,
       "input_modalities": [
         "audio"
       ],
       "output_modalities": [
-        "audio"
+        "audio",
+        "text"
       ],
       "model_id": "gpt-realtime-translate",
-      "display_name": "GPT Realtime Translate",
-      "context_window": 0,
-      "max_output_tokens": 0,
+      "display_name": "GPT-Realtime-Translate",
+      "context_window": 16000,
+      "max_output_tokens": 2000,
       "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "supports_chat_completion": false,
       "supports_streaming": true,
       "extra": {
-        "source": "https://developers.openai.com/api/docs/pricing",
+        "source": "https://developers.openai.com/api/docs/models/gpt-realtime-translate.md",
         "price_per_minute": 0.034,
         "billing_unit": "per_minute",
         "endpoints": [
@@ -1779,32 +3595,42 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
-      }
+        ],
+        "default_snapshot": "gpt-realtime-translate"
+      },
+      "supports_vision": false,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_responses_api": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Sep 30, 2024"
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "aliases": [
+        "gpt-realtime-whisper"
+      ],
       "deprecated": false,
       "input_modalities": [
-        "audio"
+        "audio",
+        "text"
       ],
       "output_modalities": [
         "text"
       ],
       "model_id": "gpt-realtime-whisper",
-      "display_name": "GPT Realtime Whisper",
-      "context_window": 0,
-      "max_output_tokens": 0,
+      "display_name": "GPT-Realtime-Whisper",
+      "context_window": 16000,
+      "max_output_tokens": 2000,
       "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "supports_chat_completion": false,
       "supports_streaming": true,
       "extra": {
-        "source": "https://developers.openai.com/api/docs/pricing",
+        "source": "https://developers.openai.com/api/docs/models/gpt-realtime-whisper.md",
         "price_per_minute": 0.017,
         "billing_unit": "per_minute",
         "endpoints": [
@@ -1814,18 +3640,25 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
-      }
+        ],
+        "default_snapshot": "gpt-realtime-whisper"
+      },
+      "supports_vision": false,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_responses_api": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Sep 30, 2024"
     },
     {
       "provider": "openai",
       "model_id": "gpt-transcribe",
-      "display_name": "GPT Transcribe",
-      "context_window": 16000,
-      "max_output_tokens": 2000,
+      "display_name": "GPT-Transcribe",
+      "context_window": 0,
+      "max_output_tokens": 0,
       "input_modalities": [
-        "text",
-        "audio"
+        "audio",
+        "text"
       ],
       "output_modalities": [
         "text"
@@ -1845,10 +3678,12 @@
         "output_per_1m": null,
         "currency": "USD"
       },
-      "aliases": [],
+      "aliases": [
+        "gpt-transcribe"
+      ],
       "deprecated": false,
       "extra": {
-        "source": "https://github.com/gh640/openai-models-ja",
+        "source": "https://developers.openai.com/api/docs/models/gpt-transcribe.md",
         "category": "realtime_audio",
         "price_per_minute": 0.0045,
         "endpoints": [
@@ -1858,19 +3693,19 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
+        ],
+        "default_snapshot": "gpt-transcribe"
       }
     },
     {
       "provider": "openai",
       "model_id": "o1",
-      "display_name": "OpenAI: o1",
+      "display_name": "o1",
       "context_window": 200000,
       "max_output_tokens": 100000,
       "input_modalities": [
         "text",
-        "image",
-        "file"
+        "image"
       ],
       "output_modalities": [
         "text"
@@ -1889,14 +3724,16 @@
       "supports_fim": false,
       "license_type": "api",
       "tokenizer_name": "",
-      "knowledge_cutoff": "2023-10-31",
+      "knowledge_cutoff": "Oct 01, 2023",
       "pricing": {
         "input_per_1m": 15.0,
         "output_per_1m": 60.0,
         "currency": "USD"
       },
-      "deprecated": true,
-      "aliases": [],
+      "deprecated": false,
+      "aliases": [
+        "o1-2024-12-17"
+      ],
       "reasoning_effort_values": [
         "none",
         "low",
@@ -1911,12 +3748,400 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
+        ],
+        "source": "https://developers.openai.com/api/docs/models/o1.md",
+        "default_snapshot": "o1-2024-12-17"
       }
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "model_id": "o1-mini",
+      "display_name": "o1-mini",
+      "context_window": 128000,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "o1-mini-2024-09-12"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/o1-mini.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "o1-mini-2024-09-12"
+      },
+      "supports_vision": false,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_responses_api": false,
+      "supports_chat_completion": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Oct 01, 2023",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "o1-preview",
+      "display_name": "o1 Preview",
+      "context_window": 128000,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "o1-preview-2024-09-12"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/o1-preview.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "o1-preview-2024-09-12"
+      },
+      "supports_vision": false,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": false,
+      "supports_chat_completion": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Oct 01, 2023",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "o1-pro",
+      "display_name": "o1-pro",
+      "context_window": 200000,
+      "max_output_tokens": 100000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "o1-pro-2025-03-19"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/o1-pro.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "o1-pro-2025-03-19"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": false,
+      "supports_responses_api": true,
+      "supports_chat_completion": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Oct 01, 2023",
+      "pricing": {
+        "input_per_1m": 150.0,
+        "output_per_1m": 600.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "o3",
+      "display_name": "o3",
+      "context_window": 200000,
+      "max_output_tokens": 100000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "o3-2025-04-16"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/o3.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "o3-2025-04-16"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Jun 01, 2024",
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 8.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "o3-deep-research",
+      "display_name": "o3-deep-research",
+      "context_window": 200000,
+      "max_output_tokens": 100000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "o3-deep-research-2025-06-26"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/o3-deep-research.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "o3-deep-research-2025-06-26"
+      },
+      "supports_vision": true,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Jun 01, 2024",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "o3-mini",
+      "display_name": "o3-mini",
+      "context_window": 200000,
+      "max_output_tokens": 100000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "o3-mini-2025-01-31"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/o3-mini.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "o3-mini-2025-01-31"
+      },
+      "supports_vision": false,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Oct 01, 2023",
+      "pricing": {
+        "input_per_1m": 1.1,
+        "output_per_1m": 4.4,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "o3-pro",
+      "display_name": "o3-pro",
+      "context_window": 200000,
+      "max_output_tokens": 100000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "o3-pro-2025-06-10"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/o3-pro.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "o3-pro-2025-06-10"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": false,
+      "supports_responses_api": true,
+      "supports_chat_completion": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Jun 01, 2024",
+      "pricing": {
+        "input_per_1m": 20.0,
+        "output_per_1m": 80.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "o4-mini",
+      "display_name": "o4-mini",
+      "context_window": 200000,
+      "max_output_tokens": 100000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "o4-mini-2025-04-16"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/o4-mini.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "o4-mini-2025-04-16"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Jun 01, 2024",
+      "pricing": {
+        "input_per_1m": 1.1,
+        "output_per_1m": 4.4,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "o4-mini-deep-research",
+      "display_name": "o4-mini-deep-research",
+      "context_window": 200000,
+      "max_output_tokens": 100000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "o4-mini-deep-research-2025-06-26"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/o4-mini-deep-research.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "o4-mini-deep-research-2025-06-26"
+      },
+      "supports_vision": true,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Jun 01, 2024",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "aliases": [
+        "omni-moderation-2024-09-26"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text",
@@ -1926,19 +4151,19 @@
         "text"
       ],
       "model_id": "omni-moderation-latest",
-      "display_name": "Omni Moderation Latest",
-      "context_window": 32768,
+      "display_name": "omni-moderation",
+      "context_window": 0,
       "max_output_tokens": 0,
       "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "supports_chat_completion": false,
       "supports_streaming": false,
       "supports_vision": true,
       "extra": {
-        "source": "https://developers.openai.com/api/docs/pricing",
+        "source": "https://developers.openai.com/api/docs/models/omni-moderation-latest.md",
         "category": "moderation",
         "note": "Free",
         "endpoints": [
@@ -1948,8 +4173,13 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
-      }
+        ],
+        "default_snapshot": "omni-moderation-2024-09-26"
+      },
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_responses_api": false,
+      "supports_reasoning": false
     },
     {
       "provider": "openai",
@@ -6982,29 +9212,34 @@
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "aliases": [
+        "sora-2-2025-12-08",
+        "sora-2-2025-10-06",
+        "sora-2"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text",
         "image"
       ],
       "output_modalities": [
-        "video"
+        "video",
+        "audio"
       ],
       "model_id": "sora-2",
       "display_name": "Sora 2",
       "context_window": 0,
       "max_output_tokens": 0,
       "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "supports_chat_completion": false,
       "supports_streaming": false,
       "supports_vision": true,
       "extra": {
-        "source": "https://developers.openai.com/api/docs/pricing",
+        "source": "https://developers.openai.com/api/docs/models/sora-2.md",
         "price_per_second_720p": 0.1,
         "batch_price_per_second_720p": 0.05,
         "billing_unit": "per_second",
@@ -7015,34 +9250,43 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
-      }
+        ],
+        "default_snapshot": "sora-2-2025-12-08"
+      },
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_responses_api": false,
+      "supports_reasoning": false
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "aliases": [
+        "sora-2-pro-2025-10-06",
+        "sora-2-pro"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text",
         "image"
       ],
       "output_modalities": [
-        "video"
+        "video",
+        "audio"
       ],
       "model_id": "sora-2-pro",
       "display_name": "Sora 2 Pro",
       "context_window": 0,
       "max_output_tokens": 0,
       "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "supports_chat_completion": false,
       "supports_streaming": false,
       "supports_vision": true,
       "extra": {
-        "source": "https://developers.openai.com/api/docs/pricing",
+        "source": "https://developers.openai.com/api/docs/models/sora-2-pro.md",
         "price_per_second_720p": 0.3,
         "price_per_second_1024p": 0.5,
         "price_per_second_1080p": 0.7,
@@ -7057,33 +9301,40 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
-      }
+        ],
+        "default_snapshot": "sora-2-pro-2025-10-06"
+      },
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_responses_api": false,
+      "supports_reasoning": false
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "aliases": [
+        "text-embedding-3-large"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text"
       ],
       "output_modalities": [
-        "embedding"
+        "text"
       ],
       "model_id": "text-embedding-3-large",
-      "display_name": "Text Embedding 3 Large",
-      "context_window": 8191,
+      "display_name": "text-embedding-3-large",
+      "context_window": 0,
       "max_output_tokens": 0,
       "pricing": {
-        "input_per_1m": 0.13,
-        "output_per_1m": 0.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "supports_chat_completion": false,
       "supports_streaming": false,
       "supports_function_calling": false,
       "extra": {
-        "source": "https://developers.openai.com/api/docs/pricing",
+        "source": "https://developers.openai.com/api/docs/models/text-embedding-3-large.md",
         "category": "embedding",
         "endpoints": [
           {
@@ -7092,33 +9343,40 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
-      }
+        ],
+        "default_snapshot": "text-embedding-3-large"
+      },
+      "supports_vision": false,
+      "supports_json_mode": false,
+      "supports_responses_api": false,
+      "supports_reasoning": false
     },
     {
       "provider": "openai",
-      "aliases": [],
+      "aliases": [
+        "text-embedding-3-small"
+      ],
       "deprecated": false,
       "input_modalities": [
         "text"
       ],
       "output_modalities": [
-        "embedding"
+        "text"
       ],
       "model_id": "text-embedding-3-small",
-      "display_name": "Text Embedding 3 Small",
-      "context_window": 8191,
+      "display_name": "text-embedding-3-small",
+      "context_window": 0,
       "max_output_tokens": 0,
       "pricing": {
-        "input_per_1m": 0.02,
-        "output_per_1m": 0.0,
+        "input_per_1m": null,
+        "output_per_1m": null,
         "currency": "USD"
       },
       "supports_chat_completion": false,
       "supports_streaming": false,
       "supports_function_calling": false,
       "extra": {
-        "source": "https://developers.openai.com/api/docs/pricing",
+        "source": "https://developers.openai.com/api/docs/models/text-embedding-3-small.md",
         "category": "embedding",
         "endpoints": [
           {
@@ -7127,14 +9385,144 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
+        ],
+        "default_snapshot": "text-embedding-3-small"
+      },
+      "supports_vision": false,
+      "supports_json_mode": false,
+      "supports_responses_api": false,
+      "supports_reasoning": false
+    },
+    {
+      "provider": "openai",
+      "model_id": "text-embedding-ada-002",
+      "display_name": "text-embedding-ada-002",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "text-embedding-ada-002"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/text-embedding-ada-002.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "text-embedding-ada-002"
+      },
+      "supports_vision": false,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_responses_api": false,
+      "supports_chat_completion": false,
+      "supports_reasoning": false,
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "text-moderation-latest",
+      "display_name": "text-moderation",
+      "context_window": 0,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "text-moderation-007"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/text-moderation-latest.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "text-moderation-007"
+      },
+      "supports_vision": false,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_responses_api": false,
+      "supports_chat_completion": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Sep 01, 2021",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "text-moderation-stable",
+      "display_name": "text-moderation-stable",
+      "context_window": 0,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "text-moderation-007"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/text-moderation-stable.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "text-moderation-007"
+      },
+      "supports_vision": false,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_responses_api": false,
+      "supports_chat_completion": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": "Sep 01, 2021",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
       }
     },
     {
       "provider": "openai",
       "model_id": "tts-1",
-      "display_name": "OpenAI: TTS-1",
-      "context_window": 1,
+      "display_name": "TTS-1",
+      "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -7144,7 +9532,7 @@
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
-      "supports_streaming": true,
+      "supports_streaming": false,
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": false,
@@ -7157,8 +9545,10 @@
       "license_type": "license",
       "tokenizer_name": "",
       "knowledge_cutoff": null,
-      "deprecated": true,
-      "aliases": [],
+      "deprecated": false,
+      "aliases": [
+        "tts-1"
+      ],
       "extra": {
         "endpoints": [
           {
@@ -7167,14 +9557,21 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
+        ],
+        "source": "https://developers.openai.com/api/docs/models/tts-1.md",
+        "default_snapshot": "tts-1"
+      },
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
       }
     },
     {
       "provider": "openai",
       "model_id": "tts-1-hd",
-      "display_name": "OpenAI: TTS-1 HD",
-      "context_window": 1,
+      "display_name": "TTS-1 HD",
+      "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -7184,7 +9581,7 @@
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
-      "supports_streaming": true,
+      "supports_streaming": false,
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": false,
@@ -7197,8 +9594,10 @@
       "license_type": "license",
       "tokenizer_name": "",
       "knowledge_cutoff": null,
-      "deprecated": true,
-      "aliases": [],
+      "deprecated": false,
+      "aliases": [
+        "tts-1-hd"
+      ],
       "extra": {
         "endpoints": [
           {
@@ -7207,7 +9606,55 @@
             "auth": "bearer",
             "source": "https://platform.openai.com/docs/api-reference"
           }
-        ]
+        ],
+        "source": "https://developers.openai.com/api/docs/models/tts-1-hd.md",
+        "default_snapshot": "tts-1-hd"
+      },
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "whisper-1",
+      "display_name": "Whisper",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "whisper-1"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/whisper-1.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "whisper-1"
+      },
+      "supports_vision": false,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_responses_api": false,
+      "supports_chat_completion": false,
+      "supports_reasoning": false,
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
       }
     }
   ]
