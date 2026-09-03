@@ -3972,3 +3972,20 @@
 - Synthetic `~*/…-latest` aliases retained (9)
 - Replaced thin 14-model placeholder catalog
 - Install copy synced
+
+## OpenRouter refresh (2026-09-03)
+
+### Source
+- API: `https://openrouter.ai/api/v1/models` (live → `_scratch_openrouter_models.json`)
+- Docs: https://openrouter.ai/docs
+- Apply: `scripts/_update_openrouter.py`
+
+### Result
+- openrouter.json: **424** models (active=424, deprecated=0, priced=398, free=21, dynamic=5, extra=424)
+- vision=256, reasoning=300, tools=358, cache_pricing=257
+- native providers: 51 (top: [('openai', 89), ('qwen', 53), ('google', 43), ('anthropic', 27), ('mistralai', 20), ('deepseek', 16), ('z-ai', 16), ('minimax', 11), ('nvidia', 9), ('meta-llama', 8)])
+- Pricing: API per-token ×1e6 → USD/1M; router prompt=-1 → catalog -1000000.0
+- Cache: input_cache_read/write(/1h) in extra when present
+- Synthetic `~*/…-latest` aliases retained (9)
+- Replaced thin 14-model placeholder catalog
+- Install copy synced
