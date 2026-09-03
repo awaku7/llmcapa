@@ -36,7 +36,6 @@ Output format (huggingface.json):
 """
 
 import json
-import os
 import re
 import sys
 import time
@@ -113,28 +112,37 @@ def convert_to_catalog_format(raw_models: list) -> list:
 
         pipeline_tag = m.get("pipeline_tag", PIPELINE_FILTER)
 
-        # Determine modalities based on model id hints
+        # Determine modalities from HuggingFace's task metadata, not model
+        # names. Model-name heuristics are brittle and misclassify new models.
         input_mods = ["text"]
         output_mods = ["text"]
         supports_vision = False
         supports_audio_input = False
         supports_audio_output = False
 
-        lid = model_id.lower()
+        metadata = {str(pipeline_tag).lower()}
+        metadata.update(str(tag).lower() for tag in (m.get("tags") or []))
+        image_tasks = {
+            "image-text-to-text",
+            "visual-question-answering",
+            "image-feature-extraction",
+            "image-to-text",
+        }
+        audio_input_tasks = {
+            "automatic-speech-recognition",
+            "audio-classification",
+            "audio-to-audio",
+        }
+        audio_output_tasks = {"text-to-speech", "text-to-audio"}
 
-        if any(kw in lid for kw in ["vl", "vision", "visual", "vlm", "llava", "cogvlm", "qwen-vl", "idefics", "fuyu"]):
-            if "text" not in input_mods:
-                input_mods.append("image")
+        if metadata & image_tasks:
+            input_mods.append("image")
             supports_vision = True
-
-        if any(kw in lid for kw in ["whisper", "voice", "speech", "audio", "wav2vec", "hubert"]):
-            if "audio" not in input_mods:
-                input_mods.append("audio")
+        if metadata & audio_input_tasks:
+            input_mods.append("audio")
             supports_audio_input = True
-
-        if any(kw in lid for kw in ["tts", "vall-e", "bark", "cosyvoice"]):
-            if "audio" not in output_mods:
-                output_mods.append("audio")
+        if metadata & audio_output_tasks:
+            output_mods.append("audio")
             supports_audio_output = True
 
         entry = {
@@ -185,33 +193,12 @@ def main():
             unique.append(m)
     print(f"Unique models: {len(unique)}")
 
-    fallback = {
-        "provider": "huggingface",
-        "model_id": "huggingface-default",
-        "display_name": "HuggingFace Inference API (default fallback)",
-        "context_window": 4096,
-        "max_output_tokens": 1024,
-        "input_modalities": ["text"],
-        "output_modalities": ["text"],
-        "supports_function_calling": False,
-        "supports_json_mode": False,
-        "supports_streaming": True,
-        "supports_vision": False,
-        "supports_reasoning": False,
-        "supports_chat_completion": True,
-        "supports_responses_api": False,
-        "supports_reasoning_effort": False,
-        "supports_thinking_budget": False,
-        "supports_anthropic_api": False,
-        "supports_google_api": False,
-        "supports_fim": False,
-        "license_type": "unknown",
-        "tokenizer_name": "",
-        "knowledge_cutoff": None,
-        "deprecated": False,
-        "aliases": [],
-    }
-    output = {"models": [fallback] + unique}
+    if not unique:
+        raise RuntimeError(
+            "HuggingFace API returned no models; refusing to create a catalog "
+            "with a fabricated fallback model"
+        )
+    output = {"models": unique}
 
     if save:
         proj_root = Path(__file__).resolve().parent.parent
@@ -220,7 +207,7 @@ def main():
             json.dump(output, f, ensure_ascii=False, indent=2)
         print(f"Saved to {out_path}")
     else:
-        print(f"\nSample entries:")
+        print("\nSample entries:")
         for m in unique[:3]:
             print(f"  {m['model_id']} (pipeline={m['pipeline_tag']}, ctx={m['context_window']}, downloads={m['downloads']})")
 

@@ -23,6 +23,18 @@ def test_estimate_cost():
     assert res2["currency"] == "USD"
 
 
+def test_estimate_cost_treats_unknown_rates_as_zero():
+    cap = Capability(
+        provider="test",
+        model_id="unknown-pricing",
+        pricing={"input_per_1m": None, "output_per_1m": None, "currency": "USD"},
+    )
+    assert cap.estimate_cost(input_tokens=1000, output_tokens=1000) == {
+        "cost": 0.0,
+        "currency": "USD",
+    }
+
+
 def test_can_be_replaced_by():
     gpt4o = llmcapa.get("gpt-4o")
     gpt4o_mini = llmcapa.get("gpt-4o-mini")

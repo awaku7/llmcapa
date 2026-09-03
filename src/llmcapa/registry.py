@@ -219,9 +219,11 @@ class Registry:
         pricing_data = r.get("pricing") or {}
         pricing = None
         if pricing_data.get("prompt") is not None:
+            prompt_rate = float(pricing_data.get("prompt") or 0)
+            completion_rate = float(pricing_data.get("completion") or 0)
             pricing = {
-                "input_per_1m": float(pricing_data.get("prompt", 0)) * 1000000,
-                "output_per_1m": float(pricing_data.get("completion", 0)) * 1000000,
+                "input_per_1m": prompt_rate * 1000000,
+                "output_per_1m": completion_rate * 1000000,
                 "currency": "USD",
             }
 
@@ -561,8 +563,29 @@ class Registry:
         self._ensure_loaded()
         if provider is not None:
             # Scoped lookup: search only within the given provider
+            normalized_provider = self._normalize_provider(provider)
             matching_providers = self._matching_providers(provider)
-            for prov in matching_providers:
+            # If the requested name is an actual provider, use that catalog
+            # only. Otherwise resolve the name through its aliases. This
+            # prevents alias queries such as provider="qwen" from combining
+            # qwen and alibaba catalogs and returning duplicate model IDs.
+            canonical_provider = next(
+                (
+                    canonical
+                    for canonical, aliases in self._provider_aliases.items()
+                    if normalized_provider == canonical
+                    or normalized_provider in aliases
+                ),
+                normalized_provider,
+            )
+            ordered_providers = (
+                [normalized_provider]
+                if normalized_provider in self._by_provider
+                else [canonical_provider]
+                if canonical_provider in self._by_provider
+                else sorted(matching_providers)
+            )
+            for prov in ordered_providers:
                 prov_index = self._by_provider.get(prov)
                 if prov_index is not None:
                     for key in self._lookup_candidates(model_id):
@@ -592,9 +615,28 @@ class Registry:
         """Return capabilities, optionally filtered by provider."""
         self._ensure_loaded()
         if provider is not None:
+            normalized_provider = self._normalize_provider(provider)
             matching_providers = self._matching_providers(provider)
+            # Prefer an exact provider catalog when it exists. Alias names
+            # such as "bedrock" still fall back to their canonical provider.
+            canonical_provider = next(
+                (
+                    canonical
+                    for canonical, aliases in self._provider_aliases.items()
+                    if normalized_provider == canonical
+                    or normalized_provider in aliases
+                ),
+                normalized_provider,
+            )
+            providers_to_list = (
+                [normalized_provider]
+                if normalized_provider in self._by_provider
+                else [canonical_provider]
+                if canonical_provider in self._by_provider
+                else sorted(matching_providers)
+            )
             result: list[Capability] = []
-            for prov in matching_providers:
+            for prov in providers_to_list:
                 idx = self._by_provider.get(prov)
                 if idx:
                     result.extend(idx.values())

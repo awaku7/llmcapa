@@ -270,9 +270,19 @@ def test_provider_alias_hf_resolves_to_huggingface() -> None:
     assert cap.model_id == "huggingface-default"
 
 
+def test_provider_alias_does_not_duplicate_existing_provider_catalog() -> None:
+    models = llmcapa.list_models(provider="qwen")
+    model_ids = [model.model_id.lower() for model in models]
+    assert len(model_ids) == len(set(model_ids))
+    assert all(model.provider == "qwen" for model in models)
+
+
 def test_provider_alias_alibaba_dashscope_to_qwen() -> None:
     """provider='alibaba' / 'dashscope' should resolve to qwen."""
     for alias in ("alibaba", "dashscope"):
+        models = llmcapa.list_models(provider=alias)
+        model_ids = [model.model_id.lower() for model in models]
+        assert len(model_ids) == len(set(model_ids))
         cap = llmcapa.get("qwen3-32b", provider=alias)
         assert cap.provider in (
             "qwen",

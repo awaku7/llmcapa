@@ -1,5 +1,11 @@
 """Playwright: click Kimi pricing tabs to reveal prices."""
-import sys, json, traceback
+import json
+import re
+import sys
+import traceback
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
 try:
     from playwright.sync_api import sync_playwright
 except ImportError:
@@ -14,9 +20,18 @@ try:
         page.wait_for_timeout(3000)
         
         results = {}
-        
-        # Click each pricing tab to reveal data
-        tabs = ["Kimi K2.7 Code", "Kimi K2.6", "Kimi K2.5", "Moonshot V1"]
+
+        # Discover pricing tabs from the page instead of maintaining a fixed
+        # list of model names. The page may add or retire models at any time.
+        candidates = page.locator("button, a").all_inner_texts()
+        tabs = []
+        pattern = r"(?:Kimi\s+K[0-9]+(?:\.[0-9]+)?(?:\s+Code)?|Moonshot\s+V[0-9]+)"
+        for label in candidates:
+            for match in re.findall(pattern, " ".join(label.split())):
+                tab_name = match.strip()
+                if tab_name not in tabs:
+                    tabs.append(tab_name)
+
         for tab_name in tabs:
             try:
                 # Try clicking the tab button

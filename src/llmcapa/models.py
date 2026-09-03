@@ -381,8 +381,11 @@ class Capability:
         if not self.pricing:
             return {"cost": 0.0, "currency": "USD"}
 
-        in_rate = float(self.pricing.get("input_per_1m", 0.0))
-        out_rate = float(self.pricing.get("output_per_1m", 0.0))
+        # Catalogs may include a pricing object even when one or both rates
+        # are unknown (represented as None). Treat unknown rates as zero,
+        # just like a missing pricing field, instead of raising TypeError.
+        in_rate = float(self.pricing.get("input_per_1m") or 0.0)
+        out_rate = float(self.pricing.get("output_per_1m") or 0.0)
         currency = self.pricing.get("currency", "USD")
 
         cost = ((input_tokens * in_rate) + (output_tokens * out_rate)) / 1000000.0

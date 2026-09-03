@@ -1,5 +1,7 @@
 """Playwright: scrape Azure AI Foundry pricing page."""
-import sys, json, traceback
+import json
+import sys
+import traceback
 try:
     from playwright.sync_api import sync_playwright
 except ImportError:

@@ -1,5 +1,7 @@
 """Playwright: scrape Anthropic model specs and pricing from official docs."""
-import sys, json, traceback
+import json
+import sys
+import traceback
 try:
     from playwright.sync_api import sync_playwright
 except ImportError:
@@ -28,26 +30,38 @@ try:
         page = browser.new_page()
         page.goto("https://platform.claude.com/docs/en/about-claude/pricing", wait_until="networkidle", timeout=60000)
         page.wait_for_timeout(5000)
-        pricing_text = page.inner_text("body")
+        pricing_html = page.content()
         page.close()
-        
+
         browser.close()
-        
-        # Parse pricing table
-        # Extract model -> price mappings
-        result = {
-            "models_scraped": True,
-            "models_page_len": len(models_text),
-            "pricing_page_len": len(pricing_text),
-            "extracted_pricing": {
-                "claude-fable-5": {"input": 10.0, "output": 50.0, "ctx": 1048576, "max_out": 131072},
-                "claude-opus-4-8": {"input": 5.0, "output": 25.0, "ctx": 1048576, "max_out": 131072},
-                "claude-opus-4-7": {"input": 5.0, "output": 25.0, "ctx": 1048576, "max_out": 131072},
-                "claude-opus-4-6": {"input": 5.0, "output": 25.0, "ctx": 1048576, "max_out": 131072},
-                "claude-sonnet-5": {"input": 3.0, "output": 15.0, "ctx": 1048576, "max_out": 131072},
-                "claude-sonnet-4-6": {"input": 3.0, "output": 15.0, "ctx": 1048576, "max_out": 131072},
-                "claude-haiku-4-5": {"input": 1.0, "output": 5.0, "ctx": 200000, "max_out": 65536},
+
+        # Parse the live pricing table.  Keep model IDs and values entirely
+        # data-driven so newly added or retired Claude models are reflected
+        # without editing this scraper.
+        from pathlib import Path
+
+        scripts_dir = str(Path(__file__).resolve().parent)
+        if scripts_dir not in sys.path:
+            sys.path.insert(0, scripts_dir)
+        from _update_anthropic import _model_id, discover_pricing
+
+        extracted_pricing = {}
+        for row in discover_pricing(pricing_html):
+            model_id = _model_id(row["name"])
+            extracted_pricing[model_id] = {
+                "input": row["input"],
+                "output": row["output"],
+                "cache_5m": row["cache_5m"],
+                "cache_1h": row["cache_1h"],
+                "cache_hit": row["cache_hit"],
+                "deprecated": row["deprecated"],
             }
+
+        result = {
+            "models_scraped": bool(extracted_pricing),
+            "models_page_len": len(models_text),
+            "pricing_page_len": len(pricing_html),
+            "extracted_pricing": extracted_pricing,
         }
         print(json.dumps(result, ensure_ascii=False))
 except Exception as e:

@@ -1,5 +1,24 @@
 """Playwright: scrape NVIDIA AI models pricing."""
-import sys, json, traceback
+import json
+import re
+import sys
+import traceback
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+
+
+def parse_model_cards(text: str) -> list[str]:
+    """Extract titles that follow the page's generic ``Model`` markers."""
+    lines = [" ".join(line.split()) for line in text.splitlines() if line.strip()]
+    names = []
+    for index, line in enumerate(lines[:-1]):
+        if line == "Model":
+            candidate = lines[index + 1]
+            if candidate and not re.fullmatch(r"(?:Link|Docs|Explore|Model)", candidate):
+                if candidate not in names:
+                    names.append(candidate)
+    return names
 try:
     from playwright.sync_api import sync_playwright
 except ImportError:
@@ -15,7 +34,13 @@ try:
         text = page.inner_text("body")
         browser.close()
         
-        result = {"nvidia_scraped": True, "text_len": len(text), "text": text[:20000]}
+        model_names = parse_model_cards(text)
+        result = {
+            "nvidia_scraped": bool(model_names),
+            "text_len": len(text),
+            "model_names": model_names,
+            "text": text[:20000],
+        }
         print(json.dumps(result, ensure_ascii=False))
 except Exception as e:
     print(json.dumps({"error": str(e), "traceback": traceback.format_exc()}, ensure_ascii=False))

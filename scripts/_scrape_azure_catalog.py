@@ -21,7 +21,6 @@ import asyncio
 import json
 import re
 import sys
-import time
 from pathlib import Path
 
 try:
@@ -170,7 +169,7 @@ async def fetch_ssr_detail(page, model_name: str) -> dict:
         await page.wait_for_timeout(500)
 
     text = await page.evaluate("document.body.innerText")
-    lines = [l.strip() for l in text.split("\n") if l.strip()]
+    lines = [line.strip() for line in text.split("\n") if line.strip()]
 
     # Extract quick facts
     qf = {}
@@ -281,7 +280,7 @@ async def main():
                 seen.add(m["model_id"])
                 unique.append(m)
 
-        print(f"\n=== Summary ===")
+        print("\n=== Summary ===")
         print(f"  SSR page 1 models:  {len(ssr_names)}")
         print(f"  API models:         {len(api_entries)}")
         print(f"  SSR-only models:    {len(ssr_only)}")
