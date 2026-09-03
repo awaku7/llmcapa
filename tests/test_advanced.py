@@ -1,14 +1,16 @@
 import sys
 from pathlib import Path
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 import llmcapa
 from llmcapa import Capability
+
 
 def test_estimate_cost():
     # Test model with pricing
     gpt = llmcapa.get("gpt-4o")
     assert gpt.pricing is not None
-    
+
     # input_per_1m = 2.5, output_per_1m = 10.0
     res = gpt.estimate_cost(input_tokens=1000000, output_tokens=1000000)
     assert res["cost"] == 12.5
@@ -19,6 +21,7 @@ def test_estimate_cost():
     res2 = claude.estimate_cost(input_tokens=1000, output_tokens=1000)
     assert res2["cost"] == 0.018
     assert res2["currency"] == "USD"
+
 
 def test_can_be_replaced_by():
     gpt4o = llmcapa.get("gpt-4o")
@@ -34,20 +37,32 @@ def test_can_be_replaced_by():
     assert gpt4o.can_be_replaced_by(gemini) is False
 
     # If we only require vision and function_calling, gemini-3.5-flash can replace gpt-4o.
-    assert gpt4o.can_be_replaced_by(gemini, required_features=["vision", "function_calling"]) is True
+    assert (
+        gpt4o.can_be_replaced_by(
+            gemini, required_features=["vision", "function_calling"]
+        )
+        is True
+    )
 
     # Check with specific required features
-    assert gpt4o.can_be_replaced_by(gpt4o_mini, required_features=["vision", "function_calling"]) is True
+    assert (
+        gpt4o.can_be_replaced_by(
+            gpt4o_mini, required_features=["vision", "function_calling"]
+        )
+        is True
+    )
+
 
 def test_feature_enum():
     from llmcapa import Feature
+
     gpt4o = llmcapa.get("gpt-4o")
     assert gpt4o.supports(Feature.LLMC_FEAT_VISION) is True
     assert gpt4o.supports(Feature.LLMC_FEAT_REASONING_EFFORT) is False
     assert gpt4o.supports("vision") is True
 
-
     from llmcapa import ReasoningEffort
+
     assert ReasoningEffort.LLMC_EFFORT_LOW == "low"
     assert ReasoningEffort.LLMC_EFFORT_MEDIUM == "medium"
     assert ReasoningEffort.LLMC_EFFORT_HIGH == "high"
@@ -56,9 +71,11 @@ def test_feature_enum():
     assert ReasoningEffort.LLMC_EFFORT_MINIMAL == "minimal"
     assert ReasoningEffort.LLMC_EFFORT_XHIGH == "xhigh"
 
+
 def test_tokenizer_name():
     gpt = llmcapa.get("gpt-4o")
     assert gpt.tokenizer_name == "o200k_base"
+
 
 def test_estimate_tokens():
     gpt4o = llmcapa.get("gpt-4o")
@@ -84,6 +101,7 @@ def test_estimate_tokens():
     assert gpt4o.estimate_tokens(hi) == 11
     assert gpt4.estimate_tokens(hi) == 33
 
+
 def test_features_list():
     gpt = llmcapa.get("gpt-4o")
     feats = gpt.features()
@@ -100,8 +118,8 @@ def test_features_list():
     o1_feats = o1.features()
     assert "reasoning_effort" in o1_feats
 
+
 def test_openrouter_cache(tmp_path, monkeypatch):
-    import os
     # Mock home directory to use tmp_path
     monkeypatch.setenv("USERPROFILE", str(tmp_path))
     monkeypatch.setenv("HOME", str(tmp_path))
@@ -115,6 +133,7 @@ def test_openrouter_cache(tmp_path, monkeypatch):
 
     # Modify cache file to verify second fetch reads from cache
     import json
+
     data = json.loads(cache_file.read_text(encoding="utf-8"))
     # Keep only 1 model in cache
     data = data[:1]
@@ -161,18 +180,22 @@ def test_structured_output_capabilities_are_independent_and_nullable():
 
 
 def test_structured_output_lookup_is_provider_scoped():
-    llmcapa.register(Capability(
-        provider="structured-a",
-        model_id="same-model",
-        supports_json_mode=True,
-        supports_json_schema=True,
-    ))
-    llmcapa.register(Capability(
-        provider="structured-b",
-        model_id="same-model",
-        supports_json_mode=True,
-        supports_json_schema=False,
-    ))
+    llmcapa.register(
+        Capability(
+            provider="structured-a",
+            model_id="same-model",
+            supports_json_mode=True,
+            supports_json_schema=True,
+        )
+    )
+    llmcapa.register(
+        Capability(
+            provider="structured-b",
+            model_id="same-model",
+            supports_json_mode=True,
+            supports_json_schema=False,
+        )
+    )
     assert llmcapa.supports_json_schema("same-model", "structured-a") is True
     assert llmcapa.supports_json_schema("same-model", "structured-b") is False
 

@@ -6,6 +6,7 @@ Sources (Playwright live 2026-07-18):
 - V2 series deprecated 2026-06-30; V2.5 is current.
 - Overseas (USD) pricing used for pricing fields; CNY kept in extra.
 """
+
 from __future__ import annotations
 
 import json
@@ -277,7 +278,12 @@ def build() -> list[dict]:
     # Deprecated V2 series (official 2026-06-30)
     for mid, disp, modalities, vision in [
         ("mimo-v2-pro", "Xiaomi MiMo-V2-Pro", ["text"], False),
-        ("mimo-v2-omni", "Xiaomi MiMo-V2-Omni", ["text", "image", "audio", "video"], True),
+        (
+            "mimo-v2-omni",
+            "Xiaomi MiMo-V2-Omni",
+            ["text", "image", "audio", "video"],
+            True,
+        ),
         ("mimo-v2-flash", "Xiaomi MiMo-V2-Flash", ["text"], False),
         ("mimo-v2-tts", "Xiaomi MiMo-V2-TTS", ["text"], False),
     ]:
@@ -318,9 +324,7 @@ def main() -> None:
     active = sum(1 for m in models if not m.get("deprecated"))
     deprecated = sum(1 for m in models if m.get("deprecated"))
     priced = sum(
-        1
-        for m in models
-        if (m.get("pricing") or {}).get("input_per_1m") is not None
+        1 for m in models if (m.get("pricing") or {}).get("input_per_1m") is not None
     )
     print(
         f"xiaomi.json: {len(models)} models "

@@ -18,7 +18,7 @@ from __future__ import annotations
 
 import json
 import warnings
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from .registry import default_registry
 
@@ -44,7 +44,7 @@ def count_tokens(text: str, model_id: str) -> int:
 
 
 def count_messages_tokens(
-    messages: List[Dict[str, Any]],
+    messages: list[dict[str, Any]],
     model_id: str,
 ) -> int:
     """Count tokens for a list of chat messages using the provider's native format.
@@ -98,7 +98,7 @@ def _extract_text_content(content: Any) -> str:
     if isinstance(content, str):
         return content
     if isinstance(content, list):
-        texts: List[str] = []
+        texts: list[str] = []
         for part in content:
             if not isinstance(part, dict):
                 continue
@@ -118,7 +118,7 @@ def _extract_text_content(content: Any) -> str:
     return ""
 
 
-def _extract_tool_calls_text(msg: Dict[str, Any]) -> str:
+def _extract_tool_calls_text(msg: dict[str, Any]) -> str:
     """Extract tool_calls or function_call from a message as JSON text."""
     tool_calls = msg.get("tool_calls")
     if tool_calls:
@@ -153,15 +153,15 @@ def _get_encoding(cap: Any) -> Any:
     if tokenizer_name:
         try:
             return tiktoken.get_encoding(tokenizer_name)
-        except Exception:
+        except Exception:  # noqa: BLE001, S110
             pass
     try:
         return tiktoken.encoding_for_model(model_id)
-    except Exception:
+    except Exception:  # noqa: BLE001, S110
         pass
     try:
         return tiktoken.get_encoding("cl100k_base")
-    except Exception:
+    except Exception:  # noqa: BLE001
         return None
 
 
@@ -170,7 +170,7 @@ def _get_encoding(cap: Any) -> Any:
 # ---------------------------------------------------------------------------
 
 
-def _count_messages_chatml(messages: List[Dict[str, Any]], cap: Any) -> Optional[int]:
+def _count_messages_chatml(messages: list[dict[str, Any]], cap: Any) -> int | None:
     """Count tokens by formatting messages in ChatML format and tokenizing.
 
     Format::
@@ -185,10 +185,10 @@ def _count_messages_chatml(messages: List[Dict[str, Any]], cap: Any) -> Optional
         enc = _get_encoding(cap)
         if enc is None:
             return None
-    except Exception:
+    except Exception:  # noqa: BLE001
         return None
 
-    parts: List[str] = []
+    parts: list[str] = []
     for msg in messages:
         role = msg.get("role", "user")
         content = _extract_text_content(msg.get("content", ""))
@@ -219,9 +219,7 @@ def _count_messages_chatml(messages: List[Dict[str, Any]], cap: Any) -> Optional
 # ---------------------------------------------------------------------------
 
 
-def _count_messages_gemini(
-    messages: List[Dict[str, Any]], model_id: str
-) -> Optional[int]:
+def _count_messages_gemini(messages: list[dict[str, Any]], model_id: str) -> int | None:
     """Count tokens using Google's LocalTokenizer with Content objects.
 
     Handles both content-list parts and agentcli-style tool_calls/function_call keys.
@@ -236,12 +234,12 @@ def _count_messages_gemini(
             from google.genai import local_tokenizer, types
 
         tokenizer = local_tokenizer.LocalTokenizer(model_name=model_id)
-        contents: List[types.Content] = []
+        contents: list[types.Content] = []
 
         for msg in messages:
             role = msg.get("role", "user")
             content_raw = msg.get("content", "")
-            parts_list: List[types.Part] = []
+            parts_list: list[types.Part] = []
 
             # Map role
             gemini_role = "user"
@@ -303,7 +301,7 @@ def _count_messages_gemini(
             )
             result = tokenizer.count_tokens(contents)
         return result.total_tokens
-    except Exception:
+    except Exception:  # noqa: BLE001
         return None
 
 
@@ -312,9 +310,7 @@ def _count_messages_gemini(
 # ---------------------------------------------------------------------------
 
 
-def _count_messages_anthropic(
-    messages: List[Dict[str, Any]], cap: Any
-) -> Optional[int]:
+def _count_messages_anthropic(messages: list[dict[str, Any]], cap: Any) -> int | None:
     """Count tokens by formatting messages in Anthropic's format and approximating
     with tiktoken cl100k_base.
 
@@ -325,10 +321,10 @@ def _count_messages_anthropic(
         enc = _get_encoding(cap)
         if enc is None:
             return None
-    except Exception:
+    except Exception:  # noqa: BLE001
         return None
 
-    parts: List[str] = []
+    parts: list[str] = []
     for msg in messages:
         role = msg.get("role", "user")
         content = _extract_text_content(msg.get("content", ""))
@@ -359,7 +355,7 @@ def _count_messages_anthropic(
 # ---------------------------------------------------------------------------
 
 
-def _count_messages_fallback(messages: List[Dict[str, Any]], cap: Any) -> int:
+def _count_messages_fallback(messages: list[dict[str, Any]], cap: Any) -> int:
     """Simple fallback: count content tokens individually + overhead."""
     total = len(messages) * 4 + 3
     for msg in messages:
@@ -410,7 +406,7 @@ def _count_for_cap(text: str, cap: Any) -> int:
     return max(1, len(text) // 3)
 
 
-def _count_gemini(text: str, model_id: str) -> Optional[int]:
+def _count_gemini(text: str, model_id: str) -> int | None:
     try:
         with warnings.catch_warnings():
             warnings.filterwarnings(
@@ -429,11 +425,11 @@ def _count_gemini(text: str, model_id: str) -> Optional[int]:
             )
             result = tz.count_tokens(text)
         return result.total_tokens
-    except Exception:
+    except Exception:  # noqa: BLE001
         return None
 
 
-def _count_tiktoken(text: str, tokenizer_name: str, model_id: str) -> Optional[int]:
+def _count_tiktoken(text: str, tokenizer_name: str, model_id: str) -> int | None:
     try:
         import tiktoken
 
@@ -441,21 +437,21 @@ def _count_tiktoken(text: str, tokenizer_name: str, model_id: str) -> Optional[i
         if tokenizer_name:
             try:
                 enc = tiktoken.get_encoding(tokenizer_name)
-            except Exception:
+            except Exception:  # noqa: BLE001, S110
                 pass
         if enc is None:
             try:
                 enc = tiktoken.encoding_for_model(model_id)
-            except Exception:
+            except Exception:  # noqa: BLE001, S110
                 pass
         if enc is None:
             return None
         return len(enc.encode(text))
-    except Exception:
+    except Exception:  # noqa: BLE001
         return None
 
 
 __all__ = [
-    "count_tokens",
     "count_messages_tokens",
+    "count_tokens",
 ]

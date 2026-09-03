@@ -2,67 +2,7 @@
   "models": [
     {
       "provider": "sakana",
-      "model_id": "sakana-namazu",
-      "display_name": "Sakana Namazu",
-      "context_window": 262144,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "api",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 0.95,
-        "output_per_1m": 4.0,
-        "currency": "USD",
-        "cached_input_per_1m": 0.15
-      },
-      "deprecated": false,
-      "aliases": [
-        "sakana-namazu",
-        "namazu"
-      ],
-      "extra": {
-        "official_source": "https://www.sakana.ai/",
-        "official_source_checked_at": "2026-08-21",
-        "official_spec_refresh": "official_source_checked",
-        "structured_output_source": "https://console.sakana.ai/models",
-        "structured_output_checked_at": "2026-09-01",
-        "structured_output_source_status": "reachable",
-        "structured_output_evidence": "Official API docs list response_format/text.format json_object and json_schema for Chat Completions and Responses.",
-        "structured_output_verified_at": "2026-08-21",
-        "structured_output_api_documented": true,
-        "endpoints": [
-          {
-            "base_url": "https://api.sakana.ai",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://console.sakana.ai/models"
-          }
-        ]
-      },
-      "supports_json_schema": true
-    },
-    {
-      "provider": "sakana",
-      "model_id": "sakana/fugu",
+      "model_id": "fugu",
       "display_name": "Sakana Fugu",
       "context_window": 272000,
       "max_output_tokens": 128000,
@@ -96,9 +36,7 @@
       },
       "deprecated": false,
       "aliases": [
-        "sakana/fugu",
-        "fugu",
-        "sakana/fugu-20260615"
+        "fugu"
       ],
       "reasoning_effort_values": [
         "high",
@@ -128,7 +66,7 @@
     },
     {
       "provider": "sakana",
-      "model_id": "sakana/fugu-cyber",
+      "model_id": "fugu-cyber",
       "display_name": "Sakana: Fugu Cyber",
       "context_window": 1000000,
       "max_output_tokens": 128000,
@@ -162,7 +100,6 @@
       },
       "deprecated": false,
       "aliases": [
-        "sakana/fugu-cyber",
         "fugu-cyber-v1.0"
       ],
       "extra": {
@@ -188,7 +125,7 @@
     },
     {
       "provider": "sakana",
-      "model_id": "sakana/fugu-ultra",
+      "model_id": "fugu-ultra",
       "display_name": "Sakana: Fugu Ultra",
       "context_window": 1000000,
       "max_output_tokens": 128000,
@@ -214,9 +151,7 @@
       "tokenizer_name": "Other",
       "knowledge_cutoff": null,
       "deprecated": false,
-      "aliases": [
-        "sakana/fugu-ultra"
-      ],
+      "aliases": [],
       "license_type": "unknown",
       "pricing": {
         "input_per_1m": 5.0,
@@ -246,14 +181,13 @@
     },
     {
       "provider": "sakana",
-      "model_id": "sakana/sakana-namazu",
-      "display_name": "Sakana: Sakana Namazu",
+      "model_id": "sakana-namazu",
+      "display_name": "Sakana Namazu",
       "context_window": 262144,
-      "max_output_tokens": 65536,
+      "max_output_tokens": 0,
       "input_modalities": [
         "text",
-        "image",
-        "file"
+        "image"
       ],
       "output_modalities": [
         "text"
@@ -270,18 +204,20 @@
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
+      "license_type": "api",
       "tokenizer_name": "Other",
       "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "sakana/sakana-namazu"
-      ],
-      "license_type": "unknown",
       "pricing": {
         "input_per_1m": 0.95,
         "output_per_1m": 4.0,
-        "currency": "USD"
+        "currency": "USD",
+        "cached_input_per_1m": 0.15
       },
+      "deprecated": false,
+      "aliases": [
+        "sakana-namazu",
+        "namazu"
+      ],
       "extra": {
         "official_source": "https://www.sakana.ai/",
         "official_source_checked_at": "2026-08-21",

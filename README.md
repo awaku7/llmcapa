@@ -251,6 +251,14 @@ for c in llmcapa.list_models(provider="anthropic"):
 # Search models by prefix (provider optional; aliases accepted)
 search_results = llmcapa.search("codegemma", provider="ollama")
 search_results = llmcapa.search("gpt-4o")  # all providers
+
+# OpenRouter route IDs are searched only in the OpenRouter catalog.
+# Native catalogs retain a provider's own namespace (which may contain `/`).
+openrouter_results = llmcapa.search("meta/muse-spark-1.3", provider="openrouter")
+# This is not a generic alias for the Meta catalog:
+# llmcapa.get("meta/muse-spark-1.3", provider="meta")  # not found
+# A slash is valid when it is part of the native ID itself, for example:
+native_model = llmcapa.get("baichuan/baichuan-m2-32b", provider="novita")
 big_reasoning_models = llmcapa.find(
     supports_reasoning=True,
     min_context_window=200000

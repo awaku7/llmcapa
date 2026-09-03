@@ -10,6 +10,7 @@ Pricing on the official page is tax-included JPY per 10,000 tokens
 (or per 60s audio / 10,000 mora TTS / 100 RAG chunks). Catalog stores
 USD shell at ~150 JPY/USD with exact JPY in extra.pricing_jpy.
 """
+
 from __future__ import annotations
 
 import json
@@ -19,7 +20,9 @@ from pathlib import Path
 
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "sakura.json"
-INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "sakura.json"
+INSTALLED = (
+    Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "sakura.json"
+)
 LOG = WORKDIR / "provider_update_log.md"
 
 SRC = "https://ai.sakura.ad.jp/sakura-ai/ai-engine/"
@@ -757,9 +760,7 @@ def main() -> None:
     active = sum(1 for m in models if not m.get("deprecated"))
     deprecated = sum(1 for m in models if m.get("deprecated"))
     priced = sum(
-        1
-        for m in models
-        if (m.get("pricing") or {}).get("input_per_1m") is not None
+        1 for m in models if (m.get("pricing") or {}).get("input_per_1m") is not None
     )
     extra_n = sum(1 for m in models if m.get("extra"))
     by_tier: dict[str, int] = {}

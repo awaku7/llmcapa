@@ -8,7 +8,7 @@ import ssl
 import urllib.request
 from importlib import resources
 from pathlib import Path
-from typing import Dict, List, Optional, Union
+from typing import ClassVar
 
 from .models import Capability
 
@@ -21,16 +21,16 @@ class Registry:
     """In-memory registry of model capabilities."""
 
     def __init__(self) -> None:
-        self._models: Dict[str, Capability] = {}
-        self._alias_index: Dict[str, str] = {}
+        self._models: dict[str, Capability] = {}
+        self._alias_index: dict[str, str] = {}
         # Provider-scoped index: {provider_lower: {model_id_lower: Capability}}
-        self._by_provider: Dict[str, Dict[str, Capability]] = {}
+        self._by_provider: dict[str, dict[str, Capability]] = {}
 
         self._loaded = False
 
     # Provider aliases map: canonical name -> list of equivalent provider names
     # Used by list_models() so that e.g. provider="deepseek" also matches "deepseek-ai"
-    _provider_aliases: Dict[str, List[str]] = {
+    _provider_aliases: ClassVar[dict[str, list[str]]] = {
         "deepseek": ["deepseek-ai"],
         "meta": ["meta-llama"],
         "mistral": ["mistralai"],
@@ -56,7 +56,7 @@ class Registry:
     def _normalize_provider(name: str) -> str:
         """Normalize provider name: lowercase, unify separators to hyphen."""
         normalized = name.lower().strip()
-        normalized = re.sub(r'[_. \t]+', '-', normalized)
+        normalized = re.sub(r"[_. \t]+", "-", normalized)
         return normalized
 
     def _matching_providers(self, provider: str) -> set:
@@ -85,7 +85,13 @@ class Registry:
         data_pkg = resources.files("llmcapa.data")
         # Aggregator/reseller files are loaded last so native provider data
         # takes precedence via first-registered-wins.
-        aggregators = {"openrouter.json", "novita.json", "azure_foundry.json", "lmstudio.json", "ollama.json"}
+        aggregators = {
+            "openrouter.json",
+            "novita.json",
+            "azure_foundry.json",
+            "lmstudio.json",
+            "ollama.json",
+        }
         regular = []
         agg = []
         for entry in sorted(data_pkg.iterdir(), key=lambda e: e.name):
@@ -100,6 +106,7 @@ class Registry:
         # Load local OpenRouter cache if it exists (up to 24h old) to override bundled data with latest updates
         import os
         import time
+
         home = os.path.expanduser("~")
         cache_file = os.path.join(home, ".llmcapa", "openrouter_cache.json")
         if os.path.exists(cache_file):
@@ -107,7 +114,7 @@ class Registry:
                 mtime = os.path.getmtime(cache_file)
                 if time.time() - mtime > 86400:
                     return
-            except Exception:
+            except Exception:  # noqa: BLE001, S110
                 pass
             try:
                 with open(cache_file, "r", encoding="utf-8") as f:
@@ -116,8 +123,8 @@ class Registry:
                     model_id = r.get("id")
                     if not model_id:
                         continue
-                    self.register(self._map_openrouter_record(r), overwrite=True)
-            except Exception:
+                    self.register(self._map_openrouter_record(r), overwrite=False)
+            except Exception:  # noqa: BLE001, S110
                 pass
 
     def _load_json_text(self, text: str) -> int:
@@ -132,7 +139,7 @@ class Registry:
             count += 1
         return count
 
-    def load_extra(self, path: Union[str, Path]) -> int:
+    def load_extra(self, path: str | Path) -> int:
         """Load user-defined model data from a local JSON file.
 
         The file may contain either a list of model records or an object
@@ -158,7 +165,27 @@ class Registry:
 
         # First-registered-wins for the flat model_id index.
         # Also skip if key is already claimed as an alias for another model.
-        if overwrite or (key not in self._models and key not in self._alias_index):
+        aggregators = {"openrouter", "novita", "azure-foundry", "lmstudio", "ollama"}
+        existing = self._models.get(key)
+        existing_provider = (
+            self._normalize_provider(existing.provider) if existing is not None else ""
+        )
+        replace_with_native = (
+            existing is not None
+            and existing_provider in aggregators
+            and prov not in aggregators
+        )
+        prefer_openrouter = (
+            existing is not None
+            and existing_provider == "novita"
+            and prov == "openrouter"
+        )
+        if (
+            overwrite
+            or replace_with_native
+            or prefer_openrouter
+            or (key not in self._models and key not in self._alias_index)
+        ):
             self._models[key] = cap
             self._alias_index[key] = key
             for alias in cap.aliases:
@@ -184,7 +211,9 @@ class Registry:
 
         # Features
         supported_params = r.get("supported_parameters") or []
-        supports_fc = "tools" in supported_params or "function_calling" in supported_params
+        supports_fc = (
+            "tools" in supported_params or "function_calling" in supported_params
+        )
 
         # Pricing
         pricing_data = r.get("pricing") or {}
@@ -196,15 +225,11 @@ class Registry:
                 "currency": "USD",
             }
 
-        # Determine provider from model_id prefix (e.g. "meta-llama/..." -> "meta-llama")
-        provider = "openrouter"
-        if "/" in model_id:
-            parts = model_id.split("/")
-            if not parts[0].startswith("~"):
-                provider = parts[0]
-
         return Capability(
-            provider=provider,
+            # OpenRouter route IDs belong to the OpenRouter catalog.  The
+            # route's upstream namespace is part of model_id, not a native
+            # provider registration.
+            provider="openrouter",
             model_id=model_id,
             display_name=r.get("name", model_id),
             context_window=context_window,
@@ -225,8 +250,10 @@ class Registry:
             supports_json_schema=(
                 True if "structured_outputs" in supported_params else None
             ),
-            supports_reasoning_effort="reasoning" in supported_params or "reasoning_effort" in supported_params,
-            supports_thinking_budget="thinking" in supported_params or "thinking_budget" in supported_params,
+            supports_reasoning_effort="reasoning" in supported_params
+            or "reasoning_effort" in supported_params,
+            supports_thinking_budget="thinking" in supported_params
+            or "thinking_budget" in supported_params,
             knowledge_cutoff=r.get("knowledge_cutoff"),
             pricing=pricing,
             aliases=[model_id.lower()],
@@ -254,6 +281,7 @@ class Registry:
         if cache_ttl > 0:
             import os
             import time
+
             home = os.path.expanduser("~")
             cache_dir = os.path.join(home, ".llmcapa")
             os.makedirs(cache_dir, exist_ok=True)
@@ -265,7 +293,7 @@ class Registry:
                     try:
                         with open(cache_file, "r", encoding="utf-8") as f:
                             records = json.load(f)
-                    except Exception:
+                    except Exception:  # noqa: BLE001, S110
                         pass
 
         if not records:
@@ -280,12 +308,15 @@ class Registry:
                     data = json.loads(response.read().decode("utf-8"))
                     records = data.get("data", [])
             except Exception as e:
-                raise RuntimeError(f"Failed to fetch models from OpenRouter: {e}") from e
+                raise RuntimeError(
+                    f"Failed to fetch models from OpenRouter: {e}"
+                ) from e
 
             # Cache the response
             if cache_ttl > 0:
                 import os
                 import time
+
                 home = os.path.expanduser("~")
                 cache_dir = os.path.join(home, ".llmcapa")
                 os.makedirs(cache_dir, exist_ok=True)
@@ -293,7 +324,7 @@ class Registry:
                 try:
                     with open(cache_file, "w", encoding="utf-8") as f:
                         json.dump(records, f, ensure_ascii=False, indent=2)
-                except Exception:
+                except Exception:  # noqa: BLE001, S110
                     pass
 
         count = 0
@@ -314,7 +345,7 @@ class Registry:
         """Map a HuggingFace API record to a Capability."""
         model_id = r.get("modelId", r.get("_id", ""))
         pipeline = r.get("pipeline_tag", "")
-        tags = r.get("tags", [])
+        r.get("tags", [])
         card = r.get("cardData", {}) or {}
         config = r.get("config", {}) or {}
 
@@ -324,7 +355,11 @@ class Registry:
             provider = model_id.split("/", 1)[0]
 
         # Determine input modalities from pipeline_tag
-        is_vision = pipeline in ("image-text-to-text", "visual-question-answering", "image-feature-extraction")
+        is_vision = pipeline in (
+            "image-text-to-text",
+            "visual-question-answering",
+            "image-feature-extraction",
+        )
         input_mods = ["text"]
         if is_vision:
             input_mods.append("image")
@@ -342,13 +377,15 @@ class Registry:
         )
 
         max_out = (
-            model_data.get("max_output_tokens")
-            or card.get("max_output_tokens")
-            or 2048
+            model_data.get("max_output_tokens") or card.get("max_output_tokens") or 2048
         )
 
         # Chat completion is supported for text-generation and image-text-to-text
-        supports_chat = pipeline in ("text-generation", "image-text-to-text", "conversational")
+        supports_chat = pipeline in (
+            "text-generation",
+            "image-text-to-text",
+            "conversational",
+        )
 
         return Capability(
             provider=provider,
@@ -369,7 +406,7 @@ class Registry:
     def fetch_huggingface(
         self,
         limit: int = 100,
-        cache_ttl: Optional[int] = None,
+        cache_ttl: int | None = None,
     ) -> int:
         """Fetch top models from HuggingFace API and register them.
 
@@ -389,6 +426,7 @@ class Registry:
         if cache_ttl is not None:
             import os
             import time
+
             home = os.path.expanduser("~")
             cache_dir = os.path.join(home, ".llmcapa")
             os.makedirs(cache_dir, exist_ok=True)
@@ -400,7 +438,7 @@ class Registry:
                     try:
                         with open(cache_file, "r", encoding="utf-8") as f:
                             records = json.load(f)
-                    except Exception:
+                    except Exception:  # noqa: BLE001, S110
                         pass
 
         if not records:
@@ -416,19 +454,23 @@ class Registry:
                 )
                 try:
                     req = urllib.request.Request(url, headers=headers)
-                    with urllib.request.urlopen(req, context=ctx, timeout=30) as response:
+                    with urllib.request.urlopen(
+                        req, context=ctx, timeout=30
+                    ) as response:
                         chunk = json.loads(response.read().decode("utf-8"))
                         for r in chunk:
                             if r.get("modelId") or r.get("_id"):
                                 records.append(r)
                 except Exception as e:
-                    raise RuntimeError(f"Failed to fetch models from HuggingFace ({tag}): {e}") from e
+                    raise RuntimeError(
+                        f"Failed to fetch models from HuggingFace ({tag}): {e}"
+                    ) from e
 
             if cache_file and records:
                 try:
                     with open(cache_file, "w", encoding="utf-8") as f:
                         json.dump(records, f, ensure_ascii=False, indent=2)
-                except Exception:
+                except Exception:  # noqa: BLE001, S110
                     pass
 
         count = 0
@@ -440,7 +482,7 @@ class Registry:
                 cap = self._map_huggingface_record(r)
                 self.register(cap)
                 count += 1
-            except Exception:
+            except Exception:  # noqa: BLE001, S112
                 continue
         return count
 
@@ -477,14 +519,6 @@ class Registry:
         #    (e.g. "novita/deepseek-v4-flash" should not fall back to "deepseek-v4-flash"
         #     which might match a different provider's model).
         #    Known providers are detected via self._by_provider (populated after _ensure_loaded).
-        if "/" in key:
-            prefix = key.split("/", 1)[0]
-            # Only add bare model_id if the prefix is NOT a known provider name
-            if prefix not in self._by_provider:
-                without_prefix = key.split("/", 1)[1]
-                if without_prefix not in candidates:
-                    candidates.append(without_prefix)
-
         # 3. Progressively strip known trailing patterns
         DatePat = r"[0-9]{4}-[0-9]{2}-[0-9]{2}|[0-9]{2}-[0-9]{2}|[0-9]{8}"
         suffix_pats = [f"[-_.]({DatePat})$", r"[-_.](latest|preview)$"]
@@ -512,7 +546,7 @@ class Registry:
                     continue
         return candidates
 
-    def get(self, model_id: str, provider: Optional[str] = None) -> Capability:
+    def get(self, model_id: str, provider: str | None = None) -> Capability:
         """Resolve a model id or alias to its Capability.
 
         Args:
@@ -544,16 +578,6 @@ class Registry:
                                 return cap
             raise ModelNotFoundError(model_id)
         # Unqualified lookup: use alias index (first-registered-wins).
-        # If model_id contains a "/" and the prefix matches a known provider,
-        # try a scoped lookup first to avoid false matches.
-        if "/" in model_id:
-            prefix, bare = model_id.split("/", 1)
-            # Resolve provider aliases (e.g. grok/..., claude/..., azure/...)
-            if any(p in self._by_provider for p in self._matching_providers(prefix)):
-                try:
-                    return self.get(bare, provider=prefix)
-                except ModelNotFoundError:
-                    pass  # Fall through to normal lookup
         for key in self._lookup_candidates(model_id):
             resolved = self._alias_index.get(key)
             if resolved is not None:
@@ -562,14 +586,14 @@ class Registry:
 
     def list_models(
         self,
-        provider: Optional[str] = None,
+        provider: str | None = None,
         include_deprecated: bool = True,
-    ) -> List[Capability]:
+    ) -> list[Capability]:
         """Return capabilities, optionally filtered by provider."""
         self._ensure_loaded()
         if provider is not None:
             matching_providers = self._matching_providers(provider)
-            result: List[Capability] = []
+            result: list[Capability] = []
             for prov in matching_providers:
                 idx = self._by_provider.get(prov)
                 if idx:
@@ -580,19 +604,19 @@ class Registry:
             result = [c for c in result if not c.deprecated]
         return sorted(result, key=lambda c: (c.provider, c.model_id))
 
-    def providers(self) -> List[str]:
+    def providers(self) -> list[str]:
         """Return the sorted list of known providers."""
         self._ensure_loaded()
         return sorted(self._by_provider.keys())
 
     def find(
         self,
-        provider: Optional[str] = None,
+        provider: str | None = None,
         min_context_window: int = 0,
         min_max_output_tokens: int = 0,
         include_deprecated: bool = False,
         **feature_flags: bool,
-    ) -> List[Capability]:
+    ) -> list[Capability]:
         """Search models by conditions.
 
         feature_flags accepts keys like supports_vision=True or
@@ -607,7 +631,7 @@ class Registry:
                 continue
             ok = True
             for key, expected in feature_flags.items():
-                feature = key[len("supports_"):] if key.startswith("supports_") else key
+                feature = key.removeprefix("supports_")
                 if cap.supports(feature) != bool(expected):
                     ok = False
                     break
@@ -615,13 +639,15 @@ class Registry:
                 result.append(cap)
         return result
 
-    def find_by_model_id(self, model_id: str) -> List[tuple[str, Capability]]:
+    def find_by_model_id(self, model_id: str) -> list[tuple[str, Capability]]:
         """Find all (provider, Capability) tuples for a given model_id across providers."""
         self._ensure_loaded()
         key = model_id.strip().lower()
-        results: List[tuple[str, Capability]] = []
+        results: list[tuple[str, Capability]] = []
         for prov, caps in self._by_provider.items():
-            for lookup_key in [key] + [k for k in self._lookup_candidates(model_id) if k != key]:
+            for lookup_key in [key] + [
+                k for k in self._lookup_candidates(model_id) if k != key
+            ]:
                 cap = caps.get(lookup_key)
                 if cap is not None:
                     results.append((prov, cap))
@@ -637,10 +663,10 @@ class Registry:
     def search(
         self,
         prefix: str,
-        provider: Optional[str] = None,
+        provider: str | None = None,
         include_deprecated: bool = False,
-        limit: Optional[int] = None,
-    ) -> List[Capability]:
+        limit: int | None = None,
+    ) -> list[Capability]:
         """Search models by prefix matching on model_id, display_name, or aliases.
 
         Case-insensitive prefix search. Results are sorted by (provider, model_id).
@@ -655,10 +681,22 @@ class Registry:
 
         # Provider-scoped candidates via list_models so first-registered-wins
         # flat index does not hide same-id models under other providers.
-        candidates = self.list_models(
-            provider=provider,
-            include_deprecated=include_deprecated,
-        )
+        if provider is None:
+            # Search must inspect every provider-scoped index.  The flat index
+            # intentionally uses first-registered-wins for lookups, but that
+            # would hide an OpenRouter route when a native catalog has the same
+            # alias (for example ``meta/muse-spark-1.3``).
+            candidates = [
+                cap
+                for prov in sorted(self._by_provider)
+                for cap in self._by_provider[prov].values()
+                if include_deprecated or not cap.deprecated
+            ]
+        else:
+            candidates = self.list_models(
+                provider=provider,
+                include_deprecated=include_deprecated,
+            )
         result = []
         for cap in candidates:
             # Check model_id

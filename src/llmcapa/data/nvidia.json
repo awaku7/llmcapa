@@ -42,6 +42,88 @@
     },
     {
       "provider": "nvidia",
+      "model_id": "Cosmos-Reason2-2B",
+      "display_name": "nvidia/Cosmos-Reason2-2B",
+      "context_window": 4096,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "unknown",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Cosmos-Reason2-8B",
+      "display_name": "nvidia/Cosmos-Reason2-8B",
+      "context_window": 4096,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "unknown",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
       "model_id": "Cosmos-reason1-NIM-microservice",
       "display_name": "Cosmos-reason1-NIM-microservice",
       "context_window": 128000,
@@ -109,9 +191,49 @@
       "knowledge_cutoff": "",
       "deprecated": false,
       "aliases": [
-        "deepseek-r1-distill-llama-8b-nim-microservice",
-        "nvidia/Deepseek-R1-Distill-Llama-8B-NIM-microservice"
+        "deepseek-r1-distill-llama-8b-nim-microservice"
       ],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Eagle2.5-8B",
+      "display_name": "nvidia/Eagle2.5-8B",
+      "context_window": 4096,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "unknown",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
       "extra": {
         "endpoints": [
           {
@@ -205,53 +327,6 @@
     },
     {
       "provider": "nvidia",
-      "model_id": "llama-3.1-nemotron-70b-instruct",
-      "display_name": "Llama 3.1 Nemotron 70B Instruct",
-      "context_window": 131072,
-      "max_output_tokens": 4096,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "api",
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2023-12",
-      "pricing": {
-        "input_per_1m": 0.25,
-        "output_per_1m": 0.4,
-        "currency": "USD"
-      },
-      "deprecated": false,
-      "aliases": [
-        "nvidia/llama-3.1-nemotron-70b-instruct"
-      ],
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
       "model_id": "Llama-3.1-Nemotron-Nano-8B-v1-NIM-microservice",
       "display_name": "Llama-3.1-Nemotron-Nano-8B-v1-NIM-microservice",
       "context_window": 128000,
@@ -277,6 +352,47 @@
       "license_type": "free",
       "tokenizer_name": "",
       "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Llama-3.1-Nemotron-Nano-VL-8B-V1",
+      "display_name": "nvidia/Llama-3.1-Nemotron-Nano-VL-8B-V1",
+      "context_window": 4096,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "unknown",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [],
       "extra": {
@@ -453,53 +569,6 @@
     },
     {
       "provider": "nvidia",
-      "model_id": "llama-3.3-nemotron-super-49b",
-      "display_name": "Llama 3.3 Nemotron Super 49B",
-      "context_window": 131072,
-      "max_output_tokens": 131072,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "api",
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2023-12",
-      "pricing": {
-        "input_per_1m": 0.4,
-        "output_per_1m": 0.4,
-        "currency": "USD"
-      },
-      "deprecated": false,
-      "aliases": [
-        "nvidia/llama-3.3-nemotron-super-49b-v1"
-      ],
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
       "model_id": "Llama-3.3-Nemotron-Super-49B-v1-NIM-microservice",
       "display_name": "Llama-3.3-Nemotron-Super-49B-v1-NIM-microservice",
       "context_window": 128000,
@@ -563,6 +632,87 @@
       "supports_google_api": false,
       "supports_fim": false,
       "license_type": "free",
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "LocateAnything-3B",
+      "display_name": "nvidia/LocateAnything-3B",
+      "context_window": 4096,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "unknown",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "MSA-search-NIM-microservice",
+      "display_name": "MSA-Search",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "license",
       "tokenizer_name": "",
       "knowledge_cutoff": "",
       "deprecated": false,
@@ -660,8 +810,169 @@
     },
     {
       "provider": "nvidia",
-      "model_id": "MSA-search-NIM-microservice",
-      "display_name": "MSA-Search",
+      "model_id": "NVIDIA-Nemotron-3-Content-Safety-NIM-microservice",
+      "display_name": "NVIDIA-Nemotron-3-Content-Safety-NIM-microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "free",
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "NVIDIA-Nemotron-3-Nano-NIM-microservice",
+      "display_name": "NVIDIA-Nemotron-3-Nano-NIM-microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "free",
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "NVIDIA-Nemotron-3-Super-NIM-microservice",
+      "display_name": "NVIDIA-Nemotron-3-Super-NIM-microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "free",
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "NVIDIA-Nemotron-3-Ultra-NIM-microservice",
+      "display_name": "NVIDIA-Nemotron-3-Ultra-NIM-microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "free",
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "NVIDIA-Nemotron-Content-Safety-Reasoning-4B-NIM-microservice",
+      "display_name": "NVIDIA Nemotron Content Safety Reasoning 4B NIM microservice",
       "context_window": 128000,
       "max_output_tokens": 16384,
       "input_modalities": [
@@ -682,7 +993,7 @@
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
-      "license_type": "license",
+      "license_type": "free",
       "tokenizer_name": "",
       "knowledge_cutoff": "",
       "deprecated": false,
@@ -700,21 +1011,62 @@
     },
     {
       "provider": "nvidia",
-      "model_id": "nemotron-3",
-      "display_name": "NVIDIA Nemotron 3",
-      "context_window": 1000000,
-      "max_output_tokens": 65536,
+      "model_id": "NVIDIA-Nemotron-Nano-12B-v2-VL-BF16",
+      "display_name": "nvidia/NVIDIA-Nemotron-Nano-12B-v2-VL-BF16",
+      "context_window": 4096,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "unknown",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "NVIDIA-Nemotron-Nano-12B-v2-VL-NIM-microservice",
+      "display_name": "NVIDIA Nemotron Nano 12B v2 VL NIM microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
       "input_modalities": [
         "text"
       ],
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": false,
-      "supports_reasoning": true,
+      "supports_reasoning": null,
       "supports_chat_completion": true,
       "supports_responses_api": false,
       "supports_reasoning_effort": false,
@@ -724,13 +1076,253 @@
       "supports_fim": false,
       "license_type": "free",
       "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "NVIDIA-Nemotron-Nano-12B-v2-VL-NVFP4-QAD",
+      "display_name": "nvidia/NVIDIA-Nemotron-Nano-12B-v2-VL-NVFP4-QAD",
+      "context_window": 4096,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "unknown",
+      "tokenizer_name": "",
       "knowledge_cutoff": null,
       "deprecated": false,
-      "aliases": [
-        "nvidia/nemotron-3",
-        "nvidia/nemotron-3-30b",
-        "nemotron-3-30b"
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "NVIDIA-Nemotron-Nano-9b-v2-NIM-microservice",
+      "display_name": "NVIDIA Nemotron Nano 9b v2 NIM microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
       ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "free",
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "NVIDIA-Nemotron-Parse-NIM-microservice",
+      "display_name": "NVIDIA Nemotron Parse NIM microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "free",
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "NVIDIA-Nemotron-Parse-v1.1",
+      "display_name": "nvidia/NVIDIA-Nemotron-Parse-v1.1",
+      "context_window": 4096,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "unknown",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "NVIDIA-Nemotron-Parse-v1.2",
+      "display_name": "nvidia/NVIDIA-Nemotron-Parse-v1.2",
+      "context_window": 4096,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "unknown",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "NVLM-D-72B",
+      "display_name": "nvidia/NVLM-D-72B",
+      "context_window": 4096,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "unknown",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
       "extra": {
         "endpoints": [
           {
@@ -984,6 +1576,515 @@
     },
     {
       "provider": "nvidia",
+      "model_id": "Openfold2-NIM-microservice",
+      "display_name": "Openfold2",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "license",
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Openfold3_1_2_0-NIM-microservice",
+      "display_name": "Openfold3_1_2_0 NIM Microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "license",
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "ProteinMPNN-NIM-microservice",
+      "display_name": "ProteinMPNN",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "license",
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Rfdiffusion-NIM-microservice",
+      "display_name": "RFdiffusion",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "license",
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Trellis-NIM-microservice",
+      "display_name": "Trellis-NIM-microservice",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "license",
+      "tokenizer_name": "",
+      "knowledge_cutoff": "",
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "cosmos3-nano",
+      "display_name": "NVIDIA Cosmos 3 Nano",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "video"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "cosmos3-nano"
+      ],
+      "license_type": "api",
+      "extra": {
+        "source": "https://build.nvidia.com/models",
+        "free_endpoint": true,
+        "api_base": "https://integrate.api.nvidia.com/v1",
+        "pricing_status": "free_endpoint",
+        "use_case": "physics-aware video generation for physical AI"
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "cosmos3-nano-reasoner",
+      "display_name": "NVIDIA Cosmos 3 Nano Reasoner",
+      "context_window": 131072,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": true,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "cosmos3-nano-reasoner"
+      ],
+      "license_type": "api",
+      "extra": {
+        "source": "https://build.nvidia.com/models",
+        "free_endpoint": true,
+        "api_base": "https://integrate.api.nvidia.com/v1",
+        "pricing_status": "free_endpoint",
+        "use_case": "physical-world video/image reasoning"
+      },
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "llama-3.1-nemotron-70b-instruct",
+      "display_name": "Llama 3.1 Nemotron 70B Instruct",
+      "context_window": 131072,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2023-12",
+      "pricing": {
+        "input_per_1m": 0.25,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "llama-3.3-nemotron-super-49b",
+      "display_name": "Llama 3.3 Nemotron Super 49B",
+      "context_window": 131072,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2023-12",
+      "pricing": {
+        "input_per_1m": 0.4,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "llama-3.3-nemotron-super-49b-v1.5",
+      "display_name": "NVIDIA: Llama 3.3 Nemotron Super 49B V1.5",
+      "context_window": 131072,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2024-03-31",
+      "pricing": {
+        "input_per_1m": 0.4,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nemotron-3",
+      "display_name": "NVIDIA Nemotron 3",
+      "context_window": 1000000,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "free",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "nemotron-3-30b"
+      ],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nemotron-3-embed-1b",
+      "display_name": "NVIDIA Nemotron 3 Embed 1B",
+      "context_window": 8192,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embedding"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "nemotron-3-embed-1b"
+      ],
+      "license_type": "api",
+      "extra": {
+        "source": "https://build.nvidia.com/models",
+        "free_endpoint": true,
+        "api_base": "https://integrate.api.nvidia.com/v1",
+        "pricing_status": "free_endpoint",
+        "use_case": "semantic search / retrieval / RAG",
+        "api_kind": "embeddings"
+      },
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "nvidia",
       "model_id": "nemotron-3-nano",
       "display_name": "NVIDIA Nemotron 3 Nano",
       "context_window": 128000,
@@ -1015,13 +2116,226 @@
         "currency": "USD"
       },
       "deprecated": false,
-      "aliases": [
-        "nvidia/nemotron-3-nano"
-      ],
+      "aliases": [],
       "thinking_budget_values": {
         "type": "token_range",
         "min": 1024,
         "max": 4096
+      },
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nemotron-3-nano-30b-a3b",
+      "display_name": "NVIDIA Nemotron 3 Nano 30B-A3B",
+      "context_window": 1048576,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": true,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "nemotron-3-nano",
+        "nemotron-3-nano-30b-a3b"
+      ],
+      "license_type": "api",
+      "extra": {
+        "source": "https://build.nvidia.com/models",
+        "free_endpoint": true,
+        "api_base": "https://integrate.api.nvidia.com/v1",
+        "architecture": "MoE",
+        "partner_prices": {
+          "deep_infra": {
+            "input_per_1m": 0.05,
+            "output_per_1m": 0.2
+          },
+          "openrouter": {
+            "input_per_1m": 0.05,
+            "output_per_1m": 0.2
+          }
+        },
+        "pricing_note": "pricing = Deep Infra / OpenRouter; free endpoint available",
+        "reasoning_budget_default": 16384
+      },
+      "pricing": {
+        "input_per_1m": 0.05,
+        "output_per_1m": 0.2,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nemotron-3-nano-30b-a3b:free",
+      "display_name": "NVIDIA Nemotron 3 Nano 30B-A3B (Free)",
+      "context_window": 1048576,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": true,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "nemotron-3-nano",
+        "nemotron-3-nano-30b-a3b"
+      ],
+      "license_type": "free",
+      "extra": {
+        "source": "https://build.nvidia.com/models",
+        "free_endpoint": true,
+        "api_base": "https://integrate.api.nvidia.com/v1",
+        "architecture": "MoE",
+        "partner_prices": {
+          "deep_infra": {
+            "input_per_1m": 0.05,
+            "output_per_1m": 0.2
+          },
+          "openrouter": {
+            "input_per_1m": 0.05,
+            "output_per_1m": 0.2
+          }
+        },
+        "pricing_note": "pricing = Deep Infra / OpenRouter; free endpoint available",
+        "reasoning_budget_default": 16384,
+        "pricing_status": "free_endpoint"
+      },
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nemotron-3-nano-omni-30b-a3b-reasoning",
+      "display_name": "NVIDIA Nemotron 3 Nano Omni 30B-A3B Reasoning",
+      "context_window": 1048576,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "speech",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": true,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "nemotron-3-omni",
+        "nemotron-3-nano-omni-30b-a3b-reasoning"
+      ],
+      "license_type": "api",
+      "extra": {
+        "source": "https://build.nvidia.com/models",
+        "free_endpoint": true,
+        "api_base": "https://integrate.api.nvidia.com/v1",
+        "pricing_status": "free_endpoint_primary",
+        "capabilities": [
+          "image_understanding",
+          "video_understanding",
+          "speech_understanding",
+          "reasoning"
+        ]
+      },
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nemotron-3-nano-omni-30b-a3b-reasoning:free",
+      "display_name": "NVIDIA: Nemotron 3 Nano Omni (free)",
+      "context_window": 256000,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "audio",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
       },
       "extra": {
         "endpoints": [
@@ -1064,9 +2378,7 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "nvidia/nemotron-3-omni",
-        "nemotron-3-nano-omni",
-        "nvidia/nemotron-3-nano-omni"
+        "nemotron-3-nano-omni"
       ],
       "extra": {
         "endpoints": [
@@ -1113,7 +2425,6 @@
       },
       "deprecated": false,
       "aliases": [
-        "nvidia/nemotron-3-super",
         "nemotron-3-super-120b-a12b"
       ],
       "thinking_budget_values": {
@@ -1130,6 +2441,139 @@
             "source": "https://docs.api.nvidia.com/nim/"
           }
         ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nemotron-3-super-120b-a12b",
+      "display_name": "NVIDIA Nemotron 3 Super 120B-A12B",
+      "context_window": 1048576,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": true,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "nemotron-3-super",
+        "nemotron-3-super-120b-a12b"
+      ],
+      "license_type": "api",
+      "extra": {
+        "source": "https://build.nvidia.com/models",
+        "free_endpoint": true,
+        "api_base": "https://integrate.api.nvidia.com/v1",
+        "architecture": "hybrid Mamba-Transformer MoE",
+        "partner_prices": {
+          "bitdeer_ai": {
+            "input_per_1m": 0.2,
+            "output_per_1m": 0.8
+          },
+          "coreweave": {
+            "input_per_1m": 0.2,
+            "output_per_1m": 0.8
+          },
+          "openrouter": {
+            "input_per_1m": 0.21,
+            "output_per_1m": 0.46
+          },
+          "digital_ocean": {
+            "input_per_1m": 0.3,
+            "output_per_1m": 0.65
+          }
+        },
+        "pricing_note": "pricing = Bitdeer/CoreWeave partner; free endpoint available",
+        "enable_thinking": true,
+        "reasoning_budget_default": 16384,
+        "api_calls_30d": "60M"
+      },
+      "pricing": {
+        "input_per_1m": 0.2,
+        "output_per_1m": 0.8,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nemotron-3-super-120b-a12b:free",
+      "display_name": "NVIDIA Nemotron 3 Super 120B-A12B (Free)",
+      "context_window": 1048576,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": true,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "nemotron-3-super",
+        "nemotron-3-super-120b-a12b"
+      ],
+      "license_type": "free",
+      "extra": {
+        "source": "https://build.nvidia.com/models",
+        "free_endpoint": true,
+        "api_base": "https://integrate.api.nvidia.com/v1",
+        "architecture": "hybrid Mamba-Transformer MoE",
+        "partner_prices": {
+          "bitdeer_ai": {
+            "input_per_1m": 0.2,
+            "output_per_1m": 0.8
+          },
+          "coreweave": {
+            "input_per_1m": 0.2,
+            "output_per_1m": 0.8
+          },
+          "openrouter": {
+            "input_per_1m": 0.21,
+            "output_per_1m": 0.46
+          },
+          "digital_ocean": {
+            "input_per_1m": 0.3,
+            "output_per_1m": 0.65
+          }
+        },
+        "pricing_note": "pricing = Bitdeer/CoreWeave partner; free endpoint available",
+        "enable_thinking": true,
+        "reasoning_budget_default": 16384,
+        "api_calls_30d": "60M",
+        "pricing_status": "free_endpoint"
+      },
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
       }
     },
     {
@@ -1166,7 +2610,6 @@
       },
       "deprecated": false,
       "aliases": [
-        "nvidia/nemotron-3-ultra",
         "nemotron-3-ultra-550b-a55b"
       ],
       "thinking_budget_values": {
@@ -1187,10 +2630,212 @@
     },
     {
       "provider": "nvidia",
-      "model_id": "NVIDIA-Nemotron-3-Content-Safety-NIM-microservice",
-      "display_name": "NVIDIA-Nemotron-3-Content-Safety-NIM-microservice",
-      "context_window": 128000,
+      "model_id": "nemotron-3-ultra-550b-a55b",
+      "display_name": "NVIDIA Nemotron 3 Ultra 550B-A55B",
+      "context_window": 1048576,
       "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": true,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "nemotron-3-ultra",
+        "nemotron-3-ultra-550b-a55b"
+      ],
+      "license_type": "api",
+      "extra": {
+        "source": "https://build.nvidia.com/models",
+        "free_endpoint": true,
+        "api_base": "https://integrate.api.nvidia.com/v1",
+        "params": "561B",
+        "architecture": "hybrid Mamba-Transformer MoE",
+        "partner_prices": {
+          "deep_infra": {
+            "input_per_1m": 0.5,
+            "output_per_1m": 2.2
+          },
+          "lightning_ai": {
+            "input_per_1m": 0.41,
+            "output_per_1m": 1.2
+          },
+          "openrouter": {
+            "input_per_1m": 0.6,
+            "output_per_1m": 3.6
+          },
+          "together_ai": {
+            "input_per_1m": 0.6,
+            "output_per_1m": 3.6
+          },
+          "bitdeer_ai": {
+            "input_per_1m": 0.8,
+            "output_per_1m": 2.6
+          },
+          "gmi_cloud": {
+            "input_per_1m": 0.8,
+            "output_per_1m": 2.6
+          },
+          "digital_ocean": {
+            "input_per_1m": 0.9,
+            "output_per_1m": 1.7
+          }
+        },
+        "pricing_note": "pricing.input/output = Deep Infra partner; free endpoint also available",
+        "enable_thinking": true,
+        "reasoning_budget_default": 16384
+      },
+      "pricing": {
+        "input_per_1m": 0.5,
+        "output_per_1m": 2.2,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nemotron-3-ultra-550b-a55b:batch",
+      "display_name": "NVIDIA: Nemotron 3 Ultra (batch)",
+      "context_window": 512288,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.3,
+        "output_per_1m": 1.7999999999999998,
+        "currency": "USD"
+      },
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.api.nvidia.com/nim/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nemotron-3-ultra-550b-a55b:free",
+      "display_name": "NVIDIA Nemotron 3 Ultra 550B-A55B (Free)",
+      "context_window": 1048576,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": true,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "nemotron-3-ultra",
+        "nemotron-3-ultra-550b-a55b"
+      ],
+      "license_type": "free",
+      "extra": {
+        "source": "https://build.nvidia.com/models",
+        "free_endpoint": true,
+        "api_base": "https://integrate.api.nvidia.com/v1",
+        "params": "561B",
+        "architecture": "hybrid Mamba-Transformer MoE",
+        "partner_prices": {
+          "deep_infra": {
+            "input_per_1m": 0.5,
+            "output_per_1m": 2.2
+          },
+          "lightning_ai": {
+            "input_per_1m": 0.41,
+            "output_per_1m": 1.2
+          },
+          "openrouter": {
+            "input_per_1m": 0.6,
+            "output_per_1m": 3.6
+          },
+          "together_ai": {
+            "input_per_1m": 0.6,
+            "output_per_1m": 3.6
+          },
+          "bitdeer_ai": {
+            "input_per_1m": 0.8,
+            "output_per_1m": 2.6
+          },
+          "gmi_cloud": {
+            "input_per_1m": 0.8,
+            "output_per_1m": 2.6
+          },
+          "digital_ocean": {
+            "input_per_1m": 0.9,
+            "output_per_1m": 1.7
+          }
+        },
+        "pricing_note": "pricing.input/output = Deep Infra partner; free endpoint also available",
+        "enable_thinking": true,
+        "reasoning_budget_default": 16384,
+        "pricing_status": "free_endpoint"
+      },
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "nemotron-3.5-content-safety",
+      "display_name": "NVIDIA Nemotron 3.5 Content Safety",
+      "context_window": 32768,
+      "max_output_tokens": 4096,
       "input_modalities": [
         "text",
         "image"
@@ -1198,51 +2843,11 @@
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_streaming": null,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
       "supports_vision": true,
-      "supports_reasoning": null,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "free",
-      "tokenizer_name": "",
-      "knowledge_cutoff": "",
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "NVIDIA-Nemotron-3-Nano-NIM-microservice",
-      "display_name": "NVIDIA-Nemotron-3-Nano-NIM-microservice",
-      "context_window": 128000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": null,
+      "supports_reasoning": false,
       "supports_chat_completion": true,
       "supports_responses_api": false,
       "supports_reasoning_effort": false,
@@ -1250,39 +2855,44 @@
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
-      "license_type": "free",
       "tokenizer_name": "",
-      "knowledge_cutoff": "",
+      "knowledge_cutoff": null,
       "deprecated": false,
-      "aliases": [],
+      "aliases": [
+        "nemotron-3.5-content-safety"
+      ],
+      "license_type": "api",
       "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
+        "source": "https://build.nvidia.com/models",
+        "free_endpoint": true,
+        "api_base": "https://integrate.api.nvidia.com/v1",
+        "pricing_status": "free_endpoint",
+        "use_case": "multilingual multimodal content safety"
+      },
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
       }
     },
     {
       "provider": "nvidia",
-      "model_id": "NVIDIA-Nemotron-3-Super-NIM-microservice",
-      "display_name": "NVIDIA-Nemotron-3-Super-NIM-microservice",
+      "model_id": "nemotron-3.5-content-safety:free",
+      "display_name": "NVIDIA: Nemotron 3.5 Content Safety (free)",
       "context_window": 128000,
-      "max_output_tokens": 16384,
+      "max_output_tokens": 8192,
       "input_modalities": [
-        "text"
+        "text",
+        "image"
       ],
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": null,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
       "supports_chat_completion": true,
       "supports_responses_api": false,
       "supports_reasoning_effort": false,
@@ -1290,11 +2900,16 @@
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
-      "license_type": "free",
-      "tokenizer_name": "",
-      "knowledge_cutoff": "",
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
       "extra": {
         "endpoints": [
           {
@@ -1308,21 +2923,23 @@
     },
     {
       "provider": "nvidia",
-      "model_id": "NVIDIA-Nemotron-3-Ultra-NIM-microservice",
-      "display_name": "NVIDIA-Nemotron-3-Ultra-NIM-microservice",
+      "model_id": "nemotron-nano-12b-v2-vl:free",
+      "display_name": "NVIDIA: Nemotron Nano 12B 2 VL (free)",
       "context_window": 128000,
-      "max_output_tokens": 16384,
+      "max_output_tokens": 128000,
       "input_modalities": [
-        "text"
+        "image",
+        "text",
+        "video"
       ],
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": null,
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
       "supports_chat_completion": true,
       "supports_responses_api": false,
       "supports_reasoning_effort": false,
@@ -1330,11 +2947,16 @@
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
-      "license_type": "free",
-      "tokenizer_name": "",
-      "knowledge_cutoff": "",
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
       "extra": {
         "endpoints": [
           {
@@ -1348,61 +2970,21 @@
     },
     {
       "provider": "nvidia",
-      "model_id": "NVIDIA-Nemotron-Content-Safety-Reasoning-4B-NIM-microservice",
-      "display_name": "NVIDIA Nemotron Content Safety Reasoning 4B NIM microservice",
+      "model_id": "nemotron-nano-9b-v2:free",
+      "display_name": "NVIDIA: Nemotron Nano 9B V2 (free)",
       "context_window": 128000,
-      "max_output_tokens": 16384,
+      "max_output_tokens": 0,
       "input_modalities": [
         "text"
       ],
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_streaming": null,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
       "supports_vision": false,
-      "supports_reasoning": null,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "free",
-      "tokenizer_name": "",
-      "knowledge_cutoff": "",
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "NVIDIA-Nemotron-Nano-12B-v2-VL-NIM-microservice",
-      "display_name": "NVIDIA Nemotron Nano 12B v2 VL NIM microservice",
-      "context_window": 128000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": null,
+      "supports_reasoning": true,
       "supports_chat_completion": true,
       "supports_responses_api": false,
       "supports_reasoning_effort": false,
@@ -1410,91 +2992,16 @@
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
-      "license_type": "free",
-      "tokenizer_name": "",
-      "knowledge_cutoff": "",
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": "2025-03-31",
       "deprecated": false,
       "aliases": [],
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "NVIDIA-Nemotron-Nano-9b-v2-NIM-microservice",
-      "display_name": "NVIDIA Nemotron Nano 9b v2 NIM microservice",
-      "context_window": 128000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": null,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "free",
-      "tokenizer_name": "",
-      "knowledge_cutoff": "",
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "NVIDIA-Nemotron-Parse-NIM-microservice",
-      "display_name": "NVIDIA Nemotron Parse NIM microservice",
-      "context_window": 128000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": null,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "free",
-      "tokenizer_name": "",
-      "knowledge_cutoff": "",
-      "deprecated": false,
-      "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
       "extra": {
         "endpoints": [
           {
@@ -1731,1563 +3238,6 @@
       "supports_google_api": false,
       "supports_fim": false,
       "license_type": "free",
-      "tokenizer_name": "",
-      "knowledge_cutoff": "",
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/Cosmos-Reason2-2B",
-      "display_name": "nvidia/Cosmos-Reason2-2B",
-      "context_window": 4096,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "unknown",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "nvidia/cosmos-reason2-2b"
-      ],
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/Cosmos-Reason2-8B",
-      "display_name": "nvidia/Cosmos-Reason2-8B",
-      "context_window": 4096,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "unknown",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "nvidia/cosmos-reason2-8b"
-      ],
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/cosmos3-nano",
-      "display_name": "NVIDIA Cosmos 3 Nano",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "video"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "cosmos3-nano"
-      ],
-      "license_type": "api",
-      "extra": {
-        "source": "https://build.nvidia.com/models",
-        "free_endpoint": true,
-        "api_base": "https://integrate.api.nvidia.com/v1",
-        "pricing_status": "free_endpoint",
-        "use_case": "physics-aware video generation for physical AI"
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/cosmos3-nano-reasoner",
-      "display_name": "NVIDIA Cosmos 3 Nano Reasoner",
-      "context_window": 131072,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text",
-        "image",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": true,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "cosmos3-nano-reasoner"
-      ],
-      "license_type": "api",
-      "extra": {
-        "source": "https://build.nvidia.com/models",
-        "free_endpoint": true,
-        "api_base": "https://integrate.api.nvidia.com/v1",
-        "pricing_status": "free_endpoint",
-        "use_case": "physical-world video/image reasoning"
-      },
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/Eagle2.5-8B",
-      "display_name": "nvidia/Eagle2.5-8B",
-      "context_window": 4096,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "unknown",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "nvidia/eagle2.5-8b"
-      ],
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/Llama-3.1-Nemotron-Nano-VL-8B-V1",
-      "display_name": "nvidia/Llama-3.1-Nemotron-Nano-VL-8B-V1",
-      "context_window": 4096,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "unknown",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "nvidia/llama-3.1-nemotron-nano-vl-8b-v1"
-      ],
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/llama-3.3-nemotron-super-49b-v1.5",
-      "display_name": "NVIDIA: Llama 3.3 Nemotron Super 49B V1.5",
-      "context_window": 131072,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "api",
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2024-03-31",
-      "pricing": {
-        "input_per_1m": 0.4,
-        "output_per_1m": 0.4,
-        "currency": "USD"
-      },
-      "deprecated": false,
-      "aliases": [
-        "nvidia/llama-3.3-nemotron-super-49b-v1.5"
-      ],
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/LocateAnything-3B",
-      "display_name": "nvidia/LocateAnything-3B",
-      "context_window": 4096,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "unknown",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "nvidia/locateanything-3b"
-      ],
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/nemotron-3-embed-1b",
-      "display_name": "NVIDIA Nemotron 3 Embed 1B",
-      "context_window": 8192,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "embedding"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "nemotron-3-embed-1b"
-      ],
-      "license_type": "api",
-      "extra": {
-        "source": "https://build.nvidia.com/models",
-        "free_endpoint": true,
-        "api_base": "https://integrate.api.nvidia.com/v1",
-        "pricing_status": "free_endpoint",
-        "use_case": "semantic search / retrieval / RAG",
-        "api_kind": "embeddings"
-      },
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/nemotron-3-nano-30b-a3b",
-      "display_name": "NVIDIA Nemotron 3 Nano 30B-A3B",
-      "context_window": 1048576,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": true,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "nemotron-3-nano",
-        "nvidia/nemotron-3-nano-30b-a3b:free",
-        "nemotron-3-nano-30b-a3b"
-      ],
-      "license_type": "api",
-      "extra": {
-        "source": "https://build.nvidia.com/models",
-        "free_endpoint": true,
-        "api_base": "https://integrate.api.nvidia.com/v1",
-        "architecture": "MoE",
-        "partner_prices": {
-          "deep_infra": {
-            "input_per_1m": 0.05,
-            "output_per_1m": 0.2
-          },
-          "openrouter": {
-            "input_per_1m": 0.05,
-            "output_per_1m": 0.2
-          }
-        },
-        "pricing_note": "pricing = Deep Infra / OpenRouter; free endpoint available",
-        "reasoning_budget_default": 16384
-      },
-      "pricing": {
-        "input_per_1m": 0.05,
-        "output_per_1m": 0.2,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/nemotron-3-nano-30b-a3b:free",
-      "display_name": "NVIDIA Nemotron 3 Nano 30B-A3B (Free)",
-      "context_window": 1048576,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": true,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "nemotron-3-nano",
-        "nemotron-3-nano-30b-a3b"
-      ],
-      "license_type": "free",
-      "extra": {
-        "source": "https://build.nvidia.com/models",
-        "free_endpoint": true,
-        "api_base": "https://integrate.api.nvidia.com/v1",
-        "architecture": "MoE",
-        "partner_prices": {
-          "deep_infra": {
-            "input_per_1m": 0.05,
-            "output_per_1m": 0.2
-          },
-          "openrouter": {
-            "input_per_1m": 0.05,
-            "output_per_1m": 0.2
-          }
-        },
-        "pricing_note": "pricing = Deep Infra / OpenRouter; free endpoint available",
-        "reasoning_budget_default": 16384,
-        "pricing_status": "free_endpoint"
-      },
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
-      "display_name": "NVIDIA Nemotron 3 Nano Omni 30B-A3B Reasoning",
-      "context_window": 1048576,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text",
-        "image",
-        "video",
-        "speech",
-        "audio"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": true,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "nemotron-3-omni",
-        "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
-        "nemotron-3-nano-omni-30b-a3b-reasoning"
-      ],
-      "license_type": "api",
-      "extra": {
-        "source": "https://build.nvidia.com/models",
-        "free_endpoint": true,
-        "api_base": "https://integrate.api.nvidia.com/v1",
-        "pricing_status": "free_endpoint_primary",
-        "capabilities": [
-          "image_understanding",
-          "video_understanding",
-          "speech_understanding",
-          "reasoning"
-        ]
-      },
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
-      "display_name": "NVIDIA: Nemotron 3 Nano Omni (free)",
-      "context_window": 256000,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text",
-        "audio",
-        "image",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/nemotron-3-super-120b-a12b",
-      "display_name": "NVIDIA Nemotron 3 Super 120B-A12B",
-      "context_window": 1048576,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": true,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "nemotron-3-super",
-        "nvidia/nemotron-3-super-120b-a12b:free",
-        "nemotron-3-super-120b-a12b"
-      ],
-      "license_type": "api",
-      "extra": {
-        "source": "https://build.nvidia.com/models",
-        "free_endpoint": true,
-        "api_base": "https://integrate.api.nvidia.com/v1",
-        "architecture": "hybrid Mamba-Transformer MoE",
-        "partner_prices": {
-          "bitdeer_ai": {
-            "input_per_1m": 0.2,
-            "output_per_1m": 0.8
-          },
-          "coreweave": {
-            "input_per_1m": 0.2,
-            "output_per_1m": 0.8
-          },
-          "openrouter": {
-            "input_per_1m": 0.21,
-            "output_per_1m": 0.46
-          },
-          "digital_ocean": {
-            "input_per_1m": 0.3,
-            "output_per_1m": 0.65
-          }
-        },
-        "pricing_note": "pricing = Bitdeer/CoreWeave partner; free endpoint available",
-        "enable_thinking": true,
-        "reasoning_budget_default": 16384,
-        "api_calls_30d": "60M"
-      },
-      "pricing": {
-        "input_per_1m": 0.2,
-        "output_per_1m": 0.8,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/nemotron-3-super-120b-a12b:free",
-      "display_name": "NVIDIA Nemotron 3 Super 120B-A12B (Free)",
-      "context_window": 1048576,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": true,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "nemotron-3-super",
-        "nemotron-3-super-120b-a12b"
-      ],
-      "license_type": "free",
-      "extra": {
-        "source": "https://build.nvidia.com/models",
-        "free_endpoint": true,
-        "api_base": "https://integrate.api.nvidia.com/v1",
-        "architecture": "hybrid Mamba-Transformer MoE",
-        "partner_prices": {
-          "bitdeer_ai": {
-            "input_per_1m": 0.2,
-            "output_per_1m": 0.8
-          },
-          "coreweave": {
-            "input_per_1m": 0.2,
-            "output_per_1m": 0.8
-          },
-          "openrouter": {
-            "input_per_1m": 0.21,
-            "output_per_1m": 0.46
-          },
-          "digital_ocean": {
-            "input_per_1m": 0.3,
-            "output_per_1m": 0.65
-          }
-        },
-        "pricing_note": "pricing = Bitdeer/CoreWeave partner; free endpoint available",
-        "enable_thinking": true,
-        "reasoning_budget_default": 16384,
-        "api_calls_30d": "60M",
-        "pricing_status": "free_endpoint"
-      },
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/nemotron-3-ultra-550b-a55b",
-      "display_name": "NVIDIA Nemotron 3 Ultra 550B-A55B",
-      "context_window": 1048576,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": true,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "nemotron-3-ultra",
-        "nvidia/nemotron-3-ultra-550b-a55b:free",
-        "nemotron-3-ultra-550b-a55b"
-      ],
-      "license_type": "api",
-      "extra": {
-        "source": "https://build.nvidia.com/models",
-        "free_endpoint": true,
-        "api_base": "https://integrate.api.nvidia.com/v1",
-        "params": "561B",
-        "architecture": "hybrid Mamba-Transformer MoE",
-        "partner_prices": {
-          "deep_infra": {
-            "input_per_1m": 0.5,
-            "output_per_1m": 2.2
-          },
-          "lightning_ai": {
-            "input_per_1m": 0.41,
-            "output_per_1m": 1.2
-          },
-          "openrouter": {
-            "input_per_1m": 0.6,
-            "output_per_1m": 3.6
-          },
-          "together_ai": {
-            "input_per_1m": 0.6,
-            "output_per_1m": 3.6
-          },
-          "bitdeer_ai": {
-            "input_per_1m": 0.8,
-            "output_per_1m": 2.6
-          },
-          "gmi_cloud": {
-            "input_per_1m": 0.8,
-            "output_per_1m": 2.6
-          },
-          "digital_ocean": {
-            "input_per_1m": 0.9,
-            "output_per_1m": 1.7
-          }
-        },
-        "pricing_note": "pricing.input/output = Deep Infra partner; free endpoint also available",
-        "enable_thinking": true,
-        "reasoning_budget_default": 16384
-      },
-      "pricing": {
-        "input_per_1m": 0.5,
-        "output_per_1m": 2.2,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/nemotron-3-ultra-550b-a55b:batch",
-      "display_name": "NVIDIA: Nemotron 3 Ultra (batch)",
-      "context_window": 512288,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "nvidia/nemotron-3-ultra-550b-a55b:batch"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.3,
-        "output_per_1m": 1.7999999999999998,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/nemotron-3-ultra-550b-a55b:free",
-      "display_name": "NVIDIA Nemotron 3 Ultra 550B-A55B (Free)",
-      "context_window": 1048576,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": true,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "nemotron-3-ultra",
-        "nemotron-3-ultra-550b-a55b"
-      ],
-      "license_type": "free",
-      "extra": {
-        "source": "https://build.nvidia.com/models",
-        "free_endpoint": true,
-        "api_base": "https://integrate.api.nvidia.com/v1",
-        "params": "561B",
-        "architecture": "hybrid Mamba-Transformer MoE",
-        "partner_prices": {
-          "deep_infra": {
-            "input_per_1m": 0.5,
-            "output_per_1m": 2.2
-          },
-          "lightning_ai": {
-            "input_per_1m": 0.41,
-            "output_per_1m": 1.2
-          },
-          "openrouter": {
-            "input_per_1m": 0.6,
-            "output_per_1m": 3.6
-          },
-          "together_ai": {
-            "input_per_1m": 0.6,
-            "output_per_1m": 3.6
-          },
-          "bitdeer_ai": {
-            "input_per_1m": 0.8,
-            "output_per_1m": 2.6
-          },
-          "gmi_cloud": {
-            "input_per_1m": 0.8,
-            "output_per_1m": 2.6
-          },
-          "digital_ocean": {
-            "input_per_1m": 0.9,
-            "output_per_1m": 1.7
-          }
-        },
-        "pricing_note": "pricing.input/output = Deep Infra partner; free endpoint also available",
-        "enable_thinking": true,
-        "reasoning_budget_default": 16384,
-        "pricing_status": "free_endpoint"
-      },
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/nemotron-3.5-content-safety",
-      "display_name": "NVIDIA Nemotron 3.5 Content Safety",
-      "context_window": 32768,
-      "max_output_tokens": 4096,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "nemotron-3.5-content-safety",
-        "nvidia/nemotron-3.5-content-safety:free"
-      ],
-      "license_type": "api",
-      "extra": {
-        "source": "https://build.nvidia.com/models",
-        "free_endpoint": true,
-        "api_base": "https://integrate.api.nvidia.com/v1",
-        "pricing_status": "free_endpoint",
-        "use_case": "multilingual multimodal content safety"
-      },
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/nemotron-3.5-content-safety:free",
-      "display_name": "NVIDIA: Nemotron 3.5 Content Safety (free)",
-      "context_window": 128000,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "nvidia/nemotron-3.5-content-safety:free"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/nemotron-nano-12b-v2-vl:free",
-      "display_name": "NVIDIA: Nemotron Nano 12B 2 VL (free)",
-      "context_window": 128000,
-      "max_output_tokens": 128000,
-      "input_modalities": [
-        "image",
-        "text",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "nvidia/nemotron-nano-12b-v2-vl:free"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/nemotron-nano-9b-v2:free",
-      "display_name": "NVIDIA: Nemotron Nano 9B V2 (free)",
-      "context_window": 128000,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": "2025-03-31",
-      "deprecated": false,
-      "aliases": [
-        "nvidia/nemotron-nano-9b-v2:free"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/NVIDIA-Nemotron-Nano-12B-v2-VL-BF16",
-      "display_name": "nvidia/NVIDIA-Nemotron-Nano-12B-v2-VL-BF16",
-      "context_window": 4096,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "unknown",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "nvidia/nvidia-nemotron-nano-12b-v2-vl-bf16"
-      ],
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/NVIDIA-Nemotron-Nano-12B-v2-VL-NVFP4-QAD",
-      "display_name": "nvidia/NVIDIA-Nemotron-Nano-12B-v2-VL-NVFP4-QAD",
-      "context_window": 4096,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "unknown",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "nvidia/nvidia-nemotron-nano-12b-v2-vl-nvfp4-qad"
-      ],
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/NVIDIA-Nemotron-Parse-v1.1",
-      "display_name": "nvidia/NVIDIA-Nemotron-Parse-v1.1",
-      "context_window": 4096,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "unknown",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "nvidia/nvidia-nemotron-parse-v1.1"
-      ],
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/NVIDIA-Nemotron-Parse-v1.2",
-      "display_name": "nvidia/NVIDIA-Nemotron-Parse-v1.2",
-      "context_window": 4096,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "unknown",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "nvidia/nvidia-nemotron-parse-v1.2"
-      ],
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "nvidia/NVLM-D-72B",
-      "display_name": "nvidia/NVLM-D-72B",
-      "context_window": 4096,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "unknown",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "nvidia/nvlm-d-72b"
-      ],
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "Openfold2-NIM-microservice",
-      "display_name": "Openfold2",
-      "context_window": 128000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": null,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "license",
-      "tokenizer_name": "",
-      "knowledge_cutoff": "",
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "Openfold3_1_2_0-NIM-microservice",
-      "display_name": "Openfold3_1_2_0 NIM Microservice",
-      "context_window": 128000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": null,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "license",
-      "tokenizer_name": "",
-      "knowledge_cutoff": "",
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "ProteinMPNN-NIM-microservice",
-      "display_name": "ProteinMPNN",
-      "context_window": 128000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": null,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "license",
-      "tokenizer_name": "",
-      "knowledge_cutoff": "",
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "Rfdiffusion-NIM-microservice",
-      "display_name": "RFdiffusion",
-      "context_window": 128000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": null,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "license",
-      "tokenizer_name": "",
-      "knowledge_cutoff": "",
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.api.nvidia.com/nim/"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "nvidia",
-      "model_id": "Trellis-NIM-microservice",
-      "display_name": "Trellis-NIM-microservice",
-      "context_window": 128000,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": true,
-      "supports_reasoning": null,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "license",
       "tokenizer_name": "",
       "knowledge_cutoff": "",
       "deprecated": false,

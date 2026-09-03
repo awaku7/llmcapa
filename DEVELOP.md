@@ -91,6 +91,8 @@ When adding a new alias, update `_provider_aliases` in `src/llmcapa/registry.py`
 - When omitted, search iterates all providers via `list_models` / `_by_provider` (not the flat `_models` index), so the same model id under multiple providers is preserved.
 - When provided, the same alias/normalization path as `list_models`/`get` is used.
 
+Route-qualified IDs such as `meta/muse-spark-1.3` belong to the `openrouter` catalog. Native catalogs do not add that aggregator route prefix as an alias; however, a native provider's own model namespace may legitimately contain a slash (for example, Novita's `baichuan/baichuan-m2-32b`). Use `provider="openrouter"` when searching for an OpenRouter route.
+
 ## Catalog updater policy
 
 Provider catalogs are updated by provider-specific scripts using each provider's official sources. There is no supported script that bulk-replaces all provider catalogs with OpenRouter data.
@@ -148,7 +150,7 @@ Create a new JSON file under `src/llmcapa/data/<provider_name>.json`.
         "currency": "USD"
       },
       "knowledge_cutoff": "2024-01",
-      "aliases": ["cohere/command-r-plus"]
+      "aliases": ["command-r-plus-latest"]
     }
   ]
 }

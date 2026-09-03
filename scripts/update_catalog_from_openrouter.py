@@ -1,8 +1,8 @@
 """Refresh bundled provider catalogs from a captured OpenRouter model snapshot."""
+
 from __future__ import annotations
 
 import json
-import os
 import sys
 import urllib.request
 from pathlib import Path
@@ -42,7 +42,9 @@ def map_record(r: dict) -> dict:
         "input_modalities": arch.get("input_modalities") or ["text"],
         "output_modalities": arch.get("output_modalities") or ["text"],
         "supports_function_calling": bool({"tools", "function_calling"} & params),
-        "supports_json_mode": bool({"response_format", "structured_outputs", "json_mode"} & params),
+        "supports_json_mode": bool(
+            {"response_format", "structured_outputs", "json_mode"} & params
+        ),
         "supports_json_schema": True if "structured_outputs" in params else None,
         "supports_streaming": True,
         "supports_vision": "image" in (arch.get("input_modalities") or []),
@@ -59,7 +61,11 @@ def map_record(r: dict) -> dict:
         "deprecated": False,
         "aliases": aliases,
         "license_type": "unknown",
-        "pricing": {"input_per_1m": prompt * 1_000_000, "output_per_1m": completion * 1_000_000, "currency": "USD"},
+        "pricing": {
+            "input_per_1m": prompt * 1_000_000,
+            "output_per_1m": completion * 1_000_000,
+            "currency": "USD",
+        },
     }
 
 
@@ -84,7 +90,10 @@ def load_web_models(prefix: str = "") -> list[dict]:
     authoritative source when both sources contain the same model ID.
     """
     query = f"&q={quote(prefix)}" if prefix else ""
-    url = "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards" + query
+    url = (
+        "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards"
+        + query
+    )
     request = urllib.request.Request(
         url,
         headers={
@@ -95,8 +104,11 @@ def load_web_models(prefix: str = "") -> list[dict]:
     try:
         with urllib.request.urlopen(request, timeout=30) as response:
             payload = json.loads(response.read().decode("utf-8"))
-    except Exception as exc:
-        print(f"warning: failed to read OpenRouter web catalog for {prefix}: {exc}", file=sys.stderr)
+    except Exception as exc:  # noqa: BLE001
+        print(
+            f"warning: failed to read OpenRouter web catalog for {prefix}: {exc}",
+            file=sys.stderr,
+        )
         return []
 
     models = (payload.get("data") or {}).get("models") or []
@@ -107,23 +119,27 @@ def load_web_models(prefix: str = "") -> list[dict]:
         if prefix and not model_id.startswith(prefix + "/"):
             continue
         pricing = endpoint.get("pricing") or {}
-        records.append({
-            "id": model_id,
-            "name": model.get("name") or model_id,
-            "context_length": model.get("context_length") or 0,
-            "top_provider": {"max_completion_tokens": endpoint.get("max_completion_tokens") or 0},
-            "architecture": {
-                "input_modalities": model.get("input_modalities") or ["text"],
-                "output_modalities": model.get("output_modalities") or ["text"],
-                "tokenizer": "",
-            },
-            "pricing": {
-                "prompt": pricing.get("prompt") or "0",
-                "completion": pricing.get("completion") or "0",
-            },
-            "supported_parameters": endpoint.get("supported_parameters") or [],
-            "knowledge_cutoff": model.get("knowledge_cutoff"),
-        })
+        records.append(
+            {
+                "id": model_id,
+                "name": model.get("name") or model_id,
+                "context_length": model.get("context_length") or 0,
+                "top_provider": {
+                    "max_completion_tokens": endpoint.get("max_completion_tokens") or 0
+                },
+                "architecture": {
+                    "input_modalities": model.get("input_modalities") or ["text"],
+                    "output_modalities": model.get("output_modalities") or ["text"],
+                    "tokenizer": "",
+                },
+                "pricing": {
+                    "prompt": pricing.get("prompt") or "0",
+                    "completion": pricing.get("completion") or "0",
+                },
+                "supported_parameters": endpoint.get("supported_parameters") or [],
+                "knowledge_cutoff": model.get("knowledge_cutoff"),
+            }
+        )
     return records
 
 
@@ -155,9 +171,7 @@ def main() -> None:
     openrouter_payload = json.loads(openrouter_path.read_text(encoding="utf-8"))
     openrouter_existing = openrouter_payload.get("models", [])
     openrouter_by_id = {
-        e.get("model_id").lower(): e
-        for e in openrouter_existing
-        if e.get("model_id")
+        e.get("model_id").lower(): e for e in openrouter_existing if e.get("model_id")
     }
     # The API snapshot is authoritative for exact IDs; frontend-only records
     # are then added as a fallback.
@@ -167,7 +181,9 @@ def main() -> None:
     for web_record in load_web_models():
         entry = map_record(web_record)
         openrouter_by_id.setdefault(entry["model_id"].lower(), entry)
-    openrouter_merged = sorted(openrouter_by_id.values(), key=lambda e: e["model_id"].lower())
+    openrouter_merged = sorted(
+        openrouter_by_id.values(), key=lambda e: e["model_id"].lower()
+    )
     openrouter_path.write_text(
         json.dumps({"models": openrouter_merged}, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",

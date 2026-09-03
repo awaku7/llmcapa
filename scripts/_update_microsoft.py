@@ -25,6 +25,7 @@ Context notes:
   Foundry pricing table lists Phi-4 as 128K but model card / catalog / OpenRouter
   are 16K — use 16384. Phi-4-reasoning / plus pricing table = 32K.
 """
+
 from __future__ import annotations
 
 import json
@@ -34,7 +35,9 @@ from pathlib import Path
 
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "microsoft.json"
-INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "microsoft.json"
+INSTALLED = (
+    Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "microsoft.json"
+)
 LOG = WORKDIR / "provider_update_log.md"
 
 SOURCE_PRICING = (
@@ -340,7 +343,9 @@ def build() -> list[dict]:
             function_calling=True,
             chat=True,
             aliases=["phi-4-mini-reasoning"],
-            extra=ft_extra(include_ft=False, notes={"foundry_row": "Phi-4-mini-reasoning"}),
+            extra=ft_extra(
+                include_ft=False, notes={"foundry_row": "Phi-4-mini-reasoning"}
+            ),
         )
     )
     models.append(
@@ -1031,7 +1036,11 @@ def build() -> list[dict]:
         ("unsloth-phi-4", "Unsloth Phi-4", {"ctx": 16_384}),
         ("unsloth-phi-4-unsloth-bnb-4bit", "Unsloth Phi-4 bnb 4bit", {"ctx": 16_384}),
         ("unsloth-phi-3.5-mini-instruct", "Unsloth Phi-3.5 mini instruct", {}),
-        ("unsloth-phi-3-medium-4k-instruct", "Unsloth Phi-3 medium 4k instruct", {"ctx": 4_096}),
+        (
+            "unsloth-phi-3-medium-4k-instruct",
+            "Unsloth Phi-3 medium 4k instruct",
+            {"ctx": 4_096},
+        ),
         (
             "sreenington-phi-3-mini-4k-instruct-awq",
             "sreenington Phi-3 mini 4k AWQ",

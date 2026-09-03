@@ -11,6 +11,7 @@ Nova 2 text models: Global Cross-Region Inference (CRI) as primary;
 geo/in-region rates stored in extra.
 Cache read = 75% less than on-demand input (official).
 """
+
 from __future__ import annotations
 
 import json
@@ -20,7 +21,9 @@ from pathlib import Path
 
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "amazon.json"
-INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "amazon.json"
+INSTALLED = (
+    Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "amazon.json"
+)
 LOG = WORKDIR / "provider_update_log.md"
 SOURCE_BEDROCK = "https://aws.amazon.com/bedrock/pricing/"
 SOURCE_NOVA = "https://aws.amazon.com/nova/pricing/"
@@ -54,8 +57,7 @@ def base(
     aliases = list(aliases or [])
     # dual alias: OpenRouter-style amazon/<id> + Bedrock amazon.<id>:0
     bare = model_id
-    if bare.startswith("amazon/"):
-        bare = bare[len("amazon/") :]
+    bare = bare.removeprefix("amazon/")
     or_id = f"amazon/{bare}"
     br_id = f"amazon.{bare}:0" if not bare.startswith("amazon.") else bare
     # also bare without version suffix variants handled by caller
@@ -99,10 +101,12 @@ def base(
             "currency": "USD",
         }
         # specialty unit prices (image/sec) may live only in extra
-        if pricing.get("input") is None and pricing.get("output") is None:
-            # keep currency shell only if specialty
-            if "unit" in (extra or {}):
-                row["pricing"] = {"currency": "USD"}
+        if (
+            pricing.get("input") is None
+            and pricing.get("output") is None
+            and "unit" in (extra or {})
+        ):
+            row["pricing"] = {"currency": "USD"}
     else:
         row["pricing"] = None
 

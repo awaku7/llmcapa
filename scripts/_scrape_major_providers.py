@@ -75,7 +75,7 @@ def scrape_page(page, url: str, wait_ms: int = 4000) -> dict:
         page.goto(url, wait_until="domcontentloaded", timeout=90000)
         try:
             page.wait_for_load_state("networkidle", timeout=20000)
-        except Exception:
+        except Exception:  # noqa: BLE001, S110
             pass
         page.wait_for_timeout(wait_ms)
         # scroll to load lazy content

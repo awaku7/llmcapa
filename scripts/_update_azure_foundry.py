@@ -20,6 +20,7 @@ Notes:
 - Hugging Face VM-only research models without MaaS/paygo are kept only when
   they appear in the chat-completion catalog scrape (task filter already applied).
 """
+
 from __future__ import annotations
 
 import json
@@ -31,7 +32,13 @@ from typing import Any
 
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "azure_foundry.json"
-INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "azure_foundry.json"
+INSTALLED = (
+    Path(__file__).resolve().parents[1]
+    / "src"
+    / "llmcapa"
+    / "data"
+    / "azure_foundry.json"
+)
 LOG = WORKDIR / "provider_update_log.md"
 CATALOG = WORKDIR / "_scratch_azure_catalog_raw.json"
 PRICING = WORKDIR / "_scratch_azure_pricing_tables.json"
@@ -174,7 +181,7 @@ def _parse_inline_pricing(text: str) -> dict[str, float]:
     # Prefer more specific patterns first — already ordered
     used_spans: list[tuple[int, int]] = []
     for pat, key in patterns:
-        for m in re.finditer(pat, text, flags=re.I):
+        for m in re.finditer(pat, text, flags=re.IGNORECASE):
             span = m.span()
             # skip if overlaps a more-specific earlier match for cached*
             if any(not (span[1] <= a or span[0] >= b) for a, b in used_spans):
@@ -192,7 +199,7 @@ def _parse_inline_pricing(text: str) -> dict[str, float]:
     m = re.search(
         r"Input:\s*\$?([0-9.]+)\s*/\s*1K\s*Tokens.*?Output:\s*\$?([0-9.]+)\s*/\s*1K",
         text,
-        flags=re.I | re.S,
+        flags=re.IGNORECASE | re.DOTALL,
     )
     if m:
         out["input_per_1m"] = float(m.group(1)) * 1000
@@ -201,7 +208,7 @@ def _parse_inline_pricing(text: str) -> dict[str, float]:
     m = re.search(
         r"Input:\s*\$?([0-9.]+)/1M\s*Tokens.*?Cached\s*Input:\s*\$?([0-9.]+)/1M\s*Tokens.*?Output:\s*\$?([0-9.]+)/1M",
         text,
-        flags=re.I | re.S,
+        flags=re.IGNORECASE | re.DOTALL,
     )
     if m:
         out["input_per_1m"] = float(m.group(1))
@@ -219,7 +226,7 @@ def _norm_key(name: str) -> str:
         r"\s*(\(|$)\s*(global|data\s*zone|datazone|regional|us/eu\s*[-–]?\s*data\s*zones?|long\s*context).*$",
         "",
         s,
-        flags=re.I,
+        flags=re.IGNORECASE,
     )
     s = re.sub(r"[^a-z0-9.+]+", "-", s)
     s = re.sub(r"-+", "-", s).strip("-")
@@ -276,7 +283,6 @@ def _norm_key(name: str) -> str:
         "grok-4-20-non-reasoning": "grok-4.2",
         "phi-4-multimodal-instruct": "phi-4-multimodal-text-and-image",
         "phi-4-multimodal": "phi-4-multimodal-text-and-image",
-        "phi-4-multimodal-instruct": "phi-4-multimodal-text-and-image",
         "deepseek-v3.2-speciale": "deepseek-v3.2-sp",
         "deepseek-v3-2-speciale": "deepseek-v3.2-sp",
         "deepseek-r1-0528": "deepseek-r1",
@@ -349,12 +355,12 @@ def _detect_zone_and_base(model_label: str) -> tuple[str, str]:
     zone = _zone_of(model_label)
     # strip zone words and parentheticals for base key
     base = model_label
-    base = re.sub(r"\([^)]*context[^)]*\)", "", base, flags=re.I)
+    base = re.sub(r"\([^)]*context[^)]*\)", "", base, flags=re.IGNORECASE)
     base = re.sub(
         r"\b(Global|Data\s*Zone|DataZone|Regional|US/EU\s*[-–]?\s*Data\s*Zones?|Long\s*Context)\b",
         "",
         base,
-        flags=re.I,
+        flags=re.IGNORECASE,
     )
     base = re.sub(r"\s+", " ", base).strip(" -")
     return zone, _norm_key(base)
@@ -443,12 +449,15 @@ def parse_aoai_tables(tables: list[dict]) -> dict[str, dict]:
             if zone_only and prev_model_label:
                 label = f"{prev_model_label} {label}"
             elif not zone_only:
-                prev_model_label = re.sub(
-                    r"\b(Global|Data\s*Zone|DataZone|Regional|Developer|Long\s*Context)\b.*$",
-                    "",
-                    label,
-                    flags=re.I,
-                ).strip(" -") or label
+                prev_model_label = (
+                    re.sub(
+                        r"\b(Global|Data\s*Zone|DataZone|Regional|Developer|Long\s*Context)\b.*$",
+                        "",
+                        label,
+                        flags=re.IGNORECASE,
+                    ).strip(" -")
+                    or label
+                )
             zone, key = _detect_zone_and_base(label)
             if not key:
                 continue
@@ -457,12 +466,16 @@ def parse_aoai_tables(tables: list[dict]) -> dict[str, dict]:
                 zone = "long_context"
             # context threshold note
             ctx_note = None
-            mctx = re.search(r"\(([<>]=?\s*\d+\s*k[^\)]*)\)", label, flags=re.I)
+            mctx = re.search(
+                r"\(([<>]=?\s*\d+\s*k[^\)]*)\)", label, flags=re.IGNORECASE
+            )
             if mctx:
                 ctx_note = mctx.group(1).strip()
                 # ">272k" = long-context tier; "<272k" = standard tier for that zone
                 if ctx_note.lstrip().startswith(">"):
-                    zone = "long_context" if zone == "global" else f"{zone}_long_context"
+                    zone = (
+                        "long_context" if zone == "global" else f"{zone}_long_context"
+                    )
 
             for col_i, col_name in enumerate(r[1:], start=1):
                 blob = r[col_i] if col_i < len(r) else ""
@@ -484,12 +497,20 @@ def parse_aoai_tables(tables: list[dict]) -> dict[str, dict]:
                     tier = zone  # global/data_zone/regional/long_context
                 slot = ensure(key).setdefault(tier, {})
                 # Prefer standard (<Nk) rates; do not let long-context overwrite
-                if slot and "input_per_1m" in slot and ctx_note and ctx_note.lstrip().startswith(">"):
+                if (
+                    slot
+                    and "input_per_1m" in slot
+                    and ctx_note
+                    and ctx_note.lstrip().startswith(">")
+                    and tier not in ("long_context",)
+                    and not str(tier).endswith("_long_context")
+                ):
                     # should have been routed to long_context; skip overwrite
-                    if tier not in ("long_context",) and not str(tier).endswith("_long_context"):
-                        # force long_context bucket
-                        tier = "long_context" if tier == "global" else f"{tier}_long_context"
-                        slot = ensure(key).setdefault(tier, {})
+                    # force long_context bucket
+                    tier = (
+                        "long_context" if tier == "global" else f"{tier}_long_context"
+                    )
+                    slot = ensure(key).setdefault(tier, {})
                 if not slot or "input_per_1m" not in slot:
                     slot.update(parsed)
                 elif ctx_note and ctx_note.lstrip().startswith("<"):
@@ -545,7 +566,11 @@ def parse_simple_token_tables(tables: list[dict]) -> dict[str, dict]:
                     continue
                 blob = r[-1]
                 # skip non-token (rerank / image / pages)
-                if "/1k searches" in blob.lower() or "/image" in blob.lower() or "pages" in blob.lower():
+                if (
+                    "/1k searches" in blob.lower()
+                    or "/image" in blob.lower()
+                    or "pages" in blob.lower()
+                ):
                     # still record special
                     if "searches" in blob.lower():
                         m = _money(blob)
@@ -556,7 +581,11 @@ def parse_simple_token_tables(tables: list[dict]) -> dict[str, dict]:
                                     "price_per_1k_searches": m,
                                 }
                             )
-                    elif "megapixel" in blob.lower() or "/image" in blob.lower() or "images" in blob.lower():
+                    elif (
+                        "megapixel" in blob.lower()
+                        or "/image" in blob.lower()
+                        or "images" in blob.lower()
+                    ):
                         m = _money(blob)
                         if m is not None:
                             store.setdefault(key, {}).setdefault(zone, {}).update(
@@ -572,7 +601,7 @@ def parse_simple_token_tables(tables: list[dict]) -> dict[str, dict]:
                     store.setdefault(key, {}).setdefault(zone, {}).update(parsed)
                 else:
                     # Cohere embed style Text: $x/1K
-                    m = re.search(r"Text:\s*\$?([0-9.]+)/1K", blob, flags=re.I)
+                    m = re.search(r"Text:\s*\$?([0-9.]+)/1K", blob, flags=re.IGNORECASE)
                     if m:
                         store.setdefault(key, {}).setdefault(zone, {}).update(
                             {
@@ -633,7 +662,7 @@ def pick_primary_pricing(tiers: dict) -> tuple[dict | None, dict]:
     for tier_name in sorted(tiers.keys()):
         if tier_name == "global":
             continue
-        if tier_name in tiers and tiers[tier_name]:
+        if tiers.get(tier_name):
             extra[f"pricing_{tier_name}"] = {
                 **{k: v for k, v in tiers[tier_name].items() if k != "context_note"},
                 "currency": "USD",
@@ -688,9 +717,7 @@ def lifecycle_of(item: dict) -> str:
     labels = item.get("labels") or []
     # retirement
     ret = (
-        scd.get("inferenceRetirementDate")
-        or tags.get("InferenceRetirementDate")
-        or ""
+        scd.get("inferenceRetirementDate") or tags.get("InferenceRetirementDate") or ""
     )
     dep = (
         scd.get("inferenceDeprecationDate")
@@ -758,9 +785,7 @@ def is_maas_or_paygo(item: dict) -> bool:
         )
     ):
         return True
-    if scd.get("maasInference") or scd.get("enableMaap"):
-        return True
-    return False
+    return bool(scd.get("maasInference") or scd.get("enableMaap"))
 
 
 def match_price_key(model_id: str, price_map: dict[str, dict]) -> str | None:
@@ -859,12 +884,20 @@ def match_price_key(model_id: str, price_map: dict[str, dict]) -> str | None:
         return None
     candidates.sort(key=len, reverse=True)
     best = candidates[0]
-    if k == best or best.startswith(k + "-") or best.startswith(k + "."):
+    if k == best or best.startswith((k + "-", k + ".")):
         return best
     # k extends best
-    if k.startswith(best + "-") or k.startswith(best + "."):
+    if k.startswith((best + "-", best + ".")):
         rest = k[len(best) :].lstrip("-.")
-        if rest in ("instruct", "chat", "fp8", "base", "reasoning", "non-reasoning", ""):
+        if rest in (
+            "instruct",
+            "chat",
+            "fp8",
+            "base",
+            "reasoning",
+            "non-reasoning",
+            "",
+        ):
             return best
         # version-like or feature extension (multimodal/vision/mini) -> do not inherit
         return None
@@ -876,16 +909,11 @@ def build_entry(item: dict, price_map: dict[str, dict]) -> dict:
     tags = item.get("tags") or {}
     name = item.get("name") or "unknown"
     display = (
-        item.get("displayName")
-        or scd.get("displayName")
-        or tags.get("summary")
-        or name
+        item.get("displayName") or scd.get("displayName") or tags.get("summary") or name
     )
     provider = provider_of(item)
 
-    in_mod = split_modalities(
-        scd.get("inputModalities") or tags.get("inputModalities")
-    )
+    in_mod = split_modalities(scd.get("inputModalities") or tags.get("inputModalities"))
     out_mod = split_modalities(
         scd.get("outputModalities") or tags.get("outputModalities")
     )
@@ -924,7 +952,9 @@ def build_entry(item: dict, price_map: dict[str, dict]) -> dict:
     if tool is None:
         caps = scd.get("modelCapabilities") or item.get("capabilities") or []
         if isinstance(caps, list):
-            tool = any("tool" in str(c).lower() or "function" in str(c).lower() for c in caps)
+            tool = any(
+                "tool" in str(c).lower() or "function" in str(c).lower() for c in caps
+            )
 
     # reasoning heuristic
     reasoning = None
@@ -967,13 +997,13 @@ def build_entry(item: dict, price_map: dict[str, dict]) -> dict:
     if tags.get("deploymentOptions"):
         extra["deployment_options"] = tags["deploymentOptions"]
     if scd.get("inferenceRetirementDate") or tags.get("InferenceRetirementDate"):
-        extra["inference_retirement_date"] = scd.get("inferenceRetirementDate") or tags.get(
-            "InferenceRetirementDate"
-        )
+        extra["inference_retirement_date"] = scd.get(
+            "inferenceRetirementDate"
+        ) or tags.get("InferenceRetirementDate")
     if scd.get("inferenceDeprecationDate") or tags.get("InferenceDeprecationDate"):
-        extra["inference_deprecation_date"] = scd.get("inferenceDeprecationDate") or tags.get(
-            "InferenceDeprecationDate"
-        )
+        extra["inference_deprecation_date"] = scd.get(
+            "inferenceDeprecationDate"
+        ) or tags.get("InferenceDeprecationDate")
     if item.get("version"):
         extra["version"] = item["version"]
     if is_maas_or_paygo(item):
@@ -987,9 +1017,7 @@ def build_entry(item: dict, price_map: dict[str, dict]) -> dict:
         extra["context_window"] = int(ctx)
 
     license_raw = (scd.get("license") or tags.get("license") or "").lower()
-    if "mit" in license_raw:
-        license_type = "open-source"
-    elif "apache" in license_raw:
+    if "mit" in license_raw or "apache" in license_raw:
         license_type = "open-source"
     elif license_raw in {"custom", "proprietary"} or provider == "azure-openai":
         license_type = "api" if provider == "azure-openai" else "custom"
@@ -1087,9 +1115,11 @@ def main() -> None:
     if OUT.exists():
         try:
             prev_models = json.loads(OUT.read_text(encoding="utf-8")).get("models", [])
-            _PREV_LIMITS = {m.get("model_id"): m for m in prev_models if m.get("model_id")}
+            _PREV_LIMITS = {
+                m.get("model_id"): m for m in prev_models if m.get("model_id")
+            }
             print(f"prev limits loaded: {len(_PREV_LIMITS)}")
-        except Exception:
+        except Exception:  # noqa: BLE001
             _PREV_LIMITS = {}
     cat = json.loads(CATALOG.read_text(encoding="utf-8"))
     items = cat.get("items") or []
@@ -1108,9 +1138,11 @@ def main() -> None:
             by_name[name] = it
             continue
         # prefer one with systemCatalogData
-        if (it.get("systemCatalogData") or {}) and not (prev.get("systemCatalogData") or {}):
-            by_name[name] = it
-        elif len(json.dumps(it, default=str)) > len(json.dumps(prev, default=str)):
+        if (
+            (it.get("systemCatalogData") or {})
+            and not (prev.get("systemCatalogData") or {})
+            or len(json.dumps(it, default=str)) > len(json.dumps(prev, default=str))
+        ):
             by_name[name] = it
 
     models: list[dict] = []
@@ -1166,7 +1198,9 @@ def main() -> None:
 - Script: `scripts/_update_azure_foundry.py` (+ `scripts/_scrape_azure_foundry_full.py`)
 - Installed copy: `{INSTALLED}`
 """
-    prev = LOG.read_text(encoding="utf-8") if LOG.exists() else "# Provider update log\n"
+    prev = (
+        LOG.read_text(encoding="utf-8") if LOG.exists() else "# Provider update log\n"
+    )
     if not prev.endswith("\n"):
         prev += "\n"
     LOG.write_text(prev + log_entry, encoding="utf-8")

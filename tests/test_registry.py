@@ -38,7 +38,10 @@ def test_record_schema(fname, record):
     assert isinstance(record["context_window"], int) and record["context_window"] >= 0
     # Some bundled records may have max_output_tokens=0 when the provider
     # does not publish a reliable limit.
-    assert isinstance(record["max_output_tokens"], int) and record["max_output_tokens"] >= 0
+    assert (
+        isinstance(record["max_output_tokens"], int)
+        and record["max_output_tokens"] >= 0
+    )
     # must round-trip through Capability
     cap = Capability.from_dict(record)
     assert cap.model_id == record["model_id"]
@@ -142,8 +145,7 @@ def test_search_provider_scoped_not_flat_index():
     results = llmcapa.search("gpt-4o", provider="azure")
     assert len(results) > 0
     assert all(
-        c.provider.lower() in {"azure", "azure-openai"}
-        or "azure" in c.provider.lower()
+        c.provider.lower() in {"azure", "azure-openai"} or "azure" in c.provider.lower()
         for c in results
     )
     assert any("gpt-4o" in c.model_id.lower() for c in results)
@@ -272,7 +274,10 @@ def test_provider_alias_alibaba_dashscope_to_qwen() -> None:
     """provider='alibaba' / 'dashscope' should resolve to qwen."""
     for alias in ("alibaba", "dashscope"):
         cap = llmcapa.get("qwen3-32b", provider=alias)
-        assert cap.provider in ("qwen", "alibaba"), f"expected qwen or alibaba, got {cap.provider}"
+        assert cap.provider in (
+            "qwen",
+            "alibaba",
+        ), f"expected qwen or alibaba, got {cap.provider}"
         assert cap.model_id.lower() == "qwen3-32b"
 
 
@@ -303,16 +308,20 @@ def test_data_from_bundled_json_not_hardcoded() -> None:
     sakura_models = reg.list_models(provider="sakura")
     assert len(sakura_models) > 0  # 26 as of latest data
     # sakura-default may be among the models
-    assert any(m.model_id == "sakura-default" for m in sakura_models), "sakura-default should be in sakura models"
+    assert any(
+        m.model_id == "sakura-default" for m in sakura_models
+    ), "sakura-default should be in sakura models"
 
     hf_models = reg.list_models(provider="huggingface")
     assert len(hf_models) > 1  # now contains real models from HF API
-    assert any(m.model_id == "huggingface-default" for m in hf_models), "huggingface-default should be in HF models"
-
+    assert any(
+        m.model_id == "huggingface-default" for m in hf_models
+    ), "huggingface-default should be in HF models"
 
 
 def test_together_provider():
     import llmcapa
+
     # together が providers リストに含まれる
     provs = llmcapa.providers()
     assert "together" in provs, "together should be in providers list"

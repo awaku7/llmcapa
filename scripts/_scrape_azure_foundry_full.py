@@ -172,7 +172,7 @@ async def scrape_pricing(page) -> dict:
                     if await btn.count() and await btn.is_visible():
                         await btn.click(timeout=2000)
                         await page.wait_for_timeout(500)
-                except Exception:
+                except Exception:  # noqa: BLE001, S110
                     pass
             data = await page.evaluate(EXTRACT_TABLES_JS)
             out[key] = data
@@ -211,7 +211,7 @@ async def apply_chat_filter(page) -> None:
                 await page.wait_for_timeout(2500)
                 print(f"  applied filter via {sel}")
                 return
-        except Exception:
+        except Exception:  # noqa: BLE001, S112
             continue
     print("  WARN: could not apply chat filter; scraping unfiltered (will filter in post)")
 
@@ -282,7 +282,7 @@ async def scrape_catalog(page) -> list[dict]:
         next_btn = page.locator('button:has-text("Next")')
         try:
             await next_btn.wait_for(timeout=5000)
-        except Exception:
+        except Exception:  # noqa: BLE001
             print("  No Next button.")
             break
         if await next_btn.is_disabled():

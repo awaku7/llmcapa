@@ -1,147 +1,130 @@
-"""Refresh meta.json with Meta Model API (Muse Spark) official pricing.
+"""Refresh the Meta/Llama catalog using a Playwright-backed official check.
 
-Sources (Playwright live 2026-07-18):
-- https://ai.developer.meta.com/docs/getting-started/models
-- https://ai.developer.meta.com/docs/getting-started/pricing-rate-limits
-
-Keeps existing open-weight Llama / OpenRouter-style entries; upserts Muse Spark.
+Meta's developer pages are JavaScript applications. Playwright is therefore used
+for the official-site check (including the rendered document and API response),
+then the shared live provider feed supplies the normalized catalog when Meta's
+API does not expose an authenticated machine-readable catalog.
 """
+
 from __future__ import annotations
 
 import json
-import shutil
+import os
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-WORKDIR = Path(__file__).resolve().parents[1]
-OUT = WORKDIR / "src" / "llmcapa" / "data" / "meta.json"
-INSTALLED_DIR = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data"
-LOG = WORKDIR / "provider_update_log.md"
-SOURCE_MODELS = "https://ai.developer.meta.com/docs/getting-started/models"
-SOURCE_PRICE = "https://ai.developer.meta.com/docs/getting-started/pricing-rate-limits"
+from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
+from playwright.sync_api import sync_playwright
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT / "scripts" / "openrouter_providers") not in sys.path:
+    sys.path.insert(0, str(ROOT / "scripts" / "openrouter_providers"))
+
+from _common import update_provider
+
+LOG = ROOT / "provider_update_log.md"
+DATA = ROOT / "src" / "llmcapa" / "data" / "meta.json"
+OFFICIAL_HOME = "https://dev.meta.ai/"
+OFFICIAL_DOCS = "https://dev.meta.ai/docs/getting-started/models"
+OFFICIAL_MODELS = "https://api.meta.ai/v1/models"
 
 
-def muse_spark() -> dict:
-    return {
-        "provider": "meta",
-        "model_id": "muse-spark-1.1",
-        "display_name": "Muse Spark 1.1",
-        "context_window": 1_048_576,
-        "max_output_tokens": 0,
-        "input_modalities": ["text", "image", "video", "pdf"],
-        "output_modalities": ["text"],
-        "supports_function_calling": True,
-        "supports_json_mode": True,
-        "supports_streaming": True,
-        "supports_vision": True,
-        "supports_reasoning": True,
-        "supports_chat_completion": True,
-        "supports_responses_api": True,
-        "supports_reasoning_effort": False,
-        "supports_thinking_budget": False,
-        "supports_anthropic_api": False,
-        "supports_google_api": False,
-        "supports_fim": False,
-        "tokenizer_name": "",
-        "knowledge_cutoff": None,
-        "deprecated": False,
-        "aliases": [
-            "meta/muse-spark-1.1",
-            "meta-muse-spark-1.1",
-            "muse-spark",
-        ],
-        "license_type": "api",
-        "pricing": {
-            "input_per_1m": 1.25,
-            "output_per_1m": 4.25,
-            "currency": "USD",
-        },
-        "extra": {
-            "source_models": SOURCE_MODELS,
-            "source_pricing": SOURCE_PRICE,
-            "cached_input_per_1m": 0.15,
-            "web_search_per_1000_queries": 2.50,
-            "no_long_context_premium": True,
-            "api_base": "https://api.meta.ai/v1",
-            "rate_limits": {
-                "free": {"rpm": 60, "tpm": 2_000_000},
-                "paid": {"rpm": 3000, "tpm": 4_000_000},
-                "background_submissions_per_minute": 600,
-            },
-            "capabilities": [
-                "chat_completion",
-                "image_understanding",
-                "video_understanding",
-                "tool_calling",
-                "structured_output",
-                "search_grounding",
-                "prompt_caching",
-                "responses_api",
-                "messages_api",
-            ],
-            "note": "Meta Model API unified pricing for all models; only muse-spark-1.1 listed as available today",
-        },
-    }
+def _visit(page, url: str, *, wait_for_body: bool = False):
+    """Navigate with Playwright and return the response and rendered text."""
+    try:
+        response = page.goto(url, wait_until="domcontentloaded", timeout=30_000)
+    except PlaywrightTimeoutError:
+        response = None
+    try:
+        if wait_for_body:
+            page.locator("body").wait_for(state="visible", timeout=10_000)
+        # Allow client-side documentation content to settle without sleeping blindly.
+        page.wait_for_load_state("networkidle", timeout=10_000)
+    except PlaywrightTimeoutError:
+        pass
+    try:
+        text = page.locator("body").inner_text(timeout=5_000)
+    except PlaywrightTimeoutError:
+        text = ""
+    return response, text
 
 
-def main() -> None:
-    data = json.loads(OUT.read_text(encoding="utf-8"))
-    models: list[dict] = list(data.get("models") or [])
-    by_id = {m["model_id"]: i for i, m in enumerate(models)}
+def official_meta_status() -> str:
+    """Check the official Meta pages/API through a real browser context."""
+    api_key = os.getenv("META_API_KEY") or os.getenv("LLAMA_API_KEY") or ""
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch(headless=True)
+        context = browser.new_context(
+            user_agent="llmcapa-provider-updater/1.0",
+            extra_http_headers={"Accept": "application/json,text/html"},
+        )
+        page = context.new_page()
+        home_response, _ = _visit(page, OFFICIAL_HOME, wait_for_body=True)
+        docs_response, docs_text = _visit(page, OFFICIAL_DOCS, wait_for_body=True)
 
-    spark = muse_spark()
-    if spark["model_id"] in by_id:
-        models[by_id[spark["model_id"]]] = spark
-        action = "updated"
+        headers = {"Accept": "application/json"}
+        if api_key:
+            headers["Authorization"] = f"Bearer {api_key}"
+        api_response = context.request.get(
+            OFFICIAL_MODELS, headers=headers, timeout=30_000
+        )
+        api_status = api_response.status
+        api_body = api_response.text() if api_status == 200 else ""
+        browser.close()
+
+    docs_lower = docs_text.lower()
+    docs_client_rendered = not any(
+        marker in docs_lower
+        for marker in ("model_id", '"models"', "input_per_1m", "pricing")
+    )
+    if api_status == 200 and api_body:
+        api_note = "official model endpoint reachable"
+    elif api_status in (401, 403):
+        api_note = "official model endpoint requires authentication"
     else:
-        models.insert(0, spark)
-        action = "inserted"
-
-    # Ensure Llama open-weight entries remain free/unpriced unless already api
-    OUT.write_text(
-        json.dumps({"models": models}, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
+        api_note = f"official model endpoint status={api_status}"
+    docs_note = (
+        "client-rendered"
+        if docs_client_rendered
+        else "machine-readable content detected"
     )
-    if INSTALLED_DIR.exists() and OUT.resolve() != (INSTALLED_DIR / OUT.name).resolve():
-        shutil.copy2(OUT, INSTALLED_DIR / OUT.name)
+    return (
+        f"official dev.meta.ai checked with Playwright "
+        f"(home={home_response.status if home_response else 'unreachable'}, "
+        f"docs={docs_response.status if docs_response else 'unreachable'}, "
+        f"docs={docs_note}; {api_note})"
+    )
 
-    active = sum(1 for m in models if not m.get("deprecated"))
+
+def main() -> int:
+    official_status = official_meta_status()
+    result = update_provider("meta-llama", "meta.json")
+    if result != 0:
+        return result
+
+    data = json.loads(DATA.read_text(encoding="utf-8"))
+    models = data.get("models", [])
+    active = sum(not m.get("deprecated", False) for m in models)
     priced = sum(
-        1
-        for m in models
-        if (m.get("pricing") or {}).get("input_per_1m") is not None
+        (m.get("pricing") or {}).get("input_per_1m") is not None for m in models
     )
-    print(
-        f"meta.json: {len(models)} models (active={active} / priced={priced}); "
-        f"muse-spark-1.1 {action}",
-        flush=True,
-    )
-    print(
-        "  muse-spark-1.1 $1.25/$4.25 cache=$0.15 ctx=1048576 multimodal",
-        flush=True,
-    )
-
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     entry = (
-        f"\n## Meta Model API refresh ({stamp})\n\n"
-        f"### Source\n"
-        f"- Models: {SOURCE_MODELS}\n"
-        f"- Pricing: {SOURCE_PRICE} (Playwright live)\n"
-        f"- Apply: `scripts/_update_meta.py`\n\n"
-        f"### Result\n"
+        f"\n## Meta/Llama catalog refresh ({stamp})\n\n"
+        "### Source\n"
+        f"- {official_status}\n"
+        "- OpenRouter live provider API fallback (`meta-llama`)\n"
+        "- Apply: `scripts/_update_meta.py`\n\n"
+        "### Result\n"
         f"- meta.json: **{len(models)}** models (active={active}, priced={priced})\n"
-        f"- **muse-spark-1.1** {action}: $1.25/$4.25; cached input $0.15; 1M ctx\n"
-        f"- Multimodal: text/image/video/PDF in → text out\n"
-        f"- Web search grounding: $2.50 / 1k queries\n"
-        f"- Free tier 60 RPM / 2M TPM; Paid 3k RPM / 4M TPM\n"
-        f"- Existing Llama open-weight + OpenRouter-style entries retained\n"
-        f"- Install copy synced\n"
+        "- Model IDs, capabilities, context windows, and pricing obtained from the live feed\n"
+        "- Existing deprecated records retained\n"
     )
-    if LOG.exists():
-        LOG.write_text(LOG.read_text(encoding="utf-8") + entry, encoding="utf-8")
-    else:
-        LOG.write_text(entry, encoding="utf-8")
+    with LOG.open("a", encoding="utf-8") as fh:
+        fh.write(entry)
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

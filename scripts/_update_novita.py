@@ -1,5 +1,7 @@
 """Update novita.json with official pricing from Novita website (Playwright)."""
-import json, os, re
+
+import json
+import os
 from pathlib import Path
 
 DATA = str(Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data")
@@ -60,7 +62,11 @@ for m in data["models"]:
     mid = m["model_id"].lower()
     for key, (inp, out) in NOVITA_PRICES.items():
         if key in mid:
-            m["pricing"] = {"input_per_1m": inp, "output_per_1m": out, "currency": "USD"}
+            m["pricing"] = {
+                "input_per_1m": inp,
+                "output_per_1m": out,
+                "currency": "USD",
+            }
             updated += 1
             break
 
@@ -69,6 +75,7 @@ with open(path, "w", encoding="utf-8") as f:
 
 # Copy to installed
 import shutil
+
 if os.path.abspath(path) != os.path.abspath(os.path.join(INSTALLED, "novita.json")):
     shutil.copy2(path, os.path.join(INSTALLED, "novita.json"))
 

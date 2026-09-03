@@ -1,5 +1,9 @@
 """Fix meta.json, xai.json etc. by re-exporting from registry."""
-import json, os, shutil
+
+import json
+import os
+import shutil
+
 import llmcapa
 
 DATA = r"F:\KAIHATSU\llmcapa\src\llmcapa\data"
@@ -22,9 +26,11 @@ for fname, prov_names in FIXES:
             d["provider"] = prov_names[0]  # use canonical name
             mid = d["model_id"]
             # Keep model with higher context_window if duplicate
-            if mid not in all_models or d.get("context_window",0) > all_models[mid].get("context_window",0):
+            if mid not in all_models or d.get("context_window", 0) > all_models[
+                mid
+            ].get("context_window", 0):
                 all_models[mid] = d
-    
+
     models = sorted(all_models.values(), key=lambda x: x["model_id"])
     path = os.path.join(DATA, fname)
     with open(path, "w", encoding="utf-8") as f:
@@ -40,7 +46,10 @@ for m in af.get("models", []):
     m["provider"] = "azure-openai"
 with open(af_path, "w", encoding="utf-8") as f:
     json.dump(af, f, ensure_ascii=False, indent=2)
-print(f"azure_foundry.json: provider fixed to azure-openai ({len(af.get('models',[]))} models)", flush=True)
+print(
+    f"azure_foundry.json: provider fixed to azure-openai ({len(af.get('models',[]))} models)",
+    flush=True,
+)
 
 # Copy to installed
 for fname, _ in FIXES:

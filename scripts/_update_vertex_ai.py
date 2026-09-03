@@ -3,6 +3,7 @@
 This catalog is separate from google.json and never reads OpenRouter. Install
 with: pip install "google-cloud-aiplatform>=1.84"
 """
+
 from __future__ import annotations
 
 import json
@@ -23,7 +24,7 @@ def discover_models() -> list[tuple[str, str]]:
         from vertexai import model_garden
     except ImportError as exc:
         raise RuntimeError(
-            'Install the maintenance dependency first: '
+            "Install the maintenance dependency first: "
             'pip install "google-cloud-aiplatform>=1.84"'
         ) from exc
 
@@ -33,29 +34,68 @@ def discover_models() -> list[tuple[str, str]]:
         if isinstance(item, str):
             model_id, label = item, item
         elif isinstance(item, dict):
-            model_id = item.get("model_id") or item.get("modelId") or item.get("name") or item.get("id")
-            label = item.get("display_name") or item.get("displayName") or item.get("name") or model_id
+            model_id = (
+                item.get("model_id")
+                or item.get("modelId")
+                or item.get("name")
+                or item.get("id")
+            )
+            label = (
+                item.get("display_name")
+                or item.get("displayName")
+                or item.get("name")
+                or model_id
+            )
         else:
-            model_id = next((getattr(item, key, None) for key in ("model_id", "modelId", "name", "id") if getattr(item, key, None)), None)
-            label = next((getattr(item, key, None) for key in ("display_name", "displayName", "name") if getattr(item, key, None)), model_id)
+            model_id = next(
+                (
+                    getattr(item, key, None)
+                    for key in ("model_id", "modelId", "name", "id")
+                    if getattr(item, key, None)
+                ),
+                None,
+            )
+            label = next(
+                (
+                    getattr(item, key, None)
+                    for key in ("display_name", "displayName", "name")
+                    if getattr(item, key, None)
+                ),
+                model_id,
+            )
         if model_id:
             result[str(model_id)] = str(label or model_id)
     if len(result) < 20:
-        raise RuntimeError(f"Vertex AI SDK returned too few deployable models: {len(result)}")
+        raise RuntimeError(
+            f"Vertex AI SDK returned too few deployable models: {len(result)}"
+        )
     return sorted(result.items())
 
 
 def minimal(model_id: str, label: str) -> dict:
     return {
-        "provider": "vertex-ai", "model_id": model_id,
-        "display_name": label, "context_window": 0, "max_output_tokens": 0,
-        "input_modalities": ["text"], "output_modalities": ["text"],
-        "supports_chat_completion": True, "supports_streaming": True,
-        "supports_function_calling": None, "supports_json_mode": None,
-        "supports_vision": None, "supports_reasoning": None,
-        "supports_responses_api": False, "pricing": None,
-        "deprecated": False, "aliases": [],
-        "extra": {"source": SOURCE, "platform": "Google Cloud Vertex AI / Model Garden", "spec_status": "sdk_listed_only"},
+        "provider": "vertex-ai",
+        "model_id": model_id,
+        "display_name": label,
+        "context_window": 0,
+        "max_output_tokens": 0,
+        "input_modalities": ["text"],
+        "output_modalities": ["text"],
+        "supports_chat_completion": True,
+        "supports_streaming": True,
+        "supports_function_calling": None,
+        "supports_json_mode": None,
+        "supports_vision": None,
+        "supports_reasoning": None,
+        "supports_responses_api": False,
+        "pricing": None,
+        "deprecated": False,
+        "aliases": [],
+        "extra": {
+            "source": SOURCE,
+            "platform": "Google Cloud Vertex AI / Model Garden",
+            "spec_status": "sdk_listed_only",
+        },
     }
 
 
@@ -94,16 +134,26 @@ def main() -> None:
     discovered = discover_models()
     old = json.loads(OUT.read_text(encoding="utf-8"))["models"] if OUT.exists() else []
     old_by_id = {m["model_id"]: m for m in old}
-    google_by_id = {m["model_id"]: m for m in json.loads(GOOGLE.read_text(encoding="utf-8"))["models"]}
+    google_by_id = {
+        m["model_id"]: m
+        for m in json.loads(GOOGLE.read_text(encoding="utf-8"))["models"]
+    }
     rows = []
     for model_id, label in discovered:
-        row = deepcopy(old_by_id.get(model_id) or google_by_id.get(model_id) or minimal(model_id, label))
+        row = deepcopy(
+            old_by_id.get(model_id)
+            or google_by_id.get(model_id)
+            or minimal(model_id, label)
+        )
         row["provider"] = "vertex-ai"
         row.setdefault("extra", {})["source"] = SOURCE
         row["extra"]["platform"] = "Google Cloud Vertex AI / Model Garden"
         enrich_modalities(row)
         rows.append(row)
-    OUT.write_text(json.dumps({"models": rows}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    OUT.write_text(
+        json.dumps({"models": rows}, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
     entry = f"""
 ## Vertex AI / Model Garden SDK refresh ({datetime.now(timezone.utc).strftime('%Y-%m-%d')})
 

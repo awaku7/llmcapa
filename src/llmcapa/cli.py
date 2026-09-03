@@ -14,7 +14,6 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from typing import List, Optional
 
 from . import (
     __version__,
@@ -28,12 +27,12 @@ from . import (
 from .registry import ModelNotFoundError, default_registry
 
 
-def _print_table(rows: List[List[str]], headers: List[str]) -> None:
+def _print_table(rows: list[list[str]], headers: list[str]) -> None:
     widths = [len(h) for h in headers]
     for row in rows:
         for i, cell in enumerate(row):
             widths[i] = max(widths[i], len(cell))
-    fmt = "  ".join("{:<%d}" % w for w in widths)
+    fmt = "  ".join(f"{{:<{w}}}" for w in widths)
     print(fmt.format(*headers))
     print(fmt.format(*["-" * w for w in widths]))
     for row in rows:
@@ -63,16 +62,21 @@ def _cmd_list(args: argparse.Namespace) -> int:
         return 0
     rows = []
     for c in caps:
-        rows.append([
-            c.provider,
-            c.model_id,
-            str(c.context_window),
-            str(c.max_output_tokens),
-            "yes" if c.supports_vision else "no",
-            "yes" if c.supports_function_calling else "no",
-            "yes" if c.deprecated else "no",
-        ])
-    _print_table(rows, ["provider", "model_id", "context", "max_out", "vision", "tools", "deprecated"])
+        rows.append(
+            [
+                c.provider,
+                c.model_id,
+                str(c.context_window),
+                str(c.max_output_tokens),
+                "yes" if c.supports_vision else "no",
+                "yes" if c.supports_function_calling else "no",
+                "yes" if c.deprecated else "no",
+            ]
+        )
+    _print_table(
+        rows,
+        ["provider", "model_id", "context", "max_out", "vision", "tools", "deprecated"],
+    )
     return 0
 
 
@@ -97,16 +101,21 @@ def _cmd_search(args: argparse.Namespace) -> int:
         return 1
     rows = []
     for c in caps:
-        rows.append([
-            c.provider,
-            c.model_id,
-            str(c.context_window),
-            str(c.max_output_tokens),
-            "yes" if c.supports_vision else "no",
-            "yes" if c.supports_function_calling else "no",
-            "yes" if c.deprecated else "no",
-        ])
-    _print_table(rows, ["provider", "model_id", "context", "max_out", "vision", "tools", "deprecated"])
+        rows.append(
+            [
+                c.provider,
+                c.model_id,
+                str(c.context_window),
+                str(c.max_output_tokens),
+                "yes" if c.supports_vision else "no",
+                "yes" if c.supports_function_calling else "no",
+                "yes" if c.deprecated else "no",
+            ]
+        )
+    _print_table(
+        rows,
+        ["provider", "model_id", "context", "max_out", "vision", "tools", "deprecated"],
+    )
     return 0
 
 
@@ -118,6 +127,7 @@ def _cmd_tokens(args: argparse.Namespace) -> int:
     try:
         if args.messages:
             import json as _json
+
             try:
                 msgs = _json.loads(text or "[]")
             except json.JSONDecodeError as e:
@@ -134,7 +144,7 @@ def _cmd_tokens(args: argparse.Namespace) -> int:
     except ModelNotFoundError:
         print(f"error: model not found: {args.model_id}", file=sys.stderr)
         return 1
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print(f"error: {e}", file=sys.stderr)
         return 1
     return 0
@@ -146,26 +156,34 @@ def _cmd_update(_args: argparse.Namespace) -> int:
         count = default_registry().fetch_openrouter(cache_ttl=0)
         print(f"Successfully updated {count} models from OpenRouter.")
         return 0
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print(f"error updating models: {e}", file=sys.stderr)
         return 1
 
 
 def _cmd_fetch_hf(args: argparse.Namespace) -> int:
     try:
-        print(f"Fetching top {args.limit} text-generation models from HuggingFace API...")
+        print(
+            f"Fetching top {args.limit} text-generation models from HuggingFace API..."
+        )
         count = default_registry().fetch_huggingface(limit=args.limit, cache_ttl=0)
         print(f"Successfully registered {count} models from HuggingFace.")
         return 0
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print(f"error fetching HuggingFace models: {e}", file=sys.stderr)
         return 1
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="llmcapa", description="Lookup LLM model capabilities (offline).")
+    parser = argparse.ArgumentParser(
+        prog="llmcapa", description="Lookup LLM model capabilities (offline)."
+    )
     parser.add_argument("--version", action="version", version=f"llmcapa {__version__}")
-    parser.add_argument("--extra", metavar="JSON_FILE", help="load extra model data from a local JSON file")
+    parser.add_argument(
+        "--extra",
+        metavar="JSON_FILE",
+        help="load extra model data from a local JSON file",
+    )
     sub = parser.add_subparsers(dest="command")
 
     p_show = sub.add_parser("show", help="show capability of a model")
@@ -176,37 +194,56 @@ def build_parser() -> argparse.ArgumentParser:
     p_list = sub.add_parser("list", help="list known models")
     p_list.add_argument("--provider", help="filter by provider")
     p_list.add_argument("--json", action="store_true", help="output as JSON")
-    p_list.add_argument("--no-deprecated", action="store_true", help="hide deprecated models")
+    p_list.add_argument(
+        "--no-deprecated", action="store_true", help="hide deprecated models"
+    )
     p_list.set_defaults(func=_cmd_list)
 
     p_prov = sub.add_parser("providers", help="list known providers")
     p_prov.set_defaults(func=_cmd_providers)
 
     p_search = sub.add_parser("search", help="search models by prefix")
-    p_search.add_argument("prefix", help="prefix to match against model_id, display_name, or aliases")
+    p_search.add_argument(
+        "prefix", help="prefix to match against model_id, display_name, or aliases"
+    )
     p_search.add_argument("--provider", help="filter by provider")
     p_search.add_argument("--json", action="store_true", help="output as JSON")
-    p_search.add_argument("--no-deprecated", action="store_true", help="hide deprecated models")
-    p_search.add_argument("--limit", type=int, default=None, help="maximum number of results")
+    p_search.add_argument(
+        "--no-deprecated", action="store_true", help="hide deprecated models"
+    )
+    p_search.add_argument(
+        "--limit", type=int, default=None, help="maximum number of results"
+    )
     p_search.set_defaults(func=_cmd_search)
 
     p_upd = sub.add_parser("update", help="fetch and update OpenRouter models cache")
     p_upd.set_defaults(func=_cmd_update)
 
-    p_hf = sub.add_parser("fetch-hf", help="fetch and register top models from HuggingFace")
-    p_hf.add_argument("--limit", type=int, default=100, help="max models to fetch per pipeline tag")
+    p_hf = sub.add_parser(
+        "fetch-hf", help="fetch and register top models from HuggingFace"
+    )
+    p_hf.add_argument(
+        "--limit", type=int, default=100, help="max models to fetch per pipeline tag"
+    )
     p_hf.set_defaults(func=_cmd_fetch_hf)
 
     p_tok = sub.add_parser("tokens", help="count tokens for text or messages")
     p_tok.add_argument("model_id", help="model identifier")
-    p_tok.add_argument("text", nargs="?", default="", help="text to count, or JSON messages with --messages")
-    p_tok.add_argument("--messages", action="store_true", help="treat input as JSON messages list")
+    p_tok.add_argument(
+        "text",
+        nargs="?",
+        default="",
+        help="text to count, or JSON messages with --messages",
+    )
+    p_tok.add_argument(
+        "--messages", action="store_true", help="treat input as JSON messages list"
+    )
     p_tok.set_defaults(func=_cmd_tokens)
 
     return parser
 
 
-def main(argv: Optional[List[str]] = None) -> int:
+def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
     if args.extra:

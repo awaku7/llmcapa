@@ -167,7 +167,7 @@ def main() -> None:
     if OUT.exists():
         try:
             prev = json.loads(OUT.read_text(encoding="utf-8")).get("models", {})
-        except Exception:
+        except Exception:  # noqa: BLE001
             prev = {}
 
     with sync_playwright() as p:

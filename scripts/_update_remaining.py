@@ -1,5 +1,8 @@
 """Update remaining providers with officially scraped pricing data."""
-import json, os, shutil
+
+import json
+import os
+import shutil
 from pathlib import Path
 
 DATA = str(Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data")
@@ -32,13 +35,20 @@ for m in mistral["models"]:
     mid = m["model_id"].lower()
     for key, (inp, out) in MISTRAL_PRICES.items():
         if key in mid:
-            m["pricing"] = {"input_per_1m": inp, "output_per_1m": out, "currency": "USD"}
+            m["pricing"] = {
+                "input_per_1m": inp,
+                "output_per_1m": out,
+                "currency": "USD",
+            }
             updated += 1
             break
 
 with open(path_mistral, "w", encoding="utf-8") as f:
     json.dump(mistral, f, ensure_ascii=False, indent=2)
-print(f"mistral.json: {updated}/{len(mistral['models'])} models updated with official pricing", flush=True)
+print(
+    f"mistral.json: {updated}/{len(mistral['models'])} models updated with official pricing",
+    flush=True,
+)
 
 # 2. Meta.json: mark Muse Spark models with meta API pricing
 path_meta = os.path.join(DATA, "meta.json")

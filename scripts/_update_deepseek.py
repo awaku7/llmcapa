@@ -11,6 +11,7 @@ deepseek-v4-pro, and deepseek-v4-flash-vision-exp.
 Legacy deepseek-chat / deepseek-reasoner are historical aliases; DeepSeek
 discontinued them after 2026-07-24 15:59 UTC.
 """
+
 from __future__ import annotations
 
 import json
@@ -20,7 +21,9 @@ from pathlib import Path
 
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "deepseek.json"
-INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "deepseek.json"
+INSTALLED = (
+    Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "deepseek.json"
+)
 LOG = WORKDIR / "provider_update_log.md"
 SOURCE_PRICING = "https://api-docs.deepseek.com/quick_start/pricing/"
 SOURCE_UPDATES = "https://api-docs.deepseek.com/updates/"
@@ -476,9 +479,7 @@ def main() -> None:
     active = sum(1 for m in models if not m.get("deprecated"))
     deprecated = sum(1 for m in models if m.get("deprecated"))
     priced = sum(
-        1
-        for m in models
-        if (m.get("pricing") or {}).get("input_per_1m") is not None
+        1 for m in models if (m.get("pricing") or {}).get("input_per_1m") is not None
     )
     print(
         f"deepseek.json: {len(models)} models "

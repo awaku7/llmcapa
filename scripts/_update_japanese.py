@@ -18,6 +18,7 @@ japanese.json is a multi-vendor aggregator. Each model keeps its native
 customer-cloud). sakura (さくらインターネット AI Engine) is a separate
 provider file (sakura.json), not folded here.
 """
+
 from __future__ import annotations
 
 import json
@@ -27,7 +28,9 @@ from pathlib import Path
 
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "japanese.json"
-INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "japanese.json"
+INSTALLED = (
+    Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "japanese.json"
+)
 LOG = WORKDIR / "provider_update_log.md"
 
 # ---- canonical sources -------------------------------------------------
@@ -858,9 +861,7 @@ def main() -> None:
     active = sum(1 for m in models if not m.get("deprecated"))
     deprecated = sum(1 for m in models if m.get("deprecated"))
     priced = sum(
-        1
-        for m in models
-        if (m.get("pricing") or {}).get("input_per_1m") is not None
+        1 for m in models if (m.get("pricing") or {}).get("input_per_1m") is not None
     )
     extra_n = sum(1 for m in models if m.get("extra"))
     by_prov: dict[str, int] = {}

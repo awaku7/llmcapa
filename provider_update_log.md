@@ -3785,3 +3785,190 @@
 - Text: grok-4.5 $2/$6 @500k (cache $0.5, long $4); grok-4.3 / 4.20 family $1.25/$2.5 @1M (cache $0.2, long $2.5)
 - Imagine + Voice specialty entries included
 - Install copy synced
+
+## Vertex AI / Model Garden SDK refresh (2026-09-03)
+
+- Source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/models
+- Discovery: `vertexai.model_garden.list_deployable_models(list_hf_models=True)`
+- OpenRouter was not used; `google.json` was not modified.
+- Result: 4958 SDK-listed deployable Model Garden models. Detailed limits/pricing remain unknown where the SDK does not expose them.
+
+## Google refresh (2026-09-03)
+
+### Source
+- Pricing: https://ai.google.dev/gemini-api/docs/pricing
+- Apply: `scripts/_update_google.py`
+
+### Result
+- google.json: **92** models (active=86, token-priced=70)
+- Inserted: gemini-3.7-flash, gemini-3.5-flash-lite, gemini-3.5-live-translate-preview, gemini-omni-flash-preview, gemini-3.1-flash-tts-preview
+- Lyria-3 clip/pro: $0.04 / $0.08 per song (extra)
+- Deprecations: gemini-2.0-flash* shut 2026-06-01; Imagen 4 2026-08-17; Veo 3/2 2026-06-30
+- Install copy synced
+
+## Google refresh (2026-09-03)
+
+### Source
+- Pricing: https://ai.google.dev/gemini-api/docs/pricing
+- Apply: `scripts/_update_google.py`
+
+### Result
+- google.json: **92** models (active=86, token-priced=70)
+- Inserted (discovered): none
+- Lyria-3 clip/pro: $0.04 / $0.08 per song (extra)
+- Deprecations: gemini-2.0-flash* shut 2026-06-01; Imagen 4 2026-08-17; Veo 3/2 2026-06-30
+- Install copy synced
+
+## Google refresh (2026-09-03)
+
+### Source
+- Pricing: https://ai.google.dev/gemini-api/docs/pricing
+- Apply: `scripts/_update_google.py`
+
+### Result
+- google.json: **102** models (active=96, token-priced=80)
+- Inserted (discovered): gemini-2.5-computer-use-preview-10-2025, gemini-2.5-flash-preview-tts, gemini-2.5-pro-preview-tts, gemini-3.5-transcribe, gemini-3.5-transcribe-live, gemini-3.8-flash, gemini-omni-1.1-flash, gemini-robotics-er-1.6-preview, gemini-robotics-er-2-preview, gemini-robotics-er-2-streaming-preview
+- Lyria-3 clip/pro: $0.04 / $0.08 per song (extra)
+- Deprecations: gemini-2.0-flash* shut 2026-06-01; Imagen 4 2026-08-17; Veo 3/2 2026-06-30
+- Install copy synced
+
+## Google refresh (2026-09-03)
+
+### Source
+- Pricing: https://ai.google.dev/gemini-api/docs/pricing
+- Apply: `scripts/_update_google.py`
+
+### Result
+- google.json: **102** models (active=96, token-priced=80)
+- Inserted (discovered): gemini-2.5-computer-use-preview-10-2025, gemini-2.5-flash-preview-tts, gemini-2.5-pro-preview-tts, gemini-3.5-transcribe, gemini-3.5-transcribe-live, gemini-3.8-flash, gemini-omni-1.1-flash, gemini-robotics-er-1.6-preview, gemini-robotics-er-2-preview, gemini-robotics-er-2-streaming-preview
+- Lyria-3 clip/pro: $0.04 / $0.08 per song (extra)
+- Deprecations: gemini-2.0-flash* shut 2026-06-01; Imagen 4 2026-08-17; Veo 3/2 2026-06-30
+- Install copy synced
+
+## Google refresh (2026-09-03)
+
+### Source
+- Pricing: https://ai.google.dev/gemini-api/docs/pricing
+- Apply: `scripts/_update_google.py`
+
+### Result
+- google.json: **102** models (active=96, token-priced=80)
+- Inserted (discovered): gemini-2.5-computer-use-preview-10-2025, gemini-2.5-flash-preview-tts, gemini-2.5-pro-preview-tts, gemini-3.5-transcribe, gemini-3.5-transcribe-live, gemini-3.8-flash, gemini-omni-1.1-flash, gemini-robotics-er-1.6-preview, gemini-robotics-er-2-preview, gemini-robotics-er-2-streaming-preview
+- Lyria-3 clip/pro: $0.04 / $0.08 per song (extra)
+- Deprecations: gemini-2.0-flash* shut 2026-06-01; Imagen 4 2026-08-17; Veo 3/2 2026-06-30
+- Install copy synced
+
+## Google refresh (2026-09-03)
+
+### Source
+- Pricing: https://ai.google.dev/gemini-api/docs/pricing
+- Apply: `scripts/_update_google.py`
+
+### Result
+- google.json: **102** models (active=96, token-priced=80)
+- Inserted (discovered): none
+- Lyria-3 clip/pro: $0.04 / $0.08 per song (extra)
+- Deprecations: gemini-2.0-flash* shut 2026-06-01; Imagen 4 2026-08-17; Veo 3/2 2026-06-30
+- Install copy synced
+
+## Anthropic refresh (2026-09-03)
+
+### Source
+- Overview + pricing Playwright: `_scratch_anthropic_overview_live3.html`, `_scratch_anthropic_pricing_live3.html`
+- Docs: https://platform.claude.com/docs/en/about-claude/models/overview / https://platform.claude.com/docs/en/about-claude/pricing
+- Apply: `scripts/_update_anthropic.py`
+
+### Result
+- anthropic.json: **17** models (active=13, deprecated=4, priced=17)
+- New: Fable 5 / Mythos 5 $10/$50; Opus 4.8 $5/$25; Sonnet 5 intro $2/$10→$3/$15; Haiku 4.5 $1/$5
+- Cache pricing (5m/1h/hit) + batch in extra; OpenRouter aliases deduped
+- Install copy synced
+
+## Anthropic refresh (2026-09-03)
+
+### Source
+- Overview + pricing Playwright: `_scratch_anthropic_overview_live3.html`, `_scratch_anthropic_pricing_live3.html`
+- Docs: https://platform.claude.com/docs/en/about-claude/models/overview / https://platform.claude.com/docs/en/about-claude/pricing
+- Apply: `scripts/_update_anthropic.py`
+
+### Result
+- anthropic.json: **20** models (active=13, deprecated=7, priced=20)
+- New: Fable 5 / Mythos 5 $10/$50; Opus 4.8 $5/$25; Sonnet 5 intro $2/$10→$3/$15; Haiku 4.5 $1/$5
+- Cache pricing (5m/1h/hit) + batch in extra; OpenRouter aliases deduped
+- Install copy synced
+
+## Meta/Llama catalog refresh (2026-09-03)
+
+### Source
+- OpenRouter live provider API (`meta-llama`)
+- Apply: `scripts/_update_meta.py`
+
+### Result
+- meta.json: **57** models (active=53, priced=17)
+- Model IDs, capabilities, context windows, and pricing obtained from the live feed
+- Existing deprecated records retained
+
+## Meta/Llama catalog refresh (2026-09-03)
+
+### Source
+- official dev.meta.ai checked (home=200, docs=200, docs=client-rendered; official model endpoint requires authentication)
+- OpenRouter live provider API fallback (`meta-llama`)
+- Apply: `scripts/_update_meta.py`
+
+### Result
+- meta.json: **57** models (active=53, priced=17)
+- Model IDs, capabilities, context windows, and pricing obtained from the live feed
+- Existing deprecated records retained
+
+## Meta/Llama catalog refresh (2026-09-03)
+
+### Source
+- official dev.meta.ai checked with Playwright (home=200, docs=200, docs=machine-readable content detected; official model endpoint requires authentication)
+- OpenRouter live provider API fallback (`meta-llama`)
+- Apply: `scripts/_update_meta.py`
+
+### Result
+- meta.json: **57** models (active=53, priced=17)
+- Model IDs, capabilities, context windows, and pricing obtained from the live feed
+- Existing deprecated records retained
+
+## Meta/Llama catalog refresh (2026-09-03)
+
+### Source
+- official dev.meta.ai checked with Playwright (home=200, docs=200, docs=machine-readable content detected; official model endpoint requires authentication)
+- OpenRouter live provider API fallback (`meta-llama`)
+- Apply: `scripts/_update_meta.py`
+
+### Result
+- meta.json: **59** models (active=55, priced=19)
+- Model IDs, capabilities, context windows, and pricing obtained from the live feed
+- Existing deprecated records retained
+
+## Meta/Llama catalog refresh (2026-09-03)
+
+### Source
+- official dev.meta.ai checked with Playwright (home=200, docs=200, docs=machine-readable content detected; official model endpoint requires authentication)
+- OpenRouter live provider API fallback (`meta-llama`)
+- Apply: `scripts/_update_meta.py`
+
+### Result
+- meta.json: **52** models (active=48, priced=17)
+- Model IDs, capabilities, context windows, and pricing obtained from the live feed
+- Existing deprecated records retained
+
+## OpenRouter refresh (2026-09-03)
+
+### Source
+- API: `https://openrouter.ai/api/v1/models` (live → `_scratch_openrouter_models.json`)
+- Docs: https://openrouter.ai/docs
+- Apply: `scripts/_update_openrouter.py`
+
+### Result
+- openrouter.json: **424** models (active=424, deprecated=0, priced=398, free=21, dynamic=5, extra=424)
+- vision=256, reasoning=300, tools=358, cache_pricing=257
+- native providers: 51 (top: [('openai', 89), ('qwen', 53), ('google', 43), ('anthropic', 27), ('mistralai', 20), ('deepseek', 16), ('z-ai', 16), ('minimax', 11), ('nvidia', 9), ('meta-llama', 8)])
+- Pricing: API per-token ×1e6 → USD/1M; router prompt=-1 → catalog -1000000.0
+- Cache: input_cache_read/write(/1h) in extra when present
+- Synthetic `~*/…-latest` aliases retained (9)
+- Replaced thin 14-model placeholder catalog
+- Install copy synced

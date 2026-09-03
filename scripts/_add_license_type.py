@@ -1,5 +1,8 @@
 """Add license_type field to Capability and update all JSON files."""
-import json, os, shutil
+
+import json
+import os
+import shutil
 
 # 1. Update models.py
 models_py = r"F:\KAIHATSU\llmcapa\src\llmcapa\models.py"
@@ -8,7 +11,7 @@ with open(models_py, encoding="utf-8") as f:
 
 if "license_type" not in content:
     content = content.replace(
-        'supports_fim: bool = False',
+        "supports_fim: bool = False",
         'supports_fim: bool = False\n    license_type: str = "unknown"',
     )
     with open(models_py, "w", encoding="utf-8") as f:
@@ -29,21 +32,19 @@ for fname in os.listdir(DATA):
     fpath = os.path.join(DATA, fname)
     with open(fpath, encoding="utf-8") as f:
         data = json.load(f)
-    
+
     models = data.get("models", [])
     if not models:
         continue
-    
+
     prov = models[0].get("provider", "")
-    
+
     for m in models:
         pricing = m.get("pricing") or {}
         inp = pricing.get("input_per_1m", -1)
         out = pricing.get("output_per_1m", -1)
-        
-        if prov == "ollama":
-            m["license_type"] = "free"
-        elif inp == 0.0 and out == 0.0:
+
+        if prov == "ollama" or inp == 0.0 and out == 0.0:
             m["license_type"] = "free"
         elif inp > 0 or out > 0:
             m["license_type"] = "api"
@@ -51,11 +52,11 @@ for fname in os.listdir(DATA):
             m["license_type"] = "license"
         else:
             m["license_type"] = "unknown"
-    
+
     with open(fpath, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
-print(f"All JSON files updated with license_type", flush=True)
+print("All JSON files updated with license_type", flush=True)
 
 # Copy to installed
 for fname in os.listdir(DATA):

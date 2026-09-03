@@ -11,6 +11,7 @@ Catalog stores USD **per 1M tokens** (× 1_000_000).
 Special routers with prompt=-1 keep the catalog convention
 input_per_1m = -1_000_000 (dynamic / routed pricing).
 """
+
 from __future__ import annotations
 
 import json
@@ -23,7 +24,9 @@ from typing import Any
 
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "openrouter.json"
-INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "openrouter.json"
+INSTALLED = (
+    Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "openrouter.json"
+)
 LOG = WORKDIR / "provider_update_log.md"
 SCRATCH = WORKDIR / "_scratch_openrouter_models.json"
 API_URL = "https://openrouter.ai/api/v1/models"
@@ -158,12 +161,10 @@ def fetch_models() -> list[dict]:
         models = data.get("data") or data
         if not isinstance(models, list) or not models:
             raise RuntimeError("empty models list from API")
-        SCRATCH.write_text(
-            json.dumps(data, ensure_ascii=False), encoding="utf-8"
-        )
+        SCRATCH.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
         print(f"fetched live API: {len(models)} models → {SCRATCH.name}", flush=True)
         return models
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:
         print(f"live fetch failed ({exc}); using scratch if present", flush=True)
         if SCRATCH.exists():
             data = json.loads(SCRATCH.read_text(encoding="utf-8"))
@@ -290,7 +291,7 @@ def map_model(raw: dict) -> dict:
         try:
             if exp_iso and exp_iso < datetime.now(timezone.utc).strftime("%Y-%m-%d"):
                 deprecated = True
-        except Exception:  # noqa: BLE001
+        except Exception:  # noqa: BLE001, S110
             pass
 
     aliases: list[str] = []
@@ -385,7 +386,9 @@ def map_model(raw: dict) -> dict:
         extra["pricing_overrides"] = pricing_raw.get("overrides")
     if raw.get("default_parameters"):
         # strip nulls
-        dp = {k: v for k, v in (raw["default_parameters"] or {}).items() if v is not None}
+        dp = {
+            k: v for k, v in (raw["default_parameters"] or {}).items() if v is not None
+        }
         if dp:
             extra["default_parameters"] = dp
     if raw.get("per_request_limits"):

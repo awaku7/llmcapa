@@ -28,9 +28,7 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "deprecated": false,
-      "aliases": [
-        "google/functiongemma"
-      ],
+      "aliases": [],
       "extra": {
         "endpoints": [
           {
@@ -250,6 +248,46 @@
     },
     {
       "provider": "google",
+      "model_id": "gemini-2.5-computer-use-preview-10-2025",
+      "display_name": "Gemini 2.5 Computer Use Preview 10 2025",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 1.25,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "extra": {
+        "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing"
+      }
+    },
+    {
+      "provider": "google",
       "model_id": "gemini-2.5-flash",
       "display_name": "Gemini 2.5 Flash",
       "context_window": 1048576,
@@ -277,7 +315,7 @@
       "supports_google_api": true,
       "supports_fim": false,
       "license_type": "api",
-      "tokenizer_name": "",
+      "tokenizer_name": "Gemini",
       "knowledge_cutoff": "2025-01-31",
       "pricing": {
         "input_per_1m": 0.3,
@@ -332,11 +370,11 @@
       "supports_google_api": true,
       "supports_fim": false,
       "license_type": "api",
-      "tokenizer_name": "",
+      "tokenizer_name": "Gemini",
       "knowledge_cutoff": "2025-01-31",
       "pricing": {
         "input_per_1m": 0.3,
-        "output_per_1m": 2.5,
+        "output_per_1m": 0.039,
         "currency": "USD"
       },
       "deprecated": false,
@@ -383,7 +421,7 @@
       "supports_google_api": true,
       "supports_fim": false,
       "license_type": "api",
-      "tokenizer_name": "",
+      "tokenizer_name": "Gemini",
       "knowledge_cutoff": "2025-01-31",
       "pricing": {
         "input_per_1m": 0.1,
@@ -400,6 +438,104 @@
         "medium",
         "high"
       ],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://generativelanguage.googleapis.com/v1beta",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://ai.google.dev/api"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-2.5-flash-lite-preview-09-2025",
+      "display_name": "Google: Gemini 2.5 Flash Lite Preview 09-2025",
+      "context_window": 1048576,
+      "max_output_tokens": 65535,
+      "input_modalities": [
+        "text",
+        "image",
+        "file",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-01-31",
+      "pricing": {
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://generativelanguage.googleapis.com/v1beta",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://ai.google.dev/api"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-2.5-flash-lite:batch",
+      "display_name": "Google: Gemini 2.5 Flash Lite (batch)",
+      "context_window": 1048576,
+      "max_output_tokens": 65535,
+      "input_modalities": [
+        "text",
+        "image",
+        "file",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "Gemini",
+      "knowledge_cutoff": "2025-01-31",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.049999999999999996,
+        "output_per_1m": 0.19999999999999998,
+        "currency": "USD"
+      },
       "extra": {
         "endpoints": [
           {
@@ -462,6 +598,95 @@
     },
     {
       "provider": "google",
+      "model_id": "gemini-2.5-flash-preview-tts",
+      "display_name": "Gemini 2.5 Flash Preview Tts",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.5,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "extra": {
+        "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing"
+      }
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-2.5-flash:batch",
+      "display_name": "Google: Gemini 2.5 Flash (batch)",
+      "context_window": 1048576,
+      "max_output_tokens": 65535,
+      "input_modalities": [
+        "file",
+        "image",
+        "text",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "Gemini",
+      "knowledge_cutoff": "2025-01-31",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.15,
+        "output_per_1m": 1.25,
+        "currency": "USD"
+      },
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://generativelanguage.googleapis.com/v1beta",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://ai.google.dev/api"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "google",
       "model_id": "gemini-2.5-pro",
       "display_name": "Gemini 2.5 Pro",
       "context_window": 1048576,
@@ -489,7 +714,7 @@
       "supports_google_api": true,
       "supports_fim": false,
       "license_type": "api",
-      "tokenizer_name": "",
+      "tokenizer_name": "Gemini",
       "knowledge_cutoff": "2025-01-31",
       "pricing": {
         "input_per_1m": 1.25,
@@ -504,6 +729,54 @@
         "medium",
         "high"
       ],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://generativelanguage.googleapis.com/v1beta",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://ai.google.dev/api"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-2.5-pro-preview",
+      "display_name": "Google: Gemini 2.5 Pro Preview 06-05",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "file",
+        "image",
+        "text",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "Gemini",
+      "knowledge_cutoff": "2025-01-31",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 1.25,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
       "extra": {
         "endpoints": [
           {
@@ -544,7 +817,7 @@
       "supports_google_api": true,
       "supports_fim": false,
       "license_type": "api",
-      "tokenizer_name": "",
+      "tokenizer_name": "Gemini",
       "knowledge_cutoff": "2025-01-31",
       "pricing": {
         "input_per_1m": 1.25,
@@ -559,6 +832,95 @@
         "medium",
         "high"
       ],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://generativelanguage.googleapis.com/v1beta",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://ai.google.dev/api"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-2.5-pro-preview-tts",
+      "display_name": "Gemini 2.5 Pro Preview Tts",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 1.0,
+        "output_per_1m": 20.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "extra": {
+        "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing"
+      }
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-2.5-pro:batch",
+      "display_name": "Google: Gemini 2.5 Pro (batch)",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "file",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "Gemini",
+      "knowledge_cutoff": "2025-01-31",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.625,
+        "output_per_1m": 5.0,
+        "currency": "USD"
+      },
       "extra": {
         "endpoints": [
           {
@@ -599,7 +961,7 @@
       "supports_google_api": true,
       "supports_fim": false,
       "license_type": "api",
-      "tokenizer_name": "",
+      "tokenizer_name": "Gemini",
       "knowledge_cutoff": "2025-01",
       "pricing": {
         "input_per_1m": 0.5,
@@ -659,6 +1021,55 @@
     },
     {
       "provider": "google",
+      "model_id": "gemini-3-flash-preview:batch",
+      "display_name": "Google: Gemini 3 Flash Preview (batch)",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "file",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "Gemini",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.25,
+        "output_per_1m": 1.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://generativelanguage.googleapis.com/v1beta",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://ai.google.dev/api"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "google",
       "model_id": "gemini-3-pro-image",
       "display_name": "Nano Banana Pro (3 Pro Image)",
       "context_window": 65536,
@@ -684,7 +1095,7 @@
       "supports_google_api": true,
       "supports_fim": false,
       "license_type": "api",
-      "tokenizer_name": "",
+      "tokenizer_name": "Gemini",
       "knowledge_cutoff": "2025-01",
       "pricing": {
         "input_per_1m": 2.0,
@@ -699,6 +1110,53 @@
         "medium",
         "high"
       ],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://generativelanguage.googleapis.com/v1beta",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://ai.google.dev/api"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-3-pro-image-preview",
+      "display_name": "Google: Nano Banana Pro (Gemini 3 Pro Image Preview)",
+      "context_window": 65536,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "image",
+        "text"
+      ],
+      "output_modalities": [
+        "image",
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "Gemini",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 12.0,
+        "currency": "USD"
+      },
       "extra": {
         "endpoints": [
           {
@@ -780,7 +1238,7 @@
       "supports_google_api": true,
       "supports_fim": false,
       "license_type": "api",
-      "tokenizer_name": "",
+      "tokenizer_name": "Gemini",
       "knowledge_cutoff": "2025-01",
       "pricing": {
         "input_per_1m": 0.5,
@@ -800,6 +1258,53 @@
         "checked_at": "2026-08-19",
         "image_output_per_1m": 60.0,
         "image_output_currency": "USD",
+        "endpoints": [
+          {
+            "base_url": "https://generativelanguage.googleapis.com/v1beta",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://ai.google.dev/api"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-3.1-flash-image-preview",
+      "display_name": "Google: Nano Banana 2 (Gemini 3.1 Flash Image Preview)",
+      "context_window": 65536,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "image",
+        "text"
+      ],
+      "output_modalities": [
+        "image",
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "Gemini",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.5,
+        "output_per_1m": 3.0,
+        "currency": "USD"
+      },
+      "extra": {
         "endpoints": [
           {
             "base_url": "https://generativelanguage.googleapis.com/v1beta",
@@ -839,7 +1344,7 @@
       "supports_google_api": true,
       "supports_fim": false,
       "license_type": "api",
-      "tokenizer_name": "",
+      "tokenizer_name": "Gemini",
       "knowledge_cutoff": "2025-01",
       "pricing": {
         "input_per_1m": 0.25,
@@ -894,7 +1399,7 @@
       "supports_google_api": true,
       "supports_fim": false,
       "license_type": "api",
-      "tokenizer_name": "",
+      "tokenizer_name": "Gemini",
       "knowledge_cutoff": "2025-01-01",
       "pricing": {
         "input_per_1m": 0.25,
@@ -914,6 +1419,104 @@
         "checked_at": "2026-08-19",
         "image_output_per_1m": 30.0,
         "image_output_currency": "USD",
+        "endpoints": [
+          {
+            "base_url": "https://generativelanguage.googleapis.com/v1beta",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://ai.google.dev/api"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-3.1-flash-lite-preview",
+      "display_name": "Google: Gemini 3.1 Flash Lite Preview",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "file",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "Gemini",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.25,
+        "output_per_1m": 1.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://generativelanguage.googleapis.com/v1beta",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://ai.google.dev/api"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-3.1-flash-lite:batch",
+      "display_name": "Google: Gemini 3.1 Flash Lite (batch)",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "file",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "Gemini",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.125,
+        "output_per_1m": 0.75,
+        "currency": "USD"
+      },
+      "extra": {
         "endpoints": [
           {
             "base_url": "https://generativelanguage.googleapis.com/v1beta",
@@ -1049,7 +1652,7 @@
       "supports_google_api": true,
       "supports_fim": false,
       "license_type": "api",
-      "tokenizer_name": "",
+      "tokenizer_name": "Gemini",
       "knowledge_cutoff": "2025-01",
       "pricing": {
         "input_per_1m": 2.0,
@@ -1110,7 +1713,7 @@
       "supports_google_api": true,
       "supports_fim": false,
       "license_type": "api",
-      "tokenizer_name": "",
+      "tokenizer_name": "Gemini",
       "knowledge_cutoff": null,
       "pricing": {
         "input_per_1m": 2.0,
@@ -1130,6 +1733,55 @@
         "long_context_input_per_1m": 4.0,
         "long_context_output_per_1m": 18.0,
         "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "endpoints": [
+          {
+            "base_url": "https://generativelanguage.googleapis.com/v1beta",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://ai.google.dev/api"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-3.1-pro-preview:batch",
+      "display_name": "Google: Gemini 3.1 Pro Preview (batch)",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "audio",
+        "file",
+        "image",
+        "text",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "Gemini",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 1.0,
+        "output_per_1m": 6.0,
+        "currency": "USD"
+      },
+      "extra": {
         "endpoints": [
           {
             "base_url": "https://generativelanguage.googleapis.com/v1beta",
@@ -1169,7 +1821,7 @@
       "supports_google_api": true,
       "supports_fim": false,
       "license_type": "api",
-      "tokenizer_name": "",
+      "tokenizer_name": "Gemini",
       "knowledge_cutoff": "2025-01-01",
       "pricing": {
         "input_per_1m": 1.5,
@@ -1226,13 +1878,111 @@
       "supports_google_api": true,
       "supports_fim": false,
       "license_type": "api",
-      "tokenizer_name": "",
+      "tokenizer_name": "Gemini",
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [],
       "pricing": {
         "input_per_1m": 0.3,
         "output_per_1m": 2.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://generativelanguage.googleapis.com/v1beta",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://ai.google.dev/api"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-3.5-flash-lite:batch",
+      "display_name": "Google: Gemini 3.5 Flash Lite (batch)",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "file",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "Gemini",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.15,
+        "output_per_1m": 1.25,
+        "currency": "USD"
+      },
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://generativelanguage.googleapis.com/v1beta",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://ai.google.dev/api"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-3.5-flash:batch",
+      "display_name": "Google: Gemini 3.5 Flash (batch)",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "file",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "Gemini",
+      "knowledge_cutoff": "2025-01-01",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.75,
+        "output_per_1m": 4.5,
         "currency": "USD"
       },
       "extra": {
@@ -1299,6 +2049,86 @@
     },
     {
       "provider": "google",
+      "model_id": "gemini-3.5-transcribe",
+      "display_name": "Gemini 3.5 Transcribe",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 12.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "extra": {
+        "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing"
+      }
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-3.5-transcribe-live",
+      "display_name": "Gemini 3.5 Transcribe Live",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 3.5,
+        "output_per_1m": 21.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "extra": {
+        "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing"
+      }
+    },
+    {
+      "provider": "google",
       "model_id": "gemini-3.6-flash",
       "display_name": "Gemini 3.6 Flash",
       "context_window": 1048576,
@@ -1325,7 +2155,7 @@
       "supports_google_api": true,
       "supports_fim": false,
       "license_type": "api",
-      "tokenizer_name": "",
+      "tokenizer_name": "Gemini",
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [],
@@ -1367,6 +2197,55 @@
       "extra": {
         "source": "https://ai.google.dev/gemini-api/docs/pricing",
         "checked_at": "2026-08-19",
+        "endpoints": [
+          {
+            "base_url": "https://generativelanguage.googleapis.com/v1beta",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://ai.google.dev/api"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-3.6-flash:batch",
+      "display_name": "Google: Gemini 3.6 Flash (batch)",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "file",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "tokenizer_name": "Gemini",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.75,
+        "output_per_1m": 3.75,
+        "currency": "USD"
+      },
+      "extra": {
         "endpoints": [
           {
             "base_url": "https://generativelanguage.googleapis.com/v1beta",
@@ -1426,6 +2305,46 @@
             "source": "https://ai.google.dev/api"
           }
         ]
+      }
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-3.8-flash",
+      "display_name": "Gemini 3.8 Flash",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.75,
+        "output_per_1m": 3.75,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "extra": {
+        "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing"
       }
     },
     {
@@ -1525,6 +2444,46 @@
     },
     {
       "provider": "google",
+      "model_id": "gemini-omni-1.1-flash",
+      "display_name": "Gemini Omni 1.1 Flash",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 1.5,
+        "output_per_1m": 9.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "extra": {
+        "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing"
+      }
+    },
+    {
+      "provider": "google",
       "model_id": "gemini-omni-flash-preview",
       "display_name": "Gemini Omni Flash Preview",
       "context_window": 1048576,
@@ -1577,6 +2536,126 @@
     },
     {
       "provider": "google",
+      "model_id": "gemini-robotics-er-1.6-preview",
+      "display_name": "Gemini Robotics Er 1.6 Preview",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 1.0,
+        "output_per_1m": 5.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "extra": {
+        "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing"
+      }
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-robotics-er-2-preview",
+      "display_name": "Gemini Robotics Er 2 Preview",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "extra": {
+        "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing"
+      }
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-robotics-er-2-streaming-preview",
+      "display_name": "Gemini Robotics Er 2 Streaming Preview",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "extra": {
+        "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing"
+      }
+    },
+    {
+      "provider": "google",
       "model_id": "gemma-2-27b-it",
       "display_name": "Google: Gemma 2 27B",
       "context_window": 8192,
@@ -1600,7 +2679,7 @@
       "supports_google_api": true,
       "supports_fim": false,
       "license_type": "api",
-      "tokenizer_name": "",
+      "tokenizer_name": "Gemini",
       "knowledge_cutoff": "2024-06-30",
       "pricing": {
         "input_per_1m": 0.65,
@@ -1650,17 +2729,11 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "google/gemma-3",
         "gemma-3-270m",
         "gemma-3-1b",
         "gemma-3-4b",
         "gemma-3-12b",
-        "gemma-3-27b",
-        "google/gemma-3-270m",
-        "google/gemma-3-1b",
-        "google/gemma-3-4b",
-        "google/gemma-3-12b",
-        "google/gemma-3-27b"
+        "gemma-3-27b"
       ],
       "extra": {
         "endpoints": [
@@ -1699,7 +2772,7 @@
       "supports_google_api": true,
       "supports_fim": false,
       "license_type": "api",
-      "tokenizer_name": "",
+      "tokenizer_name": "Gemini",
       "knowledge_cutoff": "2024-08-31",
       "pricing": {
         "input_per_1m": 0.05,
@@ -1745,7 +2818,7 @@
       "supports_google_api": true,
       "supports_fim": false,
       "license_type": "api",
-      "tokenizer_name": "",
+      "tokenizer_name": "Gemini",
       "knowledge_cutoff": "2024-08-31",
       "pricing": {
         "input_per_1m": 0.08,
@@ -1791,7 +2864,7 @@
       "supports_google_api": true,
       "supports_fim": false,
       "license_type": "api",
-      "tokenizer_name": "",
+      "tokenizer_name": "Gemini",
       "knowledge_cutoff": "2024-08-31",
       "pricing": {
         "input_per_1m": 0.05,
@@ -1841,11 +2914,8 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "google/gemma-3n",
         "gemma-3n-4.5b",
-        "gemma-3n-6.9b",
-        "google/gemma-3n-4.5b",
-        "google/gemma-3n-6.9b"
+        "gemma-3n-6.9b"
       ],
       "extra": {
         "endpoints": [
@@ -1883,7 +2953,7 @@
       "supports_google_api": true,
       "supports_fim": false,
       "license_type": "api",
-      "tokenizer_name": "",
+      "tokenizer_name": "Other",
       "knowledge_cutoff": "2024-08-31",
       "pricing": {
         "input_per_1m": 0.06,
@@ -1934,12 +3004,6 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "google/gemma-4",
-        "google/gemma-4-e2b",
-        "google/gemma-4-e4b",
-        "google/gemma-4-12b",
-        "google/gemma-4-26b-a4b",
-        "google/gemma-4-31b",
         "gemma-4-e2b",
         "gemma-4-e4b",
         "gemma-4-12b",
@@ -1984,7 +3048,7 @@
       "supports_google_api": true,
       "supports_fim": false,
       "license_type": "api",
-      "tokenizer_name": "",
+      "tokenizer_name": "Gemma",
       "knowledge_cutoff": null,
       "pricing": {
         "input_per_1m": 0.06,
@@ -2037,7 +3101,7 @@
       "supports_google_api": true,
       "supports_fim": false,
       "license_type": "free",
-      "tokenizer_name": "",
+      "tokenizer_name": "Gemma",
       "knowledge_cutoff": null,
       "pricing": {
         "input_per_1m": 0.0,
@@ -2090,7 +3154,7 @@
       "supports_google_api": true,
       "supports_fim": false,
       "license_type": "api",
-      "tokenizer_name": "",
+      "tokenizer_name": "Gemma",
       "knowledge_cutoff": null,
       "pricing": {
         "input_per_1m": 0.12,
@@ -2143,7 +3207,7 @@
       "supports_google_api": true,
       "supports_fim": false,
       "license_type": "free",
-      "tokenizer_name": "",
+      "tokenizer_name": "Gemma",
       "knowledge_cutoff": null,
       "pricing": {
         "input_per_1m": 0.0,
@@ -2331,2008 +3395,6 @@
     },
     {
       "provider": "google",
-      "model_id": "google/gemini-2.5-flash",
-      "display_name": "Google: Gemini 2.5 Flash",
-      "context_window": 1048576,
-      "max_output_tokens": 65535,
-      "input_modalities": [
-        "file",
-        "image",
-        "text",
-        "audio",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": "2025-01-31",
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-2.5-flash"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.3,
-        "output_per_1m": 2.5,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-2.5-flash-image",
-      "display_name": "Google: Nano Banana (Gemini 2.5 Flash Image)",
-      "context_window": 32768,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "image",
-        "text"
-      ],
-      "output_modalities": [
-        "image",
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": "2025-01-31",
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-2.5-flash-image"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.3,
-        "output_per_1m": 2.5,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-2.5-flash-lite",
-      "display_name": "Google: Gemini 2.5 Flash Lite",
-      "context_window": 1048576,
-      "max_output_tokens": 65535,
-      "input_modalities": [
-        "text",
-        "image",
-        "file",
-        "audio",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": "2025-01-31",
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-2.5-flash-lite"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.09999999999999999,
-        "output_per_1m": 0.39999999999999997,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-2.5-flash-lite-preview-09-2025",
-      "display_name": "Google: Gemini 2.5 Flash Lite Preview 09-2025",
-      "context_window": 1048576,
-      "max_output_tokens": 65535,
-      "input_modalities": [
-        "text",
-        "image",
-        "file",
-        "audio",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "license_type": "api",
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2025-01-31",
-      "pricing": {
-        "input_per_1m": 0.1,
-        "output_per_1m": 0.4,
-        "currency": "USD"
-      },
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-2.5-flash-lite-preview-09-2025"
-      ],
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-2.5-flash-lite:batch",
-      "display_name": "Google: Gemini 2.5 Flash Lite (batch)",
-      "context_window": 1048576,
-      "max_output_tokens": 65535,
-      "input_modalities": [
-        "text",
-        "image",
-        "file",
-        "audio",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": "2025-01-31",
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-2.5-flash-lite:batch"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.049999999999999996,
-        "output_per_1m": 0.19999999999999998,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-2.5-flash:batch",
-      "display_name": "Google: Gemini 2.5 Flash (batch)",
-      "context_window": 1048576,
-      "max_output_tokens": 65535,
-      "input_modalities": [
-        "file",
-        "image",
-        "text",
-        "audio",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": "2025-01-31",
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-2.5-flash:batch"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.15,
-        "output_per_1m": 1.25,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-2.5-pro",
-      "display_name": "Google: Gemini 2.5 Pro",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text",
-        "image",
-        "file",
-        "audio",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": "2025-01-31",
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-2.5-pro"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 1.25,
-        "output_per_1m": 10.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-2.5-pro-preview",
-      "display_name": "Google: Gemini 2.5 Pro Preview 06-05",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "file",
-        "image",
-        "text",
-        "audio"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": "2025-01-31",
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-2.5-pro-preview"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 1.25,
-        "output_per_1m": 10.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-2.5-pro-preview-05-06",
-      "display_name": "Google: Gemini 2.5 Pro Preview 05-06",
-      "context_window": 1048576,
-      "max_output_tokens": 65535,
-      "input_modalities": [
-        "text",
-        "image",
-        "file",
-        "audio",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": "2025-01-31",
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-2.5-pro-preview-05-06"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 1.25,
-        "output_per_1m": 10.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-2.5-pro:batch",
-      "display_name": "Google: Gemini 2.5 Pro (batch)",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text",
-        "image",
-        "file",
-        "audio",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": "2025-01-31",
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-2.5-pro:batch"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.625,
-        "output_per_1m": 5.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-3-flash-preview",
-      "display_name": "Google: Gemini 3 Flash Preview",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text",
-        "image",
-        "file",
-        "audio",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-3-flash-preview"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.5,
-        "output_per_1m": 3.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-3-flash-preview:batch",
-      "display_name": "Google: Gemini 3 Flash Preview (batch)",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text",
-        "image",
-        "file",
-        "audio",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-3-flash-preview:batch"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.25,
-        "output_per_1m": 1.5,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-3-pro-image",
-      "display_name": "Google: Nano Banana Pro (Gemini 3 Pro Image)",
-      "context_window": 131072,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "image",
-        "text"
-      ],
-      "output_modalities": [
-        "image",
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-3-pro-image"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 2.0,
-        "output_per_1m": 12.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-3-pro-image-preview",
-      "display_name": "Google: Nano Banana Pro (Gemini 3 Pro Image Preview)",
-      "context_window": 65536,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "image",
-        "text"
-      ],
-      "output_modalities": [
-        "image",
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-3-pro-image-preview"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 2.0,
-        "output_per_1m": 12.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-3.1-flash-image",
-      "display_name": "Google: Nano Banana 2 (Gemini 3.1 Flash Image)",
-      "context_window": 131072,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "image",
-        "text"
-      ],
-      "output_modalities": [
-        "image",
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-3.1-flash-image"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.5,
-        "output_per_1m": 3.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-3.1-flash-image-preview",
-      "display_name": "Google: Nano Banana 2 (Gemini 3.1 Flash Image Preview)",
-      "context_window": 65536,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "image",
-        "text"
-      ],
-      "output_modalities": [
-        "image",
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-3.1-flash-image-preview"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.5,
-        "output_per_1m": 3.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-3.1-flash-lite",
-      "display_name": "Google: Gemini 3.1 Flash Lite",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text",
-        "image",
-        "video",
-        "file",
-        "audio"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-3.1-flash-lite"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.25,
-        "output_per_1m": 1.5,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-3.1-flash-lite-image",
-      "display_name": "Google: Nano Banana 2 Lite (Gemini 3.1 Flash Lite Image)",
-      "context_window": 65536,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "image",
-        "text"
-      ],
-      "output_modalities": [
-        "image",
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": "2025-01-01",
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-3.1-flash-lite-image"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.25,
-        "output_per_1m": 1.5,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-3.1-flash-lite-preview",
-      "display_name": "Google: Gemini 3.1 Flash Lite Preview",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text",
-        "image",
-        "video",
-        "file",
-        "audio"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-3.1-flash-lite-preview"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.25,
-        "output_per_1m": 1.5,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-3.1-flash-lite:batch",
-      "display_name": "Google: Gemini 3.1 Flash Lite (batch)",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text",
-        "image",
-        "video",
-        "file",
-        "audio"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-3.1-flash-lite:batch"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.125,
-        "output_per_1m": 0.75,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-3.1-pro-preview",
-      "display_name": "Google: Gemini 3.1 Pro Preview",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "audio",
-        "file",
-        "image",
-        "text",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-3.1-pro-preview"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 2.0,
-        "output_per_1m": 12.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-3.1-pro-preview-customtools",
-      "display_name": "Google: Gemini 3.1 Pro Preview Custom Tools",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text",
-        "audio",
-        "image",
-        "video",
-        "file"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-3.1-pro-preview-customtools"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 2.0,
-        "output_per_1m": 12.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-3.1-pro-preview:batch",
-      "display_name": "Google: Gemini 3.1 Pro Preview (batch)",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "audio",
-        "file",
-        "image",
-        "text",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-3.1-pro-preview:batch"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 1.0,
-        "output_per_1m": 6.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-3.5-flash",
-      "display_name": "Google: Gemini 3.5 Flash",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text",
-        "image",
-        "video",
-        "file",
-        "audio"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": "2025-01-01",
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-3.5-flash"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 1.5,
-        "output_per_1m": 9.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-3.5-flash-lite",
-      "display_name": "Google: Gemini 3.5 Flash Lite",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text",
-        "image",
-        "video",
-        "file",
-        "audio"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-3.5-flash-lite"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.3,
-        "output_per_1m": 2.5,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-3.5-flash-lite:batch",
-      "display_name": "Google: Gemini 3.5 Flash Lite (batch)",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text",
-        "image",
-        "video",
-        "file",
-        "audio"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-3.5-flash-lite:batch"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.15,
-        "output_per_1m": 1.25,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-3.5-flash:batch",
-      "display_name": "Google: Gemini 3.5 Flash (batch)",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text",
-        "image",
-        "video",
-        "file",
-        "audio"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": "2025-01-01",
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-3.5-flash:batch"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.75,
-        "output_per_1m": 4.5,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-3.6-flash",
-      "display_name": "Google: Gemini 3.6 Flash",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text",
-        "image",
-        "video",
-        "file",
-        "audio"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-3.6-flash"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 1.5,
-        "output_per_1m": 7.5,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemini-3.6-flash:batch",
-      "display_name": "Google: Gemini 3.6 Flash (batch)",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text",
-        "image",
-        "video",
-        "file",
-        "audio"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "google/gemini-3.6-flash:batch"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.75,
-        "output_per_1m": 3.75,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemma-2-27b-it",
-      "display_name": "Google: Gemma 2 27B",
-      "context_window": 8192,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": "2024-06-30",
-      "deprecated": false,
-      "aliases": [
-        "google/gemma-2-27b-it"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.65,
-        "output_per_1m": 0.65,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemma-3-12b-it",
-      "display_name": "Google: Gemma 3 12B",
-      "context_window": 131072,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": "2024-08-31",
-      "deprecated": false,
-      "aliases": [
-        "google/gemma-3-12b-it"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.049999999999999996,
-        "output_per_1m": 0.15,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemma-3-27b-it",
-      "display_name": "Google: Gemma 3 27B",
-      "context_window": 262144,
-      "max_output_tokens": 131072,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": "2024-08-31",
-      "deprecated": false,
-      "aliases": [
-        "google/gemma-3-27b-it"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.08,
-        "output_per_1m": 0.44999999999999996,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemma-3-4b-it",
-      "display_name": "Google: Gemma 3 4B",
-      "context_window": 131072,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": "2024-08-31",
-      "deprecated": false,
-      "aliases": [
-        "google/gemma-3-4b-it"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.049999999999999996,
-        "output_per_1m": 0.09999999999999999,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemma-3n-e4b-it",
-      "display_name": "Google: Gemma 3n 4B",
-      "context_window": 32768,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": "2024-08-31",
-      "deprecated": false,
-      "aliases": [
-        "google/gemma-3n-e4b-it"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.06,
-        "output_per_1m": 0.12,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemma-4-26b-a4b-it",
-      "display_name": "Google: Gemma 4 26B A4B ",
-      "context_window": 262144,
-      "max_output_tokens": 262144,
-      "input_modalities": [
-        "image",
-        "text",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemma",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "google/gemma-4-26b-a4b-it"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.12,
-        "output_per_1m": 0.39999999999999997,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemma-4-26b-a4b-it:free",
-      "display_name": "Google: Gemma 4 26B A4B  (free)",
-      "context_window": 262144,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "image",
-        "text",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemma",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "google/gemma-4-26b-a4b-it:free"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemma-4-31b-it",
-      "display_name": "Google: Gemma 4 31B",
-      "context_window": 262144,
-      "max_output_tokens": 262144,
-      "input_modalities": [
-        "image",
-        "text",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemma",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "google/gemma-4-31b-it"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.09999999999999999,
-        "output_per_1m": 0.33999999999999997,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/gemma-4-31b-it:free",
-      "display_name": "Google: Gemma 4 31B (free)",
-      "context_window": 262144,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "image",
-        "text",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Gemma",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "google/gemma-4-31b-it:free"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/lyria-3-clip-preview",
-      "display_name": "Google: Lyria 3 Clip Preview",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "audio"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "google/lyria-3-clip-preview"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "price_per_song": 0.04,
-        "unit": "song",
-        "source": "https://ai.google.dev/gemini-api/docs/pricing",
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
-      "model_id": "google/lyria-3-pro-preview",
-      "display_name": "Google: Lyria 3 Pro Preview",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "audio"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": true,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "google/lyria-3-pro-preview"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "price_per_song": 0.08,
-        "unit": "song",
-        "source": "https://ai.google.dev/gemini-api/docs/pricing",
-        "endpoints": [
-          {
-            "base_url": "https://generativelanguage.googleapis.com/v1beta",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://ai.google.dev/api"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "google",
       "model_id": "lilarest-gemma-4-31b-it-nvfp4-turbo",
       "display_name": "lilarest-gemma-4-31b-it-nvfp4-turbo",
       "context_window": 128000,
@@ -4396,16 +3458,16 @@
       "supports_anthropic_api": false,
       "supports_google_api": true,
       "supports_fim": false,
-      "license_type": "free",
-      "tokenizer_name": "",
+      "tokenizer_name": "Other",
       "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
       "pricing": {
         "input_per_1m": 0.0,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
-      "deprecated": false,
-      "aliases": [],
       "extra": {
         "price_per_song": 0.04,
         "unit": "song",
@@ -4445,16 +3507,16 @@
       "supports_anthropic_api": false,
       "supports_google_api": true,
       "supports_fim": false,
-      "license_type": "free",
-      "tokenizer_name": "",
+      "tokenizer_name": "Other",
       "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
       "pricing": {
         "input_per_1m": 0.0,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
-      "deprecated": false,
-      "aliases": [],
       "extra": {
         "price_per_song": 0.08,
         "unit": "song",
@@ -4499,7 +3561,6 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "google/medgemma-1.5",
         "medgemma-1.5-4b"
       ],
       "extra": {
@@ -4625,7 +3686,6 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "google/translategemma",
         "translategemma-4b",
         "translategemma-12b",
         "translategemma-27b"

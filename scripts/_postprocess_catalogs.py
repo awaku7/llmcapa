@@ -1,11 +1,14 @@
 """Apply Playwright-scraped data to JSON files and update provider log."""
-import json, os, shutil
-from datetime import date
+
+import json
+import os
+import shutil
+from datetime import datetime, timezone
 
 DATA = r"F:\KAIHATSU\llmcapa\src\llmcapa\data"
 INSTALLED = r"F:\Python314\Lib\site-packages\llmcapa\data"
 
-today = date.today().strftime("%Y-%m-%d")
+today = datetime.now(timezone.utc).date().strftime("%Y-%m-%d")
 
 # ── 1. Update anthropic.json with official pricing ──
 anthro_path = os.path.join(DATA, "anthropic.json")
@@ -40,7 +43,9 @@ for m in anthro["models"]:
 
 with open(anthro_path, "w", encoding="utf-8") as f:
     json.dump(anthro, f, ensure_ascii=False, indent=2)
-print(f"anthropic.json: {anthro_count} models updated with official pricing", flush=True)
+print(
+    f"anthropic.json: {anthro_count} models updated with official pricing", flush=True
+)
 
 # ── 2. Update deepseek.json with official pricing ──
 ds_path = os.path.join(DATA, "deepseek.json")
@@ -69,11 +74,28 @@ print(f"deepseek.json: {ds_count} models updated with official pricing", flush=T
 
 # ── 3. Fix FIM flags for all non-Ollama providers ──
 FIM_PATTERNS = [
-    "codegemma", "codellama", "starcoder", "deepseek-coder", "deepseek-v4",
-    "qwen2.5-coder", "qwen3-coder", "codeqwen", "stable-code", "wizardcoder",
-    "magicoder", "phind-codellama", "codebooga", "codegeex4", "codeup",
-    "sqlcoder", "opencoder", "yi-coder", "north-mini-code", "granite-code",
-    "codestral", "devstral",
+    "codegemma",
+    "codellama",
+    "starcoder",
+    "deepseek-coder",
+    "deepseek-v4",
+    "qwen2.5-coder",
+    "qwen3-coder",
+    "codeqwen",
+    "stable-code",
+    "wizardcoder",
+    "magicoder",
+    "phind-codellama",
+    "codebooga",
+    "codegeex4",
+    "codeup",
+    "sqlcoder",
+    "opencoder",
+    "yi-coder",
+    "north-mini-code",
+    "granite-code",
+    "codestral",
+    "devstral",
 ]
 
 fim_count = 0

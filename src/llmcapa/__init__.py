@@ -11,12 +11,11 @@ Example:
 
 from __future__ import annotations
 
-from typing import List, Optional, Union
 from pathlib import Path
 
 from .models import Capability, ComputerUseCapability, Feature, ReasoningEffort
-from .registry import Registry, ModelNotFoundError, default_registry
-from .tokenizer import count_tokens, count_messages_tokens
+from .registry import ModelNotFoundError, Registry, default_registry
+from .tokenizer import count_messages_tokens, count_tokens
 
 __version__ = "0.5.14"
 
@@ -24,33 +23,33 @@ __all__ = [
     "Capability",
     "ComputerUseCapability",
     "Feature",
+    "ModelNotFoundError",
     "ReasoningEffort",
     "Registry",
-    "ModelNotFoundError",
-    "get",
-    "list_models",
-    "providers",
-    "find",
-    "search",
-    "find_model",
-    "load_extra",
-    "fetch_openrouter",
+    "__version__",
+    "count_messages_tokens",
+    "count_tokens",
+    "default_registry",
     "fetch_huggingface",
-    "register",
-    "supports_json_mode",
-    "supports_json_schema",
-    "supports_computer_use",
+    "fetch_openrouter",
+    "find",
+    "find_model",
+    "get",
     "get_computer_use_capability",
+    "list_models",
+    "load_extra",
+    "providers",
+    "register",
+    "search",
     "supports_computer_action",
     "supports_computer_environment",
-    "default_registry",
-    "count_tokens",
-    "count_messages_tokens",
-    "__version__",
+    "supports_computer_use",
+    "supports_json_mode",
+    "supports_json_schema",
 ]
 
 
-def get(model_id: str, provider: Optional[str] = None) -> Capability:
+def get(model_id: str, provider: str | None = None) -> Capability:
     """Return the Capability for a model id or alias.
 
     Args:
@@ -62,24 +61,24 @@ def get(model_id: str, provider: Optional[str] = None) -> Capability:
 
 
 def list_models(
-    provider: Optional[str] = None,
+    provider: str | None = None,
     include_deprecated: bool = True,
-) -> List[Capability]:
+) -> list[Capability]:
     """List known models, optionally filtered by provider."""
     return default_registry().list_models(provider, include_deprecated)
 
 
-def providers() -> List[str]:
+def providers() -> list[str]:
     """Return the sorted list of known providers."""
     return default_registry().providers()
 
 
-def find(**kwargs) -> List[Capability]:
+def find(**kwargs) -> list[Capability]:
     """Search models by conditions. See Registry.find."""
     return default_registry().find(**kwargs)
 
 
-def find_model(model_id: str) -> List[tuple[str, Capability]]:
+def find_model(model_id: str) -> list[tuple[str, Capability]]:
     """Find all (provider, Capability) tuples for a given model_id across providers.
 
     Returns a list of (provider, Capability) for every provider that has a model
@@ -91,10 +90,10 @@ def find_model(model_id: str) -> List[tuple[str, Capability]]:
 
 def search(
     prefix: str,
-    provider: Optional[str] = None,
+    provider: str | None = None,
     include_deprecated: bool = False,
-    limit: Optional[int] = None,
-) -> List[Capability]:
+    limit: int | None = None,
+) -> list[Capability]:
     """Search models by prefix matching on model_id, display_name, or aliases.
 
     Case-insensitive prefix search. Results are sorted by (provider, model_id).
@@ -102,7 +101,7 @@ def search(
     return default_registry().search(prefix, provider, include_deprecated, limit)
 
 
-def load_extra(path: Union[str, Path]) -> int:
+def load_extra(path: str | Path) -> int:
     """Load user-defined model data from a local JSON file."""
     return default_registry().load_extra(path)
 
@@ -119,7 +118,7 @@ def fetch_openrouter(cache_ttl: int = 86400) -> int:
 
 def fetch_huggingface(
     limit: int = 100,
-    cache_ttl: Optional[int] = None,
+    cache_ttl: int | None = None,
 ) -> int:
     """Fetch top models from HuggingFace API and register them.
 
@@ -139,7 +138,7 @@ def register(cap: Capability) -> None:
     default_registry().register(cap)
 
 
-def supports_json_mode(model_id: str, provider: Optional[str] = None) -> Optional[bool]:
+def supports_json_mode(model_id: str, provider: str | None = None) -> bool | None:
     """Return JSON Object mode support for ``provider + model_id``.
 
     ``None`` means that the catalog has no verified information; it is not
@@ -148,20 +147,20 @@ def supports_json_mode(model_id: str, provider: Optional[str] = None) -> Optiona
     return get(model_id, provider).supports_json_mode
 
 
-def supports_json_schema(model_id: str, provider: Optional[str] = None) -> Optional[bool]:
+def supports_json_schema(model_id: str, provider: str | None = None) -> bool | None:
     """Return native JSON Schema support for ``provider + model_id``."""
     return get(model_id, provider).supports_json_schema
 
 
 def get_computer_use_capability(
     model_id: str,
-    provider: Optional[str] = None,
-) -> Optional[ComputerUseCapability]:
+    provider: str | None = None,
+) -> ComputerUseCapability | None:
     """Return Computer Use capability, or ``None`` when it is unknown."""
     return get(model_id, provider).computer_use
 
 
-def supports_computer_use(model_id: str, provider: Optional[str] = None) -> bool:
+def supports_computer_use(model_id: str, provider: str | None = None) -> bool:
     """Return whether a model is explicitly registered as supporting CUA."""
     cap = get_computer_use_capability(model_id, provider)
     return bool(cap and cap.supported)
@@ -170,7 +169,7 @@ def supports_computer_use(model_id: str, provider: Optional[str] = None) -> bool
 def supports_computer_action(
     model_id: str,
     action: str,
-    provider: Optional[str] = None,
+    provider: str | None = None,
 ) -> bool:
     """Return whether a registered Computer Use capability supports *action*."""
     cap = get_computer_use_capability(model_id, provider)
@@ -180,7 +179,7 @@ def supports_computer_action(
 def supports_computer_environment(
     model_id: str,
     environment: str,
-    provider: Optional[str] = None,
+    provider: str | None = None,
 ) -> bool:
     """Return whether a registered capability supports *environment*."""
     cap = get_computer_use_capability(model_id, provider)

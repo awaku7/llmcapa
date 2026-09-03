@@ -7,6 +7,7 @@ Sources (Playwright live 2026-07-18):
 - https://platform.kimi.ai/docs/pricing/chat-k25
 - Overview: multimodal for K3 / K2.7 Code / K2.6 (text+image+video)
 """
+
 from __future__ import annotations
 
 import json
@@ -265,7 +266,9 @@ def main() -> None:
     out = resolve_out_path()
     out.parent.mkdir(parents=True, exist_ok=True)
     payload = {"models": models}
-    out.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    out.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
 
     if INSTALLED_DIR.exists() and out.resolve() != (INSTALLED_DIR / out.name).resolve():
         shutil.copy2(out, INSTALLED_DIR / out.name)
@@ -273,9 +276,7 @@ def main() -> None:
     active = sum(1 for m in models if not m.get("deprecated"))
     deprecated = sum(1 for m in models if m.get("deprecated"))
     priced = sum(
-        1
-        for m in models
-        if (m.get("pricing") or {}).get("input_per_1m") is not None
+        1 for m in models if (m.get("pricing") or {}).get("input_per_1m") is not None
     )
     print(
         f"{out.name}: {len(models)} models "

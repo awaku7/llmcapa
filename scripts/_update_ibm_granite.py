@@ -3,10 +3,11 @@
 The updater is fail-closed: it only records facts explicitly found on IBM's
 official Granite 4.2 page and never infers pricing from third-party catalogs.
 """
+
 from __future__ import annotations
 
 import json
-from datetime import date
+from datetime import datetime, timezone
 from pathlib import Path
 from urllib.request import Request, urlopen
 
@@ -61,21 +62,28 @@ def base_model(model_id: str, size: str) -> dict:
 
 def main() -> None:
     page = fetch_page()
-    required = ["granite 4.2", "granite-4.2-3b", "granite-4.2-8b", "granite-4.2-30b", "128k", "apache 2.0"]
+    required = [
+        "granite 4.2",
+        "granite-4.2-3b",
+        "granite-4.2-8b",
+        "granite-4.2-30b",
+        "128k",
+        "apache 2.0",
+    ]
     missing = [term for term in required if term not in page]
     if missing:
         raise RuntimeError(f"IBM official page validation failed: missing {missing}")
 
     data = json.loads(DATA.read_text(encoding="utf-8"))
     models = data.setdefault("models", [])
-    today = date.today().isoformat()
+    today = datetime.now(timezone.utc).date().isoformat()
 
     # Granite 4.0 is no longer the current documented family.
     for model in models:
         if str(model.get("model_id", "")).startswith("ibm-granite/granite-4.0"):
             model["deprecated"] = True
 
-    existing = {model.get("model_id") for model in models}
+    {model.get("model_id") for model in models}
     added = 0
     for model_id, size in GRANITE_42.items():
         full_id = f"ibm-granite/{model_id}"
@@ -84,32 +92,38 @@ def main() -> None:
             model = base_model(model_id, size)
             models.append(model)
             added += 1
-        model.update({
-            "display_name": f"IBM: Granite 4.2 {size}",
-            "context_window": 512000 if size == "30B" else 128000,
-            "max_output_tokens": 0,
-            "supports_function_calling": True,
-            "supports_reasoning": True,
-            "supports_thinking_budget": True,
-            "license_type": "open",
-            "deprecated": False,
-        })
+        model.update(
+            {
+                "display_name": f"IBM: Granite 4.2 {size}",
+                "context_window": 512000 if size == "30B" else 128000,
+                "max_output_tokens": 0,
+                "supports_function_calling": True,
+                "supports_reasoning": True,
+                "supports_thinking_budget": True,
+                "license_type": "open",
+                "deprecated": False,
+            }
+        )
         extra = model.setdefault("extra", {})
-        extra.update({
-            "official_source": SOURCE,
-            "official_source_checked_at": today,
-            "official_spec_refresh": "parsed",
-            "license": "Apache 2.0",
-            "architecture": "dense reasoning language model",
-            "granite_4_2_size": size,
-            "reasoning": "native chain-of-thought thinking",
-            "tool_calling": "reasoning-augmented tool calling",
-            "context_note": "128K for all Granite 4.2 models; 30B supports long-context extension to 512K",
-            "pricing_status": "not specified on IBM Granite model page",
-        })
+        extra.update(
+            {
+                "official_source": SOURCE,
+                "official_source_checked_at": today,
+                "official_spec_refresh": "parsed",
+                "license": "Apache 2.0",
+                "architecture": "dense reasoning language model",
+                "granite_4_2_size": size,
+                "reasoning": "native chain-of-thought thinking",
+                "tool_calling": "reasoning-augmented tool calling",
+                "context_note": "128K for all Granite 4.2 models; 30B supports long-context extension to 512K",
+                "pricing_status": "not specified on IBM Granite model page",
+            }
+        )
 
     models.sort(key=lambda m: m.get("model_id", ""))
-    DATA.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    DATA.write_text(
+        json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
     LOG.write_text(
         LOG.read_text(encoding="utf-8")
         + f"\n## IBM Granite official refresh ({today})\n\n"

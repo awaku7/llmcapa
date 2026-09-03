@@ -29,7 +29,9 @@ def scrape() -> dict[str, tuple[float, float]]:
     soup = BeautifulSoup(html, "html.parser")
     result: dict[str, tuple[float, float]] = {}
     for table in soup.select("table.pricing_table"):
-        headers = [x.get_text(" ", strip=True).lower() for x in table.select("thead th")]
+        headers = [
+            x.get_text(" ", strip=True).lower() for x in table.select("thead th")
+        ]
         if headers[:3] != ["model", "input", "output"]:
             continue
         for row in table.select("tbody tr"):
@@ -76,8 +78,20 @@ def main() -> None:
         model["extra"]["pricing_retrieved_at"] = datetime.now(timezone.utc).isoformat()
         changed += 1
         matched.append(model["model_id"])
-    DATA.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({"scraped_models": len(scraped), "updated_entries": changed, "matched": matched}, ensure_ascii=False, indent=2))
+    DATA.write_text(
+        json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+    print(
+        json.dumps(
+            {
+                "scraped_models": len(scraped),
+                "updated_entries": changed,
+                "matched": matched,
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+    )
 
 
 if __name__ == "__main__":

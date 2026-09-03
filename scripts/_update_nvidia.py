@@ -11,6 +11,7 @@ NVIDIA free endpoints exist; partner serverless prices vary. We store a
 representative partner price (Deep Infra / OpenRouter when available) plus
 partner_price_range in extra.
 """
+
 from __future__ import annotations
 
 import json
@@ -366,15 +367,12 @@ def main() -> None:
         json.dumps({"models": models}, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-    if INSTALLED_DIR.exists():
-        if OUT.resolve() != (INSTALLED_DIR / OUT.name).resolve():
-            shutil.copy2(OUT, INSTALLED_DIR / OUT.name)
+    if INSTALLED_DIR.exists() and OUT.resolve() != (INSTALLED_DIR / OUT.name).resolve():
+        shutil.copy2(OUT, INSTALLED_DIR / OUT.name)
 
     active = sum(1 for m in models if not m.get("deprecated"))
     priced = sum(
-        1
-        for m in models
-        if (m.get("pricing") or {}).get("input_per_1m") is not None
+        1 for m in models if (m.get("pricing") or {}).get("input_per_1m") is not None
     )
     print(
         f"nvidia.json: {len(models)} models (active={active} / priced={priced})",

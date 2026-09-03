@@ -8,17 +8,19 @@ Adds bare Model Studio IDs (qwen3.7-max etc.) alongside existing OpenRouter-styl
 `qwen/...` entries. Primary pricing uses official **list** rates; limited-time
 promo rates are recorded in extra.
 """
+
 from __future__ import annotations
 
 import json
 import shutil
-from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
 
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "qwen.json"
-INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "qwen.json"
+INSTALLED = (
+    Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "qwen.json"
+)
 LOG = WORKDIR / "provider_update_log.md"
 SOURCE = "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
 
@@ -121,7 +123,11 @@ FLAGSHIP_TEXT: dict[str, dict] = {
         "supports_json_mode": True,
         "supports_reasoning": True,
         "input_modalities": ["text"],
-        "aliases": ["qwen/qwen3.5-plus", "qwen/qwen3.5-plus-02-15", "qwen/qwen3.5-plus-20260420"],
+        "aliases": [
+            "qwen/qwen3.5-plus",
+            "qwen/qwen3.5-plus-02-15",
+            "qwen/qwen3.5-plus-20260420",
+        ],
     },
     "qwen3.5-omni-plus": {
         "display_name": "Qwen3.5 Omni Plus",
@@ -273,7 +279,10 @@ def make_text_model(model_id: str, spec: dict) -> dict:
 
 
 def make_media_model(model_id: str, spec: dict) -> dict:
-    extra = {"source": SOURCE, "unit": "image" if "price_per_image" in spec else "second"}
+    extra = {
+        "source": SOURCE,
+        "unit": "image" if "price_per_image" in spec else "second",
+    }
     if "price_per_image" in spec:
         extra["price_per_image"] = spec["price_per_image"]
     if "price_per_second_720p" in spec:
@@ -386,9 +395,12 @@ def main() -> None:
 
         # sync linked OpenRouter-style ids
         for alias in spec.get("aliases") or []:
-            if alias in by_id and alias != mid:
-                if sync_openrouter_entry(by_id[alias], mid, spec):
-                    updated_or += 1
+            if (
+                alias in by_id
+                and alias != mid
+                and sync_openrouter_entry(by_id[alias], mid, spec)
+            ):
+                updated_or += 1
 
     for mid, spec in MEDIA_MODELS.items():
         if mid not in by_id:
@@ -409,7 +421,9 @@ def main() -> None:
 
     models.sort(key=lambda x: x["model_id"])
     data["models"] = models
-    OUT.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    OUT.write_text(
+        json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
     if INSTALLED.parent.exists() and OUT.resolve() != INSTALLED.resolve():
         shutil.copy2(OUT, INSTALLED)
 

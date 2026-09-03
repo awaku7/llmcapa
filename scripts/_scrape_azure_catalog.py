@@ -115,7 +115,7 @@ async def click_until_no_next(page) -> list:
         next_btn = page.locator('button:has-text("Next")')
         try:
             await next_btn.wait_for(timeout=5000)
-        except Exception:
+        except Exception:  # noqa: BLE001
             print("  No more Next button found.")
             break
 

@@ -126,24 +126,36 @@ def test_computer_use_required_actions_in_replacement():
             actions=frozenset({"screenshot", "left_click", "type"}),
         ),
     )
-    assert source.can_be_replaced_by(
-        target,
-        required_actions=["screenshot", "left_click", "type"],
-    ) is True
-    assert source.can_be_replaced_by(
-        target,
-        required_actions=["screenshot", "left_click", "type"],
-        required_environment="browser",
-    ) is True
-    assert source.can_be_replaced_by(
-        target,
-        required_actions=["screenshot", "left_click", "type"],
-        required_environment="desktop",
-    ) is False
-    assert source.can_be_replaced_by(
-        target,
-        required_actions=["screenshot", "zoom"],
-    ) is False
+    assert (
+        source.can_be_replaced_by(
+            target,
+            required_actions=["screenshot", "left_click", "type"],
+        )
+        is True
+    )
+    assert (
+        source.can_be_replaced_by(
+            target,
+            required_actions=["screenshot", "left_click", "type"],
+            required_environment="browser",
+        )
+        is True
+    )
+    assert (
+        source.can_be_replaced_by(
+            target,
+            required_actions=["screenshot", "left_click", "type"],
+            required_environment="desktop",
+        )
+        is False
+    )
+    assert (
+        source.can_be_replaced_by(
+            target,
+            required_actions=["screenshot", "zoom"],
+        )
+        is False
+    )
 
 
 def test_computer_use_tool_version_is_metadata_not_compatibility_gate():
@@ -254,10 +266,13 @@ def test_can_be_replaced_by_rejects_cross_provider_computer_use():
     ]
 
     for target in targets:
-        assert source.can_be_replaced_by(
-            target,
-            required_features=["computer_use"],
-        ) is False
+        assert (
+            source.can_be_replaced_by(
+                target,
+                required_features=["computer_use"],
+            )
+            is False
+        )
 
 
 def test_required_environment_prevents_mobile_desktop_mismatch():
@@ -272,8 +287,11 @@ def test_required_environment_prevents_mobile_desktop_mismatch():
             actions=frozenset({"screenshot", "left_click", "type"}),
         ),
     )
-    assert source.can_be_replaced_by(
-        mobile_target,
-        required_actions=["screenshot", "left_click", "type"],
-        required_environment="desktop",
-    ) is False
+    assert (
+        source.can_be_replaced_by(
+            mobile_target,
+            required_actions=["screenshot", "left_click", "type"],
+            required_environment="desktop",
+        )
+        is False
+    )

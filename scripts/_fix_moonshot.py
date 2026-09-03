@@ -1,5 +1,7 @@
 """Update moonshot.json with Kimi official pricing from Novita."""
-import json, shutil
+
+import json
+import shutil
 
 path = r"F:\KAIHATSU\llmcapa\src\llmcapa\data\moonshot.json"
 with open(path, encoding="utf-8") as f:

@@ -9,6 +9,9 @@ are updated. Test models and entries with context_window=0 are skipped.
 
 Supports --dry-run to preview changes without writing.
 """
+
+from __future__ import annotations
+
 import json
 import os
 import ssl
@@ -22,8 +25,16 @@ NOVITA_JSON = os.path.join(DATA_DIR, "novita.json")
 
 # site-packages fallback (auto-detected)
 INSTALLED_CANDIDATES = [
-    os.path.join(os.path.dirname(sys.executable), "Lib", "site-packages", "llmcapa", "data"),
-    os.path.join(os.path.dirname(os.path.dirname(sys.executable)), "Lib", "site-packages", "llmcapa", "data"),
+    os.path.join(
+        os.path.dirname(sys.executable), "Lib", "site-packages", "llmcapa", "data"
+    ),
+    os.path.join(
+        os.path.dirname(os.path.dirname(sys.executable)),
+        "Lib",
+        "site-packages",
+        "llmcapa",
+        "data",
+    ),
 ]
 
 API_URL = "https://api.novita.ai/openai/v1/models"
@@ -103,7 +114,9 @@ def update_novita(dry_run: bool = False) -> dict:
     with open(NOVITA_JSON, "r", encoding="utf-8") as f:
         bundled = json.load(f)
 
-    existing_map: dict[str, dict] = {m["model_id"].lower(): m for m in bundled["models"]}
+    existing_map: dict[str, dict] = {
+        m["model_id"].lower(): m for m in bundled["models"]
+    }
 
     # Fetch from API
     print("Fetching models from Novita AI API...", flush=True)
@@ -125,10 +138,19 @@ def update_novita(dry_run: bool = False) -> dict:
             # Update pricing and metadata for existing models
             old = existing_map[key]
             changed = False
-            for field in ("context_window", "max_output_tokens", "pricing",
-                          "supports_function_calling", "supports_json_mode",
-                          "supports_streaming", "supports_vision", "supports_reasoning",
-                          "deprecated", "display_name", "supports_anthropic_api"):
+            for field in (
+                "context_window",
+                "max_output_tokens",
+                "pricing",
+                "supports_function_calling",
+                "supports_json_mode",
+                "supports_streaming",
+                "supports_vision",
+                "supports_reasoning",
+                "deprecated",
+                "display_name",
+                "supports_anthropic_api",
+            ):
                 if entry.get(field) != old.get(field):
                     old[field] = entry[field]
                     changed = True
@@ -154,6 +176,7 @@ def update_novita(dry_run: bool = False) -> dict:
         backup = NOVITA_JSON + ".org"
         if not os.path.exists(backup):
             import shutil
+
             shutil.copy2(NOVITA_JSON, backup)
 
         # Write new data
@@ -166,6 +189,7 @@ def update_novita(dry_run: bool = False) -> dict:
             dst = os.path.join(candidate, "novita.json")
             if os.path.isdir(candidate):
                 import shutil
+
                 shutil.copy2(NOVITA_JSON, dst)
                 print(f"  Synced: {dst}", flush=True)
                 break
@@ -178,6 +202,6 @@ def update_novita(dry_run: bool = False) -> dict:
 if __name__ == "__main__":
     dry_run = "--dry-run" in sys.argv
     summary = update_novita(dry_run=dry_run)
-    print(f"\nSummary:", flush=True)
+    print("\nSummary:", flush=True)
     for k, v in summary.items():
         print(f"  {k}: {v}", flush=True)

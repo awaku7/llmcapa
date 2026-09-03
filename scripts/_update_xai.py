@@ -5,17 +5,19 @@ Sources:
 - https://docs.x.ai/developers/models (+ #pricing, model detail pages)
 Shape: Capability JSON with pricing + extra (long-ctx / cache / specialty units)
 """
+
 from __future__ import annotations
 
 import json
-import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
 WORKDIR = Path(__file__).resolve().parents[1]
 LISTMODELS = WORKDIR / "_scratch_xai_listmodels_parsed.json"
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "xai.json"
-INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "xai.json"
+INSTALLED = (
+    Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "xai.json"
+)
 LOG = WORKDIR / "provider_update_log.md"
 SOURCE = "https://docs.x.ai/developers/models"
 
@@ -229,9 +231,7 @@ def _is_reasoning(name: str) -> bool:
         return False
     if "reasoning" in n or "multi-agent" in n:
         return True
-    if n in ("grok-4.5", "grok-4.3", "grok-build-0.1"):
-        return True
-    return False
+    return n in ("grok-4.5", "grok-4.3", "grok-build-0.1")
 
 
 def _supports_effort(name: str) -> bool:
@@ -278,7 +278,7 @@ def text_row(entry: dict) -> dict:
     if long_out is not None:
         extra["long_output_per_1m"] = float(long_out)
     # batch discount observed on 4.3 family docs
-    if mid.startswith("grok-4.3") or mid.startswith("grok-4.20") or mid.startswith("grok-build"):
+    if mid.startswith(("grok-4.3", "grok-4.20", "grok-build")):
         extra["batch_discount"] = 0.2
     extra["regions"] = ["us-east-1"]
 
@@ -400,9 +400,12 @@ def load_listmodels() -> list[dict]:
     if isinstance(raw, dict) and not (raw.get("models") or raw.get("data")):
         try:
             from _scrape_xai import fetch, parse
+
             raw = parse(fetch())
-            LISTMODELS.write_text(json.dumps(raw, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
-        except Exception:
+            LISTMODELS.write_text(
+                json.dumps(raw, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8"
+            )
+        except Exception:  # noqa: BLE001
             raw = []
     if isinstance(raw, dict):
         raw = raw.get("models") or raw.get("data") or []
@@ -411,7 +414,7 @@ def load_listmodels() -> list[dict]:
     if not raw:
         LISTMODELS_FALLBACK = True
         try:
-            existing = json.loads(OUT.read_text(encoding="utf-8")).get("models", [])
+            json.loads(OUT.read_text(encoding="utf-8")).get("models", [])
             return []
         except (OSError, json.JSONDecodeError):
             return []
@@ -455,15 +458,15 @@ def main() -> None:
     models = build()
     OUT.parent.mkdir(parents=True, exist_ok=True)
     payload = {"models": models}
-    OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    OUT.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
     # The portable updater writes directly to the repository catalog.
 
     active = sum(1 for m in models if not m.get("deprecated"))
     deprecated = sum(1 for m in models if m.get("deprecated"))
     priced = sum(
-        1
-        for m in models
-        if (m.get("pricing") or {}).get("input_per_1m") is not None
+        1 for m in models if (m.get("pricing") or {}).get("input_per_1m") is not None
     )
     print(
         f"xai.json: {len(models)} models "

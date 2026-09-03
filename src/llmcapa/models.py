@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from enum import Enum
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 
 class Feature(str, Enum):
     """Standard feature flags supported by LLM models."""
+
     LLMC_FEAT_VISION = "vision"
     LLMC_FEAT_FUNCTION_CALLING = "function_calling"
     LLMC_FEAT_JSON_MODE = "json_mode"
@@ -38,15 +39,13 @@ class Feature(str, Enum):
     LLMC_FEAT_SPEECH_INPUT = "speech_input"
     LLMC_FEAT_SPEECH_OUTPUT = "speech_output"
     LLMC_FEAT_EMBEDDING_OUTPUT = "embedding_output"
-    # Additional output modalities. Video input/output are defined above.
-    LLMC_FEAT_EMBEDDINGS_OUTPUT = "embedding_output"  # plural alias
     LLMC_FEAT_RERANK = "rerank"
     LLMC_FEAT_RERANK_OUTPUT = "rerank_output"
 
 
-
 class ReasoningEffort(str, Enum):
     """Standard reasoning effort levels for models supporting reasoning_effort."""
+
     LLMC_EFFORT_NONE = "none"
     LLMC_EFFORT_MINIMAL = "minimal"
     LLMC_EFFORT_LOW = "low"
@@ -64,19 +63,19 @@ class ComputerUseCapability:
     native: bool
     provider: str = ""
     model: str = ""
-    api_type: Optional[str] = None
-    tool_type: Optional[str] = None
-    tool_version: Optional[str] = None
+    api_type: str | None = None
+    tool_type: str | None = None
+    tool_version: str | None = None
     status: str = "unknown"
     environments: frozenset[str] = field(default_factory=frozenset)
     actions: frozenset[str] = field(default_factory=frozenset)
     requires_beta: bool = False
-    beta_header: Optional[str] = None
+    beta_header: str | None = None
     enable_zoom: bool = False
-    source_url: Optional[str] = None
-    checked_at: Optional[str] = None
+    source_url: str | None = None
+    checked_at: str | None = None
 
-    def is_compatible_with(self, other: "ComputerUseCapability") -> bool:
+    def is_compatible_with(self, other: ComputerUseCapability) -> bool:
         """Return whether *other* can replace this Computer Use capability.
 
         Computer Use is provider/API-specific. A generic ``supported`` flag is
@@ -100,7 +99,7 @@ class ComputerUseCapability:
         return self.actions.issubset(other.actions)
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "ComputerUseCapability":
+    def from_dict(cls, data: dict[str, Any]) -> ComputerUseCapability:
         """Create a capability from JSON-compatible data."""
         values = dict(data)
         for key in ("environments", "actions"):
@@ -108,7 +107,7 @@ class ComputerUseCapability:
             values[key] = frozenset(value or ())
         return cls(**values)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         """Return a JSON-compatible representation."""
         result = asdict(self)
         result["environments"] = sorted(self.environments)
@@ -125,12 +124,12 @@ class Capability:
     display_name: str = ""
     context_window: int = 0
     max_output_tokens: int = 0
-    input_modalities: List[str] = field(default_factory=lambda: ["text"])
-    output_modalities: List[str] = field(default_factory=lambda: ["text"])
+    input_modalities: list[str] = field(default_factory=lambda: ["text"])
+    output_modalities: list[str] = field(default_factory=lambda: ["text"])
     supports_function_calling: bool = False
     # ``None`` means that the capability is unknown. JSON object mode and
     # JSON Schema support are intentionally tracked independently.
-    supports_json_mode: Optional[bool] = None
+    supports_json_mode: bool | None = None
     supports_streaming: bool = True
     supports_vision: bool = False
     supports_reasoning: bool = False
@@ -143,21 +142,21 @@ class Capability:
     supports_fim: bool = False
     license_type: str = "unknown"
     tokenizer_name: str = ""
-    knowledge_cutoff: Optional[str] = None
-    pricing: Optional[Dict[str, Any]] = None
+    knowledge_cutoff: str | None = None
+    pricing: dict[str, Any] | None = None
     deprecated: bool = False
-    aliases: List[str] = field(default_factory=list)
-    reasoning_effort_values: Optional[List[str]] = None
-    thinking_budget_values: Optional[Dict[str, Any]] = None
-    extra: Dict[str, Any] = field(default_factory=dict)
+    aliases: list[str] = field(default_factory=list)
+    reasoning_effort_values: list[str] | None = None
+    thinking_budget_values: dict[str, Any] | None = None
+    extra: dict[str, Any] = field(default_factory=dict)
     # Kept at the end to preserve positional-constructor compatibility.
     supports_realtime: bool = False
     # Appended after all existing fields for positional compatibility.
-    computer_use: Optional[ComputerUseCapability] = None
+    computer_use: ComputerUseCapability | None = None
     # Appended after all existing fields for positional compatibility.
-    supports_json_schema: Optional[bool] = None
+    supports_json_schema: bool | None = None
 
-    def supports(self, feature: Feature | str) -> Optional[bool]:
+    def supports(self, feature: Feature | str) -> bool | None:
         """Return True if the model supports the given feature.
 
         Accepts short names such as "vision", "json_mode",
@@ -176,8 +175,8 @@ class Capability:
         if not hasattr(self, "_supports_cache"):
             # Use object.__setattr__ because the dataclass is frozen=True
             object.__setattr__(self, "_supports_cache", {})
-        
-        cache = getattr(self, "_supports_cache")
+
+        cache = self._supports_cache
         if feature_str in cache:
             return cache[feature_str]
 
@@ -185,7 +184,7 @@ class Capability:
         cache[feature_str] = res
         return res
 
-    def _eval_supports(self, feature: str) -> Optional[bool]:
+    def _eval_supports(self, feature: str) -> bool | None:
         if feature == "computer_use":
             return bool(self.computer_use and self.computer_use.supported)
         attr = f"supports_{feature}"
@@ -196,7 +195,10 @@ class Capability:
             # PDF and other document subtypes are file inputs.
             return "file" in self.input_modalities or "pdf" in self.input_modalities
         if feature == "embedding_output":
-            return "embedding" in self.output_modalities or "embeddings" in self.output_modalities
+            return (
+                "embedding" in self.output_modalities
+                or "embeddings" in self.output_modalities
+            )
         if feature.endswith("_input"):
             return feature[:-6] in self.input_modalities
         if feature.endswith("_output"):
@@ -209,14 +211,26 @@ class Capability:
             return True
         return bool(self.extra.get(attr) or self.extra.get(feature))
 
-    def features(self) -> List[str]:
+    def features(self) -> list[str]:
         """Return a sorted list of all standard and custom features supported by this model."""
         standard_features = [
-            "vision", "function_calling", "json_mode", "json_schema", "streaming",
-            "reasoning", "chat_completion", "responses_api",
-            "reasoning_effort", "thinking_budget", "fim", "realtime",
-            "file_input", "speech_input", "speech_output", "embedding_output",
-            "computer_use"
+            "vision",
+            "function_calling",
+            "json_mode",
+            "json_schema",
+            "streaming",
+            "reasoning",
+            "chat_completion",
+            "responses_api",
+            "reasoning_effort",
+            "thinking_budget",
+            "fim",
+            "realtime",
+            "file_input",
+            "speech_input",
+            "speech_output",
+            "embedding_output",
+            "computer_use",
         ]
         # Gather input/output modalities
         for mod in self.input_modalities:
@@ -240,7 +254,7 @@ class Capability:
         for f in standard_features:
             if self.supports(f) is True:
                 supported.add(f)
-        return sorted(list(supported))
+        return sorted(supported)
 
     def estimate_tokens(self, text: str) -> int:
         """Estimate the number of tokens for the given text.
@@ -259,22 +273,23 @@ class Capability:
         if t_name and any(k in t_name for k in ["o200k", "cl100k", "p50k", "r50k"]):
             try:
                 import tiktoken
+
                 # Get encoding by name or fallback to model_id
                 try:
                     enc = tiktoken.get_encoding(self.tokenizer_name)
-                except Exception:
+                except Exception:  # noqa: BLE001
                     enc = tiktoken.encoding_for_model(self.model_id)
                 return len(enc.encode(text))
-            except Exception:
+            except Exception:  # noqa: BLE001, S110
                 pass
 
         # Determine if the model uses a modern, highly-optimized tokenizer
         # Modern tokenizers have much larger vocabularies (100k-250k+) and are
         # highly efficient for non-Latin scripts.
-        is_modern = (
-            any(k in t_name for k in ["o200k", "llama3", "gemini", "claude3", "gemma", "r1", "deepseek"])
-            or self.provider.lower() in ["google", "anthropic", "deepseek"]
-        )
+        is_modern = any(
+            k in t_name
+            for k in ["o200k", "llama3", "gemini", "claude3", "gemma", "r1", "deepseek"]
+        ) or self.provider.lower() in ["google", "anthropic", "deepseek"]
 
         # Multipliers for different character classes: (modern_tokenizer, older_tokenizer)
         # CJK (Chinese, Japanese, Korean)
@@ -304,7 +319,13 @@ class Capability:
                 # Latin / ASCII / Common punctuation / Latin Extended (Turkish, Vietnamese, etc.)
                 # 1 Latin char is roughly 0.25 to 0.3 tokens (4 chars = 1 token)
                 tokens += 0.28
-            elif (0x4E00 <= cp <= 0x9FFF) or (0x3000 <= cp <= 0x30FF) or (0xAC00 <= cp <= 0xD7AF) or (0xF900 <= cp <= 0xFAFF) or (0xFF00 <= cp <= 0xFFEF):
+            elif (
+                (0x4E00 <= cp <= 0x9FFF)
+                or (0x3000 <= cp <= 0x30FF)
+                or (0xAC00 <= cp <= 0xD7AF)
+                or (0xF900 <= cp <= 0xFAFF)
+                or (0xFF00 <= cp <= 0xFFEF)
+            ):
                 # CJK Unified Ideographs, Hiragana/Katakana, Hangul, Fullwidth
                 tokens += cjk_mult
             elif 0x0400 <= cp <= 0x052F:
@@ -333,7 +354,7 @@ class Capability:
                 tokens += other_non_latin_mult
 
         # Round up to nearest integer, minimum 1 token if text is not empty
-        return max(1, int(round(tokens)))
+        return max(1, round(tokens))
 
     def count_tokens(self, text: str) -> int:
         """Count tokens for the given text using the best available tokenizer.
@@ -349,7 +370,9 @@ class Capability:
 
         return _count_for_cap(text, self)
 
-    def estimate_cost(self, input_tokens: int = 0, output_tokens: int = 0) -> Dict[str, Any]:
+    def estimate_cost(
+        self, input_tokens: int = 0, output_tokens: int = 0
+    ) -> dict[str, Any]:
         """Estimate the cost for the given number of input and output tokens.
 
         Returns a dict with 'cost' (float) and 'currency' (str).
@@ -357,7 +380,7 @@ class Capability:
         """
         if not self.pricing:
             return {"cost": 0.0, "currency": "USD"}
-        
+
         in_rate = float(self.pricing.get("input_per_1m", 0.0))
         out_rate = float(self.pricing.get("output_per_1m", 0.0))
         currency = self.pricing.get("currency", "USD")
@@ -367,10 +390,10 @@ class Capability:
 
     def can_be_replaced_by(
         self,
-        other: "Capability",
-        required_features: Optional[List[str]] = None,
-        required_actions: Optional[List[str]] = None,
-        required_environment: Optional[str] = None,
+        other: Capability,
+        required_features: list[str] | None = None,
+        required_actions: list[str] | None = None,
+        required_environment: str | None = None,
     ) -> bool:
         """Check if this model can be replaced by another model.
 
@@ -389,10 +412,21 @@ class Capability:
         if required_features is None:
             # Check all standard features supported by this model
             features_to_check = [
-                "vision", "function_calling", "json_mode", "json_schema", "streaming",
-                "reasoning", "chat_completion", "responses_api",
-                "reasoning_effort", "thinking_budget", "fim", "realtime", "image_output",
-                "audio_output", "video_output"
+                "vision",
+                "function_calling",
+                "json_mode",
+                "json_schema",
+                "streaming",
+                "reasoning",
+                "chat_completion",
+                "responses_api",
+                "reasoning_effort",
+                "thinking_budget",
+                "fim",
+                "realtime",
+                "image_output",
+                "audio_output",
+                "video_output",
             ]
             required_features = [f for f in features_to_check if self.supports(f)]
 
@@ -406,21 +440,22 @@ class Capability:
             if not other.supports(feature):
                 return False
 
-        if required_actions is not None or required_environment is not None:
-            if other.computer_use is None or not other.computer_use.supported:
-                return False
+        if (required_actions is not None or required_environment is not None) and (
+            other.computer_use is None or not other.computer_use.supported
+        ):
+            return False
 
-        if required_actions is not None:
-            if not set(required_actions).issubset(other.computer_use.actions):
-                return False
+        if required_actions is not None and not set(required_actions).issubset(
+            other.computer_use.actions
+        ):
+            return False
 
-        if required_environment is not None:
-            if required_environment not in other.computer_use.environments:
-                return False
+        return not (
+            required_environment is not None
+            and required_environment not in other.computer_use.environments
+        )
 
-        return True
-
-    def get_reasoning_effort_values(self) -> List[str]:
+    def get_reasoning_effort_values(self) -> list[str]:
         """Return the list of valid reasoning_effort values for this model.
 
         If not explicitly set, returns a sensible default based on the provider.
@@ -432,7 +467,13 @@ class Capability:
             return list(self.reasoning_effort_values)
         # Provider-specific defaults
         prov = self.provider.lower()
-        if prov in ("openai", "azure-openai", "azure_openai", "azure-foundry", "azure_foundry"):
+        if prov in (
+            "openai",
+            "azure-openai",
+            "azure_openai",
+            "azure-foundry",
+            "azure_foundry",
+        ):
             return ["none", "low", "medium", "high"]
         if prov in ("google",):
             return ["none", "low", "medium", "high"]
@@ -449,7 +490,7 @@ class Capability:
             return ["none", "minimal", "low", "medium", "high", "xhigh"]
         return ["low", "medium", "high"]
 
-    def get_thinking_budget_values(self) -> Dict[str, Any]:
+    def get_thinking_budget_values(self) -> dict[str, Any]:
         """Return information about valid thinking_budget values for this model.
 
         If not explicitly set, returns a sensible default based on the provider.
@@ -462,14 +503,30 @@ class Capability:
         # Provider-specific defaults
         prov = self.provider.lower()
         if prov in ("anthropic",):
-            return {"type": "token_range", "min": 1024, "max": self.max_output_tokens or 128000}
+            return {
+                "type": "token_range",
+                "min": 1024,
+                "max": self.max_output_tokens or 128000,
+            }
         if prov in ("deepseek", "deepseek-ai"):
-            return {"type": "token_range", "min": 1024, "max": self.max_output_tokens or 8192}
+            return {
+                "type": "token_range",
+                "min": 1024,
+                "max": self.max_output_tokens or 8192,
+            }
         if prov in ("microsoft",):
-            return {"type": "token_range", "min": 1024, "max": self.max_output_tokens or 16384}
-        return {"type": "token_range", "min": 1024, "max": self.max_output_tokens or 4096}
+            return {
+                "type": "token_range",
+                "min": 1024,
+                "max": self.max_output_tokens or 16384,
+            }
+        return {
+            "type": "token_range",
+            "min": 1024,
+            "max": self.max_output_tokens or 4096,
+        }
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         """Return a plain dict representation."""
         d = asdict(self)
         if not d.get("extra"):
@@ -491,11 +548,11 @@ class Capability:
         return d
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "Capability":
+    def from_dict(cls, data: dict[str, Any]) -> Capability:
         """Create a Capability from a dict, keeping unknown keys in `extra`."""
         known = {f for f in cls.__dataclass_fields__}  # type: ignore[attr-defined]
-        kwargs: Dict[str, Any] = {}
-        extra: Dict[str, Any] = dict(data.get("extra") or {})
+        kwargs: dict[str, Any] = {}
+        extra: dict[str, Any] = dict(data.get("extra") or {})
         _list_fields = {"aliases", "input_modalities", "output_modalities"}
         for key, value in data.items():
             if key == "extra":
@@ -506,7 +563,8 @@ class Capability:
                     kwargs[key] = []
                 elif key == "computer_use" and value is not None:
                     kwargs[key] = (
-                        value if isinstance(value, ComputerUseCapability)
+                        value
+                        if isinstance(value, ComputerUseCapability)
                         else ComputerUseCapability.from_dict(value)
                     )
                 else:

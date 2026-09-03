@@ -1,5 +1,9 @@
 """Create minimax.json with official pricing from Novita scraped data."""
-import json, os, shutil
+
+import json
+import os
+import shutil
+
 import llmcapa
 
 DATA = r"F:\KAIHATSU\llmcapa\src\llmcapa\data"
@@ -18,14 +22,18 @@ MINIMAX_PRICES = {
 
 # Export from registry
 models = []
-for m in llmcapa.list_models(provider='minimax'):
+for m in llmcapa.list_models(provider="minimax"):
     d = m.to_dict()
     d.pop("extra", None)
     mid = d["model_id"].lower()
     # Apply pricing
     for key, (inp, out) in MINIMAX_PRICES.items():
         if key in mid:
-            d["pricing"] = {"input_per_1m": inp, "output_per_1m": out, "currency": "USD"}
+            d["pricing"] = {
+                "input_per_1m": inp,
+                "output_per_1m": out,
+                "currency": "USD",
+            }
             break
     models.append(d)
 

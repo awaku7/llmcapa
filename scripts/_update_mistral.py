@@ -3,29 +3,32 @@
 Source: https://docs.mistral.ai/models + direct model pages (/models/<slug>)
 Shape: xai-style Capability JSON with pricing + extra.source
 """
+
 from __future__ import annotations
 
 import json
 import re
 import shutil
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 WORKDIR = Path(__file__).resolve().parents[1]
 SCRAPE = WORKDIR / "_scratch_mistral_scrape_full.json"
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "mistral.json"
-INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "mistral.json"
+INSTALLED = (
+    Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "mistral.json"
+)
 LOG = WORKDIR / "provider_update_log.md"
 
 # Known multimodal (vision) families on Mistral API (chat + image)
 VISION_NAME_RE = re.compile(
     r"pixtral|mistral medium|mistral large|mistral small|ministral|magistral|ocr",
-    re.I,
+    re.IGNORECASE,
 )
 # Explicitly not vision
 NO_VISION_RE = re.compile(
     r"codestral|embed|moderation|voxtral|tts|transcribe|mathstral|mixtral|mamba|nemo|leanstral|saba|next|7b",
-    re.I,
+    re.IGNORECASE,
 )
 
 SIDEBAR_JUNK = {
@@ -73,6 +76,7 @@ def pick_model_id(m: dict, slug: str) -> str:
 
     slug_l = slug.lower()
     slug_api = _slug_to_api_id(slug).lower()
+
     # Prefer candidate that best matches this card's slug (avoids voxtral mini/transcribe swap)
     def score(c: str) -> tuple:
         cl = c.lower()
@@ -85,7 +89,15 @@ def pick_model_id(m: dict, slug: str) -> str:
         ctoks_f = {t for t in ctoks if not t.isdigit()}
         overlap = len(stoks_f & ctoks_f)
         # penalize missing distinctive tokens present in slug
-        distinctive = {"transcribe", "realtime", "tts", "embed", "moderation", "ocr", "mamba"}
+        distinctive = {
+            "transcribe",
+            "realtime",
+            "tts",
+            "embed",
+            "moderation",
+            "ocr",
+            "mamba",
+        }
         miss = len((stoks_f & distinctive) - ctoks_f)
         extra = len((ctoks_f & distinctive) - stoks_f)
         # prefer open-* only when slug is open/research legacy without better match
@@ -111,8 +123,8 @@ def parse_us_date(s: str | None) -> datetime | None:
     if not s:
         return None
     try:
-        return datetime.strptime(s, "%m/%d/%Y")
-    except Exception:
+        return datetime.strptime(s, "%m/%d/%Y").replace(tzinfo=timezone.utc)
+    except Exception:  # noqa: BLE001
         return None
 
 
@@ -120,14 +132,12 @@ def is_deprecated(m: dict) -> bool:
     if m.get("deprecation_date"):
         return True
     ret = parse_us_date(m.get("retirement_date"))
-    if ret is not None:
-        return True
-    return False
+    return ret is not None
 
 
 def has_vision(display: str, model_id: str) -> bool:
     blob = f"{display} {model_id}"
-    if NO_VISION_RE.search(blob) and not re.search(r"pixtral|ocr", blob, re.I):
+    if NO_VISION_RE.search(blob) and not re.search(r"pixtral|ocr", blob, re.IGNORECASE):
         return False
     return bool(VISION_NAME_RE.search(blob))
 
@@ -179,13 +189,13 @@ def build_row(slug: str, m: dict) -> dict:
     is_embed = emb or "embed" in name_l or "embed" in mid_l
     is_moderation = moderation or "moderation" in name_l
     is_voxtral_chat = (
-        ("voxtral" in name_l or "voxtral" in mid_l)
-        and not is_tts
-        and not is_transcribe
+        ("voxtral" in name_l or "voxtral" in mid_l) and not is_tts and not is_transcribe
     )
 
     # Research / legacy cards often have all feature flags null — default chat LLM
-    if features_all_unknown(feats) and not (is_embed or is_moderation or is_ocr or is_tts or is_transcribe):
+    if features_all_unknown(feats) and not (
+        is_embed or is_moderation or is_ocr or is_tts or is_transcribe
+    ):
         chat = True
         # coding research models typically support FIM-ish usage; leave fim false unless known
         if "codestral" in name_l or "codestral" in mid_l or "mamba" in name_l:
@@ -220,13 +230,11 @@ def build_row(slug: str, m: dict) -> dict:
         in_mods = ["text"]
         if vision:
             in_mods.append("image")
-        if is_voxtral_chat:
-            if "audio" not in in_mods:
-                in_mods.append("audio")
+        if is_voxtral_chat and "audio" not in in_mods:
+            in_mods.append("audio")
         out_mods = ["text"]
 
     ctx = m.get("ctx_k")
-
 
     ctx_tokens = (int(float(ctx) * 1000) if ctx else 0) or (
         0 if _is_specialty(mid) else 4096
@@ -244,7 +252,13 @@ def build_row(slug: str, m: dict) -> dict:
         audio_per_min = float(all_dollar[0])
         ip = float(all_dollar[1])
         op = float(all_dollar[2])
-    elif is_voxtral_chat and ip is not None and op is not None and float(ip) < 0.01 and float(op) <= 0.1:
+    elif (
+        is_voxtral_chat
+        and ip is not None
+        and op is not None
+        and float(ip) < 0.01
+        and float(op) <= 0.1
+    ):
         # Heuristic: very low "input" is audio/min; keep output if second token price missing
         if isinstance(all_dollar, list) and len(all_dollar) >= 2:
             audio_per_min = float(all_dollar[0])
@@ -421,7 +435,9 @@ def main() -> None:
     rows.sort(key=lambda r: (r["deprecated"], r["model_id"]))
 
     payload = {"models": rows}
-    OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    OUT.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
     if OUT.resolve() != INSTALLED.resolve():
         shutil.copy2(OUT, INSTALLED)
 
@@ -429,7 +445,10 @@ def main() -> None:
     n_price = sum(1 for r in rows if r.get("pricing"))
     n_dep = sum(1 for r in rows if r.get("deprecated"))
     n_active = n - n_dep
-    print(f"mistral.json: {n} models (active={n_active}, deprecated={n_dep}, priced={n_price})", flush=True)
+    print(
+        f"mistral.json: {n} models (active={n_active}, deprecated={n_dep}, priced={n_price})",
+        flush=True,
+    )
     print(f"wrote {OUT}", flush=True)
     print(f"copied {INSTALLED}", flush=True)
     if skipped:
@@ -448,7 +467,7 @@ def main() -> None:
         )
 
     # append log only if last entry is not already today's mistral refresh with same count
-    today = datetime.now().strftime("%Y-%m-%d")
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     entry = f"""
 ## Mistral refresh ({today}) — quality pass
 

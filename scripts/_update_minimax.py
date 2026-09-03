@@ -6,6 +6,7 @@ Sources (Playwright 2026-07-18):
 - https://platform.minimax.io/docs/api-reference/text-chat
 Shape: Capability JSON with pricing + extra (cache / long-ctx / specialty units)
 """
+
 from __future__ import annotations
 
 import json
@@ -15,7 +16,9 @@ from pathlib import Path
 
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "minimax.json"
-INSTALLED = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "minimax.json"
+INSTALLED = (
+    Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "minimax.json"
+)
 LOG = WORKDIR / "provider_update_log.md"
 SOURCE_PRICING = "https://platform.minimax.io/docs/guides/pricing-paygo"
 SOURCE_MODELS = "https://platform.minimax.io/docs/guides/models-intro"
@@ -47,7 +50,11 @@ TEXT_MODELS = [
             "long_context_output_per_1m": 2.40,
             "priority_tier_multiplier": 1.5,
             "recommended_max_completion_tokens": 131_072,
-            "features": ["image_understanding", "video_understanding", "adaptive_thinking"],
+            "features": [
+                "image_understanding",
+                "video_understanding",
+                "adaptive_thinking",
+            ],
         },
     },
     {
@@ -161,7 +168,10 @@ TEXT_MODELS = [
         "pricing": {"input_per_1m": 0.55, "output_per_1m": 2.20, "currency": "USD"},
         "aliases": ["minimax/minimax-m1"],
         "deprecated": False,
-        "extra": {"source": SOURCE_PRICING, "note": "legacy generation; still listed on some mirrors"},
+        "extra": {
+            "source": SOURCE_PRICING,
+            "note": "legacy generation; still listed on some mirrors",
+        },
     },
     {
         "model_id": "minimax-01",
@@ -328,7 +338,9 @@ def base_capability(**kwargs) -> dict:
     }
     d.update(kwargs)
     # vision flag from modalities
-    if "image" in d.get("input_modalities", []) or "video" in d.get("input_modalities", []):
+    if "image" in d.get("input_modalities", []) or "video" in d.get(
+        "input_modalities", []
+    ):
         d["supports_vision"] = True
     return d
 
@@ -338,9 +350,12 @@ def build_models() -> list[dict]:
     for group in (TEXT_MODELS, AUDIO_MODELS, VIDEO_MODELS, MUSIC_MODELS, IMAGE_MODELS):
         for spec in group:
             models.append(base_capability(**spec))
+
     # stable sort: text first by id, then specialty
     def sort_key(m: dict) -> tuple:
-        specialty = 0 if m.get("supports_chat_completion", True) and m.get("pricing") else 1
+        specialty = (
+            0 if m.get("supports_chat_completion", True) and m.get("pricing") else 1
+        )
         return (specialty, m["model_id"].lower())
 
     models.sort(key=sort_key)
@@ -351,7 +366,9 @@ def main() -> None:
     models = build_models()
     payload = {"models": models}
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    OUT.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
     if INSTALLED.parent.exists() and OUT.resolve() != INSTALLED.resolve():
         shutil.copy2(OUT, INSTALLED)
 

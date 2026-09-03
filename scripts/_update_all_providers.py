@@ -9,6 +9,7 @@ Examples:
     python scripts/_update_all_providers.py --provider anthropic
     python scripts/_update_all_providers.py --provider ibm-granite
 """
+
 from __future__ import annotations
 
 import argparse
