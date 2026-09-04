@@ -61,11 +61,13 @@ llmcapa/
 | `mistral` | `mistralai` |
 | `xai` | `x-ai`, `grok` |
 | `anthropic` | `claude` |
-| `google` | `gemini`, `vertexai`, `vertex-ai` |
+| `openai` | `open-ai` |
+| `google` | `google-ai` |
+| `vertex-ai` | `vertexai` |
 | `azure-openai` | `azure` |
 | `zhipu` | `zai`, `z-ai` |
 | `moonshotai` | `moonshot`, `kimi` |
-| `amazon` | `bedrock` |
+| `amazon` | `bedrock`, `aws-bedrock`, `aws` |
 | `xiaomi` | `mimo` |
 | `huggingface` | `hf` |
 | `qwen` | `alibaba`, `dashscope` |

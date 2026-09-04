@@ -59,11 +59,13 @@ llmcapa/
 | `mistral` | `mistralai` |
 | `xai` | `x-ai`, `grok` |
 | `anthropic` | `claude` |
-| `google` | `gemini`, `vertexai`, `vertex-ai` |
+| `openai` | `open-ai` |
+| `google` | `google-ai` |
+| `vertex-ai` | `vertexai` |
 | `azure-openai` | `azure` |
 | `zhipu` | `zai`, `z-ai` |
 | `moonshotai` | `moonshot`, `kimi` |
-| `amazon` | `bedrock` |
+| `amazon` | `bedrock`, `aws-bedrock`, `aws` |
 | `xiaomi` | `mimo` |
 | `huggingface` | `hf` |
 | `qwen` | `alibaba`, `dashscope` |
@@ -96,6 +98,8 @@ Route-qualified IDs such as `meta/muse-spark-1.3` belong to the `openrouter` cat
 ## Catalog updater policy
 
 Provider catalogs are updated by provider-specific scripts using each provider's official sources. There is no supported script that bulk-replaces all provider catalogs with OpenRouter data.
+
+Native provider catalogs must never fetch OpenRouter for record data. `openrouter.json` is the only file built from the OpenRouter API (`scripts/_update_openrouter.py`); all other `scripts/_update_*.py` scripts parse official documentation pages or official model APIs directly. The `scripts/openrouter_providers/` shims exist only for historical reference and must not be imported by active updaters.
 
 ### OpenAI
 

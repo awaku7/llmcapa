@@ -7,7 +7,7 @@
 - **包括的な同梱データ**: OpenAI、Anthropic、Google (Gemini)、Microsoft (Phi)、Amazon (Nova/Titan)、Meta (Llama)、Mistral、Qwen、DeepSeek、xAI (Grok)、NVIDIA、MoonshotAI (Kimi)、zhipu-ai (GLM)、Sakana AI (Fugu)、**Azure AI Foundry**、Novita AI、**Together AI（98モデル）**、OpenRouter、**HuggingFace（人気モデル 2,675）**、および日本の国内モデル（デジタル庁の「GENNAI」プラットフォームで採用されているNTT tsuzumi、PFN PLaMo、ELYZA、SoftBank、NEC、Fujitsuなど）のオフライン機能データを同梱しています。
 - **実行時依存関係ゼロ**: Python標準ライブラリのみで動作します。外部パッケージ（`pytest` や `build` など）は開発・テスト用のみです。
 - **エイリアス解決**: モデルのエイリアスやプロバイダー固有の名前を自動的に解決します（例: `gpt-4o-2024-08-06` -> `gpt-4o`、`gemini-1.5-pro-preview-0409` -> `gemini-1.5-pro`）。
-- **プロバイダーエイリアス**: プロバイダー引数は一般的な別名と正規化形式を受け付けます（例: `grok`/`x-ai` → `xai`、`bedrock` → `amazon`、`vertexai`/`gemini` → `google`、`azure` → `azure-openai`、`hf` → `huggingface`、`alibaba`/`dashscope` → `qwen`、`lm-studio` → `lmstudio`）。区切り文字 `_. ` は `-` として扱われます。
+- **プロバイダーエイリアス**: プロバイダー引数は一般的な別名と正規化形式を受け付けます（例: `grok`/`x-ai` → `xai`、`bedrock`/`aws-bedrock`/`aws` → `amazon`、`vertexai` → `vertex-ai`、`open-ai` → `openai`、`google-ai` → `google`、`azure` → `azure-openai`、`hf` → `huggingface`、`alibaba`/`dashscope` → `qwen`、`lm-studio` → `lmstudio`）。区切り文字 `_. ` は `-` として扱われます。
 - **高度な機能クエリ**: `vision`、`multimodal`、`chat_completion`、`responses_api`、`realtime`、`reasoning_effort`、`thinking_budget`、および特定の入力/出力モダリティ（例: `image_input`、`audio_input`、`file_input`、`speech_input`、`embedding_output`）のサポート状況を確認できます。PDFは`file_input`のサブタイプとして扱われます。
 - **高いパフォーマンス**: 評価された機能チェックは、冗長な計算を避けるためにメモ化（内部キャッシュ）されます。
 - **コスト見積もり**: 入力および出力トークン数に基づいてAPIコストを見積もります。
@@ -133,11 +133,11 @@ embedding = llmcapa.get("text-embedding-3-large", provider="openai")
 print(embedding.supports(Feature.LLMC_FEAT_EMBEDDING_OUTPUT)) # True
 ```
 
-`bedrock`はAmazon、`vertexai`/`vertex-ai`/`gemini`はGoogleへ解決されます。
+`bedrock`はAmazonへ解決されます。`google`と`vertex-ai`は別プロバイダーです。
 
 ```python
 nova = llmcapa.get("nova-sonic-v1", provider="bedrock")
-gemini_live = llmcapa.get("gemini-3.1-flash-live-preview", provider="vertexai")
+gemini_live = llmcapa.get("gemini-3.1-flash-live-preview", provider="google")
 ```
 
 ### 推論（Reasoning）と思考（Thinking）の確認

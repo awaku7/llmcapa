@@ -7,7 +7,7 @@ Lookup capabilities (context window, modalities, supported features) of various 
 - **Comprehensive Bundled Data**: Offline capability data for OpenAI, Anthropic, Google (Gemini), Microsoft (Phi), Amazon (Nova/Titan), Meta (Llama), Mistral, Cohere (Command), Qwen, DeepSeek, xAI (Grok), NVIDIA, MoonshotAI (Kimi), zhipu-ai (GLM), Sakana AI (Fugu), **Azure AI Foundry**, Novita AI, **Together AI (98 models)**, OpenRouter, **HuggingFace (2,675 popular models)**, and Japanese domestic models (NTT tsuzumi, PFN PLaMo, ELYZA, SoftBank, NEC, Fujitsu, etc. adopted by the Digital Agency's "GENNAI" platform).
 - **Zero Runtime Dependencies**: Built entirely on the Python standard library.
 - **Alias Resolution**: Automatically resolves model aliases and provider-specific names (e.g., `gpt-4o-2024-08-06` -> `gpt-4o`, `gemini-1.5-pro-preview-0409` -> `gemini-1.5-pro`).
-- **Provider Aliases**: Provider arguments accept common aliases and normalized forms (e.g., `grok`/`x-ai` → `xai`, `bedrock` → `amazon`, `vertexai`/`gemini` → `google`, `azure` → `azure-openai`, `hf` → `huggingface`, `alibaba`/`dashscope` → `qwen`, `lm-studio` → `lmstudio`). Separators `_. ` are treated as `-`.
+- **Provider Aliases**: Provider arguments accept common aliases and normalized forms (e.g., `grok`/`x-ai` → `xai`, `bedrock`/`aws-bedrock`/`aws` → `amazon`, `vertexai` → `vertex-ai`, `open-ai` → `openai`, `google-ai` → `google`, `azure` → `azure-openai`, `hf` → `huggingface`, `alibaba`/`dashscope` → `qwen`, `lm-studio` → `lmstudio`). Separators `_. ` are treated as `-`.
 - **Advanced Feature Queries**: Check support for `vision`, `multimodal`, `chat_completion`, `responses_api`, `realtime`, `reasoning_effort`, `thinking_budget`, and specific input/output modalities (e.g., `image_input`, `audio_input`, `file_input`, `speech_input`, `embedding_output`). PDF is treated as a subtype of `file_input`.
 - **High Performance**: Evaluated feature checks are cached internally using memoization to avoid redundant calculations.
 - **Cost Estimation**: Estimate API costs based on input and output token counts.
@@ -133,11 +133,11 @@ embedding = llmcapa.get("text-embedding-3-large", provider="openai")
 print(embedding.supports(Feature.LLMC_FEAT_EMBEDDING_OUTPUT))  # True
 ```
 
-`bedrock` resolves to Amazon, while `vertexai`/`vertex-ai`/`gemini` resolve to Google.
+`bedrock` resolves to Amazon. `google` and `vertex-ai` are separate providers.
 
 ```python
 nova = llmcapa.get("nova-sonic-v1", provider="bedrock")
-gemini_live = llmcapa.get("gemini-3.1-flash-live-preview", provider="vertexai")
+gemini_live = llmcapa.get("gemini-3.1-flash-live-preview", provider="google")
 ```
 
 ### Reasoning & Thinking Checks
