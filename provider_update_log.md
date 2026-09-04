@@ -3989,3 +3989,366 @@
 - Synthetic `~*/…-latest` aliases retained (9)
 - Replaced thin 14-model placeholder catalog
 - Install copy synced
+
+## Cohere official model-page refresh (2026-09-04)
+
+- Source: https://docs.cohere.com/docs/models
+- Official model pages checked: 0
+- Provenance entries changed: 0
+- Numeric capability fields preserved unless an explicit parser rule exists.
+- OpenRouter was not used.
+
+## Google refresh (2026-09-04)
+
+### Source
+- Pricing: https://ai.google.dev/gemini-api/docs/pricing
+- Apply: `scripts/_update_google.py`
+
+### Result
+- google.json: **76** models (active=70, token-priced=58)
+- Inserted (discovered): none
+- Lyria-3 clip/pro: $0.04 / $0.08 per song (extra)
+- Deprecations: discovered from official model pricing sections
+- Install copy synced
+
+## OpenAI (2026-09-04)
+
+- Source: https://developers.openai.com/api/docs/models.md
+- Source: https://developers.openai.com/api/docs/pricing.md
+- Dynamically discovered 97 official model pages; legacy records preserved: 65
+
+## Qwen / Alibaba Model Studio refresh (2026-09-04)
+
+### Source
+- Pricing: https://www.alibabacloud.com/help/en/model-studio/model-pricing
+- Apply: `scripts/_update_qwen.py`
+
+### Result
+- qwen.json: **90** models (active=87, token-priced=54)
+- Added bare Model Studio IDs: qwen3.7-max/plus, qwen3.6-flash/plus/max-preview, qwen3.5-*, qwen-plus/flash/max, qwen3-max
+- List prices (intl): qwen3.7-max $2.5/$7.5 (promo $1.25/$3.75); qwen3.7-plus $0.4/$1.6; qwen3.6-flash $0.25/$1.5
+- Media: qwen-image-2.0-pro / wan2.7-image-pro $0.075/image; happyhorse-1.1-t2v ~$0.14/s 720p
+- OpenRouter `qwen/...` entries kept; alibaba_list_pricing annotated in extra
+- Install copy synced
+
+## xAI refresh (2026-09-04)
+
+### Source
+- ListModels: `_scratch_xai_listmodels_parsed.json`
+- Docs: https://docs.x.ai/developers/models (+ pricing / Voice / Imagine)
+- Apply: `scripts/_update_xai.py`
+
+### Result
+- xai.json: **20** models (active=15, deprecated=5, token-priced=12)
+- Text: grok-4.5 $2/$6 @500k (cache $0.5, long $4); grok-4.3 / 4.20 family $1.25/$2.5 @1M (cache $0.2, long $2.5)
+- Imagine + Voice specialty entries included
+- Install copy synced
+
+## Ollama refresh (2026-09-04)
+
+- Source: https://ollama.com/api/tags
+- Live tags merged: 19
+- Historical bundled entries preserved: 1655
+
+## Amazon Nova / Bedrock refresh (2026-09-04)
+
+### Source
+- Bedrock pricing: https://aws.amazon.com/bedrock/pricing/
+- Nova pricing: https://aws.amazon.com/nova/pricing/
+- Metered unit map: https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json
+- Scratch: `_scratch_amazon_nova_pricing_live.html`
+- Apply: `scripts/_update_amazon.py`
+
+### Result
+- amazon.json: **19** models (active=19, deprecated=0, priced=18)
+- Nova 2 Lite Global $0.30/$2.50 (geo $0.33/$2.75); Nova 2 Pro Preview $1.25/$10; Nova 2 Omni Preview $0.30/$2.50
+- Nova 1.0: Micro $0.035/$0.14, Lite $0.06/$0.24, Pro $0.80/$3.20 (+latency-opt $1/$4), Premier $2.50/$12.50
+- Sonic speech/text dual rates in extra; Canvas/Reel/Embeddings priced
+- Titan Lite corrected to $0.15/$0.20; Bedrock aliases amazon.*:0
+- Install copy synced
+
+## Microsoft refresh (2026-09-04)
+
+### Source
+- Pricing: https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/
+- Retired: https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement
+- MAI docs: https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-mai
+- Catalog: https://ai.azure.com/catalog/publishers/microsoft
+- MAI news: https://microsoft.ai/news/today-were-announcing-3-new-world-class-mai-models-available-in-foundry/
+- Scratch: `_scratch_ms_pricing_live2.html`, `_scratch_ms_retired_text.txt`, `_scratch_ms_mai_docs.html`, `_scratch_ms_catalog_publisher.html`
+- Apply: `scripts/_update_microsoft.py`
+
+### Result
+- microsoft.json: **60** models (active=48, deprecated=12, priced=21, extra=60)
+- Phi PAYG corrected: Phi-4 $0.125/$0.50 ctx **16384**; Phi-4-mini $0.075/$0.30; multimodal text+image $0.08/$0.32 (audio $4/$0.32); reasoning $0.125/$0.50 @ 32K
+- Phi-3/3.5 family marked deprecated (retired 2025-08-30) with Foundry rates kept
+- MAI-DS-R1 Global $1.35/$5.40 deprecated (retired 2026-02-27); MAI-Image-2 $5/$33, Efficient/2e $5/$19.50; Voice/Transcribe unpriced meters
+- Added MAI-Thinking-1 (256K) + MAI-Code-1-Flash product surface (unpriced)
+- Deduped phi-4 / microsoft/phi-4; modalities fixed on multimodal/vision
+- Azure AI services retained as license/unpriced; community forks free
+- Install copy synced
+
+## MiniMax refresh (2026-09-04)
+
+### Source
+- Models: https://platform.minimax.io/docs/guides/models-intro
+- PayGO: https://platform.minimax.io/docs/guides/pricing-paygo
+- Chat enum: https://platform.minimax.io/docs/api-reference/text-chat
+- Apply: `scripts/_update_minimax.py`
+
+### Result
+- minimax.json: **16** models (active=16, token-priced=10)
+- Text: MiniMax-M3 $0.30/$1.20 ≤512k (perm 50% off; >512k $0.60/$2.40); M2.7 $0.30/$1.20; highspeed $0.60/$2.40
+- Specialty: speech-2.8 (hd $100/M chars, turbo $60), Hailuo 2.3, music-3.0 $0.15/track, image-01 $0.0035
+- Install copy synced
+
+## Baidu Qianfan official refresh (2026-09-04)
+
+- Source: https://cloud.baidu.com/doc/qianfan/index.html
+- Parsed official featured model catalog metadata for 1 existing Baidu record(s).
+- No pricing/context values were inferred because the official pricing page is separate and was not reliably exposed in this pass.
+- OpenRouter was not used.
+
+## ByteDance/Seed official refresh (2026-09-04)
+
+- Source: https://docs.volcengine.com/docs/82379/1544106?lang=zh
+- Parsed official CNY video-token pricing for 0 existing Seedance records.
+- Resolution/input-video dependent prices remain in `extra`; no FX conversion or invented context window was applied.
+- OpenRouter was not used.
+
+## Reka AI official refresh (2026-09-04)
+
+- Source: https://docs.reka.ai/chat/models
+- Parsed official public baseline models: reka-flash and reka-edge-2603.
+- Updated provenance/availability metadata for 2 existing Reka records; numeric pricing/context values were not inferred.
+- OpenRouter was not used.
+
+## StepFun official refresh (2026-09-04)
+
+- Source: https://platform.stepfun.ai/docs/en/guides/pricing/details
+- Updated: 0 models (Step 3.5 Flash and Step 3.7 Flash).
+- OpenRouter was not used.
+
+## Tencent Hunyuan official refresh (2026-09-04)
+
+- Source: https://cloud.tencent.com/document/product/1729/97731
+- Parsed official Hunyuan-a13b pricing: CNY 0.5/2.0 per 1M input/output tokens.
+- Existing context/capability fields were preserved; other Tencent model prices were not inferred.
+- OpenRouter was not used.
+
+## Upstage official model refresh (2026-09-04)
+
+- Source: https://console.upstage.ai/docs/models/solar-pro-4
+- Checked: 0; updated: 0
+- Solar Pro 4: 512K context, 128K max output, $0.30/$1.20 per 1M tokens, cached $0.06.
+- OpenRouter was not used.
+
+## Mistral refresh (2026-09-04) — quality pass
+
+### Fixes
+- Voxtral Mini chat vs pure-transcribe classification (no longer force all non-small Voxtral to transcribe)
+- Voxtral Small token pricing: use 3-amount cards as audio/min + input/output token
+- Research cards with null feature flags default to chat=True (mathstral/next/mamba/7b)
+- pick_model_id accepts open-* ids (e.g. open-codestral-mamba)
+
+### Result
+- mistral.json: **65** models (active=20, deprecated=45, token-priced=11)
+- Install copy synced
+- Skipped 404 slugs: none
+
+## Mistral refresh (2026-09-04) — quality pass
+
+### Fixes
+- Voxtral Mini chat vs pure-transcribe classification (no longer force all non-small Voxtral to transcribe)
+- Voxtral Small token pricing: use 3-amount cards as audio/min + input/output token
+- Research cards with null feature flags default to chat=True (mathstral/next/mamba/7b)
+- pick_model_id accepts open-* ids (e.g. open-codestral-mamba)
+
+### Result
+- mistral.json: **65** models (active=20, deprecated=45, token-priced=11)
+- Install copy synced
+- Skipped 404 slugs: none
+
+## Mistral refresh (2026-09-04) — quality pass
+
+### Fixes
+- Voxtral Mini chat vs pure-transcribe classification (no longer force all non-small Voxtral to transcribe)
+- Voxtral Small token pricing: use 3-amount cards as audio/min + input/output token
+- Research cards with null feature flags default to chat=True (mathstral/next/mamba/7b)
+- pick_model_id accepts open-* ids (e.g. open-codestral-mamba)
+
+### Result
+- mistral.json: **65** models (active=20, deprecated=45, token-priced=11)
+- Install copy synced
+- Skipped 404 slugs: none
+
+## Mistral refresh (2026-09-04) — quality pass
+
+### Fixes
+- Voxtral Mini chat vs pure-transcribe classification (no longer force all non-small Voxtral to transcribe)
+- Voxtral Small token pricing: use 3-amount cards as audio/min + input/output token
+- Research cards with null feature flags default to chat=True (mathstral/next/mamba/7b)
+- pick_model_id accepts open-* ids (e.g. open-codestral-mamba)
+
+### Result
+- mistral.json: **65** models (active=20, deprecated=45, token-priced=11)
+- Install copy synced
+- Skipped 404 slugs: none
+
+## Mistral refresh (2026-09-04) — quality pass
+
+### Fixes
+- Voxtral Mini chat vs pure-transcribe classification (no longer force all non-small Voxtral to transcribe)
+- Voxtral Small token pricing: use 3-amount cards as audio/min + input/output token
+- Research cards with null feature flags default to chat=True (mathstral/next/mamba/7b)
+- pick_model_id accepts open-* ids (e.g. open-codestral-mamba)
+
+### Result
+- mistral.json: **65** models (active=20, deprecated=45, token-priced=11)
+- Install copy synced
+- Skipped 404 slugs: none
+
+## Meta/Llama catalog refresh (2026-09-04)
+
+### Source
+- official dev.meta.ai checked with Playwright (home=200, docs=200, docs=machine-readable content detected; official model endpoint requires authentication)
+- OpenRouter live provider API fallback (`meta-llama`)
+- Apply: `scripts/_update_meta.py`
+
+### Result
+- meta.json: **10** models (active=6, priced=4)
+- Model IDs, capabilities, context windows, and pricing obtained from the live feed
+- Existing deprecated records retained
+
+## NVIDIA NIM refresh (2026-09-04)
+
+### Source
+- Catalog: https://build.nvidia.com/models
+- Model pages: nemotron-3-ultra / super / nano (Playwright live)
+- Docs: https://docs.api.nvidia.com/nim/reference/llm-apis
+- Apply: `scripts/_update_nvidia.py`
+
+### Result
+- nvidia.json: **74** models (active=74, priced=21)
+- **nemotron-3-ultra-550b-a55b**: $0.50/$2.20 (Deep Infra); partners $0.41–$0.90 in
+- **nemotron-3-super-120b-a12b**: $0.20/$0.80 (Bitdeer/CoreWeave)
+- **nemotron-3-nano-30b-a3b**: $0.05/$0.20
+- Free endpoint twins synced; omni / embed / cosmos3-nano* added
+- Free NVIDIA trial endpoints remain available for evaluation
+- Install copy synced
+- Changes: updated:nemotron-3-ultra-550b-a55b, updated:nemotron-3-super-120b-a12b, updated:nemotron-3-nano-30b-a3b, updated:nemotron-3-nano-omni-30b-a3b-reasoning, updated:nemotron-3-embed-1b, updated:nemotron-3.5-content-safety, updated:cosmos3-nano, updated:cosmos3-nano-reasoner, synced_free:nemotron-3-ultra-550b-a55b:free, synced_free:nemotron-3-super-120b-a12b:free, synced_free:nemotron-3-nano-30b-a3b:free
+
+## Mistral refresh (2026-09-04) — quality pass
+
+### Fixes
+- Voxtral Mini chat vs pure-transcribe classification (no longer force all non-small Voxtral to transcribe)
+- Voxtral Small token pricing: use 3-amount cards as audio/min + input/output token
+- Research cards with null feature flags default to chat=True (mathstral/next/mamba/7b)
+- pick_model_id accepts open-* ids (e.g. open-codestral-mamba)
+
+### Result
+- mistral.json: **65** models (active=20, deprecated=45, token-priced=11)
+- Install copy synced
+- Skipped 404 slugs: none
+
+## Mistral refresh (2026-09-04) — quality pass
+
+### Fixes
+- Voxtral Mini chat vs pure-transcribe classification (no longer force all non-small Voxtral to transcribe)
+- Voxtral Small token pricing: use 3-amount cards as audio/min + input/output token
+- Research cards with null feature flags default to chat=True (mathstral/next/mamba/7b)
+- pick_model_id accepts open-* ids (e.g. open-codestral-mamba)
+
+### Result
+- mistral.json: **65** models (active=20, deprecated=45, token-priced=11)
+- Install copy synced
+- Skipped 404 slugs: none
+
+## Mistral refresh (2026-09-04) — quality pass
+
+### Fixes
+- Voxtral Mini chat vs pure-transcribe classification (no longer force all non-small Voxtral to transcribe)
+- Voxtral Small token pricing: use 3-amount cards as audio/min + input/output token
+- Research cards with null feature flags default to chat=True (mathstral/next/mamba/7b)
+- pick_model_id accepts open-* ids (e.g. open-codestral-mamba)
+
+### Result
+- mistral.json: **65** models (active=20, deprecated=45, token-priced=11)
+- Install copy synced
+- Skipped 404 slugs: none
+
+## Mistral refresh (2026-09-04) — quality pass
+
+### Fixes
+- Voxtral Mini chat vs pure-transcribe classification (no longer force all non-small Voxtral to transcribe)
+- Voxtral Small token pricing: use 3-amount cards as audio/min + input/output token
+- Research cards with null feature flags default to chat=True (mathstral/next/mamba/7b)
+- pick_model_id accepts open-* ids (e.g. open-codestral-mamba)
+
+### Result
+- mistral.json: **65** models (active=20, deprecated=45, token-priced=11)
+- Install copy synced
+- Skipped 404 slugs: none
+
+## Mistral refresh (2026-09-04) — quality pass
+
+### Fixes
+- Voxtral Mini chat vs pure-transcribe classification (no longer force all non-small Voxtral to transcribe)
+- Voxtral Small token pricing: use 3-amount cards as audio/min + input/output token
+- Research cards with null feature flags default to chat=True (mathstral/next/mamba/7b)
+- pick_model_id accepts open-* ids (e.g. open-codestral-mamba)
+
+### Result
+- mistral.json: **65** models (active=20, deprecated=45, token-priced=13)
+- Install copy synced
+- Skipped 404 slugs: none
+
+## Meta Model API refresh (2026-09-04)
+
+### Source
+- Models: https://dev.meta.ai/docs/getting-started/models (status=200, table=0)
+- Pricing: https://dev.meta.ai/docs/pricing-rate-limits (status=200)
+- Top: https://dev.meta.ai/ (status=200, spark-1.3=True)
+- Glimmer: https://research.meta.ai/blog/introducing-muse-glimmer-open-agentic-model (text_len=8217)
+- Apply: `scripts/_update_meta.py`
+- OpenRouter was not used.
+
+### Result
+- meta.json: **8** models (active=8, token-priced=5)
+- Spark Standard $1.25/$4.25 + cached $0.15; Contributor $0.10/$0.20 + cached $0.002
+- Glimmer 30B recorded as Apache 2.0 open weights (no API pricing)
+- Voice Transcribe ($/hour) and Image 1.0 ($/image) recorded as specialty units
+
+## azure_foundry — 2026-09-04 07:03 UTC
+
+- Catalog: chat-completion filter via Playwright paginate (`_scratch_azure_catalog_raw.json`, n=3541 unique names=3541)
+- Pricing: AOAI + Foundry partner pages (`_scratch_azure_pricing_tables.json`), price_keys=146
+- Output: n=3541 priced=118 maas_or_paygo=327 extra=3523
+- Providers (top): huggingface=3020, foundry-local=93, microsoft=75, azure-foundry=51, azure-openai=48, fireworks=36, nvidia=36, meta=34, azureml=28, mistral=17, voyage-ai=9, cohere=6
+- Sources: https://ai.azure.com/catalog/models ; https://azure.microsoft.com/en-us/pricing/details/azure-openai/ ; https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/*
+- Script: `scripts/_update_azure_foundry.py` (+ `scripts/_scrape_azure_foundry_full.py`)
+- Installed copy: `F:\KAIHATSU\llmcapa\src\llmcapa\data\azure_foundry.json`
+
+## Vertex AI / Model Garden SDK refresh (2026-09-04)
+
+- Source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/models
+- Discovery: `vertexai.model_garden.list_deployable_models(list_hf_models=True)`
+- OpenRouter was not used; `google.json` was not modified.
+- Result: 4952 SDK-listed deployable Model Garden models. Detailed limits/pricing remain unknown where the SDK does not expose them.
+
+## OpenRouter refresh (2026-09-04)
+
+### Source
+- API: `https://openrouter.ai/api/v1/models` (live → `_scratch_openrouter_models.json`)
+- Docs: https://openrouter.ai/docs
+- Apply: `scripts/_update_openrouter.py`
+
+### Result
+- openrouter.json: **427** models (active=427, deprecated=0, priced=401, free=21, dynamic=5, extra=427)
+- vision=258, reasoning=303, tools=360, cache_pricing=260
+- native providers: 51 (top: [('openai', 89), ('qwen', 53), ('google', 43), ('anthropic', 27), ('mistralai', 20), ('deepseek', 16), ('z-ai', 16), ('minimax', 11), ('nvidia', 10), ('meta-llama', 8)])
+- Pricing: API per-token ×1e6 → USD/1M; router prompt=-1 → catalog -1000000.0
+- Cache: input_cache_read/write(/1h) in extra when present
+- Synthetic `~*/…-latest` aliases retained (9)
+- Replaced thin 14-model placeholder catalog
+- Install copy synced

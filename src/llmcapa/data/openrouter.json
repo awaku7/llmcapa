@@ -1280,8 +1280,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 2.55,
-        "output_per_1m": 12.75,
+        "input_per_1m": 2.5,
+        "output_per_1m": 14.0,
         "currency": "USD"
       },
       "extra": {
@@ -1322,7 +1322,7 @@
         ],
         "created": "2026-04-27",
         "description": "This model always redirects to the latest model in the MoonshotAI Kimi family.",
-        "cache_read_per_1m": 0.256,
+        "cache_read_per_1m": 0.29,
         "default_parameters": {
           "top_p": 0.95
         },
@@ -1805,7 +1805,7 @@
       "model_id": "~z-ai/glm-latest",
       "display_name": "Z.ai: GLM Latest",
       "context_window": 1310720,
-      "max_output_tokens": 943718,
+      "max_output_tokens": 235929,
       "input_modalities": [
         "text"
       ],
@@ -1833,8 +1833,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 1.12,
-        "output_per_1m": 3.52,
+        "input_per_1m": 1.15,
+        "output_per_1m": 3.5,
         "currency": "USD"
       },
       "extra": {
@@ -1847,8 +1847,8 @@
         "modality": "text->text",
         "tokenizer": "Router",
         "top_provider": {
-          "context_length": 1048576,
-          "max_completion_tokens": 943718,
+          "context_length": 262144,
+          "max_completion_tokens": 235929,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -1876,7 +1876,7 @@
         ],
         "created": "2026-08-19",
         "description": "This model always redirects to the latest GLM model from Z.ai.",
-        "cache_read_per_1m": 0.184,
+        "cache_read_per_1m": 0.1,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -6900,7 +6900,7 @@
       "model_id": "deepseek/deepseek-chat-v3.1",
       "display_name": "DeepSeek: DeepSeek V3.1",
       "context_window": 163840,
-      "max_output_tokens": 32768,
+      "max_output_tokens": 144900,
       "input_modalities": [
         "text"
       ],
@@ -6928,8 +6928,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.25,
-        "output_per_1m": 0.95,
+        "input_per_1m": 0.55,
+        "output_per_1m": 1.65,
         "currency": "USD"
       },
       "extra": {
@@ -6944,8 +6944,8 @@
         "tokenizer": "DeepSeek",
         "instruct_type": "deepseek-v3.1",
         "top_provider": {
-          "context_length": 163840,
-          "max_completion_tokens": 32768,
+          "context_length": 161000,
+          "max_completion_tokens": 144900,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -6971,7 +6971,7 @@
         ],
         "created": "2025-08-21",
         "description": "DeepSeek-V3.1 is a large hybrid reasoning model (671B parameters, 37B active) that supports both thinking and non-thinking modes via prompt templates. It extends the DeepSeek-V3 base with a two-phase long-context...",
-        "cache_read_per_1m": 0.13,
+        "cache_read_per_1m": 0.55,
         "reasoning_meta": {
           "mandatory": false
         },
@@ -7903,8 +7903,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.22,
-        "output_per_1m": 0.66,
+        "input_per_1m": 0.44,
+        "output_per_1m": 1.32,
         "currency": "USD"
       },
       "extra": {
@@ -7946,7 +7946,7 @@
         ],
         "created": "2026-08-21",
         "description": "DeepSeek V4 Flash Vision Exp is an experimental vision-enabled version of [DeepSeek V4 Flash 0731](https://openrouter.ai/deepseek/deepseek-v4-flash-0731) from DeepSeek, adding image understanding while matching the base model on text capabilities including agents,...",
-        "cache_read_per_1m": 0.007,
+        "cache_read_per_1m": 0.014,
         "pricing_overrides": [
           {
             "utc_days": [
@@ -11753,7 +11753,7 @@
           "details": "/api/v1/models/google/gemini-3.8-flash-20260902/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 1,
+          "design_arena": 2,
           "artificial_analysis": 1
         },
         "features": [
@@ -11865,7 +11865,7 @@
           "details": "/api/v1/models/google/gemini-3.8-flash-20260902/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 1,
+          "design_arena": 2,
           "artificial_analysis": 1
         },
         "features": [
@@ -13508,6 +13508,94 @@
         "benchmarks_present": {
           "design_arena": 0,
           "artificial_analysis": 1
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "inclusionai/ling-3.0-flash-fin",
+      "display_name": "Ling 3.0 Flash Fin",
+      "context_window": 262144,
+      "max_output_tokens": 235929,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "ling-3.0-flash-fin",
+        "openrouter/inclusionai/ling-3.0-flash-fin",
+        "inclusionai/ling-3.0-flash-fin-20260827"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.06,
+        "output_per_1m": 0.18,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "inclusionai",
+        "canonical_slug": "inclusionai/ling-3.0-flash-fin-20260827",
+        "modality": "text->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 262144,
+          "max_completion_tokens": 235929,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "logit_bias",
+          "max_tokens",
+          "min_p",
+          "presence_penalty",
+          "reasoning",
+          "repetition_penalty",
+          "response_format",
+          "seed",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_k",
+          "top_p"
+        ],
+        "created": "2026-08-27",
+        "description": "Ling 3.0 Flash Fin is a finance-focused mixture-of-experts model from InclusionAI, built on Ling 3.0 Flash with 5.1B active parameters out of 124B total. It is designed for real-world investment...",
+        "cache_read_per_1m": 0.012,
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": true
+        },
+        "links": {
+          "details": "/api/v1/models/inclusionai/ling-3.0-flash-fin-20260827/endpoints"
         },
         "features": [
           "tools",
@@ -15337,6 +15425,9 @@
         },
         "links": {
           "details": "/api/v1/models/meta/muse-spark-1.3-20260902/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 1
         },
         "features": [
           "tools",
@@ -17463,8 +17554,8 @@
       "provider": "openrouter",
       "model_id": "mistralai/mistral-medium-3-5:batch",
       "display_name": "Mistral: Mistral Medium 3.5 (batch)",
-      "context_window": 262144,
-      "max_output_tokens": 209715,
+      "context_window": 32768,
+      "max_output_tokens": 26214,
       "input_modalities": [
         "text",
         "image",
@@ -17509,8 +17600,8 @@
         "modality": "text+image+file->text",
         "tokenizer": "Mistral",
         "top_provider": {
-          "context_length": 262144,
-          "max_completion_tokens": 209715,
+          "context_length": 32768,
+          "max_completion_tokens": 26214,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -20161,7 +20252,7 @@
       "model_id": "nvidia/nemotron-3-ultra-550b-a55b",
       "display_name": "NVIDIA: Nemotron 3 Ultra",
       "context_window": 262144,
-      "max_output_tokens": 182520,
+      "max_output_tokens": 32768,
       "input_modalities": [
         "text"
       ],
@@ -20190,8 +20281,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.6,
-        "output_per_1m": 2.4,
+        "input_per_1m": 0.625,
+        "output_per_1m": 3.125,
         "currency": "USD"
       },
       "extra": {
@@ -20205,8 +20296,8 @@
         "modality": "text->text",
         "tokenizer": "Other",
         "top_provider": {
-          "context_length": 202800,
-          "max_completion_tokens": 182520,
+          "context_length": 256000,
+          "max_completion_tokens": 32768,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -20231,7 +20322,7 @@
         ],
         "created": "2026-06-04",
         "description": "NVIDIA Nemotron 3 Ultra is an open frontier-reasoning and orchestration model from NVIDIA, with 55B active parameters out of 550B total (MoE). Built on a hybrid Transformer-Mamba mixture-of-experts architecture, it...",
-        "cache_read_per_1m": 0.12,
+        "cache_read_per_1m": 0.1875,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -20371,6 +20462,92 @@
         "high",
         "xhigh"
       ]
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "nvidia/nemotron-3.5-content-safety",
+      "display_name": "NVIDIA: Nemotron 3.5 Content Safety",
+      "context_window": 131072,
+      "max_output_tokens": 117964,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "nemotron-3.5-content-safety",
+        "openrouter/nvidia/nemotron-3.5-content-safety",
+        "nvidia/nemotron-3.5-content-safety-20260604"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.2,
+        "output_per_1m": 0.2,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "nvidia",
+        "canonical_slug": "nvidia/nemotron-3.5-content-safety-20260604",
+        "hugging_face_id": "nvidia/Nemotron-3.5-Content-Safety",
+        "modality": "text+image->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 131072,
+          "max_completion_tokens": 117964,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "logit_bias",
+          "max_tokens",
+          "min_p",
+          "presence_penalty",
+          "reasoning",
+          "repetition_penalty",
+          "response_format",
+          "seed",
+          "stop",
+          "temperature",
+          "top_k",
+          "top_p"
+        ],
+        "created": "2026-06-04",
+        "description": "NVIDIA Nemotron 3.5 Content Safety is a compact 4B-parameter multimodal guardrail model from NVIDIA, fine-tuned from Google Gemma-3-4B. It moderates both inputs to and responses from LLMs and VLMs, accepting...",
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": true
+        },
+        "links": {
+          "details": "/api/v1/models/nvidia/nemotron-3.5-content-safety-20260604/endpoints"
+        },
+        "features": [
+          "structured_outputs",
+          "reasoning",
+          "vision"
+        ]
+      }
     },
     {
       "provider": "openrouter",
@@ -30453,7 +30630,7 @@
       "model_id": "qwen/qwen2.5-vl-72b-instruct",
       "display_name": "Qwen: Qwen2.5 VL 72B Instruct",
       "context_window": 128000,
-      "max_output_tokens": 28800,
+      "max_output_tokens": 115200,
       "input_modalities": [
         "text",
         "image"
@@ -30482,8 +30659,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.25,
-        "output_per_1m": 0.75,
+        "input_per_1m": 0.8,
+        "output_per_1m": 1.0,
         "currency": "USD"
       },
       "extra": {
@@ -30497,8 +30674,8 @@
         "modality": "text+image->text",
         "tokenizer": "Qwen",
         "top_provider": {
-          "context_length": 32000,
-          "max_completion_tokens": 28800,
+          "context_length": 128000,
+          "max_completion_tokens": 115200,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -30519,6 +30696,7 @@
         ],
         "created": "2025-02-01",
         "description": "Qwen2.5-VL is proficient in recognizing common objects such as flowers, birds, fish, and insects. It is also highly capable of analyzing texts, charts, icons, graphics, and layouts within images.",
+        "cache_read_per_1m": 0.4,
         "links": {
           "details": "/api/v1/models/qwen/qwen2.5-vl-72b-instruct/endpoints"
         },
@@ -34726,8 +34904,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.425,
-        "output_per_1m": 2.55,
+        "input_per_1m": 0.42,
+        "output_per_1m": 3.0,
         "currency": "USD"
       },
       "extra": {
@@ -34770,7 +34948,6 @@
         "created": "2026-08-14",
         "description": "Qwen3.8 27B is an open-weight dense vision-language model from Qwen. It is suited for coding, professional workflows, research, multimodal interaction, and long-running agent tasks, with flexible thinking that can be...",
         "cache_read_per_1m": 0.085,
-        "cache_write_per_1m": 0.53125,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95,
@@ -37482,7 +37659,7 @@
       "model_id": "undi95/remm-slerp-l2-13b",
       "display_name": "ReMM SLERP 13B",
       "context_window": 6144,
-      "max_output_tokens": 4096,
+      "max_output_tokens": 5529,
       "input_modalities": [
         "text"
       ],
@@ -37510,7 +37687,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.45,
+        "input_per_1m": 0.35,
         "output_per_1m": 0.65,
         "currency": "USD"
       },
@@ -37527,7 +37704,7 @@
         "instruct_type": "alpaca",
         "top_provider": {
           "context_length": 6144,
-          "max_completion_tokens": 4096,
+          "max_completion_tokens": 5529,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -38081,6 +38258,123 @@
             "prompt": "0.0000025",
             "completion": "0.000005",
             "input_cache_read": "0.0000004"
+          }
+        ],
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "high",
+            "medium",
+            "low",
+            "none"
+          ],
+          "default_effort": "low"
+        },
+        "links": {
+          "details": "/api/v1/models/x-ai/grok-4.3-20260430/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 21,
+          "artificial_analysis": 1
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "reasoning_effort",
+          "vision",
+          "file_input"
+        ]
+      },
+      "reasoning_effort_values": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "x-ai/grok-4.3:batch",
+      "display_name": "SpaceXAI: Grok 4.3 (batch)",
+      "context_window": 1000000,
+      "max_output_tokens": 900000,
+      "input_modalities": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Grok",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "grok-4.3:batch",
+        "openrouter/x-ai/grok-4.3:batch",
+        "x-ai/grok-4.3-20260430"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 1.0,
+        "output_per_1m": 2.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "x-ai",
+        "canonical_slug": "x-ai/grok-4.3-20260430",
+        "modality": "text+image+file->text",
+        "tokenizer": "Grok",
+        "top_provider": {
+          "context_length": 1000000,
+          "max_completion_tokens": 900000,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "include_reasoning",
+          "logprobs",
+          "max_tokens",
+          "reasoning",
+          "reasoning_effort",
+          "response_format",
+          "seed",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_logprobs",
+          "top_p"
+        ],
+        "created": "2026-04-30",
+        "description": "Grok 4.3 is a reasoning model from SpaceXAI. It accepts text and image inputs with text output, and is suited for agentic workflows, instruction-following tasks, and applications requiring high factual...",
+        "cache_read_per_1m": 0.16,
+        "web_search_per_request_usd": 0.005,
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.000002",
+            "completion": "0.000004",
+            "input_cache_read": "0.00000032"
           }
         ],
         "reasoning_meta": {
@@ -39276,6 +39570,7 @@
         ],
         "created": "2026-01-19",
         "description": "As a 30B-class SOTA model, GLM-4.7-Flash offers a new option that balances performance and efficiency. It is further optimized for agentic coding use cases, strengthening coding capabilities, long-horizon task planning,...",
+        "expiration_date": "2026-09-10",
         "cache_read_per_1m": 0.01,
         "default_parameters": {
           "temperature": 1,

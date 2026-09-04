@@ -44,7 +44,9 @@ def base(
 ) -> dict:
     aliases = list(aliases or [])
     bare = model_id.split("/")[-1]
-    for a in (bare, f"xiaomi/{bare}", f"mimo/{bare}"):
+    # Native catalog only. Route-qualified IDs such as xiaomi/<id>
+    # belong to the openrouter catalog and must not be added here.
+    for a in (bare,):
         if a not in aliases and a != model_id:
             aliases.append(a)
     row = {
@@ -90,6 +92,7 @@ def build() -> list[dict]:
     models.append(
         base(
             model_id="mimo-v2.5-pro",
+            aliases=["mimo/mimo-v2.5-pro"],
             display="Xiaomi MiMo-V2.5-Pro",
             ctx=1_000_000,
             max_out=128_000,
@@ -100,7 +103,6 @@ def build() -> list[dict]:
                 "output_per_1m": 0.87,
                 "currency": "USD",
             },
-            aliases=["xiaomi/mimo-v2.5-pro"],
             reasoning=True,
             fc=True,
             json_mode=True,
@@ -134,6 +136,7 @@ def build() -> list[dict]:
     models.append(
         base(
             model_id="mimo-v2.5",
+            aliases=["mimo/mimo-v2.5"],
             display="Xiaomi MiMo-V2.5",
             ctx=1_000_000,
             max_out=128_000,
@@ -144,7 +147,6 @@ def build() -> list[dict]:
                 "output_per_1m": 0.28,
                 "currency": "USD",
             },
-            aliases=["xiaomi/mimo-v2.5"],
             reasoning=True,
             vision=True,
             fc=True,
@@ -182,6 +184,7 @@ def build() -> list[dict]:
     models.append(
         base(
             model_id="mimo-v2.5-pro-ultraspeed",
+            aliases=["mimo/mimo-v2.5-pro-ultraspeed"],
             display="Xiaomi MiMo-V2.5-Pro-UltraSpeed",
             ctx=1_000_000,
             max_out=128_000,
@@ -192,7 +195,6 @@ def build() -> list[dict]:
                 "output_per_1m": 2.61,
                 "currency": "USD",
             },
-            aliases=["xiaomi/mimo-v2.5-pro-ultraspeed"],
             reasoning=True,
             fc=True,
             json_mode=True,
@@ -210,6 +212,7 @@ def build() -> list[dict]:
     models.append(
         base(
             model_id="mimo-v2.5-asr",
+            aliases=["mimo/mimo-v2.5-asr"],
             display="Xiaomi MiMo-V2.5-ASR",
             ctx=8192,
             max_out=2000,
@@ -220,7 +223,6 @@ def build() -> list[dict]:
                 "output_per_1m": 0.0,
                 "currency": "USD",
             },
-            aliases=["xiaomi/mimo-v2.5-asr"],
             chat=False,
             license_type="api",
             extra={
@@ -252,6 +254,7 @@ def build() -> list[dict]:
         models.append(
             base(
                 model_id=mid,
+                aliases=[f"mimo/{mid}"],
                 display=disp,
                 ctx=8192,
                 max_out=8192,
@@ -262,7 +265,6 @@ def build() -> list[dict]:
                     "output_per_1m": 0.0,
                     "currency": "USD",
                 },
-                aliases=[f"xiaomi/{mid}"],
                 chat=False,
                 license_type="free",
                 extra={
@@ -291,13 +293,13 @@ def build() -> list[dict]:
         models.append(
             base(
                 model_id=mid,
+                aliases=[f"mimo/{mid}"],
                 display=disp,
                 ctx=1_000_000 if not mid.endswith("tts") else 8192,
                 max_out=128_000 if not mid.endswith("tts") else 8192,
                 input_modalities=modalities,
                 output_modalities=out_mod,
                 pricing=None,
-                aliases=[f"xiaomi/{mid}"],
                 deprecated=True,
                 vision=vision,
                 chat=not mid.endswith("tts"),

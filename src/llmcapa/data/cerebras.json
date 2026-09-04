@@ -2,9 +2,9 @@
   "models": [
     {
       "provider": "cerebras",
-      "model_id": "gpt-oss-120B",
-      "display_name": "gpt-oss-120B",
-      "context_window": 0,
+      "model_id": "gpt-oss-120b",
+      "display_name": "OpenAI GPT OSS",
+      "context_window": 131000,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -16,31 +16,22 @@
       "supports_streaming": true,
       "supports_function_calling": null,
       "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
+      "supports_vision": false,
+      "supports_reasoning": true,
       "supports_responses_api": false,
       "pricing": null,
       "deprecated": false,
       "aliases": [],
       "extra": {
-        "source": "https://inference-docs.cerebras.ai/",
-        "source_type": "official_page_scrape",
-        "spec_status": "listed_only",
-        "endpoints": [
-          {
-            "base_url": "https://api.cerebras.ai/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://inference-docs.cerebras.ai/"
-          }
-        ]
+        "source": "https://inference-docs.cerebras.ai/models/overview",
+        "source_type": "official_rendered_page"
       }
     },
     {
       "provider": "cerebras",
-      "model_id": "LlamaIndex",
-      "display_name": "LlamaIndex",
-      "context_window": 0,
+      "model_id": "qwen-3.8-27b",
+      "display_name": "Qwen 3.8 27B",
+      "context_window": 128000,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -52,24 +43,15 @@
       "supports_streaming": true,
       "supports_function_calling": null,
       "supports_json_mode": null,
-      "supports_vision": null,
+      "supports_vision": false,
       "supports_reasoning": null,
       "supports_responses_api": false,
       "pricing": null,
       "deprecated": false,
       "aliases": [],
       "extra": {
-        "source": "https://inference-docs.cerebras.ai/",
-        "source_type": "official_page_scrape",
-        "spec_status": "listed_only",
-        "endpoints": [
-          {
-            "base_url": "https://api.cerebras.ai/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://inference-docs.cerebras.ai/"
-          }
-        ]
+        "source": "https://inference-docs.cerebras.ai/models/overview",
+        "source_type": "official_rendered_page"
       }
     }
   ]

@@ -4849,6 +4849,49 @@
     },
     {
       "provider": "openai",
+      "model_id": "gpt-6-astra",
+      "display_name": "GPT-6 Astra",
+      "context_window": 1050000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-6-astra"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-6-astra.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-6-astra"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "Apr 30, 2026",
+      "pricing": {
+        "input_per_1m": 10.0,
+        "output_per_1m": 50.0,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
       "model_id": "gpt-audio",
       "display_name": "GPT-Audio",
       "context_window": 128000,

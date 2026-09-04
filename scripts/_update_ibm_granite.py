@@ -33,7 +33,7 @@ def base_model(model_id: str, size: str) -> dict:
     is_30b = size == "30B"
     return {
         "provider": "ibm-granite",
-        "model_id": f"ibm-granite/{model_id}",
+        "model_id": model_id,
         "display_name": f"IBM: Granite 4.2 {size}",
         "context_window": 512000 if is_30b else 128000,
         "max_output_tokens": 0,
@@ -54,7 +54,7 @@ def base_model(model_id: str, size: str) -> dict:
         "tokenizer_name": "Other",
         "knowledge_cutoff": None,
         "deprecated": False,
-        "aliases": [f"ibm-granite/{model_id}", model_id],
+        "aliases": [model_id],
         "license_type": "open",
         "pricing": None,
     }
@@ -86,9 +86,10 @@ def main() -> None:
     {model.get("model_id") for model in models}
     added = 0
     for model_id, size in GRANITE_42.items():
-        full_id = f"ibm-granite/{model_id}"
-        model = next((m for m in models if m.get("model_id") == full_id), None)
+        model = next((m for m in models if m.get("model_id") == model_id), None)
         if model is None:
+            # remove legacy slash-duplicate if present
+            models[:] = [m for m in models if m.get("model_id") != f"ibm-granite/{model_id}"]
             model = base_model(model_id, size)
             models.append(model)
             added += 1

@@ -56,9 +56,10 @@ def base(
     vision: bool = False,
 ) -> dict:
     aliases = list(aliases or [])
-    or_id = f"deepseek/{model_id}"
-    if or_id not in aliases and or_id != model_id:
-        aliases.append(or_id)
+    # Native catalog only. Route-qualified IDs such as
+    # deepseek/<id> belong to the openrouter catalog and must
+    # not be added as native aliases. Legacy bare aliases
+    # (deepseek-chat / deepseek-reasoner) are set by callers.
 
     row: dict = {
         "provider": "deepseek",
@@ -163,14 +164,8 @@ def build() -> list[dict]:
                     },
                 },
             ),
-            aliases=[
-                "deepseek/deepseek-v4-flash",
-                "deepseek-v4-flash-max",
-                "deepseek-chat",  # until 2026-07-24 → non-thinking
-                "deepseek-reasoner",  # until 2026-07-24 → thinking
-                "deepseek/deepseek-chat",
-                "deepseek/deepseek-reasoner",
-            ],
+            aliases=["deepseek-v4-flash-max", "deepseek-chat",  # until 2026-07-24 → non-thinking
+                "deepseek-reasoner"],  # until 2026-07-24 → thinking
             knowledge_cutoff="2025-12",
             reasoning=True,
             effort=True,
@@ -198,10 +193,7 @@ def build() -> list[dict]:
                     "reasoning_effort": ["low", "high", "max"],
                 },
             ),
-            aliases=[
-                "deepseek/deepseek-v4-pro",
-                "deepseek-v4-pro-max",
-            ],
+            aliases=["deepseek-v4-pro-max", ],
             knowledge_cutoff="2025-12",
             reasoning=True,
             effort=True,
@@ -231,7 +223,6 @@ def build() -> list[dict]:
                     "experimental": True,
                 },
             ),
-            aliases=["deepseek/deepseek-v4-flash-vision-exp"],
             knowledge_cutoff="2025-12",
             reasoning=True,
             effort=True,
@@ -262,10 +253,7 @@ def build() -> list[dict]:
                 ),
                 "cache_hit_per_1m": 0.028,
             },
-            aliases=[
-                "deepseek/deepseek-v3.2",
-                "deepseek-chat-v3.2",
-            ],
+            aliases=["deepseek-chat-v3.2", ],
             knowledge_cutoff="2025-07",
             reasoning=True,
             fim=True,
@@ -288,9 +276,6 @@ def build() -> list[dict]:
                     "until 2025-12-15 15:59 UTC; same pricing as V3.2; no tool calls."
                 ),
             },
-            aliases=[
-                "deepseek/deepseek-v3.2-speciale",
-            ],
             knowledge_cutoff="2025-07",
             reasoning=True,
             function_calling=False,
@@ -314,12 +299,7 @@ def build() -> list[dict]:
                     "deepseek/deepseek-chat-v3.1",
                 ],
             },
-            aliases=[
-                "deepseek/deepseek-v3.1",
-                "deepseek/deepseek-v3.1-terminus",
-                "deepseek/deepseek-chat-v3.1",
-                "deepseek-chat-v3.1",
-            ],
+            aliases=["deepseek-chat-v3.1", ],
             knowledge_cutoff="2025-05",
             reasoning=True,
             fim=True,
@@ -341,10 +321,7 @@ def build() -> list[dict]:
                     "Historical rates vary by host; official API now V4."
                 ),
             },
-            aliases=[
-                "deepseek/deepseek-r1",
-                "deepseek-r1:671b",
-            ],
+            aliases=["deepseek-r1:671b", ],
             knowledge_cutoff="2024-07",
             reasoning=True,
             fim=False,
@@ -363,9 +340,6 @@ def build() -> list[dict]:
                 "status": "superseded_by_v3.1_thinking",
                 "note": "deepseek-reasoner upgraded to R1-0528 on 2025-05-28.",
             },
-            aliases=[
-                "deepseek/deepseek-r1-0528",
-            ],
             knowledge_cutoff="2025-05",
             reasoning=True,
             fim=False,
@@ -384,11 +358,7 @@ def build() -> list[dict]:
                 "status": "superseded",
                 "note": "V3 (2024-12-26) then V3-0324 (2025-03-24).",
             },
-            aliases=[
-                "deepseek/deepseek-v3",
-                "deepseek/deepseek-chat-v3-0324",
-                "deepseek-v3-0324",
-            ],
+            aliases=["deepseek-v3-0324", ],
             knowledge_cutoff="2024-07",
             reasoning=False,
             fim=True,
@@ -413,20 +383,7 @@ def build() -> list[dict]:
                 ),
                 "license_type_note": "open_weight",
             },
-            aliases=[
-                "deepseek-r1-distill-qwen",
-                "deepseek-r1-distill-7b",
-                "deepseek-r1-distill-8b",
-                "deepseek-r1-distill-14b",
-                "deepseek-r1-distill-32b",
-                "deepseek-r1-distill-70b",
-                "deepseek/deepseek-r1-distill-qwen",
-                "deepseek/deepseek-r1-distill-7b",
-                "deepseek/deepseek-r1-distill-8b",
-                "deepseek/deepseek-r1-distill-14b",
-                "deepseek/deepseek-r1-distill-32b",
-                "deepseek/deepseek-r1-distill-70b",
-            ],
+            aliases=["deepseek-r1-distill-qwen", "deepseek-r1-distill-7b", "deepseek-r1-distill-8b", "deepseek-r1-distill-14b", "deepseek-r1-distill-32b", "deepseek-r1-distill-70b", ],
             knowledge_cutoff="2024-07",
             reasoning=True,
             function_calling=False,

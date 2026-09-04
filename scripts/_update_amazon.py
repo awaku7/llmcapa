@@ -55,13 +55,14 @@ def base(
     chat: bool = True,
 ) -> dict:
     aliases = list(aliases or [])
-    # dual alias: OpenRouter-style amazon/<id> + Bedrock amazon.<id>:0
+    # Native catalog: Bedrock harness alias amazon.<id>:0 only.
+    # Route-qualified IDs such as amazon/<id> belong to the
+    # openrouter catalog and must not be added as native aliases.
     bare = model_id
     bare = bare.removeprefix("amazon/")
-    or_id = f"amazon/{bare}"
     br_id = f"amazon.{bare}:0" if not bare.startswith("amazon.") else bare
     # also bare without version suffix variants handled by caller
-    for a in (or_id, br_id):
+    for a in (br_id,):
         if a not in aliases and a != model_id:
             aliases.append(a)
 
@@ -178,11 +179,7 @@ def build() -> list[dict]:
                     "modalities_note": "text/image/video/file input; text output",
                 },
             ),
-            aliases=[
-                "amazon/nova-2-lite-v1",
-                "amazon.nova-2-lite-v1:0",
-                "amazon.nova-2-lite-v1",
-            ],
+            aliases=["amazon.nova-2-lite-v1:0", "amazon.nova-2-lite-v1"],
             knowledge_cutoff="2025-10",
             input_modalities=["text", "image", "video", "file"],
             output_modalities=["text"],
@@ -210,11 +207,7 @@ def build() -> list[dict]:
                     "availability": "preview",
                 },
             ),
-            aliases=[
-                "amazon/nova-2-pro-v1",
-                "amazon.nova-2-pro-v1:0",
-                "amazon.nova-2-pro-v1",
-            ],
+            aliases=["amazon.nova-2-pro-v1:0", "amazon.nova-2-pro-v1"],
             knowledge_cutoff="2025-10",
             input_modalities=["text", "image", "video", "file"],
             output_modalities=["text"],
@@ -243,11 +236,7 @@ def build() -> list[dict]:
                     "modalities_note": "omni multimodal; primary pricing is text tokens",
                 },
             ),
-            aliases=[
-                "amazon/nova-2-omni-v1",
-                "amazon.nova-2-omni-v1:0",
-                "amazon.nova-2-omni-v1",
-            ],
+            aliases=["amazon.nova-2-omni-v1:0", "amazon.nova-2-omni-v1"],
             knowledge_cutoff="2025-10",
             input_modalities=["text", "image", "video", "audio", "speech"],
             output_modalities=["text", "image", "video", "speech"],
@@ -276,11 +265,7 @@ def build() -> list[dict]:
                     },
                 ),
             },
-            aliases=[
-                "amazon/nova-2-sonic-v1",
-                "amazon.nova-2-sonic-v1:0",
-                "amazon.nova-2-sonic-v1",
-            ],
+            aliases=["amazon.nova-2-sonic-v1:0", "amazon.nova-2-sonic-v1"],
             knowledge_cutoff="2025-10",
             input_modalities=["text", "audio", "speech"],
             output_modalities=["text", "speech"],
@@ -304,11 +289,7 @@ def build() -> list[dict]:
                 batch_in=0.0175,
                 batch_out=0.07,
             ),
-            aliases=[
-                "amazon/nova-micro-v1",
-                "amazon.nova-micro-v1:0",
-                "amazon.nova-micro-v1",
-            ],
+            aliases=["amazon.nova-micro-v1:0", "amazon.nova-micro-v1"],
             knowledge_cutoff="2024-10-31",
             input_modalities=["text"],
             output_modalities=["text"],
@@ -328,11 +309,7 @@ def build() -> list[dict]:
                 batch_in=0.03,
                 batch_out=0.12,
             ),
-            aliases=[
-                "amazon/nova-lite-v1",
-                "amazon.nova-lite-v1:0",
-                "amazon.nova-lite-v1",
-            ],
+            aliases=["amazon.nova-lite-v1:0", "amazon.nova-lite-v1"],
             knowledge_cutoff="2024-10-31",
             input_modalities=["text", "image", "video"],
             output_modalities=["text"],
@@ -354,11 +331,7 @@ def build() -> list[dict]:
                 latency_opt_in=1.00,
                 latency_opt_out=4.00,
             ),
-            aliases=[
-                "amazon/nova-pro-v1",
-                "amazon.nova-pro-v1:0",
-                "amazon.nova-pro-v1",
-            ],
+            aliases=["amazon.nova-pro-v1:0", "amazon.nova-pro-v1"],
             knowledge_cutoff="2024-10-31",
             input_modalities=["text", "image", "video"],
             output_modalities=["text"],
@@ -378,11 +351,7 @@ def build() -> list[dict]:
                 batch_in=1.25,
                 batch_out=6.25,
             ),
-            aliases=[
-                "amazon/nova-premier-v1",
-                "amazon.nova-premier-v1:0",
-                "amazon.nova-premier-v1",
-            ],
+            aliases=["amazon.nova-premier-v1:0", "amazon.nova-premier-v1"],
             knowledge_cutoff="2024-10",
             input_modalities=["text", "image", "video"],
             output_modalities=["text"],
@@ -411,11 +380,7 @@ def build() -> list[dict]:
                     },
                 ),
             },
-            aliases=[
-                "amazon/nova-sonic-v1",
-                "amazon.nova-sonic-v1:0",
-                "amazon.nova-sonic-v1",
-            ],
+            aliases=["amazon.nova-sonic-v1:0", "amazon.nova-sonic-v1"],
             knowledge_cutoff="2025-01",
             input_modalities=["text", "audio", "speech"],
             output_modalities=["text", "speech"],
@@ -440,11 +405,7 @@ def build() -> list[dict]:
                 "price_per_image_premium_le_1024": 0.06,
                 "note": "≤1024 standard $0.04 / premium $0.06 per image (US East)",
             },
-            aliases=[
-                "amazon/nova-canvas-v1",
-                "amazon.nova-canvas-v1:0",
-                "amazon.nova-canvas-v1",
-            ],
+            aliases=["amazon.nova-canvas-v1:0", "amazon.nova-canvas-v1"],
             input_modalities=["text", "image"],
             output_modalities=["image"],
             vision=True,
@@ -465,11 +426,7 @@ def build() -> list[dict]:
                 "price_per_second_720p": 0.08,
                 "note": "720p $0.08/sec (US East)",
             },
-            aliases=[
-                "amazon/nova-reel-v1",
-                "amazon.nova-reel-v1:0",
-                "amazon.nova-reel-v1",
-            ],
+            aliases=["amazon.nova-reel-v1:0", "amazon.nova-reel-v1"],
             input_modalities=["text", "image"],
             output_modalities=["video"],
             vision=True,
@@ -491,11 +448,7 @@ def build() -> list[dict]:
                 "price_per_image": 0.06,
                 "note": "text $0.135/1M tokens; image $0.06/image (US East)",
             },
-            aliases=[
-                "amazon/nova-multimodal-embeddings-v1",
-                "amazon.nova-multimodal-embeddings-v1:0",
-                "amazon.nova-multimodal-embeddings-v1",
-            ],
+            aliases=["amazon.nova-multimodal-embeddings-v1:0", "amazon.nova-multimodal-embeddings-v1"],
             input_modalities=["text", "image"],
             output_modalities=["embedding"],
             vision=True,
@@ -516,11 +469,7 @@ def build() -> list[dict]:
             max_out=32_000,
             pricing={"input": 0.50, "output": 1.50},
             extra=text_extra(cache_hit=0.125),
-            aliases=[
-                "amazon/titan-text-premier-v1",
-                "amazon.titan-text-premier-v1:0",
-                "amazon.titan-text-premier-v1",
-            ],
+            aliases=["amazon.titan-text-premier-v1:0", "amazon.titan-text-premier-v1"],
             knowledge_cutoff="2023-12",
             input_modalities=["text"],
             output_modalities=["text"],
@@ -536,11 +485,7 @@ def build() -> list[dict]:
             max_out=8_000,
             pricing={"input": 0.20, "output": 0.60},
             extra=text_extra(cache_hit=0.05),
-            aliases=[
-                "amazon/titan-text-express-v1",
-                "amazon.titan-text-express-v1:0",
-                "amazon.titan-text-express-v1",
-            ],
+            aliases=["amazon.titan-text-express-v1:0", "amazon.titan-text-express-v1"],
             knowledge_cutoff="2023-12",
             input_modalities=["text"],
             output_modalities=["text"],
@@ -559,11 +504,7 @@ def build() -> list[dict]:
                 cache_hit=0.0375,
                 notes={"note": "corrected from prior catalog $0.30/$0.40"},
             ),
-            aliases=[
-                "amazon/titan-text-lite-v1",
-                "amazon.titan-text-lite-v1:0",
-                "amazon.titan-text-lite-v1",
-            ],
+            aliases=["amazon.titan-text-lite-v1:0", "amazon.titan-text-lite-v1"],
             knowledge_cutoff="2023-12",
             input_modalities=["text"],
             output_modalities=["text"],
@@ -583,11 +524,7 @@ def build() -> list[dict]:
                 "text_input_per_1m": 0.02,
                 "note": "Titan Embed Text V2 $0.02/1M tokens",
             },
-            aliases=[
-                "amazon/titan-embed-text-v2",
-                "amazon.titan-embed-text-v2:0",
-                "amazon.titan-embed-text-v2",
-            ],
+            aliases=["amazon.titan-embed-text-v2:0", "amazon.titan-embed-text-v2"],
             input_modalities=["text"],
             output_modalities=["embedding"],
             vision=False,
@@ -608,11 +545,7 @@ def build() -> list[dict]:
                 "text_input_per_1m": 0.10,
                 "note": "Titan Embed Text G1 $0.10/1M tokens",
             },
-            aliases=[
-                "amazon/titan-embed-text-v1",
-                "amazon.titan-embed-text-v1:0",
-                "amazon.titan-embed-text-v1",
-            ],
+            aliases=["amazon.titan-embed-text-v1:0", "amazon.titan-embed-text-v1"],
             input_modalities=["text"],
             output_modalities=["embedding"],
             vision=False,
@@ -637,11 +570,7 @@ def build() -> list[dict]:
                     "image ~$0.00006/image (US East; verify on Bedrock pricing)"
                 ),
             },
-            aliases=[
-                "amazon/titan-multimodal-embeddings-v1",
-                "amazon.titan-multimodal-embeddings-v1:0",
-                "amazon.titan-multimodal-embeddings-v1",
-            ],
+            aliases=["amazon.titan-multimodal-embeddings-v1:0", "amazon.titan-multimodal-embeddings-v1"],
             input_modalities=["text", "image"],
             output_modalities=["embedding"],
             vision=True,
@@ -665,12 +594,7 @@ def build() -> list[dict]:
                 "price_per_image_premium_1024": 0.012,
                 "note": "Titan Image Generator v2 approximate US East rates",
             },
-            aliases=[
-                "amazon/titan-image-generator-v2",
-                "amazon.titan-image-generator-v2:0",
-                "amazon.titan-image-generator-v2",
-                "titan-image-generator-v1-v2",  # legacy catalog id
-            ],
+            aliases=["amazon.titan-image-generator-v2:0", "amazon.titan-image-generator-v2", "titan-image-generator-v1-v2"],  # legacy catalog id
             input_modalities=["text", "image"],
             output_modalities=["image"],
             vision=True,
@@ -770,7 +694,7 @@ def main() -> None:
         f"- Nova 1.0: Micro $0.035/$0.14, Lite $0.06/$0.24, "
         f"Pro $0.80/$3.20 (+latency-opt $1/$4), Premier $2.50/$12.50\n"
         f"- Sonic speech/text dual rates in extra; Canvas/Reel/Embeddings priced\n"
-        f"- Titan Lite corrected to $0.15/$0.20; dual aliases amazon/* + amazon.*:0\n"
+        f"- Titan Lite corrected to $0.15/$0.20; Bedrock aliases amazon.*:0\n"
         f"- Install copy synced\n"
     )
     if LOG.exists():

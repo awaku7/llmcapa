@@ -39,9 +39,9 @@ def row(
     extra_notes: dict | None = None,
 ) -> dict:
     aliases = list(aliases or [])
-    for a in (f"moonshotai/{model_id}", f"moonshot/{model_id}", f"kimi/{model_id}"):
-        if a not in aliases:
-            aliases.append(a)
+    # Native catalog only. Route-qualified IDs such as
+    # moonshotai/<id> belong to aggregator catalogs (openrouter,
+    # together) and must not be added as native aliases.
     modalities = ["text"]
     if vision:
         modalities.append("image")
@@ -101,7 +101,7 @@ def build() -> list[dict]:
             inp=3.0,
             out=15.0,
             cache_hit=0.30,
-            aliases=["kimi-latest", "moonshotai/kimi-k3", "moonshotai/kimi-latest"],
+            aliases=["kimi-latest", "moonshotai/kimi-latest", "kimi/kimi-k3"],
             reasoning=True,
             vision=True,
             video=True,
@@ -119,11 +119,11 @@ def build() -> list[dict]:
         row(
             model_id="kimi-k2.7-code",
             display="Kimi K2.7 Code",
+            aliases=["kimi/kimi-k2.7-code"],
             ctx=262_144,
             inp=0.95,
             out=4.0,
             cache_hit=0.19,
-            aliases=["moonshotai/kimi-k2.7-code"],
             reasoning=True,
             vision=True,
             video=True,
@@ -138,11 +138,11 @@ def build() -> list[dict]:
         row(
             model_id="kimi-k2.7-code-highspeed",
             display="Kimi K2.7 Code HighSpeed",
+            aliases=["moonshotai/kimi-k2.7-code-highspeed", "kimi/kimi-k2.7-code-highspeed"],
             ctx=262_144,
             inp=1.90,
             out=8.0,
             cache_hit=0.38,
-            aliases=["moonshotai/kimi-k2.7-code-highspeed"],
             reasoning=True,
             vision=True,
             video=True,
@@ -160,11 +160,11 @@ def build() -> list[dict]:
         row(
             model_id="kimi-k2.6",
             display="Kimi K2.6",
+            aliases=["kimi/kimi-k2.6"],
             ctx=262_144,
             inp=0.95,
             out=4.0,
             cache_hit=0.16,
-            aliases=["moonshotai/kimi-k2.6"],
             reasoning=True,
             vision=True,
             video=True,
@@ -178,11 +178,11 @@ def build() -> list[dict]:
         row(
             model_id="kimi-k2.5",
             display="Kimi K2.5",
+            aliases=["kimi/kimi-k2.5"],
             ctx=262_144,
             inp=0.60,
             out=3.0,
             cache_hit=0.10,
-            aliases=["moonshotai/kimi-k2.5"],
             reasoning=True,
             vision=True,
             video=True,
@@ -196,11 +196,11 @@ def build() -> list[dict]:
         row(
             model_id="kimi-k2-thinking",
             display="Kimi K2 Thinking",
+            aliases=["kimi/kimi-k2-thinking"],
             ctx=262_144,
             inp=0.60,
             out=2.50,
             cache_hit=0.15,
-            aliases=["moonshotai/kimi-k2-thinking"],
             reasoning=True,
             extra_notes={"status": "legacy-k2-family"},
         )
@@ -209,10 +209,10 @@ def build() -> list[dict]:
         row(
             model_id="kimi-k2-0905",
             display="Kimi K2 0905",
+            aliases=["kimi/kimi-k2-0905"],
             ctx=262_144,
             inp=0.60,
             out=2.50,
-            aliases=["moonshotai/kimi-k2-0905"],
             reasoning=True,
             extra_notes={"status": "legacy-k2-family"},
         )
@@ -221,10 +221,10 @@ def build() -> list[dict]:
         row(
             model_id="kimi-k2",
             display="Kimi K2",
+            aliases=["kimi/kimi-k2"],
             ctx=131_072,
             inp=0.57,
             out=2.30,
-            aliases=["moonshotai/kimi-k2"],
             reasoning=True,
             extra_notes={"status": "legacy-k2-family"},
         )
@@ -243,7 +243,6 @@ def build() -> list[dict]:
                 ctx=ctx,
                 inp=inp,
                 out=out,
-                aliases=[f"moonshotai/{mid}"],
                 reasoning=False,
                 deprecated=True,
                 extra_notes={"status": "legacy-v1"},

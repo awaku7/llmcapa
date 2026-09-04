@@ -17,7 +17,7 @@ from .models import Capability, ComputerUseCapability, Feature, ReasoningEffort
 from .registry import ModelNotFoundError, Registry, default_registry
 from .tokenizer import count_messages_tokens, count_tokens
 
-__version__ = "0.5.15"
+__version__ = "0.5.16"
 
 __all__ = [
     "Capability",

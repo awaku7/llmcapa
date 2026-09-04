@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "llmcapa"
-version = "0.5.15"
+version = "0.5.16"
 description = "Lookup capabilities (context window, modalities, features) of various LLM models offline."
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -40,3 +40,7 @@ all = ["tiktoken>=0.5.1", "sentencepiece>=0.2.1"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/llmcapa"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+norecursedirs = [".*", "build", "dist", "outputs", "CVS", "_darcs", "{arch}", "*.egg", "venv"]

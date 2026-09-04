@@ -1109,7 +1109,11 @@ def load_price_map() -> dict[str, dict]:
 
 def main() -> None:
     if not CATALOG.exists():
-        raise SystemExit(f"missing catalog scratch: {CATALOG}")
+        raise SystemExit(
+            f"missing catalog scratch: {CATALOG} "
+            "(regenerate with: python scripts/_scrape_azure_foundry_full.py; "
+            "scratch files are gitignored by design)"
+        )
 
     global _PREV_LIMITS
     if OUT.exists():
@@ -1164,6 +1168,26 @@ def main() -> None:
             m.get("provider") or "",
             m.get("model_id") or "",
         )
+
+    # Deduplicate by case-insensitive model_id (catalog can list the same
+    # model under multiple publishers, e.g. foundry-local + huggingface).
+    by_id: dict[str, dict] = {}
+    for m in models:
+        key = str(m.get("model_id") or "").lower()
+        if not key:
+            continue
+        prev = by_id.get(key)
+        if prev is None:
+            by_id[key] = m
+            continue
+        def _score(x: dict) -> tuple:
+            return (
+                1 if (x.get("pricing") or {}).get("input_per_1m") is not None else 0,
+                1 if (x.get("extra") or {}).get("maas_or_paygo") else 0,
+            )
+        if _score(m) > _score(prev):
+            by_id[key] = m
+    models = [by_id[k] for k in sorted(by_id)]
 
     models.sort(key=sort_key)
 

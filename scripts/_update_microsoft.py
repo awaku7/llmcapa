@@ -85,7 +85,9 @@ def base(
 ) -> dict:
     aliases = list(aliases or [])
     bare = model_id
-    # OpenRouter-style microsoft/<kebab>
+    # Native catalog: bare kebab/lowercase variants only.
+    # Route-qualified IDs such as microsoft/<id> belong to the
+    # openrouter catalog and must not be added as native aliases.
     kebab = bare.replace("_", "-")
     # lower-kebab for common API ids
     lower = kebab
@@ -108,7 +110,7 @@ def base(
         # collapse accidental double handling
         lower = lower.replace("--", "-")
 
-    for a in (f"microsoft/{lower}", lower, bare):
+    for a in (lower, bare):
         if a and a not in aliases and a != model_id:
             aliases.append(a)
     # de-dupe preserve order
@@ -273,7 +275,7 @@ def build() -> list[dict]:
             function_calling=True,
             json_mode=True,
             chat=True,
-            aliases=["phi-4", "microsoft/phi-4"],
+            aliases=["phi-4"],
             extra=ft_extra(
                 notes={
                     "foundry_pricing_context_listed": "128K",
@@ -375,10 +377,7 @@ def build() -> list[dict]:
             reasoning=True,
             function_calling=True,
             chat=True,
-            aliases=[
-                "phi-4-reasoning-plus",
-                "microsoft-phi-4-reasoning-plus",
-            ],
+            aliases=["phi-4-reasoning-plus", "microsoft-phi-4-reasoning-plus", ],
             extra=ft_extra(
                 include_ft=False,
                 notes={
@@ -617,7 +616,7 @@ def build() -> list[dict]:
             function_calling=True,
             chat=True,
             knowledge_cutoff="2024-07",
-            aliases=["mai-ds-r1", "microsoft/mai-ds-r1"],
+            aliases=["mai-ds-r1"],
             extra={
                 "source": SOURCE_PRICING,
                 "retired_docs": SOURCE_RETIRED,
@@ -646,7 +645,7 @@ def build() -> list[dict]:
             vision=True,
             function_calling=False,
             chat=False,
-            aliases=["mai-image-2", "microsoft/mai-image-2"],
+            aliases=["mai-image-2"],
             extra={
                 "source": SOURCE_PRICING,
                 "mai_docs": SOURCE_MAI_DOCS,
@@ -669,11 +668,7 @@ def build() -> list[dict]:
             vision=True,
             function_calling=False,
             chat=False,
-            aliases=[
-                "mai-image-2e",
-                "MAI-Image-2-Efficient",
-                "mai-image-2-efficient",
-            ],
+            aliases=["mai-image-2e", "MAI-Image-2-Efficient", "mai-image-2-efficient", ],
             extra={
                 "source": SOURCE_PRICING,
                 "mai_docs": SOURCE_MAI_DOCS,
@@ -696,7 +691,7 @@ def build() -> list[dict]:
             vision=True,
             function_calling=False,
             chat=False,
-            aliases=["mai-image-2.5", "microsoft/mai-image-2.5"],
+            aliases=["mai-image-2.5"],
             extra={
                 "source": SOURCE_PRICING,
                 "mai_docs": SOURCE_MAI_DOCS,
@@ -777,7 +772,7 @@ def build() -> list[dict]:
             output_modalities=["text", "audio"],
             function_calling=False,
             chat=False,
-            aliases=["mai-voice-2", "microsoft/mai-voice-2"],
+            aliases=["mai-voice-2"],
             extra={
                 "source": SOURCE_CATALOG,
                 "mai_news": SOURCE_MAI_NEWS,
@@ -822,7 +817,7 @@ def build() -> list[dict]:
             output_modalities=["text"],
             function_calling=False,
             chat=False,
-            aliases=["mai-transcribe-1.5", "microsoft/mai-transcribe-1.5"],
+            aliases=["mai-transcribe-1.5"],
             extra={
                 "source": SOURCE_CATALOG,
                 "mai_news": SOURCE_MAI_NEWS,
@@ -888,7 +883,7 @@ def build() -> list[dict]:
             pricing=None,
             function_calling=True,
             chat=True,
-            aliases=["Model-Router", "microsoft/model-router"],
+            aliases=["Model-Router"],
             extra={
                 "source": SOURCE_CATALOG,
                 "category": "router",

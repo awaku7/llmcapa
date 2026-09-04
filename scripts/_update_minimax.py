@@ -40,7 +40,7 @@ TEXT_MODELS = [
         "supports_reasoning": True,
         "supports_thinking_budget": True,
         "pricing": {"input_per_1m": 0.30, "output_per_1m": 1.20, "currency": "USD"},
-        "aliases": ["minimax-m3", "minimax/minimax-m3", "MiniMax-M3"],
+        "aliases": ["minimax-m3", "MiniMax-M3"],
         "extra": {
             "source": SOURCE_PRICING,
             "pricing_note": "permanent 50% off ≤512k (list $0.60/$2.40); >512k $0.60/$2.40",
@@ -68,7 +68,7 @@ TEXT_MODELS = [
         "supports_json_mode": True,
         "supports_reasoning": True,
         "pricing": {"input_per_1m": 0.30, "output_per_1m": 1.20, "currency": "USD"},
-        "aliases": ["minimax-m2.7", "minimax/minimax-m2.7"],
+        "aliases": ["minimax-m2.7"],
         "extra": {
             "source": SOURCE_PRICING,
             "cache_read_per_1m": 0.06,
@@ -86,7 +86,7 @@ TEXT_MODELS = [
         "supports_json_mode": True,
         "supports_reasoning": True,
         "pricing": {"input_per_1m": 0.60, "output_per_1m": 2.40, "currency": "USD"},
-        "aliases": ["minimax-m2.7-highspeed", "minimax/minimax-m2.7-highspeed"],
+        "aliases": ["minimax-m2.7-highspeed"],
         "extra": {"source": SOURCE_PRICING, "tier": "highspeed"},
     },
     {
@@ -100,7 +100,7 @@ TEXT_MODELS = [
         "supports_json_mode": True,
         "supports_reasoning": True,
         "pricing": {"input_per_1m": 0.30, "output_per_1m": 1.20, "currency": "USD"},
-        "aliases": ["minimax-m2.5", "minimax/minimax-m2.5"],
+        "aliases": ["minimax-m2.5"],
         "extra": {"source": SOURCE_PRICING},
     },
     {
@@ -127,7 +127,7 @@ TEXT_MODELS = [
         "supports_function_calling": True,
         "supports_json_mode": True,
         "pricing": {"input_per_1m": 0.30, "output_per_1m": 1.20, "currency": "USD"},
-        "aliases": ["minimax-m2.1", "minimax/minimax-m2.1"],
+        "aliases": ["minimax-m2.1"],
         "extra": {"source": SOURCE_PRICING},
     },
     {
@@ -153,7 +153,7 @@ TEXT_MODELS = [
         "supports_function_calling": True,
         "supports_json_mode": True,
         "pricing": {"input_per_1m": 0.30, "output_per_1m": 1.20, "currency": "USD"},
-        "aliases": ["minimax-m2", "minimax/minimax-m2"],
+        "aliases": ["minimax-m2"],
         "extra": {"source": SOURCE_PRICING},
     },
     # Legacy / third-party mirror ids retained for lookup
@@ -166,7 +166,7 @@ TEXT_MODELS = [
         "output_modalities": ["text"],
         "supports_function_calling": True,
         "pricing": {"input_per_1m": 0.55, "output_per_1m": 2.20, "currency": "USD"},
-        "aliases": ["minimax/minimax-m1"],
+        "aliases": [],
         "deprecated": False,
         "extra": {
             "source": SOURCE_PRICING,
@@ -183,7 +183,7 @@ TEXT_MODELS = [
         "supports_vision": True,
         "supports_function_calling": True,
         "pricing": {"input_per_1m": 0.20, "output_per_1m": 1.10, "currency": "USD"},
-        "aliases": ["minimax/minimax-01"],
+        "aliases": [],
         "extra": {"source": SOURCE_PRICING, "note": "legacy multimodal"},
     },
 ]

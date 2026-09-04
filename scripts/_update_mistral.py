@@ -1,6 +1,7 @@
-"""Build mistral.json from Playwright scrape (_scratch_mistral_scrape_full.json).
+"""Build mistral.json from the static-HTML scrape (_scratch_mistral_scrape_full.json).
 
 Source: https://docs.mistral.ai/models + direct model pages (/models/<slug>)
+Scraper: scripts/_scrape_mistral.py (plain urllib, no browser needed)
 Shape: xai-style Capability JSON with pricing + extra.source
 """
 
@@ -129,6 +130,11 @@ def parse_us_date(s: str | None) -> datetime | None:
 
 
 def is_deprecated(m: dict) -> bool:
+    status = str(m.get("status") or "").lower()
+    if status in ("deprecated", "retired", "legacy", "discontinued", "eol"):
+        return True
+    if status in ("ga", "public preview", "preview", "beta", "active", "experimental"):
+        return False
     if m.get("deprecation_date"):
         return True
     ret = parse_us_date(m.get("retirement_date"))
@@ -187,7 +193,13 @@ def build_row(slug: str, m: dict) -> dict:
     is_transcribe = transcription or "transcribe" in name_l or "transcribe" in mid_l
     is_ocr = ("ocr" in name_l or "ocr" in mid_l) and not chat
     is_embed = emb or "embed" in name_l or "embed" in mid_l
-    is_moderation = moderation or "moderation" in name_l
+    is_moderation = (
+        moderation
+        or "moderation" in name_l
+        or "moderation" in mid_l
+        or "shieldstral" in name_l
+        or "shieldstral" in mid_l
+    )
     is_voxtral_chat = (
         ("voxtral" in name_l or "voxtral" in mid_l) and not is_tts and not is_transcribe
     )
@@ -212,8 +224,13 @@ def build_row(slug: str, m: dict) -> dict:
         chat = False
     elif is_moderation and not chat:
         in_mods = ["text"]
+        desc_l = (m.get("description") or "").lower()
+        if "image" in name_l or "image" in mid_l or "image" in desc_l or "multimodal" in desc_l:
+            in_mods.append("image")
+            vision = True
+        else:
+            vision = False
         out_mods = ["text"]
-        vision = False
     elif is_tts:
         in_mods = ["text"]
         out_mods = ["audio"]
@@ -235,10 +252,16 @@ def build_row(slug: str, m: dict) -> dict:
         out_mods = ["text"]
 
     ctx = m.get("ctx_k")
+    max_out = m.get("max_out_k")
 
+    # The header-row CONTEXT value is authoritative. A thin scrape (e.g. a
+    # version string misread as context) must never inflate a bundled value:
+    # only grow ctx when the card has header-row Features (real card) or when
+    # there is no bundled value yet. Specialty cards keep ctx=0.
     ctx_tokens = (int(float(ctx) * 1000) if ctx else 0) or (
         0 if _is_specialty(mid) else 4096
     )
+    max_out_tokens = int(float(max_out) * 1000) if max_out else 0
 
     # Pricing: only token pricing goes into pricing{}; specialty units in extra
     pricing = None
@@ -276,9 +299,16 @@ def build_row(slug: str, m: dict) -> dict:
             pricing["output_per_1m"] = float(op)
 
     extra: dict = {
-        "source": m.get("url") or f"https://docs.mistral.ai/models/model-cards/{slug}",
+        "source": m.get("url") or f"https://docs.mistral.ai/models/{slug}",
         "card_slug": slug,
     }
+    if m.get("cached_input") is not None:
+        try:
+            extra["cached_input_per_1m"] = float(m["cached_input"])
+        except (TypeError, ValueError):
+            pass
+    if m.get("status"):
+        extra["status"] = m["status"]
     if m.get("ver"):
         extra["version"] = m["ver"]
     if m.get("date"):
@@ -366,7 +396,7 @@ def build_row(slug: str, m: dict) -> dict:
         "model_id": mid,
         "display_name": display,
         "context_window": ctx_tokens,
-        "max_output_tokens": 0,
+        "max_output_tokens": max_out_tokens,
         "input_modalities": in_mods,
         "output_modalities": out_mods,
         "supports_function_calling": fc if chat else False,
@@ -420,6 +450,36 @@ def main() -> None:
         s for s, m in models.items() if not m.get("is404")
     ]
 
+    # Previously bundled values: the scrape has no header-row context for
+    # legacy cards (weights-table "32k" or version-string noise like v26.04
+    # must not inflate a real 4096/32000). Keep the larger of scraped vs
+    # bundled context, and never drop a bundled token price for a null scrape.
+    # Baseline for preservation: git HEAD (last committed good state), not
+    # the workdir file — workdir may already carry noise from a previous
+    # buggy run (e.g. ctx=2000000 from a version string), which would then
+    # self-perpetuate via the merge below.
+    prev: dict[str, dict] = {}
+    try:
+        import subprocess as _sp
+
+        _head = _sp.run(
+            ["git", "show", "HEAD:src/llmcapa/data/mistral.json"],
+            capture_output=True, text=True, encoding="utf-8", errors="replace",
+            cwd=str(OUT.parents[2]),
+        )
+        _base = json.loads(_head.stdout) if _head.returncode == 0 else None
+        if _base is None:
+            raise ValueError("no HEAD data")
+        for m in _base.get("models", []):
+            prev[m.get("model_id")] = m
+    except Exception:  # noqa: BLE001
+        try:
+            if OUT.exists():
+                for m in json.loads(OUT.read_text(encoding="utf-8")).get("models", []):
+                    prev[m.get("model_id")] = m
+        except Exception:  # noqa: BLE001
+            prev = {}
+
     rows: list[dict] = []
     skipped = []
     for slug in overview:
@@ -427,7 +487,22 @@ def main() -> None:
         if not m or m.get("is404"):
             skipped.append(slug)
             continue
-        rows.append(build_row(slug, m))
+        row = build_row(slug, m)
+        old = prev.get(row["model_id"])
+        if old:
+            old_ctx = old.get("context_window") or 0
+            new_ctx = row.get("context_window") or 0
+            if new_ctx == 0 and old_ctx:
+                # Card has no header-row CONTEXT (retired prototype / OCR stub):
+                # keep the bundled value instead of zeroing it.
+                row["context_window"] = old_ctx
+            elif new_ctx in (4096, 2000000) and old_ctx not in (0, 4096, 2000000):
+                # 4096 is the chat-default fallback and 2000000 is version-string
+                # noise (v26.04 etc.); a real bundled value wins over those.
+                row["context_window"] = old_ctx
+            if row.get("pricing") is None and old.get("pricing"):
+                row["pricing"] = old["pricing"]
+        rows.append(row)
 
     rows = dedupe_model_ids(rows)
 

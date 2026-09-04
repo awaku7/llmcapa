@@ -34,12 +34,17 @@ def main() -> None:
     by_id = {m.get("model_id"): m for m in data.get("models", [])}
     updated = 0
     for mid, (ctx, max_out, inp, out, reasoning) in RULES.items():
-        model = by_id.get(mid)
+        bare = mid.split("/", 1)[1] if "/" in mid else mid
+        # drop legacy slash-duplicate; the native catalog uses bare ids
+        # (slash routes such as aion-labs/aion-3.0 belong to the openrouter catalog)
+        data["models"][:] = [m for m in data.get("models", []) if m.get("model_id") != mid]
+        by_id.pop(mid, None)
+        model = by_id.get(bare)
         if model is None:
             model = {
                 "provider": "aion-labs",
-                "model_id": mid,
-                "display_name": mid,
+                "model_id": bare,
+                "display_name": bare,
                 "context_window": ctx,
                 "max_output_tokens": max_out,
                 "input_modalities": ["text"],
@@ -58,8 +63,8 @@ def main() -> None:
                 "supports_fim": False,
                 "tokenizer_name": "Other",
                 "knowledge_cutoff": None,
-                "deprecated": mid.endswith("2.5"),
-                "aliases": [mid],
+                "deprecated": bare.endswith("2.5"),
+                "aliases": [],
                 "license_type": "api",
                 "pricing": {},
             }

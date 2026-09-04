@@ -48,10 +48,13 @@ def base_row(
     modalities_in = modalities_in or (["text", "image"] if vision else ["text"])
     modalities_out = modalities_out or ["text"]
     aliases = list(aliases or [])
+    # Native catalog only: bare model_id and explicit bare aliases.
+    # Route-qualified IDs such as nvidia/<id> belong to the openrouter
+    # catalog and must not be added as native aliases.
     bare = model_id.split("/")[-1]
-    for a in (bare, f"nvidia/{bare}"):
-        if a not in aliases and a != model_id:
-            aliases.append(a)
+    if bare != model_id and bare not in aliases:
+        aliases.append(bare)
+    model_id = bare
     row: dict = {
         "provider": "nvidia",
         "model_id": model_id,
@@ -96,7 +99,7 @@ def base_row(
 # Official NIM model IDs + partner serverless prices (Playwright 2026-07-18)
 UPSERTS: list[dict] = [
     base_row(
-        model_id="nvidia/nemotron-3-ultra-550b-a55b",
+        model_id="nemotron-3-ultra-550b-a55b",
         display="NVIDIA Nemotron 3 Ultra 550B-A55B",
         ctx=1_048_576,
         max_out=16384,
@@ -106,7 +109,7 @@ UPSERTS: list[dict] = [
         reasoning=True,
         aliases=[
             "nemotron-3-ultra",
-            "nvidia/nemotron-3-ultra-550b-a55b:free",
+            "nemotron-3-ultra-550b-a55b:free",
         ],
         extra={
             "params": "561B",
@@ -126,7 +129,7 @@ UPSERTS: list[dict] = [
         },
     ),
     base_row(
-        model_id="nvidia/nemotron-3-super-120b-a12b",
+        model_id="nemotron-3-super-120b-a12b",
         display="NVIDIA Nemotron 3 Super 120B-A12B",
         ctx=1_048_576,
         max_out=16384,
@@ -136,7 +139,7 @@ UPSERTS: list[dict] = [
         reasoning=True,
         aliases=[
             "nemotron-3-super",
-            "nvidia/nemotron-3-super-120b-a12b:free",
+            "nemotron-3-super-120b-a12b:free",
         ],
         extra={
             "architecture": "hybrid Mamba-Transformer MoE",
@@ -153,7 +156,7 @@ UPSERTS: list[dict] = [
         },
     ),
     base_row(
-        model_id="nvidia/nemotron-3-nano-30b-a3b",
+        model_id="nemotron-3-nano-30b-a3b",
         display="NVIDIA Nemotron 3 Nano 30B-A3B",
         ctx=1_048_576,
         max_out=16384,
@@ -163,7 +166,7 @@ UPSERTS: list[dict] = [
         reasoning=True,
         aliases=[
             "nemotron-3-nano",
-            "nvidia/nemotron-3-nano-30b-a3b:free",
+            "nemotron-3-nano-30b-a3b:free",
         ],
         extra={
             "architecture": "MoE",
@@ -176,7 +179,7 @@ UPSERTS: list[dict] = [
         },
     ),
     base_row(
-        model_id="nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+        model_id="nemotron-3-nano-omni-30b-a3b-reasoning",
         display="NVIDIA Nemotron 3 Nano Omni 30B-A3B Reasoning",
         ctx=1_048_576,
         max_out=16384,
@@ -188,7 +191,7 @@ UPSERTS: list[dict] = [
         modalities_in=["text", "image", "video", "speech", "audio"],
         aliases=[
             "nemotron-3-omni",
-            "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+            "nemotron-3-nano-omni-30b-a3b-reasoning:free",
         ],
         extra={
             "pricing_status": "free_endpoint_primary",
@@ -201,7 +204,7 @@ UPSERTS: list[dict] = [
         },
     ),
     base_row(
-        model_id="nvidia/nemotron-3-embed-1b",
+        model_id="nemotron-3-embed-1b",
         display="NVIDIA Nemotron 3 Embed 1B",
         ctx=8192,
         max_out=0,
@@ -220,7 +223,7 @@ UPSERTS: list[dict] = [
         },
     ),
     base_row(
-        model_id="nvidia/nemotron-3.5-content-safety",
+        model_id="nemotron-3.5-content-safety",
         display="NVIDIA Nemotron 3.5 Content Safety",
         ctx=32768,
         max_out=4096,
@@ -231,7 +234,7 @@ UPSERTS: list[dict] = [
         vision=True,
         aliases=[
             "nemotron-3.5-content-safety",
-            "nvidia/nemotron-3.5-content-safety:free",
+            "nemotron-3.5-content-safety:free",
         ],
         extra={
             "pricing_status": "free_endpoint",
@@ -239,7 +242,7 @@ UPSERTS: list[dict] = [
         },
     ),
     base_row(
-        model_id="nvidia/cosmos3-nano",
+        model_id="cosmos3-nano",
         display="NVIDIA Cosmos 3 Nano",
         ctx=0,
         max_out=0,
@@ -258,7 +261,7 @@ UPSERTS: list[dict] = [
         },
     ),
     base_row(
-        model_id="nvidia/cosmos3-nano-reasoner",
+        model_id="cosmos3-nano-reasoner",
         display="NVIDIA Cosmos 3 Nano Reasoner",
         ctx=131072,
         max_out=8192,
@@ -293,20 +296,7 @@ def main() -> None:
     changed: list[str] = []
     for row in UPSERTS:
         mid = row["model_id"]
-        bare = mid.split("/")[-1]
         idx = by_id.get(mid)
-        if idx is None:
-            # replace bare-name legacy entry if present
-            idx = bare_index.get(bare)
-            if idx is not None and models[idx]["model_id"] != mid:
-                # keep old as alias if different
-                old = models[idx]
-                if old["model_id"] not in row["aliases"]:
-                    row["aliases"].append(old["model_id"])
-                models[idx] = row
-                by_id[mid] = idx
-                changed.append(f"replaced:{old['model_id']}->{mid}")
-                continue
         if idx is None:
             models.append(row)
             by_id[mid] = len(models) - 1
@@ -317,9 +307,9 @@ def main() -> None:
 
     # Sync free-endpoint twin pricing for known free aliases
     free_twins = {
-        "nvidia/nemotron-3-ultra-550b-a55b:free": "nvidia/nemotron-3-ultra-550b-a55b",
-        "nvidia/nemotron-3-super-120b-a12b:free": "nvidia/nemotron-3-super-120b-a12b",
-        "nvidia/nemotron-3-nano-30b-a3b:free": "nvidia/nemotron-3-nano-30b-a3b",
+        "nemotron-3-ultra-550b-a55b:free": "nemotron-3-ultra-550b-a55b",
+        "nemotron-3-super-120b-a12b:free": "nemotron-3-super-120b-a12b",
+        "nemotron-3-nano-30b-a3b:free": "nemotron-3-nano-30b-a3b",
     }
     for free_id, paid_id in free_twins.items():
         if free_id in by_id:
