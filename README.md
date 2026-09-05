@@ -142,6 +142,8 @@ gemini_live = llmcapa.get("gemini-3.1-flash-live-preview", provider="google")
 
 ### Reasoning & Thinking Checks
 
+See the full provider-neutral API specification in [docs/API_SPECIFICATION.md](docs/API_SPECIFICATION.md).
+
 Differentiate between OpenAI-style `reasoning_effort` and Anthropic-style `thinking_budget` using `Feature` enum:
 
 ```python
@@ -193,6 +195,39 @@ cap3 = llmcapa.get("gpt-4o")
 print(cap3.get_thinking_budget_values())
 # {}
 ```
+
+### Thinking Level Values
+
+Gemini 3 and other APIs with discrete thinking controls use `thinking_level`, which is distinct from both `reasoning_effort` and numeric `thinking_budget`:
+
+```python
+cap = llmcapa.get("gemini-3-flash-preview", provider="vertex-ai")
+print(cap.supports(Feature.LLMC_FEAT_THINKING_LEVEL))  # True
+print(cap.get_thinking_level_values())
+# ['minimal', 'low', 'medium', 'high']
+
+# For Gemini 2.5 / Vertex AI numeric budgets:
+budget = llmcapa.get("gemini-2.5-flash", provider="vertex-ai")
+print(budget.get_thinking_budget_values())
+# {'type': 'token_range', 'min': 0, 'max': 24576}
+```
+
+`llmcapa` reports the provider-specific capability metadata; the application passes the selected `thinking_level` or `thinking_budget` to the provider API.
+
+For provider-neutral request construction, use `thinking_control`:
+
+```python
+control = cap.get_thinking_control()
+# {'kind': 'level', 'parameter': 'thinking_level',
+#  'values': ['minimal', 'low', 'medium', 'high']}
+
+minimax = llmcapa.get("MiniMax-M3", provider="minimax")
+print(minimax.get_thinking_control())
+# {'kind': 'toggle', 'parameter': 'thinking',
+#  'values': ['enabled', 'disabled'], ...}
+```
+
+This is additive and does not change the existing `reasoning_effort` or `thinking_budget` APIs.
 
 ### Sakana Fugu (Multi-Agent Orchestration)
 

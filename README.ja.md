@@ -142,6 +142,8 @@ gemini_live = llmcapa.get("gemini-3.1-flash-live-preview", provider="google")
 
 ### 推論（Reasoning）と思考（Thinking）の確認
 
+プロバイダー共通APIの仕様は [docs/API_SPECIFICATION.md](docs/API_SPECIFICATION.md) を参照してください。
+
 `Feature` Enum を使用して、OpenAIスタイルの `reasoning_effort` と Anthropicスタイルの `thinking_budget` を区別して確認できます。
 
 ```python
@@ -193,6 +195,38 @@ cap3 = llmcapa.get("gpt-4o")
 print(cap3.get_thinking_budget_values())
 # {}
 ```
+
+### Thinking Level の値
+
+Gemini 3 などの離散的な思考制御を持つAPIは、`reasoning_effort` や数値の `thinking_budget` とは別に `thinking_level` を使用します。
+
+```python
+cap = llmcapa.get("gemini-3-flash-preview", provider="vertex-ai")
+print(cap.supports(Feature.LLMC_FEAT_THINKING_LEVEL))  # True
+print(cap.get_thinking_level_values())
+# ['minimal', 'low', 'medium', 'high']
+
+budget = llmcapa.get("gemini-2.5-flash", provider="vertex-ai")
+print(budget.get_thinking_budget_values())
+# {'type': 'token_range', 'min': 0, 'max': 24576}
+```
+
+`llmcapa` はプロバイダー固有の機能メタデータを提供します。実際の `thinking_level` や `thinking_budget` の値は、アプリケーションからプロバイダーAPIへ渡してください。
+
+プロバイダーを意識しないリクエスト構築には `thinking_control` を使用できます。
+
+```python
+control = cap.get_thinking_control()
+# {'kind': 'level', 'parameter': 'thinking_level',
+#  'values': ['minimal', 'low', 'medium', 'high']}
+
+minimax = llmcapa.get("MiniMax-M3", provider="minimax")
+print(minimax.get_thinking_control())
+# {'kind': 'toggle', 'parameter': 'thinking',
+#  'values': ['enabled', 'disabled'], ...}
+```
+
+これは後方互換の追加機能で、既存の `reasoning_effort` や `thinking_budget` のAPIは変更しません。
 
 ### Sakana Fugu（マルチエージェント・オーケストレーション）
 
