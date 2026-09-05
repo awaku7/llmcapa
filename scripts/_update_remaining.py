@@ -63,8 +63,16 @@ with open(path_meta, "w", encoding="utf-8") as f:
     json.dump(meta_data, f, ensure_ascii=False, indent=2)
 print(f"meta.json: {len(meta_data['models'])} models preserved", flush=True)
 
-# Copy to installed
-shutil.copy2(path_mistral, os.path.join(INSTALLED, "mistral.json"))
-shutil.copy2(path_meta, os.path.join(INSTALLED, "meta.json"))
-print("Copied to installed package", flush=True)
+# DATA and INSTALLED intentionally point at the same source tree in this
+# checkout. Avoid copying files onto themselves (Windows raises WinError 32).
+for source in (path_mistral, path_meta):
+    destination = os.path.abspath(os.path.join(INSTALLED, os.path.basename(source)))
+    if os.path.abspath(source) != destination:
+        shutil.copy2(source, destination)
+        print(f"Copied {os.path.basename(source)} to installed package", flush=True)
+    else:
+        print(
+            f"Installed path for {os.path.basename(source)} is the source path; copy skipped",
+            flush=True,
+        )
 print("Done", flush=True)

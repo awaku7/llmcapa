@@ -72,6 +72,11 @@ def base_row(
         "supports_responses_api": False,
         "supports_reasoning_effort": False,
         "supports_thinking_budget": reasoning and chat,
+        "thinking_budget_values": (
+            {"type": "token_range", "min": 1024, "max": max_out or 4096}
+            if reasoning and chat
+            else None
+        ),
         "supports_anthropic_api": False,
         "supports_google_api": False,
         "supports_fim": False,

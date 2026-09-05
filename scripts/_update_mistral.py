@@ -225,7 +225,12 @@ def build_row(slug: str, m: dict) -> dict:
     elif is_moderation and not chat:
         in_mods = ["text"]
         desc_l = (m.get("description") or "").lower()
-        if "image" in name_l or "image" in mid_l or "image" in desc_l or "multimodal" in desc_l:
+        if (
+            "image" in name_l
+            or "image" in mid_l
+            or "image" in desc_l
+            or "multimodal" in desc_l
+        ):
             in_mods.append("image")
             vision = True
         else:
@@ -464,7 +469,10 @@ def main() -> None:
 
         _head = _sp.run(
             ["git", "show", "HEAD:src/llmcapa/data/mistral.json"],
-            capture_output=True, text=True, encoding="utf-8", errors="replace",
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
             cwd=str(OUT.parents[2]),
         )
         _base = json.loads(_head.stdout) if _head.returncode == 0 else None

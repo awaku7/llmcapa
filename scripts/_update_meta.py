@@ -36,6 +36,11 @@ OFFICIAL_GLIMMER = (
 STANDARD = {"input": 1.25, "output": 4.25, "cached_input": 0.15}
 CONTRIBUTOR = {"input": 0.10, "output": 0.20, "cached_input": 0.002}
 
+# Meta's reasoning documentation lists these values for Muse Spark 1.3.
+# ``none`` is rejected by Muse Spark, and ``max`` is available only on the
+# Standard-tier Muse Spark 1.3 model (not on the Contributor tier).
+SPARK_13_REASONING_EFFORTS = ["minimal", "low", "medium", "high", "xhigh"]
+
 BASE_URL = "https://api.meta.ai/v1"
 
 
@@ -84,9 +89,7 @@ def parse_pricing(text: str) -> dict:
     voice = re.search(r"Audio processed \| \$([0-9.]+) per hour", text)
     if voice:
         out["voice_per_hour"] = float(voice.group(1))
-    image = re.search(
-        r"billed at a flat \$([0-9.]+) per generated image", text
-    )
+    image = re.search(r"billed at a flat \$([0-9.]+) per generated image", text)
     if image:
         out["image_per_image"] = float(image.group(1))
     return out
@@ -163,6 +166,10 @@ def spark_row(*, model_id: str, display: str, tier: str, table: dict) -> dict:
             ],
         },
     }
+    if model_id.startswith("muse-spark-"):
+        row["reasoning_effort_values"] = list(SPARK_13_REASONING_EFFORTS)
+        if model_id == "muse-spark-1.3" and tier == "standard":
+            row["reasoning_effort_values"].append("max")
     return row
 
 
@@ -192,11 +199,21 @@ def build() -> tuple[list[dict], dict]:
         ("muse-spark-1.3", "Meta: Muse Spark 1.3", "standard"),
         ("muse-spark-1.2", "Meta: Muse Spark 1.2", "standard"),
         ("muse-spark-1.1", "Meta: Muse Spark 1.1", "standard"),
-        ("muse-spark-1.3-contributor", "Meta: Muse Spark 1.3 Contributor", "contributor"),
-        ("muse-spark-1.2-contributor", "Meta: Muse Spark 1.2 Contributor", "contributor"),
+        (
+            "muse-spark-1.3-contributor",
+            "Meta: Muse Spark 1.3 Contributor",
+            "contributor",
+        ),
+        (
+            "muse-spark-1.2-contributor",
+            "Meta: Muse Spark 1.2 Contributor",
+            "contributor",
+        ),
     ]
     for mid, display, tier in specs:
-        row = spark_row(model_id=mid, display=display, tier=tier, table=table.get(mid, {}))
+        row = spark_row(
+            model_id=mid, display=display, tier=tier, table=table.get(mid, {})
+        )
         # Refresh pricing from the live page (falls back to constants above).
         live = std if tier == "standard" else con
         row["pricing"] = {

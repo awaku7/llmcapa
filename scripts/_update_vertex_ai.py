@@ -16,6 +16,37 @@ GOOGLE = ROOT / "src" / "llmcapa" / "data" / "google.json"
 OUT = ROOT / "src" / "llmcapa" / "data" / "vertex-ai.json"
 LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models"
+THINKING_SOURCE = (
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/thinking"
+)
+
+# First-party Vertex Gemini controls. These are model-specific and deliberately
+# kept separate from OpenAI-compatible reasoning_effort.
+VERTEX_GEMINI_SPECS = {
+    "gemini-2.5-pro": {
+        "parameter": "thinking_budget",
+        "supports_thinking_budget": True,
+        "thinking_budget_values": {"type": "token_range", "min": 0, "max": 32768},
+    },
+    "gemini-2.5-flash": {
+        "parameter": "thinking_budget",
+        "supports_thinking_budget": True,
+        "thinking_budget_values": {"type": "token_range", "min": 0, "max": 24576},
+    },
+    "gemini-2.5-flash-lite": {
+        "parameter": "thinking_budget",
+        "supports_thinking_budget": True,
+        "thinking_budget_values": {"type": "token_range", "min": 512, "max": 24576},
+    },
+    "gemini-3-pro-preview": {
+        "parameter": "thinking_level",
+        "thinking_level_values": ["low", "high"],
+    },
+    "gemini-3-flash-preview": {
+        "parameter": "thinking_level",
+        "thinking_level_values": ["minimal", "low", "medium", "high"],
+    },
+}
 
 
 def discover_models() -> list[tuple[str, str]]:
@@ -69,6 +100,11 @@ def discover_models() -> list[tuple[str, str]]:
         raise RuntimeError(
             f"Vertex AI SDK returned too few deployable models: {len(result)}"
         )
+    # The SDK Model Garden listing may omit first-party Gemini IDs even though
+    # they are supported by Vertex AI. Keep the official Gemini set explicit
+    # so their model-specific thinking controls are not lost.
+    for model_id in VERTEX_GEMINI_SPECS:
+        result.setdefault(model_id, model_id.replace("-", " ").title())
     return sorted(result.items())
 
 
@@ -97,6 +133,47 @@ def minimal(model_id: str, label: str) -> dict:
             "spec_status": "sdk_listed_only",
         },
     }
+
+
+def enrich_thinking(row: dict) -> None:
+    """Attach first-party Vertex Gemini thinking controls by model family."""
+    model_id = row.get("model_id", "").lower()
+    spec = next(
+        (
+            value
+            for key, value in sorted(
+                VERTEX_GEMINI_SPECS.items(), key=lambda item: len(item[0]), reverse=True
+            )
+            if model_id.startswith(key)
+        ),
+        None,
+    )
+    if not spec:
+        return
+    row["supports_reasoning_effort"] = False
+    row["reasoning_effort_values"] = None
+    row["supports_thinking_level"] = bool(spec.get("thinking_level_values"))
+    row["thinking_level_values"] = list(spec.get("thinking_level_values", [])) or None
+    if spec.get("supports_thinking_budget"):
+        row["supports_thinking_budget"] = True
+        row["thinking_budget_values"] = dict(spec["thinking_budget_values"])
+    if spec["parameter"] == "thinking_budget":
+        row["thinking_control"] = {
+            "kind": "budget",
+            "parameter": "thinking_budget",
+            **row["thinking_budget_values"],
+        }
+    else:
+        row["thinking_control"] = {
+            "kind": "level",
+            "parameter": "thinking_level",
+            "values": list(spec["thinking_level_values"]),
+        }
+    extra = row.setdefault("extra", {})
+    extra["thinking_parameter"] = spec["parameter"]
+    if "thinking_level_values" in spec:
+        extra["thinking_level_values"] = list(spec["thinking_level_values"])
+    extra["thinking_source"] = THINKING_SOURCE
 
 
 def enrich_modalities(row: dict) -> None:
@@ -149,6 +226,7 @@ def main() -> None:
         row.setdefault("extra", {})["source"] = SOURCE
         row["extra"]["platform"] = "Google Cloud Vertex AI / Model Garden"
         enrich_modalities(row)
+        enrich_thinking(row)
         rows.append(row)
     OUT.write_text(
         json.dumps({"models": rows}, ensure_ascii=False, indent=2) + "\n",

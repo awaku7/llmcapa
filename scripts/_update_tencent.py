@@ -14,6 +14,8 @@ INSTALLED = (
 )
 LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://cloud.tencent.com/document/product/1729/97731"
+HY3_REASONING_SOURCE = "https://intl.cloud.tencent.com/document/product/1300/80695"
+HY3_REASONING_EFFORTS = ["low", "medium", "high"]
 RULES = {"tencent/hunyuan-a13b-instruct": (0.5, 2.0, "Hunyuan-a13b")}
 
 
@@ -41,6 +43,9 @@ def main() -> None:
             "currency": "CNY",
         }
         extra = model.setdefault("extra", {})
+        if model.get("model_id") in {"hy3", "hy3-preview"}:
+            model["reasoning_effort_values"] = list(HY3_REASONING_EFFORTS)
+            extra["reasoning_effort_source"] = HY3_REASONING_SOURCE
         extra.update(
             {
                 "official_source": SOURCE,
@@ -51,6 +56,12 @@ def main() -> None:
             }
         )
         updated += 1
+    for model in data.get("models", []):
+        if model.get("model_id") in {"hy3", "hy3-preview"}:
+            model["reasoning_effort_values"] = list(HY3_REASONING_EFFORTS)
+            model.setdefault("extra", {})[
+                "reasoning_effort_source"
+            ] = HY3_REASONING_SOURCE
     DATA.write_text(
         json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )

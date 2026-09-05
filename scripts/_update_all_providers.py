@@ -48,6 +48,7 @@ PROVIDER_SCRIPTS = {
     "tencent": "_update_tencent.py",
     "together": "_update_together.py",
     "upstage": "_update_upstage.py",
+    "vercel": "_update_vercel.py",
     "xai": "_update_xai.py",
     "xiaomi": "_update_xiaomi.py",
 }

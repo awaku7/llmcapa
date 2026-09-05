@@ -216,6 +216,13 @@ def main() -> None:
         m["supports_fim"] = False
         updated += 1
 
+    # Native Gemini uses thinking_budget / thinking_level, not the
+    # OpenAI-compatible reasoning_effort field. Clear stale effort metadata
+    # from imported and batch records instead of inventing effort values.
+    for model in models:
+        model["supports_reasoning_effort"] = False
+        model["reasoning_effort_values"] = None
+
     # Insert missing models that have templates
     for mid in google_prices:
         tmpl = template_for(mid)

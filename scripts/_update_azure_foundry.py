@@ -1180,11 +1180,13 @@ def main() -> None:
         if prev is None:
             by_id[key] = m
             continue
+
         def _score(x: dict) -> tuple:
             return (
                 1 if (x.get("pricing") or {}).get("input_per_1m") is not None else 0,
                 1 if (x.get("extra") or {}).get("maas_or_paygo") else 0,
             )
+
         if _score(m) > _score(prev):
             by_id[key] = m
     models = [by_id[k] for k in sorted(by_id)]

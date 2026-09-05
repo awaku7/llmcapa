@@ -47,7 +47,7 @@ def base_model(model_id: str, size: str) -> dict:
         "supports_chat_completion": True,
         "supports_responses_api": False,
         "supports_reasoning_effort": False,
-        "supports_thinking_budget": True,
+        "supports_thinking_budget": False,
         "supports_anthropic_api": False,
         "supports_google_api": False,
         "supports_fim": False,
@@ -89,7 +89,9 @@ def main() -> None:
         model = next((m for m in models if m.get("model_id") == model_id), None)
         if model is None:
             # remove legacy slash-duplicate if present
-            models[:] = [m for m in models if m.get("model_id") != f"ibm-granite/{model_id}"]
+            models[:] = [
+                m for m in models if m.get("model_id") != f"ibm-granite/{model_id}"
+            ]
             model = base_model(model_id, size)
             models.append(model)
             added += 1
@@ -100,7 +102,7 @@ def main() -> None:
                 "max_output_tokens": 0,
                 "supports_function_calling": True,
                 "supports_reasoning": True,
-                "supports_thinking_budget": True,
+                "supports_thinking_budget": False,
                 "license_type": "open",
                 "deprecated": False,
             }

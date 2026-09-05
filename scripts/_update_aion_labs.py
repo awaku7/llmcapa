@@ -37,7 +37,9 @@ def main() -> None:
         bare = mid.split("/", 1)[1] if "/" in mid else mid
         # drop legacy slash-duplicate; the native catalog uses bare ids
         # (slash routes such as aion-labs/aion-3.0 belong to the openrouter catalog)
-        data["models"][:] = [m for m in data.get("models", []) if m.get("model_id") != mid]
+        data["models"][:] = [
+            m for m in data.get("models", []) if m.get("model_id") != mid
+        ]
         by_id.pop(mid, None)
         model = by_id.get(bare)
         if model is None:

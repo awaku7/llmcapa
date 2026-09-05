@@ -377,7 +377,10 @@ def build() -> list[dict]:
             reasoning=True,
             function_calling=True,
             chat=True,
-            aliases=["phi-4-reasoning-plus", "microsoft-phi-4-reasoning-plus", ],
+            aliases=[
+                "phi-4-reasoning-plus",
+                "microsoft-phi-4-reasoning-plus",
+            ],
             extra=ft_extra(
                 include_ft=False,
                 notes={
@@ -668,7 +671,11 @@ def build() -> list[dict]:
             vision=True,
             function_calling=False,
             chat=False,
-            aliases=["mai-image-2e", "MAI-Image-2-Efficient", "mai-image-2-efficient", ],
+            aliases=[
+                "mai-image-2e",
+                "MAI-Image-2-Efficient",
+                "mai-image-2-efficient",
+            ],
             extra={
                 "source": SOURCE_PRICING,
                 "mai_docs": SOURCE_MAI_DOCS,

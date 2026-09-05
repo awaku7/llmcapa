@@ -448,7 +448,10 @@ def build() -> list[dict]:
                 "price_per_image": 0.06,
                 "note": "text $0.135/1M tokens; image $0.06/image (US East)",
             },
-            aliases=["amazon.nova-multimodal-embeddings-v1:0", "amazon.nova-multimodal-embeddings-v1"],
+            aliases=[
+                "amazon.nova-multimodal-embeddings-v1:0",
+                "amazon.nova-multimodal-embeddings-v1",
+            ],
             input_modalities=["text", "image"],
             output_modalities=["embedding"],
             vision=True,
@@ -570,7 +573,10 @@ def build() -> list[dict]:
                     "image ~$0.00006/image (US East; verify on Bedrock pricing)"
                 ),
             },
-            aliases=["amazon.titan-multimodal-embeddings-v1:0", "amazon.titan-multimodal-embeddings-v1"],
+            aliases=[
+                "amazon.titan-multimodal-embeddings-v1:0",
+                "amazon.titan-multimodal-embeddings-v1",
+            ],
             input_modalities=["text", "image"],
             output_modalities=["embedding"],
             vision=True,
@@ -594,7 +600,11 @@ def build() -> list[dict]:
                 "price_per_image_premium_1024": 0.012,
                 "note": "Titan Image Generator v2 approximate US East rates",
             },
-            aliases=["amazon.titan-image-generator-v2:0", "amazon.titan-image-generator-v2", "titan-image-generator-v1-v2"],  # legacy catalog id
+            aliases=[
+                "amazon.titan-image-generator-v2:0",
+                "amazon.titan-image-generator-v2",
+                "titan-image-generator-v1-v2",
+            ],  # legacy catalog id
             input_modalities=["text", "image"],
             output_modalities=["image"],
             vision=True,

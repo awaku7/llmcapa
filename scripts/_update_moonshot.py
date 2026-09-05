@@ -33,6 +33,7 @@ def row(
     aliases: list[str] | None = None,
     deprecated: bool = False,
     reasoning: bool = True,
+    effort_values: list[str] | None = None,
     vision: bool = False,
     video: bool = False,
     max_out: int = 0,
@@ -71,6 +72,7 @@ def row(
         "supports_chat_completion": True,
         "supports_responses_api": False,
         "supports_reasoning_effort": reasoning,
+        **({"reasoning_effort_values": list(effort_values)} if effort_values else {}),
         "supports_thinking_budget": False,
         "supports_anthropic_api": False,
         "supports_google_api": False,
@@ -103,6 +105,7 @@ def build() -> list[dict]:
             cache_hit=0.30,
             aliases=["kimi-latest", "moonshotai/kimi-latest", "kimi/kimi-k3"],
             reasoning=True,
+            effort_values=["low", "high", "max"],
             vision=True,
             video=True,
             extra_notes={
@@ -125,6 +128,7 @@ def build() -> list[dict]:
             out=4.0,
             cache_hit=0.19,
             reasoning=True,
+            effort_values=["low", "high", "max"],
             vision=True,
             video=True,
             extra_notes={
@@ -138,12 +142,16 @@ def build() -> list[dict]:
         row(
             model_id="kimi-k2.7-code-highspeed",
             display="Kimi K2.7 Code HighSpeed",
-            aliases=["moonshotai/kimi-k2.7-code-highspeed", "kimi/kimi-k2.7-code-highspeed"],
+            aliases=[
+                "moonshotai/kimi-k2.7-code-highspeed",
+                "kimi/kimi-k2.7-code-highspeed",
+            ],
             ctx=262_144,
             inp=1.90,
             out=8.0,
             cache_hit=0.38,
             reasoning=True,
+            effort_values=["low", "high", "max"],
             vision=True,
             video=True,
             extra_notes={
@@ -166,6 +174,7 @@ def build() -> list[dict]:
             out=4.0,
             cache_hit=0.16,
             reasoning=True,
+            effort_values=["low", "high", "max"],
             vision=True,
             video=True,
             extra_notes={
@@ -202,6 +211,7 @@ def build() -> list[dict]:
             out=2.50,
             cache_hit=0.15,
             reasoning=True,
+            effort_values=["low", "high", "max"],
             extra_notes={"status": "legacy-k2-family"},
         )
     )

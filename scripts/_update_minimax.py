@@ -38,7 +38,16 @@ TEXT_MODELS = [
         "supports_function_calling": True,
         "supports_json_mode": True,
         "supports_reasoning": True,
-        "supports_thinking_budget": True,
+        "supports_thinking_budget": False,
+        "thinking_control": {
+            "kind": "toggle",
+            "parameter": "thinking",
+            "values": ["enabled", "disabled"],
+            "encoding": {
+                "enabled": {"type": "enabled"},
+                "disabled": {"type": "disabled"},
+            },
+        },
         "pricing": {"input_per_1m": 0.30, "output_per_1m": 1.20, "currency": "USD"},
         "aliases": ["minimax-m3", "MiniMax-M3"],
         "extra": {
@@ -334,6 +343,8 @@ def base_capability(**kwargs) -> dict:
         "aliases": [],
         "reasoning_effort_values": None,
         "thinking_budget_values": None,
+        "thinking_level_values": None,
+        "thinking_control": None,
         "extra": {},
     }
     d.update(kwargs)

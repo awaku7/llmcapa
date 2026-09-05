@@ -64,6 +64,11 @@ def base(
         "supports_responses_api": False,
         "supports_reasoning_effort": effort,
         "supports_thinking_budget": True,
+        "thinking_budget_values": {
+            "type": "token_range",
+            "min": 1024,
+            "max": max_out or 128000,
+        },
         "supports_anthropic_api": True,
         "supports_google_api": False,
         "supports_fim": False,
@@ -302,10 +307,23 @@ def build() -> list[dict]:
                 if value is not None:
                     extra[key] = value
             old["extra"] = extra
+        old["supports_thinking_budget"] = True
+        old["thinking_budget_values"] = {
+            "type": "token_range",
+            "min": 1024,
+            "max": old.get("max_output_tokens") or 128000,
+        }
         models.append(old)
     # Keep historical models that are no longer listed in current pricing.
     discovered_ids = {m["model_id"] for m in models}
     models.extend(m for mid, m in previous.items() if mid not in discovered_ids)
+    for model in models:
+        if model.get("supports_thinking_budget"):
+            model["thinking_budget_values"] = {
+                "type": "token_range",
+                "min": 1024,
+                "max": model.get("max_output_tokens") or 128000,
+            }
     return dedupe_model_ids(models)
 
 

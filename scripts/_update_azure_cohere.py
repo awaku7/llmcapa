@@ -72,7 +72,12 @@ print(
     flush=True,
 )
 
-# Copy to installed
-shutil.copy2(path_az, os.path.join(INSTALLED, "azure_foundry.json"))
-print("Copied to installed package", flush=True)
+# DATA and INSTALLED intentionally point at the same source tree in this
+# checkout. Avoid copying a file onto itself (Windows raises WinError 32).
+dst_az = os.path.abspath(os.path.join(INSTALLED, "azure_foundry.json"))
+if os.path.abspath(path_az) != dst_az:
+    shutil.copy2(path_az, dst_az)
+    print("Copied to installed package", flush=True)
+else:
+    print("Installed path is the source path; copy skipped", flush=True)
 print("Done", flush=True)
