@@ -19,6 +19,7 @@ class Feature(str, Enum):
     LLMC_FEAT_RESPONSES_API = "responses_api"
     LLMC_FEAT_REASONING_EFFORT = "reasoning_effort"
     LLMC_FEAT_THINKING_BUDGET = "thinking_budget"
+    LLMC_FEAT_THINKING_LEVEL = "thinking_level"
     LLMC_FEAT_MULTIMODAL = "multimodal"
     LLMC_FEAT_FIM = "fim"
 
@@ -155,6 +156,10 @@ class Capability:
     computer_use: ComputerUseCapability | None = None
     # Appended after all existing fields for positional compatibility.
     supports_json_schema: bool | None = None
+    # Appended fields preserve positional-constructor compatibility.
+    supports_thinking_level: bool = False
+    thinking_level_values: list[str] | None = None
+    thinking_control: dict[str, Any] | None = None
 
     def supports(self, feature: Feature | str) -> bool | None:
         """Return True if the model supports the given feature.
@@ -224,6 +229,7 @@ class Capability:
             "responses_api",
             "reasoning_effort",
             "thinking_budget",
+            "thinking_level",
             "fim",
             "realtime",
             "file_input",
@@ -529,6 +535,16 @@ class Capability:
             "max": self.max_output_tokens or 4096,
         }
 
+    def get_thinking_level_values(self) -> list[str]:
+        """Return valid discrete thinking_level values for this model."""
+        if not self.thinking_level_values:
+            return []
+        return list(self.thinking_level_values)
+
+    def get_thinking_control(self) -> dict[str, Any]:
+        """Return normalized metadata for constructing the provider request."""
+        return dict(self.thinking_control or {})
+
     def to_dict(self) -> dict[str, Any]:
         """Return a plain dict representation."""
         d = asdict(self)
@@ -540,6 +556,10 @@ class Capability:
             d.pop("reasoning_effort_values", None)
         if d.get("thinking_budget_values") is None:
             d.pop("thinking_budget_values", None)
+        if d.get("thinking_level_values") is None:
+            d.pop("thinking_level_values", None)
+        if d.get("thinking_control") is None:
+            d.pop("thinking_control", None)
         if self.supports_json_schema is None:
             d.pop("supports_json_schema", None)
         if self.computer_use is None:
