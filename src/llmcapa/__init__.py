@@ -11,13 +11,18 @@ Example:
 
 from __future__ import annotations
 
+from importlib.metadata import PackageNotFoundError, version as package_version
 from pathlib import Path
 
 from .models import Capability, ComputerUseCapability, Feature, ReasoningEffort
 from .registry import ModelNotFoundError, Registry, default_registry
 from .tokenizer import count_messages_tokens, count_tokens
 
-__version__ = "0.5.18"
+try:
+    __version__ = package_version("llmcapa")
+except PackageNotFoundError:
+    # Source-tree fallback when the project is not installed yet.
+    __version__ = "0.5.22"
 
 __all__ = [
     "Capability",
