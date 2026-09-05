@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "llmcapa"
-version = "0.5.16"
+version = "0.5.19"
 description = "Lookup capabilities (context window, modalities, features) of various LLM models offline."
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -44,3 +44,10 @@ packages = ["src/llmcapa"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 norecursedirs = [".*", "build", "dist", "outputs", "CVS", "_darcs", "{arch}", "*.egg", "venv"]
+
+[tool.ruff.lint.per-file-ignores]
+"scripts/_update_novita.py" = ["E402"]
+"scripts/provider_updates/*.py" = ["E402"]
+
+[tool.black]
+target-version = ["py39"]

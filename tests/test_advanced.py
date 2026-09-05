@@ -84,6 +84,21 @@ def test_feature_enum():
     assert ReasoningEffort.LLMC_EFFORT_XHIGH == "xhigh"
 
 
+def test_grok47_falls_back_to_grok46_by_provider():
+    direct = llmcapa.get("grok-4.7", provider="xai")
+    gateway = llmcapa.get("grok-4.7", provider="openrouter")
+    assert direct.model_id == "grok-4.6"
+    assert gateway.model_id == "x-ai/grok-4.6"
+    assert direct.context_window == gateway.context_window == 500000
+
+
+def test_gpt6_astra_supports_reasoning_effort():
+    cap = llmcapa.get("gpt-6-astra")
+    assert cap.supports_reasoning_effort is True
+    assert cap.supports("reasoning_effort") is True
+    assert cap.reasoning_effort_values == ["low", "medium", "high", "xhigh", "max"]
+
+
 def test_tokenizer_name():
     gpt = llmcapa.get("gpt-4o")
     assert gpt.tokenizer_name == "o200k_base"

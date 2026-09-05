@@ -550,6 +550,47 @@ class Registry:
                     continue
         return candidates
 
+    @staticmethod
+    def _numeric_fallback(
+        requested: str, capabilities: list[Capability]
+    ) -> Capability | None:
+        """Return the closest lower numeric variant of a missing model ID.
+
+        A fallback is considered only when the requested ID and a registered
+        model/alias have the same non-numeric shape. For example,
+        ``grok-4.7`` may fall back to ``grok-4.6`` but not to ``grok-3`` or
+        ``gpt-4.6``. Exact IDs and normal aliases are resolved before this
+        conservative fallback is attempted.
+        """
+        version_re = re.compile(r"(?<![A-Za-z])(\d+(?:\.\d+)+|\d+)(?![A-Za-z])")
+
+        def parse(value: str) -> tuple[str, tuple[int, ...]] | None:
+            text = value.strip().lower()
+            match = version_re.search(text)
+            if not match:
+                return None
+            version = tuple(int(part) for part in match.group(1).split("."))
+            shape = text[: match.start()] + "<version>" + text[match.end() :]
+            return shape, version
+
+        wanted = parse(requested)
+        if wanted is None:
+            return None
+        wanted_shape, wanted_version = wanted
+        best: tuple[tuple[int, ...], Capability] | None = None
+        for capability in capabilities:
+            names = [capability.model_id, *(capability.aliases or [])]
+            for name in names:
+                parsed = parse(str(name))
+                if parsed is None:
+                    continue
+                shape, version = parsed
+                if shape != wanted_shape or version >= wanted_version:
+                    continue
+                if best is None or version > best[0]:
+                    best = (version, capability)
+        return best[1] if best else None
+
     def get(self, model_id: str, provider: str | None = None) -> Capability:
         """Resolve a model id or alias to its Capability.
 
@@ -583,9 +624,11 @@ class Registry:
             ordered_providers = (
                 [normalized_provider]
                 if normalized_provider in self._by_provider
-                else [canonical_provider]
-                if canonical_provider in self._by_provider
-                else sorted(matching_providers)
+                else (
+                    [canonical_provider]
+                    if canonical_provider in self._by_provider
+                    else sorted(matching_providers)
+                )
             )
             for prov in ordered_providers:
                 prov_index = self._by_provider.get(prov)
@@ -601,12 +644,35 @@ class Registry:
                             cap = prov_index.get(resolved)
                             if cap is not None:
                                 return cap
+                        # The global alias index may point to another
+                        # provider when the same fallback alias is shared by
+                        # multiple catalogs. Prefer an alias owned by this
+                        # provider before giving up.
+                        for candidate in prov_index.values():
+                            if key in {
+                                str(alias).strip().lower()
+                                for alias in (candidate.aliases or [])
+                            }:
+                                return candidate
+            fallback = self._numeric_fallback(
+                model_id,
+                [
+                    cap
+                    for prov in ordered_providers
+                    for cap in self._by_provider.get(prov, {}).values()
+                ],
+            )
+            if fallback is not None:
+                return fallback
             raise ModelNotFoundError(model_id)
         # Unqualified lookup: use alias index (first-registered-wins).
         for key in self._lookup_candidates(model_id):
             resolved = self._alias_index.get(key)
             if resolved is not None:
                 return self._models[resolved]
+        fallback = self._numeric_fallback(model_id, list(self._models.values()))
+        if fallback is not None:
+            return fallback
         raise ModelNotFoundError(model_id)
 
     def list_models(
@@ -633,9 +699,11 @@ class Registry:
             providers_to_list = (
                 [normalized_provider]
                 if normalized_provider in self._by_provider
-                else [canonical_provider]
-                if canonical_provider in self._by_provider
-                else sorted(matching_providers)
+                else (
+                    [canonical_provider]
+                    if canonical_provider in self._by_provider
+                    else sorted(matching_providers)
+                )
             )
             result: list[Capability] = []
             for prov in providers_to_list:

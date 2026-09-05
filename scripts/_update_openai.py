@@ -16,7 +16,11 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "openai.json"
-MODELS_URL = "https://developers.openai.com/api/docs/models.md"
+# The /models/all page is the official complete catalog.  We use its
+# documented Markdown representation so the model links can be parsed without
+# browser rendering, then fetch each linked model page for model-specific
+# reasoning.effort values.
+MODELS_URL = "https://developers.openai.com/api/docs/models/all.md"
 PRICING_URL = "https://developers.openai.com/api/docs/pricing.md"
 BASE = "https://developers.openai.com"
 ENDPOINT = {
@@ -110,6 +114,26 @@ def detail(path: str) -> dict:
     entry["supports_reasoning"] = (
         "reasoning token support" in text.lower() or "reasoning" in features
     )
+    effort = re.search(r"Reasoning\.effort supports:\s*([^\n.]+)", text, re.IGNORECASE)
+    if effort:
+        values = re.split(r"\s*,\s*|\s+and\s+", effort.group(1).strip())
+        cleaned = []
+        for value in values:
+            value = re.sub(r"\s*\(default\)", "", value, flags=re.IGNORECASE)
+            value = re.sub(r"^and\s+", "", value.strip(), flags=re.IGNORECASE)
+            if value:
+                cleaned.append(value.lower())
+        entry["reasoning_effort_values"] = cleaned
+    # OpenAI's o-series pages do not consistently repeat the enum, but the
+    # official o-series documentation/API uses the same three levels.
+    if entry["supports_reasoning"] and "reasoning_effort_values" not in entry:
+        if re.match(r"^o(?:1|3|4)(?:-|$)", mid):
+            entry["reasoning_effort_values"] = ["low", "medium", "high"]
+    # Keep the boolean capability flag in sync with the discovered values.
+    # Previously values were written without setting this flag, causing
+    # reasoning-capable OpenAI models (for example gpt-6-astra) to report
+    # supports("reasoning_effort") == False.
+    entry["supports_reasoning_effort"] = bool(entry.get("reasoning_effort_values"))
     cutoff = re.search(r"([A-Z][a-z]{2} \d{1,2}, \d{4}) knowledge cutoff", text)
     if cutoff:
         entry["knowledge_cutoff"] = cutoff.group(1)
