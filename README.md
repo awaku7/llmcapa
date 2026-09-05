@@ -142,7 +142,7 @@ gemini_live = llmcapa.get("gemini-3.1-flash-live-preview", provider="google")
 
 ### Reasoning & Thinking Checks
 
-See the full provider-neutral API specification in [docs/API_SPECIFICATION.md](docs/API_SPECIFICATION.md).
+See the full provider-neutral API specification in [docs/API_SPECIFICATION.md](https://github.com/awaku7/llmcapa/blob/main/docs/API_SPECIFICATION.md).
 
 Differentiate between OpenAI-style `reasoning_effort` and Anthropic-style `thinking_budget` using `Feature` enum:
 
@@ -495,7 +495,7 @@ source.can_be_replaced_by(
 
 ## Development
 
-For details on how to extend the library, add new providers, or implement new feature flags, please refer to the [DEVELOP.md](DEVELOP.md) guide.
+For details on how to extend the library, add new providers, or implement new feature flags, please refer to the [DEVELOP.md](https://github.com/awaku7/llmcapa/blob/main/DEVELOP.md) guide.
 
 ## CLI
 
@@ -532,7 +532,7 @@ llmcapa fetch-hf --limit 200
 
 ## Notes
 
-- **Static Snapshot**: Bundled capability data is a static snapshot. See [docs/catalog_data_sources.md](docs/catalog_data_sources.md) for details on each provider's data source and known SSR limitations (Azure AI Catalog). While we strive to keep it updated with the latest models (including GPT-5.5, Claude Fable, Gemini 3.5, DeepSeek V4, Sakana Fugu, etc.), providers change limits and pricing frequently. Use `fetch_openrouter()` or verify with official documentation when absolute accuracy is critical.
+- **Static Snapshot**: Bundled capability data is a static snapshot. See [docs/catalog_data_sources.md](https://github.com/awaku7/llmcapa/blob/main/docs/catalog_data_sources.md) for details on each provider's data source and known SSR limitations (Azure AI Catalog). While we strive to keep it updated with the latest models (including GPT-5.5, Claude Fable, Gemini 3.5, DeepSeek V4, Sakana Fugu, etc.), providers change limits and pricing frequently. Use `fetch_openrouter()` or verify with official documentation when absolute accuracy is critical.
 - **HuggingFace Data Accuracy**: The bundled `huggingface.json` includes 2,675 popular text-generation models with context windows estimated from model families. Models fetched via `fetch_huggingface()` at runtime have estimated defaults. For exact specifications, consult official model cards.
 
 ## License
