@@ -37,6 +37,8 @@
       "aliases": [],
       "reasoning_effort_values": null,
       "thinking_budget_values": null,
+      "thinking_level_values": null,
+      "thinking_control": null,
       "extra": {
         "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
         "note": "legacy multimodal"
@@ -78,6 +80,8 @@
       "aliases": [],
       "reasoning_effort_values": null,
       "thinking_budget_values": null,
+      "thinking_level_values": null,
+      "thinking_control": null,
       "extra": {
         "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
         "note": "legacy generation; still listed on some mirrors"
@@ -121,6 +125,8 @@
       ],
       "reasoning_effort_values": null,
       "thinking_budget_values": null,
+      "thinking_level_values": null,
+      "thinking_control": null,
       "extra": {
         "source": "https://platform.minimax.io/docs/guides/pricing-paygo"
       }
@@ -163,6 +169,8 @@
       ],
       "reasoning_effort_values": null,
       "thinking_budget_values": null,
+      "thinking_level_values": null,
+      "thinking_control": null,
       "extra": {
         "source": "https://platform.minimax.io/docs/guides/pricing-paygo"
       }
@@ -205,6 +213,8 @@
       ],
       "reasoning_effort_values": null,
       "thinking_budget_values": null,
+      "thinking_level_values": null,
+      "thinking_control": null,
       "extra": {
         "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
         "tier": "highspeed"
@@ -248,6 +258,8 @@
       ],
       "reasoning_effort_values": null,
       "thinking_budget_values": null,
+      "thinking_level_values": null,
+      "thinking_control": null,
       "extra": {
         "source": "https://platform.minimax.io/docs/guides/pricing-paygo"
       }
@@ -290,6 +302,8 @@
       ],
       "reasoning_effort_values": null,
       "thinking_budget_values": null,
+      "thinking_level_values": null,
+      "thinking_control": null,
       "extra": {
         "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
         "tier": "highspeed"
@@ -333,6 +347,8 @@
       ],
       "reasoning_effort_values": null,
       "thinking_budget_values": null,
+      "thinking_level_values": null,
+      "thinking_control": null,
       "extra": {
         "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
         "cache_read_per_1m": 0.06,
@@ -377,6 +393,8 @@
       ],
       "reasoning_effort_values": null,
       "thinking_budget_values": null,
+      "thinking_level_values": null,
+      "thinking_control": null,
       "extra": {
         "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
         "tier": "highspeed"
@@ -404,7 +422,7 @@
       "supports_chat_completion": true,
       "supports_responses_api": false,
       "supports_reasoning_effort": false,
-      "supports_thinking_budget": true,
+      "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
@@ -423,6 +441,23 @@
       ],
       "reasoning_effort_values": null,
       "thinking_budget_values": null,
+      "thinking_level_values": null,
+      "thinking_control": {
+        "kind": "toggle",
+        "parameter": "thinking",
+        "values": [
+          "enabled",
+          "disabled"
+        ],
+        "encoding": {
+          "enabled": {
+            "type": "enabled"
+          },
+          "disabled": {
+            "type": "disabled"
+          }
+        }
+      },
       "extra": {
         "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
         "pricing_note": "permanent 50% off ≤512k (list $0.60/$2.40); >512k $0.60/$2.40",
@@ -472,6 +507,8 @@
       "aliases": [],
       "reasoning_effort_values": null,
       "thinking_budget_values": null,
+      "thinking_level_values": null,
+      "thinking_control": null,
       "extra": {
         "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
         "price_per_clip_range_usd": [
@@ -516,6 +553,8 @@
       "aliases": [],
       "reasoning_effort_values": null,
       "thinking_budget_values": null,
+      "thinking_level_values": null,
+      "thinking_control": null,
       "extra": {
         "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
         "unit": "clip",
@@ -555,6 +594,8 @@
       "aliases": [],
       "reasoning_effort_values": null,
       "thinking_budget_values": null,
+      "thinking_level_values": null,
+      "thinking_control": null,
       "extra": {
         "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
         "price_per_image": 0.0035,
@@ -594,6 +635,8 @@
       "aliases": [],
       "reasoning_effort_values": null,
       "thinking_budget_values": null,
+      "thinking_level_values": null,
+      "thinking_control": null,
       "extra": {
         "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
         "price_per_track_usd": 0.15,
@@ -634,6 +677,8 @@
       "aliases": [],
       "reasoning_effort_values": null,
       "thinking_budget_values": null,
+      "thinking_level_values": null,
+      "thinking_control": null,
       "extra": {
         "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
         "price_per_1m_chars": 100.0,
@@ -674,6 +719,8 @@
       "aliases": [],
       "reasoning_effort_values": null,
       "thinking_budget_values": null,
+      "thinking_level_values": null,
+      "thinking_control": null,
       "extra": {
         "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
         "price_per_1m_chars": 60.0,

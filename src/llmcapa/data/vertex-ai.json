@@ -49731,6 +49731,387 @@
     },
     {
       "provider": "vertex-ai",
+      "model_id": "gemini-2.5-flash",
+      "display_name": "Gemini 2.5 Flash",
+      "context_window": 1048576,
+      "max_output_tokens": 65535,
+      "input_modalities": [
+        "file",
+        "image",
+        "text",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": true,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "Gemini",
+      "knowledge_cutoff": "2025-01-31",
+      "pricing": {
+        "input_per_1m": 0.3,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "gemini-2.5-flash-preview-09-2025"
+      ],
+      "reasoning_effort_values": null,
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://generativelanguage.googleapis.com/v1beta",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://ai.google.dev/api"
+          }
+        ],
+        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
+        "platform": "Google Cloud Vertex AI / Model Garden",
+        "thinking_parameter": "thinking_budget",
+        "thinking_source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/thinking"
+      },
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 0,
+        "max": 24576
+      },
+      "supports_thinking_level": false,
+      "thinking_level_values": null,
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 0,
+        "max": 24576
+      }
+    },
+    {
+      "provider": "vertex-ai",
+      "model_id": "gemini-2.5-flash-lite",
+      "display_name": "Gemini 2.5 Flash-Lite",
+      "context_window": 1048576,
+      "max_output_tokens": 65535,
+      "input_modalities": [
+        "text",
+        "image",
+        "file",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": true,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "Gemini",
+      "knowledge_cutoff": "2025-01-31",
+      "pricing": {
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "gemini-2.5-flash-lite-preview-09-2025"
+      ],
+      "reasoning_effort_values": null,
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://generativelanguage.googleapis.com/v1beta",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://ai.google.dev/api"
+          }
+        ],
+        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
+        "platform": "Google Cloud Vertex AI / Model Garden",
+        "thinking_parameter": "thinking_budget",
+        "thinking_source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/thinking"
+      },
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 512,
+        "max": 24576
+      },
+      "supports_thinking_level": false,
+      "thinking_level_values": null,
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 512,
+        "max": 24576
+      }
+    },
+    {
+      "provider": "vertex-ai",
+      "model_id": "gemini-2.5-pro",
+      "display_name": "Gemini 2.5 Pro",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "file",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": true,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "Gemini",
+      "knowledge_cutoff": "2025-01-31",
+      "pricing": {
+        "input_per_1m": 1.25,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://generativelanguage.googleapis.com/v1beta",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://ai.google.dev/api"
+          }
+        ],
+        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
+        "platform": "Google Cloud Vertex AI / Model Garden",
+        "thinking_parameter": "thinking_budget",
+        "thinking_source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/thinking"
+      },
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 0,
+        "max": 32768
+      },
+      "supports_thinking_level": false,
+      "thinking_level_values": null,
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 0,
+        "max": 32768
+      }
+    },
+    {
+      "provider": "vertex-ai",
+      "model_id": "gemini-3-flash-preview",
+      "display_name": "Gemini 3 Flash (Preview)",
+      "context_window": 1048576,
+      "max_output_tokens": 65535,
+      "input_modalities": [
+        "text",
+        "image",
+        "file",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "Gemini",
+      "knowledge_cutoff": "2025-01",
+      "pricing": {
+        "input_per_1m": 0.5,
+        "output_per_1m": 3.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "google",
+        "model": "gemini-3-flash-preview",
+        "api_type": "generate_content",
+        "tool_type": "computer_use",
+        "tool_version": null,
+        "status": "preview",
+        "environments": [
+          "browser",
+          "desktop",
+          "mobile"
+        ],
+        "actions": [
+          "screenshot",
+          "click",
+          "double_click",
+          "drag",
+          "move",
+          "scroll",
+          "keypress",
+          "type",
+          "wait"
+        ],
+        "requires_beta": false,
+        "enable_zoom": false,
+        "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/computer-use",
+        "checked_at": "2026-08-15"
+      },
+      "extra": {
+        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
+        "checked_at": "2026-08-19",
+        "endpoints": [
+          {
+            "base_url": "https://generativelanguage.googleapis.com/v1beta",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://ai.google.dev/api"
+          }
+        ],
+        "platform": "Google Cloud Vertex AI / Model Garden",
+        "thinking_parameter": "thinking_level",
+        "thinking_level_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high"
+        ],
+        "thinking_source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/thinking"
+      },
+      "supports_thinking_level": true,
+      "thinking_level_values": [
+        "minimal",
+        "low",
+        "medium",
+        "high"
+      ],
+      "thinking_control": {
+        "kind": "level",
+        "parameter": "thinking_level",
+        "values": [
+          "minimal",
+          "low",
+          "medium",
+          "high"
+        ]
+      }
+    },
+    {
+      "provider": "vertex-ai",
+      "model_id": "gemini-3-pro-preview",
+      "display_name": "Gemini 3 Pro (Preview, Shutdown)",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "license",
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-09",
+      "deprecated": true,
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://generativelanguage.googleapis.com/v1beta",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://ai.google.dev/api"
+          }
+        ],
+        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
+        "platform": "Google Cloud Vertex AI / Model Garden",
+        "thinking_parameter": "thinking_level",
+        "thinking_level_values": [
+          "low",
+          "high"
+        ],
+        "thinking_source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/thinking"
+      },
+      "reasoning_effort_values": null,
+      "supports_thinking_level": true,
+      "thinking_level_values": [
+        "low",
+        "high"
+      ],
+      "thinking_control": {
+        "kind": "level",
+        "parameter": "thinking_level",
+        "values": [
+          "low",
+          "high"
+        ]
+      }
+    },
+    {
+      "provider": "vertex-ai",
       "model_id": "genai-archive/anything-v5",
       "display_name": "genai-archive/anything-v5",
       "context_window": 0,
@@ -58694,43 +59075,6 @@
       "provider": "vertex-ai",
       "model_id": "huggingfacetb/finemath-classifier",
       "display_name": "huggingfacetb/finemath-classifier",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
-        "platform": "Google Cloud Vertex AI / Model Garden",
-        "spec_status": "sdk_listed_only",
-        "modality_source": "conservative_model_id_heuristic",
-        "endpoints": [
-          {
-            "base_url": "https://{location}-aiplatform.googleapis.com/v1/projects/{project}/locations/{location}/publishers/google/models",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "vertex-ai",
-      "model_id": "huggingfacetb/smollm-1.7b",
-      "display_name": "huggingfacetb/smollm-1.7b",
       "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
@@ -99571,6 +99915,36 @@
     },
     {
       "provider": "vertex-ai",
+      "model_id": "neonforestmist/clover-image-tiny",
+      "display_name": "neonforestmist/clover-image-tiny",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "image",
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "supports_responses_api": false,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
+        "platform": "Google Cloud Vertex AI / Model Garden",
+        "spec_status": "sdk_listed_only",
+        "modality_source": "conservative_model_id_heuristic"
+      }
+    },
+    {
+      "provider": "vertex-ai",
       "model_id": "neph1/qwen2.5-coder-7b-instruct-unity",
       "display_name": "neph1/qwen2.5-coder-7b-instruct-unity",
       "context_window": 0,
@@ -103650,43 +104024,6 @@
       "provider": "vertex-ai",
       "model_id": "nousresearch/nous-puffin-70b",
       "display_name": "nousresearch/nous-puffin-70b",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
-        "platform": "Google Cloud Vertex AI / Model Garden",
-        "spec_status": "sdk_listed_only",
-        "modality_source": "conservative_model_id_heuristic",
-        "endpoints": [
-          {
-            "base_url": "https://{location}-aiplatform.googleapis.com/v1/projects/{project}/locations/{location}/publishers/google/models",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference"
-          }
-        ]
-      }
-    },
-    {
-      "provider": "vertex-ai",
-      "model_id": "nousresearch/nouscoder-14b",
-      "display_name": "nousresearch/nouscoder-14b",
       "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [

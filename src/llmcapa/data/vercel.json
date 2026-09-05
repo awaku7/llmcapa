@@ -1751,7 +1751,7 @@
       "supports_chat_completion": true,
       "supports_responses_api": false,
       "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
+      "supports_thinking_budget": true,
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
@@ -1782,9 +1782,23 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "claude-opus-5"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 128000
+      },
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 128000,
+        "native_provider": "anthropic"
+      }
     },
     {
       "provider": "vercel",
@@ -5414,9 +5428,23 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "claude-3-5-sonnet-20241022"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 8192
+      },
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 8192,
+        "native_provider": "anthropic"
+      }
     },
     {
       "provider": "vercel",
@@ -5472,9 +5500,23 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "claude-3-haiku-20240307"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 4096
+      },
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 4096,
+        "native_provider": "anthropic"
+      }
     },
     {
       "provider": "vercel",
@@ -5530,9 +5572,23 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "claude-3-opus-20240229"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 4096
+      },
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 4096,
+        "native_provider": "anthropic"
+      }
     },
     {
       "provider": "vercel",
@@ -5590,9 +5646,23 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "claude-fable-5"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 128000
+      },
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 128000,
+        "native_provider": "anthropic"
+      }
     },
     {
       "provider": "vercel",
@@ -5648,9 +5718,23 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "claude-haiku-3-5"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 8192
+      },
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 8192,
+        "native_provider": "anthropic"
+      }
     },
     {
       "provider": "vercel",
@@ -5707,9 +5791,23 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "claude-haiku-4-5"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 64000
+      },
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 64000,
+        "native_provider": "anthropic"
+      }
     },
     {
       "provider": "vercel",
@@ -5770,9 +5868,23 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "claude-mythos-5"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 128000
+      },
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 128000,
+        "native_provider": "anthropic"
+      }
     },
     {
       "provider": "vercel",
@@ -5827,9 +5939,23 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "claude-opus-4"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 32000
+      },
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 32000,
+        "native_provider": "anthropic"
+      }
     },
     {
       "provider": "vercel",
@@ -5884,9 +6010,23 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "claude-opus-4-1"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 32000
+      },
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 32000,
+        "native_provider": "anthropic"
+      }
     },
     {
       "provider": "vercel",
@@ -5947,9 +6087,23 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "claude-opus-4-5"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 64000
+      },
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 64000,
+        "native_provider": "anthropic"
+      }
     },
     {
       "provider": "vercel",
@@ -6009,9 +6163,23 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "claude-opus-4-6"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 128000
+      },
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 128000,
+        "native_provider": "anthropic"
+      }
     },
     {
       "provider": "vercel",
@@ -6072,9 +6240,23 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "claude-opus-4-7"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 128000
+      },
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 128000,
+        "native_provider": "anthropic"
+      }
     },
     {
       "provider": "vercel",
@@ -6136,9 +6318,23 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "claude-opus-4-8"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 128000
+      },
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 128000,
+        "native_provider": "anthropic"
+      }
     },
     {
       "provider": "vercel",
@@ -6193,9 +6389,23 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "claude-sonnet-4"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 64000
+      },
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 64000,
+        "native_provider": "anthropic"
+      }
     },
     {
       "provider": "vercel",
@@ -6251,9 +6461,23 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "claude-sonnet-4-5"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 64000
+      },
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 64000,
+        "native_provider": "anthropic"
+      }
     },
     {
       "provider": "vercel",
@@ -6313,9 +6537,23 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "claude-sonnet-4-6"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 64000
+      },
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 64000,
+        "native_provider": "anthropic"
+      }
     },
     {
       "provider": "vercel",
@@ -6376,9 +6614,23 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "claude-sonnet-5"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 128000
+      },
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 128000,
+        "native_provider": "anthropic"
+      }
     },
     {
       "provider": "vercel",
@@ -36192,7 +36444,7 @@
       "supports_chat_completion": true,
       "supports_responses_api": false,
       "supports_reasoning_effort": false,
-      "supports_thinking_budget": true,
+      "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
@@ -36240,9 +36492,19 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "MiniMax-M3"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_control": {
+        "kind": "toggle",
+        "parameter": "thinking",
+        "values": [
+          "enabled",
+          "disabled"
+        ],
+        "native_provider": "minimax"
+      }
     },
     {
       "provider": "vercel",
@@ -36813,9 +37075,19 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "MiniMax-M3"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_control": {
+        "kind": "toggle",
+        "parameter": "thinking",
+        "values": [
+          "enabled",
+          "disabled"
+        ],
+        "native_provider": "minimax"
+      }
     },
     {
       "provider": "vercel",
@@ -42374,9 +42646,18 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "nemotron-3-nano"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 4096,
+        "native_provider": "nvidia"
+      }
     },
     {
       "provider": "vercel",
@@ -42488,9 +42769,18 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "nemotron-3-super"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 8192,
+        "native_provider": "nvidia"
+      }
     },
     {
       "provider": "vercel",
@@ -42549,9 +42839,18 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "nemotron-3-ultra"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 16384,
+        "native_provider": "nvidia"
+      }
     },
     {
       "provider": "vercel",
@@ -48036,9 +48335,23 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "cosmos3-nano-reasoner"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 8192
+      },
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 8192,
+        "native_provider": "nvidia"
+      }
     },
     {
       "provider": "vercel",
@@ -49066,9 +49379,23 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "nemotron-3-nano-30b-a3b"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 16384
+      },
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 16384,
+        "native_provider": "nvidia"
+      }
     },
     {
       "provider": "vercel",
@@ -49122,9 +49449,23 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "nemotron-3-nano-30b-a3b:free"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 16384
+      },
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 16384,
+        "native_provider": "nvidia"
+      }
     },
     {
       "provider": "vercel",
@@ -49183,9 +49524,23 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "nemotron-3-nano-omni-30b-a3b-reasoning"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 16384
+      },
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 16384,
+        "native_provider": "nvidia"
+      }
     },
     {
       "provider": "vercel",
@@ -49298,9 +49653,23 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "nemotron-3-super-120b-a12b"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 16384
+      },
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 16384,
+        "native_provider": "nvidia"
+      }
     },
     {
       "provider": "vercel",
@@ -49355,9 +49724,23 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "native_model_id": "nemotron-3-ultra-550b-a55b"
       },
-      "supports_json_schema": true
+      "supports_json_schema": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 16384
+      },
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_budget",
+        "type": "token_range",
+        "min": 1024,
+        "max": 16384,
+        "native_provider": "nvidia"
+      }
     },
     {
       "provider": "vercel",
@@ -53892,7 +54275,7 @@
       "supports_reasoning": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
-      "supports_reasoning_effort": false,
+      "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
@@ -54207,7 +54590,7 @@
       "supports_reasoning": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
-      "supports_reasoning_effort": false,
+      "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
@@ -54398,7 +54781,7 @@
       "supports_reasoning": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
-      "supports_reasoning_effort": false,
+      "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
