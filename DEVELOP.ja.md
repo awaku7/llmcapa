@@ -259,6 +259,10 @@ python -m build
 
 ---
 
+## Azure Catalog スクレイピング
+
+Azure AI Foundry カタログには SSR と continuation token に関する制約があります。更新処理を変更する前に、[Azure カタログのスクレイピングノート](docs/azure_catalog_scraping.md) と `scripts/_scrape_azure_catalog.py` を確認してください。
+
 ## OpenRouter マッピング詳細
 
 `fetch_openrouter()` が呼び出されると、OpenRouter APIのモデルスキーマは以下のように `Capability` データクラスにマッピングされます:

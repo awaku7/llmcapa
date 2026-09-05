@@ -261,6 +261,10 @@ The built files will be generated under the `dist/` directory.
 
 ---
 
+## Azure Catalog Scraping
+
+The Azure AI Foundry catalog has SSR and continuation-token pagination constraints. See [the Azure catalog scraping notes](docs/azure_catalog_scraping.md) and `scripts/_scrape_azure_catalog.py` before changing the updater.
+
 ## OpenRouter Mapping Details
 
 When `fetch_openrouter()` is called, it maps the OpenRouter API model schema to our `Capability` dataclass as follows:

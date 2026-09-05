@@ -272,6 +272,5 @@ Global option:
 
 ## 13. Related specifications
 
-- [Azure catalog API](azure_catalog_api.md)
 - [Catalog data sources](catalog_data_sources.md)
 - [Structured output provider status](STRUCTURED_OUTPUT_PROVIDER_STATUS.md)
