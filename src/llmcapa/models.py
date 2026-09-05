@@ -542,8 +542,35 @@ class Capability:
         return list(self.thinking_level_values)
 
     def get_thinking_control(self) -> dict[str, Any]:
-        """Return normalized metadata for constructing the provider request."""
-        return dict(self.thinking_control or {})
+        """Return normalized metadata for constructing the provider request.
+
+        Older catalog snapshots often contain the capability flags and value
+        ranges but no explicit ``thinking_control`` object. Derive the
+        provider-neutral control in that case instead of returning an empty
+        dict. Native level/budget controls take precedence over the generic
+        reasoning-effort control.
+        """
+        if self.thinking_control:
+            return dict(self.thinking_control)
+        if self.supports_thinking_level:
+            return {
+                "kind": "level",
+                "parameter": "thinking_level",
+                "values": self.get_thinking_level_values(),
+            }
+        if self.supports_thinking_budget:
+            return {
+                "kind": "budget",
+                "parameter": "thinking_budget",
+                **self.get_thinking_budget_values(),
+            }
+        if self.supports_reasoning_effort:
+            return {
+                "kind": "effort",
+                "parameter": "reasoning_effort",
+                "values": self.get_reasoning_effort_values(),
+            }
+        return {}
 
     def to_dict(self) -> dict[str, Any]:
         """Return a plain dict representation."""

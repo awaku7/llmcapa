@@ -5003,3 +5003,42 @@
 - Synthetic `~*/…-latest` aliases retained (9)
 - Replaced thin 14-model placeholder catalog
 - Install copy synced
+
+## Google refresh (2026-09-05)
+
+### Source
+- Pricing: https://ai.google.dev/gemini-api/docs/pricing
+- Apply: `scripts/_update_google.py`
+
+### Result
+- google.json: **76** models (active=70, token-priced=58)
+- Inserted (discovered): none
+- Lyria-3 clip/pro: $0.04 / $0.08 per song (extra)
+- Deprecations: discovered from official model pricing sections
+- Install copy synced
+
+## Google refresh (2026-09-05)
+
+### Source
+- Pricing: https://ai.google.dev/gemini-api/docs/pricing
+- Apply: `scripts/_update_google.py`
+
+### Result
+- google.json: **76** models (active=70, token-priced=58)
+- Inserted (discovered): none
+- Lyria-3 clip/pro: $0.04 / $0.08 per song (extra)
+- Deprecations: discovered from official model pricing sections
+- Install copy synced
+
+## Google refresh (2026-09-05)
+
+### Source
+- Pricing: https://ai.google.dev/gemini-api/docs/pricing
+- Apply: `scripts/_update_google.py`
+
+### Result
+- google.json: **76** models (active=70, token-priced=58)
+- Inserted (discovered): none
+- Lyria-3 clip/pro: $0.04 / $0.08 per song (extra)
+- Deprecations: discovered from official model pricing sections
+- Install copy synced

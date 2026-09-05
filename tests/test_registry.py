@@ -79,6 +79,12 @@ def test_get_unknown():
         llmcapa.get("this-model-does-not-exist")
 
 
+def test_numeric_fallback_does_not_cross_major_generation():
+    """Missing Gemini 3 IDs must not silently resolve to Gemini 2.5."""
+    with pytest.raises(ModelNotFoundError):
+        llmcapa.get("gemini-3-flash")
+
+
 def test_providers():
     p = llmcapa.providers()
     assert isinstance(p, list)

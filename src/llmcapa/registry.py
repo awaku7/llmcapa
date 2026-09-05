@@ -585,7 +585,16 @@ class Registry:
                 if parsed is None:
                     continue
                 shape, version = parsed
-                if shape != wanted_shape or version >= wanted_version:
+                # Never cross a major model generation during numeric
+                # fallback.  For example, gemini-3-flash must not resolve to
+                # gemini-2.5-flash; the two generations use different
+                # thinking controls. Minor/patch fallback within the same
+                # major generation remains supported (grok-4.7 -> grok-4.6).
+                if (
+                    shape != wanted_shape
+                    or version >= wanted_version
+                    or version[0] != wanted_version[0]
+                ):
                     continue
                 if best is None or version > best[0]:
                     best = (version, capability)

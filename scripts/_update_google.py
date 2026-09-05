@@ -141,6 +141,46 @@ def discover_metadata(html: str) -> tuple[dict[str, dict], dict[str, str]]:
 def template_for(model_id: str) -> dict:
     """Build conservative metadata for a newly documented Gemini model."""
     display = model_id.replace("-", " ").title()
+    # Gemini 2.5 reasoning models expose token-budget thinking controls. The
+    # OpenAI-compatible Gemini endpoint also maps reasoning_effort to these
+    # budgets (see Google's OpenAI compatibility documentation).
+    is_specialized = any(
+        tag in model_id for tag in ("-image", "-tts", "-native-audio")
+    )
+    is_gemini_25_thinking = (
+        re.match(r"^gemini-2\.5(?:-|$)", model_id) is not None
+        and not is_specialized
+    )
+    is_gemini_3_thinking = (
+        re.match(r"^gemini-3(?:\.|-|$)", model_id) is not None
+        and not is_specialized
+    )
+    is_thinking_model = is_gemini_25_thinking or is_gemini_3_thinking
+    budget_values = (
+        {"type": "token_range", "min": 0, "max": 24576}
+        if is_gemini_25_thinking
+        else None
+    )
+    level_values = (
+        ["minimal", "low", "medium", "high"] if is_gemini_3_thinking else None
+    )
+    control = (
+        {
+            "kind": "budget",
+            "parameter": "thinking_budget",
+            **budget_values,
+        }
+        if budget_values
+        else (
+            {
+                "kind": "level",
+                "parameter": "thinking_level",
+                "values": level_values,
+            }
+            if level_values
+            else None
+        )
+    )
     return {
         "display_name": display,
         "input_modalities": ["text"],
@@ -150,6 +190,13 @@ def template_for(model_id: str) -> dict:
         "supports_vision": any(x in model_id for x in ("image", "vision")),
         "supports_reasoning": any(x in model_id for x in ("pro", "flash")),
         "supports_chat_completion": True,
+        "supports_reasoning_effort": is_thinking_model,
+        "reasoning_effort_values": ["none", "minimal", "low", "medium", "high"] if is_thinking_model else None,
+        "supports_thinking_budget": is_gemini_25_thinking,
+        "thinking_budget_values": budget_values,
+        "supports_thinking_level": is_gemini_3_thinking,
+        "thinking_level_values": level_values,
+        "thinking_control": control,
         "max_output_tokens": 65_536,
         "extra": {"source": SOURCE, "discovered_from": SOURCE},
     }
@@ -174,8 +221,8 @@ def base_model(
         "supports_reasoning": template.get("supports_reasoning", False),
         "supports_chat_completion": template.get("supports_chat_completion", True),
         "supports_responses_api": False,
-        "supports_reasoning_effort": False,
-        "supports_thinking_budget": False,
+        "supports_reasoning_effort": template.get("supports_reasoning_effort", False),
+        "supports_thinking_budget": template.get("supports_thinking_budget", False),
         "supports_anthropic_api": False,
         "supports_google_api": True,
         "supports_fim": False,
@@ -185,7 +232,11 @@ def base_model(
         "pricing": {"input_per_1m": inp, "output_per_1m": out, "currency": "USD"},
         "deprecated": False,
         "aliases": [],
-        "reasoning_effort_values": None,
+        "reasoning_effort_values": template.get("reasoning_effort_values"),
+        "thinking_budget_values": template.get("thinking_budget_values"),
+        "supports_thinking_level": template.get("supports_thinking_level", False),
+        "thinking_level_values": template.get("thinking_level_values"),
+        "thinking_control": template.get("thinking_control"),
         "extra": deepcopy(template.get("extra") or {}),
     }
 
@@ -216,12 +267,18 @@ def main() -> None:
         m["supports_fim"] = False
         updated += 1
 
-    # Native Gemini uses thinking_budget / thinking_level, not the
-    # OpenAI-compatible reasoning_effort field. Clear stale effort metadata
-    # from imported and batch records instead of inventing effort values.
+    # Gemini 2.5 Flash exposes thinking_budget natively, and Google's
+    # OpenAI-compatible endpoint maps reasoning_effort to the same budget.
+    # Refresh these fields for existing, imported, and batch records too.
     for model in models:
-        model["supports_reasoning_effort"] = False
-        model["reasoning_effort_values"] = None
+        tmpl = template_for(model["model_id"])
+        model["supports_reasoning_effort"] = tmpl.get("supports_reasoning_effort", False)
+        model["reasoning_effort_values"] = tmpl.get("reasoning_effort_values")
+        model["supports_thinking_budget"] = tmpl.get("supports_thinking_budget", False)
+        model["thinking_budget_values"] = tmpl.get("thinking_budget_values")
+        model["supports_thinking_level"] = tmpl.get("supports_thinking_level", False)
+        model["thinking_level_values"] = tmpl.get("thinking_level_values")
+        model["thinking_control"] = tmpl.get("thinking_control")
 
     # Insert missing models that have templates
     for mid in google_prices:

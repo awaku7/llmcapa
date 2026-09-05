@@ -99,6 +99,22 @@ def test_gpt6_astra_supports_reasoning_effort():
     assert cap.reasoning_effort_values == ["low", "medium", "high", "xhigh", "max"]
 
 
+def test_google_thinking_controls_are_provider_specific():
+    budget = llmcapa.get("gemini-2.5-flash", provider="google")
+    assert budget.supports_thinking_budget is True
+    assert budget.get_thinking_budget_values() == {
+        "type": "token_range",
+        "min": 0,
+        "max": 24576,
+    }
+    assert budget.get_thinking_control()["parameter"] == "thinking_budget"
+
+    level = llmcapa.get("gemini-3-flash-preview", provider="google")
+    assert level.supports_thinking_level is True
+    assert level.get_thinking_level_values() == ["minimal", "low", "medium", "high"]
+    assert level.get_thinking_control()["parameter"] == "thinking_level"
+
+
 def test_tokenizer_name():
     gpt = llmcapa.get("gpt-4o")
     assert gpt.tokenizer_name == "o200k_base"
