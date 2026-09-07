@@ -141,9 +141,9 @@ def discover_metadata(html: str) -> tuple[dict[str, dict], dict[str, str]]:
 def template_for(model_id: str) -> dict:
     """Build conservative metadata for a newly documented Gemini model."""
     display = model_id.replace("-", " ").title()
-    # Gemini 2.5 reasoning models expose token-budget thinking controls. The
-    # OpenAI-compatible Gemini endpoint also maps reasoning_effort to these
-    # budgets (see Google's OpenAI compatibility documentation).
+    # Gemini's native API exposes thinking_budget for Gemini 2.5 and
+    # thinking_level for Gemini 3+. reasoning_effort is an OpenAI parameter,
+    # not a native Google API parameter, so it must not be advertised here.
     is_specialized = any(
         tag in model_id for tag in ("-image", "-tts", "-native-audio")
     )
@@ -155,7 +155,6 @@ def template_for(model_id: str) -> dict:
         re.match(r"^gemini-3(?:\.|-|$)", model_id) is not None
         and not is_specialized
     )
-    is_thinking_model = is_gemini_25_thinking or is_gemini_3_thinking
     budget_values = (
         {"type": "token_range", "min": 0, "max": 24576}
         if is_gemini_25_thinking
@@ -190,8 +189,8 @@ def template_for(model_id: str) -> dict:
         "supports_vision": any(x in model_id for x in ("image", "vision")),
         "supports_reasoning": any(x in model_id for x in ("pro", "flash")),
         "supports_chat_completion": True,
-        "supports_reasoning_effort": is_thinking_model,
-        "reasoning_effort_values": ["none", "minimal", "low", "medium", "high"] if is_thinking_model else None,
+        "supports_reasoning_effort": False,
+        "reasoning_effort_values": None,
         "supports_thinking_budget": is_gemini_25_thinking,
         "thinking_budget_values": budget_values,
         "supports_thinking_level": is_gemini_3_thinking,
@@ -267,13 +266,13 @@ def main() -> None:
         m["supports_fim"] = False
         updated += 1
 
-    # Gemini 2.5 Flash exposes thinking_budget natively, and Google's
-    # OpenAI-compatible endpoint maps reasoning_effort to the same budget.
-    # Refresh these fields for existing, imported, and batch records too.
+    # Refresh native Google thinking controls for existing, imported, and
+    # batch records too. reasoning_effort is intentionally disabled because
+    # this catalog describes the native Google API.
     for model in models:
         tmpl = template_for(model["model_id"])
-        model["supports_reasoning_effort"] = tmpl.get("supports_reasoning_effort", False)
-        model["reasoning_effort_values"] = tmpl.get("reasoning_effort_values")
+        model["supports_reasoning_effort"] = False
+        model["reasoning_effort_values"] = None
         model["supports_thinking_budget"] = tmpl.get("supports_thinking_budget", False)
         model["thinking_budget_values"] = tmpl.get("thinking_budget_values")
         model["supports_thinking_level"] = tmpl.get("supports_thinking_level", False)

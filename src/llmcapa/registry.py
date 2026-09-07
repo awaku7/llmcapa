@@ -38,7 +38,7 @@ class Registry:
         "openai": ["open-ai"],
         "xai": ["x-ai", "grok"],
         "anthropic": ["claude"],
-        "google": ["google-ai"],
+        "google": ["google-ai", "gemini"],
         "vertex-ai": ["vertexai"],
         "azure-openai": ["azure"],
         "zhipu": ["zai", "z-ai"],
@@ -504,12 +504,6 @@ class Registry:
         claude.latest). Multiple suffixes are stripped iteratively
         (e.g., -preview-05-20 removes -05-20 first, then -preview).
 
-        Also, if model_id contains a provider/ prefix (e.g. "openai/o3-mini"),
-        the bare model_id without prefix is added as a candidate, UNLESS
-        the prefix is a known provider name — in that case, the fallback
-        is skipped to avoid false matches (e.g. "novita/deepseek-v4-flash"
-        should not fall back to "deepseek-v4-flash" which might belong to
-        a different provider).
         """
         key = (model_id or "").strip().lower()
         candidates = [key]
@@ -518,12 +512,7 @@ class Registry:
         if ":" in key:
             candidates.append(key.split(":")[0])
 
-        # 2. If model_id contains a provider/ prefix, also try bare model_id
-        #    Skip if the prefix is a known provider to prevent false matches
-        #    (e.g. "novita/deepseek-v4-flash" should not fall back to "deepseek-v4-flash"
-        #     which might match a different provider's model).
-        #    Known providers are detected via self._by_provider (populated after _ensure_loaded).
-        # 3. Progressively strip known trailing patterns
+        # 2. Progressively strip known trailing patterns
         DatePat = r"[0-9]{4}-[0-9]{2}-[0-9]{2}|[0-9]{2}-[0-9]{2}|[0-9]{8}"
         suffix_pats = [f"[-_.]({DatePat})$", r"[-_.](latest|preview)$"]
 
@@ -605,9 +594,10 @@ class Registry:
 
         Args:
             model_id: Model id, alias, or deployment name.
-            provider: If given, scope the lookup to models from this
-                      provider only. Otherwise, returns the first-registered
-                      (native) version.
+            provider: If given, normalize and resolve this provider alias,
+                      then search only that single provider catalog. No other
+                      provider is used as a fallback. Otherwise, returns the
+                      first-registered (native) version.
 
         Raises:
             ModelNotFoundError: If the model cannot be resolved.
@@ -689,7 +679,12 @@ class Registry:
         provider: str | None = None,
         include_deprecated: bool = True,
     ) -> list[Capability]:
-        """Return capabilities, optionally filtered by provider."""
+        """Return capabilities, optionally filtered to one provider catalog.
+
+        A provider argument is normalized and resolved through the same alias
+        map as :meth:`get`; it never combines catalogs or falls back to
+        another provider.
+        """
         self._ensure_loaded()
         if provider is not None:
             normalized_provider = self._normalize_provider(provider)
@@ -738,10 +733,12 @@ class Registry:
         include_deprecated: bool = False,
         **feature_flags: bool,
     ) -> list[Capability]:
-        """Search models by conditions.
+        """Search models by conditions, optionally limited to one provider catalog.
 
-        feature_flags accepts keys like supports_vision=True or
-        short forms like vision=True.
+        When *provider* is supplied, it follows the normalized provider alias
+        contract used by :meth:`get` and :meth:`list_models`; no other catalog
+        is consulted. ``feature_flags`` accepts keys like
+        ``supports_vision=True`` or short forms like ``vision=True``.
         """
         self._ensure_loaded()
         result = []
@@ -791,9 +788,9 @@ class Registry:
         """Search models by prefix matching on model_id, display_name, or aliases.
 
         Case-insensitive prefix search. Results are sorted by (provider, model_id).
-        When *provider* is given, uses the provider-scoped index (same alias
-        resolution as ``list_models`` / ``get``) so aggregator and native
-        entries are both visible.
+        When *provider* is given, uses only that provider catalog and the
+        same alias resolution as ``list_models`` / ``get``. With no provider,
+        all provider catalogs are searched.
         """
         self._ensure_loaded()
         prefix_lower = prefix.strip().lower()

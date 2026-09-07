@@ -175,6 +175,15 @@ def main() -> None:
             merged = dict(old)
             merged.update(entry)
             merged["extra"] = {**old.get("extra", {}), **entry.get("extra", {})}
+            # Some official model pages omit the Reasoning.effort enum even
+            # when the existing catalog has verified values. Do not replace
+            # that metadata with the parser's default False; retain it unless
+            # the page supplies a new non-empty enum.
+            if not entry.get("reasoning_effort_values") and old.get(
+                "reasoning_effort_values"
+            ):
+                merged["reasoning_effort_values"] = old["reasoning_effort_values"]
+                merged["supports_reasoning_effort"] = True
             entry = merged
         price_id = entry.get("extra", {}).get("default_snapshot", mid)
         rate = pricing.get(price_id) or pricing.get(mid)

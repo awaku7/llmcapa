@@ -224,6 +224,36 @@ MEDIA_MODELS: dict[str, dict] = {
 }
 
 
+def qwen_thinking_mode(model_id: str) -> str | None:
+    """Return the documented Qwen thinking mode for a model ID."""
+    mid = model_id.lower()
+    thinking_family = (
+        mid.startswith(("qwen3", "qwq"))
+        or mid in {"qwen-plus", "qwen-flash", "qwen-turbo"}
+    )
+    if not thinking_family:
+        return None
+    if "thinking" in mid or mid.startswith("qwq"):
+        return "thinking_only"
+    return "hybrid"
+
+
+def apply_thinking_metadata(model: dict) -> None:
+    """Apply native DashScope thinking controls to a Qwen text record."""
+    mode = qwen_thinking_mode(model.get("model_id", ""))
+    if mode is None or not model.get("supports_chat_completion", False):
+        return
+    model["supports_reasoning"] = True
+    model["supports_thinking_budget"] = True
+    model["thinking_budget_values"] = None
+    extra = model.setdefault("extra", {})
+    extra["thinking_budget_parameter"] = "thinking_budget"
+    extra["thinking_source"] = "https://www.alibabacloud.com/help/en/model-studio/deep-thinking"
+    extra["thinking_mode"] = mode
+    if mode == "hybrid":
+        extra["thinking_parameter"] = "enable_thinking"
+
+
 def make_text_model(model_id: str, spec: dict) -> dict:
     extra: dict = {"source": SOURCE, "pricing_tier": "international_list"}
     if "promo_input_per_1m" in spec:
@@ -418,6 +448,13 @@ def main() -> None:
             extra["source"] = SOURCE
             m["extra"] = extra
             media_n += 1
+
+    # Refresh native DashScope thinking controls for existing and newly
+    # registered Qwen text models. The official API uses enable_thinking and
+    # thinking_budget; reasoning_effort is not a native Qwen parameter.
+    for model in models:
+        if model.get("provider") == "qwen":
+            apply_thinking_metadata(model)
 
     models.sort(key=lambda x: x["model_id"])
     data["models"] = models

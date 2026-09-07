@@ -210,6 +210,49 @@ def test_get_with_provider_normalization() -> None:
     assert cap.context_window > 0  # 131072 as of latest data
 
 
+def test_google_gemini_provider_alias_and_strict_scope() -> None:
+    """Gemini aliases resolve only to the requested native catalog."""
+    assert llmcapa.get("gemini-2.5-flash", provider="google").provider == "google"
+    assert llmcapa.get("gemini-2.5-flash", provider="gemini").provider == "google"
+    assert (
+        llmcapa.get("gemini-2.5-flash", provider="vertex-ai").provider
+        == "vertex-ai"
+    )
+    assert (
+        llmcapa.get("gemini-2.5-flash", provider="vertexai").provider
+        == "vertex-ai"
+    )
+    assert (
+        llmcapa.get("Llama-3.3-70B-Instruct", provider="meta").provider == "meta"
+    )
+    assert (
+        llmcapa.get("Llama-3.3-70B-Instruct", provider="meta-llama").provider
+        == "meta"
+    )
+
+    for model_id, provider in (
+        ("gemini-2.5-flash", "meta"),
+        ("gemini-2.5-flash", "openai"),
+        ("gpt-4o", "meta"),
+    ):
+        with pytest.raises(ModelNotFoundError):
+            llmcapa.get(model_id, provider=provider)
+
+    assert (
+        llmcapa.get("gemini-2.5-flash", provider="openrouter").provider
+        == "openrouter"
+    )
+
+    via_alias = llmcapa.list_models(provider="gemini")
+    via_canonical = llmcapa.list_models(provider="google")
+    assert via_alias == via_canonical
+    assert any(c.model_id == "gemini-2.5-flash" for c in via_alias)
+    assert any(
+        c.model_id == "gemini-2.5-flash"
+        for c in llmcapa.search("gemini-2.5-flash", provider="gemini")
+    )
+
+
 def test_find_model_across_providers() -> None:
     """find_model returns all (provider, Capability) tuples for a model_id."""
     results = llmcapa.find_model("gpt-4o")
