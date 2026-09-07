@@ -25,6 +25,20 @@ LOG = WORKDIR / "provider_update_log.md"
 SOURCE = "https://ai.google.dev/gemini-api/docs/pricing"
 
 
+def normalize_native_endpoint(model: dict) -> None:
+    """Mark Google Gemini entries as using the native Google API."""
+    extra = model.get("extra") or {}
+    endpoints = extra.get("endpoints") or []
+    for endpoint in endpoints:
+        base_url = str(endpoint.get("base_url") or "")
+        if "generativelanguage.googleapis.com" in base_url:
+            endpoint["protocol"] = "google-generative-language"
+            endpoint["auth"] = "api-key"
+    if endpoints:
+        extra["endpoints"] = endpoints
+        model["extra"] = extra
+
+
 def fetch(url: str) -> str:
     """Fetch a Google documentation page (with a controlled TLS fallback)."""
     request = Request(url, headers={"User-Agent": "llmcapa-google-updater/1.0"})
@@ -334,6 +348,9 @@ def main() -> None:
         m["supports_google_api"] = True
         m.setdefault("supports_responses_api", False)
         m.setdefault("supports_fim", False)
+
+    for model in models:
+        normalize_native_endpoint(model)
 
     models.sort(key=lambda x: x["model_id"])
     data["models"] = models
