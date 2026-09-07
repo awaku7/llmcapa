@@ -5407,3 +5407,10 @@
 - Source: https://developers.openai.com/api/docs/models/all.md
 - Source: https://developers.openai.com/api/docs/pricing.md
 - Dynamically discovered 97 official model pages; legacy records preserved: 65
+
+## Vertex AI / Model Garden SDK refresh (2026-09-07)
+
+- Source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/models
+- Discovery: `vertexai.model_garden.list_deployable_models(list_hf_models=True)`
+- OpenRouter was not used; `google.json` was not modified.
+- Result: 4956 SDK-listed deployable Model Garden models. Detailed limits/pricing remain unknown where the SDK does not expose them.
