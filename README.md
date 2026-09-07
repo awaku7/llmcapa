@@ -158,6 +158,24 @@ print(claude.supports(Feature.LLMC_FEAT_REASONING_EFFORT))  # False
 print(claude.supports(Feature.LLMC_FEAT_THINKING_BUDGET))   # True
 ```
 
+Google Gemini's native API uses provider-specific thinking controls rather than
+OpenAI's `reasoning_effort`. Use `provider="google"` for the Google Generative
+Language API and query `thinking_budget` (Gemini 2.5) or `thinking_level`
+(Gemini 3+):
+
+```python
+gemini25 = llmcapa.get("gemini-2.5-flash", provider="google")
+print(gemini25.supports(Feature.LLMC_FEAT_REASONING_EFFORT))  # False
+print(gemini25.supports(Feature.LLMC_FEAT_THINKING_BUDGET))   # True
+
+gemini3 = llmcapa.get("gemini-3-flash-preview", provider="google")
+print(gemini3.supports(Feature.LLMC_FEAT_REASONING_EFFORT))   # False
+print(gemini3.supports(Feature.LLMC_FEAT_THINKING_LEVEL))    # True
+```
+
+`google` and `vertex-ai` are separate provider routes. The native Google
+catalog is not treated as an OpenAI-compatible API.
+
 ### Reasoning Effort Values
 
 Retrieve the list of valid `reasoning_effort` values supported by a specific model:

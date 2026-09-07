@@ -158,6 +158,24 @@ print(claude.supports(Feature.LLMC_FEAT_REASONING_EFFORT))  # False
 print(claude.supports(Feature.LLMC_FEAT_THINKING_BUDGET))   # True
 ```
 
+Google GeminiのネイティブAPIは、OpenAIの `reasoning_effort` ではなく、
+Google固有の思考制御を使用します。`provider="google"` はGoogle
+Generative Language APIの経路を表します。
+
+```python
+gemini25 = llmcapa.get("gemini-2.5-flash", provider="google")
+print(gemini25.supports(Feature.LLMC_FEAT_REASONING_EFFORT))  # False
+print(gemini25.supports(Feature.LLMC_FEAT_THINKING_BUDGET))   # True
+
+gemini3 = llmcapa.get("gemini-3-flash-preview", provider="google")
+print(gemini3.supports(Feature.LLMC_FEAT_REASONING_EFFORT))   # False
+print(gemini3.supports(Feature.LLMC_FEAT_THINKING_LEVEL))    # True
+```
+
+Gemini 2.5は `thinking_budget`、Gemini 3以降は `thinking_level` を使用します。
+`google` と `vertex-ai` は別のプロバイダー経路であり、ネイティブGoogle
+カタログをOpenAI互換APIとして扱いません。
+
 ### 推論努力（Reasoning Effort）の値
 
 特定モデルがサポートする有効な `reasoning_effort` 値の一覧を取得します:
