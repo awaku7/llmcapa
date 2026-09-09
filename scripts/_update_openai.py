@@ -14,6 +14,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.request import Request, urlopen
 
+from _image_capability_postprocess import (
+    minimal_image_capability,
+    parse_image_input_constraints,
+)
+
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "openai.json"
 # The /models/all page is the official complete catalog.  We use its
@@ -126,14 +131,25 @@ def detail(path: str) -> dict:
         entry["reasoning_effort_values"] = cleaned
     # OpenAI's o-series pages do not consistently repeat the enum, but the
     # official o-series documentation/API uses the same three levels.
-    if entry["supports_reasoning"] and "reasoning_effort_values" not in entry:
-        if re.match(r"^o(?:1|3|4)(?:-|$)", mid):
-            entry["reasoning_effort_values"] = ["low", "medium", "high"]
+    if (
+        entry["supports_reasoning"]
+        and "reasoning_effort_values" not in entry
+        and re.match(r"^o(?:1|3|4)(?:-|$)", mid)
+    ):
+        entry["reasoning_effort_values"] = ["low", "medium", "high"]
     # Keep the boolean capability flag in sync with the discovered values.
     # Previously values were written without setting this flag, causing
     # reasoning-capable OpenAI models (for example gpt-6-astra) to report
     # supports("reasoning_effort") == False.
     entry["supports_reasoning_effort"] = bool(entry.get("reasoning_effort_values"))
+    image = minimal_image_capability(entry)
+    image_constraints = parse_image_input_constraints(text)
+    if image is not None or image_constraints:
+        image = image or {}
+        image.update(image_constraints)
+        image["source_url"] = BASE + path
+        image["status"] = "documented"
+        entry["image"] = image
     cutoff = re.search(r"([A-Z][a-z]{2} \d{1,2}, \d{4}) knowledge cutoff", text)
     if cutoff:
         entry["knowledge_cutoff"] = cutoff.group(1)

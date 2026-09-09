@@ -408,4 +408,8 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    code = main()
+    from _scrape_image_capabilities import scrape_provider
+
+    scrape_provider("meta")
+    raise SystemExit(code)

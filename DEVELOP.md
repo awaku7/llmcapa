@@ -123,6 +123,20 @@ This updates **only** `openrouter.json`; it does not replace other provider JSON
 
 `scripts/_postprocess_catalogs.py` performs corrections and validation on existing JSON files. It does not discover models or fetch all providers.
 
+### Image Capability post-processing
+
+`scripts/_image_capability_postprocess.py` is the shared post-processing step for image-generation records. It adds only conservative `ImageCapability` metadata when a catalog record has image output and a recognizable image-generation family. Image input alone is not treated as image generation. Unknown input formats, MIME types, byte limits, and pixel limits remain unset rather than being guessed.
+
+`_update_all_providers.py` runs this step after a provider updater succeeds. Run the image audit directly with:
+
+```bash
+python scripts/_image_capability_postprocess.py
+```
+
+The audit distinguishes missing generation metadata from ambiguous or image-analysis output records.
+
+`scripts/_scrape_image_capabilities.py` contains provider-specific official-page parsers for Amazon, Google, ByteDance, xAI, Qwen, MiniMax, Meta, and Microsoft. Each corresponding provider updater invokes its parser after writing the catalog, and `_update_all_providers.py` provides the same hook for dispatched updates. `_postprocess_catalogs.py` can run all image parsers as a batch. Network or layout failures are non-fatal and preserve existing catalog values.
+
 ## Adding a New Provider
 
 To add a new model provider (e.g., `cohere`):

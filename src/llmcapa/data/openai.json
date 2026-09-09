@@ -156,6 +156,22 @@
         "output_per_1m": null,
         "currency": "USD"
       },
+      "image": {
+        "generation": true,
+        "editing": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": true,
+        "output_formats": [
+          "png",
+          "jpeg",
+          "webp"
+        ],
+        "response_formats": [
+          "b64_json"
+        ],
+        "status": "documented",
+        "source_url": "https://developers.openai.com/api/docs/models/chatgpt-image-latest.md"
+      },
       "supports_vision": true,
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -2247,6 +2263,13 @@
             "source": "https://platform.openai.com/docs/api-reference"
           }
         ]
+      },
+      "image": {
+        "generation": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": true,
+        "status": "documented",
+        "source_url": "https://platform.openai.com/docs/api-reference"
       }
     },
     {
@@ -2295,6 +2318,13 @@
             "source": "https://platform.openai.com/docs/api-reference"
           }
         ]
+      },
+      "image": {
+        "generation": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": true,
+        "status": "documented",
+        "source_url": "https://platform.openai.com/docs/api-reference"
       }
     },
     {
@@ -3572,6 +3602,13 @@
             "source": "https://platform.openai.com/docs/api-reference"
           }
         ]
+      },
+      "image": {
+        "generation": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": true,
+        "status": "documented",
+        "source_url": "https://platform.openai.com/docs/api-reference"
       }
     },
     {
@@ -5315,6 +5352,22 @@
         "output_per_1m": null,
         "currency": "USD"
       },
+      "image": {
+        "generation": true,
+        "editing": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": true,
+        "output_formats": [
+          "png",
+          "jpeg",
+          "webp"
+        ],
+        "response_formats": [
+          "b64_json"
+        ],
+        "status": "documented",
+        "source_url": "https://developers.openai.com/api/docs/models/gpt-image-1.md"
+      },
       "supports_vision": true,
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -5362,6 +5415,22 @@
         "input_per_1m": null,
         "output_per_1m": null,
         "currency": "USD"
+      },
+      "image": {
+        "generation": true,
+        "editing": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": true,
+        "output_formats": [
+          "png",
+          "jpeg",
+          "webp"
+        ],
+        "response_formats": [
+          "b64_json"
+        ],
+        "status": "documented",
+        "source_url": "https://developers.openai.com/api/docs/models/gpt-image-1-mini.md"
       },
       "supports_vision": true,
       "supports_function_calling": false,
@@ -5412,6 +5481,22 @@
         "output_per_1m": null,
         "currency": "USD"
       },
+      "image": {
+        "generation": true,
+        "editing": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": true,
+        "output_formats": [
+          "png",
+          "jpeg",
+          "webp"
+        ],
+        "response_formats": [
+          "b64_json"
+        ],
+        "status": "documented",
+        "source_url": "https://developers.openai.com/api/docs/models/gpt-image-1.5.md"
+      },
       "supports_vision": true,
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -5461,6 +5546,22 @@
         "input_per_1m": null,
         "output_per_1m": null,
         "currency": "USD"
+      },
+      "image": {
+        "generation": true,
+        "editing": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": true,
+        "output_formats": [
+          "png",
+          "jpeg",
+          "webp"
+        ],
+        "response_formats": [
+          "b64_json"
+        ],
+        "status": "documented",
+        "source_url": "https://developers.openai.com/api/docs/models/gpt-image-2.md"
       },
       "supports_vision": true,
       "supports_function_calling": false,
@@ -5537,6 +5638,235 @@
             "source": "https://platform.openai.com/docs/api-reference"
           }
         ]
+      },
+      "image": {
+        "generation": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": true,
+        "status": "documented",
+        "source_url": "https://github.com/gh640/openai-models-ja"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-image-2.5-flare",
+      "display_name": "GPT-Image-2.5 Flare",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "image"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-image-2.5-flare",
+        "gpt-image-2.5-flare-2026-09-08"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-image-2.5-flare.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-image-2.5-flare-2026-09-08"
+      },
+      "image": {
+        "generation": true,
+        "editing": true,
+        "inpainting": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": true,
+        "accepts_file_id": true,
+        "accepts_image_url": true,
+        "max_input_images": 16,
+        "input_fidelity_values": [
+          "low",
+          "high"
+        ],
+        "output_formats": [
+          "png",
+          "jpeg",
+          "webp"
+        ],
+        "response_formats": [
+          "b64_json"
+        ],
+        "max_outputs": 10,
+        "supports_transparent_background": true,
+        "background_values": [
+          "auto",
+          "opaque",
+          "transparent"
+        ],
+        "quality_values": [
+          "auto",
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "max"
+        ],
+        "supports_arbitrary_size": true,
+        "supported_sizes": [
+          "1024x1024",
+          "1536x1024",
+          "1024x1536"
+        ],
+        "size_divisible_by": 16,
+        "min_aspect_ratio": 0.333333,
+        "max_aspect_ratio": 3.0,
+        "supports_streaming": true,
+        "partial_images_min": 0,
+        "partial_images_max": 3,
+        "prompt_max_chars": 32000,
+        "status": "documented",
+        "source_url": "https://developers.openai.com/api/docs/models/gpt-image-2.5-flare.md",
+        "endpoints": {
+          "image_api_generations": true,
+          "image_api_edits": true,
+          "responses_image_tool": true,
+          "chat_completions": false,
+          "responses_mainline_model_required": true,
+          "responses_action_values": [
+            "auto",
+            "generate",
+            "edit"
+          ],
+          "responses_multi_turn": true,
+          "responses_image_context": true
+        },
+        "checked_at": "2026-09-09"
+      },
+      "supports_vision": true,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_responses_api": false,
+      "supports_chat_completion": false,
+      "supports_reasoning": false,
+      "supports_reasoning_effort": false,
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-image-2.5-sunburst",
+      "display_name": "GPT-Image-2.5 Sunburst",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "image"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-image-2.5-sunburst",
+        "gpt-image-2.5-sunburst-2026-09-08"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-image-2.5-sunburst.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-image-2.5-sunburst-2026-09-08"
+      },
+      "image": {
+        "generation": true,
+        "editing": true,
+        "inpainting": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": true,
+        "accepts_file_id": true,
+        "accepts_image_url": true,
+        "max_input_images": 16,
+        "input_fidelity_values": [
+          "low",
+          "high"
+        ],
+        "output_formats": [
+          "png",
+          "jpeg",
+          "webp"
+        ],
+        "response_formats": [
+          "b64_json"
+        ],
+        "max_outputs": 10,
+        "supports_transparent_background": true,
+        "background_values": [
+          "auto",
+          "opaque",
+          "transparent"
+        ],
+        "quality_values": [
+          "auto",
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "max"
+        ],
+        "supports_arbitrary_size": true,
+        "supported_sizes": [
+          "1024x1024",
+          "1536x1024",
+          "1024x1536"
+        ],
+        "size_divisible_by": 16,
+        "min_aspect_ratio": 0.333333,
+        "max_aspect_ratio": 3.0,
+        "supports_streaming": true,
+        "partial_images_min": 0,
+        "partial_images_max": 3,
+        "prompt_max_chars": 32000,
+        "status": "documented",
+        "source_url": "https://developers.openai.com/api/docs/models/gpt-image-2.5-sunburst.md",
+        "endpoints": {
+          "image_api_generations": true,
+          "image_api_edits": true,
+          "responses_image_tool": true,
+          "chat_completions": false,
+          "responses_mainline_model_required": true,
+          "responses_action_values": [
+            "auto",
+            "generate",
+            "edit"
+          ],
+          "responses_multi_turn": true,
+          "responses_image_context": true
+        },
+        "checked_at": "2026-09-09"
+      },
+      "supports_vision": true,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_responses_api": false,
+      "supports_chat_completion": false,
+      "supports_reasoning": false,
+      "supports_reasoning_effort": false,
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
       }
     },
     {

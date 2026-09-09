@@ -569,7 +569,8 @@
       "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
-        "text"
+        "text",
+        "image"
       ],
       "output_modalities": [
         "image"
@@ -577,6 +578,30 @@
       "supports_function_calling": false,
       "supports_json_mode": false,
       "supports_streaming": true,
+      "image": {
+        "generation": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": true,
+        "status": "documented",
+        "input_formats": [
+          "jpg",
+          "jpeg",
+          "png",
+          "webp",
+          "heic",
+          "heif"
+        ],
+        "input_mime_types": [
+          "image/jpeg",
+          "image/png",
+          "image/webp",
+          "image/heic",
+          "image/heif"
+        ],
+        "max_input_bytes": 31457280,
+        "source_url": "https://platform.minimax.io/docs/api-reference/file-management-upload",
+        "checked_at": "2026-09-09"
+      },
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": false,

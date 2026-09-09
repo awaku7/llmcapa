@@ -11,10 +11,19 @@ Example:
 
 from __future__ import annotations
 
-from importlib.metadata import PackageNotFoundError, version as package_version
+from importlib.metadata import PackageNotFoundError
+from importlib.metadata import version as package_version
 from pathlib import Path
 
-from .models import Capability, ComputerUseCapability, Feature, ReasoningEffort
+from .models import (
+    Capability,
+    ComputerUseCapability,
+    Feature,
+    ImageAnalysisCapability,
+    ImageCapability,
+    ImageEndpointCapability,
+    ReasoningEffort,
+)
 from .registry import ModelNotFoundError, Registry, default_registry
 from .tokenizer import count_messages_tokens, count_tokens
 
@@ -22,12 +31,15 @@ try:
     __version__ = package_version("llmcapa")
 except PackageNotFoundError:
     # Source-tree fallback when the project is not installed yet.
-    __version__ = "0.5.27"
+    __version__ = "0.5.28"
 
 __all__ = [
     "Capability",
     "ComputerUseCapability",
     "Feature",
+    "ImageAnalysisCapability",
+    "ImageCapability",
+    "ImageEndpointCapability",
     "ModelNotFoundError",
     "ReasoningEffort",
     "Registry",

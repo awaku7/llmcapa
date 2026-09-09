@@ -415,3 +415,6 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+    from _scrape_image_capabilities import scrape_provider
+
+    scrape_provider("minimax")

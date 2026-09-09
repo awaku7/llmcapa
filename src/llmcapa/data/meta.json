@@ -56,6 +56,31 @@
       "supports_function_calling": false,
       "supports_json_mode": false,
       "supports_streaming": false,
+      "image": {
+        "generation": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": true,
+        "status": "documented",
+        "source_url": "https://dev.meta.ai/docs/image-understanding/",
+        "editing": true,
+        "endpoints": {
+          "responses_image_tool": true,
+          "chat_completions": false
+        },
+        "accepts_file_id": true,
+        "accepts_image_url": true,
+        "input_formats": [
+          "jpeg",
+          "png"
+        ],
+        "input_mime_types": [
+          "image/jpeg",
+          "image/png"
+        ],
+        "max_input_bytes": 50000000,
+        "max_input_file_bytes": 1073741824,
+        "checked_at": "2026-09-09"
+      },
       "supports_vision": true,
       "supports_reasoning": true,
       "supports_chat_completion": false,

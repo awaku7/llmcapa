@@ -85,6 +85,21 @@ def main() -> int:
 
     print(f"Running provider updater: {provider} ({script_name})", flush=True)
     completed = subprocess.run([sys.executable, str(script)], cwd=ROOT, check=False)
+    if completed.returncode == 0:
+        image_postprocess = SCRIPTS / "_image_capability_postprocess.py"
+        image_result = subprocess.run(
+            [sys.executable, str(image_postprocess), "--write"],
+            cwd=ROOT,
+            check=False,
+        )
+        if image_result.returncode != 0:
+            return image_result.returncode
+        image_scraper = SCRIPTS / "_scrape_image_capabilities.py"
+        subprocess.run(
+            [sys.executable, str(image_scraper), "--provider", provider],
+            cwd=ROOT,
+            check=False,
+        )
     return completed.returncode
 
 

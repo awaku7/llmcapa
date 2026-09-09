@@ -117,6 +117,173 @@ class ComputerUseCapability:
 
 
 @dataclass(frozen=True)
+class ImageAnalysisCapability:
+    """Detailed image-analysis capabilities for an image-capable model."""
+
+    embedding: bool | None = None
+    classification: bool | None = None
+    object_detection: bool | None = None
+    segmentation: bool | None = None
+    captioning: bool | None = None
+    ocr: bool | None = None
+
+
+@dataclass(frozen=True)
+class ImageEndpointCapability:
+    """Image capabilities exposed by individual API endpoints."""
+
+    image_api_generations: bool | None = None
+    image_api_edits: bool | None = None
+    responses_image_tool: bool | None = None
+    chat_completions: bool | None = None
+    batch: bool | None = None
+    # Responses image generation is a tool used by a supported mainline
+    # model; the image model is not normally the top-level Responses model.
+    responses_mainline_model_required: bool | None = None
+    responses_action_values: tuple[str, ...] = ()
+    responses_multi_turn: bool | None = None
+    responses_image_context: bool | None = None
+    # Provider-specific endpoint extensions are preserved without expanding
+    # the common schema for every provider.
+    extra: dict[str, Any] = field(default_factory=dict)
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> ImageEndpointCapability:
+        """Create endpoint capability metadata from JSON-compatible data."""
+        known = {f for f in cls.__dataclass_fields__ if f != "extra"}  # type: ignore[attr-defined]
+        values: dict[str, Any] = {}
+        extra: dict[str, Any] = dict(data.get("extra") or {})
+        for key, value in data.items():
+            if key == "extra":
+                continue
+            if key in known:
+                values[key] = value
+            else:
+                extra[key] = value
+        values["responses_action_values"] = tuple(
+            values.get("responses_action_values") or ()
+        )
+        values["extra"] = extra
+        return cls(**values)
+
+    def to_dict(self) -> dict[str, Any]:
+        """Return a JSON-compatible representation."""
+        result = asdict(self)
+        result["responses_action_values"] = list(self.responses_action_values)
+        extra = result.pop("extra", {})
+        result.update(extra)
+        return result
+
+
+@dataclass(frozen=True)
+class ImageCapability:
+    """Provider-specific image generation, editing, and analysis metadata."""
+
+    analysis: ImageAnalysisCapability | None = None
+
+    # Basic image operations
+    generation: bool | None = None
+    editing: bool | None = None
+    inpainting: bool | None = None
+    outpainting: bool | None = None
+    image_variation: bool | None = None
+
+    # Inputs
+    accepts_text_prompt: bool | None = None
+    accepts_image_input: bool | None = None
+    accepts_file_id: bool | None = None
+    accepts_image_url: bool | None = None
+    accepts_data_url: bool | None = None
+    max_input_images: int | None = None
+    input_formats: tuple[str, ...] = ()
+    input_mime_types: tuple[str, ...] = ()
+    max_input_bytes: int | None = None
+    max_input_payload_bytes: int | None = None
+    max_input_file_bytes: int | None = None
+    max_input_width: int | None = None
+    max_input_height: int | None = None
+    max_input_pixels: int | None = None
+    input_fidelity_values: tuple[str, ...] = ()
+
+    # Outputs and generation count
+    output_formats: tuple[str, ...] = ()
+    response_formats: tuple[str, ...] = ()
+    max_outputs: int | None = None
+    supports_transparent_background: bool | None = None
+    background_values: tuple[str, ...] = ()
+
+    # Quality
+    quality_values: tuple[str, ...] = ()
+
+    # Size
+    supports_arbitrary_size: bool | None = None
+    supported_sizes: tuple[str, ...] = ()
+    size_divisible_by: int | None = None
+    min_width: int | None = None
+    max_width: int | None = None
+    min_height: int | None = None
+    max_height: int | None = None
+    min_aspect_ratio: float | None = None
+    max_aspect_ratio: float | None = None
+
+    # Streaming and prompt limits
+    supports_streaming: bool | None = None
+    partial_images_min: int | None = None
+    partial_images_max: int | None = None
+    prompt_max_chars: int | None = None
+
+    # Provenance and lifecycle
+    source_url: str | None = None
+    checked_at: str | None = None
+    status: str = "documented"
+    endpoints: ImageEndpointCapability | None = None
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> ImageCapability:
+        """Create an image capability from JSON-compatible data."""
+        values = dict(data)
+        for key in (
+            "input_formats",
+            "input_mime_types",
+            "input_fidelity_values",
+            "output_formats",
+            "response_formats",
+            "background_values",
+            "quality_values",
+            "supported_sizes",
+        ):
+            values[key] = tuple(values.get(key) or ())
+
+        analysis = values.get("analysis")
+        if analysis is not None and not isinstance(analysis, ImageAnalysisCapability):
+            values["analysis"] = ImageAnalysisCapability(**analysis)
+
+        endpoints = values.get("endpoints")
+        if endpoints is not None and not isinstance(endpoints, ImageEndpointCapability):
+            values["endpoints"] = ImageEndpointCapability.from_dict(endpoints)
+
+        return cls(**values)
+
+    def to_dict(self) -> dict[str, Any]:
+        """Return a JSON-compatible representation."""
+        result = asdict(self)
+        for key in (
+            "input_formats",
+            "input_mime_types",
+            "input_fidelity_values",
+            "output_formats",
+            "response_formats",
+            "background_values",
+            "quality_values",
+            "supported_sizes",
+        ):
+            result[key] = list(getattr(self, key))
+        if self.endpoints is not None:
+            result["endpoints"] = self.endpoints.to_dict()
+        return result
+
+
+@dataclass(frozen=True)
 class Capability:
     """Capability information of a single LLM model."""
 
@@ -160,6 +327,8 @@ class Capability:
     supports_thinking_level: bool = False
     thinking_level_values: list[str] | None = None
     thinking_control: dict[str, Any] | None = None
+    # Appended after all existing fields for positional-constructor compatibility.
+    image: ImageCapability | None = None
 
     def supports(self, feature: Feature | str) -> bool | None:
         """Return True if the model supports the given feature.
@@ -593,6 +762,10 @@ class Capability:
             d.pop("computer_use", None)
         else:
             d["computer_use"] = self.computer_use.to_dict()
+        if self.image is None:
+            d.pop("image", None)
+        else:
+            d["image"] = self.image.to_dict()
         # Exclude internal cache from dict representation
         d.pop("_supports_cache", None)
         return d
@@ -616,6 +789,12 @@ class Capability:
                         value
                         if isinstance(value, ComputerUseCapability)
                         else ComputerUseCapability.from_dict(value)
+                    )
+                elif key == "image" and value is not None:
+                    kwargs[key] = (
+                        value
+                        if isinstance(value, ImageCapability)
+                        else ImageCapability.from_dict(value)
                     )
                 else:
                     kwargs[key] = value
