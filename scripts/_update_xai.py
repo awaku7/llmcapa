@@ -20,12 +20,40 @@ INSTALLED = (
 )
 LOG = WORKDIR / "provider_update_log.md"
 SOURCE = "https://docs.x.ai/developers/models"
+IMAGE_GENERATION_SOURCE = "https://docs.x.ai/developers/model-capabilities/images/generation.md"
+IMAGE_OVERVIEW_SOURCE = "https://docs.x.ai/developers/model-capabilities/imagine.md"
 
 # Long-context threshold used by xAI text models (docs + ListModels)
 LONG_CTX_THRESHOLD = 200_000
 
 # Official docs pricing for Imagine / Voice (not fully in ListModels LanguageModel)
 IMAGINE_MODELS = [
+    {
+        "model_id": "grok-imagine-image-2.0",
+        "display_name": "Grok Imagine Image 2.0",
+        "input_modalities": ["text", "image"],
+        "output_modalities": ["image"],
+        "image": {
+            "generation": True,
+            "editing": True,
+            "accepts_text_prompt": True,
+            "accepts_image_input": True,
+            "max_input_images": 5,
+            "max_outputs": 10,
+            "quality_values": ["low", "medium", "auto"],
+            "response_formats": ["url", "b64_json"],
+            "supported_sizes": ["1k", "2k"],
+            "source_url": IMAGE_GENERATION_SOURCE,
+            "status": "documented",
+        },
+        "extra": {
+            "price_per_image": 0.02,
+            "unit": "image",
+            "resolutions": ["1K", "2K"],
+            "source": IMAGE_GENERATION_SOURCE,
+            "overview_source": IMAGE_OVERVIEW_SOURCE,
+        },
+    },
     {
         "model_id": "grok-imagine-image",
         "display_name": "Grok Imagine Image",
@@ -36,6 +64,7 @@ IMAGINE_MODELS = [
             "unit": "image",
             "resolutions": ["1K", "2K"],
             "source": SOURCE,
+            "note": "legacy slug; use grok-imagine-image-2.0 for current generation controls",
         },
     },
     {
@@ -43,10 +72,11 @@ IMAGINE_MODELS = [
         "display_name": "Grok Imagine Image Quality",
         "input_modalities": ["text", "image"],
         "output_modalities": ["image"],
+        "deprecated": True,
         "extra": {
             "price_per_image": 0.05,
             "unit": "image",
-            "note": "higher quality tier approx; docs list $0.02/image for 1K/2K standard",
+            "note": "retirement announced; use grok-imagine-image-2.0",
             "source": SOURCE,
         },
     },
@@ -320,7 +350,8 @@ def text_row(entry: dict) -> dict:
 
 
 def specialty_row(spec: dict, *, deprecated: bool = False) -> dict:
-    return {
+    deprecated = deprecated or bool(spec.get("deprecated", False))
+    row = {
         "provider": "xai",
         "model_id": spec["model_id"],
         "display_name": spec["display_name"],
@@ -352,6 +383,9 @@ def specialty_row(spec: dict, *, deprecated: bool = False) -> dict:
         },
         "extra": dict(spec["extra"]),
     }
+    if spec.get("image") is not None:
+        row["image"] = dict(spec["image"])
+    return row
 
 
 def legacy_row(spec: dict) -> dict:
@@ -497,6 +531,8 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+    from _image_capability_postprocess import apply
     from _scrape_image_capabilities import scrape_provider
 
+    apply()
     scrape_provider("xai")

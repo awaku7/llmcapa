@@ -445,6 +445,40 @@ llmcapa.load_extra("my_models.json")
 }
 ```
 
+## Image Generation Capabilities
+
+Image-generation and image-editing models expose optional provider-specific metadata through `cap.image`. The metadata is descriptive only; `llmcapa` does not call image APIs or generate images.
+
+```python
+import llmcapa
+
+meta = llmcapa.get("muse-image-1.0", provider="meta")
+print(meta.image.output_formats)             # ('webp', 'png', 'jpeg')
+print(meta.image.response_formats)           # ('b64_json', 'url')
+print(meta.image.max_outputs)                # 10
+print(meta.image.reasoning_strength_values)  # ('high', 'low')
+
+xai = llmcapa.get("grok-imagine-image-2.0", provider="xai")
+print(xai.image.quality_values)              # ('low', 'medium', 'auto')
+print(xai.image.supported_sizes)             # ('1k', '2k')
+
+gemini = llmcapa.get("gemini-3.1-flash-image", provider="google")
+print(gemini.image.supported_sizes)          # ('512', '1K', '2K', '4K')
+print(gemini.image.supported_aspect_ratios)  # documented aspect ratios
+```
+
+Common image capability fields include:
+
+- `generation`, `editing`, and `accepts_image_input`
+- `output_formats`, `response_formats`, and `max_outputs`
+- `quality_values` for APIs with a generic `quality` parameter
+- `reasoning_strength_values` for provider-specific controls such as Meta Muse Image's `reasoning_strength`
+- `supported_sizes` and `supported_aspect_ratios`
+- `supports_transparent_background` and `background_values`
+- `supports_streaming` and endpoint metadata
+
+These controls are intentionally kept separate. For example, Meta Muse Image documents `reasoning_strength` rather than `quality`, so its values are not placed in `quality_values`. Fields remain empty or unset when the provider documentation does not define the corresponding parameter.
+
 ## Computer Use / CUA Capabilities
 
 `llmcapa` can describe whether a model supports Computer Use (CUA) without executing computer actions itself. The capability is optional, so existing model records and callers remain compatible.

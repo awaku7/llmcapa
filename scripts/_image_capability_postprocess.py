@@ -47,7 +47,12 @@ _ANALYSIS_MARKERS = (
 
 
 # Values confirmed from provider documentation during the catalog audit.
-# These are limited to input constraints; unknown values remain unset.
+# These are limited to input constraints and explicit generation controls;
+# unknown values remain unset.
+GOOGLE_IMAGE_ASPECT_RATIOS = [
+    "1:1", "1:4", "1:8", "2:3", "3:2", "3:4", "4:1", "4:3",
+    "4:5", "5:4", "8:1", "9:16", "16:9", "21:9",
+]
 IMAGE_INPUT_OVERRIDES: dict[tuple[str, str], dict[str, Any]] = {
     ("amazon", "nova-canvas-v1"): {
         "input_formats": ["png", "jpeg"],
@@ -76,42 +81,60 @@ IMAGE_INPUT_OVERRIDES: dict[tuple[str, str], dict[str, Any]] = {
         "input_formats": ["png", "jpeg"],
         "input_mime_types": ["image/png", "image/jpeg"],
         "max_input_payload_bytes": 20 * 1024 * 1024,
-        "source_url": "https://ai.google.dev/gemini-api/docs/image-understanding",
+        "supported_sizes": ["1K"],
+        "supported_aspect_ratios": GOOGLE_IMAGE_ASPECT_RATIOS,
+        "supports_transparent_background": False,
+        "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/image-generation",
         "status": "documented",
     },
     ("google", "gemini-3-pro-image"): {
         "input_formats": ["png", "jpeg"],
         "input_mime_types": ["image/png", "image/jpeg"],
         "max_input_payload_bytes": 20 * 1024 * 1024,
-        "source_url": "https://ai.google.dev/gemini-api/docs/image-understanding",
+        "supported_sizes": ["1K", "2K", "4K"],
+        "supported_aspect_ratios": GOOGLE_IMAGE_ASPECT_RATIOS,
+        "supports_transparent_background": False,
+        "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/image-generation",
         "status": "documented",
     },
     ("google", "gemini-3-pro-image-preview"): {
         "input_formats": ["png", "jpeg"],
         "input_mime_types": ["image/png", "image/jpeg"],
         "max_input_payload_bytes": 20 * 1024 * 1024,
-        "source_url": "https://ai.google.dev/gemini-api/docs/image-understanding",
+        "supported_sizes": ["1K", "2K", "4K"],
+        "supported_aspect_ratios": GOOGLE_IMAGE_ASPECT_RATIOS,
+        "supports_transparent_background": False,
+        "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/image-generation",
         "status": "documented",
     },
     ("google", "gemini-3.1-flash-image"): {
         "input_formats": ["png", "jpeg"],
         "input_mime_types": ["image/png", "image/jpeg"],
         "max_input_payload_bytes": 20 * 1024 * 1024,
-        "source_url": "https://ai.google.dev/gemini-api/docs/image-understanding",
+        "supported_sizes": ["512", "1K", "2K", "4K"],
+        "supported_aspect_ratios": GOOGLE_IMAGE_ASPECT_RATIOS,
+        "supports_transparent_background": False,
+        "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/image-generation",
         "status": "documented",
     },
     ("google", "gemini-3.1-flash-image-preview"): {
         "input_formats": ["png", "jpeg"],
         "input_mime_types": ["image/png", "image/jpeg"],
         "max_input_payload_bytes": 20 * 1024 * 1024,
-        "source_url": "https://ai.google.dev/gemini-api/docs/image-understanding",
+        "supported_sizes": ["512", "1K", "2K", "4K"],
+        "supported_aspect_ratios": GOOGLE_IMAGE_ASPECT_RATIOS,
+        "supports_transparent_background": False,
+        "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/image-generation",
         "status": "documented",
     },
     ("google", "gemini-3.1-flash-lite-image"): {
         "input_formats": ["png", "jpeg"],
         "input_mime_types": ["image/png", "image/jpeg"],
         "max_input_payload_bytes": 20 * 1024 * 1024,
-        "source_url": "https://ai.google.dev/gemini-api/docs/image-understanding",
+        "supported_sizes": ["1K"],
+        "supported_aspect_ratios": GOOGLE_IMAGE_ASPECT_RATIOS,
+        "supports_transparent_background": False,
+        "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/image-generation",
         "status": "documented",
     },
     ("xai", "grok-imagine-image"): {
@@ -126,6 +149,13 @@ IMAGE_INPUT_OVERRIDES: dict[tuple[str, str], dict[str, Any]] = {
         "input_mime_types": ["image/jpeg", "image/png"],
         "max_input_bytes": 20 * 1024 * 1024,
         "source_url": "https://docs.x.ai/developers/model-capabilities/images/understanding",
+        "status": "documented",
+    },
+    ("xai", "grok-imagine-image-2.0"): {
+        "input_formats": ["jpg", "jpeg", "png"],
+        "input_mime_types": ["image/jpeg", "image/png"],
+        "max_input_bytes": 20 * 1024 * 1024,
+        "source_url": "https://docs.x.ai/developers/model-capabilities/images/generation.md",
         "status": "documented",
     },
     ("meta", "muse-image-1.0"): {
@@ -225,7 +255,13 @@ def minimal_image_capability(record: dict[str, Any]) -> dict[str, Any] | None:
             "responses_image_context": True,
         }
     if provider == "meta" and model_id == "muse-image-1.0":
-        result["endpoints"] = {"responses_image_tool": True, "chat_completions": False}
+        result["source_url"] = "https://dev.meta.ai/docs/image-generation"
+        result["endpoints"] = {
+            "responses_image_tool": True,
+            "image_api_generations": True,
+            "image_api_edits": True,
+            "chat_completions": False,
+        }
     return result
 
 
@@ -248,7 +284,7 @@ def parse_image_input_constraints(text: str) -> dict[str, Any]:
     if mime_types:
         result["input_mime_types"] = list(dict.fromkeys(v.lower() for v in mime_types))
     byte_limit = re.search(
-        r"(?i)(?:max(?:imum)?|limit)\s+(?:input\s+)?(?:image\s+)?size\s*[:：]?\s*([\d,.]+)\s*(KB|MB|GB|bytes?)\b",
+        r"(?i)(?:max(?:imum)?|limit)\s+(?:input\s+)?(?:image\s+)?size\s*[:：]?\s*(\d[\d,.]*)\s*(KB|MB|GB|bytes?)\b",
         text,
     )
     if byte_limit:
@@ -265,7 +301,7 @@ def parse_image_input_constraints(text: str) -> dict[str, Any]:
         result["max_input_width"] = int(dimensions.group(1))
         result["max_input_height"] = int(dimensions.group(2))
     pixels = re.search(
-        r"(?i)(?:max(?:imum)?\s+)?(?:input\s+)?(?:image\s+)?pixels?\s*[:：]?\s*([\d,.]+)\s*(MP|megapixels?|pixels?)?",
+        r"(?i)(?:max(?:imum)?\s+)?(?:input\s+)?(?:image\s+)?pixels?\s*[:：]?\s*(\d[\d,.]*)\s*(MP|megapixels?|pixels?)?",
         text,
     )
     if pixels:
@@ -356,6 +392,14 @@ def apply(data_dir: Path = DEFAULT_DATA) -> dict[str, int]:
             merged.update(capability or {})
             merged.update(analysis_capability or {})
             merged.update(override)
+            if provider == "meta" and model_id == "muse-image-1.0":
+                merged["source_url"] = "https://dev.meta.ai/docs/image-generation"
+                merged["endpoints"] = {
+                    "responses_image_tool": True,
+                    "image_api_generations": True,
+                    "image_api_edits": True,
+                    "chat_completions": False,
+                }
             if capability is not None or analysis_capability is not None or override:
                 merged.setdefault("checked_at", datetime.now(timezone.utc).date().isoformat())
             if merged == record.get("image"):

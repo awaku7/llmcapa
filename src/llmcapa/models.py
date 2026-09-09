@@ -212,12 +212,14 @@ class ImageCapability:
     supports_transparent_background: bool | None = None
     background_values: tuple[str, ...] = ()
 
-    # Quality
+    # Quality and provider-specific generation controls
     quality_values: tuple[str, ...] = ()
+    reasoning_strength_values: tuple[str, ...] = ()
 
     # Size
     supports_arbitrary_size: bool | None = None
     supported_sizes: tuple[str, ...] = ()
+    supported_aspect_ratios: tuple[str, ...] = ()
     size_divisible_by: int | None = None
     min_width: int | None = None
     max_width: int | None = None
@@ -250,7 +252,9 @@ class ImageCapability:
             "response_formats",
             "background_values",
             "quality_values",
+            "reasoning_strength_values",
             "supported_sizes",
+            "supported_aspect_ratios",
         ):
             values[key] = tuple(values.get(key) or ())
 
@@ -275,7 +279,9 @@ class ImageCapability:
             "response_formats",
             "background_values",
             "quality_values",
+            "reasoning_strength_values",
             "supported_sizes",
+            "supported_aspect_ratios",
         ):
             result[key] = list(getattr(self, key))
         if self.endpoints is not None:

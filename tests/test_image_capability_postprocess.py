@@ -3,6 +3,7 @@ from scripts._image_capability_postprocess import (
     minimal_image_capability,
     parse_image_input_constraints,
 )
+from scripts._update_meta import parse_image_generation_page
 
 
 def test_image_input_only_is_not_classified_as_generation():
@@ -76,3 +77,24 @@ def test_known_analysis_capability_is_not_treated_as_generation():
     assert capability["analysis"]["segmentation"] is True
     assert capability["analysis"]["object_detection"] is True
     assert capability["status"] == "documented"
+
+
+def test_parse_meta_image_generation_constraints():
+    text = """
+    • n: number of images to return, 1 to 10 (default 1).
+    • response_format: "b64_json" (default) or "url".
+    • output_format: "webp" (default), "png", or "jpeg".
+    • background: echoed for OpenAI compatibility; always opaque.
+    Set stream: true to receive the result as a server-sent event stream.
+    • reasoning_strength: "high" (default) or "low".
+    """
+
+    assert parse_image_generation_page(text) == {
+        "max_outputs": 10,
+        "output_formats": ["webp", "png", "jpeg"],
+        "response_formats": ["b64_json", "url"],
+        "supports_transparent_background": False,
+        "background_values": ["opaque"],
+        "supports_streaming": True,
+        "reasoning_strength_values": ["high", "low"],
+    }

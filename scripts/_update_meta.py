@@ -27,6 +27,7 @@ DATA = ROOT / "src" / "llmcapa" / "data" / "meta.json"
 OFFICIAL_HOME = "https://dev.meta.ai/"
 OFFICIAL_MODELS = "https://dev.meta.ai/docs/getting-started/models"
 OFFICIAL_PRICING = "https://dev.meta.ai/docs/pricing-rate-limits"
+OFFICIAL_IMAGE_GENERATION = "https://dev.meta.ai/docs/image-generation"
 OFFICIAL_GLIMMER = (
     "https://research.meta.ai/blog/introducing-muse-glimmer-open-agentic-model"
 )
@@ -117,6 +118,69 @@ def parse_models_page(text: str) -> dict:
     return out
 
 
+def parse_image_generation_page(text: str) -> dict:
+    """Extract explicit Muse Image endpoint capability values."""
+    normalized = text.replace("\u00a0", " ")
+    result: dict[str, object] = {}
+
+    count = re.search(
+        r"\bn:\s*number of images to return,\s*1\s*to\s*(\d+)",
+        normalized,
+        re.IGNORECASE,
+    )
+    if count:
+        result["max_outputs"] = int(count.group(1))
+
+    output_line = re.search(
+        r"(?im)^\s*[•*-]?\s*output_format:\s*(.+)$", normalized
+    )
+    if output_line:
+        formats = re.findall(
+            r'\"(webp|png|jpeg)\"', output_line.group(1), re.IGNORECASE
+        )
+        if formats:
+            result["output_formats"] = list(dict.fromkeys(x.lower() for x in formats))
+
+    response_line = re.search(
+        r"(?im)^\s*[•*-]?\s*response_format:\s*(.+)$", normalized
+    )
+    if response_line:
+        formats = re.findall(
+            r'\"(b64_json|url)\"', response_line.group(1), re.IGNORECASE
+        )
+        if formats:
+            result["response_formats"] = list(
+                dict.fromkeys(x.lower() for x in formats)
+            )
+
+    if re.search(r"background:.*always opaque", normalized, re.IGNORECASE | re.DOTALL):
+        result["supports_transparent_background"] = False
+        result["background_values"] = ["opaque"]
+
+    if re.search(r"set stream:\s*true", normalized, re.IGNORECASE):
+        result["supports_streaming"] = True
+
+    if "/v1/images/generations" in normalized and "/v1/images/edits" in normalized:
+        result["endpoints"] = {
+            "responses_image_tool": "Responses API" in normalized,
+            "image_api_generations": True,
+            "image_api_edits": True,
+            "chat_completions": False,
+        }
+
+    reasoning_line = re.search(
+        r"(?im)^\s*[•*-]?\s*reasoning_strength:\s*(.+)$", normalized
+    )
+    if reasoning_line:
+        values = re.findall(r'\"(low|high)\"', reasoning_line.group(1), re.IGNORECASE)
+        if values:
+            result["reasoning_strength_values"] = list(
+                dict.fromkeys(x.lower() for x in values)
+            )
+
+    return result
+
+
 def spark_row(*, model_id: str, display: str, tier: str, table: dict) -> dict:
     pricing = STANDARD if tier == "standard" else CONTRIBUTOR
     row = {
@@ -181,6 +245,7 @@ def build() -> tuple[list[dict], dict]:
         home_status, home_text = _visit(page, OFFICIAL_HOME)
         models_status, models_text = _visit(page, OFFICIAL_MODELS)
         pricing_status, pricing_text = _visit(page, OFFICIAL_PRICING)
+        image_status, image_text = _visit(page, OFFICIAL_IMAGE_GENERATION)
         _, glimmer_text = _visit(page, OFFICIAL_GLIMMER)
         browser.close()
 
@@ -191,6 +256,11 @@ def build() -> tuple[list[dict], dict]:
 
     table = parse_models_page(models_text)
     prices = parse_pricing(pricing_text)
+    image_capability = parse_image_generation_page(image_text)
+    if image_status == 200 and image_capability:
+        image_capability["source_url"] = OFFICIAL_IMAGE_GENERATION
+        image_capability["checked_at"] = datetime.now(timezone.utc).date().isoformat()
+        image_capability["status"] = "documented"
     std = prices.get("standard", STANDARD)
     con = prices.get("contributor", CONTRIBUTOR)
 
@@ -321,7 +391,7 @@ def build() -> tuple[list[dict], dict]:
             "output_modalities": ["image"],
             "supports_function_calling": False,
             "supports_json_mode": False,
-            "supports_streaming": False,
+            "supports_streaming": bool(image_capability.get("supports_streaming", False)),
             "supports_vision": True,
             "supports_reasoning": True,
             "supports_chat_completion": False,
@@ -337,6 +407,13 @@ def build() -> tuple[list[dict], dict]:
             "deprecated": False,
             "aliases": [],
             "supports_realtime": False,
+            "image": {
+                "generation": True,
+                "editing": True,
+                "accepts_text_prompt": True,
+                "accepts_image_input": True,
+                **image_capability,
+            },
             "extra": {
                 "source": OFFICIAL_PRICING,
                 "price_per_image": image_per_image,
@@ -357,6 +434,8 @@ def build() -> tuple[list[dict], dict]:
         "home_status": home_status,
         "models_status": models_status,
         "pricing_status": pricing_status,
+        "image_status": image_status,
+        "image_capability": image_capability,
         "table_entries": len(table),
         "glimmer_text_len": len(glimmer_text),
         "home_has_spark_13": "Muse Spark 1.3" in home_text,
@@ -381,6 +460,7 @@ def main() -> int:
         "### Source\n"
         f"- Models: {OFFICIAL_MODELS} (status={meta['models_status']}, table={meta['table_entries']})\n"
         f"- Pricing: {OFFICIAL_PRICING} (status={meta['pricing_status']})\n"
+        f"- Image generation: {OFFICIAL_IMAGE_GENERATION} (status={meta['image_status']})\n"
         f"- Top: {OFFICIAL_HOME} (status={meta['home_status']}, spark-1.3={meta['home_has_spark_13']})\n"
         f"- Glimmer: {OFFICIAL_GLIMMER} (text_len={meta['glimmer_text_len']})\n"
         "- Apply: `scripts/_update_meta.py`\n"
@@ -409,7 +489,9 @@ def main() -> int:
 
 if __name__ == "__main__":
     code = main()
+    from _image_capability_postprocess import apply
     from _scrape_image_capabilities import scrape_provider
 
+    apply()
     scrape_provider("meta")
     raise SystemExit(code)

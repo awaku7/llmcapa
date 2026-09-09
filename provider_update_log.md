@@ -5751,3 +5751,33 @@
 - Source: https://developers.openai.com/api/docs/models/all.md
 - Source: https://developers.openai.com/api/docs/pricing.md
 - Dynamically discovered 99 official model pages; legacy records preserved: 65
+
+## xAI refresh (2026-09-09)
+
+### Source
+- ListModels: `_scratch_xai_listmodels_parsed.json`
+- Docs: https://docs.x.ai/developers/models (+ pricing / Voice / Imagine)
+- Apply: `scripts/_update_xai.py`
+
+### Result
+- xai.json: **21** models (active=15, deprecated=6, token-priced=12)
+- Text: grok-4.5 $2/$6 @500k (cache $0.5, long $4); grok-4.3 / 4.20 family $1.25/$2.5 @1M (cache $0.2, long $2.5)
+- Imagine + Voice specialty entries included
+- Install copy synced
+
+## Meta Model API refresh (2026-09-09)
+
+### Source
+- Models: https://dev.meta.ai/docs/getting-started/models (status=200, table=0)
+- Pricing: https://dev.meta.ai/docs/pricing-rate-limits (status=200)
+- Image generation: https://dev.meta.ai/docs/image-generation (status=200)
+- Top: https://dev.meta.ai/ (status=200, spark-1.3=True)
+- Glimmer: https://research.meta.ai/blog/introducing-muse-glimmer-open-agentic-model (text_len=8217)
+- Apply: `scripts/_update_meta.py`
+- OpenRouter was not used.
+
+### Result
+- meta.json: **8** models (active=8, token-priced=5)
+- Spark Standard $1.25/$4.25 + cached $0.15; Contributor $0.10/$0.20 + cached $0.002
+- Glimmer 30B recorded as Apache 2.0 open weights (no API pricing)
+- Voice Transcribe ($/hour) and Image 1.0 ($/image) recorded as specialty units

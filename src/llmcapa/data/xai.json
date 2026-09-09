@@ -346,8 +346,8 @@
     },
     {
       "provider": "xai",
-      "model_id": "grok-imagine-image",
-      "display_name": "Grok Imagine Image",
+      "model_id": "grok-imagine-image-2.0",
+      "display_name": "Grok Imagine Image 2.0",
       "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
@@ -360,24 +360,6 @@
       "supports_function_calling": false,
       "supports_json_mode": false,
       "supports_streaming": true,
-      "image": {
-        "generation": true,
-        "accepts_text_prompt": true,
-        "accepts_image_input": true,
-        "status": "documented",
-        "source_url": "https://docs.x.ai/developers/model-capabilities/images/understanding",
-        "input_formats": [
-          "jpg",
-          "jpeg",
-          "png"
-        ],
-        "input_mime_types": [
-          "image/jpeg",
-          "image/png"
-        ],
-        "max_input_bytes": 20971520,
-        "checked_at": "2026-09-09"
-      },
       "supports_vision": true,
       "supports_reasoning": false,
       "supports_chat_completion": false,
@@ -404,13 +386,48 @@
           "1K",
           "2K"
         ],
-        "source": "https://docs.x.ai/developers/models"
+        "source": "https://docs.x.ai/developers/model-capabilities/images/generation.md",
+        "overview_source": "https://docs.x.ai/developers/model-capabilities/imagine.md"
+      },
+      "image": {
+        "generation": true,
+        "editing": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": true,
+        "max_input_images": 5,
+        "max_outputs": 10,
+        "quality_values": [
+          "low",
+          "medium",
+          "auto"
+        ],
+        "response_formats": [
+          "url",
+          "b64_json"
+        ],
+        "supported_sizes": [
+          "1k",
+          "2k"
+        ],
+        "source_url": "https://docs.x.ai/developers/model-capabilities/images/generation.md",
+        "status": "documented",
+        "input_formats": [
+          "jpg",
+          "jpeg",
+          "png"
+        ],
+        "input_mime_types": [
+          "image/jpeg",
+          "image/png"
+        ],
+        "max_input_bytes": 20971520,
+        "checked_at": "2026-09-09"
       }
     },
     {
       "provider": "xai",
-      "model_id": "grok-imagine-image-quality",
-      "display_name": "Grok Imagine Image Quality",
+      "model_id": "grok-imagine-image",
+      "display_name": "Grok Imagine Image",
       "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
@@ -423,24 +440,6 @@
       "supports_function_calling": false,
       "supports_json_mode": false,
       "supports_streaming": true,
-      "image": {
-        "generation": true,
-        "accepts_text_prompt": true,
-        "accepts_image_input": true,
-        "status": "documented",
-        "source_url": "https://docs.x.ai/developers/model-capabilities/images/understanding",
-        "input_formats": [
-          "jpg",
-          "jpeg",
-          "png"
-        ],
-        "input_mime_types": [
-          "image/jpeg",
-          "image/png"
-        ],
-        "max_input_bytes": 20971520,
-        "checked_at": "2026-09-09"
-      },
       "supports_vision": true,
       "supports_reasoning": false,
       "supports_chat_completion": false,
@@ -461,10 +460,92 @@
         "currency": "USD"
       },
       "extra": {
+        "price_per_image": 0.02,
+        "unit": "image",
+        "resolutions": [
+          "1K",
+          "2K"
+        ],
+        "source": "https://docs.x.ai/developers/models",
+        "note": "legacy slug; use grok-imagine-image-2.0 for current generation controls"
+      },
+      "image": {
+        "generation": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": true,
+        "status": "documented",
+        "source_url": "https://docs.x.ai/developers/model-capabilities/images/understanding",
+        "input_formats": [
+          "jpg",
+          "jpeg",
+          "png"
+        ],
+        "input_mime_types": [
+          "image/jpeg",
+          "image/png"
+        ],
+        "max_input_bytes": 20971520,
+        "checked_at": "2026-09-09"
+      }
+    },
+    {
+      "provider": "xai",
+      "model_id": "grok-imagine-image-quality",
+      "display_name": "Grok Imagine Image Quality",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "image"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": null,
+        "output_per_1m": null,
+        "currency": "USD"
+      },
+      "extra": {
         "price_per_image": 0.05,
         "unit": "image",
-        "note": "higher quality tier approx; docs list $0.02/image for 1K/2K standard",
+        "note": "retirement announced; use grok-imagine-image-2.0",
         "source": "https://docs.x.ai/developers/models"
+      },
+      "image": {
+        "generation": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": true,
+        "status": "documented",
+        "source_url": "https://docs.x.ai/developers/model-capabilities/images/understanding",
+        "input_formats": [
+          "jpg",
+          "jpeg",
+          "png"
+        ],
+        "input_mime_types": [
+          "image/jpeg",
+          "image/png"
+        ],
+        "max_input_bytes": 20971520,
+        "checked_at": "2026-09-09"
       }
     },
     {
