@@ -1,6 +1,6 @@
 # Structured Output 対応状況
 
-最終確認日: 2026-08-21
+最終確認日: 2026-09-10
 
 ## 概要
 
@@ -32,7 +32,7 @@ python scripts/_update_structured_output_providers.py --insecure
 | OpenRouter | 346 | 563 | API の `supported_parameters` に `structured_outputs` があるモデル |
 | Perplexity | 5 | 7 | Sonar API の `response_format` / `json_schema` |
 | Sakana AI | 5 | 5 | Chat Completions / Responses API の `json_object` / `json_schema` |
-| Inception | 1 | 1 | Mercury 2 Chat Completions の `response_format.type=json_schema` |
+| Inception | 2 | 3 | Mercury 2 / Mercury 2.5 Chat Completions の `response_format.type=json_schema`。Mercury Edit 2 は FIM/Edit 用 |
 | Writer | 1 | 1 | Palmyra X4/X5 Chat API の `response_format.json_schema` |
 
 ## JSON Mode は確認済みだが JSON Schema は未確定

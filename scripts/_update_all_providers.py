@@ -31,6 +31,7 @@ PROVIDER_SCRIPTS = {
     "deepseek": "_update_deepseek.py",
     "google": "_update_google.py",
     "ibm-granite": "_update_ibm_granite.py",
+    "inception": "_update_inception.py",
     "japanese": "_update_japanese.py",
     "meta": "_update_meta.py",
     "microsoft": "_update_microsoft.py",

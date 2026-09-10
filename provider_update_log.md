@@ -5781,3 +5781,10 @@
 - Spark Standard $1.25/$4.25 + cached $0.15; Contributor $0.10/$0.20 + cached $0.002
 - Glimmer 30B recorded as Apache 2.0 open weights (no API pricing)
 - Voice Transcribe ($/hour) and Image 1.0 ($/image) recorded as specialty units
+
+## Inception official refresh (2026-09-10)
+
+- Sources: https://api.inceptionlabs.ai/v1/models; https://docs.inceptionlabs.ai/get-started/models
+- Updated 1 existing records and added 2 records (3 total).
+- Mercury 2.5 pricing uses the current API promotional rates; list prices are retained in `extra.list_pricing`.
+- OpenRouter was not used.
