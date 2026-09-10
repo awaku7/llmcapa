@@ -310,3 +310,14 @@ Azure AI Foundry カタログには SSR と continuation token に関する制�
 - 他プロバイダーのデータは、原則として各プロバイダーの公式 API、公式ドキュメント、または当該プロバイダー専用の更新スクリプトから取得する。
 - 複数プロバイダーを更新する場合も、プロバイダーごとに取得・内容確認・差分確認を行う。一括処理で OpenRouter データを他プロバイダーへ配布してはならない。
 - 更新前に既存の未コミット変更を確認し、必要に応じてバックアップを作成する。
+
+## Modellix 集約カタログ
+
+Modellix は LLM ゲートウェイと画像・動画・音声のメディア API を提供する集約サービスです。Bundled catalog では、次の2ファイルを別々の出所として管理します。
+
+- `src/llmcapa/data/modellix.json`: 公式 LLM カタログのスナップショット（29件）
+- `src/llmcapa/data/modellix_media.json`: 公式ドキュメントインデックス由来のメディアモデル（178件）
+
+両ファイルの `provider` は `modellix` とし、上流プロバイダーはモデルIDのプレフィックス（例: `kling/kling-v3-t2v`）に保持します。Modellix は集約カタログなので、ネイティブプロバイダーのデータを上書きしないよう、`Registry._load_bundled()` では集約ファイルとして最後にロードします。
+
+更新時の参照先は `https://docs.modellix.ai/llms.txt`、`https://www.modellix.ai/llm`、および Modellix の公式モデルドキュメントです。OpenRouter のデータを Modellix カタログへ流用してはなりません。メディアモデルはトークン系の `context_window` / `pricing` が提供されない場合があるため、未確認値は推測で補完せず `0` または `null` とし、モダリティと公式ドキュメントURLを `extra` に記録します。

@@ -47,6 +47,26 @@ any SSR (Server-Side Rendering) limitations and known issues.
 | **Metadata limit** | Context window, max tokens, and modality information are **not available** from the API. Defaults are used. |
 | **Script** | `scripts/_scrape_huggingface.py` |
 
+## Modellix
+
+| Item | Detail |
+|---|---|
+| **Data files** | `src/llmcapa/data/modellix.json`, `src/llmcapa/data/modellix_media.json` |
+| **LLM source** | Official Modellix LLM catalog at `https://www.modellix.ai/llm` |
+| **Media source** | Official documentation index at `https://docs.modellix.ai/llms.txt` and linked model pages |
+| **Snapshot** | 29 LLM records and 178 media-model records as of 2026-09-10 |
+| **Model IDs** | Upstream provider prefixes are preserved, for example `kling/kling-v3-t2v`; the catalog provider is `modellix`. |
+| **Metadata limit** | Media models may not publish token-oriented context windows or pricing. Unknown values remain `0`/`null`; modalities and official source URLs are retained in `extra`. |
+
+## Inception
+
+| Item | Detail |
+|---|---|
+| **Data file** | `src/llmcapa/data/inception.json` |
+| **Method** | Official Inception model API and documentation |
+| **Script** | `scripts/_update_inception.py` |
+| **Coverage** | Mercury 2, Mercury 2.5, and Mercury Edit 2; structured-output and FIM/Edit metadata are kept separately. |
+
 ## Other Providers
 
 | Provider | Method | SSR issue |

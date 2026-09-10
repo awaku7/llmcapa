@@ -314,4 +314,15 @@ When `fetch_huggingface()` is called, it maps the HuggingFace API model schema t
 | `supports_vision` | `pipeline_tag` | `True` if pipeline is `image-text-to-text` or `visual-question-answering` |
 | `supports_chat_completion` | `pipeline_tag` | `True` if `text-generation` or `image-text-to-text` |
 
+## Modellix Aggregated Catalog
+
+Modellix provides an LLM gateway and media APIs for image, video, and audio. In the bundled catalog, the two sources are kept separate:
+
+- `src/llmcapa/data/modellix.json`: snapshot of the official LLM catalog (29 records)
+- `src/llmcapa/data/modellix_media.json`: media models from the official documentation index (178 records)
+
+Both files use `provider="modellix"`; upstream providers remain in the model ID prefix, such as `kling/kling-v3-t2v`. Because Modellix is an aggregated catalog, `Registry._load_bundled()` loads these files last so native provider data is not overwritten.
+
+Refresh from `https://docs.modellix.ai/llms.txt`, `https://www.modellix.ai/llm`, and Modellix's official model documentation. Do not reuse OpenRouter data for the Modellix catalog. Media models may not publish token-oriented `context_window` or `pricing`; keep unverified values at `0` or `null` and record modalities and official documentation URLs in `extra` rather than inventing values.
+
 
