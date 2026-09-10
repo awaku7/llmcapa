@@ -7,6 +7,7 @@ official Granite 4.2 page and never infers pricing from third-party catalogs.
 from __future__ import annotations
 
 import json
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.request import Request, urlopen
@@ -16,11 +17,9 @@ DATA = ROOT / "src" / "llmcapa" / "data" / "ibm-granite.json"
 LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://www.ibm.com/granite/docs/models/granite4-2"
 
-GRANITE_42 = {
-    "granite-4.2-3b": "3B",
-    "granite-4.2-8b": "8B",
-    "granite-4.2-30b": "30B",
-}
+def discover_granite_42(page: str) -> dict[str, str]:
+    model_ids = sorted(set(re.findall(r"\bgranite-4\.2-[0-9]+b\b", page)))
+    return {model_id: model_id.rsplit("-", 1)[-1].upper() for model_id in model_ids}
 
 
 def fetch_page() -> str:
@@ -64,15 +63,15 @@ def main() -> None:
     page = fetch_page()
     required = [
         "granite 4.2",
-        "granite-4.2-3b",
-        "granite-4.2-8b",
-        "granite-4.2-30b",
         "128k",
         "apache 2.0",
     ]
     missing = [term for term in required if term not in page]
     if missing:
         raise RuntimeError(f"IBM official page validation failed: missing {missing}")
+    granite_42 = discover_granite_42(page)
+    if not granite_42:
+        raise RuntimeError("IBM official page contains no Granite 4.2 model IDs")
 
     data = json.loads(DATA.read_text(encoding="utf-8"))
     models = data.setdefault("models", [])
@@ -85,7 +84,7 @@ def main() -> None:
 
     {model.get("model_id") for model in models}
     added = 0
-    for model_id, size in GRANITE_42.items():
+    for model_id, size in granite_42.items():
         model = next((m for m in models if m.get("model_id") == model_id), None)
         if model is None:
             # remove legacy slash-duplicate if present
@@ -131,13 +130,13 @@ def main() -> None:
         LOG.read_text(encoding="utf-8")
         + f"\n## IBM Granite official refresh ({today})\n\n"
         + f"- Source: {SOURCE}\n"
-        + f"- Added/updated Granite 4.2 models: {len(GRANITE_42)} (new: {added}).\n"
+        + f"- Added/updated Granite 4.2 models: {len(granite_42)} (new: {added}).\n"
         + "- Recorded official 128K context, 30B long-context extension to 512K, Apache 2.0, reasoning, and tool-calling metadata.\n"
         + "- Granite 4.0 records were marked deprecated; pricing was not inferred.\n"
         + "- OpenRouter was not used.\n",
         encoding="utf-8",
     )
-    print(f"ibm-granite.json: granite_4_2_updated={len(GRANITE_42)} new={added}")
+    print(f"ibm-granite.json: granite_4_2_updated={len(granite_42)} new={added}")
 
 
 if __name__ == "__main__":

@@ -46,6 +46,49 @@
     },
     {
       "provider": "minimax",
+      "model_id": "MiniMax-H3-Context-IR",
+      "display_name": "MiniMax-H3-Context-IR",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.9,
+        "output_per_1m": 3.6,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "thinking_budget_values": null,
+      "thinking_level_values": null,
+      "thinking_control": null,
+      "extra": {
+        "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
+        "pricing_fetched": true
+      }
+    },
+    {
+      "provider": "minimax",
       "model_id": "minimax-m1",
       "display_name": "MiniMax M1",
       "context_window": 1000000,
@@ -513,7 +556,7 @@
         "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
         "price_per_clip_range_usd": [
           0.28,
-          0.56
+          0.28
         ],
         "unit": "clip",
         "note": "varies by resolution/duration",
@@ -569,8 +612,7 @@
       "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
-        "text",
-        "image"
+        "text"
       ],
       "output_modalities": [
         "image"
@@ -578,30 +620,6 @@
       "supports_function_calling": false,
       "supports_json_mode": false,
       "supports_streaming": true,
-      "image": {
-        "generation": true,
-        "accepts_text_prompt": true,
-        "accepts_image_input": true,
-        "status": "documented",
-        "input_formats": [
-          "jpg",
-          "jpeg",
-          "png",
-          "webp",
-          "heic",
-          "heif"
-        ],
-        "input_mime_types": [
-          "image/jpeg",
-          "image/png",
-          "image/webp",
-          "image/heic",
-          "image/heif"
-        ],
-        "max_input_bytes": 31457280,
-        "source_url": "https://platform.minimax.io/docs/api-reference/file-management-upload",
-        "checked_at": "2026-09-09"
-      },
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": false,
@@ -626,6 +644,30 @@
         "price_per_image": 0.0035,
         "unit": "image",
         "api": "image"
+      },
+      "image": {
+        "generation": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": true,
+        "status": "documented",
+        "input_formats": [
+          "jpg",
+          "jpeg",
+          "png",
+          "webp",
+          "heic",
+          "heif"
+        ],
+        "input_mime_types": [
+          "image/jpeg",
+          "image/png",
+          "image/webp",
+          "image/heic",
+          "image/heif"
+        ],
+        "max_input_bytes": 31457280,
+        "source_url": "https://platform.minimax.io/docs/api-reference/file-management-upload",
+        "checked_at": "2026-09-10"
       }
     },
     {

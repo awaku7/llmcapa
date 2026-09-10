@@ -5788,3 +5788,123 @@
 - Updated 1 existing records and added 2 records (3 total).
 - Mercury 2.5 pricing uses the current API promotional rates; list prices are retained in `extra.list_pricing`.
 - OpenRouter was not used.
+
+## DeepSeek refresh (2026-09-10)
+
+### Source
+- Pricing: https://api-docs.deepseek.com/quick_start/pricing/
+- Change log: https://api-docs.deepseek.com/updates/
+- Thinking mode: https://api-docs.deepseek.com/guides/thinking_mode/
+- Apply: `scripts/_update_deepseek.py` (official pages fetched automatically)
+- Scraper: `scripts/_scrape_deepseek.py`
+
+### Result
+- deepseek.json: **9** models (active=3, deprecated=6, priced=8)
+- Official models fetched: `deepseek-flash`, `deepseek-v4-pro`
+- Model IDs, versions, prices, cache/off-peak rates, capabilities, context length, max output, reasoning effort, and concurrency are fetched from official documentation
+- Historical model records remain static deprecated metadata
+- OpenRouter was not used
+
+## Amazon Nova / Bedrock refresh (2026-09-10)
+
+### Source
+- Bedrock pricing: https://aws.amazon.com/bedrock/pricing/
+- Nova pricing: https://aws.amazon.com/nova/pricing/
+- Metered unit map: https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json
+- Apply: `scripts/_update_amazon.py`
+- Scraper: `scripts/_scrape_amazon.py`
+
+### Result
+- amazon.json: **19** models (active=19, deprecated=0, priced=18)
+- Current Nova token prices are fetched from the official AWS pricing markup and metered-unit map
+- Historical Titan and specialty model metadata remains static until equivalent official model metadata is available
+- OpenRouter was not used
+
+## Qwen / Alibaba Model Studio refresh (2026-09-10)
+
+### Source
+- Pricing: https://www.alibabacloud.com/help/en/model-studio/model-pricing
+- Apply: `scripts/_update_qwen.py`
+- Scraper: `scripts/_scrape_qwen.py`
+
+### Result
+- qwen.json: **147** models (active=144, token-priced=111)
+- Official Alibaba pricing rows applied to maintained text models
+- New model IDs found in the official International pricing tables are inserted with generic capability metadata and official first-tier prices
+- Media metadata remains static until official media pricing tables are parsed
+- OpenRouter entries remain separate; OpenRouter was not used as the source
+
+## MiniMax refresh (2026-09-10)
+
+### Source
+- Models: https://platform.minimax.io/docs/guides/models-intro
+- PayGO: https://platform.minimax.io/docs/guides/pricing-paygo
+- Chat enum: https://platform.minimax.io/docs/api-reference/text-chat
+- Apply: `scripts/_update_minimax.py`
+- Scraper: `scripts/_scrape_minimax.py`
+
+### Result
+- minimax.json: **17** models (active=17, token-priced=11)
+- Official token and specialty pricing rows applied to 13 maintained models
+- New official token-priced model IDs are added with generic metadata
+- OpenRouter was not used
+
+## xAI refresh (2026-09-10)
+
+### Source
+- ListModels: `_scratch_xai_listmodels_parsed.json`
+- Docs: https://docs.x.ai/developers/models (+ pricing / Voice / Imagine)
+- Apply: `scripts/_scrape_xai.py` + `scripts/_update_xai.py`
+
+### Result
+- xai.json: **21** models (active=15, deprecated=6, token-priced=12)
+- Official xAI text model rows are fetched and applied from the Markdown model table
+- Imagine and Voice specialty entries remain represented separately
+- OpenRouter was not used
+
+## Upstage official model refresh (2026-09-10)
+
+- Source: https://console.upstage.ai/docs/models/solar-pro-4
+- Checked: 1; updated: 1
+- Context, output limit, prices, cached price, endpoint version, and cutoff were parsed from the official page.
+- OpenRouter was not used.
+
+## IBM Granite official refresh (2026-09-10)
+
+- Source: https://www.ibm.com/granite/docs/models/granite4-2
+- Discovered and updated 3 Granite 4.2 models from the official page
+- Recorded official context, Apache 2.0, reasoning, and tool-calling metadata
+- Granite 4.0 records were marked deprecated; pricing was not inferred
+- OpenRouter was not used
+
+## NVIDIA NIM refresh (2026-09-10)
+
+### Source
+- Catalog: https://build.nvidia.com/models
+- Model pages: nemotron-3-ultra / super / nano (Playwright live)
+- Docs: https://docs.api.nvidia.com/nim/reference/llm-apis
+- Apply: `scripts/_update_nvidia.py`
+
+### Result
+- nvidia.json: **74** models (active=74, priced=21)
+- **nemotron-3-ultra-550b-a55b**: $0.50/$2.20 (Deep Infra); partners $0.41–$0.90 in
+- **nemotron-3-super-120b-a12b**: $0.20/$0.80 (Bitdeer/CoreWeave)
+- **nemotron-3-nano-30b-a3b**: $0.05/$0.20
+- Free endpoint twins synced; omni / embed / cosmos3-nano* added
+- Free NVIDIA trial endpoints remain available for evaluation
+- Install copy synced
+- Changes: updated:nemotron-3-ultra-550b-a55b, updated:nemotron-3-super-120b-a12b, updated:nemotron-3-nano-30b-a3b, updated:nemotron-3-nano-omni-30b-a3b-reasoning, updated:nemotron-3-embed-1b, updated:nemotron-3.5-content-safety, updated:cosmos3-nano, updated:cosmos3-nano-reasoner, synced_free:nemotron-3-ultra-550b-a55b:free, synced_free:nemotron-3-super-120b-a12b:free, synced_free:nemotron-3-nano-30b-a3b:free
+
+## Microsoft refresh (2026-09-10)
+
+### Source
+- Pricing: https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/
+- Retired: https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement
+- Catalog: https://ai.azure.com/catalog/publishers/microsoft
+- Apply: `scripts/_update_microsoft.py`
+
+### Result
+- microsoft.json: **60** models (active=48, deprecated=12, priced=22, extra=60)
+- Official Microsoft pricing table rows parsed and applied: 22
+- Lifecycle and MAI metadata retained from official documentation
+- OpenRouter was not used

@@ -95,12 +95,6 @@ def main() -> int:
         )
         if image_result.returncode != 0:
             return image_result.returncode
-        image_scraper = SCRIPTS / "_scrape_image_capabilities.py"
-        subprocess.run(
-            [sys.executable, str(image_scraper), "--provider", provider],
-            cwd=ROOT,
-            check=False,
-        )
     return completed.returncode
 
 

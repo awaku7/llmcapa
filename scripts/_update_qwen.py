@@ -16,6 +16,11 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
+try:
+    from scripts._scrape_qwen import fetch_qwen_catalog
+except ModuleNotFoundError:  # Direct execution: python scripts/_update_qwen.py
+    from _scrape_qwen import fetch_qwen_catalog
+
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "qwen.json"
 INSTALLED = (
@@ -389,11 +394,47 @@ def sync_openrouter_entry(m: dict, bare_id: str, spec: dict) -> bool:
 
 
 def main() -> None:
+    live_catalog = fetch_qwen_catalog()
+    # Keep feature metadata and aliases from the maintained catalog, but take
+    # current prices from the official Alibaba pricing tables.
+    live_updates = 0
+    for mid, live in live_catalog.items():
+        spec = FLAGSHIP_TEXT.get(mid)
+        if spec is None:
+            continue
+        spec["input_per_1m"] = live["input_per_1m"]
+        spec["output_per_1m"] = live["output_per_1m"]
+        if live.get("context_window"):
+            spec["context_window"] = live["context_window"]
+        live_updates += 1
+
     data = json.loads(OUT.read_text(encoding="utf-8"))
     models: list[dict] = data["models"]
     by_id = {m["model_id"]: m for m in models}
 
     inserted = 0
+    for mid, live in live_catalog.items():
+        if mid in by_id:
+            continue
+        is_vision = any(token in mid for token in ("-vl-", "-omni-", "-vision-"))
+        generic_spec = {
+            "display_name": mid,
+            "context_window": live.get("context_window") or 0,
+            "max_output_tokens": 0,
+            "input_per_1m": live["input_per_1m"],
+            "output_per_1m": live["output_per_1m"],
+            "supports_function_calling": True,
+            "supports_json_mode": True,
+            "supports_reasoning": "thinking" in mid,
+            "supports_vision": is_vision,
+            "input_modalities": ["text", "image"] if is_vision else ["text"],
+            "aliases": [],
+        }
+        new_m = make_text_model(mid, generic_spec)
+        models.append(new_m)
+        by_id[mid] = new_m
+        inserted += 1
+
     updated_or = 0
     media_n = 0
 
@@ -486,9 +527,9 @@ def main() -> None:
 
 ### Result
 - qwen.json: **{len(models)}** models (active={active}, token-priced={priced})
-- Added bare Model Studio IDs: qwen3.7-max/plus, qwen3.6-flash/plus/max-preview, qwen3.5-*, qwen-plus/flash/max, qwen3-max
-- List prices (intl): qwen3.7-max $2.5/$7.5 (promo $1.25/$3.75); qwen3.7-plus $0.4/$1.6; qwen3.6-flash $0.25/$1.5
-- Media: qwen-image-2.0-pro / wan2.7-image-pro $0.075/image; happyhorse-1.1-t2v ~$0.14/s 720p
+- Official Alibaba pricing rows applied to {live_updates} maintained text models
+- Current Qwen model IDs and first International pricing tiers are fetched automatically
+- Media metadata remains static until official media pricing tables are parsed
 - OpenRouter `qwen/...` entries kept; alibaba_list_pricing annotated in extra
 - Install copy synced
 """
@@ -500,6 +541,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-    from _scrape_image_capabilities import scrape_provider
-
-    scrape_provider("qwen")

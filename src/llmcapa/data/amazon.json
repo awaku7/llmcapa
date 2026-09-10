@@ -257,8 +257,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.035,
-        "output_per_1m": 0.14,
+        "input_per_1m": 0.034999999999999996,
+        "output_per_1m": 0.13999999999999999,
         "currency": "USD"
       },
       "extra": {
@@ -307,8 +307,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.06,
-        "output_per_1m": 0.24,
+        "input_per_1m": 0.060000000000000005,
+        "output_per_1m": 0.24000000000000002,
         "currency": "USD"
       },
       "extra": {
@@ -494,25 +494,6 @@
       "supports_function_calling": false,
       "supports_json_mode": false,
       "supports_streaming": false,
-      "image": {
-        "generation": true,
-        "accepts_text_prompt": true,
-        "accepts_image_input": true,
-        "status": "documented",
-        "input_formats": [
-          "png",
-          "jpeg"
-        ],
-        "input_mime_types": [
-          "image/png",
-          "image/jpeg"
-        ],
-        "max_input_width": 4096,
-        "max_input_height": 4096,
-        "max_input_pixels": 4194304,
-        "source_url": "https://docs.aws.amazon.com/nova/latest/userguide/image-gen-access.html",
-        "checked_at": "2026-09-09"
-      },
       "supports_vision": true,
       "supports_reasoning": false,
       "supports_chat_completion": false,
@@ -540,6 +521,25 @@
         "price_per_image_std_le_1024": 0.04,
         "price_per_image_premium_le_1024": 0.06,
         "note": "≤1024 standard $0.04 / premium $0.06 per image (US East)"
+      },
+      "image": {
+        "generation": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": true,
+        "status": "documented",
+        "input_formats": [
+          "png",
+          "jpeg"
+        ],
+        "input_mime_types": [
+          "image/png",
+          "image/jpeg"
+        ],
+        "max_input_width": 4096,
+        "max_input_height": 4096,
+        "max_input_pixels": 4194304,
+        "source_url": "https://docs.aws.amazon.com/nova/latest/userguide/image-gen-access.html",
+        "checked_at": "2026-09-10"
       }
     },
     {
@@ -933,12 +933,6 @@
       "supports_function_calling": false,
       "supports_json_mode": false,
       "supports_streaming": false,
-      "image": {
-        "generation": true,
-        "accepts_text_prompt": true,
-        "accepts_image_input": true,
-        "status": "unknown"
-      },
       "supports_vision": true,
       "supports_reasoning": false,
       "supports_chat_completion": false,
@@ -969,6 +963,13 @@
         "price_per_image_premium_512": 0.01,
         "price_per_image_premium_1024": 0.012,
         "note": "Titan Image Generator v2 approximate US East rates"
+      },
+      "image": {
+        "generation": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": true,
+        "status": "unknown",
+        "checked_at": "2026-09-10"
       }
     }
   ]

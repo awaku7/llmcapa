@@ -33,6 +33,8 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
+from playwright.sync_api import sync_playwright
+
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "microsoft.json"
 INSTALLED = (
@@ -1090,8 +1092,54 @@ def build() -> list[dict]:
     return out
 
 
+def fetch_official_pricing_rows() -> list[list[str]]:
+    """Read the Microsoft Foundry pricing tables from the rendered page."""
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page(locale="en-US")
+        page.goto(SOURCE_PRICING, wait_until="domcontentloaded", timeout=60000)
+        page.wait_for_timeout(3000)
+        rows = page.locator("table tr").evaluate_all(
+            "els => els.map(row => Array.from(row.querySelectorAll('th,td')).map(c => c.innerText.trim()))"
+        )
+        browser.close()
+    return rows
+
+
+def _price(value: str) -> float | None:
+    match = __import__("re").search(r"\$([0-9]+(?:\.[0-9]+)?)", value)
+    return float(match.group(1)) if match else None
+
+
+def apply_official_pricing(models: list[dict], rows: list[list[str]]) -> int:
+    updated = 0
+    for row in rows:
+        if len(row) < 4 or row[0] in ("Models", "Model"):
+            continue
+        name = row[0]
+        input_price = _price(row[-2])
+        output_price = _price(row[-1])
+        if input_price is None or output_price is None:
+            continue
+        normalized = name.lower().replace(", text and image", "-multimodal-instruct")
+        normalized = normalized.replace("-efficient global", "e").replace(" global", "")
+        for model in models:
+            mid = model.get("model_id", "").lower()
+            if mid == normalized or mid.replace("-instruct", "") == normalized:
+                model["pricing"] = {
+                    "input_per_1m": input_price,
+                    "output_per_1m": output_price,
+                    "currency": "USD",
+                }
+                model.setdefault("extra", {})["official_pricing_parsed"] = True
+                updated += 1
+                break
+    return updated
+
+
 def main() -> None:
     models = build()
+    official_pricing_updated = apply_official_pricing(models, fetch_official_pricing_rows())
     OUT.parent.mkdir(parents=True, exist_ok=True)
     payload = {"models": models}
     OUT.write_text(
@@ -1143,9 +1191,7 @@ def main() -> None:
         f"### Result\n"
         f"- microsoft.json: **{len(models)}** models "
         f"(active={active}, deprecated={deprecated}, priced={priced}, extra={with_extra})\n"
-        f"- Phi PAYG corrected: Phi-4 $0.125/$0.50 ctx **16384**; "
-        f"Phi-4-mini $0.075/$0.30; multimodal text+image $0.08/$0.32 (audio $4/$0.32); "
-        f"reasoning $0.125/$0.50 @ 32K\n"
+        f"- Official Microsoft pricing rows parsed and applied: {official_pricing_updated}\n"
         f"- Phi-3/3.5 family marked deprecated (retired 2025-08-30) with Foundry rates kept\n"
         f"- MAI-DS-R1 Global $1.35/$5.40 deprecated (retired 2026-02-27); "
         f"MAI-Image-2 $5/$33, Efficient/2e $5/$19.50; Voice/Transcribe unpriced meters\n"
@@ -1162,6 +1208,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-    from _scrape_image_capabilities import scrape_provider
-
-    scrape_provider("microsoft")

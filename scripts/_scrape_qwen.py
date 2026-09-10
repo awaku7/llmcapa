@@ -1,65 +1,49 @@
-"""Playwright: scrape Alibaba Cloud Qwen pricing."""
-import json
+"""Fetch current Qwen International list prices from Alibaba Cloud docs."""
+from __future__ import annotations
+
+import html
 import re
-import sys
-import traceback
+from urllib.request import Request, urlopen
 
-if hasattr(sys.stdout, "reconfigure"):
-    sys.stdout.reconfigure(encoding="utf-8")
-try:
-    from playwright.sync_api import sync_playwright
-except ImportError:
-    print('{"error":"playwright not installed"}')
-    sys.exit(1)
-
-def parse_model_ids(text: str) -> list[str]:
-    """Extract Qwen model identifiers from the live pricing text."""
-    pattern = r"(?i)\bqwen(?:[0-9][a-z0-9]*(?:[-._][a-z0-9]+)*|[-_][a-z0-9]+(?:[-._][a-z0-9]+)*)\b"
-    return list(dict.fromkeys(match.lower() for match in re.findall(pattern, text)))
+PRICING_URL = "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
 
 
-try:
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
-        page = browser.new_page()
-        
-        # Try the English page first, then the Chinese page if necessary.
-        t1 = ""
-        for url in (
-            "https://www.alibabacloud.com/help/en/model-studio/getting-started/billing",
-            "https://help.aliyun.com/zh/model-studio/getting-started/billing",
-        ):
-            try:
-                page.goto(url, wait_until="domcontentloaded", timeout=60000)
-                page.wait_for_timeout(5000)
-                candidate = page.inner_text("body")
-            except Exception:
-                continue
-            if len(candidate) > len(t1):
-                t1 = candidate
-            if "pricing" in candidate.lower()[:1000] or "price" in candidate.lower()[:1000]:
-                break
-        if not t1:
-            raise RuntimeError("Qwen billing pages could not be loaded")
-        
-        browser.close()
-        
-        # Extract pricing table from text
-        idx = t1.lower().find("pricing")
-        if idx == -1:
-            idx = t1.lower().find("price")
-        if idx == -1:
-            idx = t1.lower().find("billing")
-        
-        text = t1[max(0, idx-200):idx+15000] if idx >= 0 else t1[:15000]
-        
-        model_ids = parse_model_ids(t1)
-        result = {
-            "qwen_scraped": bool(model_ids),
-            "text_len": len(t1),
-            "model_ids": model_ids,
-            "pricing_section": text[:20000],
+def fetch_qwen_catalog() -> dict[str, dict]:
+    request = Request(PRICING_URL, headers={"User-Agent": "llmcapa catalog updater"})
+    with urlopen(request, timeout=30) as response:
+        page = html.unescape(response.read().decode("utf-8", errors="replace"))
+
+    result: dict[str, dict] = {}
+    for raw_row in re.findall(r"<tr[^>]*>(.*?)</tr>", page, re.I | re.S):
+        cells = re.findall(r"<td[^>]*>(.*?)</td>", raw_row, re.I | re.S)
+        if len(cells) < 5:
+            continue
+        model_match = re.search(r"\bqwen[a-z0-9][a-z0-9._-]*", cells[0], re.I)
+        if not model_match:
+            continue
+        model_id = model_match.group(0).lower()
+        cell_text = [re.sub(r"<[^>]+>", " ", cell) for cell in cells]
+        joined = " ".join(cell_text)
+        raw_joined = " ".join(cells)
+        # The first two dollar values are the first International pricing tier.
+        prices = [float(value) for value in re.findall(r"\$\s*([0-9]+(?:\.[0-9]+)?)", joined)]
+        if len(prices) < 2 or model_id in result:
+            continue
+        sizes = []
+        for value, unit in re.findall(r"(?:≤|<)\s*([0-9]+(?:\.[0-9]+)?)\s*([KM])", raw_joined, re.I):
+            sizes.append(float(value) * (1_000 if unit.upper() == "K" else 1_000_000))
+        result[model_id] = {
+            "input_per_1m": prices[0],
+            "output_per_1m": prices[1],
+            "context_window": int(max(sizes)) if sizes else 0,
+            "source": PRICING_URL,
         }
-        print(json.dumps(result, ensure_ascii=False))
-except Exception as e:
-    print(json.dumps({"error": str(e), "traceback": traceback.format_exc()}, ensure_ascii=False))
+    if not result:
+        raise RuntimeError("no Qwen International prices found in official Alibaba docs")
+    return result
+
+
+if __name__ == "__main__":
+    import json
+
+    print(json.dumps(fetch_qwen_catalog(), ensure_ascii=False, indent=2))

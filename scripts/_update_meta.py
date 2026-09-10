@@ -490,8 +490,6 @@ def main() -> int:
 if __name__ == "__main__":
     code = main()
     from _image_capability_postprocess import apply
-    from _scrape_image_capabilities import scrape_provider
 
     apply()
-    scrape_provider("meta")
     raise SystemExit(code)

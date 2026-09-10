@@ -19,6 +19,11 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
+try:
+    from scripts._scrape_amazon import fetch_nova_prices
+except ModuleNotFoundError:  # Direct execution: python scripts/_update_amazon.py
+    from _scrape_amazon import fetch_nova_prices
+
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "amazon.json"
 INSTALLED = (
@@ -154,8 +159,10 @@ def text_extra(
     return e
 
 
-def build() -> list[dict]:
+def build(nova_prices: dict[str, dict[str, float]]) -> list[dict]:
     models: list[dict] = []
+    if not nova_prices:
+        raise RuntimeError("official AWS pricing returned no Nova models")
 
     # =====================================================================
     # Nova 2 family (Global CRI primary)
@@ -167,7 +174,7 @@ def build() -> list[dict]:
             display="Amazon Nova 2 Lite",
             ctx=1_000_000,
             max_out=65_535,
-            pricing={"input": 0.30, "output": 2.50},
+            pricing=nova_prices["nova-2-lite-v1"],
             extra=text_extra(
                 cache_hit=0.075,  # 0.30 * 0.25
                 batch_in=0.15,
@@ -195,7 +202,7 @@ def build() -> list[dict]:
             display="Amazon Nova 2 Pro (Preview)",
             ctx=1_000_000,
             max_out=65_535,
-            pricing={"input": 1.25, "output": 10.0},
+            pricing=nova_prices["nova-2-pro-v1"],
             extra=text_extra(
                 cache_hit=0.3125,
                 batch_in=0.625,
@@ -223,7 +230,7 @@ def build() -> list[dict]:
             display="Amazon Nova 2 Omni (Preview)",
             ctx=1_000_000,
             max_out=65_535,
-            pricing={"input": 0.30, "output": 2.50},
+            pricing=nova_prices["nova-2-omni-v1"],
             extra=text_extra(
                 cache_hit=0.075,
                 batch_in=0.15,
@@ -283,7 +290,7 @@ def build() -> list[dict]:
             display="Amazon Nova Micro",
             ctx=128_000,
             max_out=5_120,
-            pricing={"input": 0.035, "output": 0.14},
+            pricing=nova_prices["nova-micro-v1"],
             extra=text_extra(
                 cache_hit=0.00875,
                 batch_in=0.0175,
@@ -303,7 +310,7 @@ def build() -> list[dict]:
             display="Amazon Nova Lite",
             ctx=300_000,
             max_out=5_120,
-            pricing={"input": 0.06, "output": 0.24},
+            pricing=nova_prices["nova-lite-v1"],
             extra=text_extra(
                 cache_hit=0.015,
                 batch_in=0.03,
@@ -323,7 +330,7 @@ def build() -> list[dict]:
             display="Amazon Nova Pro",
             ctx=300_000,
             max_out=5_120,
-            pricing={"input": 0.80, "output": 3.20},
+            pricing=nova_prices["nova-pro-v1"],
             extra=text_extra(
                 cache_hit=0.20,
                 batch_in=0.40,
@@ -345,7 +352,7 @@ def build() -> list[dict]:
             display="Amazon Nova Premier",
             ctx=1_000_000,
             max_out=32_000,
-            pricing={"input": 2.50, "output": 12.50},
+            pricing=nova_prices["nova-premier-v1"],
             extra=text_extra(
                 cache_hit=0.625,
                 batch_in=1.25,
@@ -647,7 +654,8 @@ def dedupe_model_ids(models: list[dict]) -> list[dict]:
 
 
 def main() -> None:
-    models = build()
+    nova_prices = fetch_nova_prices()
+    models = build(nova_prices)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     payload = {"models": models}
     OUT.write_text(
@@ -699,13 +707,9 @@ def main() -> None:
         f"### Result\n"
         f"- amazon.json: **{len(models)}** models "
         f"(active={active}, deprecated={deprecated}, priced={priced})\n"
-        f"- Nova 2 Lite Global $0.30/$2.50 (geo $0.33/$2.75); "
-        f"Nova 2 Pro Preview $1.25/$10; Nova 2 Omni Preview $0.30/$2.50\n"
-        f"- Nova 1.0: Micro $0.035/$0.14, Lite $0.06/$0.24, "
-        f"Pro $0.80/$3.20 (+latency-opt $1/$4), Premier $2.50/$12.50\n"
-        f"- Sonic speech/text dual rates in extra; Canvas/Reel/Embeddings priced\n"
-        f"- Titan Lite corrected to $0.15/$0.20; Bedrock aliases amazon.*:0\n"
-        f"- Install copy synced\n"
+        f"- Current Nova token prices are fetched from official AWS sources\n"
+        f"- Historical Titan and specialty metadata remains static\n"
+        f"- Bedrock aliases are generated as amazon.*:0\n"
     )
     if LOG.exists():
         LOG.write_text(LOG.read_text(encoding="utf-8") + entry, encoding="utf-8")
@@ -715,6 +719,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-    from _scrape_image_capabilities import scrape_provider
-
-    scrape_provider("amazon")

@@ -1,15 +1,14 @@
 """Build/refresh deepseek.json from official DeepSeek API docs.
 
-Sources (Playwright):
+Sources (official HTTP page; Playwright fallback):
 - https://api-docs.deepseek.com/quick_start/pricing/
 - https://api-docs.deepseek.com/updates/
 - https://api-docs.deepseek.com/guides/thinking_mode/
 - _scratch_deepseek_pricing_live.html
 
-Active API models (2026-08-21): deepseek-v4-flash,
-deepseek-v4-pro, and deepseek-v4-flash-vision-exp.
-Legacy deepseek-chat / deepseek-reasoner are historical aliases; DeepSeek
-discontinued them after 2026-07-24 15:59 UTC.
+The active model list and current metadata are fetched from the official
+DeepSeek pricing page. Historical model records remain static metadata so
+that past model lookups continue to work.
 """
 
 from __future__ import annotations
@@ -18,6 +17,11 @@ import json
 import shutil
 from datetime import datetime, timezone
 from pathlib import Path
+
+try:
+    from scripts._scrape_deepseek import scrape_pricing
+except ModuleNotFoundError:  # Direct execution: python scripts/_update_deepseek.py
+    from _scrape_deepseek import scrape_pricing
 
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "deepseek.json"
@@ -134,110 +138,50 @@ def cache_extra(
     return e
 
 
-def build() -> list[dict]:
+def build(pricing_catalog: dict[str, dict]) -> list[dict]:
+    """Build the catalog using values fetched from the official pricing page."""
     models: list[dict] = []
+    if not pricing_catalog:
+        raise RuntimeError("official DeepSeek pricing returned no models")
 
     # =====================================================================
-    # Active official API (DeepSeek-V4, 2026-04-24)
+    # Active official API: generated from the official pricing page
     # =====================================================================
-    models.append(
-        base(
-            model_id="deepseek-v4-flash",
-            display="DeepSeek V4 Flash",
-            ctx=1_048_576,
-            max_out=393_216,  # 384K
-            pricing={"input": 0.44, "output": 1.32},
-            extra=cache_extra(
-                0.014,
-                concurrency=2500,
-                notes={
-                    "model_version": "DeepSeek-V4-Flash-0731",
-                    "pricing_period": "peak",
-                    "off_peak": {"input": 0.22, "output": 0.66, "cache_hit": 0.007},
-                    "thinking_default": "enabled",
-                    "thinking_toggle": {"type": "enabled|disabled"},
-                    "reasoning_effort": ["low", "high", "max"],
-                    "legacy_aliases_discontinued": "2026-07-24T15:59:00Z",
-                    "legacy_map": {
-                        "deepseek-chat": "non-thinking mode of deepseek-v4-flash",
-                        "deepseek-reasoner": "thinking mode of deepseek-v4-flash",
-                    },
-                },
-            ),
-            aliases=[
-                "deepseek-v4-flash-max",
-                "deepseek-chat",  # until 2026-07-24 → non-thinking
-                "deepseek-reasoner",
-            ],  # until 2026-07-24 → thinking
-            knowledge_cutoff="2025-12",
-            reasoning=True,
-            effort=True,
-            effort_values=["low", "high", "max"],
-            fim=True,
-            responses_api=True,
+    for model_id, row in pricing_catalog.items():
+        version = row.get("version") or model_id
+        display = version.replace("-", " ")
+        vision = bool(row.get("supports_vision"))
+        notes = {
+            "off_peak": row["off_peak"],
+            "pricing_fetched": True,
+            "model_version": version,
+            "pricing_period": "peak",
+        }
+        models.append(
+            base(
+                model_id=model_id,
+                display=display,
+                ctx=row["ctx"],
+                max_out=row["max_out"],
+                pricing={"input": row["input"], "output": row["output"]},
+                extra=cache_extra(
+                    row["cache_hit"],
+                    concurrency=row.get("concurrency") or None,
+                    notes=notes,
+                ),
+                aliases=row.get("aliases") or [],
+                reasoning=bool(row.get("supports_reasoning")),
+                effort=bool(row.get("supports_reasoning_effort")),
+                effort_values=row.get("reasoning_effort_values") or None,
+                function_calling=bool(row.get("supports_function_calling")),
+                json_mode=bool(row.get("supports_json_mode")),
+                anthropic_api=bool(row.get("supports_anthropic_api")),
+                responses_api=bool(row.get("supports_responses_api")),
+                input_modalities=["text", "image"] if vision else ["text"],
+                vision=vision,
+                fim=bool(row.get("supports_fim")),
+            )
         )
-    )
-    models.append(
-        base(
-            model_id="deepseek-v4-pro",
-            display="DeepSeek V4 Pro",
-            ctx=1_048_576,
-            max_out=393_216,
-            pricing={"input": 1.32, "output": 3.96},
-            extra=cache_extra(
-                0.044,
-                concurrency=500,
-                notes={
-                    "model_version": "DeepSeek-V4-Pro-0813",
-                    "pricing_period": "peak",
-                    "off_peak": {"input": 0.66, "output": 1.98, "cache_hit": 0.022},
-                    "thinking_default": "enabled",
-                    "thinking_toggle": {"type": "enabled|disabled"},
-                    "reasoning_effort": ["low", "high", "max"],
-                },
-            ),
-            aliases=[
-                "deepseek-v4-pro-max",
-            ],
-            knowledge_cutoff="2025-12",
-            reasoning=True,
-            effort=True,
-            effort_values=["low", "high", "max"],
-            fim=True,
-            responses_api=True,
-        )
-    )
-
-    # =====================================================================
-    # Experimental multimodal API (2026-08-21)
-    # =====================================================================
-    models.append(
-        base(
-            model_id="deepseek-v4-flash-vision-exp",
-            display="DeepSeek V4 Flash Vision Exp",
-            ctx=1_048_576,
-            max_out=393_216,
-            pricing={"input": 0.44, "output": 1.32},
-            extra=cache_extra(
-                0.014,
-                concurrency=2500,
-                notes={
-                    "model_version": "DeepSeek-V4-Flash-Vision-Exp",
-                    "pricing_period": "peak",
-                    "off_peak": {"input": 0.22, "output": 0.66, "cache_hit": 0.007},
-                    "experimental": True,
-                },
-            ),
-            knowledge_cutoff="2025-12",
-            reasoning=True,
-            effort=True,
-            effort_values=["low", "high", "max"],
-            input_modalities=["text", "image"],
-            vision=True,
-            responses_api=True,
-            fim=False,
-        )
-    )
 
     # Historical API generations (deprecated; last known public rates)
     # =====================================================================
@@ -444,7 +388,8 @@ def dedupe(models: list[dict]) -> list[dict]:
 
 
 def main() -> None:
-    models = build()
+    pricing_catalog = scrape_pricing()
+    models = build(pricing_catalog)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     payload = {"models": models}
     OUT.write_text(
@@ -492,12 +437,10 @@ def main() -> None:
         f"### Result\n"
         f"- deepseek.json: **{len(models)}** models "
         f"(active={active}, deprecated={deprecated}, priced={priced})\n"
-        f"- Active: V4 Flash $0.44/$1.32 peak (cache hit $0.014), "
-        f"V4 Pro $1.32/$3.96 peak (cache hit $0.044), V4 Flash Vision Exp $0.44/$1.32 peak; 1M ctx / 384K max out\n"
-        f"- Legacy deepseek-chat/reasoner discontinued 2026-07-24; aliases retained for compatibility\n"
-        f"- Historical V3.x/R1 kept as deprecated; distill open-weight unpriced\n"
-        f"- Removed Azure/NPU catalog pollution from deepseek provider\n"
-        f"- Install copy synced\n"
+        f"- Official models fetched: {', '.join(pricing_catalog)}\n"
+        f"- Pricing, capabilities, context length, max output, versions, and concurrency were fetched from the official page\n"
+        f"- Historical model records are retained as static deprecated metadata\n"
+        f"- OpenRouter was not used\n"
     )
     if LOG.exists():
         LOG.write_text(LOG.read_text(encoding="utf-8") + entry, encoding="utf-8")

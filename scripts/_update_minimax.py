@@ -14,6 +14,11 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
+try:
+    from scripts._scrape_minimax import fetch_minimax_catalog
+except ModuleNotFoundError:  # Direct execution: python scripts/_update_minimax.py
+    from _scrape_minimax import fetch_minimax_catalog
+
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "minimax.json"
 INSTALLED = (
@@ -374,6 +379,61 @@ def build_models() -> list[dict]:
 
 
 def main() -> None:
+    live_catalog = fetch_minimax_catalog()
+    known_ids = {spec["model_id"] for spec in TEXT_MODELS}
+    live_updates = 0
+    for spec in TEXT_MODELS:
+        live = live_catalog.get(spec["model_id"])
+        if live and "input" in live and "output" in live:
+            spec["pricing"] = {
+                "input_per_1m": live["input"],
+                "output_per_1m": live["output"],
+                "currency": "USD",
+            }
+            live_updates += 1
+    for model_id, live in live_catalog.items():
+        if model_id in known_ids or "input" not in live or "output" not in live:
+            continue
+        TEXT_MODELS.append(
+            {
+                "model_id": model_id,
+                "display_name": model_id,
+                "context_window": 0,
+                "max_output_tokens": 0,
+                "input_modalities": ["text"],
+                "output_modalities": ["text"],
+                "supports_function_calling": True,
+                "supports_json_mode": True,
+                "supports_reasoning": "thinking" in model_id.lower(),
+                "pricing": {
+                    "input_per_1m": live["input"],
+                    "output_per_1m": live["output"],
+                    "currency": "USD",
+                },
+                "aliases": [],
+                "extra": {"source": SOURCE_PRICING, "pricing_fetched": True},
+            }
+        )
+        live_updates += 1
+
+    for spec in AUDIO_MODELS + VIDEO_MODELS + MUSIC_MODELS + IMAGE_MODELS:
+        live = live_catalog.get(spec["model_id"])
+        if not live or "specialty_price" not in live:
+            continue
+        extra = spec.setdefault("extra", {})
+        if "price_per_1m_chars" in extra:
+            extra["price_per_1m_chars"] = live["specialty_price"]
+        elif "price_per_image" in extra:
+            extra["price_per_image"] = live["specialty_price"]
+        elif "price_per_track_usd" in extra:
+            extra["price_per_track_usd"] = live["specialty_price"]
+        elif "price_per_clip_range_usd" in extra:
+            extra["price_per_clip_range_usd"] = [
+                min(live.get("specialty_prices", [live["specialty_price"]])),
+                max(live.get("specialty_prices", [live["specialty_price"]])),
+            ]
+        live_updates += 1
+
     models = build_models()
     payload = {"models": models}
     OUT.parent.mkdir(parents=True, exist_ok=True)
@@ -403,9 +463,9 @@ def main() -> None:
 
 ### Result
 - minimax.json: **{len(models)}** models (active={active}, token-priced={priced})
-- Text: MiniMax-M3 $0.30/$1.20 ≤512k (perm 50% off; >512k $0.60/$2.40); M2.7 $0.30/$1.20; highspeed $0.60/$2.40
-- Specialty: speech-2.8 (hd $100/M chars, turbo $60), Hailuo 2.3, music-3.0 $0.15/track, image-01 $0.0035
-- Install copy synced
+- Official MiniMax pricing rows applied to {live_updates} text models
+- New official token-priced model IDs are added with generic metadata
+- Specialty model metadata remains static until corresponding tables are parsed
 """
     if LOG.exists():
         LOG.write_text(LOG.read_text(encoding="utf-8") + entry, encoding="utf-8")
@@ -415,6 +475,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-    from _scrape_image_capabilities import scrape_provider
-
-    scrape_provider("minimax")

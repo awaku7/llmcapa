@@ -7,7 +7,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from _image_capability_postprocess import apply as apply_image_capabilities
-from _scrape_image_capabilities import PROVIDER_DOCS, scrape_provider
 
 DATA = r"F:\KAIHATSU\llmcapa\src\llmcapa\data"
 INSTALLED = r"F:\Python314\Lib\site-packages\llmcapa\data"
@@ -145,14 +144,6 @@ print(f"Responses API: {resp_count} models fixed (only OpenAI/Azure)", flush=Tru
 # ── 4.5. Normalize image-generation capability records ──
 image_changes = apply_image_capabilities(Path(DATA))
 print(f"ImageCapability records added: {image_changes}", flush=True)
-image_scrape_changes = {}
-for image_provider in PROVIDER_DOCS:
-    try:
-        image_scrape_changes[image_provider] = scrape_provider(image_provider, Path(DATA))
-    except Exception as exc:  # noqa: BLE001
-        print(f"Image scrape skipped for {image_provider}: {exc}", flush=True)
-print(f"ImageCapability records scraped: {image_scrape_changes}", flush=True)
-
 # ── 5. Fix provider names: meta-llama->meta, x-ai->xai ──
 rename_map = {"meta-llama": "meta", "x-ai": "xai"}
 for fname in ["meta.json", "xai.json"]:
