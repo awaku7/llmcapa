@@ -110,6 +110,32 @@ def test_list_novita():
     assert len(models) >= 60
 
 
+def test_list_modellix():
+    models = llmcapa.list_models(provider="modellix")
+    assert len(models) >= 20
+    assert all(c.provider == "modellix" for c in models)
+    cap = llmcapa.get("openai/gpt-5.6-sol", provider="modellix")
+    assert cap.context_window == 1050000
+    assert llmcapa.get("~openai/gpt-latest", provider="modellix").model_id == (
+        "openai/gpt-6-astra"
+    )
+
+
+def test_modellix_media_catalog():
+    models = llmcapa.list_models(provider="modellix")
+    media = llmcapa.get("alibaba/qwen-image-3-0-pro", provider="modellix")
+    assert len(models) >= 200
+    assert media.supports("image_output")
+    assert media.extra["gateway_base_url"] == "https://api.modellix.ai"
+    assert media.extra["media_model_type"] == "text-to-image"
+
+
+def test_modellix_provider_alias():
+    assert llmcapa.list_models(provider="modellix-ai") == llmcapa.list_models(
+        provider="modellix"
+    )
+
+
 def test_find():
     results = llmcapa.find(supports_vision=True, min_context_window=100000)
     assert len(results) > 0

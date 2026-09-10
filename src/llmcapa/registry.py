@@ -50,6 +50,8 @@ class Registry:
         "lmstudio": ["lm-studio", "lm_studio"],
         "together": ["together-ai", "togethercomputer"],
         "vercel": ["vercel-ai-gateway", "vercel-gateway", "ai-gateway"],
+        # Modellix is a gateway with its own provider/name model IDs.
+        "modellix": ["modellix-ai"],
         # llama.cpp is a local inference backend, kept distinct from Ollama.
         "llama-cpp": ["llama", "llama_cpp"],
     }
@@ -93,6 +95,8 @@ class Registry:
             "azure_foundry.json",
             "lmstudio.json",
             "ollama.json",
+            "modellix.json",
+            "modellix_media.json",
         }
         regular = []
         agg = []
@@ -167,7 +171,7 @@ class Registry:
 
         # First-registered-wins for the flat model_id index.
         # Also skip if key is already claimed as an alias for another model.
-        aggregators = {"openrouter", "novita", "azure-foundry", "lmstudio", "ollama"}
+        aggregators = {"openrouter", "novita", "azure-foundry", "lmstudio", "ollama", "modellix"}
         existing = self._models.get(key)
         existing_provider = (
             self._normalize_provider(existing.provider) if existing is not None else ""
