@@ -158,16 +158,12 @@ def template_for(model_id: str) -> dict:
     # Gemini's native API exposes thinking_budget for Gemini 2.5 and
     # thinking_level for Gemini 3+. reasoning_effort is an OpenAI parameter,
     # not a native Google API parameter, so it must not be advertised here.
-    is_specialized = any(
-        tag in model_id for tag in ("-image", "-tts", "-native-audio")
-    )
+    is_specialized = any(tag in model_id for tag in ("-image", "-tts", "-native-audio"))
     is_gemini_25_thinking = (
-        re.match(r"^gemini-2\.5(?:-|$)", model_id) is not None
-        and not is_specialized
+        re.match(r"^gemini-2\.5(?:-|$)", model_id) is not None and not is_specialized
     )
     is_gemini_3_thinking = (
-        re.match(r"^gemini-3(?:\.|-|$)", model_id) is not None
-        and not is_specialized
+        re.match(r"^gemini-3(?:\.|-|$)", model_id) is not None and not is_specialized
     )
     budget_values = (
         {"type": "token_range", "min": 0, "max": 24576}

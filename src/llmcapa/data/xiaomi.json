@@ -18,7 +18,7 @@
       "supports_vision": false,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": true,
+      "supports_responses_api": false,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
@@ -84,7 +84,7 @@
       "supports_vision": true,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": true,
+      "supports_responses_api": false,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
@@ -128,6 +128,51 @@
         "input_per_1m": 0.14,
         "output_per_1m": 0.28,
         "currency": "USD"
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "checked_at": "2026-09-15",
+        "status": "inferred",
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "extra": {}
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
       }
     },
     {
@@ -148,7 +193,7 @@
       "supports_vision": false,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": true,
+      "supports_responses_api": false,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
@@ -192,7 +237,7 @@
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": false,
-      "supports_responses_api": true,
+      "supports_responses_api": false,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
@@ -223,6 +268,22 @@
         "input_per_1m": 0.0,
         "output_per_1m": 0.0,
         "currency": "USD"
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "transcription": true,
+        "checked_at": "2026-09-15",
+        "status": "inferred",
+        "endpoints": {
+          "transcription": true,
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "extra": {}
       }
     },
     {
@@ -244,7 +305,7 @@
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": false,
-      "supports_responses_api": true,
+      "supports_responses_api": false,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
@@ -272,6 +333,20 @@
         "input_per_1m": 0.0,
         "output_per_1m": 0.0,
         "currency": "USD"
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "checked_at": "2026-09-15",
+        "status": "inferred",
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "extra": {}
       }
     },
     {
@@ -293,7 +368,7 @@
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": false,
-      "supports_responses_api": true,
+      "supports_responses_api": false,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
@@ -322,6 +397,20 @@
         "input_per_1m": 0.0,
         "output_per_1m": 0.0,
         "currency": "USD"
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "checked_at": "2026-09-15",
+        "status": "inferred",
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "extra": {}
       }
     },
     {
@@ -343,7 +432,7 @@
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": false,
-      "supports_responses_api": true,
+      "supports_responses_api": false,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
@@ -372,6 +461,20 @@
         "input_per_1m": 0.0,
         "output_per_1m": 0.0,
         "currency": "USD"
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "checked_at": "2026-09-15",
+        "status": "inferred",
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "extra": {}
       }
     },
     {
@@ -392,7 +495,7 @@
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": true,
-      "supports_responses_api": true,
+      "supports_responses_api": false,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
@@ -433,7 +536,7 @@
       "supports_vision": true,
       "supports_reasoning": false,
       "supports_chat_completion": true,
-      "supports_responses_api": true,
+      "supports_responses_api": false,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
@@ -451,6 +554,51 @@
         "source_models": "https://mimo.mi.com/docs/en-US/quick-start/summary/model",
         "deprecated_on": "2026-06-30",
         "migration": "mimo-v2.5 series"
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "checked_at": "2026-09-15",
+        "status": "inferred",
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "extra": {}
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
       }
     },
     {
@@ -471,7 +619,7 @@
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": true,
-      "supports_responses_api": true,
+      "supports_responses_api": false,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
@@ -510,7 +658,7 @@
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": false,
-      "supports_responses_api": true,
+      "supports_responses_api": false,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
@@ -528,6 +676,20 @@
         "source_models": "https://mimo.mi.com/docs/en-US/quick-start/summary/model",
         "deprecated_on": "2026-06-30",
         "migration": "mimo-v2.5 series"
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "checked_at": "2026-09-15",
+        "status": "inferred",
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "extra": {}
       }
     }
   ]

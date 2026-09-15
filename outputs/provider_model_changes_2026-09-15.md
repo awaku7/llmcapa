@@ -1,0 +1,2496 @@
+# Provider model catalog changes
+
+- Baseline: `HEAD`
+- Generated: `2026-09-15`
+- `added`: model IDs absent from `HEAD` and present now.
+- `updated`: existing model IDs with substantive catalog changes.
+- `fim_only`: only FIM normalization changed; not a provider discovery change.
+- `checked_only`: only audit timestamp/provenance timestamps changed.
+
+## `aion-labs`
+
+- Added: **0**
+- Updated: **5**
+- Removed: **0**
+- FIM-only normalization: **0**
+- Timestamp-only: **0**
+
+### Updated model IDs
+
+- `aion-2.0`
+- `aion-2.5`
+- `aion-3.0`
+- `aion-3.0-mini`
+- `aion-rp-llama-3.1-8b`
+
+## `amazon`
+
+- Added: **0**
+- Updated: **0**
+- Removed: **0**
+- FIM-only normalization: **0**
+- Timestamp-only: **2**
+
+## `anthropic`
+
+- Added: **0**
+- Updated: **10**
+- Removed: **0**
+- FIM-only normalization: **0**
+- Timestamp-only: **0**
+
+### Updated model IDs
+
+- `claude-fable-5`
+- `claude-haiku-3-5`
+- `claude-haiku-4-5`
+- `claude-opus-4-5`
+- `claude-opus-4-6`
+- `claude-opus-4-7`
+- `claude-opus-4-8`
+- `claude-sonnet-4-5`
+- `claude-sonnet-4-6`
+- `claude-sonnet-5`
+
+## `azure_foundry`
+
+- Added: **1369**
+- Updated: **189**
+- Removed: **262**
+- FIM-only normalization: **1270**
+- Timestamp-only: **0**
+
+### Added model IDs
+
+- `01-ai-yi-34b-200k`
+- `01-ai-yi-6b`
+- `01-ai-yi-6b-200k`
+- `01-ai-yi-6b-chat`
+- `01-ai-yi-9b-200k`
+- `4yo1-llama3-eng-ko-8b-sl6-1`
+- `51la5-roberta-large-ner`
+- `FW-Kimi-K2-Thinking`
+- `FW-Nemotron-3-Ultra-NVFP4`
+- `FW-Qwen3.5-27B`
+- `MAI-Code-1.1-Flash`
+- `TimeGPT-2-mini`
+- `aari1995-german-semantic-sts-v2`
+- `aaubs-patentsberta-v2`
+- `abacusai-llama-3-smaug-8b`
+- `abbasgolestani-ag-nli-dets-sentence-similarity-v1`
+- `abbasgolestani-ag-nli-dets-sentence-similarity-v3-light`
+- `abhinand-llama-3-galen-8b-32k-v1`
+- `abhinavkulkarni-vmware-open-llama-13b-open-instruct-w4-g128-awq`
+- `abhishekchohan-mistral-7b-forest-dpo`
+- `adalbertojunior-distilbert-portuguese-cased`
+- `adaptllm-finance-llm`
+- `adaptllm-medicine-chat`
+- `adaptllm-medicine-llm`
+- `adrianjoheni-translation-model-opus`
+- `aerdincdal-cbddo-llm-8b-instruct-v1`
+- `afmck-testing-llama-tiny`
+- `afschowdhury-semantic-xlmr-bn`
+- `ahmed-masry-chartgemma`
+- `ahsanjavid-convnext-tiny-finetuned-cifar10`
+- `ahxt-litellama-460m-1t`
+- `ai-forever-frida`
+- `ai-forever-mgpt`
+- `ai-forever-rubert-large`
+- `ai-forever-rugpt3large-based-on-gpt2`
+- `ai-forever-ruroberta-large`
+- `ai-forever-rut5-base`
+- `ai-forever-sage-fredt5-distilled-95m`
+- `ai4bharat-indicwav2vec-odia`
+- `aijuud-juud-mistral-7b`
+- `aixonlab-eurydice-24b-v3`
+- `akhooli-xlm-r-large-arabic-sent`
+- `akshatsurolia-icd-10-code-prediction`
+- `albert-albert-large-v2`
+- `albert-base-v1`
+- `albert-base-v2`
+- `albert-xxlarge-v2`
+- `alchemab-antiberta2`
+- `alenusch-rugpt3-paraphraser`
+- `alexandrainst-da-hatespeech-detection-small`
+- `alexjercan-codet5-base-buggy-error-description`
+- `alexkay-xlm-roberta-large-qa-multilingual-finedtuned-ru`
+- `alexm-nm-tinyllama-24-gptq-4bit-g128`
+- `alexm-nm-tinyllama-24-gptq-8bit-g128`
+- `alexm-nm-tinyllama-24-marlin24-8bit-g128`
+- `alirezamsh-small100`
+- `allegro-herbert-large-cased`
+- `allenai-entailer-11b`
+- `allenai-ivila-row-layoutlm-finetuned-s2vl-v2`
+- `allenai-led-base-16384`
+- `allenai-led-large-16384`
+- `allenai-specter2-aug2023refresh-base`
+- `allenai-specter2-base`
+- `allenai-t5-small-squad2-question-generation`
+- `allenai-tulu-2-7b`
+- `allganize-llama-3-alpha-ko-8b-instruct`
+- `alvaroalon2-biobert-chemical-ner`
+- `amazon-mistrallite`
+- `amberoad-bert-multilingual-passage-reranking-msmarco`
+- `amd-amd-llama-135m`
+- `amelieschreiber-cafa-5-protein-function-prediction`
+- `amr-keleg-nadi2024-baseline`
+- `anakin87-gemma-2-2b-neogenesis-ita`
+- `anakin87-llama-3-8b-ita-slerp`
+- `anakin87-llama-3-8b-ita-ties`
+- `anakin87-llama-3-8b-ita-ties-pro`
+- `aniemore-rubert-large-emotion-russian-cedr-m7`
+- `ankitai-reviews-roberta-base-sentiment-analysis`
+- `annawegmann-style-embedding`
+- `anton-l-wav2vec2-large-xlsr-53-estonian`
+- `anton-l-wav2vec2-large-xlsr-53-slovenian`
+- `apanc-russian-inappropriate-messages`
+- `apkonsta-table-transformer-detection-ifrs`
+- `arcee-ai-virtuoso-small-v2`
+- `artples-l-mchat-7b`
+- `asahi417-tner-xlm-roberta-base-ontonotes5`
+- `asahi417-tner-xlm-roberta-large-all-english`
+- `asi-gpt-fr-cased-small`
+- `aspire-acge-text-embedding`
+- `aubmindlab-aragpt2-medium`
+- `aubmindlab-bert-base-arabertv02`
+- `aubmindlab-bert-large-arabertv02`
+- `audeering-wav2vec2-large-robust-6-ft-age-gender`
+- `axolotl-ai-co-smollm2-135m-bnb-nf4-bf16`
+- `baai-bge-m3-unsupervised`
+- `babelscape-rebel-large`
+- `bardsai-twitter-sentiment-pl-base`
+- `barrahome-zephyr-dpo-v2`
+- `bavest-fin-llama-33b-merged`
+- `bayartsogt-structbert-large`
+- `beir-query-gen-msmarco-t5-large-v1`
+- `belle-2-belle-whisper-large-v3-turbo-zh`
+- `beomi-kcbert-large`
+- `beomi-llama-2-ko-7b`
+- `beomi-llama-3-open-ko-8b`
+- `beomi-llama-3-open-ko-8b-instruct-preview`
+- `beomi-yi-ko-6b`
+- `berkecr-tr-dare-merge-7b`
+- `berkeley-nest-starling-lm-7b-alpha`
+- `bert-base-german-cased`
+- `bert-large-uncased-whole-word-masking`
+- `bhadresh-savani-albert-base-v2-emotion`
+- `bhadresh-savani-bert-base-go-emotion`
+- `bhadresh-savani-roberta-base-emotion`
+- `bidequity-autotrain-software-picture-preselection-classifier-2804582686`
+- `bigcode-starcoder2-15b`
+- `bigscience-bloom`
+- `bigscience-bloom-3b`
+- `bigscience-bloom-7b1`
+- `bigscience-bloomz-1b7`
+- `bigscience-bloomz-3b`
+- `bigscience-t0-3b`
+- `bigscience-t0pp`
+- `biodatlab-whisper-th-medium-combined`
+- `bioformers-bioformer-8l-ncbi-disease`
+- `blacksamorez-tinyllama-1-1b-chat-v1-0-aqlm-2bit-1x16-hf`
+- `bofenghuang-vigostral-7b-chat`
+- `bofenghuang-whisper-large-v3-french`
+- `bofenghuang-whisper-large-v3-french-distil-dec16`
+- `bolbolzaban-gpt2-persian`
+- `bond005-rut5-asr`
+- `boris-xlsr-en-punctuation`
+- `bowphs-ancient-t5-translation`
+- `bowphs-sphilberta`
+- `bramvanroy-gbert-base-finetuned-cefr`
+- `buddhist-nlp-byt5-sanskrit`
+- `budecosystem-genz-70b`
+- `bunsenfeng-factkb`
+- `bunsenfeng-knowledge-card-wikipedia`
+- `bvanaken-clinical-assertion-negation-bert`
+- `bytedance-seed-sail-7b`
+- `cahya-bert-base-indonesian-522m`
+- `cahya-gpt2-small-indonesian-522m`
+- `cahya-t5-base-indonesian-summarization-cased`
+- `camel-lab-bert-base-arabic-camelbert-ca-pos-egy`
+- `camel-lab-bert-base-arabic-camelbert-mix`
+- `camel-lab-bert-base-arabic-camelbert-mix-pos-msa`
+- `camel-lab-bert-base-arabic-camelbert-msa`
+- `cardiffnlp-twitter-roberta-base-2019-90m`
+- `cardiffnlp-twitter-roberta-base-dec2021-tweet-topic-multi-all`
+- `cardiffnlp-twitter-roberta-base-dec2021-tweet-topic-single-all`
+- `cardiffnlp-twitter-roberta-base-emotion`
+- `cardiffnlp-twitter-roberta-base-irony`
+- `cardiffnlp-twitter-roberta-base-offensive`
+- `cardiffnlp-twitter-xlm-roberta-base`
+- `carperai-stable-vicuna-13b-delta`
+- `casehold-custom-legalbert`
+- `casehold-legalbert`
+- `casperhansen-mixtral-instruct-awq`
+- `casperhansen-tinyllama-1b-awq`
+- `castorini-duot5-base-msmarco`
+- `castorini-monot5-base-msmarco`
+- `castorini-monot5-base-msmarco-10k`
+- `castorini-tct-colbert-v2-hnp-msmarco`
+- `castorini-tct-colbert-v2-msmarco`
+- `cerebras-cerebras-gpt-111m`
+- `chargoddard-llama2-22b`
+- `charsiu-g2p-multilingual-byt5-tiny-16-layers-100`
+- `chengsenwang-chattime-1-7b-chat`
+- `chenweili-med-chimerallama-3-8b-sherp`
+- `chenweili-medllama-3-8b-dare`
+- `chirayu-nl2mongo`
+- `cirimus-modernbert-base-go-emotions`
+- `cis-lmu-glot500-base`
+- `citizenlab-distilbert-base-multilingual-cased-toxicity`
+- `citizenlab-twitter-xlm-roberta-base-sentiment-finetunned`
+- `cjwilliams-codet5-base-python-sum`
+- `ckiplab-albert-base-chinese-ner`
+- `ckiplab-albert-base-chinese-ws`
+- `ckiplab-albert-tiny-chinese-pos`
+- `ckiplab-bert-base-chinese-pos`
+- `ckiplab-bert-base-chinese-ws`
+- `cl-nagoya-sup-simcse-ja-base`
+- `cl-tohoku-bert-base-japanese-char`
+- `cl-tohoku-bert-base-japanese-char-v2`
+- `cl-tohoku-bert-base-japanese-v2`
+- `classla-bcms-bertic-ner`
+- `claudioitaly-topevolutionwiz`
+- `cleanrl-eleutherai-pythia-1b-deduped--sft--tldr`
+- `clhuang-albert-sentiment`
+- `climate-nlp-longformer-large-4096-1-detect-evidence`
+- `climate-nlp-longformer-large-4096-2-classify-query`
+- `climatebert-distilroberta-base-climate-f`
+- `climatebert-netzero-reduction`
+- `clinicalnlp-sdohv7`
+- `cloyne-vietnamese-sbert-v3`
+- `clueai-promptclue-base`
+- `cmarkea-distilcamembert-base-ner`
+- `codellama-codellama-13b-python-hf`
+- `codellama-codellama-70b-instruct-hf`
+- `codys12-bitnet-r1-llama-8b`
+- `cointegrated-rubert-tiny-toxicity`
+- `cointegrated-sonar-200-text-encoder`
+- `comcom-gpt2-small`
+- `connorboyle-bert-ner-i2b2`
+- `consciousai-question-answering-roberta-base-s-v2`
+- `contextualai-llama-200m`
+- `cooperleong00-deberta-v3-large-toxicity-scorer`
+- `copycats-koelectra-base-v3-generalized-sentiment-analysis`
+- `cross-encoder-ms-marco-electra-base`
+- `cross-encoder-ms-marco-minilm-l-6-v2`
+- `cross-encoder-nli-distilroberta-base`
+- `cross-encoder-nli-roberta-base`
+- `cross-encoder-stsb-distilroberta-base`
+- `cross-encoder-stsb-roberta-base`
+- `crumb-bloom-560m-rlhf-sd2-prompter-aesthetic`
+- `csarron-bert-base-uncased-squad-v1`
+- `cssupport-t5-small-awesome-text-to-sql`
+- `cstr-spaetzle-v60-7b`
+- `curiositytech-mars`
+- `cyberagent-calm3-22b-chat`
+- `cypienai-cymist-2-v02-sft`
+- `cypienai-cymist-2-v03-sft`
+- `cypienai-cymist2-v01-sft`
+- `damo-nlp-sg-roberta-time-identification`
+- `dampfinchen-llama-3-8b-ultra-instruct`
+- `dandelin-vilt-b32-mlm`
+- `dangvantuan-vietnamese-embedding`
+- `dariolopez-roberta-base-bne-finetuned-msmarco-qa-es-mnrl-mn`
+- `daryl149-llama-2-7b-chat-hf`
+- `davidkim205-komt-mistral-7b-v1`
+- `davlan-bert-base-multilingual-cased-ner-hrl`
+- `dbmdz-bert-base-german-cased`
+- `dbmdz-bert-base-historic-multilingual-cased`
+- `dbmdz-bert-base-italian-cased`
+- `dbmdz-electra-large-discriminator-finetuned-conll03-english`
+- `dccuchile-bert-base-spanish-wwm-cased`
+- `declare-lab-flan-alpaca-gpt4-xl`
+- `deepmind-vision-perceiver-fourier`
+- `deepmind-vision-perceiver-learned`
+- `deeppavlov-rubert-base-cased`
+- `deeppavlov-rubert-base-cased-conversational`
+- `deeppavlov-xlm-roberta-large-en-ru`
+- `deepseek-ai-deepseek-llm-67b-chat`
+- `deepseek-ai-deepseek-llm-7b-chat`
+- `deepseek-ai-deepseek-math-7b-base`
+- `deepset-bert-base-uncased-squad2`
+- `deepset-bert-medium-squad2-distilled`
+- `deepset-roberta-base-squad2-distilled`
+- `deepset-tinyroberta-6l-768d`
+- `deepset-xlm-roberta-large-squad2`
+- `deepvk-kazrush-kk-ru`
+- `deepvk-user-base`
+- `deividasm-wav2vec2-large-xlsr-53-lithuanian`
+- `dejanseo-linkbert-mini`
+- `demo-leaderboard-gpt2-demo`
+- `dennisjooo-birds-classifier-efficientnetb2`
+- `descript-dac-24khz`
+- `dguzh-geo-all-minilm-l6-v2`
+- `dicta-il-dictabert-ner`
+- `digit82-kobart-summarization`
+- `disco-eth-cue-detr`
+- `distilbert-base-multilingual-cased`
+- `dltjdgh0928-test-instruction`
+- `dmetasoul-dmeta-embedding-zh-small`
+- `dmetasoul-sbert-chinese-general-v2-distill`
+- `dmlls-all-mpnet-base-v2-negation`
+- `dragonswing-xlm-roberta-capu`
+- `dreamgen-opus-v0-7b`
+- `dsfsi-puoberta`
+- `duyv-wonrax-phobert-base-vietnamese-sentiment`
+- `dvm1983-tinybert-general-4l-312d-de`
+- `dzeniks-roberta-fact-check`
+- `egafni-pico-llama`
+- `einmalumdiewelt-t5-base-gnad`
+- `elastic-distilbert-base-cased-finetuned-conll03-english`
+- `eleutherai-gpt-neo-125m`
+- `eleutherai-gpt-neo-2.7b`
+- `eleutherai-pythia-160m-seed1`
+- `eleutherai-pythia-2.8b`
+- `eleutherai-pythia-2.8b-deduped`
+- `eleutherai-pythia-6.9b-deduped`
+- `elnaggarlab-ankh-large`
+- `elozano-bert-base-cased-news-category`
+- `elron-bleurt-tiny-512`
+- `elyza-elyza-japanese-llama-2-7b`
+- `elyza-elyza-japanese-llama-2-7b-instruct`
+- `embaas-sentence-transformers-e5-large-v2`
+- `emilyalsentzer-bio-discharge-summary-bert`
+- `emrecan-bert-base-turkish-cased-mean-nli-stsb-tr`
+- `enoch-llama-7b-hf`
+- `entropy-roberta-zinc-480m`
+- `enzostvs-hair-color`
+- `ertugrul-qwen2-vl-7b-captioner-relaxed`
+- `erwanf-gpt2-mini`
+- `ethanyt-guwenbert-base`
+- `ethanyt-guwenbert-large`
+- `etherll-mellum-4b-sft-rust`
+- `eurdem-defne-llama3-2x8b`
+- `expert68-llama2-13b-instructed-version2`
+- `fabiochiu-t5-small-medium-title-generation`
+- `facebook-bart-large-xsum`
+- `facebook-blenderbot-3b`
+- `facebook-convnext-base-224-22k-1k`
+- `facebook-convnext-small-224`
+- `facebook-data2vec-audio-large-960h`
+- `facebook-data2vec-vision-base`
+- `facebook-deformable-detr-box-supervised`
+- `facebook-deit-base-distilled-patch16-384`
+- `facebook-deit-small-distilled-patch16-224`
+- `facebook-detr-resnet-50-dc5`
+- `facebook-dinov2-large-imagenet1k-1-layer`
+- `facebook-dpr-question-encoder-multiset-base`
+- `facebook-dpr-question-encoder-single-nq-base`
+- `facebook-dragon-plus-context-encoder`
+- `facebook-encodec-48khz`
+- `facebook-esm1b-t33-650m-ur50s`
+- `facebook-esm1v-t33-650m-ur90s-3`
+- `facebook-esm1v-t33-650m-ur90s-4`
+- `facebook-esm2-t48-15b-ur50d`
+- `facebook-hubert-large-ll60k`
+- `facebook-hubert-xlarge-ll60k`
+- `facebook-m2m100-1.2b`
+- `facebook-m2m100-418m`
+- `facebook-mask2former-swin-base-coco-instance`
+- `facebook-mask2former-swin-large-ade-panoptic`
+- `facebook-mask2former-swin-large-cityscapes-instance`
+- `facebook-mask2former-swin-large-mapillary-vistas-panoptic`
+- `facebook-mask2former-swin-small-ade-semantic`
+- `facebook-mask2former-swin-small-coco-instance`
+- `facebook-mask2former-swin-tiny-cityscapes-panoptic`
+- `facebook-mask2former-swin-tiny-coco-panoptic`
+- `facebook-maskformer-swin-base-ade`
+- `facebook-maskformer-swin-base-coco`
+- `facebook-maskformer-swin-large-ade`
+- `facebook-maskformer-swin-small-coco`
+- `facebook-maskformer-swin-tiny-ade`
+- `facebook-mbart-large-50`
+- `facebook-mbart-large-cc25`
+- `facebook-mbart-large-en-ro`
+- `facebook-mms-1b-fl102`
+- `facebook-nllb-200-1.3b`
+- `facebook-nllb-200-distilled-1.3b`
+- `facebook-npm-single`
+- `facebook-opt-1.3b`
+- `facebook-opt-2.7b`
+- `facebook-opt-6.7b`
+- `facebook-roberta-hate-speech-dynabench-r4-target`
+- `facebook-s2t-small-mustc-en-fr-st`
+- `facebook-s2t-wav2vec2-large-en-de`
+- `facebook-wav2vec2-base-10k-voxpopuli`
+- `facebook-wav2vec2-conformer-rel-pos-large-960h-ft`
+- `facebook-wav2vec2-large-100k-voxpopuli`
+- `facebook-wav2vec2-large-960h-lv60`
+- `facebook-wav2vec2-large-960h-lv60-self`
+- `facebook-wav2vec2-large-es-voxpopuli`
+- `facebook-wav2vec2-large-robust-ft-swbd-300h`
+- `facebook-wav2vec2-large-xlsr-53-portuguese`
+- `facebook-wav2vec2-lv-60-espeak-cv-ft`
+- `facebook-wmt19-en-de`
+- `facebook-wmt19-ru-en`
+- `facebook-xlm-roberta-xxl`
+- `facebook-xlm-v-base`
+- `facebookai-xlm-roberta-large-finetuned-conll02-dutch`
+- `fairmind-llama-3-8b-4bit-ultrachat-ita`
+- `fairmind-phi-3-mini-4k-instruct-bnb-4bit-ita`
+- `falconsai-intent-classification`
+- `fbarragan-helloworld-model`
+- `federicodamboreana-chained-question-classification-es`
+- `felladrin-llama-160m-chat-v1`
+- `felladrin-llama-68m-chat-v1`
+- `felladrin-pythia-31m-chat-v1`
+- `financeinc-finbert-pretrain`
+- `financialsupport-saiga-7b`
+- `finiteautomata-beto-sentiment-analysis`
+- `flaubert-flaubert-base-cased`
+- `flaubert-flaubert-small-cased`
+- `flaviagiammarino-medsam-vit-base`
+- `flax-community-gpt2-medium-persian`
+- `flax-sentence-embeddings-all-datasets-v3-mpnet-base`
+- `flax-sentence-embeddings-all-datasets-v4-minilm-l6`
+- `flax-sentence-embeddings-st-codesearch-distilroberta-base`
+- `freedomintelligence-acegpt-v2-8b-chat`
+- `freedomintelligence-apollo-2b`
+- `freepik-nsfw-image-detector`
+- `frostaura-gpt-neox-20b-fiction-novel-generation`
+- `funnel-transformer-small`
+- `fxmarty-tiny-llama-fast-tokenizer`
+- `gaborcselle-font-identifier`
+- `galatolo-cerbero-7b`
+- `garage-baind-camel-platypus2-70b`
+- `garage-baind-platypus2-7b`
+- `gaunernst-bert-mini-uncased`
+- `gaunernst-bert-tiny-uncased`
+- `gaussalgo-t5-lm-large-text2sql-spider`
+- `genius1237-xlm-roberta-large-tydip`
+- `gerulata-slovakbert`
+- `ghunkins-prompt-expansion`
+- `gitbag-reviewer2-mr`
+- `giux78-llama3-8b-usenet-merged`
+- `gleghornlab-cdsbert-plus`
+- `globis-university-deberta-v3-japanese-large`
+- `goat-ai-goat-70b-storytelling`
+- `google-byt5-small`
+- `google-efficientnet-b1`
+- `google-efficientnet-b4`
+- `google-electra-small-generator`
+- `google-madlad400-7b-mt`
+- `google-mt5-base`
+- `google-mt5-large`
+- `google-muril-base-cased`
+- `google-muril-large-cased`
+- `google-pegasus-large`
+- `google-t5-efficient-tiny`
+- `google-t5-efficient-tiny-nl32`
+- `google-t5-large-lm-adapt`
+- `google-t5-v1-1-large`
+- `google-t5-v1-1-small`
+- `google-t5-v1-1-xl`
+- `google-t5-xl-lm-adapt`
+- `google-tapas-base`
+- `google-tapas-base-masklm`
+- `google-ul2`
+- `google-vit-large-patch16-384`
+- `gpt-image-2.5-flare`
+- `gpt-image-2.5-sunburst`
+- `grayswanai-llama-3-8b-instruct-rr`
+- `gryphe-mythomist-7b`
+- `gsarti-it5-base`
+- `gsarti-it5-large`
+- `gsarti-scibert-nli`
+- `guidecare-all-mpnet-base-v2-feature-extraction`
+- `h2oai-h2ogpt-4096-llama2-13b-chat`
+- `h2oai-h2ogpt-4096-llama2-7b-chat`
+- `haoranxu-alma-13b-pretrain`
+- `haoranxu-alma-13b-r`
+- `harveenchadha-wav2vec2-pretrained-clsril-23-10k`
+- `hate-speech-cnerg-bert-base-uncased-hatexplain`
+- `heegyu-gpt2-emotion`
+- `heegyu-wizardvicuna-open-llama-3b-v2`
+- `hello-simpleai-chatgpt-detector-roberta-chinese`
+- `helsinki-nlp-opus-mt-af-en`
+- `helsinki-nlp-opus-mt-ar-en`
+- `helsinki-nlp-opus-mt-az-en`
+- `helsinki-nlp-opus-mt-ca-es`
+- `helsinki-nlp-opus-mt-cy-en`
+- `helsinki-nlp-opus-mt-de-es`
+- `helsinki-nlp-opus-mt-de-fr`
+- `helsinki-nlp-opus-mt-de-it`
+- `helsinki-nlp-opus-mt-en-ar`
+- `helsinki-nlp-opus-mt-en-cs`
+- `helsinki-nlp-opus-mt-en-eu`
+- `helsinki-nlp-opus-mt-en-fi`
+- `helsinki-nlp-opus-mt-en-fr`
+- `helsinki-nlp-opus-mt-en-hu`
+- `helsinki-nlp-opus-mt-en-iir`
+- `helsinki-nlp-opus-mt-en-it`
+- `helsinki-nlp-opus-mt-en-jap`
+- `helsinki-nlp-opus-mt-en-mr`
+- `helsinki-nlp-opus-mt-en-romance`
+- `helsinki-nlp-opus-mt-en-ru`
+- `helsinki-nlp-opus-mt-en-trk`
+- `helsinki-nlp-opus-mt-eo-en`
+- `helsinki-nlp-opus-mt-es-de`
+- `helsinki-nlp-opus-mt-es-it`
+- `helsinki-nlp-opus-mt-et-en`
+- `helsinki-nlp-opus-mt-fr-ar`
+- `helsinki-nlp-opus-mt-fr-de`
+- `helsinki-nlp-opus-mt-fr-es`
+- `helsinki-nlp-opus-mt-fr-id`
+- `helsinki-nlp-opus-mt-fr-pl`
+- `helsinki-nlp-opus-mt-fr-ro`
+- `helsinki-nlp-opus-mt-ga-en`
+- `helsinki-nlp-opus-mt-hi-en`
+- `helsinki-nlp-opus-mt-hu-en`
+- `helsinki-nlp-opus-mt-is-en`
+- `helsinki-nlp-opus-mt-it-de`
+- `helsinki-nlp-opus-mt-it-en`
+- `helsinki-nlp-opus-mt-it-es`
+- `helsinki-nlp-opus-mt-ja-es`
+- `helsinki-nlp-opus-mt-ja-vi`
+- `helsinki-nlp-opus-mt-ko-en`
+- `helsinki-nlp-opus-mt-lv-en`
+- `helsinki-nlp-opus-mt-nl-en`
+- `helsinki-nlp-opus-mt-pl-en`
+- `helsinki-nlp-opus-mt-romance-en`
+- `helsinki-nlp-opus-mt-ru-en`
+- `helsinki-nlp-opus-mt-sk-en`
+- `helsinki-nlp-opus-mt-sn-en`
+- `helsinki-nlp-opus-mt-sq-en`
+- `helsinki-nlp-opus-mt-sv-en`
+- `helsinki-nlp-opus-mt-tc-bible-big-roa-en`
+- `helsinki-nlp-opus-mt-tc-big-en-ar`
+- `helsinki-nlp-opus-mt-tc-big-en-bg`
+- `helsinki-nlp-opus-mt-tc-big-en-it`
+- `helsinki-nlp-opus-mt-tc-big-en-ko`
+- `helsinki-nlp-opus-mt-tc-big-zls-en`
+- `helsinki-nlp-opus-mt-tr-en`
+- `helsinki-nlp-opus-mt-vi-en`
+- `helsinki-nlp-opus-mt-xh-en`
+- `helsinki-nlp-opus-mt-yo-en`
+- `hfl-chinese-roberta-wwm-ext`
+- `hfl-chinese-roberta-wwm-ext-large`
+- `hit-tmg-kalm-embedding-multilingual-mini-v1`
+- `hiveurban-multilingual-e5-large-pooled`
+- `hooshvarelab-bert-fa-base-uncased`
+- `hooshvarelab-roberta-fa-zwnj-base`
+- `horychtom-czech-media-bias-classifier`
+- `huanjinyao-mulberry-qwen2vl-7b`
+- `hubert233-gptfuzz`
+- `huggingface-codeberta-language-id`
+- `huggingface-course-codeparrot-ds`
+- `huggingfacem4-idefics-9b`
+- `huggingfacem4-idefics-9b-instruct`
+- `huggyllama-llama-13b`
+- `huggyllama-llama-30b`
+- `huggyllama-llama-65b`
+- `hululuzhu-solidity-t5`
+- `human-centered-summarization-financial-summarization-pegasus`
+- `humarin-chatgpt-paraphraser-on-t5-base`
+- `hun3359-klue-bert-base-sentiment`
+- `hyp1231-blair-roberta-base`
+- `hyp1231-blair-roberta-large`
+- `iarfmoose-t5-base-question-generator`
+- `ibm-granite-granite-7b-base`
+- `ibrahimsalah-arabic-speech-syllables-recognition-using-wav2vec2`
+- `ida-serics-propagandadetection`
+- `idea-ccnl-ziya-llama-13b-v1`
+- `ignacio-ave-beto-sentiment-analysis-spanish`
+- `ik28-medmistral-instruct`
+- `ilseyar-kfu-broken-bert`
+- `ilyagusev-saiga-llama3-8b`
+- `ilyasmoutawwakil-vit-with-attentions`
+- `ilyasmoutawwakil-vit-with-hidden-states`
+- `imjeffhi-pokemon-classifier`
+- `imvladikon-sentence-transformers-alephbert`
+- `indobenchmark-indobert-large-p1`
+- `indobenchmark-indobert-lite-base-p2`
+- `indolem-indobertweet-base-uncased`
+- `indonesian-nlp-gpt2`
+- `infgrad-stella-base-zh-v2`
+- `instadeepai-agro-nucleotide-transformer-1b`
+- `internlm-internlm-xcomposer2d5-clip`
+- `intfloat-e5-base-unsupervised`
+- `intfloat-e5-large-unsupervised`
+- `intfloat-e5-small-unsupervised`
+- `ipipan-silver-retriever-base-v1`
+- `iryska-bert-on-airbnb`
+- `ishan-bert-base-uncased-mnli`
+- `ismail-lucifer011-autotrain-name-all-904029577`
+- `ista-daslab-llama-2-7b-aqlm-2bit-1x16-hf`
+- `it5-it5-base-news-summarization`
+- `izumi-lab-bert-small-japanese-fin`
+- `j-hartmann-sentiment-roberta-large-english-3-classes`
+- `jacaranda-ulizallama`
+- `jackchew-qwen2-vl-2b-ocr`
+- `jacoballessio-ai-image-detect`
+- `jacoballessio-ai-image-detect-distilled`
+- `jayant9928-orpo-med-v0`
+- `jayant9928-orpo-med-v2`
+- `jayant9928-orpo-med-v3`
+- `jayant9928-tnayaj`
+- `jazzmacedo-fruits-and-vegetables-detector-36`
+- `jb2k-bert-base-multilingual-cased-language-detection`
+- `jbetker-wav2vec2-large-robust-ft-libritts-voxpopuli`
+- `jedwang-protein-binding-site-predictor2`
+- `jetbrains-mellum-4b-sft-python`
+- `jetbrains-research-cmg-codereviewer-with-history`
+- `jetbrains-research-cmg-codet5-with-history`
+- `jhflow-mistral7b-lora-multi-turn-v2`
+- `jhgan-ko-sbert-multitask`
+- `jhgan-ko-sroberta-nli`
+- `jhu-clsp-bernice`
+- `jianghc-medical-chatbot`
+- `jihuai-bert-ancient-chinese`
+- `jinaai-jina-embedding-t-en-v1`
+- `jinymusim-gpt-czech-poet`
+- `jjzha-jobbert-base-cased`
+- `jjzha-jobbert-skill-extraction`
+- `jnjj-xd-v2`
+- `joe32140-modernbert-base-msmarco`
+- `joeddav-distilbert-base-uncased-go-emotions-student`
+- `jonatasgrosman-wav2vec2-large-xlsr-53-greek`
+- `jonatasgrosman-wav2vec2-large-xlsr-53-italian`
+- `jonatasgrosman-wav2vec2-large-xlsr-53-persian`
+- `jonatasgrosman-wav2vec2-xls-r-1b-portuguese`
+- `jonatasgrosman-wav2vec2-xls-r-1b-russian`
+- `joon09-kor-naver-ner-name`
+- `julien-c-bert-xsmall-dummy`
+- `julien-c-dummy-diff-tokenizer`
+- `jy46604790-fake-news-bert-detect`
+- `jzju-dit-doclaynet`
+- `k024-mt5-zh-ja-en-trimmed`
+- `kadirnar-turkish-gemma9b-v0`
+- `kaitchup-deepseek-r1-distill-llama-8b-autoround-gptq-4bit`
+- `kamalkraj-bioelectra-pico`
+- `kazzand-ru-longformer-tiny-16384`
+- `kblab-bert-base-swedish-cased`
+- `kblab-bert-base-swedish-lowermix-reallysimple-ner`
+- `kblab-wav2vec2-large-xlsr-53-swedish`
+- `kblueleaf-dantaggen-beta`
+- `kblueleaf-dantaggen-delta`
+- `kblueleaf-tipo-500m`
+- `keeeeenw-microllama`
+- `ken11-bert-japanese-ner`
+- `kentucky-open-science-melt-tinyllama-1.1b-chat-v1.0`
+- `kes-t5-kes`
+- `keti-nlp-ke-t5-base`
+- `keti-nlp-ke-t5-base-ko`
+- `keti-nlp-ke-t5-large`
+- `keti-nlp-ke-t5-small`
+- `kkirchheim-german-gpt2-medium`
+- `klue-roberta-large`
+- `koboldai-gpt-neo-2.7b-horni`
+- `koboldai-llama2-13b-holomax`
+- `koboldai-opt-6b-nerys-v2`
+- `koboldai-ppo-pygway-6b-mix`
+- `koichiyasuoka-bert-base-thai-upos`
+- `kornosk-bert-election2020-twitter-stance-biden`
+- `kornosk-bert-election2020-twitter-stance-biden-ke-mlm`
+- `kpf-kpf-bert-cls1`
+- `kredor-punctuate-all`
+- `krlvi-sentence-msmarco-bert-base-dot-v5-nlpl-code-search-net`
+- `ku-nlp-deberta-v2-base-japanese-char-wwm`
+- `kwoncho-ko-sroberta-multitask-informative`
+- `kykim-bert-kor-base`
+- `kyungeun-gemma-2-9b-it-mathinstruct`
+- `kz-transformers-kaz-roberta-conversational`
+- `l3cube-pune-indic-sentence-bert-nli`
+- `l3cube-pune-indic-sentence-similarity-sbert`
+- `laion-larger-clap-music`
+- `laion-larger-clap-music-and-speech`
+- `laituan245-molt5-base`
+- `lajavaness-sentence-flaubert-base`
+- `lang-uk-omnigec-minimal-8b`
+- `law-ai-inlegalbert`
+- `lazarusnlp-all-indo-e5-small-v4`
+- `lcw99-zephykor-ko-7b-chang`
+- `lemist-smollm-135m-de`
+- `lgris-wav2vec2-large-xlsr-open-brazilian-portuguese-v2`
+- `lhf-finbert-regressor`
+- `lidiya-bart-large-xsum-samsum`
+- `lightblue-suzume-llama-3-8b-multilingual`
+- `lightblue-suzume-llama-3-8b-multilingual-orpo-borda-top25`
+- `lighteternal-llama3-merge-biomed-8b`
+- `lilmeaty-smollm2-135m-instruct-gptq`
+- `line-corporation-line-distilbert-base-japanese`
+- `litagin-anime-whisper`
+- `liyucheng-frame-finder`
+- `llava-hf-llava-next-72b-hf`
+- `llm-book-bert-base-japanese-v3-jnli`
+- `llm-book-bert-base-japanese-v3-jsts`
+- `llm-book-bert-base-japanese-v3-marc-ja`
+- `llm-jp-llm-jp-3-13b`
+- `llm360-amber`
+- `lmsys-fastchat-t5-3b-v1.0`
+- `lmsys-vicuna-7b-delta-v1.1`
+- `locutusque-orca-2-13b-sft-v4`
+- `locutusque-orca-2-13b-sft-v5`
+- `locutusque-orca-2-13b-sft-v6`
+- `locutusque-tinymistral-248m`
+- `londonstory-txlm-roberta-hindi-sentiment`
+- `lstam-stellialm-smallfr-qwen7b-9tplus`
+- `lstam-stellialm-smallfr-qwen7b-lead`
+- `lucadiliello-bleurt-20`
+- `lucadiliello-bleurt-20-d12`
+- `lucadiliello-bleurt-20-d3`
+- `ludocomito-minerva-moe-2x3b`
+- `ludocomito-minerva-moe-3x3b`
+- `luffycodes-vicuna-class-shishya-7b-ep3`
+- `lumiopen-poro-34b`
+- `luyu-co-condenser-marco`
+- `lvwerra-gpt2-imdb`
+- `m-a-p-music2vec-v1`
+- `m-clip-m-bert-base-vit-b`
+- `m-fac-bert-mini-finetuned-mnli`
+- `m-fac-bert-mini-finetuned-sst2`
+- `m-fac-bert-tiny-finetuned-mnli`
+- `m-fac-bert-tiny-finetuned-qnli`
+- `m-fac-bert-tiny-finetuned-sst2`
+- `m3hrdadfi-distilbert-zwnj-wnli-mean-tokens`
+- `m3hrdadfi-typo-detector-distilbert-en`
+- `m3rg-iitd-matscibert`
+- `m8than-gemma-2-9b-it`
+- `m8than-llama-2-7b-chat-hf`
+- `magic-leap-community-superglue-outdoor`
+- `maidalun1020-bce-reranker-base-v1`
+- `malteos-gpt2-uk`
+- `manandey-wav2vec2-large-xlsr-mongolian`
+- `marcopost-it-taughtnet-disease-chem-gene`
+- `marianna13-flan-t5-base-summarization`
+- `maritaca-ai-sabia-7b`
+- `martin-ha-toxic-comment-model`
+- `marxav-frpron`
+- `maziyarpanahi-meta-llama-3-8b-instruct-gptq`
+- `mbzuai-lamini-gpt-124m`
+- `mbzuai-swiftformer-xs`
+- `mchochlov-codebert-base-cd-ft`
+- `mediabiasgroup-da-roberta-babe-ft`
+- `mediatek-research-breeze-7b-instruct-v0-1`
+- `mediatek-research-breeze-7b-instruct-v1-0`
+- `medicalai-clinicalgpt-base-zh`
+- `medmediani-arabic-kw-mdel`
+- `megagonlabs-t5-base-japanese-web`
+- `meta-math-metamath-llemma-7b`
+- `mhenrichsen-gemma-2b`
+- `michaelsoloveitchik-medsam-breast-cancer`
+- `michau-t5-base-en-generate-headline`
+- `michiyasunaga-biolinkbert-base`
+- `michiyasunaga-biolinkbert-large`
+- `michiyasunaga-linkbert-large`
+- `mickymike-vulrepair`
+- `microsoft-beit-large-patch16-224`
+- `microsoft-beit-large-patch16-224-pt22k-ft22k`
+- `microsoft-beit-large-patch16-512`
+- `microsoft-biogpt`
+- `microsoft-biomednlp-krissbert-pubmed-umls-el`
+- `microsoft-codegpt-small-java`
+- `microsoft-codegpt-small-java-adaptedgpt2`
+- `microsoft-codegpt-small-py`
+- `microsoft-conditional-detr-resnet-50`
+- `microsoft-deberta-v2-xlarge-mnli`
+- `microsoft-deberta-v3-base`
+- `microsoft-deberta-v3-large`
+- `microsoft-deberta-v3-small`
+- `microsoft-godel-v1-1-large-seq2seq`
+- `microsoft-infoxlm-large`
+- `microsoft-mdeberta-v3-base`
+- `microsoft-phi-1`
+- `microsoft-swin-base-patch4-window12-384-in22k`
+- `microsoft-swin-large-patch4-window12-384-in22k`
+- `microsoft-swin-large-patch4-window7-224`
+- `microsoft-swinv2-large-patch4-window12-192-22k`
+- `microsoft-xtremedistil-l6-h256-uncased`
+- `microsoft-xtremedistil-l6-h384-uncased`
+- `mii-community-zefiro-7b-dpo-ita`
+- `milanlproc-feel-it-italian-sentiment`
+- `mingzhong-dialogled-base-16384`
+- `mingzhong-unieval-sum`
+- `minimaxir-magic-the-gathering`
+- `mireillfares-bertis`
+- `mistralai--mistral-nemo-instruct-fp8-2407`
+- `mistralai-Mathstral-7B-v0-1`
+- `mistralai-Ministral-3-14B-Instruct-2512`
+- `mistralai-Mistral-7B-Instruct-v0-3`
+- `mit-ast-finetuned-speech-commands-v2`
+- `mizuiro-sakura-luke-japanese-base-finetuned-ner`
+- `ml6team-keyphrase-extraction-distilbert-inspec`
+- `mlabonne-alphamonarch-7b`
+- `mlfoundations-tabula-8b`
+- `mlx-community-gemma-2-2b-it-4bit`
+- `mlx-community-gemma-2-9b-it-4bit`
+- `mmg-xlm-roberta-large-ner-spanish`
+- `mohamedrashad-arabic-orpo-llama-3-8b-instruct`
+- `monologg-distilkobert`
+- `monsoon-nlp-protein-matryoshka-embeddings`
+- `moritzlaurer-multilingual-minilmv2-l6-mnli-xnli`
+- `moritzlaurer-xlm-v-base-mnli-xnli`
+- `moussakam-arabart`
+- `moussakam-frugalscore-tiny-bert-base-bert-score`
+- `mpi-inno-comp-paecter`
+- `mrm8488-bert-spanish-cased-finetuned-pos-16-tags`
+- `mrm8488-codebert-base-finetuned-detect-insecure-code`
+- `mrm8488-distilroberta-finetuned-financial-news-sentiment-analysis`
+- `mrm8488-llama-2-coder-7b`
+- `mrm8488-t5-base-finetuned-sarcasm-twitter`
+- `mrm8488-t5-base-finetuned-summarize-news`
+- `mrp-simcse-model-m-bert-thai-cased`
+- `mrsinghania-asr-question-detection`
+- `mrutyunjay-patil-keywordgen-v2`
+- `msislam-code-mixed-language-detection-xlmroberta`
+- `mtsair-cotype-nano`
+- `mu-nlpc-czegpt-2-summarizer`
+- `mukund-privbert`
+- `musiclang-musiclang-4k`
+- `mxode-tinystories-llama2-25m-256h-4l-gqa`
+- `narrativaai-bloom-560m-finetuned-totto-table-to-text`
+- `naseej-noon-7b`
+- `nategro-contradiction-mini`
+- `nateraw-bert-base-uncased-emotion`
+- `nateraw-vit-base-patch16-224-cifar10`
+- `naufalihsan-indonesian-sbert-large`
+- `naver-clova-ocr-bros-base-uncased`
+- `naver-efficient-splade-vi-bt-large-doc`
+- `naver-multilingual-distilwhisper-28k`
+- `naver-splade-cocondenser-selfdistil`
+- `naver-splade-v2-distil`
+- `navteca-nli-deberta-v3-xsmall`
+- `navteca-quora-roberta-base`
+- `nbailab-nb-sbert-base`
+- `nbailab-nb-whisper-large`
+- `nbouali-flaubert-base-uncased-finetuned-cooking`
+- `nbroad-esg-bert`
+- `nekshay-swin-angle-detection-car`
+- `nemotron-speech-streaming-en-0.6b`
+- `nemotron-speech-streaming-en-0.6b-generic-cpu`
+- `netherlandsforensicinstitute-robbert-2022-dutch-sentence-transformers`
+- `neu-hai-mental-alpaca`
+- `neulab-codebert-c`
+- `neulab-codebert-cpp`
+- `neulab-codebert-java`
+- `neulab-gpt2-finetuned-wikitext103`
+- `neuralmind-bert-large-portuguese-cased`
+- `neuralwork-gemma-2-9b-it-tr`
+- `newsmediabias-unbias-named-entity-recognition`
+- `nexaaidev-octopus-v2-gguf-awq`
+- `nexusflow-athene-70b`
+- `nexusflow-athene-v2-chat`
+- `nexusflow-starling-lm-7b-beta`
+- `nferruz-protgpt2`
+- `nghuyong-ernie-gram-zh`
+- `nghuyong-ernie-health-zh`
+- `nguyenvulebinh-lyric-alignment`
+- `nguyenvulebinh-wavlm-bart`
+- `nhndq-nllb-finetuned-en2ko`
+- `nickprock-modernbert-base-sts`
+- `nidhinthomas-esm2-t12-35m-ur50d-protein-localization`
+- `nidhinthomas-esm2-t12-35m-ur50d-protein-sec-struct`
+- `nlp-guild-bert-base-chinese-finetuned-intent-recognition-biomedical`
+- `nlp-waseda-roberta-large-japanese-with-auto-jumanpp`
+- `nlpai-lab-koe5`
+- `nlpai-lab-kullm3`
+- `nlpaueb-bert-base-greek-uncased-v1`
+- `nlpaueb-bert-base-uncased-contracts`
+- `nlpaueb-bert-base-uncased-echr`
+- `nlpaueb-bert-base-uncased-eurlex`
+- `nlpaueb-legal-bert-base-uncased`
+- `nlpaueb-legal-bert-small-uncased`
+- `nlpaueb-sec-bert-base`
+- `nlpaueb-sec-bert-num`
+- `nlpaueb-sec-bert-shape`
+- `nlphust-bert-base-vn`
+- `nlphust-gpt2-vietnamese`
+- `nlphust-vi-word-segmentation`
+- `nlpie-tiny-clinicalbert`
+- `nm-testing-meta-llama-3-8b-fp8-compressed-tensors-test`
+- `nm-testing-tinyllama-oneshot-w8-channel-a8-tensor`
+- `nm-testing-tinyllama-oneshot-w8a8-channel-dynamic-token-v2`
+- `nm-testing-tinyllama-oneshot-w8a8-dynamic-token-v2`
+- `nohtow-french-bge-m3`
+- `nomic-ai-modernbert-embed-base`
+- `notlober-llama3-8b-tr`
+- `nousresearch-hermes-2-pro-mistral-7b`
+- `nousresearch-llama-2-13b-chat-hf`
+- `nousresearch-llama-2-70b-hf`
+- `nousresearch-nous-hermes-2-mixtral-8x7b-sft`
+- `nousresearch-nous-hermes-2-yi-34b`
+- `nousresearch-nous-puffin-70b`
+- `nreimers-bert-tiny-l-2-h-128-a-2`
+- `nreimers-mmarco-mminilmv2-l12-h384-v1`
+- `nreimers-mmarco-mminilmv2-l6-h384-v1`
+- `nreimers-mminilmv2-l12-h384-distilled-from-xlmr-large`
+- `nreimers-mminilmv2-l6-h384-distilled-from-xlmr-large`
+- `nreimers-tinybert-l-4-h-312-v2`
+- `nthakur-contriever-base-msmarco`
+- `ntnq-stork-7b-slerp`
+- `ntqai-pedestrian-age-recognition`
+- `ntu-spml-distilhubert`
+- `numind-nutopic`
+- `nuwaisir-quran-speech-recognizer`
+- `nvidia--cosmos3-super`
+- `nvidia-Nemotron-Terminal-32B`
+- `nvidia-OpenCodeReasoning-Nemotron-1.1-14B`
+- `nvidia-groupvit-gcc-yfcc`
+- `nvidia-mistral-nemo-minitron-8b-base`
+- `nvidia-mit-b4`
+- `nvidia-segformer-b1-finetuned-ade-512-512`
+- `nvidia-segformer-b3-finetuned-cityscapes-1024-1024`
+- `nvidia-segformer-b4-finetuned-ade-512-512`
+- `nytk-sentiment-hts5-xlm-roberta-hungarian`
+- `obi-deid-roberta-i2b2`
+- `occiglot-occiglot-7b-fr-en`
+- `oliverguhr-german-sentiment-bert`
+- `omartificial-intelligence-space-arabic-all-nli-triplet-matryoshka`
+- `onlplab-alephbert-base`
+- `oopsung-llama2-7b-konqa-test-v1`
+- `oopsung-llama2-7b-n-ox-test-v1`
+- `open-orca-openorca-platypus2-13b`
+- `openai-jukebox-1b-lyrics`
+- `openai-whisper-tiny-generic-cpu`
+- `openalex-bert-base-multilingual-cased-finetuned-openalex-topic-classification-title-abstract`
+- `openassistant-oasst-sft-1-pythia-12b`
+- `openbmb-ultracm-13b`
+- `openbmb-ultralm-13b`
+- `opengvlab-pvt-v2-b0`
+- `openlm-research-open-llama-3b`
+- `openlm-research-open-llama-7b-v2`
+- `openmmlab-upernet-convnext-small`
+- `openpipe-mistral-ft-optimized-1227`
+- `opensearch-project-opensearch-neural-sparse-encoding-v1`
+- `orcadb-clip-vit-l-14`
+- `orkhan-llama-2-7b-absa`
+- `os-copilot-os-atlas-base-7b`
+- `p1atdev-dart-v1-sft`
+- `pamixsun-segformer-for-optic-disc-cup-segmentation`
+- `pankajmathur-orca-alpaca-3b`
+- `pankajmathur-orca-mini-3b`
+- `pankajmathur-orca-mini-v3-13b`
+- `partypress-partypress-monolingual-netherlands`
+- `partypress-partypress-monolingual-poland`
+- `partypress-partypress-multilingual`
+- `patrickquick-berticelli`
+- `patrickvonplaten-wav2vec2-large-xlsr-53-spanish-with-lm`
+- `paust-pko-t5-base`
+- `paust-pko-t5-small`
+- `pcuenq-wav2vec2-large-xlsr-53-eu`
+- `pdelobelle-robbert-v2-dutch-ner`
+- `pekingu-rtdetr-r34vd`
+- `pekingu-rtdetr-v2-r101vd`
+- `pekingu-rtdetr-v2-r50vd`
+- `perceptiveshawty-compositional-bert-large-uncased`
+- `perlthoughts-chupacabra-7b-v2`
+- `persiannlp-mbert-base-parsinlu-entailment`
+- `persing-mtg-card-model-medium`
+- `pharmolix-biomedgpt-lm-7b`
+- `philschmid-distilbart-cnn-12-6-samsum`
+- `phueb-babyberta-1`
+- `pi3141-dialogpt-medium-elon-2`
+- `pierreguillou-gpt2-small-portuguese`
+- `pierreguillou-lilt-xlm-roberta-base-finetuned-with-doclaynet-base-at-linelevel-ml384`
+- `pierreguillou-ner-bert-large-cased-pt-lenerbr`
+- `pierric-test-esperberto-small`
+- `piuba-bigdata-beto-contextualized-hate-speech`
+- `pixelbangbang-esg-bank-setfit-v1`
+- `pjox-dalembert`
+- `poedator-opt-125m-bnb-4bit`
+- `poetschlab-grover`
+- `ponteineptique-latin-classical-small`
+- `portulan-albertina-100m-portuguese-ptbr-encoder`
+- `portulan-serafim-100m-portuguese-pt-sentence-encoder`
+- `portulan-serafim-100m-portuguese-pt-sentence-encoder-ir`
+- `potsawee-t5-large-generation-race-distractor`
+- `pourmand1376-arabic-quran-nahj-sahife`
+- `primeline-whisper-large-v3-german`
+- `princeton-nlp-llama-3-8b-prolong-64k-instruct`
+- `princeton-nlp-swe-llama-13b`
+- `princeton-nlp-unsup-simcse-roberta-base`
+- `prithivida-grammar-error-correcter-v1`
+- `psyche-kot5-summarization`
+- `pszemraj-flan-t5-large-grammar-synthesis`
+- `pszemraj-grammar-synthesis-small`
+- `pucpr-biobertpt-all`
+- `pucpr-biobertpt-clin`
+- `pucpr-clinicalnerpt-medical`
+- `pucpr-gpt2-bio-pt`
+- `qnguyen3-master-yi-9b`
+- `quantumaikr-llama-2-70b-fb16-korean`
+- `questgen-all-mpnet-base-v2-feature-extraction-pipeline`
+- `qwen--qwen3.8-27b`
+- `qwen-qwen2-vl-72b`
+- `qwen-qwen3-4b`
+- `qwen3-embedding-0.6b`
+- `qwen3-embedding-0.6b-generic-cpu`
+- `qwen3.8-27b`
+- `raalst-robbert-v2-nl-ext-qa`
+- `raedfesesi-autotrain-i2i-translate-en-ar-97925146952`
+- `rahular-varta-t5`
+- `rakib-roberta-base-on-cuad`
+- `rakuten-rakutenai-7b-chat`
+- `ramsrigouthamg-t5-large-paraphraser-diverse-high-quality`
+- `ramsrigouthamg-t5-sentence-paraphraser`
+- `rasyosef-bert-medium-amharic`
+- `ray2333-gpt2-large-harmless-reward-model`
+- `raynardj-wenyanwen-ancient-translate-to-modern`
+- `raynardj-wenyanwen-chinese-translate-to-ancient`
+- `realtreetune-rho-1b-sft-math-chat`
+- `reazon-research-japanese-wav2vec2-base-rs35kh`
+- `recobo-agri-sentence-transformer`
+- `recognai-bert-base-spanish-wwm-cased-xnli`
+- `recognai-zeroshot-selectra-small`
+- `recruit-jp-japanese-typo-detector-roberta-base`
+- `reglab-rrc-mistral-rrc`
+- `retrieva-jp-t5-xl`
+- `rhaymison-mistral-portuguese-luana-7b-chat`
+- `ricardo-filho-bert-base-portuguese-cased-nli-assin-2`
+- `ricardoz-bertugues-base-portuguese-cased`
+- `rinna-japanese-roberta-base`
+- `rishud7-finetune-base-bge-pretrained-v4`
+- `rjuro-scinertopic`
+- `rlhflow-llama3-iterative-dpo-final`
+- `rlhflow-llama3-sft`
+- `rmihaylov-bert-base-bg`
+- `rmihaylov-roberta-base-nli-stsb-bg`
+- `rmihaylov-roberta-base-nli-stsb-theseus-bg`
+- `rohanrajpal-bert-base-multilingual-codemixed-cased-sentiment`
+- `rostlab-prostt5-fp16`
+- `rostlab-prot-bert`
+- `rostlab-prot-bert-bfd`
+- `royokong-e5-v`
+- `rufimelo-legal-bertimbau-base`
+- `rufimelo-legal-bertimbau-large`
+- `rufimelo-legal-bertimbau-large-tsdae-v4-gpl-sts`
+- `rufimelo-legal-bertimbau-sts-large-ma-v3`
+- `runorm-runorm-tagger`
+- `ruslanmv-medical-llama3-8b`
+- `s-nlp-xlmr-formality-classifier`
+- `safe049-smolturing-8b-instruct`
+- `sagard21-python-code-explainer`
+- `sagorsarker-bangla-bert-base`
+- `sainteye-ifoodie-classifier-v8`
+- `sakalti-saka-14b`
+- `sakanaai-evollm-jp-v1-7b`
+- `sakrah-twibert`
+- `salesforce-codegen-2b-mono`
+- `salesforce-codegen-2b-multi`
+- `salesforce-codegen25-7b-instruct-p`
+- `salesforce-codet5-base`
+- `salesforce-codet5-small`
+- `salesforce-codet5p-770m-py`
+- `salesforce-llama-xlam-2-70b-fc-r`
+- `salesforce-llama-xlam-2-8b-fc-r`
+- `sambanovasystems-sambalingo-turkish-chat`
+- `samchain-econobert`
+- `sampathkethineedi-industry-classification`
+- `sapienzanlp-modello-italia-9b`
+- `sarvamai-sarvam-1`
+- `savasy-bert-turkish-text-classification`
+- `sbcbi-sentiment-analysis-model`
+- `sbintuitions-tiny-lm-chat`
+- `sbunlp-fabert`
+- `scherrmann-germanfinbert-sc`
+- `schuylerh-bert-multilingual-go-emtions`
+- `sciphi-sciphi-mistral-7b-32k`
+- `scut-dlvclab-lilt-roberta-en-base`
+- `sdadas-mmlw-roberta-large`
+- `seacomsrl-seaphi3-medium`
+- `seallms-seallms-v3-7b-chat`
+- `sebis-code-trans-t5-base-code-documentation-generation-python`
+- `sebis-code-trans-t5-base-source-code-summarization-python-multitask`
+- `sebis-code-trans-t5-large-source-code-summarization-python-multitask-finetune`
+- `seeweb-seewebllm-it`
+- `seidel-plsum-base-ptt5`
+- `selfrag-selfrag-llama2-7b`
+- `selimc-orpogemma-2-9b-tr`
+- `sensenova-piccolo-base-zh`
+- `sentence-transformers-multi-qa-distilbert-dot-v1`
+- `sentence-transformers-multi-qa-minilm-l6-dot-v1`
+- `sentence-transformers-multi-qa-mpnet-base-cos-v1`
+- `sentence-transformers-multi-qa-mpnet-base-dot-v1`
+- `sentence-transformers-testing-stsb-bert-tiny-onnx`
+- `sentence-transformers-testing-stsb-bert-tiny-openvino-quantized-only`
+- `sentinet-suicidality`
+- `serbog-multilingual-e5-large-skill-job-matcher`
+- `serdarakyol-interpress-turkish-news-classification`
+- `sergeyzh-labse-ru-turbo`
+- `sethuiyer-medichat-llama3-8b`
+- `setu4993-smaller-labse`
+- `severinsimmler-xlm-roberta-longformer-base-16384`
+- `seyedali-multilingual-text-semantic-search-siamese-bert-v1`
+- `seyonec-chemberta-zinc250k-v2-40k`
+- `seyonec-pubchem10m-smiles-bpe-450k`
+- `seyonec-smiles-tokenized-pubchem-shard00-160k`
+- `seznam-dist-mpnet-czeng-cs-en`
+- `seznam-dist-mpnet-paracrawl-cs-en`
+- `seznam-retromae-small-cs`
+- `seznam-simcse-dist-mpnet-czeng-cs-en`
+- `seznam-simcse-small-e-czech`
+- `shadowlilac-aesthetic-shadow`
+- `shadowml-beagsake-7b`
+- `shahp7575-gpt2-horoscopes`
+- `shahrukhx01-bert-mini-finetune-question-detection`
+- `shahrukhx01-bert-multitask-query-classifiers`
+- `shalomma-llama-7b-embeddings`
+- `shanchen-llama3-8b-slerp-biomed-chat-chinese`
+- `shanchen-llama3-8b-slerp-med-chinese`
+- `shanover-symps-disease-bert-v3-c41`
+- `shareai-codellama-chat-13b-chinese`
+- `shashanksingh944-t5-english-to-python-generator`
+- `shashwatsaini-roberta-mlm-for-protein-clustering`
+- `shhossain-bert-tiny-book-text-classifier`
+- `shi-labs-oneformer-ade20k-dinat-large`
+- `shi-labs-oneformer-cityscapes-dinat-large`
+- `shi-labs-oneformer-cityscapes-swin-large`
+- `shi-labs-oneformer-coco-swin-large`
+- `shibing624-bert4ner-base-chinese`
+- `shibing624-chinese-text-correction-7b`
+- `shibing624-code-autocomplete-distilgpt2-python`
+- `shibing624-macbert4csc-base-chinese`
+- `shibing624-text2vec-base-chinese`
+- `shibing624-text2vec-base-chinese-sentence`
+- `shihab17-bangla-sentence-transformer`
+- `si2m-lab-darijabert-arabizi`
+- `siebert-sentiment-roberta-large-english`
+- `sijunhe-nezha-cn-base`
+- `silencesys-paraphrase-xlm-r-multilingual-v1-fine-tuned-for-latin`
+- `sileod-deberta-v3-large-tasksource-nli`
+- `sileod-mdeberta-v3-base-tasksource-nli`
+- `silly-machine-tupy-bert-base-binary-classifier`
+- `silly-machine-tupy-bert-large-binary-classifier`
+- `simecek-knotted-proteins-demo-model`
+- `simon-kotchou-ssast-small-patch-audioset-16-16`
+- `siris-lab-affilgood-ner-multilingual`
+- `sismetanin-rubert-ru-sentiment-rureviews`
+- `skfrost19-biomistralmerged`
+- `skt-kogpt2-base-v2`
+- `skumar9-llama-medx-v0`
+- `skumar9-llama-medx-v2`
+- `skumar9-llama-medx-v3`
+- `skyau-dog-breed-classifier-vit`
+- `smjain-abap-nous-hermes`
+- `smp111-terrain-recognition`
+- `snrspeaks-keyphrasetransformer`
+- `snrspeaks-t5-one-line-summary`
+- `snunlp-kr-finbert-sc`
+- `snypzzz-llama2-13b-language-translate`
+- `softcatala-wav2vec2-large-xlsr-catala`
+- `soleimanian-financial-roberta-large-sentiment`
+- `solidrust-l3-super-nova-rp-8b-awq`
+- `solidrust-meta-llama-3-8b-awq`
+- `songlab-gpn-msa-sapiens`
+- `sonoisa-sentence-luke-japanese-base-lite`
+- `sonoisa-t5-base-english-japanese`
+- `speakleash-bielik-11b-v2`
+- `squarelike-llama-2-ko-story-7b`
+- `sshleifer-tiny-distilbert-base-cased`
+- `sshleifer-tiny-distilbert-base-cased-distilled-squad`
+- `sshleifer-tiny-distilroberta-base`
+- `ssmits-qwen2-7b-instruct-embed-base`
+- `stabilityai-stablebeluga-13b`
+- `stabilityai-stablecode-completion-alpha-3b`
+- `stabilityai-stablelm-base-alpha-3b`
+- `stabilityai-stablelm-tuned-alpha-3b`
+- `stanford-crfm-biomedlm`
+- `stanfordaimi-radbert`
+- `state-spaces-mamba-370m-hf`
+- `stefan-it-german-gpt2-larger`
+- `stjiris-bert-large-portuguese-cased-legal-mlm`
+- `stjiris-bert-large-portuguese-cased-legal-mlm-sts-v1`
+- `stjiris-t5-portuguese-legal-summarization`
+- `stockmark-stockmark-13b`
+- `striki-ai-william-shakespeare-poetry`
+- `studio-ousia-luke-base`
+- `studio-ousia-luke-base-lite`
+- `studio-ousia-luke-japanese-base-lite`
+- `studio-ousia-luke-large`
+- `studio-ousia-mluke-large`
+- `studio-ousia-mluke-large-lite`
+- `succinctly-text2image-prompt-generator`
+- `sultan-biom-electra-large-squad2`
+- `superb-hubert-base-superb-ks`
+- `superb-hubert-large-superb-er`
+- `superb-wav2vec2-base-superb-sid`
+- `superb-wav2vec2-large-superb-ic`
+- `supermy-jinyong-gpt2`
+- `support-pvelocity-llama-2-7b-instruct-text2sql`
+- `surdan-labse-ner-nerel`
+- `susnato-clvp-dev`
+- `susnato-phi-1-5-dev`
+- `swap-uniba-llamantino-2-7b-hf-ita`
+- `swap-uniba-llamantino-3-anita-8b-inst-dpo-ita`
+- `sxie3333-bert`
+- `sxie3333-distilbert`
+- `symanto-xlm-roberta-base-snli-mnli-anli-xnli`
+- `t5-3b`
+- `tae898-emoberta-large`
+- `tahrirchi-tahrirchi-bert-base`
+- `taltechnlp-whisper-medium-et`
+- `tanfiona-unicausal-pair-baseline`
+- `tanganke-clip-vit-base-patch32-dtd`
+- `tanganke-clip-vit-base-patch32-eurosat`
+- `tanganke-clip-vit-base-patch32-gtsrb`
+- `tanganke-clip-vit-base-patch32-mnist`
+- `tanganke-clip-vit-base-patch32-resisc45`
+- `tanganke-clip-vit-base-patch32-sun397`
+- `tanmoyio-wav2vec2-large-xlsr-bengali`
+- `tasksource-deberta-base-long-nli`
+- `tasksource-modernbert-base-nli`
+- `tatsu-lab-alpaca-7b-wdiff`
+- `tavakolih-all-minilm-l6-v2-pubmed-full`
+- `tavtav-rose-20b`
+- `techxgenus-meta-llama-3-8b-gptq`
+- `techxgenus-meta-llama-3-8b-instruct-gptq`
+- `tehvenom-dolly-shygmalion-6b`
+- `teknium-collectivecognition-v1-mistral-7b`
+- `teknium-openhermes-2-mistral-7b`
+- `textattack-albert-base-v2-rotten-tomatoes`
+- `textattack-bert-base-uncased-imdb`
+- `textattack-bert-base-uncased-mnli`
+- `textattack-bert-base-uncased-sst-2`
+- `textattack-bert-base-uncased-yelp-polarity`
+- `textattack-distilbert-base-uncased-ag-news`
+- `textattack-roberta-base-imdb`
+- `textgain-tags-allnli-gronlp-bert-base-dutch-cased`
+- `tgsc-sentence-transformer-ult5-pt-small`
+- `the-matt-llama2-ko-7b-distinctive-snowflake-182-1060`
+- `thebloke-chronos-hermes-13b-gptq`
+- `thebloke-deepseek-llm-7b-base-awq`
+- `thebloke-gpt4all-13b-snoozy-gptq`
+- `thebloke-llama-2-13b-awq`
+- `thebloke-llama-2-13b-chat-awq`
+- `thebloke-llama-2-13b-chat-gptq`
+- `thebloke-llama-2-70b-chat-gptq`
+- `thebloke-llama-2-70b-gptq`
+- `thebloke-llama-2-7b-fp16`
+- `thebloke-llama2-70b-oasst-sft-v10-gptq`
+- `thebloke-meditron-70b-gptq`
+- `thebloke-mistral-7b-openorca-awq`
+- `thebloke-mistral-7b-openorca-gptq`
+- `thebloke-mythalion-13b-awq`
+- `thebloke-mythomax-l2-13b-gptq`
+- `thebloke-orca-mini-v3-7b-gptq`
+- `thebloke-upstage-llama-2-70b-instruct-v2-awq`
+- `thebloke-zephyr-7b-beta-gptq`
+- `thebritishlibrary-bl-books-genre`
+- `thellert-physbert-cased`
+- `thenlper-gte-base-zh`
+- `thenlper-gte-large-zh`
+- `thenlper-gte-small-zh`
+- `thesven-llama-3-8b-gptq-4bit`
+- `thu-coai-roberta-base-cold`
+- `thudm-bpo`
+- `thumt-mgpt`
+- `tiedeman-opus-mt-en-he`
+- `tiger-lab-mammoth2-8b-plus`
+- `tiiuae-falcon3-3b-base`
+- `tiiuae-falcon3-7b-base`
+- `timberrific-open-bio-med-merge`
+- `tinypixel-small-llama2`
+- `tngtech-olmocr-7b-faithful`
+- `togethercomputer-redpajama-incite-base-3b-v1`
+- `tohoku-nlp-bert-base-japanese-char`
+- `tokyotech-llm-swallow-13b-hf`
+- `tokyotech-llm-swallow-70b-hf`
+- `tokyotech-llm-swallow-7b-instruct-hf`
+- `tolgadev-llama-2-7b-ruyallm`
+- `tomaarsen-modernbert-base-gooaq`
+- `totally-not-an-llm-puddlejumper-13b-v2`
+- `trelis-llama-2-7b-chat-hf-function-calling-v2`
+- `trl-internal-testing-tiny-idefics2forconditionalgeneration`
+- `trl-internal-testing-tiny-llavanextforconditionalgeneration`
+- `truefilter-bertweet-lg-text-quality`
+- `trustsafeai-radar-vicuna-7b`
+- `tsaditya-gpt-kalki`
+- `tsinghuac3i-llama-3-8b-ultramedical`
+- `tsmatz-xlm-roberta-ner-japanese`
+- `turing-usp-finbertptbr`
+- `turkcell-turkcell-llm-7b-v1`
+- `ubc-nlp-arbertv2`
+- `ucla-agi-gemma-2-9b-it-sppo-iter1`
+- `ucla-agi-gemma-2-9b-it-sppo-iter2`
+- `uclanlp-visualbert-vqa`
+- `ucsynlp-myanberta`
+- `uer-albert-base-chinese-cluecorpussmall`
+- `uer-chinese-roberta-l-2-h-256`
+- `uer-gpt2-chinese-ancient`
+- `uer-gpt2-chinese-cluecorpussmall`
+- `uer-gpt2-chinese-couplet`
+- `uer-gpt2-chinese-lyric`
+- `uer-gpt2-chinese-poem`
+- `uer-gpt2-distil-chinese-cluecorpussmall`
+- `uer-gpt2-xlarge-chinese-cluecorpussmall`
+- `uer-roberta-base-chinese-extractive-qa`
+- `uer-roberta-base-finetuned-chinanews-chinese`
+- `uer-roberta-base-finetuned-cluener2020-chinese`
+- `uer-t5-base-chinese-cluecorpussmall`
+- `uer-t5-small-chinese-cluecorpussmall`
+- `uf-aice-lab-llama-2-qlora`
+- `ufal-robeczech-base`
+- `uitnlp-visobert`
+- `ukr-models-uk-ner`
+- `umarigan-llama-3-8b-instruction-tr`
+- `unbabel-gec-t5-small`
+- `unicamp-dl-ptt5-large-t5-vocab`
+- `unicamp-dl-ptt5-small-portuguese-vocab`
+- `unicamp-dl-ptt5-v2-base`
+- `unicamp-dl-translation-pt-en-t5`
+- `unitary-multilingual-toxic-xlm-roberta`
+- `unitary-toxic-bert`
+- `unsloth-gemma-2-2b-bnb-4bit`
+- `unsloth-gemma-2-9b-it-bnb-4bit`
+- `unsloth-mistral-7b`
+- `unsloth-mistral-nemo-base-2407`
+- `unsloth-mistral-small-24b-base-2501-unsloth-bnb-4bit`
+- `unsloth-qwen2-vl-7b-instruct-bnb-4bit`
+- `unsloth-smollm2-135m-instruct`
+- `unsloth-smollm2-360m-instruct`
+- `unslothai-5`
+- `unslothai-6`
+- `unslothai-9`
+- `upskyy-e5-large-korean`
+- `upskyy-e5-small-korean`
+- `upstage-llama-30b-instruct-2048`
+- `usefulsensors-moonshine-base`
+- `usefulsensors-moonshine-tiny`
+- `utrobinmv-t5-translate-en-ru-zh-large-1024`
+- `uukuguy-speechless-llama2-luban-orca-platypus-13b`
+- `uw-madison-yoso-4096`
+- `uygarkurt-llama-3-merged-linear`
+- `uzabase-luke-japanese-wordpiece-base`
+- `vagosolutions-sauerkrautlm-gemma-7b`
+- `valdemardi-deepseek-r1-distill-llama-70b-awq`
+- `valdemardi-deepseek-r1-distill-qwen-32b-awq`
+- `valhalla-distilbart-mnli-12-3`
+- `valhalla-distilbart-mnli-12-9`
+- `valhalla-gpt-neo-random-tiny`
+- `valhalla-t5-small-qg-prepend`
+- `valurank-minilm-l6-keyword-extraction`
+- `varox34-bio-saul-dolphin-beagle-breadcrumbs`
+- `vennify-t5-base-grammar-correction`
+- `verificadoprofesional-sabert-spanish-sentiment-analysis`
+- `vesteinn-danskbert`
+- `vicgalle-carbonbeagle-11b`
+- `vicgalle-carbonbeagle-11b-truthy`
+- `vicgalle-xlm-roberta-large-xnli-anli`
+- `vietai-envit5-translation`
+- `viktor-enzell-wav2vec2-large-voxrex-swedish-4gram`
+- `vinai-bartpho-syllable`
+- `vinai-bartpho-syllable-base`
+- `vinai-bertweet-base`
+- `vinai-phobert-base`
+- `vinai-xphonebert-base`
+- `viraintelligentdatamining-ariabert`
+- `visheratin-t5-efficient-mini-grammar-correction`
+- `vision-cair-vicuna`
+- `visual-attention-network-van-tiny`
+- `vmajor-orca2-13b-selfmerge-26b`
+- `vmware-open-llama-7b-v2-open-instruct`
+- `voicelab-vlt5-base-keywords`
+- `voidful-albert-chinese-tiny`
+- `voidful-context-only-question-generator`
+- `voyage-code-4`
+- `wandb-gemma-7b-zephyr-sft`
+- `wavymulder-wavyfusion`
+- `wbbbbb-wav2vec2-large-chinese-zh-cn`
+- `webbigdata-alma-7b-ja-v2`
+- `weiweishi-roc-bert-base-zh`
+- `wesleyacheng-dog-breeds-multiclass-image-classification-with-vit`
+- `westlake-repl-saprot-650m-af2`
+- `whaleloops-phrase-bert`
+- `wietsedv-wav2vec2-large-xlsr-53-dutch`
+- `wietsedv-xlm-roberta-base-ft-udpos28-en`
+- `winglian-llama-3-8b-64k-pose`
+- `winninghealth-wingpt2-llama-3-8b-base`
+- `winninghealth-wingpt2-llama-3-8b-chat`
+- `wiroai-wiroai-turkish-llm-8b`
+- `wiroai-wiroai-turkish-llm-9b`
+- `wonrax-phobert-base-vietnamese-sentiment`
+- `wxjiao-alpaca-7b`
+- `xhan77-ssdlm`
+- `xlm-clm-ende-1024`
+- `xmcmic-med-kebert`
+- `xuhui-toxdect-roberta-large`
+- `yahma-llama-7b-hf`
+- `yainage90-fashion-object-detection`
+- `yam-peleg-hebrew-mistral-7b`
+- `yam-peleg-hebrew-mistral-7b-200k`
+- `yamatazen-esotericlight-12b`
+- `yancong-dummy-model`
+- `yangy50-garbage-classification`
+- `yarongef-distilprotbert`
+- `ybanas-autotrain-fr-en-translate-51410121895`
+- `yec019-fbopt-350m-8bit`
+- `yeshpanovrustem-xlm-roberta-large-ner-kazakh`
+- `yhavinga-t5-base-dutch`
+- `yikuan8-clinical-bigbird`
+- `yiyanghkust-finbert-tone`
+- `yiyanghkust-finbert-tone-chinese`
+- `ytu-ce-cosmos-turkish-base-bert-uncased`
+- `ytu-ce-cosmos-turkish-gpt2-large`
+- `yuhuili-eagle-llama2-chat-7b`
+- `yuhuili-eagle-llama3-instruct-8b`
+- `yunconglong-dare-ties-13b`
+- `yuyijiong-t5-large-sentiment-analysis-chinese-multitask`
+- `zafercavdar-distilbert-base-turkish-cased-emotion`
+- `zetatech-pvt-tiny-224`
+- `zhayunduo-roberta-base-stocktwits-finetuned`
+- `zigeng-slimsam-uniform-50`
+- `zjunlp-molgen-7b`
+- `zli12321-answer-equivalence-distilbert`
+
+### Updated model IDs
+
+- `Codestral-2501`
+- `Cohere-embed-v3-english`
+- `Cohere-embed-v3-multilingual`
+- `Cohere-parse-v5`
+- `Cohere-rerank-v4.0-pro`
+- `CxrReportGen-Premium`
+- `DeepSeek-V3.2`
+- `DeepSeek-V3.2-Speciale`
+- `DeepSeek-V4-Flash-0731`
+- `FLUX.2-flex`
+- `FLUX.2-pro`
+- `FW-DeepSeek-V3.1`
+- `FW-DeepSeek-V3.2`
+- `FW-DeepSeek-V4-Flash`
+- `FW-DeepSeek-V4-Flash-0731`
+- `FW-DeepSeek-V4-Pro`
+- `FW-GLM-4.7`
+- `FW-GLM-5.1`
+- `FW-GLM-5.2`
+- `FW-GLM-5.2-Fast`
+- `FW-GLM-5.3`
+- `FW-GPT-OSS-20B`
+- `FW-Gemma-4-26B-A4B-IT`
+- `FW-Gemma-4-31B-IT`
+- `FW-Inkling`
+- `FW-Kimi-K2-Instruct-0905`
+- `FW-Kimi-K2.5`
+- `FW-Kimi-K2.6`
+- `FW-Kimi-K2.7-Code`
+- `FW-Kimi-K3`
+- `FW-MiniMax-M3`
+- `FW-Ministral-3-3B-Instruct-2512`
+- `FW-Nemotron-3-Super-120B-A12B-BF16`
+- `FW-Nemotron-Lightning-3.5-30B-A3B`
+- `FW-PaddleOCR-VL-1.6`
+- `FW-Qwen3-14B`
+- `FW-Qwen3-32B`
+- `FW-Qwen3.5-122B-A10B`
+- `FW-Qwen3.5-35B-A3B`
+- `FW-Qwen3.5-397B-A17B`
+- `FW-Qwen3.5-4B`
+- `FW-Qwen3.5-9B`
+- `FW-Qwen3.6-27B`
+- `FW-Qwen3.6-35B-A3B`
+- `Flux-1.1-Pro`
+- `Flux.1-Kontext-pro`
+- `HuggingFaceTB-SmolLM3-3B`
+- `MAI-Image-2.5-Pro`
+- `MAI-Image-2.6`
+- `MAI-Image-2.6-Flash`
+- `MedImageInsight-Premium`
+- `Ministral-3B`
+- `Mistral-Large-3`
+- `Qwen-Qwen2.5-1.5B-Instruct`
+- `Qwen-Qwen2.5-14B-Instruct`
+- `Qwen-Qwen2.5-7B-Instruct`
+- `Qwen-Qwen2.5-Coder-14B-Instruct`
+- `Qwen-Qwen2.5-Coder-7B-Instruct`
+- `Qwen-Qwen3-0.6B`
+- `Qwen-Qwen3-1.7B`
+- `Qwen-Qwen3-14B`
+- `Qwen-Qwen3-8B`
+- `bert-base-uncased`
+- `bert-large-cased`
+- `claude-haiku-4-5`
+- `claude-mythos-preview`
+- `claude-opus-4-5`
+- `claude-sonnet-4-5`
+- `codex-mini`
+- `computer-use-preview`
+- `deepseek-ai-DeepSeek-R1-Distill-Qwen-14B`
+- `deepseek-ai-DeepSeek-V3.1`
+- `deepseek-ai-DeepSeek-V3.2`
+- `deepseek-ai-DeepSeek-V3.2-Speciale`
+- `deepset-roberta-base-squad2`
+- `distilbert-base-uncased-distilled-squad`
+- `distilgpt2`
+- `distilroberta-base`
+- `facebook-dinov2-base-imagenet1k-1-layer`
+- `facebook-sam-vit-huge`
+- `finiteautomata-bertweet-base-sentiment-analysis`
+- `google-vit-base-patch16-224`
+- `gpt-4.1`
+- `gpt-4.1-mini`
+- `gpt-4.1-nano`
+- `gpt-4o`
+- `gpt-4o-mini`
+- `gpt-4o-mini-transcribe`
+- `gpt-4o-mini-tts`
+- `gpt-4o-transcribe`
+- `gpt-4o-transcribe-diarize`
+- `gpt-5`
+- `gpt-5-codex`
+- `gpt-5-mini`
+- `gpt-5-nano`
+- `gpt-5-pro`
+- `gpt-5.1`
+- `gpt-5.1-codex`
+- `gpt-5.1-codex-max`
+- `gpt-5.1-codex-mini`
+- `gpt-5.2`
+- `gpt-5.2-codex`
+- `gpt-5.5`
+- `gpt-audio`
+- `gpt-audio-mini`
+- `gpt-image-1-mini`
+- `gpt-image-1.5`
+- `gpt-live-transcribe`
+- `gpt-oss-20b`
+- `gpt-realtime`
+- `gpt-realtime-1.5`
+- `gpt-realtime-mini`
+- `gpt-transcribe`
+- `gpt2`
+- `gpt2-large`
+- `grok-4`
+- `grok-code-fast-1`
+- `microsoft-Phi-3-5-mini-instruct`
+- `microsoft-Phi-4-reasoning`
+- `microsoft-deberta-base`
+- `microsoft-deberta-large-mnli`
+- `microsoft-phi-1-5`
+- `microsoft-phi-4`
+- `mistral-document-ai-2512`
+- `mistral-medium-2505`
+- `mistral-medium-3-5`
+- `mistral-ocr-4-0`
+- `mistral-small-2503`
+- `mistralai--mistral-nemo-instruct-2407`
+- `mistralai-Devstral-Small-2505`
+- `mistralai-Devstral-Small-2507`
+- `mistralai-Magistral-Small-2506`
+- `mistralai-Magistral-Small-2509`
+- `mistralai-Ministral-3-14B-Reasoning-2512`
+- `mistralai-Ministral-3-3B-Instruct-2512`
+- `mistralai-Ministral-3-8B-Instruct-2512`
+- `mistralai-Mistral-7B-Instruct-v0.3`
+- `mistralai-Mistral-Large-3-675B-Instruct-2512`
+- `mistralai-Mistral-Small-3-1-24B-Instruct-2503`
+- `mistralai-Mixtral-8x22B-Instruct-v0.1`
+- `mistralai-Pixtral-12B-2409`
+- `mistralai-mistral-small-3-2-24b-instruct-2506`
+- `nvidia--cosmos-reason1-7b`
+- `nvidia--nvidia-nemotron-3-nano-30b-a3b-fp8`
+- `nvidia-AceReason-Nemotron-7B`
+- `nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-BF16`
+- `nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-BF16`
+- `nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-FP8`
+- `nvidia-NVIDIA-Nemotron-Nano-12B-v2`
+- `nvidia-NVIDIA-Nemotron-Nano-12B-v2-VL-NVFP4-QAD`
+- `nvidia-NVIDIA-Nemotron-Nano-9B-v2`
+- `nvidia-NVIDIA-Nemotron-Nano-9B-v2-FP8`
+- `nvidia-NVIDIA-Nemotron-Nano-9B-v2-NVFP4`
+- `nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16`
+- `nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-NVFP4`
+- `nvidia-Nemotron-4-Mini-Hindi-4B-Instruct`
+- `nvidia-Nemotron-Terminal-8B`
+- `nvidia-OpenCodeReasoning-Nemotron-1.1-7B`
+- `nvidia-OpenCodeReasoning-Nemotron-14B`
+- `nvidia-OpenCodeReasoning-Nemotron-32B-IOI`
+- `nvidia-OpenCodeReasoning-Nemotron-7B`
+- `nvidia-OpenMath-Nemotron-14B`
+- `nvidia-OpenReasoning-Nemotron-1.5B`
+- `nvidia-OpenReasoning-Nemotron-7B`
+- `o1`
+- `o3`
+- `o3-deep-research`
+- `o3-mini`
+- `o3-pro`
+- `o4-mini`
+- `openai-whisper-medium`
+- `qwen--qwen3-0.6b`
+- `qwen--qwen3-coder-30b-a3b-instruct-fp8`
+- `qwen--qwen3.5-2b`
+- `qwen--qwen3.6-27b-fp8`
+- `qwen3-32b`
+- `qwen3.6-35b-a3b`
+- `roberta-base`
+- `roberta-large`
+- `roberta-large-mnli`
+- `sora-2`
+- `t5-small`
+- `text-embedding-3-large`
+- `text-embedding-3-small`
+- `text-embedding-ada-002`
+- `tiiuae-falcon-7b`
+- `tts`
+- `tts-hd`
+- `whisper`
+
+### Removed model IDs
+
+- `MAI-Image-2e`
+- `Qwen-Qwen3-4B`
+- `ai-mo-numinamath-7b-tir`
+- `ai-sage-gigachat3-10b-a1.8b`
+- `aidc-ai--ovis-image-7b`
+- `aisingapore-llama3-8b-cpt-sea-lionv2-base`
+- `akdeniz27-bert-base-turkish-cased-ner`
+- `alibaba-apsara-dasd-30b-a3b-thinking-preview`
+- `allenai-olmocr-2-7b-1025-fp8`
+- `almanach-camembert-bio-base`
+- `amanpriyanshu-gpt-oss-6.0b-specialized-all-pruned-moe-only-7-experts`
+- `anonymous-pineapple-roberta-base`
+- `aryn-deformable-detr-doclaynet`
+- `audiovisual-caption-asid-captioner-3b`
+- `avitotech-avibe`
+- `avsolatorio-gist-all-minilm-l6-v2`
+- `baai-bge-large-en-v1.5`
+- `baai-bge-multilingual-gemma2`
+- `baai-bge-reranker-v2-gemma`
+- `baidu-ernie-4.5-21b-a3b-pt`
+- `bert-base-chinese`
+- `bharatgenai-param-1-2.9b-instruct`
+- `bigcode-starcoder2-3b`
+- `bigcode-starcoder2-7b`
+- `bigscience-bloom-7b1-intermediate`
+- `bin12345-autocoder`
+- `bramvanroy-geitje-7b-ultra`
+- `bsc-lt--alia-40b-instruct-2605`
+- `bsc-lt-alia-40b`
+- `bsc-lt-salamandra-2b`
+- `bsc-lt-salamandra-2b-instruct-fp8`
+- `bsc-lt-salamandra-2b-instruct-gptq`
+- `bsc-lt-salamandra-7b`
+- `bsc-lt-salamandra-7b-base-fp8`
+- `bsc-lt-salamandra-7b-base-gptq`
+- `bsc-lt-salamandrata-2b`
+- `chaoticneutrals-captain-eris-diogenes-twilight-v0.420-12b`
+- `chengyudu0123-her-32b`
+- `codellama-codellama-34b-instruct-hf`
+- `cognitivecomputations-dolphin-2.9-llama3-8b`
+- `contextboxai-halong-embedding`
+- `csebuetnlp-mt5-multilingual-xlsum`
+- `cyankiwi-qwen3.5-122b-a10b-awq-4bit`
+- `datalab-to-chandra`
+- `dbmdz-bert-base-italian-xxl-uncased`
+- `deepcogito-cogito-v1-preview-llama-70b`
+- `deepcogito-cogito-v1-preview-qwen-14b`
+- `deepcogito-cogito-v1-preview-qwen-32b`
+- `deepset-electra-base-squad2`
+- `deepset-gbert-base`
+- `deepvk-user-bge-m3`
+- `defog-sqlcoder-7b-2`
+- `descript-dac-44khz`
+- `dicta-il-dictalm2.0`
+- `distilbert--distilbert-base-uncased`
+- `distilbert-distilbert-base-uncased-distilled-squad`
+- `distilbert-distilgpt2`
+- `dity-bi-encoder-russian-msmarco`
+- `ds-archive-l3.3-70b-magnum-v4-se`
+- `dslim-bert-base-ner-uncased`
+- `eleutherai-pythia-410m`
+- `eleutherai-pythia-70m-deduped`
+- `exscientia-igt5-unpaired`
+- `facebook-bart-base`
+- `facebook-bart-large-mnli`
+- `facebook-detr-resnet-101`
+- `facebook-encodec-24khz`
+- `facebook-encodec-32khz`
+- `facebook-esm2-t6-8m-ur50d`
+- `facebook-mask2former-swin-large-coco-instance`
+- `facebook-mbart-large-50-many-to-many-mmt`
+- `facebook-wav2vec2-base-960h`
+- `facebookai-roberta-large`
+- `facebookai-roberta-large-mnli`
+- `final-bench-darwin-9b-opus`
+- `flax-community-dansk-gpt-wiki`
+- `freedomintelligence-acegpt-v1.5-13b`
+- `futurema-eva-4b-v2`
+- `gaunernst-bert-l6-h768-uncased`
+- `gemstone-models-gemstone-384x36`
+- `gemstone-models-gemstone-512x16`
+- `gemstone-models-gemstone-768x3`
+- `gokaygokay-flux-prompt-enhance`
+- `google--gemma-4-26b-a4b-it`
+- `google-bert--bert-base-multilingual-cased`
+- `google-bert--bert-large-uncased`
+- `google-bert-bert-base-multilingual-cased`
+- `google-bert-bert-large-cased-whole-word-masking-finetuned-squad`
+- `google-flan-t5-small`
+- `google-flan-t5-xxl`
+- `google-t5-t5-base`
+- `google-t5-t5-large`
+- `google-vit-base-patch32-384`
+- `google-vit-hybrid-base-bit-384`
+- `gpt-35-turbo-instruct`
+- `helsinki-nlp-opus-mt-en-zh`
+- `helsinki-nlp-opus-mt-zh-en`
+- `holy-fox-qwen3.5-0.8b-jp`
+- `huggingfacem4-idefics2-8b`
+- `huggingfacetb-smollm-135m`
+- `huggingfacetb-smollm-360m`
+- `huggyllama-llama-7b`
+- `hustvl-yolos-small`
+- `ibm-granite-granite-3.3-8b-instruct-fp8`
+- `ibm-granite-granite-4.0-h-small-fp8`
+- `ibm-granite-granite-4.1-30b-fp8`
+- `ibm-granite-granite-4.1-8b`
+- `ibm-granite-granite-4.1-8b-fp8`
+- `ibm-granite-granite-guardian-4.1-8b`
+- `ibm-granite-granite-vision-3.2-2b`
+- `ibm-granite-granite-vision-4.1-4b`
+- `ibm-granite-granite-vision-4.1-4b-gguf`
+- `infly-opencoder-8b-instruct`
+- `internlm-januscoder-14b`
+- `internlm-januscoderv-8b`
+- `intfloat--e5-large-v2`
+- `intfloat-e5-mistral-7b-instruct`
+- `intfloat-e5-small`
+- `itsjayqz-gta5-artwork-diffusion`
+- `jackrong-qwopus3.5-9b-v3.5`
+- `jamandteastudios-deepseek-r1-distill-qwen-32b-fp8-dynamic`
+- `janhq-jan-v1-4b`
+- `jean-baptiste-roberta-large-ner-english`
+- `jinaai-jina-reranker-v1-turbo-en`
+- `jinaai-readerlm-v2`
+- `joeddav-xlm-roberta-large-xnli`
+- `jonathandinu-face-parsing`
+- `kblab-sentence-bert-swedish-cased`
+- `kblab-wav2vec2-large-voxpopuli-sv-swedish`
+- `kblueleaf-dantaggen-delta-rev2`
+- `kblueleaf-tipo-200m-ft2`
+- `koalaai-text-moderation`
+- `ku-nlp-deberta-v2-large-japanese-char-wwm`
+- `ku-nlp-deberta-v2-tiny-japanese`
+- `liquidai-lfm2-2.6b-transcript`
+- `liquidai-lfm2.5-vl-1.6b`
+- `llava-hf-llama3-llava-next-8b-hf`
+- `lm-provers-qed-nano`
+- `luhua-chinese-pretrain-mrc-roberta-wwm-ext-large`
+- `machinelearninglm-machinelearninglm-7b-v1`
+- `maiyad--multilingual-e5-small`
+- `makers-lab-indus-1.1b-it`
+- `manandey-wav2vec2-large-xlsr-punjabi`
+- `mehmet582025-arap-qa-bert-large-v2`
+- `meta-llama-meta-llama-guard-2-8b`
+- `michelleli99-emotion-text-classifier`
+- `microsoft-beit-large-finetuned-ade-640-640`
+- `microsoft-bitnet-b1.58-2b-4t`
+- `microsoft-dayhoff-170m-gr`
+- `microsoft-dayhoff-3b-gr-hm`
+- `microsoft-dayhoff-3b-ur90`
+- `microsoft-dialogpt-medium`
+- `microsoft-dialogpt-small`
+- `microsoft-nextcoder-14b`
+- `microsoft-resnet-18`
+- `microsoft-table-transformer-structure-recognition`
+- `microsoft-tapex-base`
+- `mims-harvard-toolrag-t1-gte-qwen2-1-5b`
+- `miromind-ai-mirothinker-v1.5-30b`
+- `mistralai-Mistral-7B-v01`
+- `mistralai-mistral-7b-instruct-v0.2`
+- `monologg-kobert`
+- `multiversecomputingcai-hypernova-60b`
+- `nanbeige-nanbeige4.1-3b`
+- `nateraw-vit-age-classifier`
+- `nlphust-ner-vietnamese-electra-base`
+- `nlptown-bert-base-multilingual-uncased-sentiment`
+- `norallm-normistral-7b-warm`
+- `nousresearch-hermes-4-14b`
+- `nousresearch-meta-llama-3-70b-instruct`
+- `nousresearch-meta-llama-3-8b`
+- `nvidia--nemotron-terminal-8b`
+- `nvidia-llama3-chatqa-1.5-70b`
+- `nvidia-minimax-m2.7-nvfp4`
+- `nvidia-nemotron-cascade-2-30b-a3b`
+- `nvidia-nemotron-terminal-32b`
+- `nvidia-opencodereasoning-nemotron-1.1-14b`
+- `nvidia-qwen3-vl-235b-a22b-instruct-nvfp4`
+- `openai--gpt-oss-120b`
+- `openai--gpt-oss-20b`
+- `openai-community-gpt2-large`
+- `openai-community-gpt2-medium`
+- `openai-community-roberta-base-openai-detector`
+- `opendatalab-mineru2.5-2509-1.2b`
+- `opengvlab-scalecua-32b`
+- `p1atdev-dart-v2-moe-sft`
+- `papluca-xlm-roberta-base-language-detection`
+- `pekingu-rtdetr-r101vd-coco-o365`
+- `perplexity-ai-browsesafe`
+- `petals-team-stablebeluga2`
+- `prometheus-eval-prometheus-7b-v2.0`
+- `qwen--qwen-image-2512`
+- `qwen--qwen3-14b`
+- `qwen--qwen3-30b-a3b-instruct-2507-fp8`
+- `qwen--qwen3-embedding-8b`
+- `qwen--qwen3-vl-30b-a3b-instruct`
+- `qwen-qwen-agentworld-35b-a3b`
+- `qwen-qwen-image-bench`
+- `qwen-qwen1.5-110b-chat`
+- `qwen-qwen2-7b-instruct`
+- `qwen-qwen2-vl-2b-instruct`
+- `qwen-qwen2-vl-7b`
+- `qwen-qwen3-30b-a3b-instruct-2507-fp8`
+- `qwen-qwen3-4b-thinking-2507-fp8`
+- `qwen-qwen3-next-80b-a3b-instruct`
+- `qwen-qwen3-vl-30b-a3b-instruct`
+- `qwen-qwen3-vl-32b-thinking`
+- `qwen-qwen3-vl-32b-thinking-fp8`
+- `qwen-qwen3.5-35b-a3b`
+- `redwoodresearch-math-pwd-lock-deepseek-math7b-on-weak-pythia1b`
+- `roborovski-superprompt-v1`
+- `robowaifudev-megatron-gpt2-345m`
+- `sail-sailor-1.8b-chat`
+- `salesforce-sfr-embedding-mistral`
+- `samlowe-roberta-base-go-emotions`
+- `seethal-sentiment-analysis-generic-dataset`
+- `sentence-transformers--embeddinggemma-300m-medical`
+- `sentence-transformers-clip-vit-b-32-multilingual-v1`
+- `sg161222-spark.chroma-preview`
+- `shibing624-text2vec-bge-large-chinese`
+- `sileod-deberta-v3-base-tasksource-nli`
+- `snowflake--snowflake-arctic-embed-l-v2.0`
+- `snowflake-snowflake-arctic-embed-xs`
+- `sonoisa-sentence-bert-base-ja-mean-tokens-v2`
+- `sonoisa-t5-base-japanese`
+- `speakleash-bielik-11b-v2-3-instruct`
+- `speakleash-bielik-11b-v2.6-instruct-gguf`
+- `stabilityai-stable-diffusion-2-inpainting`
+- `swiss-ai-apertus-8b-2509`
+- `tasksource-modernbert-large-nli`
+- `tencent-r3-rerank-0.6b`
+- `tenyx-llama3-tenyxchat-70b`
+- `thenlper--gte-large`
+- `thenlper-gte-small`
+- `tiiuae-falcon-40b-instruct`
+- `tiiuae-falcon-7b-instruct`
+- `tiiuae-falcon3-1b-instruct`
+- `typhoon-ai-llama-3-typhoon-v1.5x-70b-instruct`
+- `unsloth--ornith-1.0-35b-gguf--ud-q4_k_xl`
+- `unsloth-deepseek-r1-distill-llama-8b`
+- `unsloth-gemma-2-9b-bnb-4bit`
+- `unsloth-gemma-3-27b-it-bnb-4bit`
+- `unsloth-gemma-3-27b-it-unsloth-bnb-4bit`
+- `unsloth-gemma-3-4b-it-bnb-4bit`
+- `unsloth-llama-3-8b-bnb-4bit`
+- `unsloth-llama-3-8b-instruct-bnb-4bit`
+- `unsloth-mistral-nemo-instruct-2407`
+- `unsloth-mistral-nemo-instruct-2407-bnb-4bit`
+- `unsloth-mistral-small-24b-instruct-2501-unsloth-bnb-4bit`
+- `unslothai-1`
+- `unslothai-3`
+- `unslothai-4`
+- `utter-project-mhubert-147`
+- `vagosolutions-llama-3.1-sauerkrautlm-70b-instruct`
+- `vikhrmodels-vikhr-nemo-12b-instruct-r-21-09-24`
+- `weblab-geniac-tanuki-8b-dpo-v1.0`
+- `whereisai-uae-large-v1`
+- `writer-palmyra-mini`
+- `xlabs-ai-xflux-text-encoders`
+- `xlm-roberta-base`
+- `zai-org-glm-image`
+- `zai-org-glyph`
+
+## `baidu`
+
+- Added: **0**
+- Updated: **1**
+- Removed: **0**
+- FIM-only normalization: **0**
+- Timestamp-only: **0**
+
+### Updated model IDs
+
+- `ernie-4.5-vl-424b-a47b`
+
+## `cerebras`
+
+- Added: **0**
+- Updated: **0**
+- Removed: **0**
+- FIM-only normalization: **2**
+- Timestamp-only: **0**
+
+## `cohere`
+
+- Added: **0**
+- Updated: **0**
+- Removed: **0**
+- FIM-only normalization: **2**
+- Timestamp-only: **0**
+
+## `deepseek`
+
+- Added: **0**
+- Updated: **2**
+- Removed: **0**
+- FIM-only normalization: **3**
+- Timestamp-only: **0**
+
+### Updated model IDs
+
+- `deepseek-flash`
+- `deepseek-v4-pro`
+
+## `fireworks`
+
+- Added: **0**
+- Updated: **0**
+- Removed: **0**
+- FIM-only normalization: **8**
+- Timestamp-only: **0**
+
+## `google`
+
+- Added: **0**
+- Updated: **8**
+- Removed: **0**
+- FIM-only normalization: **0**
+- Timestamp-only: **0**
+
+### Updated model IDs
+
+- `gemini-2.5-flash-image`
+- `gemini-3-pro-image`
+- `gemini-3-pro-image-preview`
+- `gemini-3.1-flash-image`
+- `gemini-3.1-flash-image-preview`
+- `gemini-3.1-flash-lite-image`
+- `gemini-robotics-er-2-preview`
+- `gemini-robotics-er-2-streaming-preview`
+
+## `groq`
+
+- Added: **0**
+- Updated: **0**
+- Removed: **0**
+- FIM-only normalization: **28**
+- Timestamp-only: **0**
+
+## `huggingface`
+
+- Added: **0**
+- Updated: **0**
+- Removed: **0**
+- FIM-only normalization: **2902**
+- Timestamp-only: **0**
+
+## `ibm-granite`
+
+- Added: **0**
+- Updated: **3**
+- Removed: **0**
+- FIM-only normalization: **0**
+- Timestamp-only: **0**
+
+### Updated model IDs
+
+- `granite-4.2-30b`
+- `granite-4.2-3b`
+- `granite-4.2-8b`
+
+## `inception`
+
+- Added: **0**
+- Updated: **3**
+- Removed: **0**
+- FIM-only normalization: **0**
+- Timestamp-only: **0**
+
+### Updated model IDs
+
+- `mercury-2`
+- `mercury-2.5`
+- `mercury-edit-2`
+
+## `llama_cpp`
+
+- Added: **0**
+- Updated: **0**
+- Removed: **0**
+- FIM-only normalization: **38**
+- Timestamp-only: **0**
+
+## `lmstudio`
+
+- Added: **0**
+- Updated: **0**
+- Removed: **0**
+- FIM-only normalization: **8**
+- Timestamp-only: **0**
+
+## `meta`
+
+- Added: **0**
+- Updated: **5**
+- Removed: **0**
+- FIM-only normalization: **0**
+- Timestamp-only: **1**
+
+### Updated model IDs
+
+- `muse-spark-1.1`
+- `muse-spark-1.2`
+- `muse-spark-1.2-contributor`
+- `muse-spark-1.3`
+- `muse-spark-1.3-contributor`
+
+## `microsoft`
+
+- Added: **0**
+- Updated: **4**
+- Removed: **0**
+- FIM-only normalization: **0**
+- Timestamp-only: **0**
+
+### Updated model IDs
+
+- `MAI-Image-2`
+- `MAI-Image-2.5`
+- `MAI-Image-2.5-Flash`
+- `MAI-Image-2e`
+
+## `minimax`
+
+- Added: **0**
+- Updated: **0**
+- Removed: **0**
+- FIM-only normalization: **0**
+- Timestamp-only: **1**
+
+## `mistral`
+
+- Added: **0**
+- Updated: **0**
+- Removed: **0**
+- FIM-only normalization: **6**
+- Timestamp-only: **0**
+
+## `modellix`
+
+- Added: **0**
+- Updated: **29**
+- Removed: **0**
+- FIM-only normalization: **0**
+- Timestamp-only: **0**
+
+### Updated model IDs
+
+- `anthropic/claude-fable-5.1`
+- `anthropic/claude-haiku-4.5`
+- `anthropic/claude-opus-5`
+- `anthropic/claude-sonnet-5`
+- `deepseek/deepseek-v4-flash`
+- `deepseek/deepseek-v4-flash-vision`
+- `deepseek/deepseek-v4-pro`
+- `google/gemini-3.1-pro`
+- `google/gemini-3.6-flash`
+- `google/gemini-3.7-flash`
+- `google/gemini-3.8-flash`
+- `modellix-ai/free-llm`
+- `moonshot/kimi-k2.7`
+- `moonshot/kimi-k3`
+- `openai/gpt-5.5`
+- `openai/gpt-5.6-luna`
+- `openai/gpt-5.6-sol`
+- `openai/gpt-5.6-terra`
+- `openai/gpt-6-astra`
+- `qwen/qwen3.7-max`
+- `qwen/qwen3.7-plus`
+- `qwen/qwen3.8-flash`
+- `qwen/qwen3.8-max`
+- `xai/grok-4.5`
+- `xai/grok-4.6`
+- `zai/glm-4.7-flash`
+- `zai/glm-5.2`
+- `zai/glm-5.3`
+- `zai/glm-5.3-flash`
+
+## `modellix_media`
+
+- Added: **0**
+- Updated: **37**
+- Removed: **0**
+- FIM-only normalization: **141**
+- Timestamp-only: **0**
+
+### Updated model IDs
+
+- `alibaba/qwen-image-3-0`
+- `alibaba/qwen-image-3-0-edit`
+- `alibaba/qwen-image-3-0-pro`
+- `alibaba/qwen-image-3-0-pro-edit`
+- `alibaba/wan-2-7-image`
+- `alibaba/wan-2-7-image-edit`
+- `alibaba/wan-2-7-image-pro`
+- `alibaba/wan-2-7-image-pro-edit`
+- `alibaba/z-image-turbo`
+- `bytedance/seedream-5-0-lite`
+- `bytedance/seedream-5-0-lite-edit`
+- `bytedance/seedream-5-0-pro`
+- `bytedance/seedream-5-0-pro-edit`
+- `bytedance/seedream-5-0-pro-multi-reference`
+- `kling/kling-image-expansion`
+- `kling/kling-image-o1`
+- `kling/kling-v3-omni-image`
+- `microsoft/mai-image-2-5`
+- `microsoft/mai-image-2-5-edit`
+- `microsoft/mai-image-2-5-flash`
+- `microsoft/mai-image-2-5-flash-edit`
+- `microsoft/mai-image-2-5-pro`
+- `microsoft/mai-image-2-5-pro-edit`
+- `microsoft/mai-image-2-6`
+- `microsoft/mai-image-2-6-edit`
+- `microsoft/mai-image-2-6-flash`
+- `microsoft/mai-image-2-6-flash-edit`
+- `openai/gpt-image-1-5`
+- `openai/gpt-image-1-5-edit`
+- `openai/gpt-image-2`
+- `openai/gpt-image-2-edit`
+- `xai/grok-imagine-image`
+- `xai/grok-imagine-image-2-0`
+- `xai/grok-imagine-image-2-0-edit`
+- `xai/grok-imagine-image-edit`
+- `xai/grok-imagine-image-quality`
+- `xai/grok-imagine-image-quality-edit`
+
+## `novita`
+
+- Added: **2**
+- Updated: **4**
+- Removed: **0**
+- FIM-only normalization: **8**
+- Timestamp-only: **0**
+
+### Added model IDs
+
+- `deepseek/deepseek-v4.1-flash`
+- `zai-org/glm-5.3-p`
+
+### Updated model IDs
+
+- `moonshotai/kimi-k2-0905`
+- `moonshotai/kimi-k2-instruct`
+- `moonshotai/kimi-k2-thinking`
+- `zai-org/glm-5.3-flash`
+
+## `ollama`
+
+- Added: **1**
+- Updated: **0**
+- Removed: **0**
+- FIM-only normalization: **0**
+- Timestamp-only: **0**
+
+### Added model IDs
+
+- `deepseek-v4.1-flash`
+
+## `openai`
+
+- Added: **1**
+- Updated: **0**
+- Removed: **0**
+- FIM-only normalization: **56**
+- Timestamp-only: **0**
+
+### Added model IDs
+
+- `gpt-live-1`
+
+## `openrouter`
+
+- Added: **0**
+- Updated: **0**
+- Removed: **0**
+- FIM-only normalization: **16**
+- Timestamp-only: **0**
+
+## `qwen`
+
+- Added: **0**
+- Updated: **0**
+- Removed: **0**
+- FIM-only normalization: **9**
+- Timestamp-only: **0**
+
+## `rekaai`
+
+- Added: **0**
+- Updated: **2**
+- Removed: **0**
+- FIM-only normalization: **0**
+- Timestamp-only: **0**
+
+### Updated model IDs
+
+- `reka-edge`
+- `reka-flash-3`
+
+## `relace`
+
+- Added: **0**
+- Updated: **0**
+- Removed: **0**
+- FIM-only normalization: **1**
+- Timestamp-only: **0**
+
+## `sakura`
+
+- Added: **0**
+- Updated: **14**
+- Removed: **0**
+- FIM-only normalization: **0**
+- Timestamp-only: **0**
+
+### Updated model IDs
+
+- `Kimi-K2.6`
+- `PLaMo-2.0-31B`
+- `Phi-4-mini-instruct-cpu`
+- `Phi-4-multimodal-instruct`
+- `Qwen3-0.6B-cpu`
+- `Qwen3-Coder-30B-A3B-Instruct`
+- `Qwen3-Coder-480B-A35B-Instruct-FP8`
+- `Qwen3-VL-30B-A3B-Instruct`
+- `Qwen3.6-35B-A3B`
+- `cotomi-v3`
+- `gemma-4-31B-it`
+- `gpt-oss-120b`
+- `llm-jp-3.1-8x13b-instruct4`
+- `sakura-default`
+
+## `sambanova`
+
+- Added: **0**
+- Updated: **0**
+- Removed: **0**
+- FIM-only normalization: **6**
+- Timestamp-only: **0**
+
+## `siliconflow`
+
+- Added: **0**
+- Updated: **0**
+- Removed: **0**
+- FIM-only normalization: **27**
+- Timestamp-only: **0**
+
+## `thaillm`
+
+- Added: **0**
+- Updated: **0**
+- Removed: **0**
+- FIM-only normalization: **4**
+- Timestamp-only: **0**
+
+## `together`
+
+- Added: **0**
+- Updated: **12**
+- Removed: **0**
+- FIM-only normalization: **1**
+- Timestamp-only: **0**
+
+### Updated model IDs
+
+- `MiniMaxAI/MiniMax-M2.7`
+- `MiniMaxAI/MiniMax-M3`
+- `Qwen/Qwen2.5-7B-Instruct-Turbo`
+- `Qwen/Qwen3.5-9B`
+- `Qwen/Qwen3.6-Plus`
+- `Qwen/Qwen3.7-Max`
+- `Qwen/Qwen3.7-Plus`
+- `deepcogito/cogito-v2-1-671b`
+- `meta-llama/Llama-3.3-70B-Instruct-Turbo`
+- `openai/gpt-oss-120b`
+- `thinkingmachines/Inkling`
+- `zai-org/GLM-5.2`
+
+## `upstage`
+
+- Added: **0**
+- Updated: **1**
+- Removed: **0**
+- FIM-only normalization: **0**
+- Timestamp-only: **0**
+
+### Updated model IDs
+
+- `solar-pro4`
+
+## `vercel`
+
+- Added: **0**
+- Updated: **128**
+- Removed: **0**
+- FIM-only normalization: **642**
+- Timestamp-only: **0**
+
+### Updated model IDs
+
+- `chat-latest`
+- `chatgpt-image-latest`
+- `gpt-4.1`
+- `gpt-4.1-mini`
+- `gpt-4.1-nano`
+- `gpt-4o`
+- `gpt-4o-mini`
+- `gpt-5`
+- `gpt-5-chat`
+- `gpt-5-codex`
+- `gpt-5-mini`
+- `gpt-5-nano`
+- `gpt-5-pro`
+- `gpt-5.1`
+- `gpt-5.1-chat`
+- `gpt-5.2`
+- `gpt-5.2-chat`
+- `gpt-5.3-chat`
+- `gpt-5.4`
+- `gpt-5.4-cyber`
+- `gpt-5.4-mini`
+- `gpt-5.4-nano`
+- `gpt-5.5`
+- `gpt-5.5-cyber`
+- `gpt-5.5-pro`
+- `gpt-5.6-luna`
+- `gpt-5.6-sol`
+- `gpt-5.6-terra`
+- `gpt-chat-latest`
+- `gpt-image-1`
+- `gpt-image-1-mini`
+- `gpt-image-1.5`
+- `grok-4`
+- `grok-4-1-fast-non-reasoning`
+- `grok-4-1-fast-reasoning`
+- `grok-4-20-non-reasoning`
+- `grok-4-20-reasoning`
+- `grok-4.3`
+- `grok-code-fast-1`
+- `mimo-v2-flash`
+- `mimo-v2-omni`
+- `mimo-v2-pro`
+- `mimo-v2-tts`
+- `mimo-v2.5`
+- `mimo-v2.5-asr`
+- `mimo-v2.5-pro`
+- `mimo-v2.5-pro-ultraspeed`
+- `mimo-v2.5-tts`
+- `mimo-v2.5-tts-voiceclone`
+- `mimo-v2.5-tts-voicedesign`
+- `o1`
+- `o3`
+- `o3-mini`
+- `o3-pro`
+- `o4-mini`
+- `openai/gpt-3.5-turbo`
+- `openai/gpt-3.5-turbo-0613`
+- `openai/gpt-3.5-turbo-16k`
+- `openai/gpt-3.5-turbo-instruct`
+- `openai/gpt-4`
+- `openai/gpt-4-turbo`
+- `openai/gpt-4-turbo-preview`
+- `openai/gpt-4.1`
+- `openai/gpt-4.1-mini`
+- `openai/gpt-4.1-nano`
+- `openai/gpt-4o`
+- `openai/gpt-4o-2024-05-13`
+- `openai/gpt-4o-2024-08-06`
+- `openai/gpt-4o-2024-11-20`
+- `openai/gpt-4o-mini`
+- `openai/gpt-4o-mini-2024-07-18`
+- `openai/gpt-4o-mini-search-preview`
+- `openai/gpt-4o-search-preview`
+- `openai/gpt-5`
+- `openai/gpt-5-chat`
+- `openai/gpt-5-codex`
+- `openai/gpt-5-image`
+- `openai/gpt-5-image-mini`
+- `openai/gpt-5-mini`
+- `openai/gpt-5-nano`
+- `openai/gpt-5-pro`
+- `openai/gpt-5.1`
+- `openai/gpt-5.1-chat`
+- `openai/gpt-5.1-codex`
+- `openai/gpt-5.1-codex-max`
+- `openai/gpt-5.1-codex-mini`
+- `openai/gpt-5.2`
+- `openai/gpt-5.2-chat`
+- `openai/gpt-5.2-codex`
+- `openai/gpt-5.2-pro`
+- `openai/gpt-5.3-chat`
+- `openai/gpt-5.3-codex`
+- `openai/gpt-5.4`
+- `openai/gpt-5.4-image-2`
+- `openai/gpt-5.4-mini`
+- `openai/gpt-5.4-nano`
+- `openai/gpt-5.4-pro`
+- `openai/gpt-5.5`
+- `openai/gpt-5.5-pro`
+- `openai/gpt-5.6-luna`
+- `openai/gpt-5.6-luna-pro`
+- `openai/gpt-5.6-sol`
+- `openai/gpt-5.6-sol-pro`
+- `openai/gpt-5.6-terra`
+- `openai/gpt-5.6-terra-pro`
+- `openai/gpt-audio`
+- `openai/gpt-audio-mini`
+- `openai/gpt-chat-latest`
+- `openai/gpt-oss-120b:free`
+- `openai/gpt-oss-20b:free`
+- `openai/o1`
+- `openai/o1-pro`
+- `openai/o3`
+- `openai/o3-deep-research`
+- `openai/o3-mini`
+- `openai/o3-mini-high`
+- `openai/o3-pro`
+- `openai/o4-mini`
+- `openai/o4-mini-deep-research`
+- `openai/o4-mini-high`
+- `qwen/qwen-2.5-72b-instruct`
+- `qwen/qwen3-235b-a22b-thinking-2507`
+- `qwen/qwen3-max`
+- `qwen/qwen3-next-80b-a3b-thinking`
+- `qwen/qwen3-vl-235b-a22b-thinking`
+- `qwen/qwen3-vl-30b-a3b-thinking`
+- `qwen/qwen3.6-plus`
+- `qwen/qwen3.7-max`
+
+## `vertex-ai`
+
+- Added: **0**
+- Updated: **0**
+- Removed: **0**
+- FIM-only normalization: **4945**
+- Timestamp-only: **0**
+
+## `xai`
+
+- Added: **0**
+- Updated: **0**
+- Removed: **0**
+- FIM-only normalization: **0**
+- Timestamp-only: **3**
+
+## `xiaomi`
+
+- Added: **0**
+- Updated: **11**
+- Removed: **0**
+- FIM-only normalization: **0**
+- Timestamp-only: **0**
+
+### Updated model IDs
+
+- `mimo-v2-flash`
+- `mimo-v2-omni`
+- `mimo-v2-pro`
+- `mimo-v2-tts`
+- `mimo-v2.5`
+- `mimo-v2.5-asr`
+- `mimo-v2.5-pro`
+- `mimo-v2.5-pro-ultraspeed`
+- `mimo-v2.5-tts`
+- `mimo-v2.5-tts-voiceclone`
+- `mimo-v2.5-tts-voicedesign`
+

@@ -140,6 +140,65 @@ nova = llmcapa.get("nova-sonic-v1", provider="bedrock")
 gemini_live = llmcapa.get("gemini-3.1-flash-live-preview", provider="google")
 ```
 
+### Detailed audio input/output metadata
+
+Models with audio modalities expose detailed speech metadata through `cap.audio`. Values not documented by the provider are not guessed; only conservative modality-derived fields are marked as `status="inferred"`.
+
+```python
+cap = llmcapa.get("gpt-4o-transcribe", provider="openai")
+print(cap.audio.transcription)      # True
+print(cap.audio.input_formats)      # ('flac', 'mp3', ...)
+print(cap.audio.max_input_bytes)    # 25000000
+
+voice = llmcapa.get("gpt-4o-mini-tts", provider="openai")
+print(voice.audio.speech_generation) # True
+print(voice.audio.output_formats)    # ('mp3', 'opus', ...)
+print(voice.audio.voice_values)       # voice IDs
+print(voice.audio.speed_min)          # 0.25
+print(voice.audio.speed_max)          # 4.0
+```
+
+`AudioCapability` includes transcription, translation, diarization, timestamps, supported formats and MIME types, sample rates, voices, speed and output controls, streaming/Realtime support, and source URLs.
+
+### Detailed video input/output metadata
+
+Models with video modalities expose generation, understanding, and editing metadata through `cap.video`.
+
+```python
+video = llmcapa.get("sora-2", provider="openai")
+print(video.video.generation)       # True
+print(video.video.text_to_video)    # True
+print(video.video.output_formats)   # ('mp4',)
+
+reel = llmcapa.get("nova-reel-v1", provider="amazon")
+print(reel.video.image_to_video)    # True
+print(reel.video.duration_values_seconds)  # (6.0,)
+print(reel.video.output_mime_types) # ('video/mp4',)
+```
+
+`VideoCapability` includes text-to-video, image-to-video, video-to-video, video understanding, editing, interpolation, extension, upscaling, lip-sync, input formats, resolutions, FPS, frame counts, duration, audio tracks, output codecs, streaming/Realtime support, and source URLs.
+
+### Document, embedding, rerank, and spatial data
+
+The following specialized input/output types are also normalized into dedicated metadata records.
+
+```python
+doc = llmcapa.get("text-embedding-3-large", provider="openai")
+print(doc.embedding.dimensions)       # 3072
+print(doc.embedding.max_input_tokens) # 8192
+
+rerank = llmcapa.get("rerank-v3.5", provider="cohere")
+print(rerank.rerank.rerank)            # True
+
+# Models with file/pdf/json/csv/code input
+print(cap.document.input_formats)
+
+# Geospatial / 3D-image models
+print(cap.spatial.kind_values)
+```
+
+`document`, `embedding`, `rerank`, and `spatial` are appended to the end of `Capability` to preserve positional-constructor compatibility.
+
 ### Reasoning & Thinking Checks
 
 See the full provider-neutral API specification in [docs/API_SPECIFICATION.md](https://github.com/awaku7/llmcapa/blob/main/docs/API_SPECIFICATION.md).

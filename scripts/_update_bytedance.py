@@ -20,42 +20,11 @@ INSTALLED = (
 LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://docs.volcengine.com/docs/82379/1544106?lang=zh"
 
-VIDEO_PRICES = {
-    "bytedance/seedance-2.5": {
-        "online_cny_per_1m": {
-            "480p_720p_no_input_video": 70.0,
-            "480p_720p_input_video": 42.0,
-            "1080p_no_input_video_listed": 77.0,
-            "1080p_input_video_listed": 46.0,
-        }
-    },
-    "bytedance/seedance-2.0": {
-        "online_cny_per_1m": {
-            "480p_720p_no_input_video": 46.0,
-            "480p_720p_input_video": 28.0,
-            "1080p_no_input_video": 51.0,
-            "1080p_input_video": 31.0,
-            "4k_no_input_video": 26.0,
-            "4k_input_video": 16.0,
-        }
-    },
-    "bytedance/seedance-2.0-fast": {
-        "online_cny_per_1m": {
-            "480p_720p_no_input_video_listed": 37.0,
-            "480p_720p_input_video_listed": 22.0,
-        }
-    },
-    "bytedance/seedance-2.0-mini": {
-        "online_cny_per_1m": {
-            "480p_720p_no_input_video_listed": 23.0,
-            "480p_720p_input_video_listed": 14.0,
-        }
-    },
-    "bytedance/seedance-1-5-pro": {
-        "online_cny_per_1m": {"audio_video": 16.0, "silent_video": 8.0},
-        "batch_cny_per_1m": {"audio_video": 8.0, "silent_video": 4.0},
-    },
-}
+VIDEO_PRICES = json.loads(
+    (
+        Path(__file__).parent / "metadata" / "_update_bytedance_video_prices.json"
+    ).read_text(encoding="utf-8")
+)
 
 
 def main() -> None:

@@ -6,7 +6,10 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
+from _audio_capability_postprocess import apply as apply_audio_capabilities
 from _image_capability_postprocess import apply as apply_image_capabilities
+from _video_capability_postprocess import apply as apply_video_capabilities
+from _structured_capability_postprocess import apply as apply_structured_capabilities
 
 DATA = r"F:\KAIHATSU\llmcapa\src\llmcapa\data"
 INSTALLED = r"F:\Python314\Lib\site-packages\llmcapa\data"
@@ -18,18 +21,11 @@ anthro_path = os.path.join(DATA, "anthropic.json")
 with open(anthro_path, encoding="utf-8") as f:
     anthro = json.load(f)
 
-ANTHRO_PRICES = {
-    "claude-fable-5": (10.0, 50.0, 1048576, 131072),
-    "claude-opus-4-8": (5.0, 25.0, 1048576, 131072),
-    "claude-opus-4-7": (5.0, 25.0, 1048576, 131072),
-    "claude-opus-4-6": (5.0, 25.0, 1048576, 131072),
-    "claude-opus-4-5": (5.0, 25.0, 1048576, 131072),
-    "claude-sonnet-5": (3.0, 15.0, 1048576, 131072),
-    "claude-sonnet-4-6": (3.0, 15.0, 1048576, 131072),
-    "claude-sonnet-4-5": (3.0, 15.0, 1048576, 131072),
-    "claude-haiku-4-5": (1.0, 5.0, 200000, 65536),
-    "claude-haiku-3-5": (0.8, 4.0, 200000, 65536),
-}
+ANTHRO_PRICES = json.loads(
+    (Path(__file__).parent / "metadata" / "anthro_prices.json").read_text(
+        encoding="utf-8"
+    )
+)
 
 anthro_count = 0
 for m in anthro["models"]:
@@ -55,10 +51,9 @@ ds_path = os.path.join(DATA, "deepseek.json")
 with open(ds_path, encoding="utf-8") as f:
     ds = json.load(f)
 
-DS_PRICES = {
-    "deepseek-v4-flash": (0.14, 0.28, 1048576, 393216),
-    "deepseek-v4-pro": (0.435, 0.87, 1048576, 393216),
-}
+DS_PRICES = json.loads(
+    (Path(__file__).parent / "metadata" / "ds_prices.json").read_text(encoding="utf-8")
+)
 
 ds_count = 0
 for m in ds["models"]:
@@ -141,7 +136,19 @@ for fname in os.listdir(DATA):
 
 print(f"Responses API: {resp_count} models fixed (only OpenAI/Azure)", flush=True)
 
-# ── 4.5. Normalize image-generation capability records ──
+# ── 4.5. Normalize audio capability records ──
+audio_changes = apply_audio_capabilities(Path(DATA))
+print(f"AudioCapability records updated: {audio_changes}", flush=True)
+
+# ── 4.6. Normalize video capability records ──
+video_changes = apply_video_capabilities(Path(DATA))
+print(f"VideoCapability records updated: {video_changes}", flush=True)
+
+# ── 4.7. Normalize structured capability records ──
+structured_changes = apply_structured_capabilities(Path(DATA))
+print(f"Structured capabilities updated: {structured_changes}", flush=True)
+
+# ── 4.8. Normalize image-generation capability records ──
 image_changes = apply_image_capabilities(Path(DATA))
 print(f"ImageCapability records added: {image_changes}", flush=True)
 # ── 5. Fix provider names: meta-llama->meta, x-ai->xai ──
@@ -176,12 +183,18 @@ log_entry = f"""
 - DeepSeek: https://api-docs.deepseek.com/quick_start/pricing (Playwright)
 - FIM flags: pattern-based for code completion models
 - Responses API: restricted to OpenAI/Azure only
+- Audio metadata: provider documentation plus conservative modality-derived fields
+- Video metadata: provider documentation plus conservative modality-derived fields
+- Structured capabilities: document, embedding, rerank, and spatial metadata
 
 ### Changes
 - **Anthropic**: {anthro_count} models updated with official pricing (Fable 5 $10/$50, Opus 4.8 $5/$25, Sonnet 5 $3/$15, Haiku 4.5 $1/$5)
 - **DeepSeek**: {ds_count} models updated with official pricing (v4-flash $0.14/$0.28, v4-pro $0.435/$0.87)
 - **FIM flags**: {fim_count} models corrected (codegemma, codellama, starcoder2, deepseek-coder, qwen-coder, etc.)
 - **Responses API**: {resp_count} non-OpenAI/Azure models set to False
+- **AudioCapability**: {audio_changes.get('records_changed', 0)} audio records enriched
+- **VideoCapability**: {video_changes.get('records_changed', 0)} video records enriched
+- **Structured capabilities**: {structured_changes.get('records_changed', 0)} records enriched
 - **Provider names**: meta-llama->meta, x-ai->xai (consolidated)
 """
 with open(log_path, "a", encoding="utf-8") as f:

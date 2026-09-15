@@ -515,6 +515,37 @@
           "video_understanding",
           "adaptive_thinking"
         ]
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
       }
     },
     {
@@ -561,6 +592,29 @@
         "unit": "clip",
         "note": "varies by resolution/duration",
         "api": "video"
+      },
+      "video": {
+        "accepts_video_input": false,
+        "generation": true,
+        "understanding": false,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "generation": true,
+          "streaming": true
+        },
+        "output_formats": [
+          "mp4"
+        ],
+        "output_mime_types": [
+          "video/mp4"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
       }
     },
     {
@@ -603,6 +657,29 @@
         "unit": "clip",
         "note": "faster/cheaper tier vs Hailuo 2.3",
         "api": "video"
+      },
+      "video": {
+        "accepts_video_input": false,
+        "generation": true,
+        "understanding": false,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "generation": true,
+          "streaming": true
+        },
+        "output_formats": [
+          "mp4"
+        ],
+        "output_mime_types": [
+          "video/mp4"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
       }
     },
     {
@@ -667,7 +744,7 @@
         ],
         "max_input_bytes": 31457280,
         "source_url": "https://platform.minimax.io/docs/api-reference/file-management-upload",
-        "checked_at": "2026-09-10"
+        "checked_at": "2026-09-15"
       }
     },
     {
@@ -710,6 +787,21 @@
         "max_duration_min": 5,
         "unit": "track",
         "api": "music"
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "music_generation": true,
+        "checked_at": "2026-09-15",
+        "status": "inferred",
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "extra": {}
       }
     },
     {
@@ -752,6 +844,20 @@
         "unit": "1m_chars",
         "api": "tts",
         "quality": "hd"
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "checked_at": "2026-09-15",
+        "status": "inferred",
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "extra": {}
       }
     },
     {
@@ -794,6 +900,20 @@
         "unit": "1m_chars",
         "api": "tts",
         "quality": "turbo"
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "checked_at": "2026-09-15",
+        "status": "inferred",
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "extra": {}
       }
     }
   ]

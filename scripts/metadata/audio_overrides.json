@@ -1,0 +1,363 @@
+{
+  "openai::whisper-1": {
+    "transcription": true,
+    "timestamps": true,
+    "input_formats": [
+      "flac",
+      "mp3",
+      "mp4",
+      "mpeg",
+      "mpga",
+      "m4a",
+      "ogg",
+      "wav",
+      "webm"
+    ],
+    "input_mime_types": [
+      "audio/flac",
+      "audio/mpeg",
+      "audio/mp4",
+      "audio/ogg",
+      "audio/wav",
+      "audio/webm"
+    ],
+    "max_input_bytes": 25000000,
+    "output_formats": [
+      "json",
+      "text",
+      "srt",
+      "verbose_json",
+      "vtt"
+    ],
+    "response_formats": [
+      "json",
+      "text",
+      "srt",
+      "verbose_json",
+      "vtt"
+    ],
+    "language_values": [
+      "auto"
+    ],
+    "source_url": "https://platform.openai.com/docs/guides/speech-to-text"
+  },
+  "openai::gpt-4o-transcribe": {
+    "transcription": true,
+    "timestamps": true,
+    "input_formats": [
+      "flac",
+      "mp3",
+      "mp4",
+      "mpeg",
+      "mpga",
+      "m4a",
+      "ogg",
+      "wav",
+      "webm"
+    ],
+    "input_mime_types": [
+      "audio/flac",
+      "audio/mpeg",
+      "audio/mp4",
+      "audio/ogg",
+      "audio/wav",
+      "audio/webm"
+    ],
+    "max_input_bytes": 25000000,
+    "source_url": "https://developers.openai.com/api/docs/models/gpt-4o-transcribe.md"
+  },
+  "openai::gpt-4o-mini-transcribe": {
+    "transcription": true,
+    "timestamps": true,
+    "input_formats": [
+      "flac",
+      "mp3",
+      "mp4",
+      "mpeg",
+      "mpga",
+      "m4a",
+      "ogg",
+      "wav",
+      "webm"
+    ],
+    "input_mime_types": [
+      "audio/flac",
+      "audio/mpeg",
+      "audio/mp4",
+      "audio/ogg",
+      "audio/wav",
+      "audio/webm"
+    ],
+    "max_input_bytes": 25000000,
+    "source_url": "https://developers.openai.com/api/docs/models/gpt-4o-mini-transcribe.md"
+  },
+  "openai::gpt-4o-transcribe-diarize": {
+    "transcription": true,
+    "diarization": true,
+    "timestamps": true,
+    "input_formats": [
+      "flac",
+      "mp3",
+      "mp4",
+      "mpeg",
+      "mpga",
+      "m4a",
+      "ogg",
+      "wav",
+      "webm"
+    ],
+    "input_mime_types": [
+      "audio/flac",
+      "audio/mpeg",
+      "audio/mp4",
+      "audio/ogg",
+      "audio/wav",
+      "audio/webm"
+    ],
+    "max_input_bytes": 25000000,
+    "source_url": "https://developers.openai.com/api/docs/models/gpt-4o-transcribe-diarize.md"
+  },
+  "openai::tts-1": {
+    "speech_generation": true,
+    "output_formats": [
+      "mp3",
+      "opus",
+      "aac",
+      "flac",
+      "wav",
+      "pcm"
+    ],
+    "output_mime_types": [
+      "audio/mpeg",
+      "audio/opus",
+      "audio/aac",
+      "audio/flac",
+      "audio/wav",
+      "audio/pcm"
+    ],
+    "voice_values": [
+      "alloy",
+      "ash",
+      "coral",
+      "echo",
+      "fable",
+      "onyx",
+      "nova",
+      "sage",
+      "shimmer"
+    ],
+    "speed_min": 0.25,
+    "speed_max": 4.0,
+    "source_url": "https://platform.openai.com/docs/guides/text-to-speech"
+  },
+  "openai::tts-1-hd": {
+    "speech_generation": true,
+    "output_formats": [
+      "mp3",
+      "opus",
+      "aac",
+      "flac",
+      "wav",
+      "pcm"
+    ],
+    "output_mime_types": [
+      "audio/mpeg",
+      "audio/opus",
+      "audio/aac",
+      "audio/flac",
+      "audio/wav",
+      "audio/pcm"
+    ],
+    "voice_values": [
+      "alloy",
+      "ash",
+      "coral",
+      "echo",
+      "fable",
+      "onyx",
+      "nova",
+      "sage",
+      "shimmer"
+    ],
+    "speed_min": 0.25,
+    "speed_max": 4.0,
+    "source_url": "https://platform.openai.com/docs/guides/text-to-speech"
+  },
+  "openai::gpt-4o-mini-tts": {
+    "speech_generation": true,
+    "output_formats": [
+      "mp3",
+      "opus",
+      "aac",
+      "flac",
+      "wav",
+      "pcm"
+    ],
+    "output_mime_types": [
+      "audio/mpeg",
+      "audio/opus",
+      "audio/aac",
+      "audio/flac",
+      "audio/wav",
+      "audio/pcm"
+    ],
+    "voice_values": [
+      "alloy",
+      "ash",
+      "ballad",
+      "coral",
+      "echo",
+      "fable",
+      "onyx",
+      "nova",
+      "sage",
+      "shimmer",
+      "verse",
+      "marin",
+      "cedar"
+    ],
+    "speed_min": 0.25,
+    "speed_max": 4.0,
+    "source_url": "https://developers.openai.com/api/docs/models/gpt-4o-mini-tts.md"
+  },
+  "amazon::nova-sonic-v1": {
+    "speech_understanding": true,
+    "speech_generation": true,
+    "supports_streaming": true,
+    "supports_realtime": true,
+    "input_formats": [
+      "pcm"
+    ],
+    "input_mime_types": [
+      "audio/pcm"
+    ],
+    "sample_rates_hz": [
+      16000
+    ],
+    "output_formats": [
+      "pcm"
+    ],
+    "output_mime_types": [
+      "audio/pcm"
+    ],
+    "output_sample_rates_hz": [
+      24000
+    ],
+    "source_url": "https://docs.aws.amazon.com/nova/latest/userguide/speech-to-speech.html"
+  },
+  "amazon::nova-2-sonic-v1": {
+    "speech_understanding": true,
+    "speech_generation": true,
+    "supports_streaming": true,
+    "supports_realtime": true,
+    "input_formats": [
+      "pcm"
+    ],
+    "input_mime_types": [
+      "audio/pcm"
+    ],
+    "sample_rates_hz": [
+      16000
+    ],
+    "output_formats": [
+      "pcm"
+    ],
+    "output_mime_types": [
+      "audio/pcm"
+    ],
+    "output_sample_rates_hz": [
+      24000
+    ],
+    "source_url": "https://docs.aws.amazon.com/nova/latest/userguide/speech-to-speech.html"
+  },
+  "mistral::voxtral-mini-transcribe-2602": {
+    "transcription": true,
+    "input_formats": [
+      "flac",
+      "mp3",
+      "mp4",
+      "mpeg",
+      "mpga",
+      "m4a",
+      "ogg",
+      "wav",
+      "webm"
+    ],
+    "input_mime_types": [
+      "audio/flac",
+      "audio/mpeg",
+      "audio/mp4",
+      "audio/ogg",
+      "audio/wav",
+      "audio/webm"
+    ],
+    "source_url": "https://docs.mistral.ai/capabilities/audio/"
+  },
+  "mistral::voxtral-mini-transcribe-realtime-2602": {
+    "transcription": true,
+    "supports_streaming": true,
+    "supports_realtime": true,
+    "input_formats": [
+      "pcm"
+    ],
+    "input_mime_types": [
+      "audio/pcm"
+    ],
+    "source_url": "https://docs.mistral.ai/capabilities/audio/"
+  },
+  "mistral::voxtral-mini-tts-2603": {
+    "speech_generation": true,
+    "output_formats": [
+      "wav"
+    ],
+    "output_mime_types": [
+      "audio/wav"
+    ],
+    "source_url": "https://docs.mistral.ai/capabilities/audio/"
+  },
+  "xai::grok-stt-batch": {
+    "transcription": true,
+    "input_formats": [
+      "flac",
+      "mp3",
+      "mp4",
+      "mpeg",
+      "mpga",
+      "m4a",
+      "ogg",
+      "wav",
+      "webm"
+    ],
+    "input_mime_types": [
+      "audio/flac",
+      "audio/mpeg",
+      "audio/mp4",
+      "audio/ogg",
+      "audio/wav",
+      "audio/webm"
+    ],
+    "source_url": "https://docs.x.ai/docs/models/grok-voice"
+  },
+  "xai::grok-stt-stream": {
+    "transcription": true,
+    "supports_streaming": true,
+    "supports_realtime": true,
+    "input_formats": [
+      "pcm"
+    ],
+    "input_mime_types": [
+      "audio/pcm"
+    ],
+    "source_url": "https://docs.x.ai/docs/models/grok-voice"
+  },
+  "xai::grok-tts": {
+    "speech_generation": true,
+    "output_formats": [
+      "pcm"
+    ],
+    "output_mime_types": [
+      "audio/pcm"
+    ],
+    "source_url": "https://docs.x.ai/docs/models/grok-voice"
+  }
+}

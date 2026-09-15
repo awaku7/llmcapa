@@ -240,20 +240,11 @@ def test_google_gemini_provider_alias_and_strict_scope() -> None:
     """Gemini aliases resolve only to the requested native catalog."""
     assert llmcapa.get("gemini-2.5-flash", provider="google").provider == "google"
     assert llmcapa.get("gemini-2.5-flash", provider="gemini").provider == "google"
+    assert llmcapa.get("gemini-2.5-flash", provider="vertex-ai").provider == "vertex-ai"
+    assert llmcapa.get("gemini-2.5-flash", provider="vertexai").provider == "vertex-ai"
+    assert llmcapa.get("Llama-3.3-70B-Instruct", provider="meta").provider == "meta"
     assert (
-        llmcapa.get("gemini-2.5-flash", provider="vertex-ai").provider
-        == "vertex-ai"
-    )
-    assert (
-        llmcapa.get("gemini-2.5-flash", provider="vertexai").provider
-        == "vertex-ai"
-    )
-    assert (
-        llmcapa.get("Llama-3.3-70B-Instruct", provider="meta").provider == "meta"
-    )
-    assert (
-        llmcapa.get("Llama-3.3-70B-Instruct", provider="meta-llama").provider
-        == "meta"
+        llmcapa.get("Llama-3.3-70B-Instruct", provider="meta-llama").provider == "meta"
     )
 
     for model_id, provider in (
@@ -265,8 +256,7 @@ def test_google_gemini_provider_alias_and_strict_scope() -> None:
             llmcapa.get(model_id, provider=provider)
 
     assert (
-        llmcapa.get("gemini-2.5-flash", provider="openrouter").provider
-        == "openrouter"
+        llmcapa.get("gemini-2.5-flash", provider="openrouter").provider == "openrouter"
     )
 
     via_alias = llmcapa.list_models(provider="gemini")

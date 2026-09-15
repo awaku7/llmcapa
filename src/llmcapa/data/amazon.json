@@ -53,6 +53,54 @@
         "geo_output_per_1m": 2.75,
         "inference": "global_cross_region",
         "modalities_note": "text/image/video/file input; text output"
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
+      },
+      "document": {
+        "accepts_file": true,
+        "input_formats": [
+          "file"
+        ],
+        "input_mime_types": [
+          "application/pdf",
+          "text/plain",
+          "text/markdown",
+          "text/csv",
+          "application/json",
+          "application/xml",
+          "text/html"
+        ],
+        "status": "inferred",
+        "checked_at": "2026-09-15"
       }
     },
     {
@@ -108,6 +156,54 @@
         "geo_output_per_1m": 11.0,
         "inference": "global_cross_region",
         "availability": "preview"
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
+      },
+      "document": {
+        "accepts_file": true,
+        "input_formats": [
+          "file"
+        ],
+        "input_mime_types": [
+          "application/pdf",
+          "text/plain",
+          "text/markdown",
+          "text/csv",
+          "application/json",
+          "application/xml",
+          "text/html"
+        ],
+        "status": "inferred",
+        "checked_at": "2026-09-15"
       }
     },
     {
@@ -168,6 +264,59 @@
         "inference": "global_cross_region",
         "availability": "preview",
         "modalities_note": "omni multimodal; primary pricing is text tokens"
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": true,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "checked_at": "2026-09-15",
+        "status": "inferred",
+        "endpoints": {
+          "speech_generation": true,
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "extra": {}
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": true,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "generation": true,
+          "understanding": true,
+          "streaming": true
+        },
+        "output_formats": [
+          "mp4"
+        ],
+        "output_mime_types": [
+          "video/mp4"
+        ],
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
       }
     },
     {
@@ -206,8 +355,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.33,
-        "output_per_1m": 2.75,
+        "input_per_1m": 3.0,
+        "output_per_1m": 12.0,
         "currency": "USD"
       },
       "extra": {
@@ -222,6 +371,41 @@
         "text_input_per_1m": 0.33,
         "text_output_per_1m": 2.75,
         "primary_pricing": "text tokens; speech rates in extra"
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": true,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": true,
+        "input_formats": [
+          "pcm"
+        ],
+        "input_mime_types": [
+          "audio/pcm"
+        ],
+        "sample_rates_hz": [
+          16000
+        ],
+        "output_formats": [
+          "pcm"
+        ],
+        "output_mime_types": [
+          "audio/pcm"
+        ],
+        "output_sample_rates_hz": [
+          24000
+        ],
+        "source_url": "https://docs.aws.amazon.com/nova/latest/userguide/speech-to-speech.html",
+        "checked_at": "2026-09-15",
+        "status": "documented",
+        "endpoints": {
+          "speech_generation": true,
+          "speech_understanding": true,
+          "realtime": true,
+          "streaming": true
+        },
+        "extra": {}
       }
     },
     {
@@ -320,6 +504,37 @@
         "cache_hit_note": "75% less than on-demand input (official)",
         "batch_input_per_1m": 0.03,
         "batch_output_per_1m": 0.12
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
       }
     },
     {
@@ -372,6 +587,37 @@
         "batch_output_per_1m": 1.6,
         "latency_optimized_input_per_1m": 1.0,
         "latency_optimized_output_per_1m": 4.0
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
       }
     },
     {
@@ -422,6 +668,37 @@
         "cache_hit_note": "75% less than on-demand input (official)",
         "batch_input_per_1m": 1.25,
         "batch_output_per_1m": 6.25
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
       }
     },
     {
@@ -460,8 +737,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.06,
-        "output_per_1m": 0.24,
+        "input_per_1m": 3.4,
+        "output_per_1m": 13.6,
         "currency": "USD"
       },
       "extra": {
@@ -476,6 +753,41 @@
         "text_input_per_1m": 0.06,
         "text_output_per_1m": 0.24,
         "primary_pricing": "text tokens; speech rates in extra"
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": true,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": true,
+        "input_formats": [
+          "pcm"
+        ],
+        "input_mime_types": [
+          "audio/pcm"
+        ],
+        "sample_rates_hz": [
+          16000
+        ],
+        "output_formats": [
+          "pcm"
+        ],
+        "output_mime_types": [
+          "audio/pcm"
+        ],
+        "output_sample_rates_hz": [
+          24000
+        ],
+        "source_url": "https://docs.aws.amazon.com/nova/latest/userguide/speech-to-speech.html",
+        "checked_at": "2026-09-15",
+        "status": "documented",
+        "endpoints": {
+          "speech_generation": true,
+          "speech_understanding": true,
+          "realtime": true,
+          "streaming": true
+        },
+        "extra": {}
       }
     },
     {
@@ -539,7 +851,7 @@
         "max_input_height": 4096,
         "max_input_pixels": 4194304,
         "source_url": "https://docs.aws.amazon.com/nova/latest/userguide/image-gen-access.html",
-        "checked_at": "2026-09-10"
+        "checked_at": "2026-09-15"
       }
     },
     {
@@ -584,6 +896,32 @@
         "unit": "second",
         "price_per_second_720p": 0.08,
         "note": "720p $0.08/sec (US East)"
+      },
+      "video": {
+        "accepts_video_input": false,
+        "generation": true,
+        "understanding": false,
+        "text_to_video": true,
+        "image_to_video": true,
+        "video_to_video": false,
+        "supports_streaming": false,
+        "supports_realtime": null,
+        "output_formats": [
+          "mp4"
+        ],
+        "output_mime_types": [
+          "video/mp4"
+        ],
+        "duration_values_seconds": [
+          6.0
+        ],
+        "source_url": "https://docs.aws.amazon.com/nova/latest/userguide/video-generation.html",
+        "extra": {},
+        "endpoints": {
+          "generation": true
+        },
+        "checked_at": "2026-09-15",
+        "status": "documented"
       }
     },
     {
@@ -633,6 +971,14 @@
         "text_input_per_1m": 0.135,
         "price_per_image": 0.06,
         "note": "text $0.135/1M tokens; image $0.06/image (US East)"
+      },
+      "embedding": {
+        "embedding": true,
+        "output_formats": [
+          "float"
+        ],
+        "status": "inferred",
+        "checked_at": "2026-09-15"
       }
     },
     {
@@ -819,6 +1165,14 @@
         "unit": "token",
         "text_input_per_1m": 0.02,
         "note": "Titan Embed Text V2 $0.02/1M tokens"
+      },
+      "embedding": {
+        "embedding": true,
+        "output_formats": [
+          "float"
+        ],
+        "status": "inferred",
+        "checked_at": "2026-09-15"
       }
     },
     {
@@ -866,6 +1220,14 @@
         "unit": "token",
         "text_input_per_1m": 0.1,
         "note": "Titan Embed Text G1 $0.10/1M tokens"
+      },
+      "embedding": {
+        "embedding": true,
+        "output_formats": [
+          "float"
+        ],
+        "status": "inferred",
+        "checked_at": "2026-09-15"
       }
     },
     {
@@ -915,6 +1277,14 @@
         "text_input_per_1m": 0.0008,
         "price_per_image": 6e-05,
         "note": "Titan Multimodal Embeddings: text ~$0.0008/1M; image ~$0.00006/image (US East; verify on Bedrock pricing)"
+      },
+      "embedding": {
+        "embedding": true,
+        "output_formats": [
+          "float"
+        ],
+        "status": "inferred",
+        "checked_at": "2026-09-15"
       }
     },
     {
@@ -969,7 +1339,7 @@
         "accepts_text_prompt": true,
         "accepts_image_input": true,
         "status": "unknown",
-        "checked_at": "2026-09-10"
+        "checked_at": "2026-09-15"
       }
     }
   ]

@@ -1139,7 +1139,9 @@ def apply_official_pricing(models: list[dict], rows: list[list[str]]) -> int:
 
 def main() -> None:
     models = build()
-    official_pricing_updated = apply_official_pricing(models, fetch_official_pricing_rows())
+    official_pricing_updated = apply_official_pricing(
+        models, fetch_official_pricing_rows()
+    )
     OUT.parent.mkdir(parents=True, exist_ok=True)
     payload = {"models": models}
     OUT.write_text(

@@ -171,7 +171,14 @@ class Registry:
 
         # First-registered-wins for the flat model_id index.
         # Also skip if key is already claimed as an alias for another model.
-        aggregators = {"openrouter", "novita", "azure-foundry", "lmstudio", "ollama", "modellix"}
+        aggregators = {
+            "openrouter",
+            "novita",
+            "azure-foundry",
+            "lmstudio",
+            "ollama",
+            "modellix",
+        }
         existing = self._models.get(key)
         existing_provider = (
             self._normalize_provider(existing.provider) if existing is not None else ""

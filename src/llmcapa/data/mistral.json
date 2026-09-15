@@ -74,7 +74,7 @@
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
-      "supports_fim": false,
+      "supports_fim": true,
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "deprecated": false,
@@ -95,6 +95,14 @@
         "description": "Our state-of-the-art semantic for extracting representation of code extracts",
         "supports_embeddings": true,
         "supports_batching": true
+      },
+      "embedding": {
+        "embedding": true,
+        "output_formats": [
+          "float"
+        ],
+        "status": "inferred",
+        "checked_at": "2026-09-15"
       }
     },
     {
@@ -330,6 +338,14 @@
         "description": "Our state-of-the-art semantic for extracting representation of code extracts",
         "supports_embeddings": true,
         "supports_batching": true
+      },
+      "embedding": {
+        "embedding": true,
+        "output_formats": [
+          "float"
+        ],
+        "status": "inferred",
+        "checked_at": "2026-09-15"
       }
     },
     {
@@ -748,6 +764,42 @@
         "alias_count": "1",
         "description": "An efficient audio input model, pre-trained and optimized for transcription purposes only.",
         "supports_transcription": true
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "transcription": true,
+        "input_formats": [
+          "flac",
+          "mp3",
+          "mp4",
+          "mpeg",
+          "mpga",
+          "m4a",
+          "ogg",
+          "wav",
+          "webm"
+        ],
+        "input_mime_types": [
+          "audio/flac",
+          "audio/mpeg",
+          "audio/mp4",
+          "audio/ogg",
+          "audio/wav",
+          "audio/webm"
+        ],
+        "source_url": "https://docs.mistral.ai/capabilities/audio/",
+        "checked_at": "2026-09-15",
+        "status": "documented",
+        "endpoints": {
+          "transcription": true,
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "extra": {}
       }
     },
     {
@@ -789,6 +841,30 @@
         "alias_count": "1",
         "description": "An efficient audio input model, pre-trained and optimized for live transcription purposes only.",
         "supports_transcription": true
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": true,
+        "transcription": true,
+        "input_formats": [
+          "pcm"
+        ],
+        "input_mime_types": [
+          "audio/pcm"
+        ],
+        "source_url": "https://docs.mistral.ai/capabilities/audio/",
+        "checked_at": "2026-09-15",
+        "status": "documented",
+        "endpoints": {
+          "transcription": true,
+          "speech_understanding": true,
+          "realtime": true,
+          "streaming": true
+        },
+        "extra": {}
       }
     },
     {
@@ -832,6 +908,27 @@
         "tts_price": 16.0,
         "tts_input_price": 0.0,
         "supports_tts": true
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "output_formats": [
+          "wav"
+        ],
+        "output_mime_types": [
+          "audio/wav"
+        ],
+        "source_url": "https://docs.mistral.ai/capabilities/audio/",
+        "checked_at": "2026-09-15",
+        "status": "documented",
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "extra": {}
       }
     },
     {
@@ -881,6 +978,20 @@
         "supports_batching": true,
         "supports_prefix": true,
         "supports_document_qna": true
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "checked_at": "2026-09-15",
+        "status": "inferred",
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "extra": {}
       }
     },
     {
@@ -1046,7 +1157,7 @@
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
-      "supports_fim": false,
+      "supports_fim": true,
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "deprecated": true,
@@ -1091,7 +1202,7 @@
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
-      "supports_fim": false,
+      "supports_fim": true,
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "deprecated": true,
@@ -1135,7 +1246,7 @@
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
-      "supports_fim": false,
+      "supports_fim": true,
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "deprecated": true,
@@ -1179,7 +1290,7 @@
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
-      "supports_fim": false,
+      "supports_fim": true,
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "deprecated": true,
@@ -1223,7 +1334,7 @@
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
-      "supports_fim": false,
+      "supports_fim": true,
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "deprecated": true,
@@ -2928,6 +3039,20 @@
         "supports_batching": true,
         "supports_prefix": true,
         "supports_document_qna": true
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "checked_at": "2026-09-15",
+        "status": "inferred",
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "extra": {}
       }
     },
     {
@@ -2970,6 +3095,22 @@
         "replacement": "Voxtral Mini Transcribe 2",
         "description": "An efficient audio input model, pre-trained and optimized for transcription purposes only.",
         "supports_transcription": true
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "transcription": true,
+        "checked_at": "2026-09-15",
+        "status": "inferred",
+        "endpoints": {
+          "transcription": true,
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "extra": {}
       }
     }
   ]

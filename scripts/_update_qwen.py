@@ -232,10 +232,11 @@ MEDIA_MODELS: dict[str, dict] = {
 def qwen_thinking_mode(model_id: str) -> str | None:
     """Return the documented Qwen thinking mode for a model ID."""
     mid = model_id.lower()
-    thinking_family = (
-        mid.startswith(("qwen3", "qwq"))
-        or mid in {"qwen-plus", "qwen-flash", "qwen-turbo"}
-    )
+    thinking_family = mid.startswith(("qwen3", "qwq")) or mid in {
+        "qwen-plus",
+        "qwen-flash",
+        "qwen-turbo",
+    }
     if not thinking_family:
         return None
     if "thinking" in mid or mid.startswith("qwq"):
@@ -253,7 +254,9 @@ def apply_thinking_metadata(model: dict) -> None:
     model["thinking_budget_values"] = None
     extra = model.setdefault("extra", {})
     extra["thinking_budget_parameter"] = "thinking_budget"
-    extra["thinking_source"] = "https://www.alibabacloud.com/help/en/model-studio/deep-thinking"
+    extra["thinking_source"] = (
+        "https://www.alibabacloud.com/help/en/model-studio/deep-thinking"
+    )
     extra["thinking_mode"] = mode
     if mode == "hybrid":
         extra["thinking_parameter"] = "enable_thinking"

@@ -140,6 +140,65 @@ nova = llmcapa.get("nova-sonic-v1", provider="bedrock")
 gemini_live = llmcapa.get("gemini-3.1-flash-live-preview", provider="google")
 ```
 
+### 音声入力・出力の詳細メタデータ
+
+音声モダリティを持つモデルには、`cap.audio` として音声処理の詳細が収録されます。公式ドキュメントにない値は推測せず、`status="inferred"` としてモダリティ由来の基本情報のみを保持します。
+
+```python
+cap = llmcapa.get("gpt-4o-transcribe", provider="openai")
+print(cap.audio.transcription)          # True
+print(cap.audio.input_formats)          # ('flac', 'mp3', ...)
+print(cap.audio.max_input_bytes)        # 25000000
+
+voice = llmcapa.get("gpt-4o-mini-tts", provider="openai")
+print(voice.audio.speech_generation)    # True
+print(voice.audio.output_formats)       # ('mp3', 'opus', ...)
+print(voice.audio.voice_values)          # 音声ID一覧
+print(voice.audio.speed_min)             # 0.25
+print(voice.audio.speed_max)             # 4.0
+```
+
+`AudioCapability` には、文字起こし、翻訳、話者分離、タイムスタンプ、対応形式、MIMEタイプ、サンプルレート、音声合成の声・速度・出力形式、ストリーミング／Realtime API対応、公式ソースURLなどが含まれます。
+
+### 動画入力・出力の詳細メタデータ
+
+動画モダリティを持つモデルには、`cap.video` として生成・理解・編集の詳細が収録されます。
+
+```python
+video = llmcapa.get("sora-2", provider="openai")
+print(video.video.generation)           # True
+print(video.video.text_to_video)        # True
+print(video.video.output_formats)       # ('mp4',)
+
+reel = llmcapa.get("nova-reel-v1", provider="amazon")
+print(reel.video.image_to_video)        # True
+print(reel.video.duration_values_seconds)  # (6.0,)
+print(reel.video.output_mime_types)     # ('video/mp4',)
+```
+
+`VideoCapability` には、Text-to-Video、Image-to-Video、Video-to-Video、動画理解、編集、補間、延長、アップスケール、リップシンク、入力形式、解像度、FPS、フレーム数、動画長、音声トラック、出力コーデック、ストリーミング／Realtime対応などが含まれます。
+
+### ドキュメント・Embedding・Rerank・空間データ
+
+次の特殊な入出力も専用メタデータへ正規化しています。
+
+```python
+doc = llmcapa.get("text-embedding-3-large", provider="openai")
+print(doc.embedding.dimensions)       # 3072
+print(doc.embedding.max_input_tokens) # 8192
+
+rerank = llmcapa.get("rerank-v3.5", provider="cohere")
+print(rerank.rerank.rerank)            # True
+
+# file/pdf/json/csv/code 入力を持つモデル
+print(cap.document.input_formats)
+
+# geospatial / 3d-image モデル
+print(cap.spatial.kind_values)
+```
+
+`document`、`embedding`、`rerank`、`spatial` も、既存の位置引数互換性を壊さないよう `Capability` の末尾に追加されています。
+
 ### 推論（Reasoning）と思考（Thinking）の確認
 
 プロバイダー共通APIの仕様は [docs/API_SPECIFICATION.md](docs/API_SPECIFICATION.md) を参照してください。

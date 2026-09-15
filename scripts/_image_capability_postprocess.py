@@ -19,6 +19,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+try:
+    from _metadata_loader import load_overrides
+except ImportError:  # package-style test imports
+    from scripts._metadata_loader import load_overrides
+
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_DATA = ROOT / "src" / "llmcapa" / "data"
 
@@ -50,149 +55,31 @@ _ANALYSIS_MARKERS = (
 # These are limited to input constraints and explicit generation controls;
 # unknown values remain unset.
 GOOGLE_IMAGE_ASPECT_RATIOS = [
-    "1:1", "1:4", "1:8", "2:3", "3:2", "3:4", "4:1", "4:3",
-    "4:5", "5:4", "8:1", "9:16", "16:9", "21:9",
+    "1:1",
+    "1:4",
+    "1:8",
+    "2:3",
+    "3:2",
+    "3:4",
+    "4:1",
+    "4:3",
+    "4:5",
+    "5:4",
+    "8:1",
+    "9:16",
+    "16:9",
+    "21:9",
 ]
-IMAGE_INPUT_OVERRIDES: dict[tuple[str, str], dict[str, Any]] = {
-    ("amazon", "nova-canvas-v1"): {
-        "input_formats": ["png", "jpeg"],
-        "input_mime_types": ["image/png", "image/jpeg"],
-        "max_input_width": 4096,
-        "max_input_height": 4096,
-        "max_input_pixels": 4_194_304,
-        "source_url": "https://docs.aws.amazon.com/nova/latest/userguide/image-gen-access.html",
-        "status": "documented",
-    },
-    ("bytedance-seed", "seedream-4.5"): {
-        "input_formats": ["jpeg", "png", "webp", "bmp", "tiff", "gif", "heic"],
-        "input_mime_types": ["image/jpeg", "image/png", "image/webp", "image/bmp", "image/tiff", "image/gif", "image/heic"],
-        "max_input_images": 14,
-        "source_url": "https://docs.byteplus.com/en/docs/ModelArk/1541523",
-        "status": "documented",
-    },
-    ("bytedance-seed", "seedream-5-0-pro"): {
-        "input_formats": ["jpeg", "png", "webp", "bmp", "tiff", "gif", "heic"],
-        "input_mime_types": ["image/jpeg", "image/png", "image/webp", "image/bmp", "image/tiff", "image/gif", "image/heic"],
-        "max_input_images": 14,
-        "source_url": "https://docs.byteplus.com/en/docs/ModelArk/1541523",
-        "status": "documented",
-    },
-    ("google", "gemini-2.5-flash-image"): {
-        "input_formats": ["png", "jpeg"],
-        "input_mime_types": ["image/png", "image/jpeg"],
-        "max_input_payload_bytes": 20 * 1024 * 1024,
-        "supported_sizes": ["1K"],
-        "supported_aspect_ratios": GOOGLE_IMAGE_ASPECT_RATIOS,
-        "supports_transparent_background": False,
-        "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/image-generation",
-        "status": "documented",
-    },
-    ("google", "gemini-3-pro-image"): {
-        "input_formats": ["png", "jpeg"],
-        "input_mime_types": ["image/png", "image/jpeg"],
-        "max_input_payload_bytes": 20 * 1024 * 1024,
-        "supported_sizes": ["1K", "2K", "4K"],
-        "supported_aspect_ratios": GOOGLE_IMAGE_ASPECT_RATIOS,
-        "supports_transparent_background": False,
-        "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/image-generation",
-        "status": "documented",
-    },
-    ("google", "gemini-3-pro-image-preview"): {
-        "input_formats": ["png", "jpeg"],
-        "input_mime_types": ["image/png", "image/jpeg"],
-        "max_input_payload_bytes": 20 * 1024 * 1024,
-        "supported_sizes": ["1K", "2K", "4K"],
-        "supported_aspect_ratios": GOOGLE_IMAGE_ASPECT_RATIOS,
-        "supports_transparent_background": False,
-        "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/image-generation",
-        "status": "documented",
-    },
-    ("google", "gemini-3.1-flash-image"): {
-        "input_formats": ["png", "jpeg"],
-        "input_mime_types": ["image/png", "image/jpeg"],
-        "max_input_payload_bytes": 20 * 1024 * 1024,
-        "supported_sizes": ["512", "1K", "2K", "4K"],
-        "supported_aspect_ratios": GOOGLE_IMAGE_ASPECT_RATIOS,
-        "supports_transparent_background": False,
-        "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/image-generation",
-        "status": "documented",
-    },
-    ("google", "gemini-3.1-flash-image-preview"): {
-        "input_formats": ["png", "jpeg"],
-        "input_mime_types": ["image/png", "image/jpeg"],
-        "max_input_payload_bytes": 20 * 1024 * 1024,
-        "supported_sizes": ["512", "1K", "2K", "4K"],
-        "supported_aspect_ratios": GOOGLE_IMAGE_ASPECT_RATIOS,
-        "supports_transparent_background": False,
-        "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/image-generation",
-        "status": "documented",
-    },
-    ("google", "gemini-3.1-flash-lite-image"): {
-        "input_formats": ["png", "jpeg"],
-        "input_mime_types": ["image/png", "image/jpeg"],
-        "max_input_payload_bytes": 20 * 1024 * 1024,
-        "supported_sizes": ["1K"],
-        "supported_aspect_ratios": GOOGLE_IMAGE_ASPECT_RATIOS,
-        "supports_transparent_background": False,
-        "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/image-generation",
-        "status": "documented",
-    },
-    ("xai", "grok-imagine-image"): {
-        "input_formats": ["jpg", "jpeg", "png"],
-        "input_mime_types": ["image/jpeg", "image/png"],
-        "max_input_bytes": 20 * 1024 * 1024,
-        "source_url": "https://docs.x.ai/developers/model-capabilities/images/understanding",
-        "status": "documented",
-    },
-    ("xai", "grok-imagine-image-quality"): {
-        "input_formats": ["jpg", "jpeg", "png"],
-        "input_mime_types": ["image/jpeg", "image/png"],
-        "max_input_bytes": 20 * 1024 * 1024,
-        "source_url": "https://docs.x.ai/developers/model-capabilities/images/understanding",
-        "status": "documented",
-    },
-    ("xai", "grok-imagine-image-2.0"): {
-        "input_formats": ["jpg", "jpeg", "png"],
-        "input_mime_types": ["image/jpeg", "image/png"],
-        "max_input_bytes": 20 * 1024 * 1024,
-        "source_url": "https://docs.x.ai/developers/model-capabilities/images/generation.md",
-        "status": "documented",
-    },
-    ("meta", "muse-image-1.0"): {
-        "editing": True,
-        "accepts_file_id": True,
-        "accepts_image_url": True,
-        "input_formats": ["jpeg", "png"],
-        "input_mime_types": ["image/jpeg", "image/png"],
-        "max_input_bytes": 50_000_000,
-        "max_input_file_bytes": 1_073_741_824,
-        "source_url": "https://dev.meta.ai/docs/image-understanding/",
-        "status": "documented",
-    },
-    ("minimax", "image-01"): {
-        "accepts_image_input": True,
-        "input_formats": ["jpg", "jpeg", "png", "webp", "heic", "heif"],
-        "input_mime_types": ["image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"],
-        "max_input_bytes": 30 * 1024 * 1024,
-        "source_url": "https://platform.minimax.io/docs/api-reference/file-management-upload",
-        "status": "documented",
-    },
-    ("qwen", "qwen-image-2.0-pro"): {
-        "accepts_image_input": True,
-        "input_formats": ["jpg", "jpeg", "png", "bmp", "tiff", "webp", "gif"],
-        "input_mime_types": ["image/jpeg", "image/png", "image/bmp", "image/tiff", "image/webp", "image/gif"],
-        "max_input_bytes": 10 * 1024 * 1024,
-        "source_url": "https://help.aliyun.com/en/model-studio/qwen-image-edit-api",
-        "status": "documented",
-    },
-}
+IMAGE_INPUT_OVERRIDES = load_overrides("image_overrides.json")
+
 
 def _is_generation_record(record: dict[str, Any]) -> bool:
-    modalities = {str(x).lower() for x in record.get("output_modalities", [])}
-    if "image" not in modalities:
+    """Return whether an image-output record is an image generator."""
+    outputs = {str(x).lower() for x in record.get("output_modalities", [])}
+    if "image" not in outputs:
         return False
     model_id = str(record.get("model_id", "")).lower()
-    if any(marker.lower() in model_id for marker in _ANALYSIS_MARKERS):
+    if any(marker in model_id for marker in _ANALYSIS_MARKERS):
         return False
     return any(marker in model_id for marker in _GENERATION_MARKERS)
 
@@ -229,7 +116,11 @@ def minimal_image_capability(record: dict[str, Any]) -> dict[str, Any] | None:
     if source:
         result["source_url"] = source
         result["status"] = "documented"
-    result.update(IMAGE_INPUT_OVERRIDES.get((record.get("provider", ""), record.get("model_id", "")), {}))
+    result.update(
+        IMAGE_INPUT_OVERRIDES.get(
+            (record.get("provider", ""), record.get("model_id", "")), {}
+        )
+    )
     provider = str(record.get("provider", ""))
     model_id = str(record.get("model_id", ""))
     if provider == "microsoft" and model_id.lower().startswith("mai-image"):
@@ -243,7 +134,10 @@ def minimal_image_capability(record: dict[str, Any]) -> dict[str, Any] | None:
                 "status": "documented",
             }
         )
-    if provider == "openai" and model_id in {"gpt-image-2.5-flare", "gpt-image-2.5-sunburst"}:
+    if provider == "openai" and model_id in {
+        "gpt-image-2.5-flare",
+        "gpt-image-2.5-sunburst",
+    }:
         result["endpoints"] = {
             "image_api_generations": True,
             "image_api_edits": True,
@@ -317,7 +211,10 @@ def known_analysis_capability(record: dict[str, Any]) -> dict[str, Any] | None:
     """Return documented image-analysis metadata for non-generative records."""
     provider = str(record.get("provider", ""))
     model_id = str(record.get("model_id", ""))
-    if provider == "microsoft" and model_id.lower() in {"medimageparse", "medimageparse3d"}:
+    if provider == "microsoft" and model_id.lower() in {
+        "medimageparse",
+        "medimageparse3d",
+    }:
         return {
             "analysis": {
                 "classification": True,
@@ -345,7 +242,9 @@ def audit(data_dir: Path = DEFAULT_DATA) -> dict[str, Any]:
     for path in sorted(data_dir.glob("*.json")):
         data = json.loads(path.read_text(encoding="utf-8"))
         for record in data.get("models", []):
-            if "image" not in {str(x).lower() for x in record.get("output_modalities", [])}:
+            if "image" not in {
+                str(x).lower() for x in record.get("output_modalities", [])
+            }:
                 continue
             image_records += 1
             provider = str(record.get("provider", path.stem))
@@ -377,12 +276,18 @@ def apply(data_dir: Path = DEFAULT_DATA) -> dict[str, int]:
             model_id = str(record.get("model_id", ""))
             override = IMAGE_INPUT_OVERRIDES.get((provider, model_id), {})
             dynamic_override = (
-                provider == "microsoft" and model_id.lower().startswith("mai-image")
-            ) or (
-                provider == "openai"
-                and model_id in {"gpt-image-2.5-flare", "gpt-image-2.5-sunburst"}
-            ) or (provider == "meta" and model_id == "muse-image-1.0")
-            if record.get("image") is not None and not override and not dynamic_override:
+                (provider == "microsoft" and model_id.lower().startswith("mai-image"))
+                or (
+                    provider == "openai"
+                    and model_id in {"gpt-image-2.5-flare", "gpt-image-2.5-sunburst"}
+                )
+                or (provider == "meta" and model_id == "muse-image-1.0")
+            )
+            if (
+                record.get("image") is not None
+                and not override
+                and not dynamic_override
+            ):
                 continue
             capability = minimal_image_capability(record)
             analysis_capability = known_analysis_capability(record)
@@ -401,7 +306,9 @@ def apply(data_dir: Path = DEFAULT_DATA) -> dict[str, int]:
                     "chat_completions": False,
                 }
             if capability is not None or analysis_capability is not None or override:
-                merged.setdefault("checked_at", datetime.now(timezone.utc).date().isoformat())
+                merged.setdefault(
+                    "checked_at", datetime.now(timezone.utc).date().isoformat()
+                )
             if merged == record.get("image"):
                 continue
             record["image"] = merged
@@ -421,7 +328,9 @@ def main() -> int:
     parser.add_argument("--write", action="store_true", help="add conservative records")
     args = parser.parse_args()
     if args.write:
-        print(json.dumps({"changed": apply(args.data_dir)}, ensure_ascii=False, indent=2))
+        print(
+            json.dumps({"changed": apply(args.data_dir)}, ensure_ascii=False, indent=2)
+        )
     print(json.dumps(audit(args.data_dir), ensure_ascii=False, indent=2))
     return 0
 

@@ -710,12 +710,30 @@ def provider_of(item: dict) -> str:
     return "azure-foundry"
 
 
+def _date_is_past(value: Any) -> bool:
+    """Return whether a catalog lifecycle date has already elapsed."""
+    text = str(value or "").strip()
+    if not text:
+        return False
+    for fmt in ("%m/%d/%Y %H:%M:%S %z", "%m/%d/%Y", "%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%d"):
+        try:
+            parsed = datetime.strptime(text, fmt)
+            if parsed.tzinfo is None:
+                parsed = parsed.replace(tzinfo=timezone.utc)
+            return parsed.date() <= datetime.now(timezone.utc).date()
+        except ValueError:
+            continue
+    return False
+
+
 def lifecycle_of(item: dict) -> str:
     scd = item.get("systemCatalogData") or {}
     tags = item.get("tags") or {}
     stage = (item.get("stage") or "").strip()
     labels = item.get("labels") or []
-    # retirement
+    # Lifecycle dates describe a future transition until they elapse; merely
+    # having an InferenceDeprecationDate must not mark a currently usable model
+    # as deprecated.
     ret = (
         scd.get("inferenceRetirementDate") or tags.get("InferenceRetirementDate") or ""
     )
@@ -724,9 +742,9 @@ def lifecycle_of(item: dict) -> str:
         or tags.get("InferenceDeprecationDate")
         or ""
     )
-    if ret:
+    if _date_is_past(ret):
         return "Retired"
-    if dep:
+    if _date_is_past(dep):
         return "Deprecated"
     if scd.get("preview") or stage.lower() == "preview":
         return "Preview"

@@ -360,6 +360,28 @@
             "source": "https://www.alibabacloud.com/help/en/model-studio/"
           }
         ]
+      },
+      "video": {
+        "accepts_video_input": false,
+        "generation": true,
+        "understanding": false,
+        "text_to_video": true,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": false,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "generation": true
+        },
+        "output_formats": [
+          "mp4"
+        ],
+        "output_mime_types": [
+          "video/mp4"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
       }
     },
     {
@@ -440,6 +462,14 @@
             "source": "https://www.alibabacloud.com/help/en/model-studio/"
           }
         ]
+      },
+      "embedding": {
+        "embedding": true,
+        "output_formats": [
+          "float"
+        ],
+        "status": "inferred",
+        "checked_at": "2026-09-15"
       }
     },
     {
@@ -1454,6 +1484,21 @@
             "source": "https://www.alibabacloud.com/help/en/model-studio/"
           }
         ]
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": null,
+        "supports_realtime": null,
+        "transcription": true,
+        "checked_at": "2026-09-15",
+        "status": "inferred",
+        "endpoints": {
+          "transcription": true,
+          "speech_understanding": true
+        },
+        "extra": {}
       }
     },
     {
@@ -1494,6 +1539,14 @@
             "source": "https://www.alibabacloud.com/help/en/model-studio/"
           }
         ]
+      },
+      "embedding": {
+        "embedding": true,
+        "output_formats": [
+          "float"
+        ],
+        "status": "inferred",
+        "checked_at": "2026-09-15"
       }
     },
     {
@@ -1534,6 +1587,14 @@
             "source": "https://www.alibabacloud.com/help/en/model-studio/"
           }
         ]
+      },
+      "embedding": {
+        "embedding": true,
+        "output_formats": [
+          "float"
+        ],
+        "status": "inferred",
+        "checked_at": "2026-09-15"
       }
     },
     {
@@ -2321,7 +2382,7 @@
       "supports_thinking_budget": true,
       "supports_anthropic_api": false,
       "supports_google_api": false,
-      "supports_fim": false,
+      "supports_fim": true,
       "tokenizer_name": "Qwen3",
       "knowledge_cutoff": "2025-06-30",
       "deprecated": false,
@@ -2371,7 +2432,7 @@
       "supports_thinking_budget": true,
       "supports_anthropic_api": false,
       "supports_google_api": false,
-      "supports_fim": false,
+      "supports_fim": true,
       "tokenizer_name": "Qwen3",
       "knowledge_cutoff": "2025-06-30",
       "deprecated": false,
@@ -2421,7 +2482,7 @@
       "supports_thinking_budget": true,
       "supports_anthropic_api": false,
       "supports_google_api": false,
-      "supports_fim": false,
+      "supports_fim": true,
       "license_type": "api",
       "tokenizer_name": "",
       "knowledge_cutoff": null,
@@ -2466,7 +2527,7 @@
       "supports_thinking_budget": true,
       "supports_anthropic_api": false,
       "supports_google_api": false,
-      "supports_fim": false,
+      "supports_fim": true,
       "tokenizer_name": "Qwen3",
       "knowledge_cutoff": "2025-06-30",
       "deprecated": false,
@@ -2516,7 +2577,7 @@
       "supports_thinking_budget": true,
       "supports_anthropic_api": false,
       "supports_google_api": false,
-      "supports_fim": false,
+      "supports_fim": true,
       "license_type": "api",
       "tokenizer_name": "",
       "knowledge_cutoff": null,
@@ -2561,7 +2622,7 @@
       "supports_thinking_budget": true,
       "supports_anthropic_api": false,
       "supports_google_api": false,
-      "supports_fim": false,
+      "supports_fim": true,
       "tokenizer_name": "Qwen",
       "knowledge_cutoff": null,
       "deprecated": false,
@@ -2611,7 +2672,7 @@
       "supports_thinking_budget": true,
       "supports_anthropic_api": false,
       "supports_google_api": false,
-      "supports_fim": false,
+      "supports_fim": true,
       "tokenizer_name": "Qwen3",
       "knowledge_cutoff": "2025-06-30",
       "deprecated": false,
@@ -2661,7 +2722,7 @@
       "supports_thinking_budget": true,
       "supports_anthropic_api": false,
       "supports_google_api": false,
-      "supports_fim": false,
+      "supports_fim": true,
       "license_type": "api",
       "tokenizer_name": "",
       "knowledge_cutoff": null,
@@ -2706,7 +2767,7 @@
       "supports_thinking_budget": true,
       "supports_anthropic_api": false,
       "supports_google_api": false,
-      "supports_fim": false,
+      "supports_fim": true,
       "license_type": "api",
       "tokenizer_name": "",
       "knowledge_cutoff": null,
@@ -4745,7 +4806,38 @@
         "thinking_mode": "hybrid",
         "thinking_parameter": "enable_thinking"
       },
-      "thinking_budget_values": null
+      "thinking_budget_values": null,
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
+      }
     },
     {
       "provider": "qwen",
@@ -4797,7 +4889,38 @@
         "thinking_mode": "hybrid",
         "thinking_parameter": "enable_thinking"
       },
-      "thinking_budget_values": null
+      "thinking_budget_values": null,
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
+      }
     },
     {
       "provider": "qwen",
@@ -4849,7 +4972,38 @@
         "thinking_mode": "hybrid",
         "thinking_parameter": "enable_thinking"
       },
-      "thinking_budget_values": null
+      "thinking_budget_values": null,
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
+      }
     },
     {
       "provider": "qwen",
@@ -4901,7 +5055,38 @@
         "thinking_mode": "hybrid",
         "thinking_parameter": "enable_thinking"
       },
-      "thinking_budget_values": null
+      "thinking_budget_values": null,
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
+      }
     },
     {
       "provider": "qwen",
@@ -4953,7 +5138,38 @@
         "thinking_mode": "hybrid",
         "thinking_parameter": "enable_thinking"
       },
-      "thinking_budget_values": null
+      "thinking_budget_values": null,
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
+      }
     },
     {
       "provider": "qwen",
@@ -5064,7 +5280,38 @@
         "thinking_mode": "hybrid",
         "thinking_parameter": "enable_thinking"
       },
-      "thinking_budget_values": null
+      "thinking_budget_values": null,
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
+      }
     },
     {
       "provider": "qwen",
@@ -5439,7 +5686,53 @@
         "thinking_mode": "hybrid",
         "thinking_parameter": "enable_thinking"
       },
-      "thinking_budget_values": null
+      "thinking_budget_values": null,
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": true,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "checked_at": "2026-09-15",
+        "status": "inferred",
+        "endpoints": {
+          "speech_generation": true,
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "extra": {}
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
+      }
     },
     {
       "provider": "qwen",
@@ -5688,7 +5981,38 @@
         "thinking_mode": "hybrid",
         "thinking_parameter": "enable_thinking"
       },
-      "thinking_budget_values": null
+      "thinking_budget_values": null,
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
+      }
     },
     {
       "provider": "qwen",
@@ -5837,7 +6161,38 @@
         "thinking_mode": "hybrid",
         "thinking_parameter": "enable_thinking"
       },
-      "thinking_budget_values": null
+      "thinking_budget_values": null,
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
+      }
     },
     {
       "provider": "qwen",
@@ -5889,7 +6244,38 @@
         "thinking_mode": "hybrid",
         "thinking_parameter": "enable_thinking"
       },
-      "thinking_budget_values": null
+      "thinking_budget_values": null,
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
+      }
     },
     {
       "provider": "qwen",
@@ -5941,7 +6327,38 @@
         "thinking_mode": "hybrid",
         "thinking_parameter": "enable_thinking"
       },
-      "thinking_budget_values": null
+      "thinking_budget_values": null,
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
+      }
     },
     {
       "provider": "qwen",
@@ -6002,7 +6419,38 @@
         "thinking_mode": "hybrid",
         "thinking_parameter": "enable_thinking"
       },
-      "thinking_budget_values": null
+      "thinking_budget_values": null,
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
+      }
     },
     {
       "provider": "qwen",
@@ -6212,7 +6660,38 @@
         "thinking_mode": "hybrid",
         "thinking_parameter": "enable_thinking"
       },
-      "thinking_budget_values": null
+      "thinking_budget_values": null,
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
+      }
     },
     {
       "provider": "qwen",
@@ -6309,7 +6788,38 @@
         "thinking_mode": "hybrid",
         "thinking_parameter": "enable_thinking"
       },
-      "thinking_budget_values": null
+      "thinking_budget_values": null,
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
+      }
     },
     {
       "provider": "qwen",
@@ -6989,7 +7499,38 @@
         "thinking_mode": "hybrid",
         "thinking_parameter": "enable_thinking"
       },
-      "thinking_budget_values": null
+      "thinking_budget_values": null,
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-09-15",
+        "status": "inferred"
+      }
     },
     {
       "provider": "qwen",

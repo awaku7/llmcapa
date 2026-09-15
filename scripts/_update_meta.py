@@ -131,27 +131,21 @@ def parse_image_generation_page(text: str) -> dict:
     if count:
         result["max_outputs"] = int(count.group(1))
 
-    output_line = re.search(
-        r"(?im)^\s*[•*-]?\s*output_format:\s*(.+)$", normalized
-    )
+    output_line = re.search(r"(?im)^\s*[•*-]?\s*output_format:\s*(.+)$", normalized)
     if output_line:
         formats = re.findall(
-            r'\"(webp|png|jpeg)\"', output_line.group(1), re.IGNORECASE
+            r"\"(webp|png|jpeg)\"", output_line.group(1), re.IGNORECASE
         )
         if formats:
             result["output_formats"] = list(dict.fromkeys(x.lower() for x in formats))
 
-    response_line = re.search(
-        r"(?im)^\s*[•*-]?\s*response_format:\s*(.+)$", normalized
-    )
+    response_line = re.search(r"(?im)^\s*[•*-]?\s*response_format:\s*(.+)$", normalized)
     if response_line:
         formats = re.findall(
-            r'\"(b64_json|url)\"', response_line.group(1), re.IGNORECASE
+            r"\"(b64_json|url)\"", response_line.group(1), re.IGNORECASE
         )
         if formats:
-            result["response_formats"] = list(
-                dict.fromkeys(x.lower() for x in formats)
-            )
+            result["response_formats"] = list(dict.fromkeys(x.lower() for x in formats))
 
     if re.search(r"background:.*always opaque", normalized, re.IGNORECASE | re.DOTALL):
         result["supports_transparent_background"] = False
@@ -172,7 +166,7 @@ def parse_image_generation_page(text: str) -> dict:
         r"(?im)^\s*[•*-]?\s*reasoning_strength:\s*(.+)$", normalized
     )
     if reasoning_line:
-        values = re.findall(r'\"(low|high)\"', reasoning_line.group(1), re.IGNORECASE)
+        values = re.findall(r"\"(low|high)\"", reasoning_line.group(1), re.IGNORECASE)
         if values:
             result["reasoning_strength_values"] = list(
                 dict.fromkeys(x.lower() for x in values)
@@ -391,7 +385,9 @@ def build() -> tuple[list[dict], dict]:
             "output_modalities": ["image"],
             "supports_function_calling": False,
             "supports_json_mode": False,
-            "supports_streaming": bool(image_capability.get("supports_streaming", False)),
+            "supports_streaming": bool(
+                image_capability.get("supports_streaming", False)
+            ),
             "supports_vision": True,
             "supports_reasoning": True,
             "supports_chat_completion": False,

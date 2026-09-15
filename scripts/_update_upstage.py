@@ -20,6 +20,7 @@ INSTALLED = (
 )
 LOG = ROOT / "provider_update_log.md"
 
+
 def parse_official_model_page(text: str) -> dict:
     """Extract current Solar model metadata from the rendered official page."""
     normalized = " ".join(text.split())
@@ -41,8 +42,7 @@ def parse_official_model_page(text: str) -> dict:
     if not context or not max_output or not version:
         raise RuntimeError("Upstage official model page is missing required metadata")
     page_prices = [
-        float(value)
-        for value in re.findall(r"\$([0-9]+(?:\.[0-9]+)?)", normalized)
+        float(value) for value in re.findall(r"\$([0-9]+(?:\.[0-9]+)?)", normalized)
     ]
     if len(page_prices) < 3:
         raise RuntimeError("Upstage official model page is missing pricing values")

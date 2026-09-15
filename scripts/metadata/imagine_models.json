@@ -1,0 +1,123 @@
+[
+  {
+    "model_id": "grok-imagine-image-2.0",
+    "display_name": "Grok Imagine Image 2.0",
+    "input_modalities": [
+      "text",
+      "image"
+    ],
+    "output_modalities": [
+      "image"
+    ],
+    "image": {
+      "generation": true,
+      "editing": true,
+      "accepts_text_prompt": true,
+      "accepts_image_input": true,
+      "max_input_images": 5,
+      "max_outputs": 10,
+      "quality_values": [
+        "low",
+        "medium",
+        "auto"
+      ],
+      "response_formats": [
+        "url",
+        "b64_json"
+      ],
+      "supported_sizes": [
+        "1k",
+        "2k"
+      ],
+      "source_url": "https://docs.x.ai/developers/model-capabilities/images/generation.md",
+      "status": "documented"
+    },
+    "extra": {
+      "price_per_image": 0.02,
+      "unit": "image",
+      "resolutions": [
+        "1K",
+        "2K"
+      ],
+      "source": "https://docs.x.ai/developers/model-capabilities/images/generation.md",
+      "overview_source": "https://docs.x.ai/developers/model-capabilities/imagine.md"
+    }
+  },
+  {
+    "model_id": "grok-imagine-image",
+    "display_name": "Grok Imagine Image",
+    "input_modalities": [
+      "text",
+      "image"
+    ],
+    "output_modalities": [
+      "image"
+    ],
+    "extra": {
+      "price_per_image": 0.02,
+      "unit": "image",
+      "resolutions": [
+        "1K",
+        "2K"
+      ],
+      "source": "https://docs.x.ai/developers/models",
+      "note": "legacy slug; use grok-imagine-image-2.0 for current generation controls"
+    }
+  },
+  {
+    "model_id": "grok-imagine-image-quality",
+    "display_name": "Grok Imagine Image Quality",
+    "input_modalities": [
+      "text",
+      "image"
+    ],
+    "output_modalities": [
+      "image"
+    ],
+    "deprecated": true,
+    "extra": {
+      "price_per_image": 0.05,
+      "unit": "image",
+      "note": "retirement announced; use grok-imagine-image-2.0",
+      "source": "https://docs.x.ai/developers/models"
+    }
+  },
+  {
+    "model_id": "grok-imagine-video",
+    "display_name": "Grok Imagine Video",
+    "input_modalities": [
+      "text",
+      "image"
+    ],
+    "output_modalities": [
+      "video"
+    ],
+    "extra": {
+      "price_per_second": 0.05,
+      "unit": "second",
+      "resolutions": [
+        "480p",
+        "720p",
+        "1080p"
+      ],
+      "source": "https://docs.x.ai/developers/models"
+    }
+  },
+  {
+    "model_id": "grok-imagine-video-1.5",
+    "display_name": "Grok Imagine Video 1.5",
+    "input_modalities": [
+      "text",
+      "image"
+    ],
+    "output_modalities": [
+      "video"
+    ],
+    "extra": {
+      "price_per_second": 0.08,
+      "unit": "second",
+      "note": "1.5 tier retained; docs headline $0.05/sec",
+      "source": "https://docs.x.ai/developers/models"
+    }
+  }
+]

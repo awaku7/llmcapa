@@ -3,21 +3,21 @@
 import json
 import os
 import shutil
+from pathlib import Path
 
 import llmcapa
 
 DATA = r"F:\KAIHATSU\llmcapa\src\llmcapa\data"
 INSTALLED = r"F:\Python314\Lib\site-packages\llmcapa\data"
 
-# MiniMax official pricing (from Novita pricing page & known info)
+# Official pricing is kept in metadata JSON so the updater contains no model values.
 MINIMAX_PRICES = {
-    "minimax-m1": (0.55, 2.2),
-    "minimax-m2": (0.3, 1.2),
-    "minimax-m2.1": (0.3, 1.2),
-    "minimax-m2.5": (0.3, 1.2),
-    "minimax-m2.7": (0.3, 1.2),
-    "minimax-m3": (0.3, 1.2),
-    "minimax-01": (0.2, 1.1),
+    key: tuple(value)
+    for key, value in json.loads(
+        (
+            Path(__file__).parent / "metadata" / "_add_minimax_minimax_prices.json"
+        ).read_text(encoding="utf-8")
+    ).items()
 }
 
 # Export from registry

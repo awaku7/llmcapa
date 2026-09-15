@@ -17,6 +17,7 @@ DATA = ROOT / "src" / "llmcapa" / "data" / "ibm-granite.json"
 LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://www.ibm.com/granite/docs/models/granite4-2"
 
+
 def discover_granite_42(page: str) -> dict[str, str]:
     model_ids = sorted(set(re.findall(r"\bgranite-4\.2-[0-9]+b\b", page)))
     return {model_id: model_id.rsplit("-", 1)[-1].upper() for model_id in model_ids}

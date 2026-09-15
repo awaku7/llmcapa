@@ -16,7 +16,15 @@ from importlib.metadata import version as package_version
 from pathlib import Path
 
 from .models import (
+    AudioCapability,
+    AudioEndpointCapability,
     Capability,
+    VideoCapability,
+    VideoEndpointCapability,
+    DocumentCapability,
+    EmbeddingCapability,
+    RerankCapability,
+    SpatialCapability,
     ComputerUseCapability,
     Feature,
     ImageAnalysisCapability,
@@ -31,10 +39,18 @@ try:
     __version__ = package_version("llmcapa")
 except PackageNotFoundError:
     # Source-tree fallback when the project is not installed yet.
-    __version__ = "0.5.29"
+    __version__ = "0.5.31"
 
 __all__ = [
+    "AudioCapability",
+    "AudioEndpointCapability",
     "Capability",
+    "VideoCapability",
+    "VideoEndpointCapability",
+    "DocumentCapability",
+    "EmbeddingCapability",
+    "RerankCapability",
+    "SpatialCapability",
     "ComputerUseCapability",
     "Feature",
     "ImageAnalysisCapability",

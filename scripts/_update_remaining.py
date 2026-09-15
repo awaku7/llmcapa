@@ -8,22 +8,14 @@ from pathlib import Path
 DATA = str(Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data")
 INSTALLED = str(Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data")
 
-# 1. Mistral official pricing (from mistral.ai FAQ: "Mistral Large costs $2/M in $6/M out")
+# Official pricing is kept in metadata JSON so the updater contains no model values.
 MISTRAL_PRICES = {
-    "mistral-large": (2.0, 6.0),
-    "mistral-large-3": (2.0, 6.0),
-    "mistral-medium": (1.0, 3.0),
-    "mistral-medium-3.5": (1.0, 3.0),
-    "mistral-small": (0.2, 0.6),
-    "mistral-small-24b": (0.2, 0.6),
-    "mistral-small3.1": (0.2, 0.6),
-    "mistral-small3.2": (0.2, 0.6),
-    "mistral-nemo": (0.15, 0.15),
-    "codestral": (1.0, 3.0),
-    "ministral-3": (0.04, 0.04),
-    "mistral-7b": (0.05, 0.05),
-    "mixtral": (0.15, 0.15),
-    "mistrallite": (0.1, 0.1),
+    key: tuple(value)
+    for key, value in json.loads(
+        (
+            Path(__file__).parent / "metadata" / "_update_remaining_mistral_prices.json"
+        ).read_text(encoding="utf-8")
+    ).items()
 }
 
 path_mistral = os.path.join(DATA, "mistral.json")

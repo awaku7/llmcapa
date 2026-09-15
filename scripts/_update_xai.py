@@ -20,228 +20,48 @@ INSTALLED = (
 )
 LOG = WORKDIR / "provider_update_log.md"
 SOURCE = "https://docs.x.ai/developers/models"
-IMAGE_GENERATION_SOURCE = "https://docs.x.ai/developers/model-capabilities/images/generation.md"
+IMAGE_GENERATION_SOURCE = (
+    "https://docs.x.ai/developers/model-capabilities/images/generation.md"
+)
 IMAGE_OVERVIEW_SOURCE = "https://docs.x.ai/developers/model-capabilities/imagine.md"
 
 # Long-context threshold used by xAI text models (docs + ListModels)
 LONG_CTX_THRESHOLD = 200_000
 
 # Official docs pricing for Imagine / Voice (not fully in ListModels LanguageModel)
-IMAGINE_MODELS = [
-    {
-        "model_id": "grok-imagine-image-2.0",
-        "display_name": "Grok Imagine Image 2.0",
-        "input_modalities": ["text", "image"],
-        "output_modalities": ["image"],
-        "image": {
-            "generation": True,
-            "editing": True,
-            "accepts_text_prompt": True,
-            "accepts_image_input": True,
-            "max_input_images": 5,
-            "max_outputs": 10,
-            "quality_values": ["low", "medium", "auto"],
-            "response_formats": ["url", "b64_json"],
-            "supported_sizes": ["1k", "2k"],
-            "source_url": IMAGE_GENERATION_SOURCE,
-            "status": "documented",
-        },
-        "extra": {
-            "price_per_image": 0.02,
-            "unit": "image",
-            "resolutions": ["1K", "2K"],
-            "source": IMAGE_GENERATION_SOURCE,
-            "overview_source": IMAGE_OVERVIEW_SOURCE,
-        },
-    },
-    {
-        "model_id": "grok-imagine-image",
-        "display_name": "Grok Imagine Image",
-        "input_modalities": ["text", "image"],
-        "output_modalities": ["image"],
-        "extra": {
-            "price_per_image": 0.02,
-            "unit": "image",
-            "resolutions": ["1K", "2K"],
-            "source": SOURCE,
-            "note": "legacy slug; use grok-imagine-image-2.0 for current generation controls",
-        },
-    },
-    {
-        "model_id": "grok-imagine-image-quality",
-        "display_name": "Grok Imagine Image Quality",
-        "input_modalities": ["text", "image"],
-        "output_modalities": ["image"],
-        "deprecated": True,
-        "extra": {
-            "price_per_image": 0.05,
-            "unit": "image",
-            "note": "retirement announced; use grok-imagine-image-2.0",
-            "source": SOURCE,
-        },
-    },
-    {
-        "model_id": "grok-imagine-video",
-        "display_name": "Grok Imagine Video",
-        "input_modalities": ["text", "image"],
-        "output_modalities": ["video"],
-        "extra": {
-            "price_per_second": 0.05,
-            "unit": "second",
-            "resolutions": ["480p", "720p", "1080p"],
-            "source": SOURCE,
-        },
-    },
-    {
-        "model_id": "grok-imagine-video-1.5",
-        "display_name": "Grok Imagine Video 1.5",
-        "input_modalities": ["text", "image"],
-        "output_modalities": ["video"],
-        "extra": {
-            "price_per_second": 0.08,
-            "unit": "second",
-            "note": "1.5 tier retained; docs headline $0.05/sec",
-            "source": SOURCE,
-        },
-    },
-]
+IMAGINE_MODELS = json.loads(
+    (WORKDIR / "scripts" / "metadata" / "xai_imagine_models.json").read_text(
+        encoding="utf-8"
+    )
+)
 
 # Voice API (optional specialty entries — not chat LLMs)
-VOICE_MODELS = [
-    {
-        "model_id": "grok-voice-agent",
-        "display_name": "Grok Voice Agent",
-        "input_modalities": ["audio", "text"],
-        "output_modalities": ["audio", "text"],
-        "extra": {
-            "price_per_hour": 3.0,
-            "unit": "hour",
-            "source": SOURCE,
-            "api": "voice-agent",
-        },
-    },
-    {
-        "model_id": "grok-tts",
-        "display_name": "Grok Text to Speech",
-        "input_modalities": ["text"],
-        "output_modalities": ["audio"],
-        "extra": {
-            "price_per_1m_chars": 15.0,
-            "unit": "1m_chars",
-            "source": SOURCE,
-            "api": "tts",
-        },
-    },
-    {
-        "model_id": "grok-stt-batch",
-        "display_name": "Grok Speech to Text (Batch)",
-        "input_modalities": ["audio"],
-        "output_modalities": ["text"],
-        "extra": {
-            "price_per_hour": 0.10,
-            "unit": "hour",
-            "source": SOURCE,
-            "api": "stt-batch",
-        },
-    },
-    {
-        "model_id": "grok-stt-stream",
-        "display_name": "Grok Speech to Text (Streaming)",
-        "input_modalities": ["audio"],
-        "output_modalities": ["text"],
-        "extra": {
-            "price_per_hour": 0.20,
-            "unit": "hour",
-            "source": SOURCE,
-            "api": "stt-streaming",
-        },
-    },
-]
+VOICE_MODELS = json.loads(
+    (WORKDIR / "scripts" / "metadata" / "xai_voice_models.json").read_text(
+        encoding="utf-8"
+    )
+)
 
 # Legacy models retained as deprecated (no longer on primary docs table)
-LEGACY = [
-    {
-        "model_id": "grok-3",
-        "display_name": "grok-3",
-        "context_window": 131072,
-        "input_modalities": ["text"],
-        "output_modalities": ["text"],
-        "pricing": {"input_per_1m": 0.3, "output_per_1m": 1.5, "currency": "USD"},
-        "aliases": ["x-ai/grok-3"],
-        "supports_vision": False,
-        "supports_reasoning": False,
-        "supports_reasoning_effort": False,
-    },
-    {
-        "model_id": "grok-3-mini",
-        "display_name": "grok-3-mini",
-        "context_window": 131072,
-        "input_modalities": ["text"],
-        "output_modalities": ["text"],
-        "pricing": {"input_per_1m": 0.3, "output_per_1m": 1.5, "currency": "USD"},
-        "aliases": ["x-ai/grok-3-mini"],
-        "supports_vision": False,
-        "supports_reasoning": False,
-        "supports_reasoning_effort": False,
-    },
-    {
-        "model_id": "grok-4",
-        "display_name": "grok-4",
-        "context_window": 256000,
-        "input_modalities": ["text", "image"],
-        "output_modalities": ["text"],
-        "pricing": {"input_per_1m": 3.0, "output_per_1m": 15.0, "currency": "USD"},
-        "aliases": ["x-ai/grok-4"],
-        "supports_vision": True,
-        "supports_reasoning": True,
-        "supports_reasoning_effort": False,
-    },
-    {
-        "model_id": "grok-4-1-fast-reasoning",
-        "display_name": "grok-4-1-fast-reasoning",
-        "context_window": 131072,
-        "input_modalities": ["text"],
-        "output_modalities": ["text"],
-        "pricing": {"input_per_1m": 0.5, "output_per_1m": 2.0, "currency": "USD"},
-        "aliases": ["x-ai/grok-4-1-fast-reasoning"],
-        "supports_vision": False,
-        "supports_reasoning": True,
-        "supports_reasoning_effort": False,
-    },
-    {
-        "model_id": "grok-4-1-fast-non-reasoning",
-        "display_name": "grok-4-1-fast-non-reasoning",
-        "context_window": 131072,
-        "input_modalities": ["text"],
-        "output_modalities": ["text"],
-        "pricing": {"input_per_1m": 0.5, "output_per_1m": 2.0, "currency": "USD"},
-        "aliases": ["x-ai/grok-4-1-fast-non-reasoning"],
-        "supports_vision": False,
-        "supports_reasoning": False,
-        "supports_reasoning_effort": False,
-    },
-]
-
+LEGACY = json.loads(
+    (WORKDIR / "scripts" / "metadata" / "xai_legacy.json").read_text(encoding="utf-8")
+)
 # Display / capability overrides keyed by model_id
-DISPLAY = {
-    "grok-4.5": "Grok 4.5",
-    "grok-4.3": "Grok 4.3",
-    "grok-4.20-0309-reasoning": "Grok 4.20 Reasoning",
-    "grok-4.20-0309-non-reasoning": "Grok 4.20 Non-Reasoning",
-    "grok-4.20-multi-agent-0309": "Grok 4.20 Multi-Agent",
-    "grok-build-0.1": "Grok Build 0.1",
-}
+DISPLAY = json.loads(
+    (WORKDIR / "scripts" / "metadata" / "xai_display.json").read_text(encoding="utf-8")
+)
 
-KNOWLEDGE_CUTOFF = {
-    "grok-4.5": "2026-02-01",
-}
+KNOWLEDGE_CUTOFF = json.loads(
+    (WORKDIR / "scripts" / "metadata" / "xai_knowledge_cutoff.json").read_text(
+        encoding="utf-8"
+    )
+)
 
-REASONING_EFFORT = {
-    "grok-4.5": ["low", "medium", "high"],
-    "grok-4.3": ["none", "low", "medium", "high"],
-    "grok-4.20-0309-reasoning": ["low", "medium", "high", "xhigh"],
-    "grok-4.20-multi-agent-0309": ["low", "medium", "high", "xhigh"],
-}
+REASONING_EFFORT = json.loads(
+    (WORKDIR / "scripts" / "metadata" / "xai_reasoning_effort.json").read_text(
+        encoding="utf-8"
+    )
+)
 
 
 def _mods(nums: list[int] | None) -> list[str]:

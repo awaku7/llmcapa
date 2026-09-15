@@ -6,6 +6,13 @@ from dataclasses import asdict, dataclass, field
 from enum import Enum
 from typing import Any
 
+from .specialized_capabilities import (
+    DocumentCapability,
+    EmbeddingCapability,
+    RerankCapability,
+    SpatialCapability,
+)
+
 
 class Feature(str, Enum):
     """Standard feature flags supported by LLM models."""
@@ -176,6 +183,289 @@ class ImageEndpointCapability:
 
 
 @dataclass(frozen=True)
+class AudioEndpointCapability:
+    """Audio operations exposed by individual API endpoints."""
+
+    transcription: bool | None = None
+    translation: bool | None = None
+    speech_generation: bool | None = None
+    speech_understanding: bool | None = None
+    realtime: bool | None = None
+    chat_completions: bool | None = None
+    responses_api: bool | None = None
+    batch: bool | None = None
+    streaming: bool | None = None
+    extra: dict[str, Any] = field(default_factory=dict)
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> AudioEndpointCapability:
+        """Create endpoint metadata while preserving provider extensions."""
+        known = {f for f in cls.__dataclass_fields__ if f != "extra"}  # type: ignore[attr-defined]
+        values: dict[str, Any] = {}
+        extra: dict[str, Any] = dict(data.get("extra") or {})
+        for key, value in data.items():
+            if key == "extra":
+                continue
+            if key in known:
+                values[key] = value
+            else:
+                extra[key] = value
+        values["extra"] = extra
+        return cls(**values)
+
+    def to_dict(self) -> dict[str, Any]:
+        """Return endpoint metadata as JSON-compatible data."""
+        result = asdict(self)
+        extra = result.pop("extra", {})
+        result.update(extra)
+        return result
+
+
+@dataclass(frozen=True)
+class AudioCapability:
+    """Detailed audio input, output, speech, and realtime metadata."""
+
+    # Operations
+    transcription: bool | None = None
+    translation: bool | None = None
+    speech_generation: bool | None = None
+    speech_understanding: bool | None = None
+    diarization: bool | None = None
+    timestamps: bool | None = None
+    word_timestamps: bool | None = None
+    punctuation: bool | None = None
+    voice_cloning: bool | None = None
+    music_generation: bool | None = None
+    sound_effect_generation: bool | None = None
+
+    # Input
+    accepts_audio_input: bool | None = None
+    accepts_audio_url: bool | None = None
+    accepts_file_id: bool | None = None
+    accepts_data_url: bool | None = None
+    input_formats: tuple[str, ...] = ()
+    input_mime_types: tuple[str, ...] = ()
+    max_input_bytes: int | None = None
+    max_duration_seconds: float | None = None
+    sample_rates_hz: tuple[int, ...] = ()
+    channels: int | None = None
+    language_values: tuple[str, ...] = ()
+    speaker_count_max: int | None = None
+
+    # Output / speech synthesis
+    output_formats: tuple[str, ...] = ()
+    output_mime_types: tuple[str, ...] = ()
+    response_formats: tuple[str, ...] = ()
+    output_sample_rates_hz: tuple[int, ...] = ()
+    output_channels: int | None = None
+    max_output_duration_seconds: float | None = None
+    voice_values: tuple[str, ...] = ()
+    voice_id_values: tuple[str, ...] = ()
+    speed_min: float | None = None
+    speed_max: float | None = None
+    speed_default: float | None = None
+    pitch_min: float | None = None
+    pitch_max: float | None = None
+    style_values: tuple[str, ...] = ()
+
+    # Transport and provenance
+    supports_streaming: bool | None = None
+    supports_realtime: bool | None = None
+    source_url: str | None = None
+    checked_at: str | None = None
+    status: str = "documented"
+    endpoints: AudioEndpointCapability | None = None
+    extra: dict[str, Any] = field(default_factory=dict)
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> AudioCapability:
+        """Create audio metadata from JSON-compatible data."""
+        values = dict(data)
+        for key in (
+            "input_formats",
+            "input_mime_types",
+            "sample_rates_hz",
+            "language_values",
+            "output_formats",
+            "output_mime_types",
+            "response_formats",
+            "output_sample_rates_hz",
+            "voice_values",
+            "voice_id_values",
+            "style_values",
+        ):
+            values[key] = tuple(values.get(key) or ())
+        endpoints = values.get("endpoints")
+        if endpoints is not None and not isinstance(endpoints, AudioEndpointCapability):
+            values["endpoints"] = AudioEndpointCapability.from_dict(endpoints)
+        return cls(**values)
+
+    def to_dict(self) -> dict[str, Any]:
+        """Return audio metadata as JSON-compatible data."""
+        result = asdict(self)
+        for key in (
+            "input_formats",
+            "input_mime_types",
+            "sample_rates_hz",
+            "language_values",
+            "output_formats",
+            "output_mime_types",
+            "response_formats",
+            "output_sample_rates_hz",
+            "voice_values",
+            "voice_id_values",
+            "style_values",
+        ):
+            result[key] = list(getattr(self, key))
+        if self.endpoints is not None:
+            result["endpoints"] = self.endpoints.to_dict()
+        return result
+
+
+@dataclass(frozen=True)
+class VideoEndpointCapability:
+    """Video operations exposed by individual API endpoints."""
+
+    generation: bool | None = None
+    understanding: bool | None = None
+    editing: bool | None = None
+    interpolation: bool | None = None
+    extension: bool | None = None
+    upscaling: bool | None = None
+    lipsync: bool | None = None
+    realtime: bool | None = None
+    streaming: bool | None = None
+    batch: bool | None = None
+    extra: dict[str, Any] = field(default_factory=dict)
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> VideoEndpointCapability:
+        """Create endpoint metadata while preserving provider extensions."""
+        known = {f for f in cls.__dataclass_fields__ if f != "extra"}  # type: ignore[attr-defined]
+        values: dict[str, Any] = {}
+        extra: dict[str, Any] = dict(data.get("extra") or {})
+        for key, value in data.items():
+            if key == "extra":
+                continue
+            if key in known:
+                values[key] = value
+            else:
+                extra[key] = value
+        values["extra"] = extra
+        return cls(**values)
+
+    def to_dict(self) -> dict[str, Any]:
+        """Return endpoint metadata as JSON-compatible data."""
+        result = asdict(self)
+        extra = result.pop("extra", {})
+        result.update(extra)
+        return result
+
+
+@dataclass(frozen=True)
+class VideoCapability:
+    """Detailed video input, output, generation, and editing metadata."""
+
+    # Operations
+    generation: bool | None = None
+    understanding: bool | None = None
+    editing: bool | None = None
+    interpolation: bool | None = None
+    extension: bool | None = None
+    upscaling: bool | None = None
+    lipsync: bool | None = None
+    avatar: bool | None = None
+    text_to_video: bool | None = None
+    image_to_video: bool | None = None
+    video_to_video: bool | None = None
+
+    # Input
+    accepts_video_input: bool | None = None
+    accepts_video_url: bool | None = None
+    accepts_file_id: bool | None = None
+    accepts_image_reference: bool | None = None
+    input_formats: tuple[str, ...] = ()
+    input_mime_types: tuple[str, ...] = ()
+    max_input_bytes: int | None = None
+    max_input_duration_seconds: float | None = None
+    max_input_width: int | None = None
+    max_input_height: int | None = None
+    max_input_fps: float | None = None
+    max_input_frames: int | None = None
+    max_reference_images: int | None = None
+    max_reference_videos: int | None = None
+    input_has_audio: bool | None = None
+
+    # Output and generation
+    output_formats: tuple[str, ...] = ()
+    output_mime_types: tuple[str, ...] = ()
+    codecs: tuple[str, ...] = ()
+    response_formats: tuple[str, ...] = ()
+    max_output_duration_seconds: float | None = None
+    duration_values_seconds: tuple[float, ...] = ()
+    resolution_values: tuple[str, ...] = ()
+    aspect_ratio_values: tuple[str, ...] = ()
+    fps_values: tuple[float, ...] = ()
+    output_has_audio: bool | None = None
+    audio_languages: tuple[str, ...] = ()
+
+    # Controls and transport
+    prompt_max_chars: int | None = None
+    negative_prompt: bool | None = None
+    supports_streaming: bool | None = None
+    supports_realtime: bool | None = None
+    source_url: str | None = None
+    checked_at: str | None = None
+    status: str = "documented"
+    endpoints: VideoEndpointCapability | None = None
+    extra: dict[str, Any] = field(default_factory=dict)
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> VideoCapability:
+        """Create video metadata from JSON-compatible data."""
+        values = dict(data)
+        for key in (
+            "input_formats",
+            "input_mime_types",
+            "output_formats",
+            "output_mime_types",
+            "codecs",
+            "response_formats",
+            "duration_values_seconds",
+            "resolution_values",
+            "aspect_ratio_values",
+            "fps_values",
+            "audio_languages",
+        ):
+            values[key] = tuple(values.get(key) or ())
+        endpoints = values.get("endpoints")
+        if endpoints is not None and not isinstance(endpoints, VideoEndpointCapability):
+            values["endpoints"] = VideoEndpointCapability.from_dict(endpoints)
+        return cls(**values)
+
+    def to_dict(self) -> dict[str, Any]:
+        """Return video metadata as JSON-compatible data."""
+        result = asdict(self)
+        for key in (
+            "input_formats",
+            "input_mime_types",
+            "output_formats",
+            "output_mime_types",
+            "codecs",
+            "response_formats",
+            "duration_values_seconds",
+            "resolution_values",
+            "aspect_ratio_values",
+            "fps_values",
+            "audio_languages",
+        ):
+            result[key] = list(getattr(self, key))
+        if self.endpoints is not None:
+            result["endpoints"] = self.endpoints.to_dict()
+        return result
+
+
+@dataclass(frozen=True)
 class ImageCapability:
     """Provider-specific image generation, editing, and analysis metadata."""
 
@@ -335,6 +625,15 @@ class Capability:
     thinking_control: dict[str, Any] | None = None
     # Appended after all existing fields for positional-constructor compatibility.
     image: ImageCapability | None = None
+    # Appended after all existing fields for positional-constructor compatibility.
+    audio: AudioCapability | None = None
+    # Appended after all existing fields for positional-constructor compatibility.
+    video: VideoCapability | None = None
+    # Appended after all existing fields for positional-constructor compatibility.
+    document: DocumentCapability | None = None
+    embedding: EmbeddingCapability | None = None
+    rerank: RerankCapability | None = None
+    spatial: SpatialCapability | None = None
 
     def supports(self, feature: Feature | str) -> bool | None:
         """Return True if the model supports the given feature.
@@ -772,6 +1071,24 @@ class Capability:
             d.pop("image", None)
         else:
             d["image"] = self.image.to_dict()
+        if self.audio is None:
+            d.pop("audio", None)
+        else:
+            d["audio"] = self.audio.to_dict()
+        if self.video is None:
+            d.pop("video", None)
+        else:
+            d["video"] = self.video.to_dict()
+        for key, value in (
+            ("document", self.document),
+            ("embedding", self.embedding),
+            ("rerank", self.rerank),
+            ("spatial", self.spatial),
+        ):
+            if value is None:
+                d.pop(key, None)
+            else:
+                d[key] = value.to_dict()
         # Exclude internal cache from dict representation
         d.pop("_supports_cache", None)
         return d
@@ -801,6 +1118,42 @@ class Capability:
                         value
                         if isinstance(value, ImageCapability)
                         else ImageCapability.from_dict(value)
+                    )
+                elif key == "audio" and value is not None:
+                    kwargs[key] = (
+                        value
+                        if isinstance(value, AudioCapability)
+                        else AudioCapability.from_dict(value)
+                    )
+                elif key == "video" and value is not None:
+                    kwargs[key] = (
+                        value
+                        if isinstance(value, VideoCapability)
+                        else VideoCapability.from_dict(value)
+                    )
+                elif key == "document" and value is not None:
+                    kwargs[key] = (
+                        value
+                        if isinstance(value, DocumentCapability)
+                        else DocumentCapability.from_dict(value)
+                    )
+                elif key == "embedding" and value is not None:
+                    kwargs[key] = (
+                        value
+                        if isinstance(value, EmbeddingCapability)
+                        else EmbeddingCapability.from_dict(value)
+                    )
+                elif key == "rerank" and value is not None:
+                    kwargs[key] = (
+                        value
+                        if isinstance(value, RerankCapability)
+                        else RerankCapability.from_dict(value)
+                    )
+                elif key == "spatial" and value is not None:
+                    kwargs[key] = (
+                        value
+                        if isinstance(value, SpatialCapability)
+                        else SpatialCapability.from_dict(value)
                     )
                 else:
                     kwargs[key] = value

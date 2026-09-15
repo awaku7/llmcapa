@@ -191,6 +191,17 @@ def main() -> None:
             merged = dict(old)
             merged.update(entry)
             merged["extra"] = {**old.get("extra", {}), **entry.get("extra", {})}
+            # The model detail page is authoritative for fields it exposes,
+            # but it does not always repeat the full image capability matrix.
+            # Keep previously documented nested image constraints instead of
+            # replacing them with the parser's minimal capability record.
+            if old.get("image") and entry.get("image"):
+                merged["image"] = {**old["image"], **entry["image"]}
+                if old["image"].get("endpoints") and entry["image"].get("endpoints"):
+                    merged["image"]["endpoints"] = {
+                        **old["image"]["endpoints"],
+                        **entry["image"]["endpoints"],
+                    }
             # Some official model pages omit the Reasoning.effort enum even
             # when the existing catalog has verified values. Do not replace
             # that metadata with the parser's default False; retain it unless

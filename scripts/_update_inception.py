@@ -59,9 +59,7 @@ def _pricing(api_pricing: dict[str, object]) -> dict[str, object]:
         "currency": "USD",
     }
     if api_pricing.get("input_cache_reads") is not None:
-        pricing["cached_input_per_1m"] = _per_million(
-            api_pricing["input_cache_reads"]
-        )
+        pricing["cached_input_per_1m"] = _per_million(api_pricing["input_cache_reads"])
     return pricing
 
 
@@ -101,8 +99,7 @@ def _chat_entry(record: dict[str, object], today: str) -> dict[str, object]:
         "max_output_tokens": int(record.get("max_output_length") or 0),
         "input_modalities": input_modalities,
         "output_modalities": output_modalities,
-        "supports_function_calling": "tools" in features
-        or "tool_calling" in features,
+        "supports_function_calling": "tools" in features or "tool_calling" in features,
         "supports_json_mode": "json_mode" in features
         or "structured_outputs" in features,
         "supports_json_schema": "structured_outputs" in features,
@@ -197,9 +194,9 @@ def update_catalog(*, dry_run: bool = False) -> dict[str, int]:
         if model_id not in official_ids:
             previous = dict(previous)
             previous["deprecated"] = True
-            previous.setdefault("extra", {})["official_spec_refresh"] = (
-                "not_returned_by_official_api"
-            )
+            previous.setdefault("extra", {})[
+                "official_spec_refresh"
+            ] = "not_returned_by_official_api"
             rows.append(previous)
 
     rows.sort(key=lambda row: str(row["model_id"]).lower())

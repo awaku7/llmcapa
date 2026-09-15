@@ -1,0 +1,68 @@
+[
+  {
+    "model_id": "grok-voice-agent",
+    "display_name": "Grok Voice Agent",
+    "input_modalities": [
+      "audio",
+      "text"
+    ],
+    "output_modalities": [
+      "audio",
+      "text"
+    ],
+    "extra": {
+      "price_per_hour": 3.0,
+      "unit": "hour",
+      "source": "https://docs.x.ai/developers/models",
+      "api": "voice-agent"
+    }
+  },
+  {
+    "model_id": "grok-tts",
+    "display_name": "Grok Text to Speech",
+    "input_modalities": [
+      "text"
+    ],
+    "output_modalities": [
+      "audio"
+    ],
+    "extra": {
+      "price_per_1m_chars": 15.0,
+      "unit": "1m_chars",
+      "source": "https://docs.x.ai/developers/models",
+      "api": "tts"
+    }
+  },
+  {
+    "model_id": "grok-stt-batch",
+    "display_name": "Grok Speech to Text (Batch)",
+    "input_modalities": [
+      "audio"
+    ],
+    "output_modalities": [
+      "text"
+    ],
+    "extra": {
+      "price_per_hour": 0.1,
+      "unit": "hour",
+      "source": "https://docs.x.ai/developers/models",
+      "api": "stt-batch"
+    }
+  },
+  {
+    "model_id": "grok-stt-stream",
+    "display_name": "Grok Speech to Text (Streaming)",
+    "input_modalities": [
+      "audio"
+    ],
+    "output_modalities": [
+      "text"
+    ],
+    "extra": {
+      "price_per_hour": 0.2,
+      "unit": "hour",
+      "source": "https://docs.x.ai/developers/models",
+      "api": "stt-streaming"
+    }
+  }
+]
