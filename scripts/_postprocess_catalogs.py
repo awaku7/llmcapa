@@ -114,27 +114,11 @@ for fname in os.listdir(DATA):
 
 print(f"FIM flags fixed for {fim_count} models across all providers", flush=True)
 
-# ── 4. Fix Responses API: only OpenAI/Azure ──
-resp_count = 0
-for fname in os.listdir(DATA):
-    if not fname.endswith(".json") or fname == "ollama.json":
-        continue
-    fpath = os.path.join(DATA, fname)
-    with open(fpath, encoding="utf-8") as f:
-        data = json.load(f)
-    models = data.get("models", [])
-    if not models:
-        continue
-    prov = models[0].get("provider", "")
-    if prov not in ("openai", "azure-openai"):
-        for m in models:
-            if m.get("supports_responses_api", False):
-                m["supports_responses_api"] = False
-                resp_count += 1
-    with open(fpath, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-
-print(f"Responses API: {resp_count} models fixed (only OpenAI/Azure)", flush=True)
+# ── 4. Preserve provider-specific Responses API flags ──
+# This capability is provider/model data. Do not replace it with a
+# provider-wide allowlist here; the catalog updater is responsible for
+# obtaining the value from the provider's official source.
+print("Responses API flags preserved from provider catalogs", flush=True)
 
 # ── 4.5. Normalize audio capability records ──
 audio_changes = apply_audio_capabilities(Path(DATA))
@@ -182,7 +166,7 @@ log_entry = f"""
 - Anthropic: https://platform.claude.com/docs/en/about-claude/pricing (Playwright)
 - DeepSeek: https://api-docs.deepseek.com/quick_start/pricing (Playwright)
 - FIM flags: pattern-based for code completion models
-- Responses API: restricted to OpenAI/Azure only
+- Responses API: preserved from provider-specific official sources
 - Audio metadata: provider documentation plus conservative modality-derived fields
 - Video metadata: provider documentation plus conservative modality-derived fields
 - Structured capabilities: document, embedding, rerank, and spatial metadata
@@ -191,7 +175,7 @@ log_entry = f"""
 - **Anthropic**: {anthro_count} models updated with official pricing (Fable 5 $10/$50, Opus 4.8 $5/$25, Sonnet 5 $3/$15, Haiku 4.5 $1/$5)
 - **DeepSeek**: {ds_count} models updated with official pricing (v4-flash $0.14/$0.28, v4-pro $0.435/$0.87)
 - **FIM flags**: {fim_count} models corrected (codegemma, codellama, starcoder2, deepseek-coder, qwen-coder, etc.)
-- **Responses API**: {resp_count} non-OpenAI/Azure models set to False
+- **Responses API**: provider-specific flags preserved
 - **AudioCapability**: {audio_changes.get('records_changed', 0)} audio records enriched
 - **VideoCapability**: {video_changes.get('records_changed', 0)} video records enriched
 - **Structured capabilities**: {structured_changes.get('records_changed', 0)} records enriched

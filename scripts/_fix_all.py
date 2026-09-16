@@ -53,10 +53,7 @@ FIM_PATTERNS = [
     "devstral",
 ]
 
-# ── 4. Responses API: only OpenAI/Azure ──
-RESPONSES_PROVIDERS = {"openai", "azure-openai"}
-
-# ── 5. Provider merge map ──
+# ── 4. Provider merge map ──
 MERGE_MAP = {
     "meta-llama": "meta",
     "mistralai": "mistral",
@@ -126,10 +123,6 @@ for fname in os.listdir(DATA):
         # FIM flag (ollama already has it)
         if prov != "ollama":
             m["supports_fim"] = is_fim_model(mid)
-
-        # Responses API: only OpenAI/Azure
-        if prov not in RESPONSES_PROVIDERS:
-            m["supports_responses_api"] = False
 
         # Google: supports_google_api=True
         if prov == "google":
