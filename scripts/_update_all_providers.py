@@ -13,6 +13,7 @@ Examples:
 from __future__ import annotations
 
 import argparse
+import json
 import subprocess
 import sys
 from pathlib import Path
@@ -60,6 +61,77 @@ ALIASES = {
     "kimi": "moonshot",
 }
 
+CAPABILITY_FIELDS = (
+    "audio",
+    "video",
+    "image",
+    "document",
+    "embedding",
+    "rerank",
+    "spatial",
+)
+
+
+def _read_catalogs() -> dict[Path, dict]:
+    catalogs = {}
+    for path in sorted((ROOT / "src" / "llmcapa" / "data").glob("*.json")):
+        raw = path.read_bytes()
+        catalogs[path] = json.loads(raw.decode("utf-8"))
+    return catalogs
+
+
+def _write_catalog(path: Path, data: dict) -> None:
+    raw = path.read_bytes()
+    newline = "\r\n" if b"\r\n" in raw else "\n"
+    payload = json.dumps(data, ensure_ascii=False, indent=2) + "\n"
+    path.write_bytes(payload.replace("\n", newline).encode("utf-8"))
+
+
+def _preserve_capabilities(before: dict[Path, dict]) -> int:
+    """Restore documented capability blocks omitted by a provider refresh."""
+    restored = 0
+    for path, old_data in before.items():
+        if not path.exists():
+            continue
+        current = json.loads(path.read_text(encoding="utf-8"))
+        old_by_id = {
+            (str(model.get("provider", "")), str(model.get("model_id", ""))): model
+            for model in old_data.get("models", [])
+        }
+        changed = False
+        for model in current.get("models", []):
+            key = (str(model.get("provider", "")), str(model.get("model_id", "")))
+            old_model = old_by_id.get(key)
+            if old_model is None:
+                continue
+            for field in CAPABILITY_FIELDS:
+                if field not in model and field in old_model:
+                    model[field] = old_model[field]
+                    restored += 1
+                    changed = True
+        if changed:
+            _write_catalog(path, current)
+    return restored
+
+
+def _run_capability_postprocessors() -> int:
+    """Rebuild derived capability metadata after a catalog refresh."""
+    commands = [
+        ("_audio_capability_postprocess.py", []),
+        ("_video_capability_postprocess.py", []),
+        ("_structured_capability_postprocess.py", []),
+        ("_image_capability_postprocess.py", ["--write"]),
+    ]
+    for name, args in commands:
+        result = subprocess.run(
+            [sys.executable, str(SCRIPTS / name), *args],
+            cwd=ROOT,
+            check=False,
+        )
+        if result.returncode != 0:
+            return result.returncode
+    return 0
+
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
@@ -85,17 +157,15 @@ def main() -> int:
         parser.error(f"provider script not found: {script}")
 
     print(f"Running provider updater: {provider} ({script_name})", flush=True)
+    before = _read_catalogs()
     completed = subprocess.run([sys.executable, str(script)], cwd=ROOT, check=False)
-    if completed.returncode == 0:
-        image_postprocess = SCRIPTS / "_image_capability_postprocess.py"
-        image_result = subprocess.run(
-            [sys.executable, str(image_postprocess), "--write"],
-            cwd=ROOT,
-            check=False,
-        )
-        if image_result.returncode != 0:
-            return image_result.returncode
-    return completed.returncode
+    if completed.returncode != 0:
+        return completed.returncode
+
+    restored = _preserve_capabilities(before)
+    if restored:
+        print(f"Preserved capability blocks: {restored}", flush=True)
+    return _run_capability_postprocessors()
 
 
 if __name__ == "__main__":

@@ -228,7 +228,7 @@ def _count_messages_gemini(messages: list[dict[str, Any]], model_id: str) -> int
         with warnings.catch_warnings():
             warnings.filterwarnings(
                 "ignore",
-                message=r"builtin type SwigPy.*|builtin type swigvarlink.*|'_UnionGenericAlias' is deprecated",
+                message=r"builtin type SwigPy.*|builtin type swigvarlink.*|The SDK's local tokenizer implementation is experimental.*|'_UnionGenericAlias' is deprecated",
                 category=DeprecationWarning,
             )
             from google.genai import local_tokenizer, types
@@ -411,7 +411,7 @@ def _count_gemini(text: str, model_id: str) -> int | None:
         with warnings.catch_warnings():
             warnings.filterwarnings(
                 "ignore",
-                message=r"builtin type SwigPy.*|builtin type swigvarlink.*|'_UnionGenericAlias' is deprecated",
+                message=r"builtin type SwigPy.*|builtin type swigvarlink.*|The SDK's local tokenizer implementation is experimental.*|'_UnionGenericAlias' is deprecated",
                 category=DeprecationWarning,
             )
             from google.genai import local_tokenizer

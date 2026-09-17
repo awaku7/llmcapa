@@ -30,14 +30,14 @@ LONG_CTX_THRESHOLD = 200_000
 
 # Official docs pricing for Imagine / Voice (not fully in ListModels LanguageModel)
 IMAGINE_MODELS = json.loads(
-    (WORKDIR / "scripts" / "metadata" / "xai_imagine_models.json").read_text(
+    (WORKDIR / "scripts" / "metadata" / "imagine_models.json").read_text(
         encoding="utf-8"
     )
 )
 
 # Voice API (optional specialty entries — not chat LLMs)
 VOICE_MODELS = json.loads(
-    (WORKDIR / "scripts" / "metadata" / "xai_voice_models.json").read_text(
+    (WORKDIR / "scripts" / "metadata" / "voice_models.json").read_text(
         encoding="utf-8"
     )
 )
