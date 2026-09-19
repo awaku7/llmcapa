@@ -254,6 +254,9 @@ class Registry:
             supports_function_calling=supports_fc,
             supports_streaming=True,
             supports_chat_completion=True,
+            # Gateway-wide transport capability: OpenRouter serves
+            # POST /api/v1/responses (stateless) for every route.  This flag
+            # does not imply a model-native Responses API.
             supports_responses_api=True,
             supports_reasoning=bool(r.get("reasoning")),
             supports_vision="image" in input_mods,

@@ -383,6 +383,8 @@ print(cap.context_window)  # 131072
 print(cap.pricing)         # {'input_per_1m': 0.1, 'output_per_1m': 0.32, 'currency': 'USD'}
 ```
 
+> **Note**: OpenRouterのResponses API（`POST /api/v1/responses`）はOpenAI互換のゲートウェイ機能で、モデル固有ではなくOpenRouterの全ルートで利用できます。したがって`provider="openrouter"`のすべてのモデルは`responses_api`をサポートします。ただし**ステートレスのみ**で、`store: true`と`previous_response_id`は400エラーで拒否されます。会話履歴は毎回リクエストに含める必要があります。ネイティブプロバイダー経路（`provider="openai"`など）の`responses_api`は各プロバイダーの実装状況を表し、OpenRouterのゲートウェイ機能とは別に管理されます。
+
 ### Novita AI（同梱プロバイダー）
 
 Novita AI は、200以上のオープンソース／独自モデルを単一 API で提供するクラウドプラットフォームです。llmcapa は DeepSeek、Qwen、Meta Llama、GLM、Gemini などを含む 136 の Novita AI モデルの機能データ（Novita 固有の価格設定付き）を同梱しています。

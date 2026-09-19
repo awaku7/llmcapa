@@ -103,6 +103,11 @@ cap.features()                 # sorted supported feature names
 
 A feature can return `True`, `False`, or `None` when the underlying value is unknown. Custom features may be stored in `extra`.
 
+`responses_api` is transport-scoped. It is `True` for every OpenRouter route because the gateway
+serves `POST /api/v1/responses` (stateless: `store: true` and `previous_response_id` are rejected
+with a 400 error). Native provider routes report that provider's own Responses API support, and the
+two are tracked separately.
+
 `multimodal` is inferred when more than one input or output modality is present. `file_input` includes `file` and `pdf` input modalities; `embedding_output` includes `embedding` and `embeddings`.
 
 ### 4.2 `ReasoningEffort`

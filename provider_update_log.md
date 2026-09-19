@@ -1,3 +1,19 @@
+## OpenRouter (2026-09-19)
+
+### Source
+- Responses API overview: https://openrouter.ai/docs/api_reference/responses/overview
+- Full docs snapshot: https://openrouter.ai/docs/llms-full.txt (Responses API is GA; the 2026-07-25 entry removed the `beta.responses` tag, endpoint paths unchanged)
+- Models API: https://openrouter.ai/api/v1/models (no per-model Responses flag; `supported_parameters` has no `responses` entry)
+
+### Changes
+- `supports_responses_api`: false -> true for all 445 OpenRouter routes in `src/llmcapa/data/openrouter.json`.
+- Rationale: OpenRouter serves `POST /api/v1/responses` (OpenAI-compatible, stateless) for every route, so the flag is transport-scoped rather than model-native.
+- `scripts/_update_openrouter.py`: model rows and `~latest` convenience aliases now emit `true` (previously hard-coded `false`).
+- `src/llmcapa/registry.py`: dynamic `_map_openrouter_record()` already emitted `true`; comment clarified. This removes the previous bundled(false) vs dynamic(true) mismatch.
+- Native provider routes (OpenAI, Azure, DeepSeek, Vercel, Xiaomi, Modellix, etc.) are unchanged and keep their provider-specific values.
+- Docs: README.md, README.ja.md, and docs/API_SPECIFICATION.md now note the stateless-only constraint (`store: true` and a non-null `previous_response_id` are rejected with a 400 error).
+- Install copy synced (`registry.py`, `data/openrouter.json`).
+
 
 ## OpenRouter Catalog Refresh (2026-08-11)
 

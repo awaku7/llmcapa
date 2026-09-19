@@ -418,6 +418,8 @@ print(cap.context_window)  # 131072
 print(cap.pricing)         # {'input_per_1m': 0.1, 'output_per_1m': 0.32, 'currency': 'USD'}
 ```
 
+> **Note**: OpenRouter's Responses API (`POST /api/v1/responses`) is an OpenAI-compatible gateway feature available for every OpenRouter route, so every model with `provider="openrouter"` supports `responses_api`. It is **stateless only**: `store: true` and `previous_response_id` are rejected with a 400 error, and the full conversation history must be sent in each request. The `responses_api` flag on native provider routes (for example `provider="openai"`) reflects that provider's own implementation and is tracked separately from the OpenRouter gateway capability.
+
 ### On-demand HuggingFace Integration (Caching)
 
 You can also fetch and register popular models from the HuggingFace API on-demand using `fetch_huggingface()`. This retrieves the most downloaded text-generation and image-text-to-text models, registers their basic capabilities, and caches the result locally in `~/.llmcapa/huggingface_cache.json`.

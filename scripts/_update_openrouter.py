@@ -449,7 +449,10 @@ def map_model(raw: dict) -> dict:
         "supports_vision": vision,
         "supports_reasoning": reasoning,
         "supports_chat_completion": chat,
-        "supports_responses_api": False,
+        # Gateway-wide transport capability: OpenRouter exposes
+        # POST /api/v1/responses (stateless) for every route, so this
+        # flag does not imply a model-native Responses API.
+        "supports_responses_api": True,
         "supports_reasoning_effort": effort,
         "supports_thinking_budget": False,
         "supports_anthropic_api": False,
@@ -488,7 +491,9 @@ def build_latest_aliases() -> list[dict]:
                 "supports_vision": bool(a.get("vision")),
                 "supports_reasoning": bool(a.get("reasoning")),
                 "supports_chat_completion": True,
-                "supports_responses_api": False,
+                # Gateway-wide transport capability: OpenRouter exposes
+                # POST /api/v1/responses (stateless) for every route.
+                "supports_responses_api": True,
                 "supports_reasoning_effort": True,
                 "supports_thinking_budget": False,
                 "supports_anthropic_api": False,
