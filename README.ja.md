@@ -4,7 +4,7 @@
 
 ## 特徴
 
-- **包括的な同梱データ**: OpenAI、Anthropic、Google (Gemini)、Microsoft (Phi)、Amazon (Nova/Titan)、Meta (Llama)、Mistral、Qwen、DeepSeek、xAI (Grok)、NVIDIA、MoonshotAI (Kimi)、zhipu-ai (GLM)、Sakana AI (Fugu)、**Azure AI Foundry**、Novita AI、**Together AI（98モデル）**、OpenRouter、**HuggingFace（人気モデル 2,675）**、**Modellix LLM・メディアモデル**（LLM 29件、メディア178件）、および日本の国内モデル（デジタル庁の「GENNAI」プラットフォームで採用されているNTT tsuzumi、PFN PLaMo、ELYZA、SoftBank、NEC、Fujitsuなど）のオフライン機能データを同梱しています。
+- **包括的な同梱データ**: OpenAI、Anthropic、Google (Gemini)、Microsoft (Phi)、Amazon (Nova/Titan)、Meta (Llama)、Mistral、Qwen、DeepSeek、xAI (Grok)、NVIDIA、MoonshotAI (Kimi)、zhipu-ai (GLM)、Sakana AI (Fugu)、**Azure AI Foundry**、Novita AI、**Together AI（98モデル）**、OpenRouter、**HuggingFace（人気モデル 2,675）**、**Modellix LLM・メディアモデル**（LLM 29件、メディア178件）、**TypeSafe（Jev / System One の決定出力モデル）**、および日本の国内モデル（デジタル庁の「GENNAI」プラットフォームで採用されているNTT tsuzumi、PFN PLaMo、ELYZA、SoftBank、NEC、Fujitsuなど）のオフライン機能データを同梱しています。
 - **実行時依存関係ゼロ**: Python標準ライブラリのみで動作します。外部パッケージ（`pytest` や `build` など）は開発・テスト用のみです。
 - **エイリアス解決**: モデルのエイリアスやプロバイダー固有の名前を自動的に解決します（例: `gpt-4o-2024-08-06` -> `gpt-4o`、`gemini-1.5-pro-preview-0409` -> `gemini-1.5-pro`）。
 - **プロバイダーエイリアス**: プロバイダー引数は一般的な別名と正規化形式を受け付けます（例: `grok`/`x-ai` → `xai`、`bedrock`/`aws-bedrock`/`aws` → `amazon`、`vertexai` → `vertex-ai`、`open-ai` → `openai`、`google-ai` → `google`、`azure` → `azure-openai`、`hf` → `huggingface`、`alibaba`/`dashscope` → `qwen`、`lm-studio` → `lmstudio`、`modellix-ai` → `modellix`）。区切り文字 `_. ` は `-` として扱われます。
@@ -197,7 +197,42 @@ print(cap.document.input_formats)
 print(cap.spatial.kind_values)
 ```
 
-`document`、`embedding`、`rerank`、`spatial` も、既存の位置引数互換性を壊さないよう `Capability` の末尾に追加されています。
+`document`、`embedding`、`rerank`、`spatial`、`decision` も、既存の位置引数互換性を壊さないよう `Capability` の末尾に追加されています。
+
+### 決定出力（Decision / System One）
+
+文章を生成せず、型付きの決定と較正済み確率だけを返すモデル（TypeSafe の Jev など、System One 系）は、出力モダリティを `decision` として表現します。`text_output` は false、`chat_completion` は false、`multimodal` も成立しません（入力は text のみ）。
+
+```python
+import llmcapa
+
+jev = llmcapa.get("jev-1.13.0", provider="typesafe")
+print(jev.input_modalities)                    # ['text']
+print(jev.output_modalities)                   # ['decision']
+print(jev.supports("decision_output"))         # True
+print(jev.supports("text_output"))             # False
+print(jev.supports("chat_completion"))         # False
+
+print(jev.decision.question_kinds)             # ('choice', 'score', 'noul')
+print(jev.decision.answer_fields)              # ('choice', 'score', 'noul', 'probabilities', 'confidence')
+print(jev.decision.returns_confidence)         # True
+print(jev.decision.calibrated_confidence)      # True
+print(jev.decision.free_form_text)             # False
+print(jev.decision.type_errors_possible)       # False
+print(jev.decision.max_total_tokens)           # 64000
+print(jev.decision.endpoints)                  # ('https://api.typesafe.ai/v1/systemone',)
+```
+
+OpenRouter 経由のルートは `/api/v1` ではなく Alpha の Decisions エンドポイントを使い、OpenAI 互換の Responses API ではありません。
+
+```python
+route = llmcapa.get("typesafe/jev-1.13", provider="openrouter")
+print(route.supports("decision_output"))  # True
+print(route.supports("responses_api"))    # False
+print(route.decision.endpoints)           # ('https://openrouter.ai/api/alpha/decisions',)
+```
+
+決定出力は独立した出力モダリティとして扱われるため、`can_be_replaced_by()` は決定モデルをテキスト生成モデルで代替可能とは判定しません。
 
 ### 推論（Reasoning）と思考（Thinking）の確認
 

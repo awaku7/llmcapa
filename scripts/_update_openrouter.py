@@ -174,6 +174,28 @@ def fetch_models() -> list[dict]:
         raise
 
 
+# Non-text decision routes served by OpenRouter.
+#
+# TypeSafe's System One models are not language models: they return typed
+# decisions with calibrated probabilities instead of generated text. They are
+# also not exposed by GET /api/v1/models, and they are reached through the
+# alpha Decisions endpoint rather than /api/v1, so they are added here as
+# synthetic rows instead of being derived from the models API.
+DECISION_ROUTES: list[dict[str, Any]] = [
+    {
+        "model_id": "typesafe/jev-1.13",
+        "tilde_alias": "~typesafe/jev-latest",
+        "display_name": "TypeSafe: Jev 1.13 (decisions)",
+        "display_name_alias": "OpenRouter ~ TypeSafe Jev (latest)",
+        "ctx": 64_000,
+        "input": 0.042,
+        "output": 0.0,
+        "endpoint": "https://openrouter.ai/api/alpha/decisions",
+        "resolves_hint": "typesafe/jev-*",
+    },
+]
+
+
 def per_token_to_1m(v: Any) -> float | None:
     if v is None or v == "":
         return None
@@ -528,6 +550,97 @@ def build_latest_aliases() -> list[dict]:
     return rows
 
 
+def build_decision_routes() -> list[dict]:
+    """Rows for decision routes that the models API does not expose."""
+    rows: list[dict] = []
+    for d in DECISION_ROUTES:
+        mid = d["model_id"]
+        tilde = d["tilde_alias"]
+        decision = {
+            "decision": True,
+            "question_kinds": ["choice", "score", "noul"],
+            "answer_fields": [
+                "choice",
+                "score",
+                "noul",
+                "probabilities",
+                "confidence",
+            ],
+            "returns_probabilities": True,
+            "returns_confidence": True,
+            "calibrated_confidence": True,
+            "parallel_questions": True,
+            "free_form_text": False,
+            "type_errors_possible": False,
+            "output_token_billing": False,
+            "endpoints": [d["endpoint"]],
+            "source_url": SOURCE_DOCS,
+            "checked_at": "2026-09-19",
+            "status": "documented",
+            "extra": {
+                "openai_compatible": False,
+                "availability": "alpha",
+                "upstream_route": mid,
+            },
+        }
+        base_extra = {
+            "source": API_URL,
+            "docs": SOURCE_DOCS,
+            "base_url": BASE_URL,
+            "tier": "decisions",
+            "synthetic": True,
+            "endpoint": d["endpoint"],
+            "resolves_hint": d["resolves_hint"],
+            "features": ["decision_output", "decisions_api"],
+        }
+        for row_id, row_name, aliases in (
+            (mid, d["display_name"], [mid.split("/", 1)[1]]),
+            (
+                tilde,
+                d["display_name_alias"],
+                [tilde.lstrip("~"), f"openrouter/{tilde}"],
+            ),
+        ):
+            rows.append(
+                {
+                    "provider": "openrouter",
+                    "model_id": row_id,
+                    "display_name": row_name,
+                    "context_window": d["ctx"],
+                    "max_output_tokens": 0,
+                    "input_modalities": ["text"],
+                    "output_modalities": ["decision"],
+                    "supports_function_calling": False,
+                    "supports_json_mode": True,
+                    "supports_streaming": False,
+                    "supports_vision": False,
+                    "supports_reasoning": False,
+                    "supports_chat_completion": False,
+                    # The Decisions endpoint lives outside /api/v1 and is not
+                    # the OpenAI-compatible Responses API.
+                    "supports_responses_api": False,
+                    "supports_reasoning_effort": False,
+                    "supports_thinking_budget": False,
+                    "supports_anthropic_api": False,
+                    "supports_google_api": False,
+                    "supports_fim": False,
+                    "tokenizer_name": "",
+                    "knowledge_cutoff": None,
+                    "deprecated": False,
+                    "aliases": aliases,
+                    "license_type": "special",
+                    "pricing": {
+                        "input_per_1m": d["input"],
+                        "output_per_1m": d["output"],
+                        "currency": "USD",
+                    },
+                    "decision": decision,
+                    "extra": dict(base_extra),
+                }
+            )
+    return rows
+
+
 def dedupe(models: list[dict]) -> list[dict]:
     by_id: dict[str, dict] = {}
     order: list[str] = []
@@ -560,6 +673,8 @@ def main() -> None:
     models = [map_model(r) for r in raw_models if r.get("id")]
     # append synthetic ~latest aliases (not in API)
     models.extend(build_latest_aliases())
+    # append synthetic decision routes (not in the models API)
+    models.extend(build_decision_routes())
     models = dedupe(models)
 
     # sort: openrouter/* specials first, then ~aliases, then alpha by id

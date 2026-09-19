@@ -90,7 +90,7 @@ thinking_level, multimodal, fim, realtime, file_input,
 speech_input, speech_output, embedding_output, rerank,
 rerank_output,
 text_input, image_input, audio_input, video_input,
-text_output, image_output, audio_output, video_output
+text_output, image_output, audio_output, video_output, decision_output
 ```
 
 `Capability.supports(feature)` accepts either a `Feature` member or a string. It also accepts modality shorthand such as `image`, `audio`, `video`, `embedding`, and `rerank`.
@@ -107,6 +107,8 @@ A feature can return `True`, `False`, or `None` when the underlying value is unk
 serves `POST /api/v1/responses` (stateless: `store: true` and `previous_response_id` are rejected
 with a 400 error). Native provider routes report that provider's own Responses API support, and the
 two are tracked separately.
+
+`decision_output` is the output modality for models that return typed decisions with calibrated probabilities instead of generated text (System One style, such as TypeSafe's Jev). Such models report `output_modalities == ["decision"]`, `text_output == False`, `chat_completion == False`, and a populated `decision` block. Because decision output is a distinct modality, a text-generation model is never a valid `can_be_replaced_by()` replacement for a decision model.
 
 `multimodal` is inferred when more than one input or output modality is present. `file_input` includes `file` and `pdf` input modalities; `embedding_output` includes `embedding` and `embeddings`.
 
@@ -165,7 +167,7 @@ Fields and defaults:
 | `thinking_level_values` | `list[str] \| None` | `None` |
 | `thinking_control` | `dict \| None` | `None` |
 
-The order of fields is part of positional-constructor compatibility; new fields are appended.
+The order of fields is part of positional-constructor compatibility; new fields are appended. Optional capability objects (`image`, `audio`, `video`, `document`, `embedding`, `rerank`, `spatial`, `decision`) are appended after the core fields and are omitted from `to_dict()` when unset.
 
 ## 6. Capability methods
 

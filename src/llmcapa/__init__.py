@@ -19,6 +19,7 @@ from .models import (
     AudioCapability,
     AudioEndpointCapability,
     Capability,
+    DecisionCapability,
     VideoCapability,
     VideoEndpointCapability,
     DocumentCapability,
@@ -39,12 +40,13 @@ try:
     __version__ = package_version("llmcapa")
 except PackageNotFoundError:
     # Source-tree fallback when the project is not installed yet.
-    __version__ = "0.5.35"
+    __version__ = "0.5.36"
 
 __all__ = [
     "AudioCapability",
     "AudioEndpointCapability",
     "Capability",
+    "DecisionCapability",
     "VideoCapability",
     "VideoEndpointCapability",
     "DocumentCapability",

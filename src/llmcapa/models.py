@@ -7,6 +7,7 @@ from enum import Enum
 from typing import Any
 
 from .specialized_capabilities import (
+    DecisionCapability,
     DocumentCapability,
     EmbeddingCapability,
     RerankCapability,
@@ -49,6 +50,7 @@ class Feature(str, Enum):
     LLMC_FEAT_EMBEDDING_OUTPUT = "embedding_output"
     LLMC_FEAT_RERANK = "rerank"
     LLMC_FEAT_RERANK_OUTPUT = "rerank_output"
+    LLMC_FEAT_DECISION_OUTPUT = "decision_output"
 
 
 class ReasoningEffort(str, Enum):
@@ -634,6 +636,8 @@ class Capability:
     embedding: EmbeddingCapability | None = None
     rerank: RerankCapability | None = None
     spatial: SpatialCapability | None = None
+    # Appended after all existing fields for positional compatibility.
+    decision: DecisionCapability | None = None
 
     def supports(self, feature: Feature | str) -> bool | None:
         """Return True if the model supports the given feature.
@@ -642,8 +646,8 @@ class Capability:
         "function_calling", "json_schema", "streaming", "reasoning",
         "chat_completion", "responses_api", "multimodal",
         "reasoning_effort", "thinking_budget", "fim",
-        or a modality such as "image", "audio", "video", "embedding", or
-        "rerank".
+        or a modality such as "image", "audio", "video", "embedding",
+        "rerank", or "decision".
 
         Also accepts `Feature` enum members (e.g., `Feature.LLMC_FEATURE_VISION`).
         """
@@ -910,6 +914,9 @@ class Capability:
                 "image_output",
                 "audio_output",
                 "video_output",
+                # Decision output is a distinct modality: a text model cannot
+                # stand in for a model that only returns typed decisions.
+                "decision_output",
             ]
             required_features = [f for f in features_to_check if self.supports(f)]
 
@@ -1084,6 +1091,7 @@ class Capability:
             ("embedding", self.embedding),
             ("rerank", self.rerank),
             ("spatial", self.spatial),
+            ("decision", self.decision),
         ):
             if value is None:
                 d.pop(key, None)
@@ -1154,6 +1162,12 @@ class Capability:
                         value
                         if isinstance(value, SpatialCapability)
                         else SpatialCapability.from_dict(value)
+                    )
+                elif key == "decision" and value is not None:
+                    kwargs[key] = (
+                        value
+                        if isinstance(value, DecisionCapability)
+                        else DecisionCapability.from_dict(value)
                     )
                 else:
                     kwargs[key] = value

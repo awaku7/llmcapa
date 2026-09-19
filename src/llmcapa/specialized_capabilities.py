@@ -1,4 +1,4 @@
-"""Normalized capability records for document, embedding, ranking, and spatial models."""
+"""Normalized capability records for document, embedding, ranking, spatial, and decision models."""
 
 from __future__ import annotations
 
@@ -166,6 +166,55 @@ class SpatialCapability(_TupleCapability):
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> SpatialCapability:
+        return cls(**cls._from_dict_values(data))
+
+    def to_dict(self) -> dict[str, Any]:
+        return self._to_dict_values()
+@dataclass(frozen=True)
+class DecisionCapability(_TupleCapability):
+    """Typed-decision output metadata for System One style models.
+
+    A decision model does not generate text. It evaluates typed questions
+    against a state and returns typed answers with calibrated probabilities,
+    so ``free_form_text`` is ``False`` and ``type_errors_possible`` is
+    ``False`` rather than unknown.
+    """
+
+    decision: bool | None = None
+    question_kinds: tuple[str, ...] = ()
+    answer_fields: tuple[str, ...] = ()
+    returns_probabilities: bool | None = None
+    returns_confidence: bool | None = None
+    calibrated_confidence: bool | None = None
+    parallel_questions: bool | None = None
+    free_form_text: bool | None = None
+    type_errors_possible: bool | None = None
+    deterministic: bool | None = None
+    state_shapes: tuple[str, ...] = ()
+    max_state_tokens: int | None = None
+    max_total_tokens: int | None = None
+    output_token_billing: bool | None = None
+    max_questions: int | None = None
+    cardinality_max: int | None = None
+    rate_limit_tokens_per_second: int | None = None
+    rate_limit_requests_per_minute: int | None = None
+    language_values: tuple[str, ...] = ()
+    endpoints: tuple[str, ...] = ()
+    source_url: str | None = None
+    checked_at: str | None = None
+    status: str = "documented"
+    extra: dict[str, Any] = field(default_factory=dict)
+
+    _tuple_fields: ClassVar[tuple[str, ...]] = (
+        "question_kinds",
+        "answer_fields",
+        "state_shapes",
+        "language_values",
+        "endpoints",
+    )
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> DecisionCapability:
         return cls(**cls._from_dict_values(data))
 
     def to_dict(self) -> dict[str, Any]:

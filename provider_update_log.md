@@ -1,3 +1,27 @@
+## TypeSafe (2026-09-19)
+
+### Source
+- Model docs: https://docs.typesafe.ai/models (context length, pricing, rate limits, aliases, input types)
+- API reference: https://docs.typesafe.ai/api (POST https://api.typesafe.ai/v1/systemone)
+- Announcement: https://typesafe.ai/blog/introducing-system-one-models-and-jev
+- OpenRouter route: https://openrouter.ai/typesafe/jev-1.13 (alpha Decisions endpoint, https://openrouter.ai/api/alpha/decisions)
+
+### Changes
+- Added `src/llmcapa/data/typesafe.json` with `jev-1.13.0` (aliases `jev-latest`, `jev-preview`, `jev-1.13`).
+- New output modality `decision` and feature `decision_output`, plus a `DecisionCapability` object
+  (`src/llmcapa/specialized_capabilities.py`, `src/llmcapa/models.py`).
+- Jev is not a language model: text-only input, typed decisions out (`choice` / `score` / `noul`) with
+  calibrated probabilities, 64k context (32k for state plus the longest question), $0.042 per 1M input
+  tokens and free output tokens. `chat_completion`, `streaming`, `responses_api`, and `text_output`
+  are all false.
+- `can_be_replaced_by()` now treats `decision_output` as a required feature, so a text-generation model
+  cannot silently replace a decision model.
+- OpenRouter catalog mirrors the route as `typesafe/jev-1.13` and `~typesafe/jev-latest`
+  (synthetic `DECISION_ROUTES` in `scripts/_update_openrouter.py`, since `GET /api/v1/models` does not
+  list decision routes and the endpoint is outside `/api/v1`).
+- Docs updated: `README.md`, `README.ja.md`, `docs/API_SPECIFICATION.md`.
+- Install copy synced (`models.py`, `specialized_capabilities.py`, `__init__.py`, `data/typesafe.json`, `data/openrouter.json`).
+
 ## OpenRouter (2026-09-19)
 
 ### Source

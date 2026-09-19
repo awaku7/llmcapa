@@ -2635,6 +2635,90 @@
     },
     {
       "provider": "openrouter",
+      "model_id": "~typesafe/jev-latest",
+      "display_name": "OpenRouter ~ TypeSafe Jev (latest)",
+      "context_window": 64000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "decision"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": false,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "typesafe/jev-latest",
+        "openrouter/~typesafe/jev-latest"
+      ],
+      "license_type": "special",
+      "pricing": {
+        "input_per_1m": 0.042,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "choice",
+          "score",
+          "noul"
+        ],
+        "answer_fields": [
+          "choice",
+          "score",
+          "noul",
+          "probabilities",
+          "confidence"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "calibrated_confidence": true,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "output_token_billing": false,
+        "endpoints": [
+          "https://openrouter.ai/api/alpha/decisions"
+        ],
+        "source_url": "https://openrouter.ai/docs",
+        "checked_at": "2026-09-19",
+        "status": "documented",
+        "extra": {
+          "openai_compatible": false,
+          "availability": "alpha",
+          "upstream_route": "typesafe/jev-1.13"
+        }
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "base_url": "https://openrouter.ai/api/v1",
+        "tier": "decisions",
+        "synthetic": true,
+        "endpoint": "https://openrouter.ai/api/alpha/decisions",
+        "resolves_hint": "typesafe/jev-*",
+        "features": [
+          "decision_output",
+          "decisions_api"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
       "model_id": "~x-ai/grok-latest",
       "display_name": "xAI: Grok Latest",
       "context_window": 500000,
@@ -45029,6 +45113,89 @@
         },
         "checked_at": "2026-09-17",
         "status": "inferred"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "typesafe/jev-1.13",
+      "display_name": "TypeSafe: Jev 1.13 (decisions)",
+      "context_window": 64000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "decision"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": false,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "jev-1.13"
+      ],
+      "license_type": "special",
+      "pricing": {
+        "input_per_1m": 0.042,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "choice",
+          "score",
+          "noul"
+        ],
+        "answer_fields": [
+          "choice",
+          "score",
+          "noul",
+          "probabilities",
+          "confidence"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "calibrated_confidence": true,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "output_token_billing": false,
+        "endpoints": [
+          "https://openrouter.ai/api/alpha/decisions"
+        ],
+        "source_url": "https://openrouter.ai/docs",
+        "checked_at": "2026-09-19",
+        "status": "documented",
+        "extra": {
+          "openai_compatible": false,
+          "availability": "alpha",
+          "upstream_route": "typesafe/jev-1.13"
+        }
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "base_url": "https://openrouter.ai/api/v1",
+        "tier": "decisions",
+        "synthetic": true,
+        "endpoint": "https://openrouter.ai/api/alpha/decisions",
+        "resolves_hint": "typesafe/jev-*",
+        "features": [
+          "decision_output",
+          "decisions_api"
+        ]
       }
     },
     {

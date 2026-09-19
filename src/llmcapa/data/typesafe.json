@@ -1,0 +1,108 @@
+{
+  "models": [
+    {
+      "provider": "typesafe",
+      "model_id": "jev-1.13.0",
+      "display_name": "TypeSafe Jev 1.13",
+      "context_window": 64000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "decision"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": false,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "supports_json_schema": true,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.042,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "jev",
+        "jev-latest",
+        "jev-1.13",
+        "jev-preview"
+      ],
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "choice",
+          "score",
+          "noul"
+        ],
+        "answer_fields": [
+          "choice",
+          "score",
+          "noul",
+          "probabilities",
+          "confidence"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "calibrated_confidence": true,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "deterministic": false,
+        "state_shapes": [
+          "string",
+          "json_object",
+          "text_array"
+        ],
+        "max_state_tokens": 32000,
+        "max_total_tokens": 64000,
+        "output_token_billing": false,
+        "rate_limit_tokens_per_second": 250000,
+        "rate_limit_requests_per_minute": 1200,
+        "language_values": [
+          "en"
+        ],
+        "endpoints": [
+          "https://api.typesafe.ai/v1/systemone"
+        ],
+        "source_url": "https://docs.typesafe.ai/models",
+        "checked_at": "2026-09-19",
+        "status": "documented",
+        "extra": {
+          "endpoint_protocol": "systemone",
+          "openai_compatible": false,
+          "openrouter_route": "typesafe/jev-1.13",
+          "openrouter_endpoint": "https://openrouter.ai/api/alpha/decisions",
+          "openrouter_availability": "alpha",
+          "not_a_language_model": true,
+          "language_note": "English is the primary training language; other languages including CJK are accepted with lower accuracy.",
+          "notes": "System One model. Returns typed decisions with calibrated probabilities instead of generated text; output tokens are not billed. Images, audio, and video input are not supported."
+        }
+      },
+      "extra": {
+        "official_source": "https://typesafe.ai/",
+        "official_source_checked_at": "2026-09-19",
+        "model_docs": "https://docs.typesafe.ai/models",
+        "api_reference": "https://docs.typesafe.ai/api",
+        "announcement": "https://typesafe.ai/blog/introducing-system-one-models-and-jev",
+        "early_access": true,
+        "aliases_resolved": {
+          "jev-latest": "jev-1.13.0",
+          "jev-preview": "jev-1.13.0"
+        }
+      }
+    }
+  ]
+}
