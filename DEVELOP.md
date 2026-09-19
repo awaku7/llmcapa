@@ -242,6 +242,87 @@ Add test cases in `tests/test_advanced.py` or `tests/test_registry.py` to verify
 
 ---
 
+## CLI Output Design
+
+`llmcapa list` and `llmcapa search` share `_resolve_columns()` / `_sort_caps()` /
+`_emit()` in `src/llmcapa/cli.py`. Do not duplicate row-building logic per command.
+
+### Rendering rules
+
+| Item | Behavior |
+|---|---|
+| deprecated | Hidden by default. `--all` (`--include-deprecated`) shows them, and they always sort after active models |
+| `show` output | Nested records are expanded as dotted rows, e.g. `decision.question_kinds  choice, score, noul` |
+| `ctx` / `out` | `-` (unverified) / `65536` / `65.5K` / `1M`. A stored `0` renders as `-` so unknown is not mistaken for zero |
+| `VTRJS` | vision / tools (function calling) / reasoning / json_mode / streaming. `-` = unsupported, `?` = unknown in the catalog |
+| `*` | Deprecated marker for table output only; csv/markdown replace it with an explicit `deprecated` yes/no column |
+| `$/1M in/out` | `input_per_1m`/`output_per_1m`; non-USD currencies are prefixed with the currency code |
+| Width | Fits the terminal width (120 when piped) by shortening `model_id` with `...`; `--wide` disables it |
+
+### Capability columns (specialized records)
+
+The nested `Capability` records (`image` / `audio` / `video` / `document` / `embedding` /
+`rerank` / `spatial` / `decision`) are reachable through `--columns`.
+
+| Column | Content |
+|---|---|
+| `decision` | Whether the model is a decision model (`yes` / `no` / `?` / `-`) |
+| `image` `audio` `video` `document` `embedding` `rerank` `spatial` | Presence of the corresponding record |
+| `q_kinds` | `decision.question_kinds` (e.g. `choice,score,noul`) |
+| `answers` | `decision.answer_fields` |
+| `pck` | Three slots: `returns_probabilities`, `returns_confidence`, `calibrated_confidence` |
+| `state` | `max_state_tokens`/`max_total_tokens` (e.g. `32K/64K`) |
+
+Resolution rules (`_cap_flag()`):
+
+1. A nested record with a same-named primary field reports that value (`decision.decision`).
+2. A record without a primary field reports `yes` (`image` / `audio` / `video` are per-operation records).
+3. No record but the name is in `output_modalities` reports `yes`.
+4. No record and input modality only reports `?`. Accepting images as input says nothing about image generation, so it is not `yes`.
+5. Otherwise `-`.
+
+`--wide` adds `decision,image,audio,video` on top of `name,in_mod,out_mod,cutoff`.
+`--sort` also accepts specialized capability names (`yes`=1 > `no`=0 > `?`=-1).
+
+`llmcapa find` filters through `Capability.supports()`, so `find image=true` also returns
+models that accept images as input. That can disagree with the `?` shown in the column.
+
+### `llmcapa find`
+
+```bash
+llmcapa find decision=true
+llmcapa find decision --min-context 64000 --provider typesafe
+llmcapa find vision=false embedding=true --limit 20
+llmcapa find --provider amazon --min-max-output 32768
+```
+
+- Positional arguments are `NAME` or `NAME=BOOL` (`true/false/yes/no/1/0/on/off`); a bare `NAME` means `true`.
+- `--provider` / `--min-context` / `--min-max-output` are passed straight to `Registry.find()`.
+- It reuses the `list` / `search` rendering options (`--format` / `--columns` / `--sort` / `--limit` / `--all` / `--wide` / `--allow-empty`).
+- An invalid boolean exits with code 2.
+
+### Options (shared by `list` and `search`)
+
+- `--format {table,json,csv,md}` / `--json` (alias for `--format json`)
+- `--columns a,b,c` (aliases such as `ctx`/`context_window`, `price`/`pricing`, `tools`/`function_calling`; see `_COLUMN_ALIASES`)
+- `--sort KEY[,KEY]` (descending via the `:desc` suffix or the `--sort=-ctx` form; a bare `-ctx` is parsed by argparse as an option)
+- `--limit N` (applied after sorting; `registry.search()` also sorts non-deprecated first, so `limit` can never return deprecated entries only)
+- `--all` / `--include-deprecated`
+- `--wide` / `--width N`
+- `--allow-empty` (exit 0 on no match; default is 1)
+
+### Exit codes
+
+| Code | Condition |
+|---|---|
+| 0 | Success (including no match with `--allow-empty`) |
+| 1 | No match (message on stderr for table, `[]` for json), model not found, fetch failure |
+| 2 | Invalid `--sort` or `--columns` value |
+
+JSON output still returns every `Capability.to_dict()` field, so its column set does not match csv/markdown.
+
+---
+
 ## Development Workflow
 
 ### Running Tests

@@ -656,6 +656,21 @@ llmcapa show gpt-4o --json
 llmcapa list
 llmcapa list --provider google
 llmcapa list --json --no-deprecated
+llmcapa list --provider anthropic --wide
+
+# Search models by prefix
+llmcapa search claude --limit 10
+llmcapa search gpt --provider azure --format json
+
+# Choose columns, sort order, and output format
+llmcapa search claude --columns provider,model_id,ctx,out,flags,price
+llmcapa search claude --sort=-ctx --limit 5
+llmcapa search claude --format csv        # or md / json
+
+# Find models by feature flags and size limits (decision models, embeddings, ...)
+llmcapa find decision=true
+llmcapa find embedding=true --provider amazon
+llmcapa find vision=false --min-context 64000
 
 # List all known providers
 llmcapa providers

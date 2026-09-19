@@ -40,7 +40,7 @@ try:
     __version__ = package_version("llmcapa")
 except PackageNotFoundError:
     # Source-tree fallback when the project is not installed yet.
-    __version__ = "0.5.36"
+    __version__ = "0.5.37"
 
 __all__ = [
     "AudioCapability",
@@ -131,7 +131,8 @@ def search(
 ) -> list[Capability]:
     """Search models by prefix matching on model_id, display_name, or aliases.
 
-    Case-insensitive prefix search. Results are sorted by (provider, model_id).
+    Case-insensitive prefix search. Results are sorted by
+    ``(deprecated, provider, model_id)``.
     """
     return default_registry().search(prefix, provider, include_deprecated, limit)
 

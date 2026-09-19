@@ -226,6 +226,86 @@ class Capability:
 
 ---
 
+## CLI 出力の設計
+
+`llmcapa list` と `llmcapa search` は `src/llmcapa/cli.py` の `_resolve_columns()` /
+`_sort_caps()` / `_emit()` を共有します。行生成のロジックをコマンドごとに複製しないでください。
+
+### 表示ルール
+
+| 項目 | 挙動 |
+|---|---|
+| deprecated | 既定では非表示。`--all`（`--include-deprecated`）で表示し、表示時も常に有効モデルの後ろに並ぶ |
+| `show` 出力 | ネストしたレコードを行展開し、`decision.question_kinds  choice, score, noul` のようにドット区切りで表示 |
+| `ctx` / `out` | `-`（未確認）/ `65536` / `65.5K` / `1M`。`0` は未確認として `-` を表示する |
+| `VTRJS` | vision / tools(reasoning含む関数呼び出し) / reasoning / json_mode / streaming。`-`=非対応、`?`=カタログ上未確認 |
+| `*` | deprecated マーカー（テーブル表示のみ。CSV/Markdown では `deprecated` の yes/no 列に置換） |
+| `$/1M in/out` | `input_per_1m`/`output_per_1m`。USD 以外は通貨コードを前置 |
+| 幅 | 端末幅（非TTYは 120）に収まるよう `model_id` を優先的に `...` で切り詰め。`--wide` で無効化 |
+
+### 機能カラム（specialized capability）
+
+`Capability` のネストしたレコード（`image` / `audio` / `video` / `document` / `embedding` / `rerank` / `spatial` / `decision`）は `--columns` で参照できます。
+
+| カラム | 内容 |
+|---|---|
+| `decision` | decision モデルかどうか（`yes` / `no` / `?` / `-`） |
+| `image` `audio` `video` `document` `embedding` `rerank` `spatial` | 対応するレコードの有無 |
+| `q_kinds` | `decision.question_kinds`（例 `choice,score,noul`） |
+| `answers` | `decision.answer_fields` |
+| `pck` | `returns_probabilities` / `returns_confidence` / `calibrated_confidence` の3スロット |
+| `state` | `max_state_tokens`/`max_total_tokens`（例 `32K/64K`） |
+
+判定ルール（`_cap_flag()`）:
+
+1. ネストしたレコードが存在し、同名の主フィールドを持つ場合はその値（`decision.decision` など）。
+2. レコードが存在し主フィールドを持たない場合は `yes`（`image` / `audio` / `video` は操作単位のレコードのため）。
+3. レコードが無く、`output_modalities` に含まれる場合は `yes`。
+4. レコードが無く、入力モダリティのみの場合は `?`。画像を入力できることは画像生成の可否を意味しないため、`yes` にはしない。
+5. それ以外は `-`。
+
+`--wide` は `name,in_mod,out_mod,cutoff` に加えて `decision,image,audio,video` を追加します。
+`--sort` は specialized capability 名も指定できます（`yes`=1 > `no`=0 > `?`=-1）。
+
+`llmcapa find` のフィルタは `Capability.supports()` を使うため、`find image=true` は
+入力モダリティとして画像を受け取るモデルも返します。カラムの `?` と一致しない場合がある点に注意してください。
+
+### `llmcapa find`
+
+```bash
+llmcapa find decision=true
+llmcapa find decision --min-context 64000 --provider typesafe
+llmcapa find vision=false embedding=true --limit 20
+llmcapa find --provider amazon --min-max-output 32768
+```
+
+- 位置引数は `NAME` または `NAME=BOOL`（`true/false/yes/no/1/0/on/off`）。`NAME` 単独は `true`。
+- `--provider` / `--min-context` / `--min-max-output` は `Registry.find()` にそのまま渡します。
+- `list` / `search` と同じ描画オプション（`--format` / `--columns` / `--sort` / `--limit` / `--all` / `--wide` / `--allow-empty`）を使えます。
+- 不正な真偽値は終了コード 2。
+
+### オプション（`list` / `search` 共通）
+
+- `--format {table,json,csv,md}` / `--json`（`--format json` の別名）
+- `--columns a,b,c`（別名: `ctx`/`context_window`, `price`/`pricing`, `tools`/`function_calling` など。`_COLUMN_ALIASES` を参照）
+- `--sort KEY[,KEY]`（降順は `:desc` 接尾辞、または `--sort=-ctx` 形式。`-ctx` を単独で渡すと argparse がオプションとして解釈する）
+- `--limit N`（ソート後に適用。`registry.search()` 側も非 deprecated 優先でソートするため、`limit` が deprecated だけを返すことはない）
+- `--all` / `--include-deprecated`
+- `--wide` / `--width N`
+- `--allow-empty`（0件でも終了コード0。既定は 1）
+
+### 終了コード
+
+| コード | 条件 |
+|---|---|
+| 0 | 正常（`--allow-empty` で 0 件も含む） |
+| 1 | 0 件（table は stderr にメッセージ、json は `[]` を出力）、モデル未検出、取得失敗 |
+| 2 | `--sort` / `--columns` の不正な値 |
+
+JSON 出力は従来どおり `Capability.to_dict()` の全フィールドを返すため、CSV/Markdown と列構成は一致しません。
+
+---
+
 ## 開発ワークフロー
 
 ### テストの実行

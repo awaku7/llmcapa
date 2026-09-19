@@ -613,6 +613,21 @@ llmcapa show gpt-4o --json
 llmcapa list
 llmcapa list --provider google
 llmcapa list --json --no-deprecated
+llmcapa list --provider anthropic --wide
+
+# プレフィックスでモデルを検索
+llmcapa search claude --limit 10
+llmcapa search gpt --provider azure --format json
+
+# 列・並び順・出力形式を指定
+llmcapa search claude --columns provider,model_id,ctx,out,flags,price
+llmcapa search claude --sort=-ctx --limit 5
+llmcapa search claude --format csv        # または md / json
+
+# 機能フラグ・サイズでモデルを検索（decision モデルなど）
+llmcapa find decision=true
+llmcapa find embedding=true --provider amazon
+llmcapa find vision=false --min-context 64000
 
 # 既知のすべてのプロバイダーを一覧表示
 llmcapa providers

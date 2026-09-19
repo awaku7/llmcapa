@@ -801,7 +801,9 @@ class Registry:
     ) -> list[Capability]:
         """Search models by prefix matching on model_id, display_name, or aliases.
 
-        Case-insensitive prefix search. Results are sorted by (provider, model_id).
+        Case-insensitive prefix search. Results are sorted by
+        ``(deprecated, provider, model_id)``, so non-deprecated models always
+        precede deprecated ones and ``limit`` keeps the active entries.
         When *provider* is given, uses only that provider catalog and the
         same alias resolution as ``list_models`` / ``get``. With no provider,
         all provider catalogs are searched.
@@ -845,7 +847,9 @@ class Registry:
                     result.append(cap)
                     break
 
-        result.sort(key=lambda c: (c.provider, c.model_id))
+        # Active models first so that ``limit`` never truncates a result set
+        # down to deprecated entries only.
+        result.sort(key=lambda c: (c.deprecated, c.provider, c.model_id))
         if limit is not None:
             result = result[:limit]
         return result
