@@ -17,18 +17,31 @@ llmcapa/
 ├── src/llmcapa/
 │   ├── __init__.py         # 公開APIのエントリーポイント
 │   ├── models.py           # 機能データクラスと機能評価
-│   ├── registry.py         # インメモリレジストリ、ロード、およびOpenRouter取得
+│   ├── specialized_capabilities.py  # document / embedding / rerank / spatial / decision レコード
+│   ├── registry.py         # インメモリレジストリ、ロード、およびOpenRouter/HuggingFace取得
 │   ├── cli.py              # コマンドラインインターフェース
 │   ├── tokenizer.py        # トークンカウント（オフライン、プロバイダー別）
 │   └── data/               # 同梱されているオフライン機能データ (JSON)
 │       ├── __init__.py
 │       ├── openai.json
 │       ├── anthropic.json
-│       └── ...
+│       └── ...             # プロバイダーごとのカタログ（70件超）。集約ファイルを含む
+├── scripts/                # プロバイダー別の更新・スクレイプ・後処理スクリプト
+│   ├── _update_*.py        # 公式ソースから各プロバイダーを更新
+│   ├── _scrape_*.py        # 公式ページのスクレイピング
+│   └── _*_postprocess.py   # audio / video / image / structured 補正
+├── docs/                   # 仕様・スクレイピングノート
 └── tests/                  # ユニットテスト (pytest)
     ├── test_registry.py
     ├── test_cache.py
-    └── test_advanced.py
+    ├── test_advanced.py
+    ├── test_cli.py
+    ├── test_computer_use.py
+    ├── test_audio_capability.py
+    ├── test_video_capability.py
+    ├── test_image_capability.py
+    ├── test_decision_capability.py
+    └── test_specialized_capability.py
 ```
 
 ---
@@ -62,7 +75,7 @@ llmcapa/
 | `xai` | `x-ai`, `grok` |
 | `anthropic` | `claude` |
 | `openai` | `open-ai` |
-| `google` | `google-ai` |
+| `google` | `google-ai`, `gemini` |
 | `vertex-ai` | `vertexai` |
 | `azure-openai` | `azure` |
 | `zhipu` | `zai`, `z-ai` |
@@ -72,6 +85,10 @@ llmcapa/
 | `huggingface` | `hf` |
 | `qwen` | `alibaba`, `dashscope` |
 | `lmstudio` | `lm-studio`, `lm_studio` |
+| `together` | `together-ai`, `togethercomputer` |
+| `vercel` | `vercel-ai-gateway`, `vercel-gateway`, `ai-gateway` |
+| `modellix` | `modellix-ai` |
+| `llama-cpp` | `llama`, `llama_cpp` |
 
 例:
 
@@ -95,9 +112,13 @@ llmcapa.search("gpt-4o", provider="azure")          # → azure-openai
 - 省略時は flat な `_models` ではなく `list_models` / `_by_provider` 経由で全プロバイダーを走査するため、複数プロバイダーに存在する同一 model id も保持されます。
 - 指定時は `list_models` / `get` と同じエイリアス・正規化パスを使います。
 
+`meta/muse-spark-1.3` のようなルート修飾 ID は `openrouter` カタログに属します。ネイティブカタログは集約側のルートプレフィックスをエイリアスとして追加しません。ただしネイティブプロバイダー自身の名前空間にスラッシュを含むことはあります（例: Novita の `baichuan/baichuan-m2-32b`）。OpenRouter のルートを検索する場合は `provider="openrouter"` を指定してください。
+
 ## カタログ更新スクリプトの方針
 
 プロバイダーのカタログ更新は、プロバイダーごとの公式ソースを使う個別スクリプトで行います。全プロバイダーをOpenRouterのデータで一括置換するスクリプトは使用しません。
+
+ネイティブプロバイダーのカタログは、レコード取得に OpenRouter を使ってはなりません。OpenRouter API から構築するのは `openrouter.json` だけです（`scripts/_update_openrouter.py`）。他の `scripts/_update_*.py` は公式ドキュメントページまたは公式モデル API を直接解析します。`scripts/openrouter_providers/` 配下のシムは歴史的参照用であり、現役の更新スクリプトから import してはなりません。
 
 ### OpenAI
 
@@ -107,7 +128,7 @@ python scripts/_update_all_providers.py --provider openai
 python scripts/_update_openai.py
 ```
 
-`_update_openai.py` は `https://developers.openai.com/api/docs/models.md` から詳細ページを動的に発見し、各ページと公式料金ページを解析します。モデル名やエイリアスをスクリプトへハードコードしません。公式ページから取得できない既存のレガシー項目は互換性のため保持します。
+`_update_openai.py` は `https://developers.openai.com/api/docs/models/all.md` から詳細ページを動的に発見し、各ページと公式料金ページを解析します。モデル名やエイリアスをスクリプトへハードコードしません。現在の公式インデックスに存在しない既存レコードは、レガシー互換用としてのみ保持します。
 
 ### OpenRouter
 
@@ -115,11 +136,23 @@ python scripts/_update_openai.py
 python scripts/update_catalog_from_openrouter.py
 ```
 
-これは `openrouter.json` **だけ**を更新します。他プロバイダーのJSONをOpenRouterデータで置き換えません。
+これは `openrouter.json` **だけ**を更新します。他プロバイダーのJSONをOpenRouterデータで置き換えません。live API から再構築する場合は `scripts/_update_openrouter.py` を使います。
 
 ### 全ファイル対象の補正処理
 
-`scripts/_postprocess_catalogs.py` は取得処理ではなく、既存JSONの補正・検証用です。モデル発見やプロバイダーカタログの一括取得は行いません。
+`scripts/_postprocess_catalogs.py` はモデル発見やプロバイダーカタログの一括取得を行いません。既存JSONに対する補正が本体です。具体的には、公式料金メタデータ（`scripts/metadata/anthro_prices.json`、`ds_prices.json`）による Anthropic / DeepSeek の上書き、コード系モデル名パターンによる `supports_fim` の一括修正、`meta-llama` → `meta`・`x-ai` → `xai` のプロバイダー名統合、audio / video / structured / image の正規化（`_audio_capability_postprocess` 等の `apply()` を呼び出し）、および `provider_update_log.md` への追記です。
+
+### 画像 Capability の後処理
+
+`scripts/_image_capability_postprocess.py` は画像生成レコード用の共有後処理です。画像出力を持ち、認識可能な画像生成ファミリーに属するカタログレコードにのみ、保守的な `ImageCapability` メタデータを付与します。画像入力だけでは画像生成とみなしません。未確認の入力形式・MIME・バイト上限・ピクセル上限は推測で補完せず未設定のままにします。
+
+`_update_all_providers.py` はプロバイダー更新の成功後にこのステップを実行します。直接監査する場合は以下を実行します:
+
+```bash
+python scripts/_image_capability_postprocess.py
+```
+
+監査では、生成メタデータの欠落と、曖昧または画像解析系の出力レコードを区別します。
 
 ## 新しいプロバイダーの追加
 
@@ -158,21 +191,19 @@ python scripts/update_catalog_from_openrouter.py
 }
 ```
 
-### 2. プロバイダーテストリストの更新
-`tests/test_registry.py` を開き、`test_providers()` 内の `expected` セットに新しいプロバイダー名を追加します:
+### 2. 動作確認テストの追加
+`tests/test_registry.py` に新しいプロバイダーが `providers()` / `list_models()` / `get()` 経由で取得できることを確認するテストを追加します（例: `test_together_provider`、`test_new_providers_registered` を参照）。現在の `test_providers()` は規模だけを検証します:
 
 ```python
 def test_providers():
-    provs = llmcapa.providers()
-    expected = {
-        "openai", "anthropic", "google",
-        "xai", "meta", "mistral", "qwen", "deepseek", "nvidia",
-        "microsoft", "amazon", "ntt", "customer-cloud", "elyza",
-        "softbank", "nec", "fujitsu", "pfn",
-        "cohere",  # ここに追加
-    }
-    assert expected <= set(provs)
+    p = llmcapa.providers()
+    assert isinstance(p, list)
+    assert len(p) > 10
+    assert "openai" in p
+    assert "novita" in p
 ```
+
+新しいプロバイダー（例: `cohere` は `src/llmcapa/data/cohere.json` として同梱済み）のように、最低限 `providers()` に含まれることと、代表モデルが `get()` できることを検証してください。
 
 ---
 
@@ -180,14 +211,16 @@ def test_providers():
 
 新しい機能フラグ（例: `supports_structured_outputs`）を追加する場合:
 
-現在の標準Feature Enumには、Realtimeと追加モダリティも含まれます:
+現在の標準 `Feature` Enum（`src/llmcapa/models.py`）には、Realtime と拡張モダリティも含まれます:
 
 - `LLMC_FEAT_REALTIME`
-- `LLMC_FEAT_FILE_INPUT`（PDFを含むファイル系入力）
+- `LLMC_FEAT_FILE_INPUT`（PDFを含むファイル系入力。PDFは独立した Enum ではなく `file_input` のサブタイプとして評価されます）
 - `LLMC_FEAT_SPEECH_INPUT` / `LLMC_FEAT_SPEECH_OUTPUT`
 - `LLMC_FEAT_EMBEDDING_OUTPUT`（`embedding` / `embeddings` の表記揺れを吸収）
-
-PDFは独立したFeature Enumではなく、`file_input`のサブタイプとして評価されます。
+- `LLMC_FEAT_FIM`、`LLMC_FEAT_MULTIMODAL`、`LLMC_FEAT_THINKING_LEVEL`
+- `LLMC_FEAT_TEXT_INPUT` / `LLMC_FEAT_IMAGE_INPUT` / `LLMC_FEAT_AUDIO_INPUT` / `LLMC_FEAT_VIDEO_INPUT`
+- `LLMC_FEAT_TEXT_OUTPUT` / `LLMC_FEAT_IMAGE_OUTPUT` / `LLMC_FEAT_AUDIO_OUTPUT` / `LLMC_FEAT_VIDEO_OUTPUT`
+- `LLMC_FEAT_RERANK` / `LLMC_FEAT_RERANK_OUTPUT` / `LLMC_FEAT_DECISION_OUTPUT`
 
 ### 1. データクラスの更新
 `src/llmcapa/models.py` を開き、`Capability` データクラスにデフォルト値を持つ新しいフィールドを追加します:
@@ -208,11 +241,11 @@ class Capability:
         ...
         if required_features is None:
             features_to_check = [
-                "vision", "function_calling", "json_mode", "streaming",
-                "reasoning", "chat_completion", "responses_api",
-                "reasoning_effort", "thinking_budget", "image_output",
-                "audio_output", "video_output",
-                "structured_outputs"  # ここに追加
+                "vision", "function_calling", "json_mode", "json_schema",
+                "streaming", "reasoning", "chat_completion", "responses_api",
+                "reasoning_effort", "thinking_budget", "fim", "realtime",
+                "image_output", "audio_output", "video_output",
+                "decision_output",  # ここに追加
             ]
             required_features = [f for f in features_to_check if self.supports(f)]
         ...
@@ -228,7 +261,7 @@ class Capability:
 
 ## CLI 出力の設計
 
-`llmcapa list` と `llmcapa search` は `src/llmcapa/cli.py` の `_resolve_columns()` /
+`llmcapa list` / `search` / `find` は `src/llmcapa/cli.py` の `_resolve_columns()` /
 `_sort_caps()` / `_emit()` を共有します。行生成のロジックをコマンドごとに複製しないでください。
 
 ### 表示ルール
@@ -238,7 +271,7 @@ class Capability:
 | deprecated | 既定では非表示。`--all`（`--include-deprecated`）で表示し、表示時も常に有効モデルの後ろに並ぶ |
 | `show` 出力 | ネストしたレコードを行展開し、`decision.question_kinds  choice, score, noul` のようにドット区切りで表示 |
 | `ctx` / `out` | `-`（未確認）/ `65536` / `65.5K` / `1M`。`0` は未確認として `-` を表示する |
-| `VTRJS` | vision / tools(reasoning含む関数呼び出し) / reasoning / json_mode / streaming。`-`=非対応、`?`=カタログ上未確認 |
+| `VTRJS` | vision / tools（= function_calling） / reasoning / json_mode / streaming。`-`=非対応、`?`=カタログ上未確認 |
 | `*` | deprecated マーカー（テーブル表示のみ。CSV/Markdown では `deprecated` の yes/no 列に置換） |
 | `$/1M in/out` | `input_per_1m`/`output_per_1m`。USD 以外は通貨コードを前置 |
 | 幅 | 端末幅（非TTYは 120）に収まるよう `model_id` を優先的に `...` で切り詰め。`--wide` で無効化 |
@@ -265,7 +298,7 @@ class Capability:
 5. それ以外は `-`。
 
 `--wide` は `name,in_mod,out_mod,cutoff` に加えて `decision,image,audio,video` を追加します。
-`--sort` は specialized capability 名も指定できます（`yes`=1 > `no`=0 > `?`=-1）。
+`--sort` は specialized capability 名も指定できます（`yes`=1 > `-`=0 > `no` / `?`=-1。`_sort_value()` の定義どおり）。
 
 `llmcapa find` のフィルタは `Capability.supports()` を使うため、`find image=true` は
 入力モダリティとして画像を受け取るモデルも返します。カラムの `?` と一致しない場合がある点に注意してください。
@@ -279,12 +312,12 @@ llmcapa find vision=false embedding=true --limit 20
 llmcapa find --provider amazon --min-max-output 32768
 ```
 
-- 位置引数は `NAME` または `NAME=BOOL`（`true/false/yes/no/1/0/on/off`）。`NAME` 単独は `true`。
+- 位置引数は `NAME` または `NAME=BOOL`（`true/yes/y/t/1/on`・`false/no/n/f/0/off`。大文字小文字不問）。`NAME` 単独は `true`。
 - `--provider` / `--min-context` / `--min-max-output` は `Registry.find()` にそのまま渡します。
 - `list` / `search` と同じ描画オプション（`--format` / `--columns` / `--sort` / `--limit` / `--all` / `--wide` / `--allow-empty`）を使えます。
 - 不正な真偽値は終了コード 2。
 
-### オプション（`list` / `search` 共通）
+### オプション（`list` / `search` / `find` 共通）
 
 - `--format {table,json,csv,md}` / `--json`（`--format json` の別名）
 - `--columns a,b,c`（別名: `ctx`/`context_window`, `price`/`pricing`, `tools`/`function_calling` など。`_COLUMN_ALIASES` を参照）
@@ -355,10 +388,16 @@ Azure AI Foundry カタログには SSR と continuation token に関する制�
 | `max_output_tokens` | `top_provider.max_completion_tokens` | `int` にキャスト、デフォルトは `0` |
 | `input_modalities` | `architecture.input_modalities` | デフォルトは `["text"]` |
 | `output_modalities` | `architecture.output_modalities` | デフォルトは `["text"]` |
-| `supports_function_calling` | `supported_parameters` | `"tools"` または `"tool_choice"` が存在すれば `True` |
-| `supports_json_mode` | `supported_parameters` | `"structured_outputs"` または `"response_format"` が存在すれば `True` |
-| `supports_reasoning` | `supported_parameters` | `"reasoning"` または `"include_reasoning"` が存在すれば `True` |
-| `supports_reasoning_effort` | `supported_parameters` | `"reasoning"` が存在すれば `True` |
+| `provider` | — | 常に `"openrouter"`（ルートの上流名前空間は `model_id` のプレフィックスに残る） |
+| `supports_function_calling` | `supported_parameters` | `"tools"` または `"function_calling"` が存在すれば `True` |
+| `supports_json_mode` | `supported_parameters` | `"json_mode"`・`"response_format"`・`"structured_outputs"` のいずれかが存在すれば `True` |
+| `supports_json_schema` | `supported_parameters` | `"structured_outputs"` が存在すれば `True`、それ以外は `None`（未確認） |
+| `supports_reasoning` | `reasoning`（トップレベル） | 真値であれば `True` |
+| `supports_reasoning_effort` | `supported_parameters` | `"reasoning"` または `"reasoning_effort"` が存在すれば `True` |
+| `supports_thinking_budget` | `supported_parameters` | `"thinking"` または `"thinking_budget"` が存在すれば `True` |
+| `supports_vision` | `architecture.input_modalities` | `"image"` を含めば `True` |
+| `supports_streaming` / `supports_chat_completion` | — | 常に `True` |
+| `supports_responses_api` | — | 常に `True`。OpenRouter のゲートウェイ転送能力であり、モデルネイティブの Responses API を意味しない |
 | `pricing` | `pricing` | `prompt` と `completion` のレートを100万トークンあたりのレートに変換 |
 | `aliases` | `id` | 小文字に変換された `id` がエイリアスとして追加されます |
 
@@ -371,13 +410,15 @@ Azure AI Foundry カタログには SSR と continuation token に関する制�
 
 | 機能フィールド | HuggingFace API フィールド | マッピングロジック / フォールバック |
 |---|---|---|
+| `provider` | `modelId` の `/` より前 | `org/model` の org 部分。`/` がなければ `"huggingface"` |
 | `model_id` | `modelId` | `_id` にフォールバック |
 | `display_name` | `modelId` | モデル ID と同一 |
-| `context_window` | `cardData.model_data.context_window` / `config.max_position_embeddings` | デフォルト `4096` |
-| `max_output_tokens` | `cardData.model_data.max_output_tokens` | デフォルト `2048` |
-| `input_modalities` | `pipeline_tag` | `image-text-to-text` の場合 `["text", "image"]`、それ以外は `["text"]` |
-| `supports_vision` | `pipeline_tag` | パイプラインが `image-text-to-text` または `visual-question-answering` なら `True` |
-| `supports_chat_completion` | `pipeline_tag` | `text-generation` または `image-text-to-text` なら `True` |
+| `context_window` | `cardData.model_data.context_window` / `cardData.context_window`・`context_length` / `config.max_position_embeddings`・`n_positions`・`n_ctx` | デフォルト `4096` |
+| `max_output_tokens` | `cardData.model_data.max_output_tokens` / `cardData.max_output_tokens` | デフォルト `2048` |
+| `input_modalities` | `pipeline_tag` | `image-text-to-text` / `visual-question-answering` / `image-feature-extraction` の場合 `["text", "image"]`、それ以外は `["text"]`。`output_modalities` は常に `["text"]` |
+| `supports_vision` | `pipeline_tag` | 上記3種のいずれかなら `True` |
+| `supports_chat_completion` | `pipeline_tag` | `text-generation`・`image-text-to-text`・`conversational` なら `True` |
+| `supports_streaming` | — | 常に `True`（`supports_function_calling` / `supports_json_mode` は `False`） |
 
 
 
@@ -398,6 +439,6 @@ Modellix は LLM ゲートウェイと画像・動画・音声のメディア AP
 - `src/llmcapa/data/modellix.json`: 公式 LLM カタログのスナップショット（29件）
 - `src/llmcapa/data/modellix_media.json`: 公式ドキュメントインデックス由来のメディアモデル（178件）
 
-両ファイルの `provider` は `modellix` とし、上流プロバイダーはモデルIDのプレフィックス（例: `kling/kling-v3-t2v`）に保持します。Modellix は集約カタログなので、ネイティブプロバイダーのデータを上書きしないよう、`Registry._load_bundled()` では集約ファイルとして最後にロードします。
+両ファイルの `provider` は `modellix` とし、上流プロバイダーはモデルIDのプレフィックス（例: `kling/kling-v3-t2v`）に保持します。Modellix は集約カタログなので、ネイティブプロバイダーのデータを上書きしないよう、`Registry._load_bundled()` では集約ファイル群（`openrouter.json`、`novita.json`、`azure_foundry.json`、`lmstudio.json`、`ollama.json`、`modellix.json`、`modellix_media.json`）として最後にロードします。flat な `_models` 側は first-registered-wins のため、ネイティブ側が優先されます。
 
 更新時の参照先は `https://docs.modellix.ai/llms.txt`、`https://www.modellix.ai/llm`、および Modellix の公式モデルドキュメントです。OpenRouter のデータを Modellix カタログへ流用してはなりません。メディアモデルはトークン系の `context_window` / `pricing` が提供されない場合があるため、未確認値は推測で補完せず `0` または `null` とし、モダリティと公式ドキュメントURLを `extra` に記録します。
