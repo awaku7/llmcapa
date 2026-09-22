@@ -323,16 +323,23 @@ def test_new_provider_models_accessible() -> None:
     assert sakura.provider == "sakura"
     assert sakura.context_window > 0  # 131072 as of latest data
 
-    hf = llmcapa.get("huggingface-default")
+    # huggingface.json now holds real HF API records (2900+ models);
+    # the old "huggingface-default" placeholder no longer exists.
+    hf_models = llmcapa.list_models(provider="huggingface")
+    assert len(hf_models) > 1
+    hf = hf_models[0]
     assert hf.provider == "huggingface"
-    assert hf.context_window == 4096
+    assert hf.context_window > 0
+    # Spot-check a well-known record resolves through the registry.
+    assert llmcapa.get(hf.model_id).provider == "huggingface"
 
 
 def test_provider_alias_hf_resolves_to_huggingface() -> None:
     """provider='hf' should resolve to huggingface via alias."""
-    cap = llmcapa.get("huggingface-default", provider="hf")
+    expected_first = llmcapa.list_models(provider="huggingface")[0]
+    cap = llmcapa.get(expected_first.model_id, provider="hf")
     assert cap.provider == "huggingface"
-    assert cap.model_id == "huggingface-default"
+    assert cap.model_id == expected_first.model_id
 
 
 def test_provider_alias_does_not_duplicate_existing_provider_catalog() -> None:
@@ -389,9 +396,9 @@ def test_data_from_bundled_json_not_hardcoded() -> None:
 
     hf_models = reg.list_models(provider="huggingface")
     assert len(hf_models) > 1  # now contains real models from HF API
-    assert any(
-        m.model_id == "huggingface-default" for m in hf_models
-    ), "huggingface-default should be in HF models"
+    assert all(
+        m.provider == "huggingface" for m in hf_models
+    ), "huggingface models should all carry provider=huggingface"
 
 
 def test_together_provider():
