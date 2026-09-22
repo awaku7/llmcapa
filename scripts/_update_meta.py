@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parents[1]
 LOG = ROOT / "provider_update_log.md"
 DATA = ROOT / "src" / "llmcapa" / "data" / "meta.json"
 OFFICIAL_HOME = "https://dev.meta.ai/"
-OFFICIAL_MODELS = "https://dev.meta.ai/docs/getting-started/models"
+OFFICIAL_MODELS = "https://dev.meta.ai/docs/models"
 OFFICIAL_PRICING = "https://dev.meta.ai/docs/pricing-rate-limits"
 OFFICIAL_IMAGE_GENERATION = "https://dev.meta.ai/docs/image-generation"
 OFFICIAL_GLIMMER = (
@@ -65,9 +65,12 @@ def _visit(page, url: str):
 def parse_pricing(text: str) -> dict:
     """Extract Standard / Contributor / Voice / Image pricing from the page."""
     out: dict = {}
+    # Playwright inner_text() renders HTML tables as tab/newline-separated text,
+    # not as Markdown pipes. Normalize both forms before applying the patterns.
+    normalized = re.sub(r"\s+", " ", text.replace("|", " "))
     std = re.search(
-        r"Standard pricing.*?Cached input \| \$([0-9.]+).*?Input \| \$([0-9.]+).*?Output \| \$([0-9.]+)",
-        text,
+        r"Standard pricing.*?Cached input \$([0-9.]+).*?Input \$([0-9.]+).*?Output \$([0-9.]+)",
+        normalized,
         re.DOTALL,
     )
     if std:
@@ -77,8 +80,8 @@ def parse_pricing(text: str) -> dict:
             "output": float(std.group(3)),
         }
     con = re.search(
-        r"Contributor tier.*?Cached input \| \$([0-9.]+).*?Input \| \$([0-9.]+).*?Output \| \$([0-9.]+)",
-        text,
+        r"Contributor tier.*?Cached input \$([0-9.]+).*?Input \$([0-9.]+).*?Output \$([0-9.]+)",
+        normalized,
         re.DOTALL,
     )
     if con:
@@ -87,10 +90,10 @@ def parse_pricing(text: str) -> dict:
             "input": float(con.group(2)),
             "output": float(con.group(3)),
         }
-    voice = re.search(r"Audio processed \| \$([0-9.]+) per hour", text)
+    voice = re.search(r"Audio processed \$([0-9.]+) per hour", normalized)
     if voice:
         out["voice_per_hour"] = float(voice.group(1))
-    image = re.search(r"billed at a flat \$([0-9.]+) per generated image", text)
+    image = re.search(r"billed at a flat \$([0-9.]+) per generated image", normalized)
     if image:
         out["image_per_image"] = float(image.group(1))
     return out
@@ -99,20 +102,22 @@ def parse_pricing(text: str) -> dict:
 def parse_models_page(text: str) -> dict:
     """Extract the Available-models table from the official models page."""
     out: dict = {}
-    # e.g. "muse-spark-1.1 | Text, image, video, PDF | Text | 1,048,576 tokens"
+    # Playwright's inner_text() returns table cells separated by whitespace.
+    # Normalize both rendered tables and pipe-formatted text first.
+    normalized = re.sub(r"\s+", " ", text.replace("|", " "))
+    # e.g. "muse-spark-1.1 Standard Text, image, video, PDF Text 1,048,576 tokens"
     for m in re.finditer(
-        r"(muse-[\w.\-]+)\s*\|\s*([^|]+?)\|\s*([^|]+?)\|\s*([\d,]+)\s*tokens",
-        text,
+        r"(muse-[\w.\-]+)\s+(?:(?:Standard|Contributor)\s+)?(.+?)\s+Text\s+([\d,]+)\s+tokens",
+        normalized,
     ):
-        mid, inp, outp, ctx = (
+        mid, inp, ctx = (
             m.group(1),
             m.group(2),
             m.group(3),
-            m.group(4),
         )
         out[mid] = {
             "input": inp.strip(),
-            "output": outp.strip(),
+            "output": "Text",
             "context": int(ctx.replace(",", "")),
         }
     return out
@@ -243,7 +248,7 @@ def build() -> tuple[list[dict], dict]:
         _, glimmer_text = _visit(page, OFFICIAL_GLIMMER)
         browser.close()
 
-    if models_status != 200 or "Available models" not in models_text:
+    if models_status != 200 or "Available Muse Spark models" not in models_text:
         raise RuntimeError("official Meta models page did not render")
     if pricing_status != 200 or "Price per 1M tokens" not in pricing_text:
         raise RuntimeError("official Meta pricing page did not render")

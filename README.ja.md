@@ -4,7 +4,7 @@
 
 ## 特徴
 
-- **包括的な同梱データ**: OpenAI、Anthropic、Google (Gemini)、Microsoft (Phi)、Amazon (Nova/Titan)、Meta (Llama)、Mistral、Qwen、DeepSeek、xAI (Grok)、NVIDIA、MoonshotAI (Kimi)、zhipu-ai (GLM)、Sakana AI (Fugu)、**Azure AI Foundry**、Novita AI、**Together AI（98モデル）**、OpenRouter、**HuggingFace（人気モデル 2,675）**、**Modellix LLM・メディアモデル**（LLM 29件、メディア178件）、**TypeSafe（Jev / System One の決定出力モデル）**、および日本の国内モデル（デジタル庁の「GENNAI」プラットフォームで採用されているNTT tsuzumi、PFN PLaMo、ELYZA、SoftBank、NEC、Fujitsuなど）のオフライン機能データを同梱しています。
+- **包括的な同梱データ**: OpenAI、Anthropic、Google (Gemini)、Microsoft (Phi)、Amazon (Nova/Titan)、Meta (Llama)、Mistral、Qwen、DeepSeek、xAI (Grok)、NVIDIA、MoonshotAI (Kimi)、zhipu-ai (GLM)、Sakana AI (Fugu)、**Azure AI Foundry**、Novita AI、**Together AI（98モデル）**、OpenRouter、**HuggingFace（人気モデル 2,904）**、**Modellix LLM・メディアモデル**（LLM 29件、メディア178件）、**TypeSafe（Jev / System One の決定出力モデル）**、および日本の国内モデル（デジタル庁の「GENNAI」プラットフォームで採用されているNTT tsuzumi、PFN PLaMo、ELYZA、SoftBank、NEC、Fujitsuなど）のオフライン機能データを同梱しています。
 - **実行時依存関係ゼロ**: Python標準ライブラリのみで動作します。外部パッケージ（`pytest` や `build` など）は開発・テスト用のみです。
 - **エイリアス解決**: モデルのエイリアスやプロバイダー固有の名前を自動的に解決します（例: `gpt-4o-2024-08-06` -> `gpt-4o`、`gemini-1.5-pro-preview-0409` -> `gemini-1.5-pro`）。
 - **プロバイダーエイリアス**: プロバイダー引数は一般的な別名と正規化形式を受け付けます（例: `grok`/`x-ai` → `xai`、`bedrock`/`aws-bedrock`/`aws` → `amazon`、`vertexai` → `vertex-ai`、`open-ai` → `openai`、`google-ai` → `google`、`azure` → `azure-openai`、`hf` → `huggingface`、`alibaba`/`dashscope` → `qwen`、`lm-studio` → `lmstudio`、`modellix-ai` → `modellix`）。区切り文字 `_. ` は `-` として扱われます。
@@ -14,7 +14,7 @@
 - **代替モデルチェッカー**: コンテキストウィンドウと必要な機能に基づいて、あるモデルを別のモデルで安全に代替できるかどうかを確認します。
 - **トークナイザーマッピング**: モデルの機能から直接トークナイザー名（例: `o200k_base`）にアクセスできます。
 - **拡張性**: 独自のローカルJSONモデル定義をロードできます。
-- **Ollama & HuggingFace サポート**: **1,638のOllamaモデル**および**2,675の人気HuggingFaceモデル**（236ベースモデル×全サイズバリアント）の機能データを収録。codegemma、llama、qwen、mistral、deepseek、gemma、phi など、ローカル推論向けモデルをカバーしています。
+- **Ollama & HuggingFace サポート**: **1,656のOllamaモデル**および**2,904の人気HuggingFaceモデル**（236ベースモデル×全サイズバリアント）の機能データを収録。codegemma、llama、qwen、mistral、deepseek、gemma、phi など、ローカル推論向けモデルをカバーしています。
 - **FIM（Fill-in-the-Middle）サポート**: `cap.supports('fim')` でコード補完（FIM）対応を確認可能。codegemma、codellama、starcoder2、deepseek-coder、qwen2.5-coder などに対応。
 - **CLI同梱**: ターミナルから直接モデルの機能を照会・一覧表示できます。
 
@@ -123,13 +123,14 @@ from llmcapa import Feature
 
 realtime = llmcapa.get("gpt-realtime-2")
 print(realtime.supports(Feature.LLMC_FEAT_REALTIME))       # True
-print(realtime.supports(Feature.LLMC_FEAT_SPEECH_INPUT))  # True
-print(realtime.supports(Feature.LLMC_FEAT_SPEECH_OUTPUT)) # True
+speech = llmcapa.get("nova-2-sonic-v1", provider="amazon")
+print(speech.supports(Feature.LLMC_FEAT_SPEECH_INPUT))     # True
+print(speech.supports(Feature.LLMC_FEAT_SPEECH_OUTPUT))    # True
 
 pdf_model = llmcapa.get("muse-spark-1.1", provider="meta")
 print(pdf_model.supports(Feature.LLMC_FEAT_FILE_INPUT))    # True
 
-embedding = llmcapa.get("text-embedding-3-large", provider="openai")
+embedding = llmcapa.get("gemini-embedding-001", provider="google")
 print(embedding.supports(Feature.LLMC_FEAT_EMBEDDING_OUTPUT)) # True
 ```
 
@@ -183,9 +184,9 @@ print(reel.video.output_mime_types)     # ('video/mp4',)
 次の特殊な入出力も専用メタデータへ正規化しています。
 
 ```python
-doc = llmcapa.get("text-embedding-3-large", provider="openai")
-print(doc.embedding.dimensions)       # 3072
-print(doc.embedding.max_input_tokens) # 8192
+doc = llmcapa.get("gemini-embedding-001", provider="google")
+print(doc.embedding.dimensions)       # プロバイダーのメタデータ（収録時に利用可能な場合）
+print(doc.embedding.max_input_tokens) # プロバイダーのメタデータ（収録時に利用可能な場合）
 
 rerank = llmcapa.get("rerank-v3.5", provider="cohere")
 print(rerank.rerank.rerank)            # True
@@ -247,7 +248,7 @@ o1 = llmcapa.get("o1")
 print(o1.supports(Feature.LLMC_FEAT_REASONING_EFFORT))  # True
 print(o1.supports(Feature.LLMC_FEAT_THINKING_BUDGET))   # False
 
-claude = llmcapa.get("claude-3-7-sonnet")
+claude = llmcapa.get("claude-sonnet-4-5", provider="anthropic")
 print(claude.supports(Feature.LLMC_FEAT_REASONING_EFFORT))  # False
 print(claude.supports(Feature.LLMC_FEAT_THINKING_BUDGET))   # True
 ```
@@ -422,7 +423,7 @@ print(cap.pricing)         # {'input_per_1m': 0.1, 'output_per_1m': 0.32, 'curre
 
 ### Novita AI（同梱プロバイダー）
 
-Novita AI は、200以上のオープンソース／独自モデルを単一 API で提供するクラウドプラットフォームです。llmcapa は DeepSeek、Qwen、Meta Llama、GLM、Gemini などを含む 136 の Novita AI モデルの機能データ（Novita 固有の価格設定付き）を同梱しています。
+Novita AI は、200以上のオープンソース／独自モデルを単一 API で提供するクラウドプラットフォームです。llmcapa は DeepSeek、Qwen、Meta Llama、GLM、Gemini などを含む 157 の Novita AI モデルの機能データ（Novita 固有の価格設定付き）を同梱しています。
 
 `provider="novita"` で Novita AI モデルにスコープを絞れます:
 
@@ -464,7 +465,7 @@ print(cap.supports_vision)  # False（text-generation パイプライン）
 count = llmcapa.fetch_huggingface(limit=200)
 ```
 
-> **Note**: HuggingFace の一覧 API はコンテキストウィンドウ、価格、詳細な機能データを提供しません。登録されるモデルのコンテキストウィンドウはモデルファミリーに基づく推定値です（例: Llama 3: 8K、Qwen3: 128K）。同梱の `huggingface.json` には、改善されたコンテキスト推定付きの人気 text-generation モデル 2,675 件が含まれます。正確な仕様が必要な場合は、各モデルの公式ドキュメントを参照してください。
+> **Note**: HuggingFace の一覧 API はコンテキストウィンドウ、価格、詳細な機能データを提供しません。登録されるモデルのコンテキストウィンドウはモデルファミリーに基づく推定値です（例: Llama 3: 8K、Qwen3: 128K）。同梱の `huggingface.json` には、改善されたコンテキスト推定付きの人気 text-generation モデル 2,904 件が含まれます。正確な仕様が必要な場合は、各モデルの公式ドキュメントを参照してください。
 
 ### トークン数のカウント（スタンドアロン）
 
@@ -539,7 +540,7 @@ llmcapa.load_extra("my_models.json")
 ```python
 import llmcapa
 
-cap = llmcapa.get("claude-opus-4-5", provider="anthropic")
+cap = llmcapa.get("gemini-3-flash-preview", provider="google")
 computer = cap.computer_use
 
 if computer and computer.supported:
@@ -553,9 +554,9 @@ if computer and computer.supported:
 簡易判定用のAPIも利用できます。
 
 ```python
-llmcapa.supports_computer_use("claude-opus-4-5", provider="anthropic")
-llmcapa.supports_computer_action("claude-opus-4-5", "zoom", provider="anthropic")
-llmcapa.supports_computer_environment("claude-opus-4-5", "desktop", provider="anthropic")
+llmcapa.supports_computer_use("gemini-3-flash-preview", provider="google")
+llmcapa.supports_computer_action("gemini-3-flash-preview", "click", provider="google")
+llmcapa.supports_computer_environment("gemini-3-flash-preview", "desktop", provider="google")
 ```
 
 ### ネイティブ対応とカスタムハーネス対応
@@ -570,17 +571,17 @@ llmcapa.supports_computer_environment("claude-opus-4-5", "desktop", provider="an
 ### 登録済み経路の例
 
 ```python
-# Anthropic APIへ直接接続
-anthropic = llmcapa.get("claude-opus-4-5", provider="anthropic")
-assert anthropic.computer_use.tool_type == "computer_20251124"
+# Google Gemini APIへ直接接続
+google = llmcapa.get("gemini-3-flash-preview", provider="google")
+assert google.computer_use.tool_type == "computer_use"
 
-# Amazon Bedrock経由のClaude
-bedrock = llmcapa.get("us.anthropic.claude-opus-4-7", provider="amazon")
-assert bedrock.computer_use.tool_type == "computer_20251124"
+# Qwen visual agent with a custom harness
+qwen = llmcapa.get("qwen3-vl-235b-a22b-instruct", provider="qwen")
+assert qwen.computer_use.native is False
 
 # OpenAI Responses API
-openai = llmcapa.get("gpt-5.4", provider="openai")
-assert openai.computer_use.tool_type == "computer"
+openai = llmcapa.get("computer-use-preview", provider="openai")
+assert openai.computer_use.tool_type == "computer_use_preview"
 ```
 
 OpenRouterなどのゲートウェイは、直接のプロバイダー経路とは分けて管理します。汎用Tool Callingとカスタムハーネスを組み合わせることはできますが、プロバイダーのネイティブComputer Toolと自動的に同一視しません。

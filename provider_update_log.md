@@ -7367,3 +7367,26 @@
 - Parsed official featured model catalog metadata for 1 existing Baidu record(s).
 - No pricing/context values were inferred because the official pricing page is separate and was not reliably exposed in this pass.
 - OpenRouter was not used.
+
+## StepFun official refresh (2026-09-22)
+
+- Source: https://platform.stepfun.ai/docs/en/guides/pricing/details.md
+- Updated: 2 models (Step 3.5 Flash and Step 3.7 Flash).
+- OpenRouter was not used.
+
+## Meta Model API refresh (2026-09-22)
+
+### Source
+- Models: https://dev.meta.ai/docs/models (status=200, table=5)
+- Pricing: https://dev.meta.ai/docs/pricing-rate-limits (status=200)
+- Image generation: https://dev.meta.ai/docs/image-generation (status=200)
+- Top: https://dev.meta.ai/ (status=200, spark-1.3=True)
+- Glimmer: https://research.meta.ai/blog/introducing-muse-glimmer-open-agentic-model (text_len=8217)
+- Apply: `scripts/_update_meta.py`
+- OpenRouter was not used.
+
+### Result
+- meta.json: **8** models (active=8, token-priced=5)
+- Spark Standard $1.25/$4.25 + cached $0.15; Contributor $0.10/$0.20 + cached $0.002
+- Glimmer 30B recorded as Apache 2.0 open weights (no API pricing)
+- Voice Transcribe ($/hour) and Image 1.0 ($/image) recorded as specialty units

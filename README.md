@@ -4,7 +4,7 @@ Lookup capabilities (context window, modalities, supported features) of various 
 
 ## Features
 
-- **Comprehensive Bundled Data**: Offline capability data for OpenAI, Anthropic, Google (Gemini), Microsoft (Phi), Amazon (Nova/Titan), Meta (Llama), Mistral, Cohere (Command), Qwen, DeepSeek, xAI (Grok), NVIDIA, MoonshotAI (Kimi), zhipu-ai (GLM), Sakana AI (Fugu), **Azure AI Foundry**, Novita AI, **Together AI (98 models)**, OpenRouter, **HuggingFace (2,675 popular models)**, **Modellix LLM and Media models** (29 LLM and 178 media records), **TypeSafe (Jev / System One decision-output models)**, and Japanese domestic models (NTT tsuzumi, PFN PLaMo, ELYZA, SoftBank, NEC, Fujitsu, etc. adopted by the Digital Agency's "GENNAI" platform).
+- **Comprehensive Bundled Data**: Offline capability data for OpenAI, Anthropic, Google (Gemini), Microsoft (Phi), Amazon (Nova/Titan), Meta (Llama), Mistral, Cohere (Command), Qwen, DeepSeek, xAI (Grok), NVIDIA, MoonshotAI (Kimi), zhipu-ai (GLM), Sakana AI (Fugu), **Azure AI Foundry**, Novita AI, **Together AI (98 models)**, OpenRouter, **HuggingFace (2,904 popular models)**, **Modellix LLM and Media models** (29 LLM and 178 media records), **TypeSafe (Jev / System One decision-output models)**, and Japanese domestic models (NTT tsuzumi, PFN PLaMo, ELYZA, SoftBank, NEC, Fujitsu, etc. adopted by the Digital Agency's "GENNAI" platform).
 - **Zero Runtime Dependencies**: Built entirely on the Python standard library.
 - **Alias Resolution**: Automatically resolves model aliases and provider-specific names (e.g., `gpt-4o-2024-08-06` -> `gpt-4o`, `gemini-1.5-pro-preview-0409` -> `gemini-1.5-pro`).
 - **Provider Aliases**: Provider arguments accept common aliases and normalized forms (e.g., `grok`/`x-ai` → `xai`, `bedrock`/`aws-bedrock`/`aws` → `amazon`, `vertexai` → `vertex-ai`, `open-ai` → `openai`, `google-ai` → `google`, `azure` → `azure-openai`, `hf` → `huggingface`, `alibaba`/`dashscope` → `qwen`, `lm-studio` → `lmstudio`, `modellix-ai` → `modellix`). Separators `_. ` are treated as `-`.
@@ -14,7 +14,7 @@ Lookup capabilities (context window, modalities, supported features) of various 
 - **Drop-in Replacement Checker**: Check if a model can be safely replaced by another model based on context window and required features.
 - **Tokenizer Mapping**: Access tokenizer names (e.g., `o200k_base`) directly from model capabilities.
 - **Extendable**: Load your own local JSON model definitions.
-- **Ollama & HuggingFace Support**: Full capability data for **1,638 Ollama models** and **2,675 popular HuggingFace models** across 236 base models with all size variants (codegemma, llama, qwen, mistral, deepseek, gemma, phi, etc.). Zero-cost local inference models included.
+- **Ollama & HuggingFace Support**: Full capability data for **1,656 Ollama models** and **2,904 popular HuggingFace models** across 236 base models with all size variants (codegemma, llama, qwen, mistral, deepseek, gemma, phi, etc.). Zero-cost local inference models included.
 - **FIM (Fill-in-the-Middle) Support**: Check if a model supports code infilling via `cap.supports('fim')`. Supported for codegemma, codellama, starcoder2, deepseek-coder, qwen2.5-coder, and more.
 - **CLI Included**: Query and list model capabilities directly from your terminal.
 
@@ -123,13 +123,14 @@ from llmcapa import Feature
 
 realtime = llmcapa.get("gpt-realtime-2")
 print(realtime.supports(Feature.LLMC_FEAT_REALTIME))        # True
-print(realtime.supports(Feature.LLMC_FEAT_SPEECH_INPUT))   # True
-print(realtime.supports(Feature.LLMC_FEAT_SPEECH_OUTPUT))  # True
+speech = llmcapa.get("nova-2-sonic-v1", provider="amazon")
+print(speech.supports(Feature.LLMC_FEAT_SPEECH_INPUT))      # True
+print(speech.supports(Feature.LLMC_FEAT_SPEECH_OUTPUT))     # True
 
 pdf_model = llmcapa.get("muse-spark-1.1", provider="meta")
 print(pdf_model.supports(Feature.LLMC_FEAT_FILE_INPUT))     # True
 
-embedding = llmcapa.get("text-embedding-3-large", provider="openai")
+embedding = llmcapa.get("gemini-embedding-001", provider="google")
 print(embedding.supports(Feature.LLMC_FEAT_EMBEDDING_OUTPUT))  # True
 ```
 
@@ -183,9 +184,9 @@ print(reel.video.output_mime_types) # ('video/mp4',)
 The following specialized input/output types are also normalized into dedicated metadata records.
 
 ```python
-doc = llmcapa.get("text-embedding-3-large", provider="openai")
-print(doc.embedding.dimensions)       # 3072
-print(doc.embedding.max_input_tokens) # 8192
+doc = llmcapa.get("gemini-embedding-001", provider="google")
+print(doc.embedding.dimensions)       # Provider metadata, when available
+print(doc.embedding.max_input_tokens) # Provider metadata, when available
 
 rerank = llmcapa.get("rerank-v3.5", provider="cohere")
 print(rerank.rerank.rerank)            # True
@@ -247,7 +248,7 @@ o1 = llmcapa.get("o1")
 print(o1.supports(Feature.LLMC_FEAT_REASONING_EFFORT))  # True
 print(o1.supports(Feature.LLMC_FEAT_THINKING_BUDGET))   # False
 
-claude = llmcapa.get("claude-3-7-sonnet")
+claude = llmcapa.get("claude-sonnet-4-5", provider="anthropic")
 print(claude.supports(Feature.LLMC_FEAT_REASONING_EFFORT))  # False
 print(claude.supports(Feature.LLMC_FEAT_THINKING_BUDGET))   # True
 ```
@@ -414,7 +415,7 @@ big_reasoning_models = llmcapa.find(
 
 ### Novita AI (Bundled Provider)
 
-Novita AI is a cloud platform offering 200+ open-source and proprietary models via a single API. llmcapa bundles capability data for 136 Novita AI models, including DeepSeek, Qwen, Meta Llama, GLM, Gemini, and many more, with Novita-specific pricing.
+Novita AI is a cloud platform offering 200+ open-source and proprietary models via a single API. llmcapa bundles capability data for 157 Novita AI models, including DeepSeek, Qwen, Meta Llama, GLM, Gemini, and many more, with Novita-specific pricing.
 
 Use the `provider="novita"` parameter to scope lookups to Novita AI models:
 
@@ -473,7 +474,7 @@ print(cap.supports_vision)  # False (text-generation pipeline)
 count = llmcapa.fetch_huggingface(limit=200)
 ```
 
-> **Note**: The HuggingFace listing API does not provide context window, pricing, or detailed capability data. The registered models have estimated context windows based on their model family (e.g., Llama 3: 8K, Qwen3: 128K). The bundled `huggingface.json` includes 2,675 popular text-generation models with improved context window estimates. For exact specifications, use `fetch_openrouter()` or official model cards.
+> **Note**: The HuggingFace listing API does not provide context window, pricing, or detailed capability data. The registered models have estimated context windows based on their model family (e.g., Llama 3: 8K, Qwen3: 128K). The bundled `huggingface.json` includes 2,904 popular text-generation models with improved context window estimates. For exact specifications, use `fetch_openrouter()` or official model cards.
 
 ### Token Counting (Standalone)
 
@@ -582,7 +583,7 @@ These controls are intentionally kept separate. For example, Meta Muse Image doc
 ```python
 import llmcapa
 
-cap = llmcapa.get("claude-opus-4-5", provider="anthropic")
+cap = llmcapa.get("gemini-3-flash-preview", provider="google")
 computer = cap.computer_use
 
 if computer and computer.supported:
@@ -596,9 +597,9 @@ if computer and computer.supported:
 Convenience checks are also available:
 
 ```python
-llmcapa.supports_computer_use("claude-opus-4-5", provider="anthropic")
-llmcapa.supports_computer_action("claude-opus-4-5", "zoom", provider="anthropic")
-llmcapa.supports_computer_environment("claude-opus-4-5", "desktop", provider="anthropic")
+llmcapa.supports_computer_use("gemini-3-flash-preview", provider="google")
+llmcapa.supports_computer_action("gemini-3-flash-preview", "click", provider="google")
+llmcapa.supports_computer_environment("gemini-3-flash-preview", "desktop", provider="google")
 ```
 
 ### Native and custom-harness support
@@ -613,17 +614,17 @@ llmcapa.supports_computer_environment("claude-opus-4-5", "desktop", provider="an
 ### Examples of registered routes
 
 ```python
-# Direct Anthropic API
-anthropic = llmcapa.get("claude-opus-4-5", provider="anthropic")
-assert anthropic.computer_use.tool_type == "computer_20251124"
+# Direct Google Gemini API
+google = llmcapa.get("gemini-3-flash-preview", provider="google")
+assert google.computer_use.tool_type == "computer_use"
 
-# Amazon Bedrock-hosted Claude
-bedrock = llmcapa.get("us.anthropic.claude-opus-4-7", provider="amazon")
-assert bedrock.computer_use.tool_type == "computer_20251124"
+# Qwen visual agent with a custom harness
+qwen = llmcapa.get("qwen3-vl-235b-a22b-instruct", provider="qwen")
+assert qwen.computer_use.native is False
 
 # OpenAI Responses API
-openai = llmcapa.get("gpt-5.4", provider="openai")
-assert openai.computer_use.tool_type == "computer"
+openai = llmcapa.get("computer-use-preview", provider="openai")
+assert openai.computer_use.tool_type == "computer_use_preview"
 ```
 
 OpenRouter and similar gateways are represented separately from direct provider routes. Generic tool calling can be combined with a custom harness, but it should not automatically be treated as the provider's native Computer Tool.
@@ -696,7 +697,7 @@ llmcapa fetch-hf --limit 200
 ## Notes
 
 - **Static Snapshot**: Bundled capability data is a static snapshot. See [docs/catalog_data_sources.md](https://github.com/awaku7/llmcapa/blob/main/docs/catalog_data_sources.md) for details on each provider's data source and known SSR limitations (Azure AI Catalog). While we strive to keep it updated with the latest models (including GPT-5.5, Claude Fable, Gemini 3.5, DeepSeek V4, Sakana Fugu, etc.), providers change limits and pricing frequently. Use `fetch_openrouter()` or verify with official documentation when absolute accuracy is critical.
-- **HuggingFace Data Accuracy**: The bundled `huggingface.json` includes 2,675 popular text-generation models with context windows estimated from model families. Models fetched via `fetch_huggingface()` at runtime have estimated defaults. For exact specifications, consult official model cards.
+- **HuggingFace Data Accuracy**: The bundled `huggingface.json` includes 2,904 popular text-generation models with context windows estimated from model families. Models fetched via `fetch_huggingface()` at runtime have estimated defaults. For exact specifications, consult official model cards.
 
 ## License
 

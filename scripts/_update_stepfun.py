@@ -13,15 +13,15 @@ INSTALLED = (
     Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "stepfun.json"
 )
 LOG = ROOT / "provider_update_log.md"
-SOURCE = "https://platform.stepfun.ai/docs/en/guides/pricing/details"
+SOURCE = "https://platform.stepfun.ai/docs/en/guides/pricing/details.md"
 RULES = {
-    "stepfun/step-3.5-flash": {
+    "step-3.5-flash": {
         "input": 0.10,
         "output": 0.30,
         "context": 262144,
         "max_output": 65536,
     },
-    "stepfun/step-3.7-flash": {
+    "step-3.7-flash": {
         "input": 0.20,
         "output": 1.15,
         "context": 262144,
