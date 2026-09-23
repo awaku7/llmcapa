@@ -8,7 +8,7 @@ Lookup capabilities (context window, modalities, supported features) of various 
 - **Zero Runtime Dependencies**: Built entirely on the Python standard library.
 - **Alias Resolution**: Automatically resolves model aliases and provider-specific names (e.g., `gpt-4o-2024-08-06` -> `gpt-4o`, `gemini-1.5-pro-preview-0409` -> `gemini-1.5-pro`).
 - **Provider Aliases**: Provider arguments accept common aliases and normalized forms (e.g., `grok`/`x-ai` → `xai`, `bedrock`/`aws-bedrock`/`aws` → `amazon`, `vertexai` → `vertex-ai`, `open-ai` → `openai`, `google-ai` → `google`, `azure` → `azure-openai`, `hf` → `huggingface`, `alibaba`/`dashscope` → `qwen`, `lm-studio` → `lmstudio`, `modellix-ai` → `modellix`). Separators `_. ` are treated as `-`.
-- **Advanced Feature Queries**: Check support for `vision`, `multimodal`, `chat_completion`, `responses_api`, `realtime`, `reasoning_effort`, `thinking_budget`, and specific input/output modalities (e.g., `image_input`, `audio_input`, `file_input`, `speech_input`, `embedding_output`). PDF is treated as a subtype of `file_input`.
+- **Advanced Feature Queries**: Check support for `vision`, `multimodal`, `chat_completion`, `responses_api`, `realtime`, `tool_search`, `reasoning_effort`, `reasoning_mode`, `thinking_budget`, and specific input/output modalities (e.g., `image_input`, `audio_input`, `file_input`, `speech_input`, `embedding_output`). PDF is treated as a subtype of `file_input`.
 - **High Performance**: Evaluated feature checks are cached internally using memoization to avoid redundant calculations.
 - **Cost Estimation**: Estimate API costs based on input and output token counts.
 - **Drop-in Replacement Checker**: Check if a model can be safely replaced by another model based on context window and required features.
@@ -289,6 +289,23 @@ cap3 = llmcapa.get("gpt-4o")
 print(cap3.get_reasoning_effort_values())
 # []
 ```
+
+### Tool Search and Reasoning Mode
+
+`tool_search` is recorded per model from its documented Responses API tools. `None` means the catalog has no verified answer. Reasoning mode is separate from reasoning effort:
+
+```python
+nano = llmcapa.get("gpt-5.4-nano", provider="openai")
+print(nano.supports("tool_search"))  # False
+
+luna = llmcapa.get("gpt-6-luna", provider="openai")
+print(luna.supports("tool_search"))  # True
+
+cap = llmcapa.get("gpt-5.6")
+print(cap.get_reasoning_mode_values())  # ['standard', 'pro']
+```
+
+For `gpt-5.6` and `gpt-6` Responses API models, `reasoning.mode` values are `standard` and `pro`; `reasoning.effort` remains an independent setting.
 
 ### Thinking Budget Values
 

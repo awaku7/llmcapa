@@ -922,6 +922,27 @@ def match_price_key(model_id: str, price_map: dict[str, dict]) -> str | None:
     return best
 
 
+def azure_tool_search_support(
+    model_id: str, supports_responses_api: bool | None
+) -> bool | None:
+    """Use Azure's documented GPT-5.4+ Responses API support, excluding nano.
+
+    The OpenAI model page's explicit Supported tools list omits tool_search for
+    GPT-5.4 nano, so keep that SKU false even though the Azure guide describes
+    support at the family level.
+    """
+    if supports_responses_api is not True:
+        return None
+    model_id = model_id.lower()
+    if re.match(r"^gpt-5\.4-nano(?:-|$)", model_id):
+        return False
+    version = re.match(r"^gpt-(\d+)(?:\.(\d+))?(?:-|$)", model_id)
+    if not version:
+        return None
+    major, minor = int(version.group(1)), int(version.group(2) or 0)
+    return True if (major, minor) >= (5, 4) else None
+
+
 def build_entry(item: dict, price_map: dict[str, dict]) -> dict:
     scd = item.get("systemCatalogData") or {}
     tags = item.get("tags") or {}
@@ -1065,6 +1086,9 @@ def build_entry(item: dict, price_map: dict[str, dict]) -> dict:
         "supports_responses_api": responses,
         "license_type": license_type,
     }
+    tool_search = azure_tool_search_support(name, responses)
+    if tool_search is not None:
+        row["supports_tool_search"] = tool_search
     if audio_in:
         row["supports_audio_input"] = True
     if audio_out:

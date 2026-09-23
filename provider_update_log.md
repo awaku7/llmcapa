@@ -7726,3 +7726,21 @@
 - V2 series marked deprecated 2026-06-30
 - Model IDs normalized to bare official IDs
 - Install copy synced
+
+## OpenAI (2026-09-23)
+
+- Source: https://developers.openai.com/api/docs/models/all.md
+- Source: https://developers.openai.com/api/docs/pricing.md
+- Dynamically discovered 102 official model pages; legacy records preserved: 65
+
+## OpenAI (2026-09-23)
+
+- Source: https://developers.openai.com/api/docs/models/all.md
+- Source: https://developers.openai.com/api/docs/pricing.md
+- Dynamically discovered 102 official model pages; legacy records preserved: 65
+
+## OpenAI (2026-09-23)
+
+- Source: https://developers.openai.com/api/docs/models/all.md
+- Source: https://developers.openai.com/api/docs/pricing.md
+- Dynamically discovered 102 official model pages; legacy records preserved: 65

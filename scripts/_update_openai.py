@@ -47,6 +47,47 @@ def number(text: str, default: int = 0) -> int:
     return int(m.group(0).replace(",", "")) if m else default
 
 
+def parse_reasoning_effort_values(text: str) -> list[str]:
+    """Extract the documented reasoning.effort enum from a model page."""
+    effort = re.search(r"Reasoning\.effort supports:?\s*([^.]+)", text, re.IGNORECASE)
+    if not effort:
+        return []
+    values = re.split(r"\s*,\s*|\s+and\s+", effort.group(1).strip())
+    cleaned = []
+    for value in values:
+        value = re.sub(r"\s*\(default\)", "", value, flags=re.IGNORECASE)
+        value = re.sub(r"^and\s+", "", value.strip(), flags=re.IGNORECASE)
+        value = value.strip().strip("`'\"").strip().rstrip(".").lower()
+        if value:
+            cleaned.append(value)
+    return cleaned
+
+
+def parse_supported_tools(text: str) -> set[str] | None:
+    """Parse a model page's Responses API supported-tools list if present."""
+    section = re.search(
+        r"^##\s+Supported tools\s*$\n(.*?)(?=^##\s|\Z)",
+        text,
+        re.IGNORECASE | re.MULTILINE | re.DOTALL,
+    )
+    if not section:
+        return None
+    return set(
+        re.findall(
+            r"^-\s+`?([a-z][a-z0-9_]*)`?\s*$",
+            section.group(1),
+            re.IGNORECASE | re.MULTILINE,
+        )
+    )
+
+
+def parse_reasoning_mode_values(model_id: str, supports_responses_api: bool) -> list[str]:
+    """Return modes documented by OpenAI's GPT-5.6/GPT-6 reasoning guide."""
+    if supports_responses_api and re.match(r"^gpt-(?:5\.6|6)(?:-|$)", model_id.lower()):
+        return ["standard", "pro"]
+    return []
+
+
 def detail(path: str) -> dict:
     text = fetch(BASE + path)
     model = re.search(r"Model ID:\s*`([^`]+)`", text)
@@ -85,6 +126,10 @@ def detail(path: str) -> dict:
         if "## Snapshots" in text
         else []
     )
+    aliases.extend(
+        re.findall(r"`([^`]+)`\s+alias routes requests to", text, re.IGNORECASE)
+    )
+    aliases = list(dict.fromkeys(aliases))
     extra = {"source": BASE + path, "endpoints": [ENDPOINT]}
     default = re.search(r"Default snapshot:\s*`([^`]+)`", text, re.IGNORECASE)
     if default:
@@ -116,19 +161,21 @@ def detail(path: str) -> dict:
     entry["supports_streaming"] = "streaming" in features
     entry["supports_responses_api"] = supported("Responses")
     entry["supports_chat_completion"] = supported("Chat Completions")
+    supported_tools = parse_supported_tools(text)
+    if supported_tools is not None:
+        entry["supports_tool_search"] = bool(
+            entry["supports_responses_api"] and "tool_search" in supported_tools
+        )
     entry["supports_reasoning"] = (
         "reasoning token support" in text.lower() or "reasoning" in features
     )
-    effort = re.search(r"Reasoning\.effort supports:\s*([^\n.]+)", text, re.IGNORECASE)
-    if effort:
-        values = re.split(r"\s*,\s*|\s+and\s+", effort.group(1).strip())
-        cleaned = []
-        for value in values:
-            value = re.sub(r"\s*\(default\)", "", value, flags=re.IGNORECASE)
-            value = re.sub(r"^and\s+", "", value.strip(), flags=re.IGNORECASE)
-            if value:
-                cleaned.append(value.lower())
-        entry["reasoning_effort_values"] = cleaned
+    mode_values = parse_reasoning_mode_values(mid, entry["supports_responses_api"])
+    if mode_values:
+        entry["supports_reasoning_mode"] = True
+        entry["reasoning_mode_values"] = mode_values
+    effort_values = parse_reasoning_effort_values(text)
+    if effort_values:
+        entry["reasoning_effort_values"] = effort_values
     # OpenAI's o-series pages do not consistently repeat the enum, but the
     # official o-series documentation/API uses the same three levels.
     if (
@@ -211,6 +258,17 @@ def main() -> None:
             ):
                 merged["reasoning_effort_values"] = old["reasoning_effort_values"]
                 merged["supports_reasoning_effort"] = True
+            if entry.get("supports_tool_search") is None and old.get(
+                "supports_tool_search"
+            ) is not None:
+                merged["supports_tool_search"] = old["supports_tool_search"]
+            if not entry.get("reasoning_mode_values") and old.get(
+                "reasoning_mode_values"
+            ):
+                merged["reasoning_mode_values"] = old["reasoning_mode_values"]
+                merged["supports_reasoning_mode"] = old.get(
+                    "supports_reasoning_mode", True
+                )
             entry = merged
         price_id = entry.get("extra", {}).get("default_snapshot", mid)
         rate = pricing.get(price_id) or pricing.get(mid)

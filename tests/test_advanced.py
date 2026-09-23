@@ -99,6 +99,84 @@ def test_gpt6_astra_supports_reasoning_effort():
     assert cap.reasoning_effort_values == ["low", "medium", "high", "xhigh", "max"]
 
 
+def test_gpt6_luna_supports_reasoning_effort():
+    cap = llmcapa.get("gpt-6-luna")
+    assert cap.supports_reasoning_effort is True
+    assert cap.supports("reasoning_effort") is True
+    assert cap.reasoning_effort_values == ["none", "low", "medium", "high", "xhigh", "max"]
+
+
+def test_tool_search_support_is_model_and_provider_specific():
+    assert llmcapa.get("gpt-5.4", provider="openai").supports("tool_search") is True
+    assert llmcapa.get("gpt-5.4-mini", provider="openai").supports("tool_search") is True
+    assert llmcapa.get("gpt-5.4-nano", provider="openai").supports("tool_search") is False
+    assert llmcapa.get("gpt-6-luna", provider="openai").supports("tool_search") is True
+
+    assert llmcapa.get("gpt-5.5", provider="azure-openai").supports("tool_search") is True
+    # Azure Foundry's record does not confirm a Responses API endpoint here.
+    assert llmcapa.get("gpt-5.4", provider="azure-foundry").supports("tool_search") is None
+
+
+def test_reasoning_mode_is_separate_from_reasoning_effort():
+    cap = llmcapa.get("gpt-5.6")
+    assert cap.supports("reasoning_mode") is True
+    assert cap.get_reasoning_mode_values() == ["standard", "pro"]
+    assert llmcapa.get_reasoning_mode_values("gpt-5.6") == ["standard", "pro"]
+    assert llmcapa.ReasoningMode.LLMC_MODE_PRO == "pro"
+
+    luna = llmcapa.get("gpt-6-luna", provider="openai")
+    assert luna.supports_reasoning_mode is True
+    assert luna.reasoning_mode_values == ["standard", "pro"]
+    assert luna.get_reasoning_effort_values() != luna.get_reasoning_mode_values()
+
+    unsupported = llmcapa.get("gpt-5.4", provider="openai")
+    assert unsupported.supports("reasoning_mode") is None
+    assert unsupported.get_reasoning_mode_values() == []
+
+
+def test_openai_effort_parser_accepts_current_markdown_syntax():
+    scripts_path = str(Path(__file__).resolve().parents[1] / "scripts")
+    sys.path.insert(0, scripts_path)
+    try:
+        from _update_openai import (
+            parse_reasoning_effort_values,
+            parse_reasoning_mode_values,
+            parse_supported_tools,
+        )
+    finally:
+        sys.path.remove(scripts_path)
+
+    values = "`none`, `low`, `medium` (default), `high`, `xhigh`, and `max`."
+    assert parse_reasoning_effort_values(f"reasoning.effort supports {values}") == [
+        "none", "low", "medium", "high", "xhigh", "max"
+    ]
+    assert parse_reasoning_effort_values(f"Reasoning.effort supports: {values}") == [
+        "none", "low", "medium", "high", "xhigh", "max"
+    ]
+    tools_page = "## Supported tools\n- function_calling\n- tool_search\n\n## Snapshots\n"
+    assert parse_supported_tools(tools_page) == {"function_calling", "tool_search"}
+    assert parse_supported_tools("No supported tools section") is None
+    assert parse_reasoning_mode_values("gpt-5.6-sol", True) == ["standard", "pro"]
+    assert parse_reasoning_mode_values("gpt-6-luna", True) == ["standard", "pro"]
+    assert parse_reasoning_mode_values("gpt-5.4", True) == []
+    assert parse_reasoning_mode_values("gpt-6-luna", False) == []
+
+
+def test_azure_tool_search_support_requires_responses_api_and_excludes_nano():
+    scripts_path = str(Path(__file__).resolve().parents[1] / "scripts")
+    sys.path.insert(0, scripts_path)
+    try:
+        from _update_azure_foundry import azure_tool_search_support
+    finally:
+        sys.path.remove(scripts_path)
+
+    assert azure_tool_search_support("gpt-5.4", True) is True
+    assert azure_tool_search_support("gpt-5.6-luna", True) is True
+    assert azure_tool_search_support("gpt-5.4-nano", True) is False
+    assert azure_tool_search_support("gpt-4.1", True) is None
+    assert azure_tool_search_support("gpt-6-luna", False) is None
+
+
 def test_google_thinking_controls_are_provider_specific():
     budget = llmcapa.get("gemini-2.5-flash", provider="google")
     assert budget.supports_thinking_budget is True

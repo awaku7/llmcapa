@@ -26,6 +26,8 @@ class Feature(str, Enum):
     LLMC_FEAT_CHAT_COMPLETION = "chat_completion"
     LLMC_FEAT_RESPONSES_API = "responses_api"
     LLMC_FEAT_REASONING_EFFORT = "reasoning_effort"
+    LLMC_FEAT_REASONING_MODE = "reasoning_mode"
+    LLMC_FEAT_TOOL_SEARCH = "tool_search"
     LLMC_FEAT_THINKING_BUDGET = "thinking_budget"
     LLMC_FEAT_THINKING_LEVEL = "thinking_level"
     LLMC_FEAT_MULTIMODAL = "multimodal"
@@ -63,6 +65,13 @@ class ReasoningEffort(str, Enum):
     LLMC_EFFORT_HIGH = "high"
     LLMC_EFFORT_XHIGH = "xhigh"
     LLMC_EFFORT_MAX = "max"
+
+
+class ReasoningMode(str, Enum):
+    """Reasoning execution modes exposed by supported Responses API models."""
+
+    LLMC_MODE_STANDARD = "standard"
+    LLMC_MODE_PRO = "pro"
 
 
 @dataclass(frozen=True)
@@ -638,6 +647,10 @@ class Capability:
     spatial: SpatialCapability | None = None
     # Appended after all existing fields for positional compatibility.
     decision: DecisionCapability | None = None
+    # Appended after all existing fields for positional compatibility.
+    supports_tool_search: bool | None = None
+    supports_reasoning_mode: bool | None = None
+    reasoning_mode_values: list[str] | None = None
 
     def supports(self, feature: Feature | str) -> bool | None:
         """Return True if the model supports the given feature.
@@ -645,7 +658,8 @@ class Capability:
         Accepts short names such as "vision", "json_mode",
         "function_calling", "json_schema", "streaming", "reasoning",
         "chat_completion", "responses_api", "multimodal",
-        "reasoning_effort", "thinking_budget", "fim",
+        "reasoning_effort", "reasoning_mode", "tool_search",
+        "thinking_budget", "fim",
         or a modality such as "image", "audio", "video", "embedding",
         "rerank", or "decision".
 
@@ -706,6 +720,8 @@ class Capability:
             "chat_completion",
             "responses_api",
             "reasoning_effort",
+            "reasoning_mode",
+            "tool_search",
             "thinking_budget",
             "thinking_level",
             "fim",
@@ -908,6 +924,8 @@ class Capability:
                 "chat_completion",
                 "responses_api",
                 "reasoning_effort",
+                "reasoning_mode",
+                "tool_search",
                 "thinking_budget",
                 "fim",
                 "realtime",
@@ -979,6 +997,12 @@ class Capability:
             # OpenRouter normalizes reasoning_effort across all providers
             return ["none", "minimal", "low", "medium", "high", "xhigh"]
         return ["low", "medium", "high"]
+
+    def get_reasoning_mode_values(self) -> list[str]:
+        """Return documented reasoning.mode values, or an empty list if unknown/unsupported."""
+        if self.supports_reasoning_mode is not True or not self.reasoning_mode_values:
+            return []
+        return list(self.reasoning_mode_values)
 
     def get_thinking_budget_values(self) -> dict[str, Any]:
         """Return information about valid thinking_budget values for this model.
@@ -1062,6 +1086,12 @@ class Capability:
             d.pop("pricing", None)
         if d.get("reasoning_effort_values") is None:
             d.pop("reasoning_effort_values", None)
+        if d.get("reasoning_mode_values") is None:
+            d.pop("reasoning_mode_values", None)
+        if self.supports_tool_search is None:
+            d.pop("supports_tool_search", None)
+        if self.supports_reasoning_mode is None:
+            d.pop("supports_reasoning_mode", None)
         if d.get("thinking_budget_values") is None:
             d.pop("thinking_budget_values", None)
         if d.get("thinking_level_values") is None:

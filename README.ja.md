@@ -8,7 +8,7 @@
 - **実行時依存関係ゼロ**: Python標準ライブラリのみで動作します。外部パッケージ（`pytest` や `build` など）は開発・テスト用のみです。
 - **エイリアス解決**: モデルのエイリアスやプロバイダー固有の名前を自動的に解決します（例: `gpt-4o-2024-08-06` -> `gpt-4o`、`gemini-1.5-pro-preview-0409` -> `gemini-1.5-pro`）。
 - **プロバイダーエイリアス**: プロバイダー引数は一般的な別名と正規化形式を受け付けます（例: `grok`/`x-ai` → `xai`、`bedrock`/`aws-bedrock`/`aws` → `amazon`、`vertexai` → `vertex-ai`、`open-ai` → `openai`、`google-ai` → `google`、`azure` → `azure-openai`、`hf` → `huggingface`、`alibaba`/`dashscope` → `qwen`、`lm-studio` → `lmstudio`、`modellix-ai` → `modellix`）。区切り文字 `_. ` は `-` として扱われます。
-- **高度な機能クエリ**: `vision`、`multimodal`、`chat_completion`、`responses_api`、`realtime`、`reasoning_effort`、`thinking_budget`、および特定の入力/出力モダリティ（例: `image_input`、`audio_input`、`file_input`、`speech_input`、`embedding_output`）のサポート状況を確認できます。PDFは`file_input`のサブタイプとして扱われます。
+- **高度な機能クエリ**: `vision`、`multimodal`、`chat_completion`、`responses_api`、`realtime`、`tool_search`、`reasoning_effort`、`reasoning_mode`、`thinking_budget`、および特定の入力/出力モダリティ（例: `image_input`、`audio_input`、`file_input`、`speech_input`、`embedding_output`）のサポート状況を確認できます。PDFは`file_input`のサブタイプとして扱われます。
 - **高いパフォーマンス**: 評価された機能チェックは、冗長な計算を避けるためにメモ化（内部キャッシュ）されます。
 - **コスト見積もり**: 入力および出力トークン数に基づいてAPIコストを見積もります。
 - **代替モデルチェッカー**: コンテキストウィンドウと必要な機能に基づいて、あるモデルを別のモデルで安全に代替できるかどうかを確認します。
@@ -289,6 +289,23 @@ cap3 = llmcapa.get("gpt-4o")
 print(cap3.get_reasoning_effort_values())
 # []
 ```
+
+### Tool Search と Reasoning Mode
+
+`tool_search` は Responses API の公式ツール一覧をモデルごとに記録します。`None` は対応可否が未確認であることを示します。Reasoning mode は reasoning effort とは独立した設定です。
+
+```python
+nano = llmcapa.get("gpt-5.4-nano", provider="openai")
+print(nano.supports("tool_search"))  # False
+
+luna = llmcapa.get("gpt-6-luna", provider="openai")
+print(luna.supports("tool_search"))  # True
+
+cap = llmcapa.get("gpt-5.6")
+print(cap.get_reasoning_mode_values())  # ['standard', 'pro']
+```
+
+GPT-5.6 と GPT-6 の Responses API モデルでは、`reasoning.mode` に `standard` または `pro` を指定できます。`reasoning.effort` は別の設定です。
 
 ### 思考バジェット（Thinking Budget）の値
 

@@ -32,6 +32,7 @@ from .models import (
     ImageCapability,
     ImageEndpointCapability,
     ReasoningEffort,
+    ReasoningMode,
 )
 from .registry import ModelNotFoundError, Registry, default_registry
 from .tokenizer import count_messages_tokens, count_tokens
@@ -40,7 +41,7 @@ try:
     __version__ = package_version("llmcapa")
 except PackageNotFoundError:
     # Source-tree fallback when the project is not installed yet.
-    __version__ = "0.5.39"
+    __version__ = "0.5.41"
 
 __all__ = [
     "AudioCapability",
@@ -60,6 +61,7 @@ __all__ = [
     "ImageEndpointCapability",
     "ModelNotFoundError",
     "ReasoningEffort",
+    "ReasoningMode",
     "Registry",
     "__version__",
     "count_messages_tokens",
@@ -81,6 +83,8 @@ __all__ = [
     "supports_computer_use",
     "supports_json_mode",
     "supports_json_schema",
+    "supports_tool_search",
+    "get_reasoning_mode_values",
 ]
 
 
@@ -172,6 +176,16 @@ def fetch_huggingface(
 def register(cap: Capability) -> None:
     """Register (or override) a Capability in the default registry."""
     default_registry().register(cap)
+
+
+def supports_tool_search(model_id: str, provider: str | None = None) -> bool | None:
+    """Return whether the model explicitly supports Responses API tool_search."""
+    return get(model_id, provider).supports_tool_search
+
+
+def get_reasoning_mode_values(model_id: str, provider: str | None = None) -> list[str]:
+    """Return documented reasoning.mode values for a model, if known."""
+    return get(model_id, provider).get_reasoning_mode_values()
 
 
 def supports_json_mode(model_id: str, provider: str | None = None) -> bool | None:
