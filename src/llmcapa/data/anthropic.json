@@ -244,6 +244,65 @@
     },
     {
       "provider": "anthropic",
+      "model_id": "claude-opus-5-5",
+      "display_name": "Claude Opus 5.5",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 128000
+      },
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "anthropic/claude-opus-5-5"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 4.0,
+        "output_per_1m": 20.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "overview": "https://platform.claude.com/docs/en/about-claude/models/overview",
+        "cache_write_5m_per_1m": 5.0,
+        "cache_write_1h_per_1m": 8.0,
+        "cache_hit_per_1m": 0.2,
+        "batch_input_per_1m": 2.0,
+        "batch_output_per_1m": 10.0,
+        "long_context_window": 1000000,
+        "long_context_at_standard_rates": true
+      },
+      "reasoning_effort_values": [
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    {
+      "provider": "anthropic",
       "model_id": "claude-opus-5",
       "display_name": "Claude Opus 5",
       "context_window": 1000000,
