@@ -40,7 +40,7 @@ try:
     __version__ = package_version("llmcapa")
 except PackageNotFoundError:
     # Source-tree fallback when the project is not installed yet.
-    __version__ = "0.0.1"
+    __version__ = "0.5.39"
 
 __all__ = [
     "AudioCapability",
