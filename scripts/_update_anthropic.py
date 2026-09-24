@@ -121,7 +121,7 @@ def cache_extra(
 
 
 def fetch(url: str) -> str:
-    """Fetch official documentation, tolerating only local CA verification issues."""
+    """Fetch official docs, rendering the pricing page when it is client-side."""
     import ssl
     from urllib.error import URLError
     from urllib.request import Request, urlopen
@@ -129,14 +129,38 @@ def fetch(url: str) -> str:
     req = Request(url, headers={"User-Agent": "llmcapa official-catalog-updater/1.0"})
     try:
         with urlopen(req, timeout=30) as response:
-            return response.read().decode("utf-8", errors="replace")
+            html = response.read().decode("utf-8", errors="replace")
     except URLError as exc:
         if "CERTIFICATE_VERIFY_FAILED" not in str(exc):
             raise
         with urlopen(
             req, timeout=30, context=ssl._create_unverified_context()
         ) as response:
-            return response.read().decode("utf-8", errors="replace")
+            html = response.read().decode("utf-8", errors="replace")
+
+    if url != SOURCE_PRICING or discover_pricing(html):
+        return html
+
+    # The docs site renders its pricing table client-side. Fall back to the
+    # rendered official page instead of failing the catalog update on the shell.
+    try:
+        from playwright.sync_api import sync_playwright
+    except ImportError:
+        return html
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch(headless=True)
+        page = browser.new_page()
+        try:
+            page.goto(url, wait_until="networkidle", timeout=60_000)
+            page.wait_for_function(
+                "Array.from(document.querySelectorAll('table')).some(t => "
+                "t.innerText.includes('Base tokens') && "
+                "t.innerText.includes('5m writes'))",
+                timeout=30_000,
+            )
+            return page.content()
+        finally:
+            browser.close()
 
 
 def _text(value: str) -> str:
@@ -172,6 +196,10 @@ def discover_pricing(html: str) -> list[dict]:
                 self.row = []
             elif tag in ("td", "th") and self.row is not None:
                 self.cell = []
+            elif tag == "button" and self.cell is not None:
+                label = dict(attrs).get("aria-label")
+                if label:
+                    self.cell.append(f" {label} ")
 
         def handle_data(self, data):
             if self.cell is not None:
@@ -192,25 +220,37 @@ def discover_pricing(html: str) -> list[dict]:
     parser = TableParser()
     parser.feed(html)
     result = []
+    import re
+
     for table in parser.tables:
-        if not table or len(table[0]) < 6 or "Base input" not in " ".join(table[0]):
+        header = " ".join(cell for row in table[:2] for cell in row).lower()
+        if not all(
+            label in header
+            for label in ("base tokens", "input", "output", "5m writes", "1h writes")
+        ):
             continue
-        for row in table[1:]:
+        for row in table[2:]:
             if len(row) < 6:
                 continue
-            name = _text(row[0])
-            if not name.lower().startswith("claude "):
+            raw_name = _text(row[0])
+            match = re.match(
+                r"(?i)^(Claude\s+(?:(?:\d+(?:\.\d+)?)\s+)?"
+                r"(?:Fable|Mythos|Opus|Sonnet|Haiku)(?:\s+\d+(?:\.\d+)?)?)",
+                raw_name,
+            )
+            if not match:
                 continue
+            name = match.group(1)
             result.append(
                 {
                     "name": name,
                     "input": _price(row[1]),
-                    "cache_5m": _price(row[2]),
-                    "cache_1h": _price(row[3]),
-                    "cache_hit": _price(row[4]),
-                    "output": _price(row[5]),
-                    "deprecated": "retired" in name.lower()
-                    or "deprecated" in name.lower(),
+                    "output": _price(row[2]),
+                    "cache_5m": _price(row[3]),
+                    "cache_1h": _price(row[4]),
+                    "cache_hit": _price(row[5]),
+                    "deprecated": "retired" in raw_name.lower()
+                    or "deprecated" in raw_name.lower(),
                 }
             )
     return result

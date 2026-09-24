@@ -33,6 +33,9 @@ API_URL = "https://openrouter.ai/api/v1/models"
 SOURCE_DOCS = "https://openrouter.ai/docs"
 SOURCE_MODELS = "https://openrouter.ai/models"
 BASE_URL = "https://openrouter.ai/api/v1"
+FRONTEND_API_URL = (
+    "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards"
+)
 
 # Catalog convention for dynamic/router pricing (matches prior openrouter.json)
 DYNAMIC_PRICE = -1_000_000.0
@@ -172,6 +175,83 @@ def fetch_models() -> list[dict]:
             print(f"scratch: {len(models)} models", flush=True)
             return models
         raise
+
+
+def fetch_frontend_models() -> list[dict]:
+    """Discover active models shown in OpenRouter's public /models catalog."""
+    req = urllib.request.Request(
+        FRONTEND_API_URL,
+        headers={
+            "User-Agent": "llmcapa-updater/1.0",
+            "Accept": "application/json",
+        },
+    )
+    ctx = ssl._create_unverified_context()
+    try:
+        with urllib.request.urlopen(req, timeout=60, context=ctx) as resp:
+            payload = json.load(resp)
+    except Exception as exc:  # noqa: BLE001
+        print(f"frontend catalog fetch failed: {exc}", flush=True)
+        return []
+
+    cards = (payload.get("data") or {}).get("models") or []
+    records = []
+    for card in cards:
+        model_id = card.get("slug") or ""
+        if not model_id:
+            continue
+        endpoint = card.get("endpoint") or {}
+        architecture = {
+            "modality": card.get("modality"),
+            "input_modalities": card.get("input_modalities") or ["text"],
+            "output_modalities": card.get("output_modalities") or ["text"],
+            "tokenizer": card.get("tokenizer") or "",
+            "instruct_type": card.get("instruct_type"),
+        }
+        records.append(
+            {
+                "id": model_id,
+                "canonical_slug": card.get("canonical_slug"),
+                "name": card.get("name") or model_id,
+                "description": card.get("description"),
+                "created": card.get("created"),
+                "context_length": card.get("context_length") or 0,
+                "architecture": architecture,
+                "pricing": endpoint.get("pricing") or card.get("pricing") or {},
+                "top_provider": {
+                    "context_length": endpoint.get("context_length")
+                    or card.get("context_length"),
+                    "max_completion_tokens": endpoint.get("max_completion_tokens"),
+                    "is_moderated": endpoint.get("is_moderated"),
+                },
+                "supported_parameters": endpoint.get("supported_parameters") or [],
+                "knowledge_cutoff": card.get("knowledge_cutoff"),
+                "expiration_date": card.get("expiration_date"),
+                "catalog_source": FRONTEND_API_URL,
+            }
+        )
+    return records
+
+
+def add_frontend_models(raw_models: list[dict]) -> list[dict]:
+    """Add public /models entries missing from the authoritative API snapshot."""
+    known = {str(m.get("id", "")).casefold() for m in raw_models}
+    special_routes = {
+        route.casefold()
+        for d in DECISION_ROUTES
+        for route in (d["model_id"], d.get("tilde_alias", ""))
+    }
+    added = 0
+    for model in fetch_frontend_models():
+        model_id = str(model.get("id", ""))
+        normalized_id = model_id.casefold()
+        if not model_id or normalized_id in known or normalized_id in special_routes:
+            continue
+        raw_models.append(model)
+        known.add(normalized_id)
+        added += 1
+    print(f"frontend-only models added: {added}", flush=True)
+    return raw_models
 
 
 # Non-text decision routes served by OpenRouter.
@@ -358,7 +438,7 @@ def map_model(raw: dict) -> dict:
     native_provider = mid.split("/", 1)[0] if "/" in mid else "openrouter"
 
     extra: dict[str, Any] = {
-        "source": API_URL,
+        "source": raw.get("catalog_source") or API_URL,
         "docs": SOURCE_DOCS,
         "models_page": SOURCE_MODELS,
         "base_url": BASE_URL,
@@ -670,6 +750,9 @@ def dedupe(models: list[dict]) -> list[dict]:
 
 def main() -> None:
     raw_models = fetch_models()
+    api_model_count = len(raw_models)
+    raw_models = add_frontend_models(raw_models)
+    frontend_only_count = len(raw_models) - api_model_count
     models = [map_model(r) for r in raw_models if r.get("id")]
     # append synthetic ~latest aliases (not in API)
     models.extend(build_latest_aliases())
@@ -778,6 +861,7 @@ def main() -> None:
         f"\n## OpenRouter refresh ({stamp})\n\n"
         f"### Source\n"
         f"- API: `{API_URL}` (live → `_scratch_openrouter_models.json`)\n"
+        f"- /models fallback: `{FRONTEND_API_URL}` (adds frontend-only active model cards)\n"
         f"- Docs: {SOURCE_DOCS}\n"
         f"- Apply: `scripts/_update_openrouter.py`\n\n"
         f"### Result\n"
@@ -788,6 +872,7 @@ def main() -> None:
         f"cache_pricing={with_cache}\n"
         f"- native providers: {len(providers)} "
         f"(top: {providers.most_common(10)})\n"
+        f"- Frontend-only records added: {frontend_only_count}\n"
         f"- Pricing: API per-token ×1e6 → USD/1M; "
         f"router prompt=-1 → catalog {DYNAMIC_PRICE}\n"
         f"- Cache: input_cache_read/write(/1h) in extra when present\n"

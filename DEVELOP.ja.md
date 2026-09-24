@@ -136,7 +136,7 @@ python scripts/_update_openai.py
 python scripts/update_catalog_from_openrouter.py
 ```
 
-これは `openrouter.json` **だけ**を更新します。他プロバイダーのJSONをOpenRouterデータで置き換えません。live API から再構築する場合は `scripts/_update_openrouter.py` を使います。
+これは `openrouter.json` **だけ**を更新します。他プロバイダーのJSONをOpenRouterデータで置き換えません。live API から再構築する場合は `scripts/_update_openrouter.py` を使います。このスクリプトは `/api/v1/models` を正確なメタデータの一次ソースとして使い、OpenRouterの `/models` を支える公開フロントエンドAPIからも有効なモデル一覧を取得します。後者にだけ存在するモデルは不足分として追加し、両方にあるモデルは一次APIの情報を優先します。
 
 ### 全ファイル対象の補正処理
 

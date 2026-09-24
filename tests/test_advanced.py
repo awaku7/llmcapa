@@ -88,7 +88,7 @@ def test_grok47_falls_back_to_grok46_by_provider():
     direct = llmcapa.get("grok-4.7", provider="xai")
     gateway = llmcapa.get("grok-4.7", provider="openrouter")
     assert direct.model_id == "grok-4.6"
-    assert gateway.model_id == "x-ai/grok-4.6"
+    assert gateway.model_id == "x-ai/grok-4.7"
     assert direct.context_window == gateway.context_window == 500000
 
 
@@ -238,6 +238,21 @@ def test_features_list():
     o1 = llmcapa.get("o1")
     o1_feats = o1.features()
     assert "reasoning_effort" in o1_feats
+
+
+def test_openrouter_ming_image_is_in_bundled_catalog():
+    cap = llmcapa.get("inclusionai/ming-image-0.1-design", provider="openrouter")
+    assert cap.input_modalities == ["text"]
+    assert cap.output_modalities == ["image"]
+    assert cap.supports("image_output")
+    assert not cap.supports("vision")
+
+    layer = llmcapa.get(
+        "inclusionai/ming-image-0.1-design-layer", provider="openrouter"
+    )
+    assert layer.input_modalities == ["text", "image"]
+    assert layer.output_modalities == ["image"]
+    assert layer.supports("image_output")
 
 
 def test_openrouter_cache(tmp_path, monkeypatch):

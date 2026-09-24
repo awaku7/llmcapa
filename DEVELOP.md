@@ -117,7 +117,7 @@ python scripts/_update_openai.py
 python scripts/update_catalog_from_openrouter.py
 ```
 
-This updates **only** `openrouter.json`; it does not replace other provider JSON files.
+This updates **only** `openrouter.json`; it does not replace other provider JSON files. For a live rebuild, use `scripts/_update_openrouter.py`. It treats `/api/v1/models` as authoritative for detailed metadata and also discovers active model cards through the public frontend API backing OpenRouter's `/models` page. Models found only in the frontend catalog are added as fallbacks; API records take precedence when both sources contain the same model ID.
 
 ### Cross-file post-processing
 
