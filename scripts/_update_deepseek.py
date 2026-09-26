@@ -183,14 +183,23 @@ def build(pricing_catalog: dict[str, dict]) -> list[dict]:
             )
         )
 
-    # Historical and open-weight records are stored as explicit legacy
-    # metadata so the updater itself contains no model literals.
-    legacy = json.loads(
-        (Path(__file__).parent / "metadata" / "deepseek_legacy_models.json").read_text(
-            encoding="utf-8"
+    # Keep historical rows from the last published catalog; no separately
+    # maintained legacy-model manifest is consulted. Current pricing-page
+    # records always take precedence over carried-forward history.
+    try:
+        previous = json.loads(OUT.read_text(encoding="utf-8")).get("models", [])
+    except (OSError, json.JSONDecodeError):
+        previous = []
+    active_ids = {model["model_id"].casefold() for model in models}
+    for old in previous:
+        model_id = str(old.get("model_id", ""))
+        if not model_id or model_id.casefold() in active_ids:
+            continue
+        carried = dict(old)
+        carried.setdefault("extra", {})["catalog_status"] = (
+            "retained_from_previous_catalog_not_in_current_pricing_table"
         )
-    )
-    models.extend(legacy["models"])
+        models.append(carried)
     return dedupe(models)
 
 

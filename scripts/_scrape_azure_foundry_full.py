@@ -1,4 +1,4 @@
-"""Scrape Azure AI Foundry catalog (chat-focused) + multi-provider pricing.
+"""Scrape Azure AI Foundry inference catalog (all tasks) + multi-provider pricing.
 
 Outputs:
   _scratch_azure_catalog_raw.json   - raw API items (deduped by name)
@@ -184,7 +184,7 @@ async def scrape_pricing(page) -> dict:
 
 
 async def apply_chat_filter(page) -> None:
-    """Try to filter catalog to Chat completion inference task."""
+    """Legacy UI filter helper; not invoked by the all-task catalog scrape."""
     # Expand Inference tasks section if collapsed
     try:
         # Click the Inference tasks filter header
@@ -259,10 +259,11 @@ async def scrape_catalog(page) -> list[dict]:
         if n not in items_by_name:
             items_by_name[n] = {"name": n, "displayName": n, "source": "ssr_card"}
 
-    await apply_chat_filter(page)
-    await page.wait_for_timeout(3000)
+    # Keep the catalog unfiltered here: the updater selects supported tasks and
+    # modalities after receiving the complete paginated API result.
+    await page.wait_for_timeout(1000)
 
-    # Re-collect after filter
+    # Re-collect SSR cards after the initial page has settled
     ssr_names2 = await page.evaluate(
         """() => {
         const links = document.querySelectorAll('a[href*="/catalog/models/"]');
@@ -272,7 +273,7 @@ async def scrape_catalog(page) -> list[dict]:
         }).filter(Boolean);
     }"""
     )
-    print(f"  SSR cards after filter: {len(ssr_names2)}")
+    print(f"  SSR cards after initial load: {len(ssr_names2)}")
     for n in ssr_names2:
         if n not in items_by_name:
             items_by_name[n] = {"name": n, "displayName": n, "source": "ssr_card"}

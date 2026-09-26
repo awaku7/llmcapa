@@ -2,6 +2,61 @@
   "models": [
     {
       "provider": "xai",
+      "model_id": "grok-4.7",
+      "display_name": "Grok 4.7",
+      "context_window": 500000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2026-05",
+      "deprecated": false,
+      "aliases": [
+        "x-ai/grok-4.7"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 6.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://docs.x.ai/developers/models/grok-4.7",
+        "cached_input_per_1m": 0.5,
+        "long_context_threshold_tokens": 200000,
+        "long_input_per_1m": 4.0,
+        "long_cached_input_per_1m": 1.0,
+        "long_output_per_1m": 12.0,
+        "regions": [
+          "us-east-1"
+        ]
+      },
+      "reasoning_effort_values": [
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ]
+    },
+    {
+      "provider": "xai",
       "model_id": "grok-4.6",
       "display_name": "grok-4.6",
       "context_window": 500000,
@@ -40,6 +95,10 @@
       "extra": {
         "source": "https://docs.x.ai/developers/models/grok-4.6",
         "cached_input_per_1m": 0.5,
+        "long_context_threshold_tokens": 200000,
+        "long_input_per_1m": 4.0,
+        "long_cached_input_per_1m": 1.0,
+        "long_output_per_1m": 12.0,
         "regions": [
           "us-east-1"
         ]
@@ -85,6 +144,10 @@
       "extra": {
         "source": "https://docs.x.ai/developers/models/grok-4.5",
         "cached_input_per_1m": 0.3,
+        "long_context_threshold_tokens": 200000,
+        "long_input_per_1m": 4.0,
+        "long_cached_input_per_1m": 0.6,
+        "long_output_per_1m": 12.0,
         "regions": [
           "us-east-1"
         ]
@@ -135,6 +198,10 @@
       "extra": {
         "source": "https://docs.x.ai/developers/models/grok-4.3",
         "cached_input_per_1m": 0.2,
+        "long_context_threshold_tokens": 200000,
+        "long_input_per_1m": 2.5,
+        "long_cached_input_per_1m": 0.4,
+        "long_output_per_1m": 5.0,
         "batch_discount": 0.2,
         "regions": [
           "us-east-1"
@@ -187,6 +254,10 @@
       "extra": {
         "source": "https://docs.x.ai/developers/models/grok-4.20-0309-reasoning",
         "cached_input_per_1m": 0.2,
+        "long_context_threshold_tokens": 200000,
+        "long_input_per_1m": 2.5,
+        "long_cached_input_per_1m": 0.4,
+        "long_output_per_1m": 5.0,
         "batch_discount": 0.2,
         "regions": [
           "us-east-1"
@@ -239,6 +310,10 @@
       "extra": {
         "source": "https://docs.x.ai/developers/models/grok-4.20-0309-non-reasoning",
         "cached_input_per_1m": 0.2,
+        "long_context_threshold_tokens": 200000,
+        "long_input_per_1m": 2.5,
+        "long_cached_input_per_1m": 0.4,
+        "long_output_per_1m": 5.0,
         "batch_discount": 0.2,
         "regions": [
           "us-east-1"
@@ -285,6 +360,10 @@
       "extra": {
         "source": "https://docs.x.ai/developers/models",
         "cached_input_per_1m": 0.2,
+        "long_context_threshold_tokens": 200000,
+        "long_input_per_1m": 2.0,
+        "long_cached_input_per_1m": 0.4,
+        "long_output_per_1m": 4.0,
         "batch_discount": 0.2,
         "regions": [
           "us-east-1"
@@ -332,6 +411,10 @@
       "extra": {
         "source": "https://docs.x.ai/developers/models/grok-4.20-multi-agent-0309",
         "cached_input_per_1m": 0.2,
+        "long_context_threshold_tokens": 200000,
+        "long_input_per_1m": 2.5,
+        "long_cached_input_per_1m": 0.4,
+        "long_output_per_1m": 5.0,
         "batch_discount": 0.2,
         "regions": [
           "us-east-1"
@@ -421,7 +504,7 @@
           "image/png"
         ],
         "max_input_bytes": 20971520,
-        "checked_at": "2026-09-24"
+        "checked_at": "2026-09-26"
       }
     },
     {
@@ -485,7 +568,7 @@
           "image/png"
         ],
         "max_input_bytes": 20971520,
-        "checked_at": "2026-09-24"
+        "checked_at": "2026-09-26"
       }
     },
     {
@@ -545,7 +628,7 @@
           "image/png"
         ],
         "max_input_bytes": 20971520,
-        "checked_at": "2026-09-24"
+        "checked_at": "2026-09-26"
       }
     },
     {
@@ -614,7 +697,7 @@
           "generation": true,
           "streaming": true
         },
-        "checked_at": "2026-09-24",
+        "checked_at": "2026-09-26",
         "status": "documented"
       }
     },
@@ -680,7 +763,7 @@
           "generation": true,
           "streaming": true
         },
-        "checked_at": "2026-09-24",
+        "checked_at": "2026-09-26",
         "status": "documented"
       }
     },
@@ -738,7 +821,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-09-24",
+        "checked_at": "2026-09-26",
         "status": "inferred"
       }
     },
@@ -800,7 +883,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-09-24",
+        "checked_at": "2026-09-26",
         "status": "documented"
       }
     },
@@ -877,7 +960,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-09-24",
+        "checked_at": "2026-09-26",
         "status": "documented"
       }
     },
@@ -942,7 +1025,7 @@
           "realtime": true,
           "streaming": true
         },
-        "checked_at": "2026-09-24",
+        "checked_at": "2026-09-26",
         "status": "documented"
       }
     },

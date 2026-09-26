@@ -21,8 +21,11 @@ provider file (sakura.json), not folded here.
 
 from __future__ import annotations
 
+import html
 import json
+import re
 import shutil
+from urllib.request import Request, urlopen
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -35,17 +38,15 @@ LOG = WORKDIR / "provider_update_log.md"
 
 # ---- canonical sources -------------------------------------------------
 SRC_PLAMO_API = "https://plamo.preferredai.jp/api"
-SRC_PLAMO_PR = "https://www.preferred.jp/ja/news/pr20260622/"
-SRC_PLAMO_BLOG = "https://tech.preferred.jp/ja/blog/plamo-3-0-prime-release/"
+SRC_PLAMO_PR = "https://www.preferred.jp/ja/news/pr20260622"
+SRC_PLAMO_BLOG = "https://www.preferred.jp/ja/blog/tech/plamo-3-0-prime-release"
 SRC_PLAMO_BASE = "https://api.platform.preferredai.jp/v1"
-SRC_CLOUD_PF = "https://www.softbank.jp/biz/services/ai/cloud-pf-type-a/"
+SRC_CLOUD_PF = "https://www.softbank.jp/business/service/platform/cloud-pf-type-a/"
 SRC_SARASHINA_API = "https://www.softbank.jp/business/service/ai/sarashina-api/"
 SRC_SARASHINA3_BLOG = (
     "https://www.sbintuitions.co.jp/blog/entry/2026/06/30/sarashina3-mini-nano/"
 )
-SRC_SARASHINA3_PRESS = (
-    "https://www.sbintuitions.co.jp/news/press/2026/06/30/sarashina3-cloud-pf/"
-)
+SRC_SARASHINA3_PRESS = "https://www.softbank.jp/business/news/2026/0630-01"
 SRC_TSUZUMI = "https://www.nttdata.com/jp/ja/lineup/tsuzumi/"
 SRC_TSUZUMI_RD = "https://www.rd.ntt/research/LLM_tsuzumi.html"
 SRC_TSUZUMI_AZURE = (
@@ -152,14 +153,159 @@ def base(
     return row
 
 
-def build() -> list[dict]:
-    """Load source-backed Japanese provider records from external metadata."""
-    manifest = json.loads(
-        (Path(__file__).parent / "metadata" / "japanese_legacy_models.json").read_text(
-            encoding="utf-8"
+OFFICIAL_SOURCES = {
+    "pfn": SRC_PLAMO_API,
+    "softbank": SRC_SARASHINA3_PRESS,
+    "ntt": SRC_TSUZUMI,
+    "ntt_rd": SRC_TSUZUMI_RD,
+}
+
+
+def _fetch_official_text(url: str) -> str:
+    request = Request(url, headers={"User-Agent": "llmcapa-official-catalog/1.0"})
+    with urlopen(request, timeout=45) as response:
+        source = response.read(8_000_000).decode("utf-8", "replace")
+    source = re.sub(r"(?is)<(script|style)\b[^>]*>.*?</\1>", " ", source)
+    return html.unescape(re.sub(r"<[^>]+>", " ", source))
+
+
+def _discover_official_models(source_texts: dict[str, str]) -> list[dict]:
+    discovered: dict[str, dict] = {}
+    stamp = datetime.now(timezone.utc).date().isoformat()
+
+    pfn_text = source_texts.get("pfn", "")
+    for version in dict.fromkeys(re.findall(r"PLaMo\s*([0-9]+(?:\.[0-9]+)?)\s*Prime", pfn_text, re.I)):
+        model_id = f"plamo-{version}-prime"
+        price = None
+        standard = re.search(
+            r"STANDARD.*?PLaMo\s*" + re.escape(version) + r"\s*Prime.*?INPUT\s*([0-9,]+)円.*?OUTPUT\s*([0-9,]+)円",
+            pfn_text,
+            re.I | re.S,
         )
-    )
-    return dedupe([dict(model) for model in manifest["models"]])
+        if standard:
+            yen_in, yen_out = (float(value.replace(",", "")) for value in standard.groups())
+            price = {"input": yen_in / 150.0, "output": yen_out / 150.0, "currency": "USD"}
+        ctx_match = re.search(r"PLaMo\s*" + re.escape(version) + r"\s*Prime.{0,300}?([0-9]+)k\s*(?:tokens|トークン)", pfn_text, re.I | re.S)
+        discovered[model_id.casefold()] = {
+            "provider": "pfn", "model_id": model_id,
+            "display_name": f"PFN PLaMo {version} Prime",
+            "context_window": int(ctx_match.group(1)) * 1000 if ctx_match else 0,
+            "max_output_tokens": 0, "pricing": price,
+            "input_modalities": ["text"], "output_modalities": ["text"],
+            "supports_chat_completion": True, "supports_reasoning": True,
+            "source_url": SRC_PLAMO_API, "checked_at": stamp,
+        }
+
+    sb_text = source_texts.get("softbank", "")
+    for variant in dict.fromkeys(re.findall(r"Sarashina\s*3\s*(mini|nano|guard|embedding|rerank)", sb_text, re.I)):
+        variant = variant.lower()
+        model_id = f"sarashina3-{variant}"
+        is_vector = variant in {"embedding", "rerank"}
+        discovered[model_id.casefold()] = {
+            "provider": "softbank", "model_id": model_id,
+            "display_name": f"Sarashina3 {variant}", "context_window": 0,
+            "max_output_tokens": 0, "pricing": None,
+            "input_modalities": ["text"],
+            "output_modalities": ["embedding" if variant == "embedding" else "rerank" if variant == "rerank" else "text"],
+            "supports_chat_completion": not is_vector,
+            "supports_reasoning": None,
+            "source_url": SRC_SARASHINA3_PRESS, "checked_at": stamp,
+        }
+
+    ntt_text = " ".join((source_texts.get("ntt", ""), source_texts.get("ntt_rd", "")))
+    if re.search(r"tsuzumi\s*2", ntt_text, re.I):
+        discovered["tsuzumi-2"] = {
+            "provider": "ntt", "model_id": "tsuzumi-2",
+            "display_name": "NTT tsuzumi 2", "context_window": 0,
+            "max_output_tokens": 0, "pricing": None,
+            "input_modalities": ["text"], "output_modalities": ["text"],
+            "supports_chat_completion": True, "supports_reasoning": None,
+            "source_url": SRC_TSUZUMI, "checked_at": stamp,
+        }
+    return list(discovered.values())
+
+
+def build() -> list[dict]:
+    """Discover current entries from official provider pages; carry unmatched history.
+
+    Existing published rows are used only as a metadata cache for exact model
+    IDs. The separate manually curated japanese_legacy_models.json is not read.
+    """
+    try:
+        previous = json.loads(OUT.read_text(encoding="utf-8")).get("models", [])
+    except (OSError, json.JSONDecodeError):
+        previous = []
+
+    source_texts: dict[str, str] = {}
+    errors: list[str] = []
+    for key, url in OFFICIAL_SOURCES.items():
+        try:
+            source_texts[key] = _fetch_official_text(url)
+        except Exception as exc:  # noqa: BLE001
+            errors.append(f"{key}: {exc}")
+    discovered = _discover_official_models(source_texts)
+    if not discovered:
+        raise RuntimeError(
+            "No Japanese provider models could be discovered from official pages; "
+            + "; ".join(errors)
+        )
+
+    previous_by_id = {str(model.get("model_id", "")).casefold(): model for model in previous}
+    result: list[dict] = []
+    seen: set[str] = set()
+    for fresh in discovered:
+        key = fresh["model_id"].casefold()
+        old = previous_by_id.get(key)
+        if old:
+            model = dict(old)
+            # Apply source-confirmed values; do not overwrite richer metadata
+            # with empty/unknown values from a limited product listing.
+            model["display_name"] = fresh["display_name"]
+            model.setdefault("extra", {}).update({
+                "official_source_checked_at": fresh["checked_at"],
+                "official_source_status": "listed_on_current_source",
+                "current_source": fresh["source_url"],
+            })
+            if fresh["pricing"] is not None:
+                model["pricing"] = fresh["pricing"]
+            if fresh["output_modalities"] != ["text"] or fresh["provider"] == "pfn":
+                model["input_modalities"] = fresh["input_modalities"]
+                model["output_modalities"] = fresh["output_modalities"]
+            if fresh["supports_chat_completion"] is not None:
+                model["supports_chat_completion"] = fresh["supports_chat_completion"]
+        else:
+            model = base(
+                provider=fresh["provider"], model_id=fresh["model_id"],
+                display=fresh["display_name"], ctx=fresh["context_window"],
+                max_out=fresh["max_output_tokens"], pricing=fresh["pricing"],
+                input_modalities=fresh["input_modalities"],
+                output_modalities=fresh["output_modalities"],
+                chat=fresh["supports_chat_completion"],
+                reasoning=fresh["supports_reasoning"],
+                function_calling=None, streaming=None, json_mode=None,
+                extra={"source": fresh["source_url"],
+                       "official_source_checked_at": fresh["checked_at"],
+                       "official_source_status": "listed_on_current_source"},
+            )
+        result.append(model)
+        seen.add(key)
+
+    # Preserve prior rows for aliases/history not covered by the current small
+    # set of official product pages, while making their verification status
+    # explicit instead of silently treating the old metadata as freshly scraped.
+    for old in previous:
+        key = str(old.get("model_id", "")).casefold()
+        if not key or key in seen:
+            continue
+        model = dict(old)
+        model.setdefault("extra", {}).update({
+            "official_source_checked_at": datetime.now(timezone.utc).date().isoformat(),
+            "official_source_status": "not_reconfirmed_by_current_page_set",
+        })
+        result.append(model)
+    if errors:
+        print("Japanese source fetch warnings: " + "; ".join(errors), flush=True)
+    return dedupe(result)
 
 
 def dedupe(models: list[dict]) -> list[dict]:
@@ -253,15 +399,9 @@ def main() -> None:
         f"(active={active}, deprecated={deprecated}, "
         f"priced={priced}, extra={extra_n})\n"
         f"- Providers: {by_prov}\n"
-        f"- PFN: plamo-3.0-prime GA 256K, Standard ¥60/¥250 "
-        f"(USD shell ${PLAMO_USD_IN}/${PLAMO_USD_OUT}); "
-        f"2.0/2.2 deprecated\n"
-        f"- SoftBank: Sarashina3 mini/nano/guard/embedding/rerank "
-        f"on Cloud PF Type A (2026-06-30); sarashina2-mini deprecated\n"
-        f"- NTT tsuzumi-2: vision + Azure GPU-hour "
-        f"(~${TSUZUMI_GPU_HOUR}/h); secondary token $4/$1100\n"
-        f"- NEC cotomi-v3 / ELYZA 70B / Fujitsu Takane 32B / "
-        f"CC Gov-LLM: enterprise quote, 源内 selected\n"
+        f"- Current model names and modalities are discovered from the official pages above.\n"
+        f"- Prices and limits are updated only where the official source publishes them; unknowns remain unset.\n"
+        f"- Carried-forward rows are marked as not reconfirmed by the current page set.\n"
         f"- sakura kept separate (sakura.json) — next refresh\n"
         f"- Install copy synced\n"
     )

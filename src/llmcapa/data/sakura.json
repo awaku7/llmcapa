@@ -3,29 +3,29 @@
     {
       "provider": "sakura",
       "model_id": "gpt-oss-120b",
-      "display_name": "Sakura gpt-oss-120b",
-      "context_window": 131072,
-      "max_output_tokens": 16384,
+      "display_name": "gpt-oss-120b",
+      "context_window": 0,
+      "max_output_tokens": 0,
       "input_modalities": [
         "text"
       ],
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": false,
-      "supports_reasoning": true,
+      "supports_reasoning": false,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": null,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
       "tokenizer_name": "",
-      "knowledge_cutoff": "2025-06",
+      "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
         "sakura/gpt-oss-120b"
@@ -44,13 +44,7 @@
         "openai_compatible": true,
         "tax_included": true,
         "fx_jpy_per_usd_shell": 150.0,
-        "free_plan_requests_per_month": 3000,
-        "payg_free_requests_per_month": 3000,
-        "plans": [
-          "base_model_free",
-          "payg"
-        ],
-        "plan_note": "free plan rate-limits after quota; payg bills per 10k tokens after free quota; plans do not auto-switch",
+        "official_catalog_checked_at": "2026-09-26",
         "pricing_jpy": {
           "input_per_10k_tokens": 0.15,
           "output_per_10k_tokens": 0.75,
@@ -59,189 +53,39 @@
           "currency": "JPY",
           "tax": "included"
         },
-        "category": "chat_completions",
-        "tier": "standard",
-        "upstream": "openai_gpt_oss_120b",
-        "features": [
-          "chat_completions",
-          "responses_api"
-        ]
-      }
-    },
-    {
-      "provider": "sakura",
-      "model_id": "Qwen3-Coder-480B-A35B-Instruct-FP8",
-      "display_name": "Sakura Qwen3-Coder-480B-A35B-Instruct-FP8",
-      "context_window": 262144,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": true,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2025-06",
-      "deprecated": false,
-      "aliases": [
-        "sakura/Qwen3-Coder-480B-A35B-Instruct-FP8",
-        "qwen3-coder-480b",
-        "sakura/qwen3-coder-480b"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.2,
-        "output_per_1m": 1.666667,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
-        "playground": "https://playground.aipf.sakura.ad.jp/",
-        "control_panel": "https://secure.sakura.ad.jp/ai/",
-        "domestic_jp_cloud": true,
-        "openai_compatible": true,
-        "tax_included": true,
-        "fx_jpy_per_usd_shell": 150.0,
-        "free_plan_requests_per_month": 3000,
-        "payg_free_requests_per_month": 3000,
-        "plans": [
-          "base_model_free",
-          "payg"
-        ],
-        "plan_note": "free plan rate-limits after quota; payg bills per 10k tokens after free quota; plans do not auto-switch",
-        "pricing_jpy": {
-          "input_per_10k_tokens": 0.3,
-          "output_per_10k_tokens": 2.5,
-          "input_per_1m": 30.0,
-          "output_per_1m": 250.0,
-          "currency": "JPY",
-          "tax": "included"
-        },
-        "category": "chat_completions",
-        "tier": "standard",
-        "upstream": "qwen3_coder_480b_a35b",
-        "features": [
-          "coding",
-          "chat_completions",
-          "tool_use"
-        ],
-        "quant": "FP8"
-      }
-    },
-    {
-      "provider": "sakura",
-      "model_id": "Qwen3-Coder-30B-A3B-Instruct",
-      "display_name": "Sakura Qwen3-Coder-30B-A3B-Instruct",
-      "context_window": 131072,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": true,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2025-06",
-      "deprecated": false,
-      "aliases": [
-        "sakura/Qwen3-Coder-30B-A3B-Instruct",
-        "qwen3-coder-30b",
-        "sakura/qwen3-coder-30b"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.1,
-        "output_per_1m": 0.5,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
-        "playground": "https://playground.aipf.sakura.ad.jp/",
-        "control_panel": "https://secure.sakura.ad.jp/ai/",
-        "domestic_jp_cloud": true,
-        "openai_compatible": true,
-        "tax_included": true,
-        "fx_jpy_per_usd_shell": 150.0,
-        "free_plan_requests_per_month": 3000,
-        "payg_free_requests_per_month": 3000,
-        "plans": [
-          "base_model_free",
-          "payg"
-        ],
-        "plan_note": "free plan rate-limits after quota; payg bills per 10k tokens after free quota; plans do not auto-switch",
-        "pricing_jpy": {
-          "input_per_10k_tokens": 0.15,
-          "output_per_10k_tokens": 0.75,
-          "input_per_1m": 15.0,
-          "output_per_1m": 75.0,
-          "currency": "JPY",
-          "tax": "included"
-        },
-        "category": "chat_completions",
-        "tier": "standard",
-        "upstream": "qwen3_coder_30b_a3b",
-        "features": [
-          "coding",
-          "chat_completions",
-          "tool_use"
-        ]
+        "free_requests_per_month": 3000,
+        "tier": "standard"
       }
     },
     {
       "provider": "sakura",
       "model_id": "llm-jp-3.1-8x13b-instruct4",
-      "display_name": "Sakura llm-jp-3.1-8x13b-instruct4",
-      "context_window": 32768,
-      "max_output_tokens": 8192,
+      "display_name": "llm-jp-3.1-8x13b-instruct4",
+      "context_window": 0,
+      "max_output_tokens": 0,
       "input_modalities": [
         "text"
       ],
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": null,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
       "tokenizer_name": "",
-      "knowledge_cutoff": "2025-03",
+      "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "sakura/llm-jp-3.1-8x13b-instruct4",
-        "llm-jp-3.1",
-        "sakura/llm-jp-3.1"
+        "sakura/llm-jp-3.1-8x13b-instruct4"
       ],
       "license_type": "api",
       "pricing": {
@@ -257,13 +101,7 @@
         "openai_compatible": true,
         "tax_included": true,
         "fx_jpy_per_usd_shell": 150.0,
-        "free_plan_requests_per_month": 3000,
-        "payg_free_requests_per_month": 3000,
-        "plans": [
-          "base_model_free",
-          "payg"
-        ],
-        "plan_note": "free plan rate-limits after quota; payg bills per 10k tokens after free quota; plans do not auto-switch",
+        "official_catalog_checked_at": "2026-09-26",
         "pricing_jpy": {
           "input_per_10k_tokens": 0.15,
           "output_per_10k_tokens": 0.75,
@@ -272,43 +110,35 @@
           "currency": "JPY",
           "tax": "included"
         },
-        "category": "chat_completions",
-        "tier": "standard",
-        "upstream": "llm-jp / NII",
-        "full_scratch_jp": true,
-        "features": [
-          "japanese",
-          "chat_completions"
-        ],
-        "params_note": "MoE 8x13B class"
+        "tier": "standard"
       }
     },
     {
       "provider": "sakura",
       "model_id": "whisper-large-v3-turbo",
-      "display_name": "Sakura whisper-large-v3-turbo",
-      "context_window": 30,
-      "max_output_tokens": 4096,
+      "display_name": "whisper-large-v3-turbo",
+      "context_window": 0,
+      "max_output_tokens": 0,
       "input_modalities": [
         "audio"
       ],
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": false,
-      "supports_responses_api": false,
+      "supports_responses_api": null,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
       "tokenizer_name": "",
-      "knowledge_cutoff": "2024-10",
+      "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
         "sakura/whisper-large-v3-turbo"
@@ -323,46 +153,18 @@
         "openai_compatible": true,
         "tax_included": true,
         "fx_jpy_per_usd_shell": 150.0,
-        "free_plan_requests_per_month": 50,
-        "payg_free_requests_per_month": 50,
-        "pricing_jpy": {
-          "per_60_seconds": 0.5,
-          "currency": "JPY",
-          "tax": "included"
-        },
-        "pricing_usd_shell": {
-          "per_minute": 0.003333,
-          "note": "0.5 JPY/60s @ 150.0 JPY/USD"
-        },
-        "category": "audio_transcription",
+        "official_catalog_checked_at": "2026-09-26",
+        "price_per_60_seconds_jpy": 0.5,
+        "free_requests_per_month": 50,
         "tier": "standard",
-        "upstream": "openai_whisper_large_v3_turbo",
-        "features": [
-          "audio_transcription"
-        ]
-      },
-      "audio": {
-        "accepts_audio_input": true,
-        "speech_generation": false,
-        "speech_understanding": true,
-        "supports_streaming": true,
-        "supports_realtime": null,
-        "transcription": true,
-        "checked_at": "2026-09-24",
-        "status": "inferred",
-        "endpoints": {
-          "transcription": true,
-          "speech_understanding": true,
-          "streaming": true
-        },
-        "extra": {}
+        "unit": "60_seconds"
       }
     },
     {
       "provider": "sakura",
       "model_id": "multilingual-e5-large",
-      "display_name": "Sakura multilingual-e5-large",
-      "context_window": 512,
+      "display_name": "multilingual-e5-large",
+      "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -370,20 +172,20 @@
       "output_modalities": [
         "embedding"
       ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": false,
-      "supports_responses_api": false,
+      "supports_responses_api": null,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
       "tokenizer_name": "",
-      "knowledge_cutoff": "2024-01",
+      "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
         "sakura/multilingual-e5-large"
@@ -402,36 +204,24 @@
         "openai_compatible": true,
         "tax_included": true,
         "fx_jpy_per_usd_shell": 150.0,
-        "free_plan_requests_per_month": 10000,
-        "payg_free_requests_per_month": 10000,
+        "official_catalog_checked_at": "2026-09-26",
         "pricing_jpy": {
           "input_per_10k_tokens": 2.0,
-          "output": "free",
+          "output_per_10k_tokens": 0.0,
           "input_per_1m": 200.0,
+          "output_per_1m": 0.0,
           "currency": "JPY",
           "tax": "included"
         },
-        "category": "embeddings",
-        "tier": "standard",
-        "upstream": "intfloat/multilingual-e5-large",
-        "features": [
-          "embeddings"
-        ]
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-09-24"
+        "free_requests_per_month": 10000,
+        "tier": "standard"
       }
     },
     {
       "provider": "sakura",
-      "model_id": "voicevox-zundamon",
-      "display_name": "Sakura VOICEVOX:ずんだもん",
-      "context_window": 1024,
+      "model_id": "VOICEVOX:ずんだもん",
+      "display_name": "VOICEVOX:ずんだもん",
+      "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -439,13 +229,13 @@
       "output_modalities": [
         "audio"
       ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": false,
-      "supports_responses_api": false,
+      "supports_responses_api": null,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
@@ -455,8 +245,6 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "sakura/voicevox-zundamon",
-        "VOICEVOX:ずんだもん",
         "sakura/VOICEVOX:ずんだもん"
       ],
       "license_type": "api",
@@ -469,46 +257,18 @@
         "openai_compatible": true,
         "tax_included": true,
         "fx_jpy_per_usd_shell": 150.0,
-        "free_plan_requests_per_month": 50,
-        "payg_free_requests_per_month": 50,
-        "pricing_jpy": {
-          "per_10k_mora": 3.0,
-          "currency": "JPY",
-          "tax": "included",
-          "mora_note": "1 mora ≈ 1 kana length unit"
-        },
-        "pricing_usd_shell": {
-          "per_10k_mora": 0.02
-        },
-        "category": "text_to_speech",
+        "official_catalog_checked_at": "2026-09-26",
+        "price_per_10k_mora_jpy": 3.0,
+        "free_requests_per_month": 50,
         "tier": "standard",
-        "upstream": "VOICEVOX",
-        "official_model_name": "VOICEVOX:ずんだもん",
-        "features": [
-          "tts"
-        ],
-        "license_manual": "https://manual.sakura.ad.jp/cloud/ai-engine/05-tts-licenses.html"
-      },
-      "audio": {
-        "accepts_audio_input": false,
-        "speech_generation": true,
-        "speech_understanding": false,
-        "supports_streaming": true,
-        "supports_realtime": null,
-        "checked_at": "2026-09-24",
-        "status": "inferred",
-        "endpoints": {
-          "speech_generation": true,
-          "streaming": true
-        },
-        "extra": {}
+        "unit": "10k_mora"
       }
     },
     {
       "provider": "sakura",
-      "model_id": "voicevox-tohoku-zunko",
-      "display_name": "Sakura VOICEVOX:東北ずん子",
-      "context_window": 1024,
+      "model_id": "VOICEVOX:東北ずん子",
+      "display_name": "VOICEVOX:東北ずん子",
+      "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -516,13 +276,13 @@
       "output_modalities": [
         "audio"
       ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": false,
-      "supports_responses_api": false,
+      "supports_responses_api": null,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
@@ -532,8 +292,6 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "sakura/voicevox-tohoku-zunko",
-        "VOICEVOX:東北ずん子",
         "sakura/VOICEVOX:東北ずん子"
       ],
       "license_type": "api",
@@ -546,46 +304,17 @@
         "openai_compatible": true,
         "tax_included": true,
         "fx_jpy_per_usd_shell": 150.0,
-        "free_plan_requests_per_month": 50,
-        "payg_free_requests_per_month": 50,
-        "pricing_jpy": {
-          "per_10k_mora": 3.0,
-          "currency": "JPY",
-          "tax": "included",
-          "mora_note": "1 mora ≈ 1 kana length unit"
-        },
-        "pricing_usd_shell": {
-          "per_10k_mora": 0.02
-        },
-        "category": "text_to_speech",
-        "tier": "standard",
-        "upstream": "VOICEVOX",
-        "official_model_name": "VOICEVOX:東北ずん子",
-        "features": [
-          "tts"
-        ],
-        "license_manual": "https://manual.sakura.ad.jp/cloud/ai-engine/05-tts-licenses.html"
-      },
-      "audio": {
-        "accepts_audio_input": false,
-        "speech_generation": true,
-        "speech_understanding": false,
-        "supports_streaming": true,
-        "supports_realtime": null,
-        "checked_at": "2026-09-24",
-        "status": "inferred",
-        "endpoints": {
-          "speech_generation": true,
-          "streaming": true
-        },
-        "extra": {}
+        "official_catalog_checked_at": "2026-09-26",
+        "price_per_10k_mora_jpy": 3.0,
+        "free_requests_per_month": 50,
+        "tier": "standard"
       }
     },
     {
       "provider": "sakura",
-      "model_id": "voicevox-tohoku-kiritan",
-      "display_name": "Sakura VOICEVOX:東北きりたん",
-      "context_window": 1024,
+      "model_id": "VOICEVOX:東北きりたん",
+      "display_name": "VOICEVOX:東北きりたん",
+      "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -593,13 +322,13 @@
       "output_modalities": [
         "audio"
       ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": false,
-      "supports_responses_api": false,
+      "supports_responses_api": null,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
@@ -609,8 +338,6 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "sakura/voicevox-tohoku-kiritan",
-        "VOICEVOX:東北きりたん",
         "sakura/VOICEVOX:東北きりたん"
       ],
       "license_type": "api",
@@ -623,46 +350,17 @@
         "openai_compatible": true,
         "tax_included": true,
         "fx_jpy_per_usd_shell": 150.0,
-        "free_plan_requests_per_month": 50,
-        "payg_free_requests_per_month": 50,
-        "pricing_jpy": {
-          "per_10k_mora": 3.0,
-          "currency": "JPY",
-          "tax": "included",
-          "mora_note": "1 mora ≈ 1 kana length unit"
-        },
-        "pricing_usd_shell": {
-          "per_10k_mora": 0.02
-        },
-        "category": "text_to_speech",
-        "tier": "standard",
-        "upstream": "VOICEVOX",
-        "official_model_name": "VOICEVOX:東北きりたん",
-        "features": [
-          "tts"
-        ],
-        "license_manual": "https://manual.sakura.ad.jp/cloud/ai-engine/05-tts-licenses.html"
-      },
-      "audio": {
-        "accepts_audio_input": false,
-        "speech_generation": true,
-        "speech_understanding": false,
-        "supports_streaming": true,
-        "supports_realtime": null,
-        "checked_at": "2026-09-24",
-        "status": "inferred",
-        "endpoints": {
-          "speech_generation": true,
-          "streaming": true
-        },
-        "extra": {}
+        "official_catalog_checked_at": "2026-09-26",
+        "price_per_10k_mora_jpy": 3.0,
+        "free_requests_per_month": 50,
+        "tier": "standard"
       }
     },
     {
       "provider": "sakura",
-      "model_id": "voicevox-tohoku-itako",
-      "display_name": "Sakura VOICEVOX:東北イタコ",
-      "context_window": 1024,
+      "model_id": "VOICEVOX:東北イタコ",
+      "display_name": "VOICEVOX:東北イタコ",
+      "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -670,13 +368,13 @@
       "output_modalities": [
         "audio"
       ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": false,
-      "supports_responses_api": false,
+      "supports_responses_api": null,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
@@ -686,8 +384,6 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "sakura/voicevox-tohoku-itako",
-        "VOICEVOX:東北イタコ",
         "sakura/VOICEVOX:東北イタコ"
       ],
       "license_type": "api",
@@ -700,46 +396,17 @@
         "openai_compatible": true,
         "tax_included": true,
         "fx_jpy_per_usd_shell": 150.0,
-        "free_plan_requests_per_month": 50,
-        "payg_free_requests_per_month": 50,
-        "pricing_jpy": {
-          "per_10k_mora": 3.0,
-          "currency": "JPY",
-          "tax": "included",
-          "mora_note": "1 mora ≈ 1 kana length unit"
-        },
-        "pricing_usd_shell": {
-          "per_10k_mora": 0.02
-        },
-        "category": "text_to_speech",
-        "tier": "standard",
-        "upstream": "VOICEVOX",
-        "official_model_name": "VOICEVOX:東北イタコ",
-        "features": [
-          "tts"
-        ],
-        "license_manual": "https://manual.sakura.ad.jp/cloud/ai-engine/05-tts-licenses.html"
-      },
-      "audio": {
-        "accepts_audio_input": false,
-        "speech_generation": true,
-        "speech_understanding": false,
-        "supports_streaming": true,
-        "supports_realtime": null,
-        "checked_at": "2026-09-24",
-        "status": "inferred",
-        "endpoints": {
-          "speech_generation": true,
-          "streaming": true
-        },
-        "extra": {}
+        "official_catalog_checked_at": "2026-09-26",
+        "price_per_10k_mora_jpy": 3.0,
+        "free_requests_per_month": 50,
+        "tier": "standard"
       }
     },
     {
       "provider": "sakura",
-      "model_id": "voicevox-shikoku-metan",
-      "display_name": "Sakura VOICEVOX:四国めたん",
-      "context_window": 1024,
+      "model_id": "VOICEVOX:四国めたん",
+      "display_name": "VOICEVOX:四国めたん",
+      "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -747,13 +414,13 @@
       "output_modalities": [
         "audio"
       ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": false,
-      "supports_responses_api": false,
+      "supports_responses_api": null,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
@@ -763,8 +430,6 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "sakura/voicevox-shikoku-metan",
-        "VOICEVOX:四国めたん",
         "sakura/VOICEVOX:四国めたん"
       ],
       "license_type": "api",
@@ -777,46 +442,17 @@
         "openai_compatible": true,
         "tax_included": true,
         "fx_jpy_per_usd_shell": 150.0,
-        "free_plan_requests_per_month": 50,
-        "payg_free_requests_per_month": 50,
-        "pricing_jpy": {
-          "per_10k_mora": 3.0,
-          "currency": "JPY",
-          "tax": "included",
-          "mora_note": "1 mora ≈ 1 kana length unit"
-        },
-        "pricing_usd_shell": {
-          "per_10k_mora": 0.02
-        },
-        "category": "text_to_speech",
-        "tier": "standard",
-        "upstream": "VOICEVOX",
-        "official_model_name": "VOICEVOX:四国めたん",
-        "features": [
-          "tts"
-        ],
-        "license_manual": "https://manual.sakura.ad.jp/cloud/ai-engine/05-tts-licenses.html"
-      },
-      "audio": {
-        "accepts_audio_input": false,
-        "speech_generation": true,
-        "speech_understanding": false,
-        "supports_streaming": true,
-        "supports_realtime": null,
-        "checked_at": "2026-09-24",
-        "status": "inferred",
-        "endpoints": {
-          "speech_generation": true,
-          "streaming": true
-        },
-        "extra": {}
+        "official_catalog_checked_at": "2026-09-26",
+        "price_per_10k_mora_jpy": 3.0,
+        "free_requests_per_month": 50,
+        "tier": "standard"
       }
     },
     {
       "provider": "sakura",
-      "model_id": "voicevox-ankomon",
-      "display_name": "Sakura VOICEVOX:あんこもん",
-      "context_window": 1024,
+      "model_id": "VOICEVOX:あんこもん",
+      "display_name": "VOICEVOX:あんこもん",
+      "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -824,13 +460,13 @@
       "output_modalities": [
         "audio"
       ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": false,
-      "supports_responses_api": false,
+      "supports_responses_api": null,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
@@ -840,8 +476,6 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "sakura/voicevox-ankomon",
-        "VOICEVOX:あんこもん",
         "sakura/VOICEVOX:あんこもん"
       ],
       "license_type": "api",
@@ -854,46 +488,17 @@
         "openai_compatible": true,
         "tax_included": true,
         "fx_jpy_per_usd_shell": 150.0,
-        "free_plan_requests_per_month": 50,
-        "payg_free_requests_per_month": 50,
-        "pricing_jpy": {
-          "per_10k_mora": 3.0,
-          "currency": "JPY",
-          "tax": "included",
-          "mora_note": "1 mora ≈ 1 kana length unit"
-        },
-        "pricing_usd_shell": {
-          "per_10k_mora": 0.02
-        },
-        "category": "text_to_speech",
-        "tier": "standard",
-        "upstream": "VOICEVOX",
-        "official_model_name": "VOICEVOX:あんこもん",
-        "features": [
-          "tts"
-        ],
-        "license_manual": "https://manual.sakura.ad.jp/cloud/ai-engine/05-tts-licenses.html"
-      },
-      "audio": {
-        "accepts_audio_input": false,
-        "speech_generation": true,
-        "speech_understanding": false,
-        "supports_streaming": true,
-        "supports_realtime": null,
-        "checked_at": "2026-09-24",
-        "status": "inferred",
-        "endpoints": {
-          "speech_generation": true,
-          "streaming": true
-        },
-        "extra": {}
+        "official_catalog_checked_at": "2026-09-26",
+        "price_per_10k_mora_jpy": 3.0,
+        "free_requests_per_month": 50,
+        "tier": "standard"
       }
     },
     {
       "provider": "sakura",
-      "model_id": "voicevox-meimei-himari",
-      "display_name": "Sakura VOICEVOX:冥鳴ひまり",
-      "context_window": 1024,
+      "model_id": "VOICEVOX:冥鳴ひまり",
+      "display_name": "VOICEVOX:冥鳴ひまり",
+      "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -901,13 +506,13 @@
       "output_modalities": [
         "audio"
       ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": false,
-      "supports_responses_api": false,
+      "supports_responses_api": null,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
@@ -917,8 +522,6 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "sakura/voicevox-meimei-himari",
-        "VOICEVOX:冥鳴ひまり",
         "sakura/VOICEVOX:冥鳴ひまり"
       ],
       "license_type": "api",
@@ -931,46 +534,17 @@
         "openai_compatible": true,
         "tax_included": true,
         "fx_jpy_per_usd_shell": 150.0,
-        "free_plan_requests_per_month": 50,
-        "payg_free_requests_per_month": 50,
-        "pricing_jpy": {
-          "per_10k_mora": 3.0,
-          "currency": "JPY",
-          "tax": "included",
-          "mora_note": "1 mora ≈ 1 kana length unit"
-        },
-        "pricing_usd_shell": {
-          "per_10k_mora": 0.02
-        },
-        "category": "text_to_speech",
-        "tier": "standard",
-        "upstream": "VOICEVOX",
-        "official_model_name": "VOICEVOX:冥鳴ひまり",
-        "features": [
-          "tts"
-        ],
-        "license_manual": "https://manual.sakura.ad.jp/cloud/ai-engine/05-tts-licenses.html"
-      },
-      "audio": {
-        "accepts_audio_input": false,
-        "speech_generation": true,
-        "speech_understanding": false,
-        "supports_streaming": true,
-        "supports_realtime": null,
-        "checked_at": "2026-09-24",
-        "status": "inferred",
-        "endpoints": {
-          "speech_generation": true,
-          "streaming": true
-        },
-        "extra": {}
+        "official_catalog_checked_at": "2026-09-26",
+        "price_per_10k_mora_jpy": 3.0,
+        "free_requests_per_month": 50,
+        "tier": "standard"
       }
     },
     {
       "provider": "sakura",
-      "model_id": "voicevox-kasukabe-tsumugi",
-      "display_name": "Sakura VOICEVOX:春日部つむぎ",
-      "context_window": 1024,
+      "model_id": "VOICEVOX:春日部つむぎ",
+      "display_name": "VOICEVOX:春日部つむぎ",
+      "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -978,13 +552,13 @@
       "output_modalities": [
         "audio"
       ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": false,
-      "supports_responses_api": false,
+      "supports_responses_api": null,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
@@ -994,8 +568,6 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "sakura/voicevox-kasukabe-tsumugi",
-        "VOICEVOX:春日部つむぎ",
         "sakura/VOICEVOX:春日部つむぎ"
       ],
       "license_type": "api",
@@ -1008,45 +580,16 @@
         "openai_compatible": true,
         "tax_included": true,
         "fx_jpy_per_usd_shell": 150.0,
-        "free_plan_requests_per_month": 50,
-        "payg_free_requests_per_month": 50,
-        "pricing_jpy": {
-          "per_10k_mora": 3.0,
-          "currency": "JPY",
-          "tax": "included",
-          "mora_note": "1 mora ≈ 1 kana length unit"
-        },
-        "pricing_usd_shell": {
-          "per_10k_mora": 0.02
-        },
-        "category": "text_to_speech",
-        "tier": "standard",
-        "upstream": "VOICEVOX",
-        "official_model_name": "VOICEVOX:春日部つむぎ",
-        "features": [
-          "tts"
-        ],
-        "license_manual": "https://manual.sakura.ad.jp/cloud/ai-engine/05-tts-licenses.html"
-      },
-      "audio": {
-        "accepts_audio_input": false,
-        "speech_generation": true,
-        "speech_understanding": false,
-        "supports_streaming": true,
-        "supports_realtime": null,
-        "checked_at": "2026-09-24",
-        "status": "inferred",
-        "endpoints": {
-          "speech_generation": true,
-          "streaming": true
-        },
-        "extra": {}
+        "official_catalog_checked_at": "2026-09-26",
+        "price_per_10k_mora_jpy": 3.0,
+        "free_requests_per_month": 50,
+        "tier": "standard"
       }
     },
     {
       "provider": "sakura",
-      "model_id": "rag-document",
-      "display_name": "Sakura RAG Document Store",
+      "model_id": "PLaMo 2.0-31B",
+      "display_name": "PLaMo 2.0-31B",
       "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
@@ -1055,13 +598,13 @@
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": false,
       "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
@@ -1071,10 +614,9 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "sakura/rag-document",
-        "sakura-rag"
+        "sakura/PLaMo 2.0-31B"
       ],
-      "license_type": "api",
+      "license_type": "custom",
       "pricing": null,
       "extra": {
         "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
@@ -1084,57 +626,42 @@
         "openai_compatible": true,
         "tax_included": true,
         "fx_jpy_per_usd_shell": 150.0,
-        "pricing_jpy": {
-          "per_100_chunks": 3.0,
-          "currency": "JPY",
-          "tax": "included",
-          "free_tier": false
-        },
-        "pricing_usd_shell": {
-          "per_100_chunks": 0.02
-        },
-        "category": "rag",
-        "tier": "standard",
-        "features": [
-          "document_store",
-          "retrieval"
-        ],
-        "note": "no free quota; billed per 100 chunks on both plans"
+        "official_catalog_checked_at": "2026-09-26",
+        "tier": "closed",
+        "pricing_status": "quote/application; price not published on product page"
       }
     },
     {
       "provider": "sakura",
-      "model_id": "PLaMo-2.0-31B",
-      "display_name": "Sakura PLaMo 2.0-31B (closed)",
-      "context_window": 32768,
-      "max_output_tokens": 4096,
+      "model_id": "PLaMo 3.0 Prime",
+      "display_name": "PLaMo 3.0 Prime",
+      "context_window": 0,
+      "max_output_tokens": 0,
       "input_modalities": [
         "text"
       ],
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": null,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
       "tokenizer_name": "",
-      "knowledge_cutoff": "2025-07",
+      "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "sakura/PLaMo-2.0-31B",
-        "plamo-2.0-31b",
-        "sakura/plamo-2.0-31b"
+        "sakura/PLaMo 3.0 Prime"
       ],
-      "license_type": "api",
+      "license_type": "custom",
       "pricing": null,
       "extra": {
         "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
@@ -1144,49 +671,42 @@
         "openai_compatible": true,
         "tax_included": true,
         "fx_jpy_per_usd_shell": 150.0,
-        "closed_manual": "https://manual.sakura.ad.jp/cloud/ai-engine/06-closed-model.html",
-        "category": "chat_completions",
+        "official_catalog_checked_at": "2026-09-26",
         "tier": "closed",
-        "upstream_provider": "pfn",
-        "upstream_model": "plamo-2.0-prime / PLaMo 2.0-31B",
-        "application_required": true,
-        "free_plan": "not_eligible",
-        "pricing_note": "quote / manual; control-panel application required",
-        "related_native": "japanese.json pfn/plamo-2.0-prime (deprecated) / plamo-3.0-prime"
+        "pricing_status": "quote/application; price not published on product page"
       }
     },
     {
       "provider": "sakura",
-      "model_id": "cotomi-v3",
-      "display_name": "Sakura cotomi v3 (closed)",
-      "context_window": 128000,
-      "max_output_tokens": 8192,
+      "model_id": "cotomi v3",
+      "display_name": "cotomi v3",
+      "context_window": 0,
+      "max_output_tokens": 0,
       "input_modalities": [
         "text"
       ],
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": null,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
       "tokenizer_name": "",
-      "knowledge_cutoff": "2025-07",
+      "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "sakura/cotomi-v3",
-        "sakura/cotomi_v3"
+        "sakura/cotomi v3"
       ],
-      "license_type": "api",
+      "license_type": "custom",
       "pricing": null,
       "extra": {
         "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
@@ -1196,49 +716,40 @@
         "openai_compatible": true,
         "tax_included": true,
         "fx_jpy_per_usd_shell": 150.0,
-        "closed_manual": "https://manual.sakura.ad.jp/cloud/ai-engine/06-closed-model.html",
-        "category": "chat_completions",
+        "official_catalog_checked_at": "2026-09-26",
         "tier": "closed",
-        "upstream_provider": "nec",
-        "upstream_model": "cotomi v3",
-        "application_required": true,
-        "free_plan": "not_eligible",
-        "pricing_note": "quote / manual; control-panel application required",
-        "related_native": "japanese.json nec/cotomi-v3",
-        "trademark": "cotomi is a registered trademark of NEC"
+        "pricing_status": "quote/application; price not published on product page"
       }
     },
     {
       "provider": "sakura",
       "model_id": "Qwen3-0.6B-cpu",
-      "display_name": "Sakura Qwen3-0.6B-cpu (preview)",
-      "context_window": 32768,
-      "max_output_tokens": 8192,
+      "display_name": "Qwen3-0.6B-cpu",
+      "context_window": 0,
+      "max_output_tokens": 0,
       "input_modalities": [
         "text"
       ],
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": false,
       "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_chat_completion": null,
+      "supports_responses_api": null,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
       "tokenizer_name": "",
-      "knowledge_cutoff": "2025-10",
+      "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "sakura/Qwen3-0.6B-cpu",
-        "qwen3-0.6b-cpu",
-        "preview/Qwen3-0.6B-cpu"
+        "sakura/Qwen3-0.6B-cpu"
       ],
       "license_type": "api",
       "pricing": {
@@ -1254,13 +765,7 @@
         "openai_compatible": true,
         "tax_included": true,
         "fx_jpy_per_usd_shell": 150.0,
-        "free_plan_requests_per_month": 3000,
-        "payg_free_requests_per_month": 3000,
-        "plans": [
-          "base_model_free",
-          "payg"
-        ],
-        "plan_note": "free plan rate-limits after quota; payg bills per 10k tokens after free quota; plans do not auto-switch",
+        "official_catalog_checked_at": "2026-09-26",
         "pricing_jpy": {
           "input_per_10k_tokens": 0.01,
           "output_per_10k_tokens": 0.03,
@@ -1269,45 +774,39 @@
           "currency": "JPY",
           "tax": "included"
         },
-        "category": "chat_completions",
-        "tier": "public_preview",
-        "preview_since": "2025-10-09",
-        "preview_note": "may end without notice; stability/quality not guaranteed; price may change when GA",
-        "upstream": "Qwen3-0.6B",
-        "runtime": "cpu"
+        "free_requests_per_month": 3000,
+        "tier": "preview"
       }
     },
     {
       "provider": "sakura",
       "model_id": "Phi-4-mini-instruct-cpu",
-      "display_name": "Sakura Phi-4-mini-instruct-cpu (preview)",
-      "context_window": 128000,
-      "max_output_tokens": 4096,
+      "display_name": "Phi-4-mini-instruct-cpu",
+      "context_window": 0,
+      "max_output_tokens": 0,
       "input_modalities": [
         "text"
       ],
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": false,
       "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_chat_completion": null,
+      "supports_responses_api": null,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
       "tokenizer_name": "",
-      "knowledge_cutoff": "2025-10",
+      "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "sakura/Phi-4-mini-instruct-cpu",
-        "phi-4-mini-instruct-cpu",
-        "preview/Phi-4-mini-instruct-cpu"
+        "sakura/Phi-4-mini-instruct-cpu"
       ],
       "license_type": "api",
       "pricing": {
@@ -1323,13 +822,7 @@
         "openai_compatible": true,
         "tax_included": true,
         "fx_jpy_per_usd_shell": 150.0,
-        "free_plan_requests_per_month": 3000,
-        "payg_free_requests_per_month": 3000,
-        "plans": [
-          "base_model_free",
-          "payg"
-        ],
-        "plan_note": "free plan rate-limits after quota; payg bills per 10k tokens after free quota; plans do not auto-switch",
+        "official_catalog_checked_at": "2026-09-26",
         "pricing_jpy": {
           "input_per_10k_tokens": 0.01,
           "output_per_10k_tokens": 0.03,
@@ -1338,46 +831,38 @@
           "currency": "JPY",
           "tax": "included"
         },
-        "category": "chat_completions",
-        "tier": "public_preview",
-        "preview_since": "2025-10-09",
-        "preview_note": "may end without notice; stability/quality not guaranteed; price may change when GA",
-        "upstream": "microsoft/Phi-4-mini-instruct",
-        "runtime": "cpu"
+        "tier": "preview"
       }
     },
     {
       "provider": "sakura",
       "model_id": "Qwen3-VL-30B-A3B-Instruct",
-      "display_name": "Sakura Qwen3-VL-30B-A3B-Instruct (preview)",
-      "context_window": 131072,
-      "max_output_tokens": 32768,
+      "display_name": "Qwen3-VL-30B-A3B-Instruct",
+      "context_window": 0,
+      "max_output_tokens": 0,
       "input_modalities": [
-        "text",
-        "image"
+        "text"
       ],
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
       "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_chat_completion": null,
+      "supports_responses_api": null,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
       "tokenizer_name": "",
-      "knowledge_cutoff": "2025-10",
+      "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "sakura/Qwen3-VL-30B-A3B-Instruct",
-        "qwen3-vl-30b-a3b-instruct",
-        "preview/Qwen3-VL-30B-A3B-Instruct"
+        "sakura/Qwen3-VL-30B-A3B-Instruct"
       ],
       "license_type": "api",
       "pricing": {
@@ -1393,13 +878,7 @@
         "openai_compatible": true,
         "tax_included": true,
         "fx_jpy_per_usd_shell": 150.0,
-        "free_plan_requests_per_month": 3000,
-        "payg_free_requests_per_month": 3000,
-        "plans": [
-          "base_model_free",
-          "payg"
-        ],
-        "plan_note": "free plan rate-limits after quota; payg bills per 10k tokens after free quota; plans do not auto-switch",
+        "official_catalog_checked_at": "2026-09-26",
         "pricing_jpy": {
           "input_per_10k_tokens": 0.1,
           "output_per_10k_tokens": 0.3,
@@ -1408,116 +887,38 @@
           "currency": "JPY",
           "tax": "included"
         },
-        "category": "chat_completions",
-        "tier": "public_preview",
-        "preview_since": "2025-10-21",
-        "preview_note": "may end without notice; stability/quality not guaranteed; price may change when GA",
-        "upstream": "Qwen3-VL-30B-A3B",
-        "vision": true
-      }
-    },
-    {
-      "provider": "sakura",
-      "model_id": "Phi-4-multimodal-instruct",
-      "display_name": "Sakura Phi-4-multimodal-instruct (preview)",
-      "context_window": 128000,
-      "max_output_tokens": 4096,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2025-10",
-      "deprecated": false,
-      "aliases": [
-        "sakura/Phi-4-multimodal-instruct",
-        "phi-4-multimodal-instruct",
-        "preview/Phi-4-multimodal-instruct"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.066667,
-        "output_per_1m": 0.2,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
-        "playground": "https://playground.aipf.sakura.ad.jp/",
-        "control_panel": "https://secure.sakura.ad.jp/ai/",
-        "domestic_jp_cloud": true,
-        "openai_compatible": true,
-        "tax_included": true,
-        "fx_jpy_per_usd_shell": 150.0,
-        "free_plan_requests_per_month": 3000,
-        "payg_free_requests_per_month": 3000,
-        "plans": [
-          "base_model_free",
-          "payg"
-        ],
-        "plan_note": "free plan rate-limits after quota; payg bills per 10k tokens after free quota; plans do not auto-switch",
-        "pricing_jpy": {
-          "input_per_10k_tokens": 0.1,
-          "output_per_10k_tokens": 0.3,
-          "input_per_1m": 10.0,
-          "output_per_1m": 30.0,
-          "currency": "JPY",
-          "tax": "included"
-        },
-        "category": "chat_completions",
-        "tier": "public_preview",
-        "preview_since": "2025-10-21",
-        "preview_note": "may end without notice; stability/quality not guaranteed; price may change when GA",
-        "upstream": "microsoft/Phi-4-multimodal-instruct",
-        "vision": true,
-        "input_modalities_note": "text+image (+audio on upstream)"
+        "tier": "preview"
       }
     },
     {
       "provider": "sakura",
       "model_id": "Kimi-K2.6",
-      "display_name": "Sakura Kimi-K2.6 (preview)",
-      "context_window": 262144,
-      "max_output_tokens": 32768,
+      "display_name": "Kimi-K2.6",
+      "context_window": 0,
+      "max_output_tokens": 0,
       "input_modalities": [
         "text"
       ],
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": null,
+      "supports_responses_api": null,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
-      "supports_anthropic_api": true,
+      "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
       "tokenizer_name": "",
-      "knowledge_cutoff": "2026-05",
+      "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "sakura/Kimi-K2.6",
-        "kimi-k2.6",
-        "preview/Kimi-K2.6"
+        "sakura/Kimi-K2.6"
       ],
       "license_type": "api",
       "pricing": {
@@ -1533,13 +934,7 @@
         "openai_compatible": true,
         "tax_included": true,
         "fx_jpy_per_usd_shell": 150.0,
-        "free_plan_requests_per_month": 3000,
-        "payg_free_requests_per_month": 3000,
-        "plans": [
-          "base_model_free",
-          "payg"
-        ],
-        "plan_note": "free plan rate-limits after quota; payg bills per 10k tokens after free quota; plans do not auto-switch",
+        "official_catalog_checked_at": "2026-09-26",
         "pricing_jpy": {
           "input_per_10k_tokens": 0.6,
           "output_per_10k_tokens": 3.0,
@@ -1548,47 +943,38 @@
           "currency": "JPY",
           "tax": "included"
         },
-        "category": "chat_completions",
-        "tier": "public_preview",
-        "preview_since": "2026-05-12",
-        "preview_note": "may end without notice; stability/quality not guaranteed; price may change when GA",
-        "upstream": "moonshotai/Kimi-K2.6",
-        "anthropic_messages_api": true,
-        "anthropic_model_id": "preview/Kimi-K2.6",
-        "claude_code_compatible": true
+        "tier": "preview"
       }
     },
     {
       "provider": "sakura",
       "model_id": "Qwen3.6-35B-A3B",
-      "display_name": "Sakura Qwen3.6-35B-A3B (preview)",
-      "context_window": 131072,
-      "max_output_tokens": 32768,
+      "display_name": "Qwen3.6-35B-A3B",
+      "context_window": 0,
+      "max_output_tokens": 0,
       "input_modalities": [
         "text"
       ],
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": null,
+      "supports_responses_api": null,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
       "tokenizer_name": "",
-      "knowledge_cutoff": "2026-06",
+      "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "sakura/Qwen3.6-35B-A3B",
-        "qwen3.6-35b-a3b",
-        "preview/Qwen3.6-35B-A3B"
+        "sakura/Qwen3.6-35B-A3B"
       ],
       "license_type": "api",
       "pricing": {
@@ -1604,13 +990,7 @@
         "openai_compatible": true,
         "tax_included": true,
         "fx_jpy_per_usd_shell": 150.0,
-        "free_plan_requests_per_month": 3000,
-        "payg_free_requests_per_month": 3000,
-        "plans": [
-          "base_model_free",
-          "payg"
-        ],
-        "plan_note": "free plan rate-limits after quota; payg bills per 10k tokens after free quota; plans do not auto-switch",
+        "official_catalog_checked_at": "2026-09-26",
         "pricing_jpy": {
           "input_per_10k_tokens": 0.3,
           "output_per_10k_tokens": 1.5,
@@ -1619,44 +999,38 @@
           "currency": "JPY",
           "tax": "included"
         },
-        "category": "chat_completions",
-        "tier": "public_preview",
-        "preview_since": "2026-06-04",
-        "preview_note": "may end without notice; stability/quality not guaranteed; price may change when GA",
-        "upstream": "Qwen3.6-35B-A3B"
+        "tier": "preview"
       }
     },
     {
       "provider": "sakura",
       "model_id": "gemma-4-31B-it",
-      "display_name": "Sakura gemma-4-31B-it (preview)",
-      "context_window": 131072,
-      "max_output_tokens": 16384,
+      "display_name": "gemma-4-31B-it",
+      "context_window": 0,
+      "max_output_tokens": 0,
       "input_modalities": [
         "text"
       ],
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": false,
       "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_chat_completion": null,
+      "supports_responses_api": null,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
       "tokenizer_name": "",
-      "knowledge_cutoff": "2026-06",
+      "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "sakura/gemma-4-31B-it",
-        "gemma-4-31b-it",
-        "preview/gemma-4-31B-it"
+        "sakura/gemma-4-31B-it"
       ],
       "license_type": "api",
       "pricing": {
@@ -1672,13 +1046,7 @@
         "openai_compatible": true,
         "tax_included": true,
         "fx_jpy_per_usd_shell": 150.0,
-        "free_plan_requests_per_month": 3000,
-        "payg_free_requests_per_month": 3000,
-        "plans": [
-          "base_model_free",
-          "payg"
-        ],
-        "plan_note": "free plan rate-limits after quota; payg bills per 10k tokens after free quota; plans do not auto-switch",
+        "official_catalog_checked_at": "2026-09-26",
         "pricing_jpy": {
           "input_per_10k_tokens": 0.24,
           "output_per_10k_tokens": 0.96,
@@ -1687,19 +1055,70 @@
           "currency": "JPY",
           "tax": "included"
         },
-        "category": "chat_completions",
-        "tier": "public_preview",
-        "preview_since": "2026-06-30",
-        "preview_note": "may end without notice; stability/quality not guaranteed; price may change when GA",
-        "upstream": "google/gemma-4-31B-it",
-        "news": "https://cloud.sakura.ad.jp/news/2026/06/30/aiengine_gemma-4-31b-it_pubpreview/"
+        "tier": "preview"
       }
     },
     {
       "provider": "sakura",
-      "model_id": "Qwen3-Embedding-4B-FP16",
-      "display_name": "Sakura Qwen3-Embedding-4B (FP16, preview)",
-      "context_window": 8192,
+      "model_id": "Kimi-K2.7-Code",
+      "display_name": "Kimi-K2.7-Code",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": null,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "sakura/Kimi-K2.7-Code"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.346667,
+        "output_per_1m": 3.36,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
+        "playground": "https://playground.aipf.sakura.ad.jp/",
+        "control_panel": "https://secure.sakura.ad.jp/ai/",
+        "domestic_jp_cloud": true,
+        "openai_compatible": true,
+        "tax_included": true,
+        "fx_jpy_per_usd_shell": 150.0,
+        "official_catalog_checked_at": "2026-09-26",
+        "pricing_jpy": {
+          "input_per_10k_tokens": 0.52,
+          "output_per_10k_tokens": 5.04,
+          "input_per_1m": 52.0,
+          "output_per_1m": 504.0,
+          "currency": "JPY",
+          "tax": "included"
+        },
+        "tier": "preview"
+      }
+    },
+    {
+      "provider": "sakura",
+      "model_id": "Qwen3-Embedding-4B(FP16)",
+      "display_name": "Qwen3-Embedding-4B(FP16)",
+      "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -1707,27 +1126,23 @@
       "output_modalities": [
         "embedding"
       ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": false,
-      "supports_responses_api": false,
+      "supports_responses_api": null,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
       "tokenizer_name": "",
-      "knowledge_cutoff": "2025-12",
+      "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "sakura/Qwen3-Embedding-4B-FP16",
-        "Qwen3-Embedding-4B(FP16)",
-        "Qwen3-Embedding-4B",
-        "qwen3-embedding-4b",
-        "preview/Qwen3-Embedding-4B-FP16"
+        "sakura/Qwen3-Embedding-4B(FP16)"
       ],
       "license_type": "api",
       "pricing": {
@@ -1743,69 +1158,53 @@
         "openai_compatible": true,
         "tax_included": true,
         "fx_jpy_per_usd_shell": 150.0,
-        "free_plan_requests_per_month": 10000,
-        "payg_free_requests_per_month": 10000,
+        "official_catalog_checked_at": "2026-09-26",
         "pricing_jpy": {
           "input_per_10k_tokens": 3.0,
-          "output": "free",
+          "output_per_10k_tokens": 0.0,
           "input_per_1m": 300.0,
+          "output_per_1m": 0.0,
           "currency": "JPY",
           "tax": "included"
         },
-        "category": "embeddings",
-        "tier": "public_preview",
-        "preview_since": "2025-12-16",
-        "upstream": "Qwen3-Embedding-4B",
-        "quant": "FP16",
-        "official_model_name": "Qwen3-Embedding-4B(FP16)",
-        "features": [
-          "embeddings"
-        ]
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-09-24"
+        "free_requests_per_month": 10000,
+        "tier": "preview"
       }
     },
     {
       "provider": "sakura",
-      "model_id": "sakura-default",
-      "display_name": "SAKURA AI Engine (default → gpt-oss-120b)",
-      "context_window": 131072,
-      "max_output_tokens": 16384,
+      "model_id": "Weblab-MedLLM-gpt-oss-120b",
+      "display_name": "Weblab-MedLLM-gpt-oss-120b",
+      "context_window": 0,
+      "max_output_tokens": 0,
       "input_modalities": [
         "text"
       ],
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": null,
+      "supports_responses_api": null,
       "supports_reasoning_effort": false,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
       "tokenizer_name": "",
-      "knowledge_cutoff": "2025-06",
+      "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "sakura/sakura-default",
-        "sakura"
+        "sakura/Weblab-MedLLM-gpt-oss-120b"
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.1,
-        "output_per_1m": 0.5,
+        "input_per_1m": 0.6,
+        "output_per_1m": 3.0,
         "currency": "USD"
       },
       "extra": {
@@ -1816,25 +1215,16 @@
         "openai_compatible": true,
         "tax_included": true,
         "fx_jpy_per_usd_shell": 150.0,
-        "free_plan_requests_per_month": 3000,
-        "payg_free_requests_per_month": 3000,
-        "plans": [
-          "base_model_free",
-          "payg"
-        ],
-        "plan_note": "free plan rate-limits after quota; payg bills per 10k tokens after free quota; plans do not auto-switch",
+        "official_catalog_checked_at": "2026-09-26",
         "pricing_jpy": {
-          "input_per_10k_tokens": 0.15,
-          "output_per_10k_tokens": 0.75,
-          "input_per_1m": 15.0,
-          "output_per_1m": 75.0,
+          "input_per_10k_tokens": 0.9,
+          "output_per_10k_tokens": 4.5,
+          "input_per_1m": 90.0,
+          "output_per_1m": 450.0,
           "currency": "JPY",
           "tax": "included"
         },
-        "category": "chat_completions",
-        "tier": "alias_default",
-        "resolves_to": "gpt-oss-120b",
-        "note": "legacy placeholder id; prefer explicit model_id. Mapped to gpt-oss-120b standard chat model."
+        "tier": "preview"
       }
     }
   ]

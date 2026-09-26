@@ -449,8 +449,21 @@ def dedupe_model_ids(rows: list[dict]) -> list[dict]:
 
 
 def main() -> None:
+    import subprocess
+    import sys
+
+    scrape_script = WORKDIR / "scripts" / "_scrape_mistral.py"
+    result = subprocess.run([sys.executable, str(scrape_script)], cwd=WORKDIR, check=False)
+    if result.returncode != 0:
+        raise SystemExit(f"Mistral official scrape failed: {scrape_script}")
+
     raw = json.loads(SCRAPE.read_text(encoding="utf-8"))
-    models = raw["models"]
+    models = raw.get("models") or {}
+    if not models:
+        raise SystemExit(f"Mistral scrape returned no models: {SCRAPE}")
+    errors = raw.get("errors") or []
+    if errors:
+        print(f"warning: Mistral scrape had {len(errors)} page errors", flush=True)
     overview = raw.get("overview_slugs") or [
         s for s, m in models.items() if not m.get("is404")
     ]

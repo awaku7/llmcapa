@@ -52,7 +52,7 @@ def parse(text: str) -> list[dict]:
         if not model or model.lower() == "model":
             continue
         price = lambda s: float(re.search(r"[\d.]+", s.replace(",", "")).group()) if re.search(r"[\d.]+", s) else None
-        rows.append({
+        row = {
             "name": model,
             "inputModalities": [1, 2],
             "outputModalities": [1],
@@ -61,10 +61,21 @@ def parse(text: str) -> list[dict]:
             "promptTextTokenPrice": price(cells[2]),
             "cachedPromptTokenPrice": price(cells[3]),
             "completionTextTokenPrice": price(cells[4]),
-        })
-    unique = {}
+        }
+        if "≥ 200k" in cells[0] or ">= 200k" in cells[0]:
+            row["_longContext"] = True
+        rows.append(row)
+    unique: dict[str, dict] = {}
     for row in rows:
-        unique.setdefault(row["name"], row)
+        model = row["name"]
+        existing = unique.get(model)
+        if existing is None:
+            existing = {key: value for key, value in row.items() if key != "_longContext"}
+            unique[model] = existing
+        elif row.get("_longContext"):
+            existing["promptTextTokenPriceLongContext"] = row["promptTextTokenPrice"]
+            existing["cachedPromptTokenPriceLongContext"] = row["cachedPromptTokenPrice"]
+            existing["completionTextTokenPriceLongContext"] = row["completionTextTokenPrice"]
     return list(unique.values())
 
 

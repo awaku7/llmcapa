@@ -102,7 +102,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-09-24"
+        "checked_at": "2026-09-26"
       }
     },
     {
@@ -345,7 +345,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-09-24"
+        "checked_at": "2026-09-26"
       }
     },
     {
@@ -792,7 +792,7 @@
           "audio/webm"
         ],
         "source_url": "https://docs.mistral.ai/capabilities/audio/",
-        "checked_at": "2026-09-24",
+        "checked_at": "2026-09-26",
         "status": "documented",
         "endpoints": {
           "transcription": true,
@@ -856,7 +856,7 @@
           "audio/pcm"
         ],
         "source_url": "https://docs.mistral.ai/capabilities/audio/",
-        "checked_at": "2026-09-24",
+        "checked_at": "2026-09-26",
         "status": "documented",
         "endpoints": {
           "transcription": true,
@@ -922,7 +922,7 @@
           "audio/wav"
         ],
         "source_url": "https://docs.mistral.ai/capabilities/audio/",
-        "checked_at": "2026-09-24",
+        "checked_at": "2026-09-26",
         "status": "documented",
         "endpoints": {
           "speech_generation": true,
@@ -985,7 +985,7 @@
         "speech_understanding": true,
         "supports_streaming": true,
         "supports_realtime": null,
-        "checked_at": "2026-09-24",
+        "checked_at": "2026-09-26",
         "status": "inferred",
         "endpoints": {
           "speech_understanding": true,
@@ -1035,7 +1035,55 @@
         "status": "Public Preview",
         "version": "1",
         "release_date": "August 6, 2026",
-        "description": "A third-party open source text model from Z.ai, hosted by Mistral for long-context coding and agentic workflows. The model is served without Mistral modifications.",
+        "description": "A third-party open weight text model from Z.ai, hosted by Mistral for long-context coding and agentic workflows. The model is served without Mistral modifications.",
+        "supports_batching": true,
+        "supports_prefix": true,
+        "supports_predicted_outputs": true
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "zai-glm-5-3",
+      "display_name": "Z.ai GLM 5.3",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "currency": "USD",
+        "input_per_1m": 1.4,
+        "output_per_1m": 4.4
+      },
+      "extra": {
+        "source": "https://docs.mistral.ai/models/zai-glm-5-3",
+        "card_slug": "zai-glm-5-3",
+        "cached_input_per_1m": 0.14,
+        "status": "Public Preview",
+        "version": "1",
+        "release_date": "September 15, 2026",
+        "alias_count": "2",
+        "description": "A third-party open weight text model from Z.ai, hosted by Mistral for long-context coding and agentic workflows. The model is served without Mistral modifications.",
         "supports_batching": true,
         "supports_prefix": true,
         "supports_predicted_outputs": true
@@ -3046,7 +3094,7 @@
         "speech_understanding": true,
         "supports_streaming": true,
         "supports_realtime": null,
-        "checked_at": "2026-09-24",
+        "checked_at": "2026-09-26",
         "status": "inferred",
         "endpoints": {
           "speech_understanding": true,
@@ -3103,7 +3151,7 @@
         "supports_streaming": true,
         "supports_realtime": null,
         "transcription": true,
-        "checked_at": "2026-09-24",
+        "checked_at": "2026-09-26",
         "status": "inferred",
         "endpoints": {
           "transcription": true,

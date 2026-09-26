@@ -160,24 +160,41 @@ def text_extra(
 
 
 def build(nova_prices: dict[str, dict[str, float]]) -> list[dict]:
-    """Load legacy metadata from JSON and refresh Nova prices from AWS."""
+    """Refresh Nova prices and carry forward records from the published catalog.
+
+    The updater does not read a separately curated legacy-model manifest. The
+    existing catalog is used only to preserve metadata for records not covered
+    by the current Nova pricing page.
+    """
     if not nova_prices:
         raise RuntimeError("official AWS pricing returned no Nova models")
-    manifest = json.loads(
-        (Path(__file__).parent / "metadata" / "amazon_legacy_models.json").read_text(
-            encoding="utf-8"
-        )
-    )
-    models = manifest["models"]
-    for model in models:
-        model_id = model.get("model_id", "")
-        if model_id in nova_prices:
-            rate = nova_prices[model_id]
+    try:
+        current = json.loads(OUT.read_text(encoding="utf-8"))
+        models = [dict(model) for model in current.get("models", [])]
+    except (OSError, json.JSONDecodeError):
+        models = []
+
+    by_id = {str(model.get("model_id", "")): model for model in models}
+    for model_id, rate in nova_prices.items():
+        model = by_id.get(model_id)
+        if model is None:
+            model = base(
+                model_id=model_id,
+                display=model_id.replace("-", " ").title(),
+                ctx=0,
+                max_out=0,
+                pricing=rate,
+                extra={"catalog_metadata_status": "official price only; limits unknown"},
+            )
+            models.append(model)
+            by_id[model_id] = model
+        else:
             model["pricing"] = {
                 "input_per_1m": rate.get("input"),
                 "output_per_1m": rate.get("output"),
                 "currency": "USD",
             }
+            model.setdefault("extra", {})["pricing_source"] = SOURCE_NOVA
     return dedupe_model_ids(models)
 
 

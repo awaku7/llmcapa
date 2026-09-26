@@ -84,12 +84,19 @@ def test_feature_enum():
     assert ReasoningEffort.LLMC_EFFORT_XHIGH == "xhigh"
 
 
-def test_grok47_falls_back_to_grok46_by_provider():
+def test_grok47_is_available_on_xai_and_openrouter():
     direct = llmcapa.get("grok-4.7", provider="xai")
     gateway = llmcapa.get("grok-4.7", provider="openrouter")
-    assert direct.model_id == "grok-4.6"
+    assert direct.model_id == "grok-4.7"
     assert gateway.model_id == "x-ai/grok-4.7"
     assert direct.context_window == gateway.context_window == 500000
+    assert direct.supports_reasoning is True
+    assert direct.reasoning_effort_values == ["low", "medium", "high", "xhigh"]
+    assert direct.supports_responses_api is True
+    assert direct.pricing["input_per_1m"] == 2.0
+    assert direct.pricing["output_per_1m"] == 6.0
+    assert direct.extra["long_input_per_1m"] == 4.0
+    assert direct.extra["long_output_per_1m"] == 12.0
 
 
 def test_gpt6_astra_supports_reasoning_effort():
@@ -175,6 +182,102 @@ def test_azure_tool_search_support_requires_responses_api_and_excludes_nano():
     assert azure_tool_search_support("gpt-5.4-nano", True) is False
     assert azure_tool_search_support("gpt-4.1", True) is None
     assert azure_tool_search_support("gpt-6-luna", False) is None
+
+
+
+def test_azure_foundry_selects_supported_tasks_and_modalities():
+    scripts_path = str(Path(__file__).resolve().parents[1] / "scripts")
+    sys.path.insert(0, scripts_path)
+    try:
+        from _update_azure_foundry import (
+            build_entry,
+            is_supported_catalog_item,
+        )
+    finally:
+        sys.path.remove(scripts_path)
+
+    assert is_supported_catalog_item(
+        {"systemCatalogData": {"inferenceTasks": ["chat-completion"]}}
+    )
+    assert is_supported_catalog_item({"tags": {"task": "responses"}})
+    assert is_supported_catalog_item(
+        {"systemCatalogData": {"inferenceTasks": ["feature-extraction"]}}
+    )
+    assert is_supported_catalog_item(
+        {"systemCatalogData": {"inferenceTasks": ["text-to-image"]}}
+    )
+    assert is_supported_catalog_item(
+        {"systemCatalogData": {"inferenceTasks": "text-to-speech"}}
+    )
+    assert is_supported_catalog_item(
+        {
+            "systemCatalogData": {
+                "inferenceTasks": ["vendor-new-task"],
+                "inputModalities": ["audio"],
+                "outputModalities": ["text"],
+            }
+        }
+    )
+    assert not is_supported_catalog_item(
+        {
+            "systemCatalogData": {
+                "inferenceTasks": ["translation"],
+                "inputModalities": ["text"],
+                "outputModalities": ["text"],
+            }
+        }
+    )
+    assert not is_supported_catalog_item(
+        {"systemCatalogData": {"inferenceTasks": []}}
+    )
+    assert is_supported_catalog_item(
+        {"name": "gpt-5.4", "source": "ssr_card"}, {"gpt-5.4"}
+    )
+    assert not is_supported_catalog_item(
+        {"name": "unknown", "source": "ssr_card"}, set()
+    )
+
+    image_model = build_entry(
+        {
+            "name": "bfl-image-model",
+            "systemCatalogData": {
+                "publisher": "black forest labs",
+                "inferenceTasks": ["text-to-image"],
+                "inputModalities": ["text"],
+                "outputModalities": ["image"],
+            },
+        },
+        {},
+    )
+    assert image_model["supports_chat_completion"] is False
+    assert image_model["input_modalities"] == ["text"]
+    assert image_model["output_modalities"] == ["image"]
+
+    speech_model = build_entry(
+        {
+            "name": "speech-model",
+            "systemCatalogData": {
+                "inferenceTasks": "text-to-speech",
+                "inputModalities": ["text"],
+                "outputModalities": ["audio"],
+            },
+        },
+        {},
+    )
+    assert speech_model["supports_chat_completion"] is False
+    assert speech_model["supports_audio_output"] is True
+
+    embedding_model = build_entry(
+        {
+            "name": "embedding-model",
+            "systemCatalogData": {
+                "inferenceTasks": ["feature-extraction"],
+                "inputModalities": ["text"],
+            },
+        },
+        {},
+    )
+    assert embedding_model["output_modalities"] == ["embedding"]
 
 
 def test_google_thinking_controls_are_provider_specific():

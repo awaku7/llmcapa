@@ -1,10 +1,10 @@
 """Build/refresh azure_foundry.json from Foundry catalog + multi-provider pricing.
 
 Sources:
-- Catalog (chat-completion filter, Playwright paginate):
+- Catalog (Playwright pagination; task/modality-aware model selection in updater):
   https://ai.azure.com/catalog/models
   API: https://ai.azure.com/api/japaneast/asset-gallery/v1.0/models
-  Scratch: _scratch_azure_catalog_raw.json (694 items)
+  Scratch: _scratch_azure_catalog_raw.json (unfiltered API results)
 - Pricing pages (Playwright tables):
   https://azure.microsoft.com/en-us/pricing/details/azure-openai/
   https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/{microsoft,mistral-ai,llama,cohere,deepseek,grok,kimi,fireworks,black-forest-labs}/
@@ -17,8 +17,9 @@ Notes:
   collapsed into microsoft.json.
 - Prefer Global Standard PAYG rates as top-level pricing; Data Zone / Regional /
   Priority / Batch / cache live under extra.
-- Hugging Face VM-only research models without MaaS/paygo are kept only when
-  they appear in the chat-completion catalog scrape (task filter already applied).
+- Include documented chat/text-generation, embedding/rerank, and non-text modality
+  inference records; omit unrelated text-only task families not represented by this
+  capability schema unless they also expose a supported non-text modality.
 """
 
 from __future__ import annotations
@@ -680,12 +681,14 @@ def split_modalities(val: Any) -> list[str]:
     if val is None:
         return ["text"]
     if isinstance(val, list):
-        parts = [str(x).strip().lower() for x in val if str(x).strip()]
-        return parts or ["text"]
-    s = str(val).strip().lower()
-    if not s or s in {"null", "none"}:
-        return ["text"]
-    parts = [p.strip() for p in re.split(r"[,/|]", s) if p.strip()]
+        raw_parts = [str(x).strip().lower() for x in val if str(x).strip()]
+    else:
+        s = str(val).strip().lower()
+        if not s or s in {"null", "none"}:
+            return ["text"]
+        raw_parts = [p.strip() for p in re.split(r"[,/|]", s) if p.strip()]
+    # llmcapa models document/PDF modalities as file inputs.
+    parts = ["file" if part in {"document", "documents"} else part for part in raw_parts]
     return parts or ["text"]
 
 
@@ -755,19 +758,70 @@ def lifecycle_of(item: dict) -> str:
     return stage or ""
 
 
-def azure_type_of(item: dict) -> str:
+CHAT_TASKS = {
+    "chat-completion", "chat-completions", "chat completion", "responses",
+    "messages", "conversational", "conversational-ai", "vision-language-chat",
+}
+TEXT_GENERATION_TASKS = {
+    "text-generation", "text2text-generation", "completions",
+}
+CAPABILITY_TASKS = {
+    # Embedding, similarity, and ranking
+    "feature-extraction", "image-feature-extraction", "embeddings", "embedding",
+    "sentence-similarity", "text-ranking", "rerank",
+    # Image and video understanding/generation
+    "image-text-to-text", "image-to-text", "visual-question-answering",
+    "image-analysis", "image-classification", "zero-shot-image-classification",
+    "object-detection", "image-segmentation", "text-to-image", "image-to-image",
+    "image-to-video", "video-generation", "text-to-3d", "image-to-3d", "3d-generation",
+    # Audio and speech
+    "automatic-speech-recognition", "speech-to-text", "transcriptions",
+    "audio-classification", "audio-generation", "text-to-speech", "speech-translation",
+}
+SUPPORTED_CATALOG_TASKS = CHAT_TASKS | TEXT_GENERATION_TASKS | CAPABILITY_TASKS
+NON_TEXT_MODALITIES = {
+    "image", "vision", "audio", "speech", "video", "embedding", "embeddings",
+    "spatial", "document", "file", "pdf",
+}
+
+
+def inference_tasks_of(item: dict) -> list[str]:
+    """Normalize inference task metadata from the catalog API or its tags."""
     scd = item.get("systemCatalogData") or {}
     tags = item.get("tags") or {}
-    tasks = scd.get("inferenceTasks") or []
-    if not tasks and tags.get("task"):
-        tasks = [t.strip() for t in str(tags["task"]).split(",") if t.strip()]
-    # Title-case join like existing "Chat completion,Responses"
+    tasks = scd.get("inferenceTasks") or tags.get("task") or []
+    if isinstance(tasks, str):
+        tasks = [task.strip() for task in tasks.split(",") if task.strip()]
+    return [str(task).strip().lower() for task in tasks if str(task).strip()]
+
+
+def _declared_modalities(item: dict) -> set[str]:
+    scd = item.get("systemCatalogData") or {}
+    tags = item.get("tags") or {}
+    values: set[str] = set()
+    for key in ("inputModalities", "outputModalities"):
+        value = scd.get(key) or tags.get(key)
+        if isinstance(value, str):
+            parts = re.split(r"[,/|]", value)
+        elif isinstance(value, list):
+            parts = value
+        else:
+            parts = []
+        values.update(str(part).strip().lower() for part in parts if str(part).strip())
+    return values
+
+
+def azure_type_of(item: dict) -> str:
+    # Title-case join like existing "Chat completion,Responses".
     mapping = {
         "chat-completion": "Chat completion",
+        "chat-completions": "Chat completion",
+        "chat completion": "Chat completion",
         "responses": "Responses",
         "completions": "Completions",
         "text-generation": "Text generation",
         "embeddings": "Embeddings",
+        "embedding": "Embedding",
         "image-generation": "Image generation",
         "image-text-to-image": "Image generation",
         "text-to-image": "Image generation",
@@ -776,10 +830,26 @@ def azure_type_of(item: dict) -> str:
         "text-to-speech": "Text to speech",
         "rerank": "Rerank",
     }
-    pretty = []
-    for t in tasks:
-        pretty.append(mapping.get(t, t.replace("-", " ").capitalize()))
-    return ",".join(pretty)
+    return ",".join(
+        mapping.get(task, task.replace("-", " ").capitalize())
+        for task in inference_tasks_of(item)
+    )
+
+
+def is_supported_catalog_item(
+    item: dict, previously_confirmed_model_names: set[str] | None = None
+) -> bool:
+    """Keep supported model tasks and explicit non-text modality records."""
+    tasks = inference_tasks_of(item)
+    if any(task in SUPPORTED_CATALOG_TASKS for task in tasks):
+        return True
+    if _declared_modalities(item) & NON_TEXT_MODALITIES:
+        return True
+    return (
+        item.get("source") == "ssr_card"
+        and str(item.get("name") or "").lower()
+        in (previously_confirmed_model_names or set())
+    )
 
 
 def is_maas_or_paygo(item: dict) -> bool:
@@ -952,10 +1022,18 @@ def build_entry(item: dict, price_map: dict[str, dict]) -> dict:
     )
     provider = provider_of(item)
 
-    in_mod = split_modalities(scd.get("inputModalities") or tags.get("inputModalities"))
-    out_mod = split_modalities(
-        scd.get("outputModalities") or tags.get("outputModalities")
-    )
+    tasks_l = inference_tasks_of(item)
+    in_raw = scd.get("inputModalities") or tags.get("inputModalities")
+    out_raw = scd.get("outputModalities") or tags.get("outputModalities")
+    in_mod = split_modalities(in_raw)
+    out_mod = split_modalities(out_raw)
+    # Some Foundry task rows omit output modality even when the task names it.
+    # Only infer a specialized output when explicit output metadata is absent.
+    if not out_raw:
+        if set(tasks_l) & {"feature-extraction", "image-feature-extraction", "embeddings", "embedding"}:
+            out_mod = ["embedding"]
+        elif set(tasks_l) & {"rerank", "text-ranking"}:
+            out_mod = ["rerank"]
 
     ctx = scd.get("textContextWindow")
     max_out = scd.get("maxOutputTokens")
@@ -974,15 +1052,8 @@ def build_entry(item: dict, price_map: dict[str, dict]) -> dict:
             else limits.get("maxOutputTokens") or limits.get("maxTokens")
         )
 
-    tasks = scd.get("inferenceTasks") or []
-    if not tasks and tags.get("task"):
-        tasks = [t.strip() for t in str(tags["task"]).split(",") if t.strip()]
-    tasks_l = [t.lower() for t in tasks]
-
-    chat = any(t in tasks_l for t in ("chat-completion", "responses", "messages"))
-    if not tasks_l:
-        chat = True  # catalog already chat-filtered
-    responses = "responses" in tasks_l
+    chat = True if any(task in CHAT_TASKS for task in tasks_l) else (False if tasks_l else None)
+    responses = True if "responses" in tasks_l else (False if tasks_l else None)
     vision = any(m in in_mod for m in ("image", "vision"))
     audio_in = any(m in in_mod for m in ("audio", "speech"))
     audio_out = any(m in out_mod for m in ("audio", "speech"))
@@ -1125,11 +1196,13 @@ def build_entry(item: dict, price_map: dict[str, dict]) -> dict:
 
 def load_price_map() -> dict[str, dict]:
     maps: list[dict[str, dict]] = []
+    live_aoai_found = False
     if PRICING.exists():
         raw = json.loads(PRICING.read_text(encoding="utf-8"))
         # AOAI full tables
         if "aoai" in raw and raw["aoai"].get("tables"):
             maps.append(parse_aoai_tables(raw["aoai"]["tables"]))
+            live_aoai_found = True
         for key in (
             "microsoft",
             "mistral",
@@ -1143,18 +1216,32 @@ def load_price_map() -> dict[str, dict]:
         ):
             if key in raw and raw[key].get("tables"):
                 maps.append(parse_simple_token_tables(raw[key]["tables"]))
-    if AOAI_PRICING.exists():
+    # The manual AOAI extract is only a fallback. If the live full scrape
+    # produced AOAI tables, do not let an older manual snapshot override them.
+    if not live_aoai_found and AOAI_PRICING.exists():
         raw2 = json.loads(AOAI_PRICING.read_text(encoding="utf-8"))
         maps.append(parse_aoai_tables(raw2.get("tables") or []))
     return merge_price_maps(*maps)
 
 
 def main() -> None:
+    import subprocess
+    import sys
+
+    scrape_script = WORKDIR / "scripts" / "_scrape_azure_foundry_full.py"
+    result = subprocess.run([sys.executable, str(scrape_script)], cwd=WORKDIR, check=False)
+    if result.returncode != 0:
+        raise SystemExit(f"Azure Foundry official scrape failed: {scrape_script}")
+
     if not CATALOG.exists():
+        raise SystemExit(f"official catalog scrape did not create {CATALOG}")
+    if not PRICING.exists():
+        raise SystemExit(f"official pricing scrape did not create {PRICING}")
+    fresh_pricing = json.loads(PRICING.read_text(encoding="utf-8"))
+    if not (fresh_pricing.get("aoai") or {}).get("tables"):
         raise SystemExit(
-            f"missing catalog scratch: {CATALOG} "
-            "(regenerate with: python scripts/_scrape_azure_foundry_full.py; "
-            "scratch files are gitignored by design)"
+            "fresh Azure OpenAI pricing tables were not found; refusing to use "
+            "the stale manual AOAI extract"
         )
 
     global _PREV_LIMITS
@@ -1168,9 +1255,22 @@ def main() -> None:
         except Exception:  # noqa: BLE001
             _PREV_LIMITS = {}
     cat = json.loads(CATALOG.read_text(encoding="utf-8"))
-    items = cat.get("items") or []
+    raw_items = cat.get("items") or []
+    previously_confirmed_model_names = {
+        str(name).lower() for name in _PREV_LIMITS
+    }
+    items = [
+        item
+        for item in raw_items
+        if is_supported_catalog_item(item, previously_confirmed_model_names)
+    ]
+    if not items:
+        raise SystemExit("fresh Azure catalog had no supported inference models")
     price_map = load_price_map()
-    print(f"catalog items={len(items)} price_keys={len(price_map)}")
+    print(
+        f"catalog raw_items={len(raw_items)} selected_items={len(items)} "
+        f"price_keys={len(price_map)}"
+    )
     print("price key sample:", sorted(price_map.keys())[:40])
 
     # Prefer richer API items over bare SSR cards when duplicate names
@@ -1194,8 +1294,22 @@ def main() -> None:
     models: list[dict] = []
     priced = 0
     maas = 0
+    previous_by_id = {str(mid).lower(): model for mid, model in _PREV_LIMITS.items()}
+    ssr_preserve_fields = (
+        "input_modalities", "output_modalities", "supports_chat_completion",
+        "supports_function_calling", "supports_json_mode", "supports_streaming",
+        "supports_vision", "supports_responses_api", "supports_reasoning",
+        "supports_audio_input", "supports_audio_output", "supports_embedding_output",
+        "supports_rerank_output", "azure_type",
+    )
     for name in sorted(by_name.keys(), key=str.lower):
-        entry = build_entry(by_name[name], price_map)
+        item = by_name[name]
+        entry = build_entry(item, price_map)
+        if item.get("source") == "ssr_card":
+            previous = previous_by_id.get(str(name).lower(), {})
+            for field in ssr_preserve_fields:
+                if field in previous:
+                    entry[field] = previous[field]
         if entry.get("pricing"):
             priced += 1
         if (entry.get("extra") or {}).get("maas_or_paygo"):
@@ -1258,7 +1372,7 @@ def main() -> None:
     log_entry = f"""
 ## azure_foundry — {ts}
 
-- Catalog: chat-completion filter via Playwright paginate (`_scratch_azure_catalog_raw.json`, n={len(items)} unique names={len(by_name)})
+- Catalog: official API scrape + supported-task/modality selection (`_scratch_azure_catalog_raw.json`, raw={len(raw_items)}, selected={len(items)}, unique={len(by_name)})
 - Pricing: AOAI + Foundry partner pages (`_scratch_azure_pricing_tables.json`), price_keys={len(price_map)}
 - Output: n={len(models)} priced={priced} maas_or_paygo={maas} extra={extra_n}
 - Providers (top): {", ".join(f"{k}={v}" for k, v in pubs.most_common(12))}

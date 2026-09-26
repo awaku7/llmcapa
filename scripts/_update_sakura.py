@@ -1,10 +1,11 @@
 """Build/refresh sakura.json — さくらインターネット さくらのAI Engine.
 
-Sources (Playwright, 2026-07-18):
+Sources (live Playwright scrape):
 - https://ai.sakura.ad.jp/sakura-ai/ai-engine/
-- Scratch: _scratch_sakura_ai_engine.html
-- Manual closed models: https://manual.sakura.ad.jp/cloud/ai-engine/06-closed-model.html
-- Playground: https://playground.aipf.sakura.ad.jp/
+- https://playground.aipf.sakura.ad.jp/
+
+Model IDs, categories, published prices, and public-preview/closed rows are
+read from the current official product tables; no local model manifest is read.
 
 Pricing on the official page is tax-included JPY per 10,000 tokens
 (or per 60s audio / 10,000 mora TTS / 100 RAG chunks). Catalog stores
@@ -14,6 +15,7 @@ USD shell at ~150 JPY/USD with exact JPY in extra.pricing_jpy.
 from __future__ import annotations
 
 import json
+import re
 import shutil
 from datetime import datetime, timezone
 from pathlib import Path
@@ -158,14 +160,189 @@ def free_tier_chat(n: int = 3000) -> dict:
     }
 
 
-def build() -> list[dict]:
-    """Load SAKURA AI metadata from external source-backed JSON."""
-    manifest = json.loads(
-        (Path(__file__).parent / "metadata" / "sakura_legacy_models.json").read_text(
-            encoding="utf-8"
+def _fetch_source_tables() -> list[dict]:
+    """Read the current model/pricing tables from Sakura's public product page."""
+    from playwright.sync_api import sync_playwright
+
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch(headless=True)
+        page = browser.new_page()
+        page.goto(SRC, wait_until="domcontentloaded", timeout=60_000)
+        page.locator("table").first.wait_for(timeout=30_000)
+        tables = page.evaluate(
+            r"""() => Array.from(document.querySelectorAll('table')).map((table, index) => ({
+                index,
+                rows: Array.from(table.querySelectorAll('tr')).map(row =>
+                    Array.from(row.querySelectorAll('th,td')).map(cell =>
+                        (cell.innerText || '').trim().replace(/\s+/g, ' ')
+                    )
+                ).filter(row => row.some(cell => cell)),
+            }))"""
         )
+        body = page.locator("body").inner_text()
+        browser.close()
+    if not tables or not any(table.get("rows") for table in tables):
+        raise RuntimeError("Sakura official product page has no model/pricing tables")
+    return tables, body
+
+
+def _model_cell_name(value: str) -> str | None:
+    text = " ".join(str(value or "").split())
+    text = re.sub(r"^提供モデル\s*[:：]\s*", "", text)
+    text = re.sub(r"\s*提供元[：:]?.*$", "", text)
+    text = re.sub(r"\s*\(\d{4}年[^)]*\)", "", text)
+    text = re.sub(r"[※*]+$", "", text)
+    text = text.strip()
+    if not text or text.lower() in {
+        "提供モデル", "無償枠", "対象外", "service item", "model name",
+    }:
+        return None
+    if any(token in text.lower() for token in ("input", "output", "リクエストまで", "チャンク")):
+        return None
+    if text.startswith("提供元") or "提供元：" in text:
+        return None
+    return text
+
+
+def _price_per_10k(text: str, label: str) -> float | None:
+    match = re.search(
+        rf"{re.escape(label)}\s*([0-9]+(?:\.[0-9]+)?)\s*円\s*/\s*10,000\s*トークン",
+        text,
+        re.I,
     )
-    return dedupe([dict(model) for model in manifest["models"]])
+    return float(match.group(1)) if match else None
+
+
+def _build_from_tables(tables: list[dict], body: str) -> list[dict]:
+    rows_by_id: dict[str, dict] = {}
+    current_category = ""
+    for table in tables:
+        rows = table.get("rows") or []
+        inherited_tts_rate: float | None = None
+        inherited_quota: int | None = None
+        if not rows:
+            continue
+        header = " ".join(rows[0]).lower()
+        if not any(word in header for word in ("提供モデル", "category", "model")):
+            continue
+        closed = "提供モデル・提供元" in " ".join(rows[0])
+        preview = table.get("index") not in (0, 1) and not closed
+        current_category = "Chat Completions" if closed else ("Public Preview" if preview else "")
+        for cells in rows[1:]:
+            if not cells:
+                continue
+            first = cells[0].strip()
+            known_categories = {
+                "Chat completions", "Audio transcription", "Embeddings",
+                "Text-to-Speech", "ドキュメント（RAG）", "Chat Completions",
+            }
+            if first in known_categories:
+                current_category = first
+                model_cell = cells[1] if len(cells) > 1 else ""
+            elif closed and len(cells) > 1 and ("提供モデル" in first or "提供元" in first):
+                model_cell = first
+            else:
+                model_cell = first
+            name = _model_cell_name(model_cell)
+            if not name:
+                continue
+
+            category = current_category.lower()
+            text = " ".join(cells)
+            input_price = _price_per_10k(text, "input")
+            output_price = _price_per_10k(text, "output")
+            token_pricing = None
+            extra: dict = {
+                "source": SRC,
+                "official_catalog_checked_at": datetime.now(timezone.utc).date().isoformat(),
+            }
+            if input_price is not None:
+                output_price = output_price if output_price is not None else 0.0
+                token_pricing, pricing_jpy = chat_price(input_price, output_price)
+                extra["pricing_jpy"] = pricing_jpy
+            audio_meter = re.search(r"([0-9]+(?:\.[0-9]+)?)\s*円\s*/\s*60秒", text)
+            tts_meter = re.search(r"([0-9]+(?:\.[0-9]+)?)\s*円\s*/\s*10,000\s*モーラ", text)
+            tts_rate = float(tts_meter.group(1)) if tts_meter else None
+            if tts_rate is not None:
+                inherited_tts_rate = tts_rate
+            elif "text-to-speech" in category:
+                tts_rate = inherited_tts_rate
+            if audio_meter:
+                extra["price_per_60_seconds_jpy"] = float(audio_meter.group(1))
+            if tts_rate is not None:
+                extra["price_per_10k_mora_jpy"] = tts_rate
+            quota = re.search(r"([0-9,]+)\s*リクエストまで", text)
+            quota_value = int(quota.group(1).replace(",", "")) if quota else None
+            if quota_value is not None:
+                inherited_quota = quota_value
+            elif category in {"text-to-speech", "audio transcription", "embeddings"}:
+                quota_value = inherited_quota
+            if quota_value is not None:
+                extra["free_requests_per_month"] = quota_value
+
+            if "audio transcription" in category:
+                input_modalities, output_modalities = ["audio"], ["text"]
+                chat = False
+            elif "embeddings" in category or "embedding" in name.lower():
+                input_modalities, output_modalities = ["text"], ["embedding"]
+                chat = False
+            elif "text-to-speech" in category or "voicevox:" in name.lower():
+                input_modalities, output_modalities = ["text"], ["audio"]
+                chat = False
+            elif "chat completions" in category or "chat completions" in text.lower():
+                input_modalities, output_modalities = ["text"], ["text"]
+                chat = True
+            else:
+                input_modalities, output_modalities = ["text"], ["text"]
+                chat = None if preview else True
+
+            if "public preview" in category:
+                extra["tier"] = "preview"
+            elif closed:
+                extra["tier"] = "closed"
+                extra["pricing_status"] = "quote/application; price not published on product page"
+            else:
+                extra["tier"] = "standard"
+            if tts_meter:
+                extra["unit"] = "10k_mora"
+            if audio_meter:
+                extra["unit"] = "60_seconds"
+            if not token_pricing and not audio_meter and tts_rate is None:
+                extra.setdefault("pricing_status", "not listed for this model on current product page")
+
+            model_id = name
+            row = base(
+                model_id=model_id,
+                display=name,
+                ctx=0,
+                max_out=0,
+                pricing=token_pricing,
+                extra=extra,
+                input_modalities=input_modalities,
+                output_modalities=output_modalities,
+                vision="image" in input_modalities,
+                chat=chat,
+                function_calling=None,
+                streaming=None,
+                json_mode=None,
+                responses_api=None,
+                license_type="custom" if closed else "api",
+            )
+            if closed:
+                row["supports_function_calling"] = None
+                row["supports_json_mode"] = None
+            rows_by_id[model_id.casefold()] = row
+
+    if not rows_by_id:
+        raise RuntimeError("Sakura official product page produced no model records")
+    return list(rows_by_id.values())
+
+
+def build() -> list[dict]:
+    """Discover Sakura AI Engine models from the live official product tables."""
+    tables, body = _fetch_source_tables()
+    models = _build_from_tables(tables, body)
+    return dedupe(models)
 
 
 def dedupe(models: list[dict]) -> list[dict]:
@@ -245,25 +422,16 @@ def main() -> None:
         f"\n## Sakura (さくらのAI Engine) refresh ({stamp})\n\n"
         f"### Source\n"
         f"- Product: {SRC}\n"
-        f"- Closed models manual: {SRC_MANUAL_CLOSED}\n"
         f"- Playground: {SRC_PLAYGROUND}\n"
-        f"- Scratch: `_scratch_sakura_ai_engine.html`\n"
         f"- Apply: `scripts/_update_sakura.py`\n\n"
         f"### Result\n"
         f"- sakura.json: **{len(models)}** models "
         f"(active={active}, deprecated={deprecated}, "
         f"priced={priced}, extra={extra_n})\n"
         f"- Tiers: {by_tier}\n"
-        f"- Standard chat: gpt-oss-120b ¥0.15/0.75 per 10k "
-        f"(USD shell $0.10/$0.50); Qwen3-Coder 480B/30B; llm-jp-3.1\n"
-        f"- Preview: Kimi-K2.6 (Anthropic Messages), Qwen3.6-35B, "
-        f"gemma-4-31B-it (2026-06-30), Phi-4 mini/mm, Qwen3-VL, "
-        f"Qwen3-0.6B-cpu, Qwen3-Embedding-4B\n"
-        f"- Closed (application): PLaMo 2.0-31B, cotomi v3\n"
-        f"- Also: whisper, e5-large, VOICEVOX×8, RAG document meter\n"
-        f"- Free tier 3,000 chat req/mo; tax-included JPY official\n"
-        f"- Replaced placeholder sakura-default with full catalog "
-        f"(default alias → gpt-oss-120b)\n"
+        f"- Model IDs and categories were discovered from the live product tables; values absent from the page remain unknown.\n"
+        f"- Token/audio/TTS prices are parsed from the current table; quote-only closed models remain unpriced.\n"
+        f"- No local sakura_legacy_models.json manifest or hard-coded model catalog is used.\n"
         f"- Install copy synced\n"
     )
     if LOG.exists():

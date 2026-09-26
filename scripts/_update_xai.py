@@ -81,7 +81,7 @@ def _is_reasoning(name: str) -> bool:
         return False
     if "reasoning" in n or "multi-agent" in n:
         return True
-    return n in ("grok-4.5", "grok-4.3", "grok-build-0.1")
+    return n in ("grok-4.7", "grok-4.5", "grok-4.3", "grok-build-0.1")
 
 
 def _supports_effort(name: str) -> bool:
@@ -146,7 +146,7 @@ def text_row(entry: dict) -> dict:
         "supports_vision": vision,
         "supports_reasoning": reasoning,
         "supports_chat_completion": True,
-        "supports_responses_api": False,
+        "supports_responses_api": mid == "grok-4.7",
         "supports_reasoning_effort": _supports_effort(mid),
         "supports_thinking_budget": False,
         "supports_anthropic_api": False,
@@ -249,18 +249,20 @@ def load_listmodels() -> list[dict]:
     global LISTMODELS_FALLBACK
     LISTMODELS_FALLBACK = False
     raw = json.loads(LISTMODELS.read_text(encoding="utf-8"))
-    # The scraper may return an envelope or an old page-only payload. Refresh
-    # from the official Markdown endpoint when no structured rows are present.
-    if isinstance(raw, dict) and not (raw.get("models") or raw.get("data")):
-        try:
-            from _scrape_xai import fetch, parse
+    # Refresh from the official Markdown endpoint on every run; structured
+    # snapshots can still be stale and omit newly released models.
+    try:
+        from _scrape_xai import fetch, parse
 
-            raw = parse(fetch())
+        refreshed = parse(fetch())
+        if refreshed:
+            raw = refreshed
             LISTMODELS.write_text(
-                json.dumps(raw, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8"
+                json.dumps(refreshed, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
             )
-        except Exception:  # noqa: BLE001
-            raw = []
+    except Exception:  # noqa: BLE001
+        pass  # Continue with the cached snapshot if the official docs are unavailable.
     if isinstance(raw, dict):
         raw = raw.get("models") or raw.get("data") or []
     if not isinstance(raw, list):
