@@ -236,8 +236,13 @@ def test_get_with_provider_normalization() -> None:
     assert cap.context_window > 0  # 131072 as of latest data
 
 
-def test_google_gemini_provider_alias_and_strict_scope() -> None:
+def test_google_gemini_provider_alias_and_strict_scope(monkeypatch) -> None:
     """Gemini aliases resolve only to the requested native catalog."""
+    monkeypatch.setattr(
+        llmcapa.default_registry(),
+        "fetch_github_catalog",
+        lambda provider, cache_ttl=86400, ref="main": 0,
+    )
     assert llmcapa.get("gemini-2.5-flash", provider="google").provider == "google"
     assert llmcapa.get("gemini-2.5-flash", provider="gemini").provider == "google"
     assert llmcapa.get("gemini-2.5-flash", provider="vertex-ai").provider == "vertex-ai"
@@ -318,10 +323,10 @@ def test_new_providers_registered() -> None:
 
 
 def test_new_provider_models_accessible() -> None:
-    """Models from new JSON files are accessible via get()."""
-    sakura = llmcapa.get("sakura-default")
+    """A model from the current Sakura catalog is accessible via get()."""
+    sakura = llmcapa.get("gpt-oss-120b", provider="sakura")
     assert sakura.provider == "sakura"
-    assert sakura.context_window > 0  # 131072 as of latest data
+    assert sakura.model_id == "gpt-oss-120b"
 
     # huggingface.json now holds real HF API records (2900+ models);
     # the old "huggingface-default" placeholder no longer exists.
@@ -388,11 +393,11 @@ def test_data_from_bundled_json_not_hardcoded() -> None:
     # These providers were NOT in the original codebase - they only exist
     # because we added JSON files.
     sakura_models = reg.list_models(provider="sakura")
-    assert len(sakura_models) > 0  # 26 as of latest data
-    # sakura-default may be among the models
+    assert len(sakura_models) > 0
+    # Check a model that is actually present in the current Sakura snapshot.
     assert any(
-        m.model_id == "sakura-default" for m in sakura_models
-    ), "sakura-default should be in sakura models"
+        m.model_id == "gpt-oss-120b" for m in sakura_models
+    ), "gpt-oss-120b should be in sakura models"
 
     hf_models = reg.list_models(provider="huggingface")
     assert len(hf_models) > 1  # now contains real models from HF API
@@ -416,3 +421,145 @@ def test_together_provider():
     # 全モデル数
     all_models = llmcapa.list_models(provider="together")
     assert len(all_models) >= 90, "should have 90+ together models"
+
+
+def test_fetch_github_catalog_downloads_selected_provider_and_uses_cache(
+    tmp_path, monkeypatch
+):
+    from io import BytesIO
+
+    monkeypatch.setenv("USERPROFILE", str(tmp_path))
+    monkeypatch.setenv("HOME", str(tmp_path))
+    cap = Capability(
+        provider="xai",
+        model_id="grok-github-cache-test",
+        context_window=8192,
+        max_output_tokens=1024,
+    )
+    response_data = json.dumps({"models": [cap.to_dict()]}).encode("utf-8")
+    requests = []
+
+    def fake_urlopen(request, context=None, timeout=None):
+        requests.append(request.full_url)
+        return BytesIO(response_data)
+
+    monkeypatch.setattr("llmcapa.registry.urllib.request.urlopen", fake_urlopen)
+
+    registry = Registry()
+    registered = registry.fetch_github_catalog("grok", write_bundled=False)
+    assert registered >= 1
+    assert (
+        registry.get("grok-github-cache-test", provider="xai").context_window
+        == 8192
+    )
+    request_count = len(requests)
+    assert request_count >= 1
+    assert any(url.endswith("/src/llmcapa/data/xai.json") for url in requests)
+    user_catalogs = tmp_path / ".llmcapa" / "catalogs" / "github"
+    assert list(user_catalogs.glob("*.json"))
+
+    cached_registry = Registry()
+    assert cached_registry.get("grok-github-cache-test", provider="xai")
+    assert (
+        cached_registry.fetch_github_catalog("xai", write_bundled=False)
+        == registered
+    )
+    assert len(requests) == request_count
+
+
+def test_fetch_github_catalog_rejects_unknown_provider_and_unsafe_ref():
+    registry = Registry()
+    with pytest.raises(ValueError, match="No bundled GitHub catalog"):
+        registry.fetch_github_catalog("not-a-provider")
+    with pytest.raises(ValueError, match="valid branch"):
+        registry.fetch_github_catalog("openai", ref="../main")
+
+
+
+def test_provider_scoped_get_refreshes_github_catalog_once_on_miss(monkeypatch):
+    registry = Registry()
+    fresh_cap = Capability(
+        provider="custom-provider",
+        model_id="newly-published-model",
+        context_window=1234,
+        max_output_tokens=256,
+    )
+    calls = []
+
+    def fake_fetch(provider, cache_ttl=86400, ref="main"):
+        calls.append((provider, cache_ttl))
+        registry.register(fresh_cap)
+        return 1
+
+    monkeypatch.setattr(registry, "fetch_github_catalog", fake_fetch)
+    assert registry.get("newly-published-model", provider="custom-provider") == fresh_cap
+    assert calls == [("custom-provider", 86400)]
+
+    with pytest.raises(ModelNotFoundError):
+        registry.get("still-missing-model", provider="custom-provider")
+    assert calls == [("custom-provider", 86400)]
+
+
+def test_provider_scoped_search_refreshes_github_catalog_on_miss(monkeypatch):
+    registry = Registry()
+    fresh_cap = Capability(
+        provider="custom-provider",
+        model_id="newly-published-search-model",
+        context_window=1234,
+        max_output_tokens=256,
+    )
+
+    def fake_fetch(provider, cache_ttl=86400, ref="main"):
+        registry.register(fresh_cap)
+        return 1
+
+    monkeypatch.setattr(registry, "fetch_github_catalog", fake_fetch)
+    results = registry.search("newly-published-search-model", provider="custom-provider")
+    assert results == [fresh_cap]
+
+
+
+def test_bundled_catalog_writer_replaces_json_atomically(tmp_path, monkeypatch):
+    destination = tmp_path / "xai.json"
+    destination.write_text('{"models": []}', encoding="utf-8")
+    monkeypatch.setattr(
+        "llmcapa.registry.resources.files", lambda package: tmp_path
+    )
+    registry = Registry()
+    updated_json = '{"models": [{"provider": "xai", "model_id": "new-model"}]}'
+
+    backup_dir = tmp_path / "backups"
+    assert registry._write_bundled_catalog_files(
+        {"xai.json": updated_json}, backup_dir=backup_dir
+    )
+
+    assert destination.read_text(encoding="utf-8") == updated_json
+    assert json.loads(destination.read_text(encoding="utf-8"))["models"][0]["model_id"] == "new-model"
+    backups = list(backup_dir.glob("xai.json.*.bak"))
+    assert len(backups) == 1
+    assert backups[0].read_text(encoding="utf-8") == '{"models": []}'
+    assert not list(tmp_path.glob("*.tmp"))
+
+
+
+def test_persistent_user_catalog_is_loaded_by_new_registry(tmp_path, monkeypatch):
+    monkeypatch.setenv("USERPROFILE", str(tmp_path))
+    monkeypatch.setenv("HOME", str(tmp_path))
+    capability = Capability(
+        provider="xai",
+        model_id="persistent-user-catalog-model",
+        context_window=4096,
+        max_output_tokens=512,
+    )
+    registry = Registry()
+    registry._ensure_loaded()
+    registry._write_user_catalog_override(
+        "test-snapshot", "main", {"xai"}, [capability]
+    )
+
+    restarted_registry = Registry()
+    loaded = restarted_registry.get(
+        "persistent-user-catalog-model", provider="xai"
+    )
+    assert loaded.model_id == capability.model_id
+    assert loaded.context_window == 4096

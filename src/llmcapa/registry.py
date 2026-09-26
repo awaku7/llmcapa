@@ -2,13 +2,20 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
+import os
 import re
 import ssl
+import stat
+import tempfile
+import time
 import urllib.request
+import warnings
 from importlib import resources
 from pathlib import Path
 from typing import ClassVar
+from urllib.parse import quote
 
 from .models import Capability
 
@@ -25,6 +32,11 @@ class Registry:
         self._alias_index: dict[str, str] = {}
         # Provider-scoped index: {provider_lower: {model_id_lower: Capability}}
         self._by_provider: dict[str, dict[str, Capability]] = {}
+        # Provider-to-bundled-file index used by the optional GitHub catalog
+        # fetcher. Some providers (for example Modellix) have multiple files.
+        self._catalog_files_by_provider: dict[str, set[str]] = {}
+        # Auto-refresh at most once per provider in this Registry instance.
+        self._github_auto_refresh_attempted: set[str] = set()
 
         self._loaded = False
 
@@ -107,7 +119,14 @@ class Registry:
                 else:
                     regular.append(entry)
         for entry in regular + agg:
-            self._load_json_text(entry.read_text(encoding="utf-8"))
+            self._load_json_text(
+                entry.read_text(encoding="utf-8"), catalog_name=entry.name
+            )
+
+        # Reuse explicitly fetched GitHub snapshots without networking.
+        self._load_github_catalog_caches()
+        # Persistent user catalogs take precedence over the bundled snapshots.
+        self._load_persistent_github_catalogs()
 
         # Load local OpenRouter cache if it exists (up to 24h old) to override bundled data with latest updates
         import os
@@ -133,7 +152,123 @@ class Registry:
             except Exception:  # noqa: BLE001, S110
                 pass
 
-    def _load_json_text(self, text: str) -> int:
+    def _load_github_catalog_caches(self) -> None:
+        """Load fresh main-branch GitHub snapshots from the local cache only."""
+        cache_dir = Path.home() / ".llmcapa" / "github_catalog_cache"
+        try:
+            cache_paths = sorted(
+                cache_dir.glob("*.json"),
+                key=lambda path: path.stat().st_mtime,
+                reverse=True,
+            )
+        except OSError:
+            return
+
+        seen: set[tuple[str, str]] = set()
+        now = time.time()
+        for cache_path in cache_paths:
+            try:
+                if now - cache_path.stat().st_mtime >= 86400:
+                    continue
+                cache_data = json.loads(cache_path.read_text(encoding="utf-8"))
+                if (
+                    not isinstance(cache_data, dict)
+                    or cache_data.get("ref") != "main"
+                ):
+                    continue
+                providers = cache_data.get("providers")
+                files = cache_data.get("files")
+                if (
+                    not isinstance(providers, list)
+                    or not isinstance(files, dict)
+                    or not all(isinstance(name, str) for name in providers)
+                ):
+                    continue
+                provider_set = {
+                    self._normalize_provider(name) for name in providers
+                }
+                for text in files.values():
+                    if not isinstance(text, str):
+                        continue
+                    payload = json.loads(text)
+                    records = (
+                        payload.get("models", [])
+                        if isinstance(payload, dict)
+                        else payload
+                    )
+                    if not isinstance(records, list):
+                        continue
+                    for record in records:
+                        try:
+                            cap = Capability.from_dict(record)
+                            provider = self._normalize_provider(cap.provider)
+                            if (
+                                provider not in provider_set
+                                or provider not in self._catalog_files_by_provider
+                            ):
+                                continue
+                            identity = (provider, cap.model_id.lower())
+                            if identity in seen:
+                                continue
+                            seen.add(identity)
+                            self._register_refreshed_catalog_record(cap)
+                        except (TypeError, ValueError, KeyError):
+                            continue
+            except (OSError, ValueError, TypeError):
+                continue
+
+    def _load_persistent_github_catalogs(self) -> None:
+        """Load durable user-owned GitHub catalog overrides, newest first."""
+        override_dir = Path.home() / ".llmcapa" / "catalogs" / "github"
+        try:
+            override_paths = sorted(
+                override_dir.glob("*.json"),
+                key=lambda path: path.stat().st_mtime,
+                reverse=True,
+            )
+        except OSError:
+            return
+
+        seen: set[tuple[str, str]] = set()
+        for override_path in override_paths:
+            try:
+                payload = json.loads(override_path.read_text(encoding="utf-8"))
+                if (
+                    not isinstance(payload, dict)
+                    or payload.get("source") != "https://github.com/awaku7/llmcapa"
+                ):
+                    continue
+                providers = payload.get("providers")
+                records = payload.get("models")
+                if (
+                    not isinstance(providers, list)
+                    or not isinstance(records, list)
+                    or not all(isinstance(name, str) for name in providers)
+                ):
+                    continue
+                provider_set = {
+                    self._normalize_provider(name) for name in providers
+                }
+                for record in records:
+                    try:
+                        cap = Capability.from_dict(record)
+                        provider = self._normalize_provider(cap.provider)
+                        if (
+                            provider not in provider_set
+                            or provider not in self._catalog_files_by_provider
+                        ):
+                            continue
+                        identity = (provider, cap.model_id.lower())
+                        if identity in seen:
+                            continue
+                        seen.add(identity)
+                        self._register_refreshed_catalog_record(cap)
+                    except (TypeError, ValueError, KeyError):
+                        continue
+            except (OSError, ValueError, TypeError):
+                continue
+
+    def _load_json_text(self, text: str, catalog_name: str | None = None) -> int:
         payload = json.loads(text)
         if isinstance(payload, dict):
             records = payload.get("models", [])
@@ -141,7 +276,13 @@ class Registry:
             records = payload
         count = 0
         for record in records:
-            self.register(Capability.from_dict(record))
+            cap = Capability.from_dict(record)
+            if catalog_name:
+                provider = self._normalize_provider(cap.provider)
+                self._catalog_files_by_provider.setdefault(provider, set()).add(
+                    catalog_name
+                )
+            self.register(cap)
             count += 1
         return count
 
@@ -507,6 +648,302 @@ class Registry:
     # ------------------------------------------------------------------
     # lookup
     # ------------------------------------------------------------------
+    def _register_refreshed_catalog_record(self, cap: Capability) -> None:
+        """Upsert a fetched record without changing cross-provider precedence."""
+        key = cap.model_id.lower()
+        provider = self._normalize_provider(cap.provider)
+        provider_models = self._by_provider.get(provider, {})
+        if key not in provider_models:
+            self.register(cap)
+            return
+
+        # Refresh the provider-scoped entry. Only replace the flat lookup entry
+        # when it already belongs to this provider; another provider may own it.
+        provider_models[key] = cap
+        current = self._models.get(key)
+        if current is not None and self._normalize_provider(current.provider) == provider:
+            self._models[key] = cap
+        for alias in cap.aliases:
+            self._alias_index.setdefault(alias.lower(), key)
+
+    def _write_bundled_catalog_files(
+        self,
+        files: dict[str, str],
+        backup_dir: Path | None = None,
+    ) -> bool:
+        """Back up and atomically replace bundled JSON snapshots when writable."""
+        data_package = resources.files("llmcapa.data")
+        backup_root = backup_dir or (
+            Path.home() / ".llmcapa" / "github_catalog_backups"
+        )
+        success = True
+        for filename, text in files.items():
+            destination = data_package / filename
+            if not isinstance(destination, Path):
+                success = False
+                warnings.warn(
+                    f"Cannot rewrite bundled catalog {filename}: package resources are read-only; "
+                    "the GitHub cache will be used instead.",
+                    RuntimeWarning,
+                    stacklevel=2,
+                )
+                continue
+
+            temporary_path: Path | None = None
+            try:
+                old_content = destination.read_bytes()
+                if old_content.decode("utf-8") == text:
+                    continue
+                mode = stat.S_IMODE(destination.stat().st_mode)
+                backup_root.mkdir(parents=True, exist_ok=True)
+                backup_path = backup_root / f"{filename}.{time.time_ns()}.bak"
+                backup_path.write_bytes(old_content)
+                with tempfile.NamedTemporaryFile(
+                    mode="w",
+                    encoding="utf-8",
+                    dir=destination.parent,
+                    prefix=f".{destination.name}.",
+                    suffix=".tmp",
+                    delete=False,
+                ) as temporary_file:
+                    temporary_file.write(text)
+                    temporary_path = Path(temporary_file.name)
+                os.chmod(temporary_path, mode)
+                os.replace(temporary_path, destination)
+            except OSError as exc:
+                success = False
+                warnings.warn(
+                    f"Could not rewrite bundled catalog {filename}: {exc}; "
+                    "the GitHub cache will be used instead.",
+                    RuntimeWarning,
+                    stacklevel=2,
+                )
+            finally:
+                if temporary_path is not None:
+                    try:
+                        temporary_path.unlink(missing_ok=True)
+                    except OSError:
+                        pass
+        return success
+
+    def _write_user_catalog_override(
+        self,
+        cache_key: str,
+        ref: str,
+        providers: set[str],
+        capabilities: list[Capability],
+    ) -> None:
+        """Persist a fetched catalog under the user's home directory."""
+        override_dir = Path.home() / ".llmcapa" / "catalogs" / "github"
+        override_key = hashlib.sha256(
+            (cache_key + "\0" + ",".join(sorted(providers))).encode("utf-8")
+        ).hexdigest()
+        override_path = override_dir / f"{override_key}.json"
+        payload = {
+            "source": "https://github.com/awaku7/llmcapa",
+            "ref": ref,
+            "updated_at": time.time(),
+            "providers": sorted(providers),
+            "models": [cap.to_dict() for cap in capabilities],
+        }
+        temporary_path: Path | None = None
+        try:
+            override_dir.mkdir(parents=True, exist_ok=True)
+            with tempfile.NamedTemporaryFile(
+                mode="w",
+                encoding="utf-8",
+                dir=override_dir,
+                prefix=f".{cache_key}.",
+                suffix=".tmp",
+                delete=False,
+            ) as temporary_file:
+                json.dump(payload, temporary_file, ensure_ascii=False, indent=2)
+                temporary_file.write(chr(10))
+                temporary_path = Path(temporary_file.name)
+            os.replace(temporary_path, override_path)
+        except OSError as exc:
+            warnings.warn(
+                f"Could not persist GitHub catalog under {override_dir}: {exc}",
+                RuntimeWarning,
+                stacklevel=2,
+            )
+        finally:
+            if temporary_path is not None:
+                try:
+                    temporary_path.unlink(missing_ok=True)
+                except OSError:
+                    pass
+
+    def fetch_github_catalog(
+        self,
+        provider: str,
+        cache_ttl: int = 86400,
+        ref: str = "main",
+        write_bundled: bool = True,
+    ) -> int:
+        """Fetch this project's bundled catalog for one provider from GitHub.
+
+        The download source is the public ``awaku7/llmcapa`` repository. The
+        provider-to-file mapping is derived from the bundled catalogs, so
+        providers backed by multiple files are handled as well. By default,
+        fetched JSON files replace the corresponding bundled files when the
+        package directory is writable; fetched records are also upserted into
+        this registry and cached under ``~/.llmcapa``. If the package is
+        read-only, a durable user catalog is saved under
+        ``~/.llmcapa/catalogs/github``. Set ``write_bundled`` to False to use
+        that user catalog instead of changing the bundled files.
+
+        Provider-scoped lookup misses call this method once per provider per
+        registry instance, then retry the lookup once.
+
+        Args:
+            provider: Provider name or one of its configured aliases.
+            cache_ttl: Cache lifetime in seconds (default 24 hours). Pass 0 to
+                force a network refresh.
+            ref: Git branch, tag, or commit (default ``main``).
+            write_bundled: Replace the package's source JSON files when writable.
+
+        Returns:
+            Number of matching model records registered.
+
+        Raises:
+            ValueError: If provider/ref is invalid or no bundled catalog exists.
+            RuntimeError: If GitHub cannot be reached or its catalog is invalid.
+        """
+        self._ensure_loaded()
+        if not isinstance(provider, str) or not provider.strip():
+            raise ValueError("provider must be a non-empty string")
+        if cache_ttl < 0:
+            raise ValueError("cache_ttl must be non-negative")
+        if (
+            not isinstance(ref, str)
+            or not re.fullmatch(r"[A-Za-z0-9._/-]+", ref)
+            or any(part in ("", ".", "..") for part in ref.split("/"))
+        ):
+            raise ValueError("ref must be a valid branch, tag, or commit name")
+
+        target_providers = {
+            self._normalize_provider(name) for name in self._matching_providers(provider)
+        }
+        catalog_files = sorted(
+            {
+                filename
+                for catalog_provider, filenames in self._catalog_files_by_provider.items()
+                if catalog_provider in target_providers
+                for filename in filenames
+            }
+        )
+        if not catalog_files:
+            raise ValueError(f"No bundled GitHub catalog found for provider: {provider}")
+
+        # Key the cache by the actual remote files so aliases share one copy.
+        cache_key = hashlib.sha256(
+            (ref + "\0" + ",".join(catalog_files)).encode("utf-8")
+        ).hexdigest()
+        cache_path = (
+            Path.home()
+            / ".llmcapa"
+            / "github_catalog_cache"
+            / f"{cache_key}.json"
+        )
+        cached_files: dict[str, str] | None = None
+        if cache_ttl > 0 and cache_path.is_file():
+            try:
+                if time.time() - cache_path.stat().st_mtime < cache_ttl:
+                    cache_data = json.loads(cache_path.read_text(encoding="utf-8"))
+                    files = cache_data.get("files") if isinstance(cache_data, dict) else None
+                    if (
+                        isinstance(files, dict)
+                        and all(
+                            filename in files and isinstance(files[filename], str)
+                            for filename in catalog_files
+                        )
+                    ):
+                        cached_files = {name: files[name] for name in catalog_files}
+            except (OSError, ValueError, TypeError):
+                cached_files = None
+
+        downloaded_files: dict[str, str] = cached_files or {}
+        if cached_files is None:
+            raw_ref = quote(ref, safe="/")
+            context = ssl.create_default_context()
+            for filename in catalog_files:
+                url = (
+                    "https://raw.githubusercontent.com/awaku7/llmcapa/"
+                    f"{raw_ref}/src/llmcapa/data/{quote(filename, safe='')}"
+                )
+                request = urllib.request.Request(
+                    url, headers={"User-Agent": "llmcapa"}
+                )
+                try:
+                    with urllib.request.urlopen(
+                        request, context=context, timeout=30
+                    ) as response:
+                        content = response.read(25 * 1024 * 1024 + 1)
+                    if len(content) > 25 * 1024 * 1024:
+                        raise RuntimeError(f"GitHub catalog is too large: {filename}")
+                    downloaded_files[filename] = content.decode("utf-8")
+                except Exception as exc:  # noqa: BLE001
+                    raise RuntimeError(
+                        f"Failed to fetch GitHub catalog {filename} at {ref}: {exc}"
+                    ) from exc
+
+        capabilities: list[Capability] = []
+        try:
+            for filename, text in downloaded_files.items():
+                payload = json.loads(text)
+                records = (
+                    payload.get("models", []) if isinstance(payload, dict) else payload
+                )
+                if not isinstance(records, list):
+                    raise ValueError(f"catalog {filename} must contain a models list")
+                for record in records:
+                    if not isinstance(record, dict):
+                        raise ValueError(
+                            f"catalog {filename} contains a non-object record"
+                        )
+                    cap = Capability.from_dict(record)
+                    if self._normalize_provider(cap.provider) in target_providers:
+                        capabilities.append(cap)
+        except (TypeError, ValueError, KeyError) as exc:
+            raise RuntimeError(
+                f"Invalid GitHub catalog for {provider}: {exc}"
+            ) from exc
+
+        if not capabilities:
+            raise RuntimeError(
+                f"GitHub catalog contains no models for provider: {provider}"
+            )
+
+        bundled_updated = False
+        if write_bundled:
+            bundled_updated = self._write_bundled_catalog_files(downloaded_files)
+        if not bundled_updated:
+            self._write_user_catalog_override(
+                cache_key, ref, target_providers, capabilities
+            )
+
+        if cached_files is None:
+            try:
+                cache_path.parent.mkdir(parents=True, exist_ok=True)
+                cache_path.write_text(
+                    json.dumps(
+                        {
+                            "ref": ref,
+                            "providers": sorted(target_providers),
+                            "files": downloaded_files,
+                        },
+                        ensure_ascii=False,
+                    ),
+                    encoding="utf-8",
+                )
+            except OSError:
+                pass
+
+        for cap in capabilities:
+            self._register_refreshed_catalog_record(cap)
+        return len(capabilities)
+
     def _lookup_candidates(self, model_id: str) -> list[str]:
         """Return lookup keys including safe suffix normalization.
 
@@ -603,7 +1040,41 @@ class Registry:
                     best = (version, capability)
         return best[1] if best else None
 
+    def _refresh_provider_catalog_on_miss(self, provider: str) -> bool:
+        """Try one cached/remote GitHub refresh per provider per registry."""
+        provider_key = "\0".join(
+            sorted(
+                self._normalize_provider(name)
+                for name in self._matching_providers(provider)
+            )
+        )
+        if provider_key in self._github_auto_refresh_attempted:
+            return False
+        self._github_auto_refresh_attempted.add(provider_key)
+        try:
+            return self.fetch_github_catalog(provider, cache_ttl=86400) > 0
+        except (RuntimeError, ValueError):
+            # Preserve the normal not-found behavior if GitHub is unavailable
+            # or this provider has no published llmcapa catalog.
+            return False
+
     def get(self, model_id: str, provider: str | None = None) -> Capability:
+        """Resolve a model, refreshing a provider catalog once after a miss.
+
+        When a provider is supplied and the local lookup misses, the matching
+        llmcapa GitHub catalog is fetched (using its 24-hour cache) once per
+        provider for this registry, then the lookup is retried once. Unscoped
+        lookups and successful local lookups never trigger a fetch.
+        """
+        self._ensure_loaded()
+        try:
+            return self._get_local(model_id, provider)
+        except ModelNotFoundError:
+            if provider is None or not self._refresh_provider_catalog_on_miss(provider):
+                raise
+            return self._get_local(model_id, provider)
+
+    def _get_local(self, model_id: str, provider: str | None = None) -> Capability:
         """Resolve a model id or alias to its Capability.
 
         Args:
@@ -793,6 +1264,26 @@ class Registry:
         return results
 
     def search(
+        self,
+        prefix: str,
+        provider: str | None = None,
+        include_deprecated: bool = False,
+        limit: int | None = None,
+    ) -> list[Capability]:
+        """Search locally, refreshing once if a provider-scoped query misses."""
+        self._ensure_loaded()
+        result = self._search_local(prefix, provider, include_deprecated, limit)
+        if (
+            result
+            or provider is None
+            or not prefix.strip()
+            or limit == 0
+            or not self._refresh_provider_catalog_on_miss(provider)
+        ):
+            return result
+        return self._search_local(prefix, provider, include_deprecated, limit)
+
+    def _search_local(
         self,
         prefix: str,
         provider: str | None = None,

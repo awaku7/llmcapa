@@ -232,3 +232,22 @@ def test_registry_search_orders_active_first():
     assert flags == sorted(flags)
     limited = llmcapa.search(PREFIX, include_deprecated=True, limit=5)
     assert limited and not any(c.deprecated for c in limited)
+
+
+def test_fetch_github_cli_forces_refresh_when_requested(monkeypatch, capsys):
+    calls = {}
+
+    class DummyRegistry:
+        def fetch_github_catalog(self, **kwargs):
+            calls.update(kwargs)
+            return 3
+
+    monkeypatch.setattr(cli, "default_registry", lambda: DummyRegistry())
+    assert (
+        cli.main(
+            ["fetch-github", "--provider", "openai", "--ref", "main", "--refresh"]
+        )
+        == 0
+    )
+    assert calls == {"provider": "openai", "ref": "main", "cache_ttl": 0}
+    assert "registered 3 models" in capsys.readouterr().out.lower()

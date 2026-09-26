@@ -1,6 +1,6 @@
 # llmcapa
 
-Lookup capabilities (context window, modalities, supported features) of various LLM models — fully offline by default.
+Lookup capabilities (context window, modalities, supported features) of various LLM models — offline by default; provider-scoped misses can refresh the GitHub catalog.
 
 ## Features
 
@@ -492,6 +492,28 @@ count = llmcapa.fetch_huggingface(limit=200)
 ```
 
 > **Note**: The HuggingFace listing API does not provide context window, pricing, or detailed capability data. The registered models have estimated context windows based on their model family (e.g., Llama 3: 8K, Qwen3: 128K). The bundled `huggingface.json` includes 2,904 popular text-generation models with improved context window estimates. For exact specifications, use `fetch_openrouter()` or official model cards.
+
+### On-demand llmcapa GitHub Catalog
+
+Fetch the published, normalized catalog for one provider from the public [`awaku7/llmcapa`](https://github.com/awaku7/llmcapa) repository. Provider aliases are accepted, and catalogs backed by multiple data files are fetched together. Downloads are cached under `~/.llmcapa/github_catalog_cache` for 24 hours by default; fresh `main`-branch snapshots are loaded by later processes without network access. A provider-scoped `get()` or `search()` that misses locally also tries this catalog once per provider per registry instance, then retries the lookup. Successful lookups and unscoped lookups remain offline.
+
+```python
+# Fetch the latest published OpenAI catalog and register its records
+count = llmcapa.fetch_github_catalog("openai")
+print(f"Registered {count} OpenAI models")
+
+# Force a refresh, or select a branch/tag/commit
+count = llmcapa.fetch_github_catalog("openai", cache_ttl=0, ref="main")
+```
+
+CLI equivalent:
+
+```bash
+llmcapa fetch-github --provider openai
+llmcapa fetch-github --provider modellix --refresh
+```
+
+By default, the fetched provider JSON files replace the corresponding bundled files when the package directory is writable. Previous files are backed up under `~/.llmcapa/github_catalog_backups`. If the package directory is read-only—or `write_bundled=False` is set—llmcapa saves a persistent user catalog under `~/.llmcapa/catalogs/github` and loads it on later runs, overlaying bundled records. Remove that directory to discard the user overrides. The 24-hour download cache is separate. Verify catalog provenance and specifications before relying on them in production.
 
 ### Token Counting (Standalone)
 

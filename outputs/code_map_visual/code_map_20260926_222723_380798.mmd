@@ -1,0 +1,320 @@
+graph TD
+    n1["scripts/"]
+    n2["update_catalog_from_openrouter.py"]
+    n1 --> n2
+    n3["_add_license_type.py"]
+    n1 --> n3
+    n4["_add_minimax.py"]
+    n1 --> n4
+    n5["_audio_capability_postprocess.py"]
+    n1 --> n5
+    n6["_fix_all.py"]
+    n1 --> n6
+    n7["_fix_broken_jsons.py"]
+    n1 --> n7
+    n8["_fix_license_v2.py"]
+    n1 --> n8
+    n9["_fix_moonshot.py"]
+    n1 --> n9
+    n10["_image_capability_postprocess.py"]
+    n1 --> n10
+    n11["_metadata_loader.py"]
+    n1 --> n11
+    n12["_postprocess_catalogs.py"]
+    n1 --> n12
+    n13["_scrape_amazon.py"]
+    n1 --> n13
+    n14["_scrape_anthropic.py"]
+    n1 --> n14
+    n15["_scrape_azure_catalog.py"]
+    n1 --> n15
+    n16["_scrape_azure_foundry_full.py"]
+    n1 --> n16
+    n17["_scrape_azure_pricing.py"]
+    n1 --> n17
+    n18["_scrape_deepseek.py"]
+    n1 --> n18
+    n19["_scrape_google.py"]
+    n1 --> n19
+    n20["_scrape_huggingface.py"]
+    n1 --> n20
+    n21["_scrape_kimi.py"]
+    n1 --> n21
+    n22["_scrape_kimi_pricing.py"]
+    n1 --> n22
+    n23["_scrape_kimi_tabs.py"]
+    n1 --> n23
+    n24["_scrape_minimax.py"]
+    n1 --> n24
+    n25["_scrape_mistral.py"]
+    n1 --> n25
+    n26["_scrape_more.py"]
+    n1 --> n26
+    n27["_scrape_novita.py"]
+    n1 --> n27
+    n28["_scrape_nvidia.py"]
+    n1 --> n28
+    n29["_scrape_qwen.py"]
+    n1 --> n29
+    n30["_scrape_xai.py"]
+    n1 --> n30
+    n31["_structured_capability_postprocess.py"]
+    n1 --> n31
+    n32["_update_aion_labs.py"]
+    n1 --> n32
+    n33["_update_all_providers.py"]
+    n1 --> n33
+    n34["_update_amazon.py"]
+    n1 --> n34
+    n35["_update_anthropic.py"]
+    n1 --> n35
+    n36["_update_azure_cohere.py"]
+    n1 --> n36
+    n37["_update_azure_foundry.py"]
+    n1 --> n37
+    n38["_update_baidu.py"]
+    n1 --> n38
+    n39["_update_bytedance.py"]
+    n1 --> n39
+    n40["_update_cerebras.py"]
+    n1 --> n40
+    n41["_update_cohere.py"]
+    n1 --> n41
+    n42["_update_deepseek.py"]
+    n1 --> n42
+    n43["_update_google.py"]
+    n1 --> n43
+    n44["_update_hf_official_orgs.py"]
+    n1 --> n44
+    n45["_update_ibm_granite.py"]
+    n1 --> n45
+    n46["_update_inception.py"]
+    n1 --> n46
+    n47["_update_japanese.py"]
+    n1 --> n47
+    n48["_update_meta.py"]
+    n1 --> n48
+    n49["_update_microsoft.py"]
+    n1 --> n49
+    n50["_update_minimax.py"]
+    n1 --> n50
+    n51["_update_mistral.py"]
+    n1 --> n51
+    n52["_update_moonshot.py"]
+    n1 --> n52
+    n53["_update_novita.py"]
+    n1 --> n53
+    n54["_update_novita_from_api.py"]
+    n1 --> n54
+    n55["_update_nvidia.py"]
+    n1 --> n55
+    n56["_update_ollama.py"]
+    n1 --> n56
+    n57["_update_openai.py"]
+    n1 --> n57
+    n58["_update_openrouter.py"]
+    n1 --> n58
+    n59["_update_qwen.py"]
+    n1 --> n59
+    n60["_update_rekaai.py"]
+    n1 --> n60
+    n61["_update_remaining.py"]
+    n1 --> n61
+    n62["_update_sakura.py"]
+    n1 --> n62
+    n63["_update_stepfun.py"]
+    n1 --> n63
+    n64["_update_tencent.py"]
+    n1 --> n64
+    n65["_update_thaillm.py"]
+    n1 --> n65
+    n66["_update_together.py"]
+    n1 --> n66
+    n67["_update_upstage.py"]
+    n1 --> n67
+    n68["_update_vercel.py"]
+    n1 --> n68
+    n69["_update_vertex_ai.py"]
+    n1 --> n69
+    n70["_update_xai.py"]
+    n1 --> n70
+    n71["_update_xiaomi.py"]
+    n1 --> n71
+    n72["_video_capability_postprocess.py"]
+    n1 --> n72
+    n73["openrouter_providers/"]
+    n1 --> n73
+    n74["amazon.py"]
+    n73 --> n74
+    n75["anthropic.py"]
+    n73 --> n75
+    n76["deepseek.py"]
+    n73 --> n76
+    n77["google.py"]
+    n73 --> n77
+    n78["meta.py"]
+    n73 --> n78
+    n79["microsoft.py"]
+    n73 --> n79
+    n80["mistral.py"]
+    n73 --> n80
+    n81["moonshot.py"]
+    n73 --> n81
+    n82["novita.py"]
+    n73 --> n82
+    n83["nvidia.py"]
+    n73 --> n83
+    n84["openai.py"]
+    n73 --> n84
+    n85["qwen.py"]
+    n73 --> n85
+    n86["sakana.py"]
+    n73 --> n86
+    n87["xai.py"]
+    n73 --> n87
+    n88["xiaomi.py"]
+    n73 --> n88
+    n89["_common.py"]
+    n73 --> n89
+    n90["provider_updates/"]
+    n1 --> n90
+    n91["ai21.py"]
+    n90 --> n91
+    n92["allenai.py"]
+    n90 --> n92
+    n93["amazon.py"]
+    n90 --> n93
+    n94["anthropic.py"]
+    n90 --> n94
+    n95["arcee-ai.py"]
+    n90 --> n95
+    n96["azure_foundry.py"]
+    n90 --> n96
+    n97["baidu.py"]
+    n90 --> n97
+    n98["bytedance-seed.py"]
+    n90 --> n98
+    n99["bytedance.py"]
+    n90 --> n99
+    n100["cerebras.py"]
+    n90 --> n100
+    n101["cognitivecomputations.py"]
+    n90 --> n101
+    n102["cohere.py"]
+    n90 --> n102
+    n103["deepseek.py"]
+    n90 --> n103
+    n104["fireworks.py"]
+    n90 --> n104
+    n105["google.py"]
+    n90 --> n105
+    n106["groq.py"]
+    n90 --> n106
+    n107["huggingface.py"]
+    n90 --> n107
+    n108["inception.py"]
+    n90 --> n108
+    n109["llama_cpp.py"]
+    n90 --> n109
+    n110["lmstudio.py"]
+    n90 --> n110
+    n111["microsoft.py"]
+    n90 --> n111
+    n112["minimax.py"]
+    n90 --> n112
+    n113["mistral.py"]
+    n90 --> n113
+    n114["moonshot.py"]
+    n90 --> n114
+    n115["morph.py"]
+    n90 --> n115
+    n116["nousresearch.py"]
+    n90 --> n116
+    n117["novita.py"]
+    n90 --> n117
+    n118["nvidia.py"]
+    n90 --> n118
+    n119["ollama.py"]
+    n90 --> n119
+    n120["openai.py"]
+    n90 --> n120
+    n121["openrouter.py"]
+    n90 --> n121
+    n122["perplexity.py"]
+    n90 --> n122
+    n123["poolside.py"]
+    n90 --> n123
+    n124["qwen.py"]
+    n90 --> n124
+    n125["rekaai.py"]
+    n90 --> n125
+    n126["relace.py"]
+    n90 --> n126
+    n127["sakana.py"]
+    n90 --> n127
+    n128["sambanova.py"]
+    n90 --> n128
+    n129["siliconflow.py"]
+    n90 --> n129
+    n130["tencent.py"]
+    n90 --> n130
+    n131["thinkingmachines.py"]
+    n90 --> n131
+    n132["together.py"]
+    n90 --> n132
+    n133["upstage.py"]
+    n90 --> n133
+    n134["vercel.py"]
+    n90 --> n134
+    n135["vertex-ai.py"]
+    n90 --> n135
+    n136["writer.py"]
+    n90 --> n136
+    n137["xai.py"]
+    n90 --> n137
+    n138["xiaomi.py"]
+    n90 --> n138
+    n139["z-ai.py"]
+    n90 --> n139
+    n140["src/"]
+    n141["llmcapa/"]
+    n140 --> n141
+    n142["cli.py"]
+    n141 --> n142
+    n143["models.py"]
+    n141 --> n143
+    n144["registry.py"]
+    n141 --> n144
+    n145["specialized_capabilities.py"]
+    n141 --> n145
+    n146["tokenizer.py"]
+    n141 --> n146
+    n147["__init__.py"]
+    n141 --> n147
+    n148["data/"]
+    n141 --> n148
+    n149["__init__.py"]
+    n148 --> n149
+    n150["tests/"]
+    n151["test_advanced.py"]
+    n150 --> n151
+    n152["test_audio_capability.py"]
+    n150 --> n152
+    n153["test_cache.py"]
+    n150 --> n153
+    n154["test_cli.py"]
+    n150 --> n154
+    n155["test_computer_use.py"]
+    n150 --> n155
+    n156["test_decision_capability.py"]
+    n150 --> n156
+    n157["test_image_capability.py"]
+    n150 --> n157
+    n158["test_image_capability_postprocess.py"]
+    n150 --> n158
+    n159["test_registry.py"]
+    n150 --> n159
+    n160["test_specialized_capability.py"]
+    n150 --> n160
+    n161["test_video_capability.py"]
+    n150 --> n161

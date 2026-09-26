@@ -737,6 +737,21 @@ def _cmd_fetch_hf(args: argparse.Namespace) -> int:
         return 1
 
 
+def _cmd_fetch_github(args: argparse.Namespace) -> int:
+    try:
+        print(f"Fetching {args.provider} catalog from llmcapa GitHub ({args.ref})...")
+        count = default_registry().fetch_github_catalog(
+            provider=args.provider,
+            ref=args.ref,
+            cache_ttl=0 if args.refresh else args.cache_ttl,
+        )
+        print(f"Successfully registered {count} models from llmcapa GitHub.")
+        return 0
+    except Exception as e:  # noqa: BLE001
+        print(f"error fetching GitHub catalog: {e}", file=sys.stderr)
+        return 1
+
+
 # ---------------------------------------------------------------------------
 # parser
 # ---------------------------------------------------------------------------
@@ -863,6 +878,27 @@ def build_parser() -> argparse.ArgumentParser:
         "--limit", type=int, default=100, help="max models to fetch per pipeline tag"
     )
     p_hf.set_defaults(func=_cmd_fetch_hf)
+
+    p_github = sub.add_parser(
+        "fetch-github",
+        help="fetch a provider catalog from the llmcapa GitHub repository",
+    )
+    p_github.add_argument(
+        "--provider", required=True, help="provider catalog to fetch"
+    )
+    p_github.add_argument(
+        "--ref", default="main", help="Git branch, tag, or commit"
+    )
+    p_github.add_argument(
+        "--cache-ttl",
+        type=int,
+        default=86400,
+        help="cache lifetime in seconds (default: 86400)",
+    )
+    p_github.add_argument(
+        "--refresh", action="store_true", help="ignore cache and fetch from GitHub"
+    )
+    p_github.set_defaults(func=_cmd_fetch_github)
 
     p_tok = sub.add_parser("tokens", help="count tokens for text or messages")
     p_tok.add_argument("model_id", help="model identifier")

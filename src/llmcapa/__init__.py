@@ -41,7 +41,7 @@ try:
     __version__ = package_version("llmcapa")
 except PackageNotFoundError:
     # Source-tree fallback when the project is not installed yet.
-    __version__ = "0.5.43"
+    __version__ = "0.5.44"
 
 __all__ = [
     "AudioCapability",
@@ -67,6 +67,7 @@ __all__ = [
     "count_messages_tokens",
     "count_tokens",
     "default_registry",
+    "fetch_github_catalog",
     "fetch_huggingface",
     "fetch_openrouter",
     "find",
@@ -95,6 +96,9 @@ def get(model_id: str, provider: str | None = None) -> Capability:
         model_id: Model id, alias, or deployment name.
         provider: If given, scope the lookup to models from this
                   provider only (e.g. ``provider="novita"``).
+
+    A provider-scoped miss tries the cached llmcapa GitHub catalog once per
+    provider for this process and retries the lookup once.
     """
     return default_registry().get(model_id, provider)
 
@@ -136,7 +140,8 @@ def search(
     """Search models by prefix matching on model_id, display_name, or aliases.
 
     Case-insensitive prefix search. Results are sorted by
-    ``(deprecated, provider, model_id)``.
+    ``(deprecated, provider, model_id)``. A provider-scoped miss tries the
+    cached llmcapa GitHub catalog once per provider and retries once.
     """
     return default_registry().search(prefix, provider, include_deprecated, limit)
 
@@ -171,6 +176,25 @@ def fetch_huggingface(
         cache_ttl: Cache lifetime in seconds. Pass 0 to force refresh.
     """
     return default_registry().fetch_huggingface(limit=limit, cache_ttl=cache_ttl)
+
+
+def fetch_github_catalog(
+    provider: str,
+    cache_ttl: int = 86400,
+    ref: str = "main",
+    write_bundled: bool = True,
+) -> int:
+    """Fetch and register a provider catalog from the public llmcapa repository.
+
+    The corresponding bundled JSON is rewritten when the package directory is
+    writable. Set ``write_bundled=False`` to update only the user cache.
+    """
+    return default_registry().fetch_github_catalog(
+        provider=provider,
+        cache_ttl=cache_ttl,
+        ref=ref,
+        write_bundled=write_bundled,
+    )
 
 
 def register(cap: Capability) -> None:
