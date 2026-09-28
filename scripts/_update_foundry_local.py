@@ -238,6 +238,12 @@ def _variant(item: dict[str, Any]) -> dict[str, Any] | None:
         match = re.search(r"/models/([^/]+)", parent_asset)
         alias = match.group(1) if match else name
 
+    context_window = (
+        _as_int(system.get("textContextWindow"))
+        or _as_int(system.get("maxInputTokens"))
+        or _as_int(tags.get("contextLength"))
+        or _as_int(tags.get("maxInputTokens"))
+    )
     max_output = _as_int(system.get("maxOutputTokens")) or _as_int(
         tags.get("maxOutputTokens")
     )
@@ -251,6 +257,7 @@ def _variant(item: dict[str, Any]) -> dict[str, Any] | None:
         "license": str(tags.get("license") or "").strip(),
         "supports_tool_calling": _as_bool(tags.get("supportsToolCalling")),
         "supports_reasoning": _as_bool(tags.get("supportsReasoning")),
+        "context_window": context_window,
         "max_output_tokens": max_output,
         "uri": str(item.get("assetId") or "").strip(),
         "version": properties.get("version"),
@@ -281,6 +288,12 @@ def build_models(raw_rows: list[dict[str, Any]], region: str) -> list[dict[str, 
             {str(row["license"]) for row in variants if row.get("license")}
         )
         input_modalities, output_modalities, chat = _task_modalities(tasks)
+        context_windows = [
+            int(row["context_window"])
+            for row in variants
+            if isinstance(row.get("context_window"), int)
+            and int(row["context_window"]) > 0
+        ]
         max_outputs = [
             int(row["max_output_tokens"])
             for row in variants
@@ -299,7 +312,7 @@ def build_models(raw_rows: list[dict[str, Any]], region: str) -> list[dict[str, 
                 "provider": "foundry-local",
                 "model_id": model_id,
                 "display_name": str(variants[0].get("display_name") or official_alias),
-                "context_window": 0,
+                "context_window": min(context_windows) if context_windows else 0,
                 "max_output_tokens": min(max_outputs) if max_outputs else 0,
                 "input_modalities": input_modalities,
                 "output_modalities": output_modalities,
@@ -314,6 +327,7 @@ def build_models(raw_rows: list[dict[str, Any]], region: str) -> list[dict[str, 
                     [row.get("supports_reasoning") for row in variants]
                 ),
                 "supports_responses_api": False,
+                "license_type": licenses[0] if len(licenses) == 1 else "unknown",
                 "pricing": None,
                 "deprecated": False,
                 "aliases": sorted(aliases, key=str.lower),
