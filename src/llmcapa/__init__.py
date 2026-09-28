@@ -15,7 +15,6 @@ from importlib.metadata import PackageNotFoundError
 from importlib.metadata import version as package_version
 from pathlib import Path
 
-from .foundry_local import fetch_foundry_local
 from .models import (
     AudioCapability,
     AudioEndpointCapability,
@@ -68,7 +67,6 @@ __all__ = [
     "count_messages_tokens",
     "count_tokens",
     "default_registry",
-    "fetch_foundry_local",
     "fetch_github_catalog",
     "fetch_huggingface",
     "fetch_openrouter",

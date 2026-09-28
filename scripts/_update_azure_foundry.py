@@ -1305,6 +1305,8 @@ def main() -> None:
     for name in sorted(by_name.keys(), key=str.lower):
         item = by_name[name]
         entry = build_entry(item, price_map)
+        if entry.get("provider") == "foundry-local":
+            continue
         if item.get("source") == "ssr_card":
             previous = previous_by_id.get(str(name).lower(), {})
             for field in ssr_preserve_fields:

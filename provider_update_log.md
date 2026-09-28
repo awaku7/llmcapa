@@ -8723,3 +8723,9 @@
 - Token/audio/TTS prices are parsed from the current table; quote-only closed models remain unpriced.
 - No local sakura_legacy_models.json manifest or hard-coded model catalog is used.
 - Install copy synced
+
+## Foundry Local refresh (2026-09-28)
+
+- Source: https://ai.azure.com/api/centralus/ux/v1.0/entities/crossRegion
+- Official implementation: https://github.com/microsoft/Foundry-Local
+- Result: 65 logical models from 238 variants.

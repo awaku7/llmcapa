@@ -24,7 +24,9 @@ LOG = ROOT / "provider_update_log.md"
 REGION_PROBE_URL = "https://api.catalog.azureml.ms/asset-gallery/v1.0/models"
 DEFAULT_REGION = "centralus"
 CATALOG_URL_TEMPLATE = "https://ai.azure.com/api/{region}/ux/v1.0/entities/crossRegion"
-SOURCE_DOCS = "https://learn.microsoft.com/en-us/azure/foundry-local/reference/reference-rest"
+SOURCE_DOCS = (
+    "https://learn.microsoft.com/en-us/azure/foundry-local/reference/reference-rest"
+)
 SOURCE_IMPL = "https://github.com/microsoft/Foundry-Local"
 USER_AGENT = "AzureAiStudio"
 PAGE_SIZE = 50
@@ -53,8 +55,8 @@ def _detect_region() -> str:
         match = re.search(r"vienna-([a-z0-9]+)-\d+", served_by, re.IGNORECASE)
         if match:
             return match.group(1).lower()
-    except Exception:
-        pass
+    except (OSError, TypeError, ValueError):
+        return DEFAULT_REGION
     return DEFAULT_REGION
 
 
@@ -104,10 +106,12 @@ def fetch_catalog() -> tuple[str, list[dict[str, Any]]]:
         )
         response = payload.get("indexEntitiesResponse")
         if not isinstance(response, dict):
-            raise RuntimeError("Foundry Local catalog response has no indexEntitiesResponse")
+            raise TypeError(
+                "Foundry Local catalog response has no indexEntitiesResponse"
+            )
         page = response.get("value")
         if not isinstance(page, list):
-            raise RuntimeError("Foundry Local catalog response has no value list")
+            raise TypeError("Foundry Local catalog response has no value list")
         rows.extend(item for item in page if isinstance(item, dict))
 
         next_skip = response.get("nextSkip")
@@ -189,14 +193,18 @@ def _task_modalities(tasks: set[str]) -> tuple[list[str], list[str], bool]:
 
 
 def _variant(item: dict[str, Any]) -> dict[str, Any] | None:
-    annotations = item.get("annotations") if isinstance(item.get("annotations"), dict) else {}
+    annotations = (
+        item.get("annotations") if isinstance(item.get("annotations"), dict) else {}
+    )
     tags = annotations.get("tags") if isinstance(annotations.get("tags"), dict) else {}
     system = (
         annotations.get("systemCatalogData")
         if isinstance(annotations.get("systemCatalogData"), dict)
         else {}
     )
-    properties = item.get("properties") if isinstance(item.get("properties"), dict) else {}
+    properties = (
+        item.get("properties") if isinstance(item.get("properties"), dict) else {}
+    )
     variant_info = (
         properties.get("variantInfo")
         if isinstance(properties.get("variantInfo"), dict)
@@ -215,14 +223,20 @@ def _variant(item: dict[str, Any]) -> dict[str, Any] | None:
 
     alias = str(tags.get("alias") or "").strip()
     if not alias:
-        parents = variant_info.get("parents") if isinstance(variant_info.get("parents"), list) else []
+        parents = (
+            variant_info.get("parents")
+            if isinstance(variant_info.get("parents"), list)
+            else []
+        )
         parent_asset = ""
         if parents and isinstance(parents[0], dict):
             parent_asset = str(parents[0].get("assetId") or "")
         match = re.search(r"/models/([^/]+)", parent_asset)
         alias = match.group(1) if match else name
 
-    max_output = _as_int(system.get("maxOutputTokens")) or _as_int(tags.get("maxOutputTokens"))
+    max_output = _as_int(system.get("maxOutputTokens")) or _as_int(
+        tags.get("maxOutputTokens")
+    )
     return {
         "alias": alias,
         "name": name,
@@ -256,8 +270,12 @@ def build_models(raw_rows: list[dict[str, Any]], region: str) -> list[dict[str, 
     for model_id in sorted(grouped):
         variants = sorted(grouped[model_id], key=lambda row: row["entity_id"].lower())
         tasks = {str(row["task"]) for row in variants if row.get("task")}
-        publishers = sorted({str(row["publisher"]) for row in variants if row.get("publisher")})
-        licenses = sorted({str(row["license"]) for row in variants if row.get("license")})
+        publishers = sorted(
+            {str(row["publisher"]) for row in variants if row.get("publisher")}
+        )
+        licenses = sorted(
+            {str(row["license"]) for row in variants if row.get("license")}
+        )
         input_modalities, output_modalities, chat = _task_modalities(tasks)
         max_outputs = [
             int(row["max_output_tokens"])
@@ -266,9 +284,7 @@ def build_models(raw_rows: list[dict[str, Any]], region: str) -> list[dict[str, 
             and int(row["max_output_tokens"]) > 0
         ]
         official_alias = str(variants[0]["alias"])
-        aliases = {
-            str(row["name"]) for row in variants if row.get("name")
-        } | {
+        aliases = {str(row["name"]) for row in variants if row.get("name")} | {
             str(row["entity_id"]) for row in variants if row.get("entity_id")
         }
         if official_alias.lower() != model_id:
