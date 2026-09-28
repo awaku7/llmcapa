@@ -44,7 +44,7 @@ jobs:
         shell: bash
         run: |
           set -o pipefail
-          xargs -r python -m black --check --diff < changed-python.txt 2>&1 | tee black.log
+          xargs -r python -m black --check < changed-python.txt 2>&1 | tee black.log
       - name: Ruff
         if: steps.changed-python.outputs.has_files == 'true'
         shell: bash
