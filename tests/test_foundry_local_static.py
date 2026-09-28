@@ -120,4 +120,4 @@ def test_foundry_local_generic_image_blocks_remain_refreshable() -> None:
             continue
         checked += 1
         assert image.get("status") == "inferred"
-    assert checked == 9
+    assert checked == 9, f"expected 9 generic Foundry image blocks, got {checked}"
