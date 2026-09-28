@@ -133,5 +133,5 @@ def test_fetch_foundry_local_rejects_invalid_payload(monkeypatch) -> None:
         "llmcapa.foundry_local.urllib.request.urlopen",
         lambda request, timeout=None: BytesIO(b'{"unexpected": []}'),
     )
-    with pytest.raises(RuntimeError, match="models list"):
+    with pytest.raises(TypeError, match="models list"):
         llmcapa.fetch_foundry_local("http://127.0.0.1:5272", registry=Registry())
