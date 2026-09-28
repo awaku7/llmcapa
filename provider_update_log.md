@@ -8728,10 +8728,4 @@
 
 - Source: https://ai.azure.com/api/centralus/ux/v1.0/entities/crossRegion
 - Official implementation: https://github.com/microsoft/Foundry-Local
-- Result: 65 logical models from 238 variants.
-
-## Foundry Local refresh (2026-09-28)
-
-- Source: https://ai.azure.com/api/centralus/ux/v1.0/entities/crossRegion
-- Official implementation: https://github.com/microsoft/Foundry-Local
 - Result: 49 logical models from 238 variants.
