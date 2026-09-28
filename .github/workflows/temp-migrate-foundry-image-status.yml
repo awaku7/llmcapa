@@ -1,0 +1,73 @@
+name: Temporary migrate Foundry image statuses
+
+on:
+  push:
+    branches:
+      - fix/foundry-local-catalog-metadata
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/foundry-local-catalog-metadata
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Migrate legacy generic image blocks
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path('src/llmcapa/data/foundry_local.json')
+          raw = path.read_bytes()
+          newline = '\r\n' if b'\r\n' in raw else '\n'
+          data = json.loads(raw.decode('utf-8'))
+          migrated = []
+          for record in data.get('models', []):
+              image = record.get('image')
+              extra = record.get('extra') or {}
+              if not isinstance(image, dict):
+                  continue
+              if extra.get('source_type') != 'official_foundry_local_catalog_api':
+                  continue
+              if image.get('status') != 'documented':
+                  continue
+              if not image.get('source_url') or image.get('source_url') != extra.get('source'):
+                  continue
+              image['status'] = 'inferred'
+              migrated.append(record.get('model_id'))
+
+          if len(migrated) != 9:
+              raise SystemExit(f'expected 9 legacy image blocks, migrated {len(migrated)}: {migrated}')
+
+          payload = json.dumps(data, ensure_ascii=False, indent=2) + '\n'
+          path.write_bytes(payload.replace('\n', newline).encode('utf-8'))
+          print('migrated:', ', '.join(migrated))
+
+          tests = Path('tests/test_foundry_local_static.py')
+          body = tests.read_text(encoding='utf-8')
+          addition = '''\n\ndef test_foundry_local_generic_image_blocks_remain_refreshable() -> None:\n    import json\n    from pathlib import Path\n\n    path = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "foundry_local.json"\n    data = json.loads(path.read_text(encoding="utf-8"))\n    checked = 0\n    for record in data.get("models", []):\n        image = record.get("image")\n        extra = record.get("extra") or {}\n        if not isinstance(image, dict):\n            continue\n        if image.get("source_url") != extra.get("source"):\n            continue\n        checked += 1\n        assert image.get("status") == "inferred"\n    assert checked == 9\n'''
+          if 'test_foundry_local_generic_image_blocks_remain_refreshable' not in body:
+              tests.write_text(body.rstrip() + addition + '\n', encoding='utf-8')
+          PY
+      - name: Validate migration
+        run: |
+          python -m pip install -e . pytest black ruff
+          python -m black tests/test_foundry_local_static.py
+          python -m ruff check tests/test_foundry_local_static.py
+          python -m pytest -q tests/test_foundry_local_static.py
+      - name: Commit migration and remove temporary workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/temp-migrate-foundry-image-status.yml
+          git add src/llmcapa/data/foundry_local.json tests/test_foundry_local_static.py
+          git diff --cached --check
+          git commit -m "fix: migrate Foundry image blocks to inferred"
+          git push
