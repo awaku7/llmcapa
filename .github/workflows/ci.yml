@@ -12,25 +12,56 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
       - name: Install quality tools
         run: python -m pip install --upgrade pip black ruff build
+      - name: Determine changed Python files
+        id: changed-python
+        shell: bash
+        run: |
+          if [ -n "${{ github.base_ref }}" ]; then
+            base="origin/${{ github.base_ref }}"
+            range="$base...HEAD"
+          elif git rev-parse HEAD^ >/dev/null 2>&1; then
+            range="HEAD^...HEAD"
+          else
+            range="HEAD"
+          fi
+          git diff --name-only --diff-filter=ACMR "$range" -- '*.py' > changed-python.txt || true
+          if [ -s changed-python.txt ]; then
+            echo "has_files=true" >> "$GITHUB_OUTPUT"
+            cat changed-python.txt
+          else
+            echo "has_files=false" >> "$GITHUB_OUTPUT"
+            echo "No changed Python files."
+          fi
       - name: Black
-        run: python -m black --check src tests 2>&1 | tee black.log
+        if: steps.changed-python.outputs.has_files == 'true'
+        shell: bash
+        run: |
+          set -o pipefail
+          xargs -r python -m black --check < changed-python.txt 2>&1 | tee black.log
       - name: Ruff
-        if: always()
-        run: python -m ruff check src tests 2>&1 | tee ruff.log
+        if: steps.changed-python.outputs.has_files == 'true'
+        shell: bash
+        run: |
+          set -o pipefail
+          xargs -r python -m ruff check < changed-python.txt 2>&1 | tee ruff.log
       - name: Build
-        if: always()
-        run: python -m build 2>&1 | tee build.log
+        run: |
+          set -o pipefail
+          python -m build 2>&1 | tee build.log
       - name: Upload quality diagnostics
-        if: always()
+        if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: quality-diagnostics
           path: |
+            changed-python.txt
             black.log
             ruff.log
             build.log
@@ -50,14 +81,20 @@ jobs:
       - name: Install
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -e . pytest
+          python -m pip install -e . pytest playwright
       - name: Test
-        run: python -m pytest -q --junitxml=pytest-${{ matrix.python-version }}.xml 2>&1 | tee pytest-${{ matrix.python-version }}.log
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m pytest -q --junitxml=pytest-${{ matrix.python-version }}.xml 2>&1 | tee pytest-${{ matrix.python-version }}.log
       - name: Compile
         if: always()
-        run: python -m py_compile src/llmcapa/*.py tests/*.py 2>&1 | tee compile-${{ matrix.python-version }}.log
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m py_compile src/llmcapa/*.py tests/*.py 2>&1 | tee compile-${{ matrix.python-version }}.log
       - name: Upload test diagnostics
-        if: always()
+        if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: test-diagnostics-${{ matrix.python-version }}
