@@ -1,7 +1,6 @@
 """Tests for the bundled Microsoft Foundry Local catalog."""
 
 import llmcapa
-
 from scripts._capability_normalizers import normalize_record, preserve_capability_blocks
 
 
