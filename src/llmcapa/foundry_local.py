@@ -63,9 +63,7 @@ def _positive_int(value: Any) -> int | None:
     return None
 
 
-def _model_setting_value(
-    record: dict[str, Any], keys: tuple[str, ...]
-) -> int | None:
+def _model_setting_value(record: dict[str, Any], keys: tuple[str, ...]) -> int | None:
     for key in keys:
         value = _positive_int(record.get(key))
         if value is not None:
