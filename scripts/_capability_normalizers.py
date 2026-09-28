@@ -264,7 +264,7 @@ def audio_generic(record: dict[str, Any]) -> dict[str, Any]:
     official_source = _source(extra)
     if official_source:
         result["source_url"] = official_source
-        result["status"] = "documented"
+        result["status"] = "inferred"
     if media_type:
         result["extra"] = {"media_model_type": media_type}
     return result
@@ -360,7 +360,7 @@ def video_generic(record: dict[str, Any]) -> dict[str, Any]:
     official_source = _source(extra)
     if official_source:
         result["source_url"] = official_source
-        result["status"] = "documented"
+        result["status"] = "inferred"
     if media_type:
         result["extra"] = {"media_model_type": media_type}
     return result
@@ -430,13 +430,13 @@ def image_input_capability(record: dict[str, Any]) -> dict[str, Any]:
     inputs = {str(x).lower() for x in record.get("input_modalities", [])}
     if "image" not in inputs:
         return {}
-    result: dict[str, Any] = {"accepts_image_input": True}
+    result: dict[str, Any] = {
+        "accepts_image_input": True,
+        "status": "inferred",
+    }
     source = _source_url(record)
     if source:
         result["source_url"] = source
-        result["status"] = "documented"
-    else:
-        result["status"] = "inferred"
     return result
 
 
@@ -453,7 +453,6 @@ def minimal_image_capability(record: dict[str, Any]) -> dict[str, Any] | None:
     source = _source_url(record)
     if source:
         result["source_url"] = source
-        result["status"] = "documented"
     result.update(
         IMAGE_INPUT_OVERRIDES.get(
             (record.get("provider", ""), record.get("model_id", "")), {}
@@ -625,7 +624,6 @@ def decision_generic(record: dict[str, Any]) -> dict[str, Any]:
     source = _source_url(record)
     if source:
         result["source_url"] = source
-        result["status"] = "documented"
     return result
 
 
@@ -662,7 +660,7 @@ def structured_generic(record: dict[str, Any]) -> dict[str, dict[str, Any]]:
     model_id = str(record.get("model_id", "")).lower()
     result: dict[str, dict[str, Any]] = {}
     source = _source(extra)
-    status = "documented" if source else "inferred"
+    status = "inferred"
 
     file_like = inputs & {"file", "pdf", "csv", "json", "code", "data"}
     if file_like or outputs & {"file", "pdf", "csv", "json"}:
@@ -797,6 +795,7 @@ def apply_audio(data_dir: Path = DEFAULT_DATA) -> dict[str, int]:
                 (str(record.get("provider", "")), str(record.get("model_id", ""))),
                 {},
             )
+            or _is_derived_block(dict(record.get("audio") or {}))
         ),
         normalize_audio_record,
     )
@@ -825,6 +824,7 @@ def apply_video(data_dir: Path = DEFAULT_DATA) -> dict[str, int]:
                 (str(record.get("provider", "")), str(record.get("model_id", ""))),
                 {},
             )
+            or _is_derived_block(dict(record.get("video") or {}))
         ),
         normalize_video_record,
     )
@@ -894,6 +894,10 @@ def apply_structured(data_dir: Path = DEFAULT_DATA) -> dict[str, int]:
             or STRUCTURED_OVERRIDES.get(
                 (str(record.get("provider", "")), str(record.get("model_id", ""))),
                 {},
+            )
+            or any(
+                _is_derived_block(dict(record.get(key) or {}))
+                for key in ("document", "embedding", "rerank", "spatial")
             )
         ),
         normalize_structured_record,

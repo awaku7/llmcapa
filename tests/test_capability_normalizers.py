@@ -1,6 +1,9 @@
 """Regression tests for shared record-level capability normalization."""
 
 from scripts._capability_normalizers import (
+    apply_audio,
+    apply_structured,
+    apply_video,
     normalize_audio_record,
     normalize_decision_record,
     normalize_image_record,
@@ -318,3 +321,61 @@ def test_stale_inferred_embedding_block_is_removed():
 
     assert normalize_record(record, checked_at="2026-09-29") is True
     assert "embedding" not in record
+
+
+def test_generic_image_source_url_remains_refreshable_inference():
+    record = {
+        "provider": "foundry-local",
+        "model_id": "vision-chat",
+        "input_modalities": ["text", "image"],
+        "output_modalities": ["text"],
+        "extra": {"source": "https://ai.azure.com/api/catalog"},
+    }
+    assert normalize_image_record(record, checked_at="2026-09-29") is True
+    assert record["image"]["accepts_image_input"] is True
+    assert record["image"]["source_url"] == "https://ai.azure.com/api/catalog"
+    assert record["image"]["status"] == "inferred"
+
+
+def test_compatibility_apply_functions_remove_stale_derived_blocks(tmp_path):
+    path = tmp_path / "demo.json"
+    path.write_text(
+        __import__("json").dumps(
+            {
+                "models": [
+                    {
+                        "provider": "test",
+                        "model_id": "old-audio",
+                        "input_modalities": ["text"],
+                        "output_modalities": ["text"],
+                        "audio": {"transcription": True, "status": "inferred"},
+                    },
+                    {
+                        "provider": "test",
+                        "model_id": "old-video",
+                        "input_modalities": ["text"],
+                        "output_modalities": ["text"],
+                        "video": {"generation": True, "status": "inferred"},
+                    },
+                    {
+                        "provider": "test",
+                        "model_id": "old-vector-model",
+                        "input_modalities": ["text"],
+                        "output_modalities": ["text"],
+                        "embedding": {"embedding": True, "status": "inferred"},
+                    },
+                ]
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    assert apply_audio(tmp_path)["records_changed"] == 1
+    assert apply_video(tmp_path)["records_changed"] == 1
+    assert apply_structured(tmp_path)["records_changed"] == 1
+    data = __import__("json").loads(path.read_text(encoding="utf-8"))
+    by_id = {record["model_id"]: record for record in data["models"]}
+    assert "audio" not in by_id["old-audio"]
+    assert "video" not in by_id["old-video"]
+    assert "embedding" not in by_id["old-vector-model"]
