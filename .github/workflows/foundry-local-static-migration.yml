@@ -22,6 +22,7 @@ jobs:
         shell: bash
         run: |
           python - <<'PY'
+          import json
           import re
           from pathlib import Path
 
@@ -92,9 +93,38 @@ jobs:
           )
           scraper.write_text(text, encoding="utf-8")
 
+          azure_updater = Path("scripts/_update_azure_foundry.py")
+          text = azure_updater.read_text(encoding="utf-8")
+          anchor = "        entry = build_entry(item, price_map)\n"
+          skip = (
+              '        if entry.get("provider") == "foundry-local":\n'
+              "            continue\n"
+          )
+          if skip not in text:
+              if anchor not in text:
+                  raise SystemExit("Azure Foundry updater entry anchor not found")
+              text = text.replace(anchor, anchor + skip, 1)
+          azure_updater.write_text(text, encoding="utf-8")
+
+          azure_data = Path("src/llmcapa/data/azure_foundry.json")
+          payload = json.loads(azure_data.read_text(encoding="utf-8"))
+          before = len(payload.get("models", []))
+          payload["models"] = [
+              model
+              for model in payload.get("models", [])
+              if str(model.get("provider", "")).strip().lower().replace("_", "-")
+              != "foundry-local"
+          ]
+          removed = before - len(payload["models"])
+          print(f"removed {removed} Foundry Local rows from azure_foundry.json")
+          azure_data.write_text(
+              json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+              encoding="utf-8",
+          )
+
           test = Path("tests/test_foundry_local_static.py")
           test.write_text(
-              '''"""Tests for the bundled Microsoft Foundry Local catalog."""\n\nimport llmcapa\n\n\ndef test_foundry_local_catalog_is_bundled_and_offline() -> None:\n    models = llmcapa.list_models(provider="foundry-local")\n    assert models\n    assert all(model.provider == "foundry-local" for model in models)\n\n\ndef test_foundry_local_aliases_and_capabilities_are_queryable() -> None:\n    models = llmcapa.list_models(provider="foundry-local")\n    model = next((item for item in models if item.aliases), models[0])\n    resolved = llmcapa.get(model.model_id, provider="foundry_local")\n    assert resolved.model_id == model.model_id\n    assert resolved.extra.get("source_type") == "official_foundry_local_catalog_api"\n\n\ndef test_foundry_local_is_not_a_runtime_fetch_api() -> None:\n    assert not hasattr(llmcapa, "fetch_foundry_local")\n''',
+              '''"""Tests for the bundled Microsoft Foundry Local catalog."""\n\nimport llmcapa\n\n\ndef test_foundry_local_catalog_is_bundled_and_offline() -> None:\n    models = llmcapa.list_models(provider="foundry-local")\n    assert models\n    assert all(model.provider == "foundry-local" for model in models)\n    assert all(model.extra.get("source_type") == "official_foundry_local_catalog_api" for model in models)\n\n\ndef test_foundry_local_aliases_and_capabilities_are_queryable() -> None:\n    models = llmcapa.list_models(provider="foundry-local")\n    model = next((item for item in models if item.aliases), models[0])\n    resolved = llmcapa.get(model.model_id, provider="foundry_local")\n    assert resolved.model_id == model.model_id\n    assert resolved.extra.get("source_type") == "official_foundry_local_catalog_api"\n\n\ndef test_foundry_local_is_not_a_runtime_fetch_api() -> None:\n    assert not hasattr(llmcapa, "fetch_foundry_local")\n''',
               encoding="utf-8",
           )
           PY
