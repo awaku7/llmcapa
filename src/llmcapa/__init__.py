@@ -15,24 +15,25 @@ from importlib.metadata import PackageNotFoundError
 from importlib.metadata import version as package_version
 from pathlib import Path
 
+from .foundry_local import fetch_foundry_local
 from .models import (
     AudioCapability,
     AudioEndpointCapability,
     Capability,
+    ComputerUseCapability,
     DecisionCapability,
-    VideoCapability,
-    VideoEndpointCapability,
     DocumentCapability,
     EmbeddingCapability,
-    RerankCapability,
-    SpatialCapability,
-    ComputerUseCapability,
     Feature,
     ImageAnalysisCapability,
     ImageCapability,
     ImageEndpointCapability,
     ReasoningEffort,
     ReasoningMode,
+    RerankCapability,
+    SpatialCapability,
+    VideoCapability,
+    VideoEndpointCapability,
 )
 from .registry import ModelNotFoundError, Registry, default_registry
 from .tokenizer import count_messages_tokens, count_tokens
@@ -47,14 +48,10 @@ __all__ = [
     "AudioCapability",
     "AudioEndpointCapability",
     "Capability",
+    "ComputerUseCapability",
     "DecisionCapability",
-    "VideoCapability",
-    "VideoEndpointCapability",
     "DocumentCapability",
     "EmbeddingCapability",
-    "RerankCapability",
-    "SpatialCapability",
-    "ComputerUseCapability",
     "Feature",
     "ImageAnalysisCapability",
     "ImageCapability",
@@ -63,10 +60,15 @@ __all__ = [
     "ReasoningEffort",
     "ReasoningMode",
     "Registry",
+    "RerankCapability",
+    "SpatialCapability",
+    "VideoCapability",
+    "VideoEndpointCapability",
     "__version__",
     "count_messages_tokens",
     "count_tokens",
     "default_registry",
+    "fetch_foundry_local",
     "fetch_github_catalog",
     "fetch_huggingface",
     "fetch_openrouter",
@@ -74,6 +76,7 @@ __all__ = [
     "find_model",
     "get",
     "get_computer_use_capability",
+    "get_reasoning_mode_values",
     "list_models",
     "load_extra",
     "providers",
@@ -85,7 +88,6 @@ __all__ = [
     "supports_json_mode",
     "supports_json_schema",
     "supports_tool_search",
-    "get_reasoning_mode_values",
 ]
 
 
