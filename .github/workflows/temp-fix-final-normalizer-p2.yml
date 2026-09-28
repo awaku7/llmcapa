@@ -1,0 +1,97 @@
+name: Temporary fix final normalizer review findings
+
+on:
+  push:
+    branches:
+      - fix/foundry-local-catalog-metadata
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/foundry-local-catalog-metadata
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Patch generic provenance and compatibility predicates
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('scripts/_capability_normalizers.py')
+          text = path.read_text(encoding='utf-8')
+
+          old = '''    official_source = _source(extra)\n    if official_source:\n        result["source_url"] = official_source\n        result["status"] = "documented"\n'''
+          new = '''    official_source = _source(extra)\n    if official_source:\n        result["source_url"] = official_source\n        result["status"] = "inferred"\n'''
+          if text.count(old) != 2:
+              raise SystemExit(f'expected 2 audio/video source blocks, found {text.count(old)}')
+          text = text.replace(old, new)
+
+          old = '''    result: dict[str, Any] = {"accepts_image_input": True}\n    source = _source_url(record)\n    if source:\n        result["source_url"] = source\n        result["status"] = "documented"\n    else:\n        result["status"] = "inferred"\n'''
+          new = '''    result: dict[str, Any] = {\n        "accepts_image_input": True,\n        "status": "inferred",\n    }\n    source = _source_url(record)\n    if source:\n        result["source_url"] = source\n'''
+          if old not in text:
+              raise SystemExit('image input source block not found')
+          text = text.replace(old, new, 1)
+
+          old = '''    source = _source_url(record)\n    if source:\n        result["source_url"] = source\n        result["status"] = "documented"\n'''
+          new = '''    source = _source_url(record)\n    if source:\n        result["source_url"] = source\n'''
+          if text.count(old) != 2:
+              raise SystemExit(f'expected 2 generic image/decision source blocks, found {text.count(old)}')
+          text = text.replace(old, new)
+
+          old = '''    source = _source(extra)\n    status = "documented" if source else "inferred"\n'''
+          new = '''    source = _source(extra)\n    status = "inferred"\n'''
+          if old not in text:
+              raise SystemExit('structured source status block not found')
+          text = text.replace(old, new, 1)
+
+          old = '''            audio_generic(record)\n            or AUDIO_OVERRIDES.get(\n                (str(record.get("provider", "")), str(record.get("model_id", ""))),\n                {},\n            )\n'''
+          new = '''            audio_generic(record)\n            or AUDIO_OVERRIDES.get(\n                (str(record.get("provider", "")), str(record.get("model_id", ""))),\n                {},\n            )\n            or _is_derived_block(dict(record.get("audio") or {}))\n'''
+          if old not in text:
+              raise SystemExit('apply_audio predicate not found')
+          text = text.replace(old, new, 1)
+
+          old = '''            video_generic(record)\n            or VIDEO_OVERRIDES.get(\n                (str(record.get("provider", "")), str(record.get("model_id", ""))),\n                {},\n            )\n'''
+          new = '''            video_generic(record)\n            or VIDEO_OVERRIDES.get(\n                (str(record.get("provider", "")), str(record.get("model_id", ""))),\n                {},\n            )\n            or _is_derived_block(dict(record.get("video") or {}))\n'''
+          if old not in text:
+              raise SystemExit('apply_video predicate not found')
+          text = text.replace(old, new, 1)
+
+          old = '''            structured_generic(record)\n            or STRUCTURED_OVERRIDES.get(\n                (str(record.get("provider", "")), str(record.get("model_id", ""))),\n                {},\n            )\n'''
+          new = '''            structured_generic(record)\n            or STRUCTURED_OVERRIDES.get(\n                (str(record.get("provider", "")), str(record.get("model_id", ""))),\n                {},\n            )\n            or any(\n                _is_derived_block(dict(record.get(key) or {}))\n                for key in ("document", "embedding", "rerank", "spatial")\n            )\n'''
+          if old not in text:
+              raise SystemExit('apply_structured predicate not found')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+
+          tests = Path('tests/test_capability_normalizers.py')
+          body = tests.read_text(encoding='utf-8')
+          old = '''from scripts._capability_normalizers import (\n    normalize_audio_record,\n'''
+          new = '''from scripts._capability_normalizers import (\n    apply_audio,\n    apply_structured,\n    apply_video,\n    normalize_audio_record,\n'''
+          if old not in body:
+              raise SystemExit('test import block not found')
+          body = body.replace(old, new, 1)
+          addition = '''\n\ndef test_generic_image_source_url_remains_refreshable_inference():\n    record = {\n        "provider": "foundry-local",\n        "model_id": "vision-chat",\n        "input_modalities": ["text", "image"],\n        "output_modalities": ["text"],\n        "extra": {"source": "https://ai.azure.com/api/catalog"},\n    }\n\n    assert normalize_image_record(record, checked_at="2026-09-29") is True\n    assert record["image"]["accepts_image_input"] is True\n    assert record["image"]["source_url"] == "https://ai.azure.com/api/catalog"\n    assert record["image"]["status"] == "inferred"\n\n\ndef test_compatibility_apply_functions_remove_stale_derived_blocks(tmp_path):\n    path = tmp_path / "demo.json"\n    path.write_text(\n        __import__("json").dumps(\n            {\n                "models": [\n                    {\n                        "provider": "test",\n                        "model_id": "old-audio",\n                        "input_modalities": ["text"],\n                        "output_modalities": ["text"],\n                        "audio": {"transcription": True, "status": "inferred"},\n                    },\n                    {\n                        "provider": "test",\n                        "model_id": "old-video",\n                        "input_modalities": ["text"],\n                        "output_modalities": ["text"],\n                        "video": {"generation": True, "status": "inferred"},\n                    },\n                    {\n                        "provider": "test",\n                        "model_id": "old-embedding",\n                        "input_modalities": ["text"],\n                        "output_modalities": ["text"],\n                        "embedding": {"embedding": True, "status": "inferred"},\n                    },\n                ]\n            },\n            indent=2,\n        )\n        + "\\n",\n        encoding="utf-8",\n    )\n\n    assert apply_audio(tmp_path)["records_changed"] == 1\n    assert apply_video(tmp_path)["records_changed"] == 1\n    assert apply_structured(tmp_path)["records_changed"] == 1\n\n    data = __import__("json").loads(path.read_text(encoding="utf-8"))\n    by_id = {record["model_id"]: record for record in data["models"]}\n    assert "audio" not in by_id["old-audio"]\n    assert "video" not in by_id["old-video"]\n    assert "embedding" not in by_id["old-embedding"]\n'''
+          if 'test_generic_image_source_url_remains_refreshable_inference' not in body:
+              body = body.rstrip() + addition + '\n'
+          tests.write_text(body, encoding='utf-8')
+          PY
+      - name: Validate focused changes
+        run: |
+          python -m pip install --upgrade black ruff pytest
+          python -m black scripts/_capability_normalizers.py tests/test_capability_normalizers.py
+          python -m ruff check scripts/_capability_normalizers.py tests/test_capability_normalizers.py
+          python -m pytest -q tests/test_capability_normalizers.py
+      - name: Commit fix and remove temporary workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/temp-fix-final-normalizer-p2.yml
+          git add scripts/_capability_normalizers.py tests/test_capability_normalizers.py
+          git diff --cached --check
+          git commit -m "fix: keep generic capability inference refreshable"
+          git push
