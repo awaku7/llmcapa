@@ -555,12 +555,17 @@ def normalize_image_record(
     merged = {**base, **old, **override}
     if base or override:
         merged.setdefault("checked_at", checked_at or _today())
-    if merged == old:
-        return False
-    record["image"] = merged
-    if "image" in {str(x).lower() for x in record.get("input_modalities", [])}:
+    block_changed = merged != old
+    if block_changed:
+        record["image"] = merged
+    top_changed = False
+    if (
+        "image" in {str(x).lower() for x in record.get("input_modalities", [])}
+        and record.get("supports_vision") is not True
+    ):
         record["supports_vision"] = True
-    return True
+        top_changed = True
+    return block_changed or top_changed
 
 
 def decision_generic(record: dict[str, Any]) -> dict[str, Any]:
@@ -590,12 +595,17 @@ def normalize_decision_record(
     old = dict(record.get("decision") or {})
     merged = {**base, **old}
     merged.setdefault("checked_at", checked_at or _today())
-    if "decision" in {str(x).lower() for x in record.get("output_modalities", [])}:
+    top_changed = False
+    if (
+        "decision" in {str(x).lower() for x in record.get("output_modalities", [])}
+        and record.get("supports_chat_completion") is not False
+    ):
         record["supports_chat_completion"] = False
-    if merged == old:
-        return False
-    record["decision"] = merged
-    return True
+        top_changed = True
+    block_changed = merged != old
+    if block_changed:
+        record["decision"] = merged
+    return block_changed or top_changed
 
 
 def structured_generic(record: dict[str, Any]) -> dict[str, dict[str, Any]]:

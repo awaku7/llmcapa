@@ -136,3 +136,40 @@ def test_decision_block_is_preserved_before_normalization():
     assert record["decision"]["question_kinds"] == ["choice", "score"]
     assert record["decision"]["free_form_text"] is False
     assert record["supports_chat_completion"] is False
+
+
+def test_image_top_level_flag_change_is_reported():
+    record = {
+        "provider": "test",
+        "model_id": "vision-chat",
+        "input_modalities": ["text", "image"],
+        "output_modalities": ["text"],
+        "supports_vision": False,
+        "image": {
+            "accepts_image_input": True,
+            "status": "inferred",
+            "checked_at": "2026-09-29",
+        },
+    }
+
+    assert normalize_image_record(record, checked_at="2026-09-29") is True
+    assert record["supports_vision"] is True
+
+
+def test_decision_top_level_flag_change_is_reported():
+    record = {
+        "provider": "test",
+        "model_id": "typed-decision",
+        "input_modalities": ["text"],
+        "output_modalities": ["decision"],
+        "supports_chat_completion": True,
+        "decision": {
+            "decision": True,
+            "free_form_text": False,
+            "status": "inferred",
+            "checked_at": "2026-09-29",
+        },
+    }
+
+    assert normalize_decision_record(record, checked_at="2026-09-29") is True
+    assert record["supports_chat_completion"] is False
