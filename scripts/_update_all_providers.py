@@ -1,6 +1,6 @@
 """Run one provider updater at a time.
 
-Provider data must not be bulk-replaced from OpenRouter.  The actual update
+Provider data must not be bulk-replaced from OpenRouter. The actual update
 logic lives in provider-specific scripts; this compatibility entry point only
 dispatches to one selected script.
 
@@ -18,8 +18,14 @@ import subprocess
 import sys
 from pathlib import Path
 
+try:
+    import _capability_normalizers as _normalizers
+except ImportError:  # package-style test imports
+    from scripts import _capability_normalizers as _normalizers
+
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
+DATA = ROOT / "src" / "llmcapa" / "data"
 
 PROVIDER_SCRIPTS = {
     "aion-labs": "_update_aion_labs.py",
@@ -64,20 +70,12 @@ ALIASES = {
     "kimi": "moonshot",
 }
 
-CAPABILITY_FIELDS = (
-    "audio",
-    "video",
-    "image",
-    "document",
-    "embedding",
-    "rerank",
-    "spatial",
-)
+CAPABILITY_FIELDS = _normalizers.CAPABILITY_FIELDS
 
 
 def _read_catalogs() -> dict[Path, dict]:
     catalogs = {}
-    for path in sorted((ROOT / "src" / "llmcapa" / "data").glob("*.json")):
+    for path in sorted(DATA.glob("*.json")):
         raw = path.read_bytes()
         catalogs[path] = json.loads(raw.decode("utf-8"))
     return catalogs
@@ -117,22 +115,14 @@ def _preserve_capabilities(before: dict[Path, dict]) -> int:
     return restored
 
 
-def _run_capability_postprocessors() -> int:
-    """Rebuild derived capability metadata after a catalog refresh."""
-    commands = [
-        ("_audio_capability_postprocess.py", []),
-        ("_video_capability_postprocess.py", []),
-        ("_structured_capability_postprocess.py", []),
-        ("_image_capability_postprocess.py", ["--write"]),
-    ]
-    for name, args in commands:
-        result = subprocess.run(
-            [sys.executable, str(SCRIPTS / name), *args],
-            cwd=ROOT,
-            check=False,
-        )
-        if result.returncode != 0:
-            return result.returncode
+def _normalize_capabilities() -> int:
+    """Normalize derived capability metadata in a single pass."""
+    summary = _normalizers.apply_all(DATA)
+    print(
+        "Capability normalization: "
+        f"checked={summary['records_checked']} changed={summary['records_changed']}",
+        flush=True,
+    )
     return 0
 
 
@@ -168,7 +158,7 @@ def main() -> int:
     restored = _preserve_capabilities(before)
     if restored:
         print(f"Preserved capability blocks: {restored}", flush=True)
-    return _run_capability_postprocessors()
+    return _normalize_capabilities()
 
 
 if __name__ == "__main__":
