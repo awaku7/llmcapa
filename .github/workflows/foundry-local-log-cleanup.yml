@@ -1,0 +1,36 @@
+name: Foundry Local log cleanup
+
+on:
+  push:
+    branches: [fix/foundry-local-static-catalog]
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    if: ${{ !contains(github.event.head_commit.message, '[foundry-local-log-cleanup]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/foundry-local-static-catalog
+      - name: Keep only current Foundry Local refresh entry and restore CRLF
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("provider_update_log.md")
+          text = path.read_bytes().decode("utf-8").replace("\r\n", "\n")
+          stale = '''\n## Foundry Local refresh (2026-09-28)\n\n- Source: https://ai.azure.com/api/centralus/ux/v1.0/entities/crossRegion\n- Official implementation: https://github.com/microsoft/Foundry-Local\n- Result: 65 logical models from 238 variants.\n'''
+          text = text.replace(stale, "", 1)
+          path.write_bytes(text.replace("\n", "\r\n").encode("utf-8"))
+          PY
+      - name: Commit log cleanup
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add provider_update_log.md
+          git commit -m "chore: clean Foundry Local refresh log [foundry-local-log-cleanup]"
+          git push origin HEAD:fix/foundry-local-static-catalog
