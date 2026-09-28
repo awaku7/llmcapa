@@ -215,6 +215,10 @@ def _variant(item: dict[str, Any]) -> dict[str, Any] | None:
         if isinstance(variant_info.get("variantMetadata"), dict)
         else {}
     )
+    device = str(metadata.get("device") or "").strip()
+    execution_provider = str(metadata.get("executionProvider") or "").strip()
+    if not metadata or not device or not execution_provider:
+        return None
 
     name = str(properties.get("name") or "").strip()
     entity_id = str(item.get("entityId") or "").strip()

@@ -23,3 +23,12 @@ def test_foundry_local_aliases_and_capabilities_are_queryable() -> None:
 
 def test_foundry_local_is_not_a_runtime_fetch_api() -> None:
     assert not hasattr(llmcapa, "fetch_foundry_local")
+
+
+def test_foundry_local_catalog_contains_only_runnable_variants() -> None:
+    models = llmcapa.list_models(provider="foundry-local")
+    for model in models:
+        variants = model.extra.get("variants", [])
+        assert variants
+        assert all(variant.get("device") for variant in variants)
+        assert all(variant.get("execution_provider") for variant in variants)
