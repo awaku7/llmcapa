@@ -2,6 +2,8 @@
 
 import llmcapa
 
+from scripts._capability_normalizers import normalize_record, preserve_capability_blocks
+
 
 def test_foundry_local_catalog_is_bundled_and_offline() -> None:
     models = llmcapa.list_models(provider="foundry-local")
@@ -52,7 +54,7 @@ def test_foundry_local_exposes_catalog_context_windows_and_licenses() -> None:
             assert model.license_type.lower() == next(iter(licenses))
 
 
-def test_foundry_local_specialized_capabilities_are_postprocessed() -> None:
+def test_foundry_local_specialized_capabilities_are_normalized() -> None:
     models = llmcapa.list_models(provider="foundry-local")
     audio_models = [
         model
@@ -69,3 +71,29 @@ def test_foundry_local_specialized_capabilities_are_postprocessed() -> None:
     assert embedding_models
     assert all(model.audio is not None for model in audio_models)
     assert all(model.embedding is not None for model in embedding_models)
+
+
+def test_integrated_normalizer_preserves_curated_capability_details() -> None:
+    previous = {
+        "provider": "foundry-local",
+        "model_id": "sample-audio",
+        "audio": {
+            "accepts_audio_input": True,
+            "curated_detail": "keep-me",
+            "extra": {"curated": True},
+        },
+    }
+    refreshed = {
+        "provider": "foundry-local",
+        "model_id": "sample-audio",
+        "input_modalities": ["audio"],
+        "output_modalities": ["text"],
+        "supports_streaming": False,
+        "extra": {},
+    }
+
+    assert preserve_capability_blocks(refreshed, previous)
+    assert normalize_record(refreshed, checked_at="2026-09-29")
+    assert refreshed["audio"]["curated_detail"] == "keep-me"
+    assert refreshed["audio"]["extra"]["curated"] is True
+    assert refreshed["audio"]["speech_understanding"] is True
