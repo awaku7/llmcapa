@@ -178,6 +178,11 @@ def audio_generic(record: dict[str, Any]) -> dict[str, Any]:
     extra = record.get("extra") or {}
     model_id = str(record.get("model_id", "")).lower()
     media_type = str(extra.get("media_model_type", "")).lower()
+    tasks = {
+        str(task).lower().strip()
+        for task in extra.get("tasks", [])
+        if str(task).strip()
+    }
     has_audio_in = bool(inputs & {"audio", "speech"})
     has_audio_out = bool(outputs & {"audio", "speech"})
     if not (has_audio_in or has_audio_out):
@@ -188,8 +193,11 @@ def audio_generic(record: dict[str, Any]) -> dict[str, Any]:
         "speech_generation": has_audio_out,
         "speech_understanding": has_audio_in,
         "supports_streaming": (
-            bool(record.get("supports_streaming"))
-            if record.get("supports_streaming") is not None
+            True
+            if record.get("supports_streaming") is True
+            or "streaming" in model_id
+            or "streaming" in media_type
+            or any("streaming" in task for task in tasks)
             else None
         ),
         "supports_realtime": (
@@ -199,11 +207,13 @@ def audio_generic(record: dict[str, Any]) -> dict[str, Any]:
         ),
     }
     if any(
-        token in model_id or token in media_type
+        token in model_id or token in media_type or any(token in task for task in tasks)
         for token in (
             "transcrib",
             "translat",
             "speech-to-text",
+            "speech-recognition",
+            "automatic-speech-recognition",
             "stt",
             "asr",
             "whisper",
@@ -237,12 +247,23 @@ def normalize_audio_record(
         return False
 
     old = dict(record.get("audio") or {})
-    merged = {**base, **old, **override}
-    merged["extra"] = {
-        **(base.get("extra") or {}),
-        **(old.get("extra") or {}),
-        **(override.get("extra") or {}),
-    }
+    old_is_inferred = old.get("status") == "inferred"
+    merged = (
+        {**old, **base, **override} if old_is_inferred else {**base, **old, **override}
+    )
+    merged["extra"] = (
+        {
+            **(old.get("extra") or {}),
+            **(base.get("extra") or {}),
+            **(override.get("extra") or {}),
+        }
+        if old_is_inferred
+        else {
+            **(base.get("extra") or {}),
+            **(old.get("extra") or {}),
+            **(override.get("extra") or {}),
+        }
+    )
     endpoint = dict(merged.get("endpoints") or {})
     if merged.get("transcription"):
         endpoint.setdefault("transcription", True)

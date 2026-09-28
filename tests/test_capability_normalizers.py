@@ -173,3 +173,59 @@ def test_decision_top_level_flag_change_is_reported():
 
     assert normalize_decision_record(record, checked_at="2026-09-29") is True
     assert record["supports_chat_completion"] is False
+
+
+def test_audio_catalog_task_drives_transcription_without_name_hint():
+    record = {
+        "provider": "foundry-local",
+        "model_id": "parakeet-tdt-0.6b-v2",
+        "input_modalities": ["audio"],
+        "output_modalities": ["text"],
+        "supports_streaming": False,
+        "extra": {"tasks": ["automatic-speech-recognition"]},
+    }
+
+    assert normalize_audio_record(record, checked_at="2026-09-29") is True
+    assert record["audio"]["transcription"] is True
+    assert record["audio"]["supports_streaming"] is None
+
+
+def test_audio_streaming_hint_overrides_chat_only_false_for_inferred_block():
+    record = {
+        "provider": "foundry-local",
+        "model_id": "nemotron-speech-streaming-en-0.6b",
+        "input_modalities": ["audio"],
+        "output_modalities": ["text"],
+        "supports_streaming": False,
+        "extra": {"tasks": ["automatic-speech-recognition"]},
+        "audio": {
+            "accepts_audio_input": True,
+            "speech_understanding": True,
+            "supports_streaming": False,
+            "status": "inferred",
+            "checked_at": "2026-09-28",
+        },
+    }
+
+    assert normalize_audio_record(record, checked_at="2026-09-29") is True
+    assert record["audio"]["transcription"] is True
+    assert record["audio"]["supports_streaming"] is True
+
+
+def test_documented_audio_streaming_value_remains_curated():
+    record = {
+        "provider": "test",
+        "model_id": "streaming-audio",
+        "input_modalities": ["audio"],
+        "output_modalities": ["text"],
+        "supports_streaming": True,
+        "audio": {
+            "accepts_audio_input": True,
+            "supports_streaming": False,
+            "status": "documented",
+            "checked_at": "2026-09-28",
+        },
+    }
+
+    normalize_audio_record(record, checked_at="2026-09-29")
+    assert record["audio"]["supports_streaming"] is False
