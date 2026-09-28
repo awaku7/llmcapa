@@ -35,7 +35,7 @@ jobs:
 
           test = Path("tests/test_foundry_local_static.py")
           text = test.read_text(encoding="utf-8")
-          addition = '''\n\ndef test_foundry_local_catalog_contains_only_runnable_variants() -> None:\n    models = llmcapa.list_models(provider="foundry-local")\n    for model in models:\n        variants = model.extra.get("foundry_local", {}).get("variants", [])\n        assert variants\n        assert all(variant.get("device") for variant in variants)\n        assert all(variant.get("execution_provider") for variant in variants)\n'''
+          addition = '''\n\ndef test_foundry_local_catalog_contains_only_runnable_variants() -> None:\n    models = llmcapa.list_models(provider="foundry-local")\n    for model in models:\n        variants = model.extra.get("variants", [])\n        assert variants\n        assert all(variant.get("device") for variant in variants)\n        assert all(variant.get("execution_provider") for variant in variants)\n'''
           if "test_foundry_local_catalog_contains_only_runnable_variants" not in text:
               text = text.rstrip() + addition + "\n"
           test.write_text(text, encoding="utf-8")
