@@ -1,0 +1,96 @@
+name: Foundry Local static catalog migration
+
+on:
+  push:
+    branches: [fix/foundry-local-static-catalog]
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    if: ${{ !contains(github.event.head_commit.message, '[foundry-local-static-migration]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/foundry-local-static-catalog
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Remove runtime importer and wire static provider updater
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          for name in (
+              "docs/foundry_local.md",
+              "src/llmcapa/foundry_local.py",
+              "tests/test_foundry_local.py",
+          ):
+              path = Path(name)
+              if path.exists():
+                  path.unlink()
+
+          init = Path("src/llmcapa/__init__.py")
+          text = init.read_text(encoding="utf-8")
+          text = text.replace("from .foundry_local import fetch_foundry_local\n", "")
+          text = text.replace('    "fetch_foundry_local",\n', "")
+          init.write_text(text, encoding="utf-8")
+
+          dispatcher = Path("scripts/_update_all_providers.py")
+          text = dispatcher.read_text(encoding="utf-8")
+          anchor = '    "fireworks": "provider_updates/fireworks.py",\n'
+          if '    "foundry-local": "_update_foundry_local.py",\n' not in text:
+              if anchor not in text:
+                  raise SystemExit("provider dispatcher anchor not found")
+              text = text.replace(
+                  anchor,
+                  anchor + '    "foundry-local": "_update_foundry_local.py",\n',
+              )
+          dispatcher.write_text(text, encoding="utf-8")
+
+          registry = Path("src/llmcapa/registry.py")
+          text = registry.read_text(encoding="utf-8")
+          file_anchor = '            "azure_foundry.json",\n'
+          if '            "foundry_local.json",\n' not in text:
+              if file_anchor not in text:
+                  raise SystemExit("catalog aggregator anchor not found")
+              text = text.replace(
+                  file_anchor,
+                  file_anchor + '            "foundry_local.json",\n',
+                  1,
+              )
+          provider_anchor = '            "azure-foundry",\n'
+          if '            "foundry-local",\n' not in text:
+              if provider_anchor not in text:
+                  raise SystemExit("provider aggregator anchor not found")
+              text = text.replace(
+                  provider_anchor,
+                  provider_anchor + '            "foundry-local",\n',
+                  1,
+              )
+          registry.write_text(text, encoding="utf-8")
+
+          test = Path("tests/test_foundry_local_static.py")
+          test.write_text(
+              '''"""Tests for the bundled Microsoft Foundry Local catalog."""\n\nimport llmcapa\n\n\ndef test_foundry_local_catalog_is_bundled_and_offline() -> None:\n    models = llmcapa.list_models(provider="foundry-local")\n    assert models\n    assert all(model.provider == "foundry-local" for model in models)\n\n\ndef test_foundry_local_aliases_and_capabilities_are_queryable() -> None:\n    models = llmcapa.list_models(provider="foundry-local")\n    model = next((item for item in models if item.aliases), models[0])\n    resolved = llmcapa.get(model.model_id, provider="foundry_local")\n    assert resolved.model_id == model.model_id\n    assert resolved.extra.get("source_type") == "official_foundry_local_catalog_api"\n\n\ndef test_foundry_local_is_not_a_runtime_fetch_api() -> None:\n    assert not hasattr(llmcapa, "fetch_foundry_local")\n''',
+              encoding="utf-8",
+          )
+          PY
+      - name: Generate Foundry Local catalog
+        run: python scripts/_update_foundry_local.py
+      - name: Validate generated catalog
+        run: |
+          python -m pip install --upgrade pip black ruff pytest
+          python -m black scripts/_update_foundry_local.py scripts/_update_all_providers.py tests/test_foundry_local_static.py
+          python -m ruff check scripts/_update_foundry_local.py scripts/_update_all_providers.py tests/test_foundry_local_static.py
+          PYTHONPATH=src python -m pytest tests/test_foundry_local_static.py -q
+      - name: Commit migration and generated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "fix: use static Foundry Local catalog [foundry-local-static-migration]"
+          git push origin HEAD:fix/foundry-local-static-catalog
