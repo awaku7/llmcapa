@@ -105,6 +105,7 @@ class Registry:
             "openrouter.json",
             "novita.json",
             "azure_foundry.json",
+            "foundry_local.json",
             "lmstudio.json",
             "ollama.json",
             "modellix.json",
@@ -171,10 +172,7 @@ class Registry:
                 if now - cache_path.stat().st_mtime >= 86400:
                     continue
                 cache_data = json.loads(cache_path.read_text(encoding="utf-8"))
-                if (
-                    not isinstance(cache_data, dict)
-                    or cache_data.get("ref") != "main"
-                ):
+                if not isinstance(cache_data, dict) or cache_data.get("ref") != "main":
                     continue
                 providers = cache_data.get("providers")
                 files = cache_data.get("files")
@@ -184,9 +182,7 @@ class Registry:
                     or not all(isinstance(name, str) for name in providers)
                 ):
                     continue
-                provider_set = {
-                    self._normalize_provider(name) for name in providers
-                }
+                provider_set = {self._normalize_provider(name) for name in providers}
                 for text in files.values():
                     if not isinstance(text, str):
                         continue
@@ -246,9 +242,7 @@ class Registry:
                     or not all(isinstance(name, str) for name in providers)
                 ):
                     continue
-                provider_set = {
-                    self._normalize_provider(name) for name in providers
-                }
+                provider_set = {self._normalize_provider(name) for name in providers}
                 for record in records:
                     try:
                         cap = Capability.from_dict(record)
@@ -316,6 +310,7 @@ class Registry:
             "openrouter",
             "novita",
             "azure-foundry",
+            "foundry-local",
             "lmstudio",
             "ollama",
             "modellix",
@@ -661,7 +656,10 @@ class Registry:
         # when it already belongs to this provider; another provider may own it.
         provider_models[key] = cap
         current = self._models.get(key)
-        if current is not None and self._normalize_provider(current.provider) == provider:
+        if (
+            current is not None
+            and self._normalize_provider(current.provider) == provider
+        ):
             self._models[key] = cap
         for alias in cap.aliases:
             self._alias_index.setdefault(alias.lower(), key)
@@ -823,7 +821,8 @@ class Registry:
             raise ValueError("ref must be a valid branch, tag, or commit name")
 
         target_providers = {
-            self._normalize_provider(name) for name in self._matching_providers(provider)
+            self._normalize_provider(name)
+            for name in self._matching_providers(provider)
         }
         catalog_files = sorted(
             {
@@ -834,30 +833,30 @@ class Registry:
             }
         )
         if not catalog_files:
-            raise ValueError(f"No bundled GitHub catalog found for provider: {provider}")
+            raise ValueError(
+                f"No bundled GitHub catalog found for provider: {provider}"
+            )
 
         # Key the cache by the actual remote files so aliases share one copy.
         cache_key = hashlib.sha256(
             (ref + "\0" + ",".join(catalog_files)).encode("utf-8")
         ).hexdigest()
         cache_path = (
-            Path.home()
-            / ".llmcapa"
-            / "github_catalog_cache"
-            / f"{cache_key}.json"
+            Path.home() / ".llmcapa" / "github_catalog_cache" / f"{cache_key}.json"
         )
         cached_files: dict[str, str] | None = None
         if cache_ttl > 0 and cache_path.is_file():
             try:
                 if time.time() - cache_path.stat().st_mtime < cache_ttl:
                     cache_data = json.loads(cache_path.read_text(encoding="utf-8"))
-                    files = cache_data.get("files") if isinstance(cache_data, dict) else None
-                    if (
-                        isinstance(files, dict)
-                        and all(
-                            filename in files and isinstance(files[filename], str)
-                            for filename in catalog_files
-                        )
+                    files = (
+                        cache_data.get("files")
+                        if isinstance(cache_data, dict)
+                        else None
+                    )
+                    if isinstance(files, dict) and all(
+                        filename in files and isinstance(files[filename], str)
+                        for filename in catalog_files
                     ):
                         cached_files = {name: files[name] for name in catalog_files}
             except (OSError, ValueError, TypeError):
@@ -872,9 +871,7 @@ class Registry:
                     "https://raw.githubusercontent.com/awaku7/llmcapa/"
                     f"{raw_ref}/src/llmcapa/data/{quote(filename, safe='')}"
                 )
-                request = urllib.request.Request(
-                    url, headers={"User-Agent": "llmcapa"}
-                )
+                request = urllib.request.Request(url, headers={"User-Agent": "llmcapa"})
                 try:
                     with urllib.request.urlopen(
                         request, context=context, timeout=30
@@ -883,7 +880,7 @@ class Registry:
                     if len(content) > 25 * 1024 * 1024:
                         raise RuntimeError(f"GitHub catalog is too large: {filename}")
                     downloaded_files[filename] = content.decode("utf-8")
-                except Exception as exc:  # noqa: BLE001
+                except Exception as exc:
                     raise RuntimeError(
                         f"Failed to fetch GitHub catalog {filename} at {ref}: {exc}"
                     ) from exc
@@ -896,19 +893,17 @@ class Registry:
                     payload.get("models", []) if isinstance(payload, dict) else payload
                 )
                 if not isinstance(records, list):
-                    raise ValueError(f"catalog {filename} must contain a models list")
+                    raise TypeError(f"catalog {filename} must contain a models list")
                 for record in records:
                     if not isinstance(record, dict):
-                        raise ValueError(
+                        raise TypeError(
                             f"catalog {filename} contains a non-object record"
                         )
                     cap = Capability.from_dict(record)
                     if self._normalize_provider(cap.provider) in target_providers:
                         capabilities.append(cap)
         except (TypeError, ValueError, KeyError) as exc:
-            raise RuntimeError(
-                f"Invalid GitHub catalog for {provider}: {exc}"
-            ) from exc
+            raise RuntimeError(f"Invalid GitHub catalog for {provider}: {exc}") from exc
 
         if not capabilities:
             raise RuntimeError(
