@@ -1,0 +1,43 @@
+name: Foundry Local context inspect
+
+on:
+  push:
+    branches: [fix/foundry-local-catalog-metadata]
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Inspect official catalog rows
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from scripts._update_foundry_local import fetch_catalog
+
+          region, rows = fetch_catalog()
+          print("region", region, "rows", len(rows))
+          matches = []
+          for item in rows:
+              blob = json.dumps(item, ensure_ascii=False).lower()
+              if "phi-3-mini-128k" in blob or "phi-4-mini" in blob:
+                  matches.append(item)
+          print("matches", len(matches))
+          for item in matches[:4]:
+              annotations = item.get("annotations") if isinstance(item.get("annotations"), dict) else {}
+              system = annotations.get("systemCatalogData") if isinstance(annotations.get("systemCatalogData"), dict) else {}
+              tags = annotations.get("tags") if isinstance(annotations.get("tags"), dict) else {}
+              properties = item.get("properties") if isinstance(item.get("properties"), dict) else {}
+              print("---")
+              print("entityId", item.get("entityId"))
+              print("top-level keys", sorted(item.keys()))
+              print("system", json.dumps(system, ensure_ascii=False, sort_keys=True))
+              print("tags", json.dumps(tags, ensure_ascii=False, sort_keys=True))
+              print("properties keys", sorted(properties.keys()))
+              print("properties selected", json.dumps({k: properties.get(k) for k in properties if any(token in k.lower() for token in ("token", "context", "limit", "input", "output"))}, ensure_ascii=False, sort_keys=True))
+              print("top selected", json.dumps({k: item.get(k) for k in item if any(token in k.lower() for token in ("token", "context", "limit", "input", "output"))}, ensure_ascii=False, sort_keys=True))
+          PY
