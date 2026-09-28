@@ -590,9 +590,7 @@ def normalize_decision_record(
     old = dict(record.get("decision") or {})
     merged = {**base, **old}
     merged.setdefault("checked_at", checked_at or _today())
-    if "decision" in {
-        str(x).lower() for x in record.get("output_modalities", [])
-    }:
+    if "decision" in {str(x).lower() for x in record.get("output_modalities", [])}:
         record["supports_chat_completion"] = False
     if merged == old:
         return False
