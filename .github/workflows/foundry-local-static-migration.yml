@@ -73,6 +73,22 @@ jobs:
               )
           registry.write_text(text, encoding="utf-8")
 
+          scraper = Path("scripts/_update_foundry_local.py")
+          text = scraper.read_text(encoding="utf-8")
+          text = text.replace(
+              "    except Exception:\n        pass\n    return DEFAULT_REGION\n",
+              "    except (OSError, TypeError, ValueError):\n        return DEFAULT_REGION\n    return DEFAULT_REGION\n",
+          )
+          text = text.replace(
+              '            raise RuntimeError(\n                "Foundry Local catalog response has no indexEntitiesResponse"\n            )',
+              '            raise TypeError(\n                "Foundry Local catalog response has no indexEntitiesResponse"\n            )',
+          )
+          text = text.replace(
+              '            raise RuntimeError("Foundry Local catalog response has no value list")',
+              '            raise TypeError("Foundry Local catalog response has no value list")',
+          )
+          scraper.write_text(text, encoding="utf-8")
+
           test = Path("tests/test_foundry_local_static.py")
           test.write_text(
               '''"""Tests for the bundled Microsoft Foundry Local catalog."""\n\nimport llmcapa\n\n\ndef test_foundry_local_catalog_is_bundled_and_offline() -> None:\n    models = llmcapa.list_models(provider="foundry-local")\n    assert models\n    assert all(model.provider == "foundry-local" for model in models)\n\n\ndef test_foundry_local_aliases_and_capabilities_are_queryable() -> None:\n    models = llmcapa.list_models(provider="foundry-local")\n    model = next((item for item in models if item.aliases), models[0])\n    resolved = llmcapa.get(model.model_id, provider="foundry_local")\n    assert resolved.model_id == model.model_id\n    assert resolved.extra.get("source_type") == "official_foundry_local_catalog_api"\n\n\ndef test_foundry_local_is_not_a_runtime_fetch_api() -> None:\n    assert not hasattr(llmcapa, "fetch_foundry_local")\n''',
