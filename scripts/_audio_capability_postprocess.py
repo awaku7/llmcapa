@@ -6,37 +6,24 @@ import json
 from pathlib import Path
 
 try:
-    from _capability_normalizers import (
-        AUDIO_INPUT_FORMATS,
-        AUDIO_INPUT_MIME_TYPES,
-        AUDIO_OVERRIDES,
-        DEFAULT_DATA,
-        apply_audio,
-        audit_audio,
-        audio_generic,
-        normalize_audio_record,
-    )
+    import _capability_normalizers as _normalizers
 except ImportError:  # package-style test imports
-    from scripts._capability_normalizers import (
-        AUDIO_INPUT_FORMATS,
-        AUDIO_INPUT_MIME_TYPES,
-        AUDIO_OVERRIDES,
-        DEFAULT_DATA,
-        apply_audio,
-        audit_audio,
-        audio_generic,
-        normalize_audio_record,
-    )
+    from scripts import _capability_normalizers as _normalizers
 
-_generic = audio_generic
+AUDIO_INPUT_FORMATS = _normalizers.AUDIO_INPUT_FORMATS
+AUDIO_INPUT_MIME_TYPES = _normalizers.AUDIO_INPUT_MIME_TYPES
+AUDIO_OVERRIDES = _normalizers.AUDIO_OVERRIDES
+DEFAULT_DATA = _normalizers.DEFAULT_DATA
+normalize_audio_record = _normalizers.normalize_audio_record
+_generic = _normalizers.audio_generic
 
 
 def apply(data_dir: Path = DEFAULT_DATA) -> dict[str, int]:
-    return apply_audio(data_dir)
+    return _normalizers.apply_audio(data_dir)
 
 
 def audit(data_dir: Path = DEFAULT_DATA) -> dict[str, int]:
-    return audit_audio(data_dir)
+    return _normalizers.audit_audio(data_dir)
 
 
 if __name__ == "__main__":
