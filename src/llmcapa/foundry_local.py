@@ -267,7 +267,7 @@ def fetch_foundry_local(
     try:
         with urllib.request.urlopen(request, timeout=float(timeout)) as response:
             raw = response.read(_MAX_CATALOG_BYTES + 1)
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:
         raise RuntimeError(f"Failed to fetch Foundry Local catalog: {exc}") from exc
     if len(raw) > _MAX_CATALOG_BYTES:
         raise RuntimeError("Foundry Local catalog exceeds size limit")
@@ -276,7 +276,7 @@ def fetch_foundry_local(
     except (UnicodeDecodeError, json.JSONDecodeError) as exc:
         raise RuntimeError("Foundry Local returned invalid JSON") from exc
     if not isinstance(payload, dict) or not isinstance(payload.get("models"), list):
-        raise RuntimeError("Foundry Local catalog must contain a models list")
+        raise TypeError("Foundry Local catalog must contain a models list")
 
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for record in payload["models"]:
