@@ -1,11 +1,15 @@
-name: Foundry Local Black diff
+name: Foundry Local Black fix
 
 on:
   push:
     branches: [fix/foundry-local-static-catalog]
 
+permissions:
+  contents: write
+
 jobs:
-  diff:
+  format:
+    if: ${{ !contains(github.event.head_commit.message, '[foundry-local-black-fix]') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -15,5 +19,22 @@ jobs:
         with:
           python-version: "3.11"
       - run: python -m pip install black
-      - name: Show Black diff
-        run: python -m black --diff src/llmcapa/registry.py scripts/_update_azure_foundry.py
+      - name: Apply Black
+        run: python -m black src/llmcapa/registry.py scripts/_update_azure_foundry.py
+      - name: Restore existing CRLF convention
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          for name in ("src/llmcapa/registry.py", "scripts/_update_azure_foundry.py"):
+              path = Path(name)
+              text = path.read_bytes().decode("utf-8").replace("\r\n", "\n")
+              path.write_bytes(text.replace("\n", "\r\n").encode("utf-8"))
+          PY
+      - name: Commit formatting
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/llmcapa/registry.py scripts/_update_azure_foundry.py
+          git commit -m "style: format touched Foundry Local files [foundry-local-black-fix]"
+          git push origin HEAD:fix/foundry-local-static-catalog
