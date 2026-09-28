@@ -1,0 +1,103 @@
+name: Temporary fix derived capability precedence
+
+on:
+  push:
+    branches:
+      - fix/foundry-local-catalog-metadata
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/foundry-local-catalog-metadata
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Unify inferred-versus-curated merge semantics
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('scripts/_capability_normalizers.py')
+          text = path.read_text(encoding='utf-8')
+
+          marker = '''def audio_generic(record: dict[str, Any]) -> dict[str, Any]:\n'''
+          helper = '''DERIVED_STATUSES = {"inferred", "unknown"}\n\n\ndef _is_derived_block(block: dict[str, Any]) -> bool:\n    return bool(block) and block.get("status") in DERIVED_STATUSES\n\n\ndef _merge_capability_values(\n    base: dict[str, Any], old: dict[str, Any], override: dict[str, Any]\n) -> dict[str, Any]:\n    """Merge fresh inference, preserved metadata, and explicit overrides.\n\n    Previously inferred/unknown blocks are regenerated from the fresh source.\n    Documented or legacy blocks remain authoritative over generic inference.\n    Explicit overrides always win.\n    """\n    if _is_derived_block(old):\n        merged = {**base, **override}\n        if "extra" in base or "extra" in override:\n            merged["extra"] = {\n                **(base.get("extra") or {}),\n                **(override.get("extra") or {}),\n            }\n        return merged\n\n    merged = {**base, **old, **override}\n    if "extra" in base or "extra" in old or "extra" in override:\n        merged["extra"] = {\n            **(base.get("extra") or {}),\n            **(old.get("extra") or {}),\n            **(override.get("extra") or {}),\n        }\n    return merged\n\n\n'''
+          if 'def _is_derived_block' not in text:
+              if marker not in text:
+                  raise SystemExit('normalizer helper insertion point not found')
+              text = text.replace(marker, helper + marker, 1)
+
+          old = '''    base = audio_generic(record)\n    override = AUDIO_OVERRIDES.get((provider, model_id), {})\n    if not base and not override:\n        return False\n\n    old = dict(record.get("audio") or {})\n    old_is_inferred = old.get("status") == "inferred"\n    merged = (\n        {**old, **base, **override} if old_is_inferred else {**base, **old, **override}\n    )\n    merged["extra"] = (\n        {\n            **(old.get("extra") or {}),\n            **(base.get("extra") or {}),\n            **(override.get("extra") or {}),\n        }\n        if old_is_inferred\n        else {\n            **(base.get("extra") or {}),\n            **(old.get("extra") or {}),\n            **(override.get("extra") or {}),\n        }\n    )\n'''
+          new = '''    base = audio_generic(record)\n    override = AUDIO_OVERRIDES.get((provider, model_id), {})\n    old = dict(record.get("audio") or {})\n    if not base and not override:\n        if _is_derived_block(old):\n            del record["audio"]\n            return True\n        return False\n\n    merged = _merge_capability_values(base, old, override)\n'''
+          if old not in text:
+              raise SystemExit('audio merge block not found')
+          text = text.replace(old, new, 1)
+
+          old = '''    base = video_generic(record)\n    override = VIDEO_OVERRIDES.get((provider, model_id), {})\n    if not base and not override:\n        return False\n\n    old = dict(record.get("video") or {})\n    merged = {**base, **old, **override}\n    merged["extra"] = {\n        **(base.get("extra") or {}),\n        **(old.get("extra") or {}),\n        **(override.get("extra") or {}),\n    }\n'''
+          new = '''    base = video_generic(record)\n    override = VIDEO_OVERRIDES.get((provider, model_id), {})\n    old = dict(record.get("video") or {})\n    if not base and not override:\n        if _is_derived_block(old):\n            del record["video"]\n            return True\n        return False\n\n    merged = _merge_capability_values(base, old, override)\n'''
+          if old not in text:
+              raise SystemExit('video merge block not found')
+          text = text.replace(old, new, 1)
+
+          old = '''    override = IMAGE_INPUT_OVERRIDES.get((provider, model_id), {})\n    if not inferred_input and not generation and not analysis and not override:\n        return False\n\n    base = {**inferred_input, **generation, **analysis}\n    old = dict(record.get("image") or {})\n    merged = {**base, **old, **override}\n'''
+          new = '''    override = IMAGE_INPUT_OVERRIDES.get((provider, model_id), {})\n    base = {**inferred_input, **generation, **analysis}\n    old = dict(record.get("image") or {})\n    if not base and not override:\n        if _is_derived_block(old):\n            del record["image"]\n            return True\n        return False\n\n    merged = _merge_capability_values(base, old, override)\n'''
+          if old not in text:
+              raise SystemExit('image merge block not found')
+          text = text.replace(old, new, 1)
+
+          old = '''    base = decision_generic(record)\n    if not base:\n        return False\n    old = dict(record.get("decision") or {})\n    merged = {**base, **old}\n'''
+          new = '''    base = decision_generic(record)\n    old = dict(record.get("decision") or {})\n    if not base:\n        if _is_derived_block(old):\n            del record["decision"]\n            return True\n        return False\n    merged = _merge_capability_values(base, old, {})\n'''
+          if old not in text:
+              raise SystemExit('decision merge block not found')
+          text = text.replace(old, new, 1)
+
+          old = '''    overrides = STRUCTURED_OVERRIDES.get((provider, model_id), {})\n    keys = set(inferred) | set(overrides)\n    if not keys:\n        return False\n\n    stamp = checked_at or _today()\n    changed = False\n    for key in keys:\n        base = inferred.get(key, {})\n        override = overrides.get(key, {})\n        old = dict(record.get(key) or {})\n        merged = {**base, **old, **override}\n        merged.setdefault("checked_at", stamp)\n        if merged != old:\n            record[key] = merged\n            changed = True\n'''
+          new = '''    overrides = STRUCTURED_OVERRIDES.get((provider, model_id), {})\n    structured_fields = ("document", "embedding", "rerank", "spatial")\n    derived_existing = {\n        key\n        for key in structured_fields\n        if _is_derived_block(dict(record.get(key) or {}))\n    }\n    keys = set(inferred) | set(overrides) | derived_existing\n    if not keys:\n        return False\n\n    stamp = checked_at or _today()\n    changed = False\n    for key in keys:\n        base = inferred.get(key, {})\n        override = overrides.get(key, {})\n        old = dict(record.get(key) or {})\n        if not base and not override and _is_derived_block(old):\n            del record[key]\n            changed = True\n            continue\n        merged = _merge_capability_values(base, old, override)\n        merged.setdefault("checked_at", stamp)\n        if merged != old:\n            record[key] = merged\n            changed = True\n'''
+          if old not in text:
+              raise SystemExit('structured merge block not found')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+
+          tests = Path('tests/test_capability_normalizers.py')
+          body = tests.read_text(encoding='utf-8')
+          addition = '''\n\ndef test_fresh_video_inference_replaces_preserved_inferred_values():\n    record = {\n        "provider": "test",\n        "model_id": "demo-text-to-video",\n        "input_modalities": ["text"],\n        "output_modalities": ["video"],\n        "video": {\n            "accepts_video_input": True,\n            "generation": False,\n            "understanding": True,\n            "status": "inferred",\n            "checked_at": "2026-09-28",\n        },\n    }\n\n    assert normalize_video_record(record, checked_at="2026-09-29") is True\n    assert record["video"]["accepts_video_input"] is False\n    assert record["video"]["generation"] is True\n    assert record["video"]["understanding"] is False\n\n\ndef test_stale_inferred_capability_is_removed_when_modality_disappears():\n    record = {\n        "provider": "test",\n        "model_id": "plain-text",\n        "input_modalities": ["text"],\n        "output_modalities": ["text"],\n        "audio": {\n            "accepts_audio_input": True,\n            "speech_understanding": True,\n            "status": "inferred",\n        },\n    }\n\n    assert normalize_audio_record(record, checked_at="2026-09-29") is True\n    assert "audio" not in record\n\n\ndef test_documented_capability_survives_when_generic_signal_disappears():\n    record = {\n        "provider": "test",\n        "model_id": "plain-text",\n        "input_modalities": ["text"],\n        "output_modalities": ["text"],\n        "audio": {\n            "accepts_audio_input": True,\n            "status": "documented",\n            "source_url": "https://example.test/audio",\n        },\n    }\n\n    assert normalize_audio_record(record, checked_at="2026-09-29") is False\n    assert record["audio"]["status"] == "documented"\n\n\ndef test_stale_inferred_decision_block_is_removed():\n    record = {\n        "provider": "test",\n        "model_id": "now-text",\n        "input_modalities": ["text"],\n        "output_modalities": ["text"],\n        "decision": {\n            "decision": True,\n            "free_form_text": False,\n            "status": "inferred",\n        },\n    }\n\n    assert normalize_decision_record(record, checked_at="2026-09-29") is True\n    assert "decision" not in record\n\n\ndef test_stale_inferred_embedding_block_is_removed():\n    record = {\n        "provider": "test",\n        "model_id": "plain-text",\n        "input_modalities": ["text"],\n        "output_modalities": ["text"],\n        "embedding": {\n            "embedding": True,\n            "output_formats": ["float"],\n            "status": "inferred",\n        },\n    }\n\n    assert normalize_record(record, checked_at="2026-09-29") is True\n    assert "embedding" not in record\n'''
+          if 'test_fresh_video_inference_replaces_preserved_inferred_values' not in body:
+              tests.write_text(body.rstrip() + addition + '\n', encoding='utf-8')
+          PY
+      - name: Re-normalize bundled Foundry Local catalog
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from scripts._capability_normalizers import normalize_record
+
+          path = Path('src/llmcapa/data/foundry_local.json')
+          data = json.loads(path.read_text(encoding='utf-8'))
+          changed = 0
+          for record in data.get('models', []):
+              if normalize_record(record, checked_at='2026-09-29'):
+                  changed += 1
+          path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          print(f'Foundry Local records normalized: {changed}')
+          PY
+      - name: Validate focused changes
+        run: |
+          python -m pip install --upgrade black ruff pytest
+          python -m pip install -e .
+          python -m black scripts/_capability_normalizers.py tests/test_capability_normalizers.py
+          python -m ruff check scripts/_capability_normalizers.py tests/test_capability_normalizers.py
+          python -m pytest -q tests/test_capability_normalizers.py tests/test_foundry_local_static.py tests/test_decision_capability.py
+      - name: Commit fix and remove temporary workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/temp-fix-derived-precedence.yml
+          git add scripts/_capability_normalizers.py tests/test_capability_normalizers.py src/llmcapa/data/foundry_local.json
+          git diff --cached --check
+          git commit -m "fix: refresh preserved inferred capabilities"
+          git push
