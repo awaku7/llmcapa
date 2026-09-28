@@ -11,6 +11,8 @@ from __future__ import annotations
 
 import json
 import re
+import shutil
+import tempfile
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -350,6 +352,23 @@ def build_models(raw_rows: list[dict[str, Any]], region: str) -> list[dict[str, 
     return models
 
 
+def _postprocess_output() -> None:
+    try:
+        from _audio_capability_postprocess import apply as apply_audio
+        from _structured_capability_postprocess import apply as apply_structured
+    except ImportError:  # package-style imports in tests/tools
+        from scripts._audio_capability_postprocess import apply as apply_audio
+        from scripts._structured_capability_postprocess import apply as apply_structured
+
+    with tempfile.TemporaryDirectory() as tmp:
+        data_dir = Path(tmp)
+        target = data_dir / OUT.name
+        shutil.copy2(OUT, target)
+        apply_audio(data_dir)
+        apply_structured(data_dir)
+        shutil.copy2(target, OUT)
+
+
 def main() -> None:
     region, raw_rows = fetch_catalog()
     models = build_models(raw_rows, region)
@@ -357,6 +376,7 @@ def main() -> None:
         json.dumps({"models": models}, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+    _postprocess_output()
     LOG.write_text(
         LOG.read_text(encoding="utf-8")
         + f"\n## Foundry Local refresh ({datetime.now(timezone.utc).date()})\n\n"
