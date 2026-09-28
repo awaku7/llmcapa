@@ -1,0 +1,41 @@
+name: Foundry Local line ending cleanup
+
+on:
+  push:
+    branches: [fix/foundry-local-static-catalog]
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    if: ${{ !contains(github.event.head_commit.message, '[foundry-local-line-endings]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/foundry-local-static-catalog
+      - name: Restore repository CRLF convention on existing files
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          for name in (
+              "provider_update_log.md",
+              "scripts/_update_all_providers.py",
+              "scripts/_update_azure_foundry.py",
+              "src/llmcapa/registry.py",
+              "src/llmcapa/data/azure_foundry.json",
+          ):
+              path = Path(name)
+              text = path.read_bytes().decode("utf-8").replace("\r\n", "\n")
+              path.write_bytes(text.replace("\n", "\r\n").encode("utf-8"))
+          PY
+      - name: Commit normalized files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add provider_update_log.md scripts/_update_all_providers.py scripts/_update_azure_foundry.py src/llmcapa/registry.py src/llmcapa/data/azure_foundry.json
+          git commit -m "chore: preserve existing line endings [foundry-local-line-endings]"
+          git push origin HEAD:fix/foundry-local-static-catalog
