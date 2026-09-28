@@ -22,6 +22,7 @@ jobs:
         shell: bash
         run: |
           python - <<'PY'
+          import re
           from pathlib import Path
 
           for name in (
@@ -79,9 +80,11 @@ jobs:
               "    except Exception:\n        pass\n    return DEFAULT_REGION\n",
               "    except (OSError, TypeError, ValueError):\n        return DEFAULT_REGION\n    return DEFAULT_REGION\n",
           )
-          text = text.replace(
-              '            raise RuntimeError(\n                "Foundry Local catalog response has no indexEntitiesResponse"\n            )',
-              '            raise TypeError(\n                "Foundry Local catalog response has no indexEntitiesResponse"\n            )',
+          text = re.sub(
+              r'raise RuntimeError\(\s*"Foundry Local catalog response has no indexEntitiesResponse"\s*\)',
+              'raise TypeError("Foundry Local catalog response has no indexEntitiesResponse")',
+              text,
+              count=1,
           )
           text = text.replace(
               '            raise RuntimeError("Foundry Local catalog response has no value list")',
