@@ -722,7 +722,7 @@ def _date_is_past(value: Any) -> bool:
         return False
     for fmt in ("%m/%d/%Y %H:%M:%S %z", "%m/%d/%Y", "%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%d"):
         try:
-            parsed = datetime.strptime(text, fmt)
+            parsed = datetime.strptime(text, fmt)  # noqa: DTZ007
             if parsed.tzinfo is None:
                 parsed = parsed.replace(tzinfo=timezone.utc)
             return parsed.date() <= datetime.now(timezone.utc).date()

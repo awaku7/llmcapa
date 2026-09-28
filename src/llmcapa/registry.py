@@ -880,7 +880,7 @@ class Registry:
                     if len(content) > 25 * 1024 * 1024:
                         raise RuntimeError(f"GitHub catalog is too large: {filename}")
                     downloaded_files[filename] = content.decode("utf-8")
-                except Exception as exc:  # noqa: BLE001
+                except Exception as exc:
                     raise RuntimeError(
                         f"Failed to fetch GitHub catalog {filename} at {ref}: {exc}"
                     ) from exc
@@ -893,10 +893,10 @@ class Registry:
                     payload.get("models", []) if isinstance(payload, dict) else payload
                 )
                 if not isinstance(records, list):
-                    raise ValueError(f"catalog {filename} must contain a models list")
+                    raise TypeError(f"catalog {filename} must contain a models list")
                 for record in records:
                     if not isinstance(record, dict):
-                        raise ValueError(
+                        raise TypeError(
                             f"catalog {filename} contains a non-object record"
                         )
                     cap = Capability.from_dict(record)
