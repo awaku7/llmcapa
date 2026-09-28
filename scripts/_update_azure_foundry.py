@@ -688,7 +688,9 @@ def split_modalities(val: Any) -> list[str]:
             return ["text"]
         raw_parts = [p.strip() for p in re.split(r"[,/|]", s) if p.strip()]
     # llmcapa models document/PDF modalities as file inputs.
-    parts = ["file" if part in {"document", "documents"} else part for part in raw_parts]
+    parts = [
+        "file" if part in {"document", "documents"} else part for part in raw_parts
+    ]
     return parts or ["text"]
 
 
@@ -759,29 +761,67 @@ def lifecycle_of(item: dict) -> str:
 
 
 CHAT_TASKS = {
-    "chat-completion", "chat-completions", "chat completion", "responses",
-    "messages", "conversational", "conversational-ai", "vision-language-chat",
+    "chat-completion",
+    "chat-completions",
+    "chat completion",
+    "responses",
+    "messages",
+    "conversational",
+    "conversational-ai",
+    "vision-language-chat",
 }
 TEXT_GENERATION_TASKS = {
-    "text-generation", "text2text-generation", "completions",
+    "text-generation",
+    "text2text-generation",
+    "completions",
 }
 CAPABILITY_TASKS = {
     # Embedding, similarity, and ranking
-    "feature-extraction", "image-feature-extraction", "embeddings", "embedding",
-    "sentence-similarity", "text-ranking", "rerank",
+    "feature-extraction",
+    "image-feature-extraction",
+    "embeddings",
+    "embedding",
+    "sentence-similarity",
+    "text-ranking",
+    "rerank",
     # Image and video understanding/generation
-    "image-text-to-text", "image-to-text", "visual-question-answering",
-    "image-analysis", "image-classification", "zero-shot-image-classification",
-    "object-detection", "image-segmentation", "text-to-image", "image-to-image",
-    "image-to-video", "video-generation", "text-to-3d", "image-to-3d", "3d-generation",
+    "image-text-to-text",
+    "image-to-text",
+    "visual-question-answering",
+    "image-analysis",
+    "image-classification",
+    "zero-shot-image-classification",
+    "object-detection",
+    "image-segmentation",
+    "text-to-image",
+    "image-to-image",
+    "image-to-video",
+    "video-generation",
+    "text-to-3d",
+    "image-to-3d",
+    "3d-generation",
     # Audio and speech
-    "automatic-speech-recognition", "speech-to-text", "transcriptions",
-    "audio-classification", "audio-generation", "text-to-speech", "speech-translation",
+    "automatic-speech-recognition",
+    "speech-to-text",
+    "transcriptions",
+    "audio-classification",
+    "audio-generation",
+    "text-to-speech",
+    "speech-translation",
 }
 SUPPORTED_CATALOG_TASKS = CHAT_TASKS | TEXT_GENERATION_TASKS | CAPABILITY_TASKS
 NON_TEXT_MODALITIES = {
-    "image", "vision", "audio", "speech", "video", "embedding", "embeddings",
-    "spatial", "document", "file", "pdf",
+    "image",
+    "vision",
+    "audio",
+    "speech",
+    "video",
+    "embedding",
+    "embeddings",
+    "spatial",
+    "document",
+    "file",
+    "pdf",
 }
 
 
@@ -845,10 +885,8 @@ def is_supported_catalog_item(
         return True
     if _declared_modalities(item) & NON_TEXT_MODALITIES:
         return True
-    return (
-        item.get("source") == "ssr_card"
-        and str(item.get("name") or "").lower()
-        in (previously_confirmed_model_names or set())
+    return item.get("source") == "ssr_card" and str(item.get("name") or "").lower() in (
+        previously_confirmed_model_names or set()
     )
 
 
@@ -1030,7 +1068,12 @@ def build_entry(item: dict, price_map: dict[str, dict]) -> dict:
     # Some Foundry task rows omit output modality even when the task names it.
     # Only infer a specialized output when explicit output metadata is absent.
     if not out_raw:
-        if set(tasks_l) & {"feature-extraction", "image-feature-extraction", "embeddings", "embedding"}:
+        if set(tasks_l) & {
+            "feature-extraction",
+            "image-feature-extraction",
+            "embeddings",
+            "embedding",
+        }:
             out_mod = ["embedding"]
         elif set(tasks_l) & {"rerank", "text-ranking"}:
             out_mod = ["rerank"]
@@ -1052,7 +1095,11 @@ def build_entry(item: dict, price_map: dict[str, dict]) -> dict:
             else limits.get("maxOutputTokens") or limits.get("maxTokens")
         )
 
-    chat = True if any(task in CHAT_TASKS for task in tasks_l) else (False if tasks_l else None)
+    chat = (
+        True
+        if any(task in CHAT_TASKS for task in tasks_l)
+        else (False if tasks_l else None)
+    )
     responses = True if "responses" in tasks_l else (False if tasks_l else None)
     vision = any(m in in_mod for m in ("image", "vision"))
     audio_in = any(m in in_mod for m in ("audio", "speech"))
@@ -1229,7 +1276,9 @@ def main() -> None:
     import sys
 
     scrape_script = WORKDIR / "scripts" / "_scrape_azure_foundry_full.py"
-    result = subprocess.run([sys.executable, str(scrape_script)], cwd=WORKDIR, check=False)
+    result = subprocess.run(
+        [sys.executable, str(scrape_script)], cwd=WORKDIR, check=False
+    )
     if result.returncode != 0:
         raise SystemExit(f"Azure Foundry official scrape failed: {scrape_script}")
 
@@ -1256,9 +1305,7 @@ def main() -> None:
             _PREV_LIMITS = {}
     cat = json.loads(CATALOG.read_text(encoding="utf-8"))
     raw_items = cat.get("items") or []
-    previously_confirmed_model_names = {
-        str(name).lower() for name in _PREV_LIMITS
-    }
+    previously_confirmed_model_names = {str(name).lower() for name in _PREV_LIMITS}
     items = [
         item
         for item in raw_items
@@ -1296,11 +1343,20 @@ def main() -> None:
     maas = 0
     previous_by_id = {str(mid).lower(): model for mid, model in _PREV_LIMITS.items()}
     ssr_preserve_fields = (
-        "input_modalities", "output_modalities", "supports_chat_completion",
-        "supports_function_calling", "supports_json_mode", "supports_streaming",
-        "supports_vision", "supports_responses_api", "supports_reasoning",
-        "supports_audio_input", "supports_audio_output", "supports_embedding_output",
-        "supports_rerank_output", "azure_type",
+        "input_modalities",
+        "output_modalities",
+        "supports_chat_completion",
+        "supports_function_calling",
+        "supports_json_mode",
+        "supports_streaming",
+        "supports_vision",
+        "supports_responses_api",
+        "supports_reasoning",
+        "supports_audio_input",
+        "supports_audio_output",
+        "supports_embedding_output",
+        "supports_rerank_output",
+        "azure_type",
     )
     for name in sorted(by_name.keys(), key=str.lower):
         item = by_name[name]
