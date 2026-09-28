@@ -171,6 +171,41 @@ def preserve_capability_blocks(
     return changed
 
 
+DERIVED_STATUSES = {"inferred", "unknown"}
+
+
+def _is_derived_block(block: dict[str, Any]) -> bool:
+    return bool(block) and block.get("status") in DERIVED_STATUSES
+
+
+def _merge_capability_values(
+    base: dict[str, Any], old: dict[str, Any], override: dict[str, Any]
+) -> dict[str, Any]:
+    """Merge fresh inference, preserved metadata, and explicit overrides.
+
+    Previously inferred/unknown blocks are regenerated from the fresh source.
+    Documented or legacy blocks remain authoritative over generic inference.
+    Explicit overrides always win.
+    """
+    if _is_derived_block(old):
+        merged = {**base, **override}
+        if "extra" in base or "extra" in override:
+            merged["extra"] = {
+                **(base.get("extra") or {}),
+                **(override.get("extra") or {}),
+            }
+        return merged
+
+    merged = {**base, **old, **override}
+    if "extra" in base or "extra" in old or "extra" in override:
+        merged["extra"] = {
+            **(base.get("extra") or {}),
+            **(old.get("extra") or {}),
+            **(override.get("extra") or {}),
+        }
+    return merged
+
+
 def audio_generic(record: dict[str, Any]) -> dict[str, Any]:
     """Infer audio operations from explicit modalities and catalog metadata only."""
     inputs = {str(x).lower() for x in record.get("input_modalities", [])}
@@ -243,27 +278,14 @@ def normalize_audio_record(
     model_id = str(record.get("model_id", ""))
     base = audio_generic(record)
     override = AUDIO_OVERRIDES.get((provider, model_id), {})
+    old = dict(record.get("audio") or {})
     if not base and not override:
+        if _is_derived_block(old):
+            del record["audio"]
+            return True
         return False
 
-    old = dict(record.get("audio") or {})
-    old_is_inferred = old.get("status") == "inferred"
-    merged = (
-        {**old, **base, **override} if old_is_inferred else {**base, **old, **override}
-    )
-    merged["extra"] = (
-        {
-            **(old.get("extra") or {}),
-            **(base.get("extra") or {}),
-            **(override.get("extra") or {}),
-        }
-        if old_is_inferred
-        else {
-            **(base.get("extra") or {}),
-            **(old.get("extra") or {}),
-            **(override.get("extra") or {}),
-        }
-    )
+    merged = _merge_capability_values(base, old, override)
     endpoint = dict(merged.get("endpoints") or {})
     if merged.get("transcription"):
         endpoint.setdefault("transcription", True)
@@ -352,16 +374,14 @@ def normalize_video_record(
     model_id = str(record.get("model_id", ""))
     base = video_generic(record)
     override = VIDEO_OVERRIDES.get((provider, model_id), {})
+    old = dict(record.get("video") or {})
     if not base and not override:
+        if _is_derived_block(old):
+            del record["video"]
+            return True
         return False
 
-    old = dict(record.get("video") or {})
-    merged = {**base, **old, **override}
-    merged["extra"] = {
-        **(base.get("extra") or {}),
-        **(old.get("extra") or {}),
-        **(override.get("extra") or {}),
-    }
+    merged = _merge_capability_values(base, old, override)
     endpoint = dict(merged.get("endpoints") or {})
     for key in (
         "generation",
@@ -568,12 +588,15 @@ def normalize_image_record(
     generation = minimal_image_capability(record) or {}
     analysis = known_analysis_capability(record) or {}
     override = IMAGE_INPUT_OVERRIDES.get((provider, model_id), {})
-    if not inferred_input and not generation and not analysis and not override:
-        return False
-
     base = {**inferred_input, **generation, **analysis}
     old = dict(record.get("image") or {})
-    merged = {**base, **old, **override}
+    if not base and not override:
+        if _is_derived_block(old):
+            del record["image"]
+            return True
+        return False
+
+    merged = _merge_capability_values(base, old, override)
     if base or override:
         merged.setdefault("checked_at", checked_at or _today())
     block_changed = merged != old
@@ -611,10 +634,13 @@ def normalize_decision_record(
 ) -> bool:
     """Normalize explicit decision output without guessing provider semantics."""
     base = decision_generic(record)
-    if not base:
-        return False
     old = dict(record.get("decision") or {})
-    merged = {**base, **old}
+    if not base:
+        if _is_derived_block(old):
+            del record["decision"]
+            return True
+        return False
+    merged = _merge_capability_values(base, old, {})
     merged.setdefault("checked_at", checked_at or _today())
     top_changed = False
     if (
@@ -697,7 +723,13 @@ def normalize_structured_record(
     model_id = str(record.get("model_id", ""))
     inferred = structured_generic(record)
     overrides = STRUCTURED_OVERRIDES.get((provider, model_id), {})
-    keys = set(inferred) | set(overrides)
+    structured_fields = ("document", "embedding", "rerank", "spatial")
+    derived_existing = {
+        key
+        for key in structured_fields
+        if _is_derived_block(dict(record.get(key) or {}))
+    }
+    keys = set(inferred) | set(overrides) | derived_existing
     if not keys:
         return False
 
@@ -707,7 +739,11 @@ def normalize_structured_record(
         base = inferred.get(key, {})
         override = overrides.get(key, {})
         old = dict(record.get(key) or {})
-        merged = {**base, **old, **override}
+        if not base and not override and _is_derived_block(old):
+            del record[key]
+            changed = True
+            continue
+        merged = _merge_capability_values(base, old, override)
         merged.setdefault("checked_at", stamp)
         if merged != old:
             record[key] = merged

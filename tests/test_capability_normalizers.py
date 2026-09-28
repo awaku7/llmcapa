@@ -229,3 +229,92 @@ def test_documented_audio_streaming_value_remains_curated():
 
     normalize_audio_record(record, checked_at="2026-09-29")
     assert record["audio"]["supports_streaming"] is False
+
+
+def test_fresh_video_inference_replaces_preserved_inferred_values():
+    record = {
+        "provider": "test",
+        "model_id": "demo-text-to-video",
+        "input_modalities": ["text"],
+        "output_modalities": ["video"],
+        "video": {
+            "accepts_video_input": True,
+            "generation": False,
+            "understanding": True,
+            "status": "inferred",
+            "checked_at": "2026-09-28",
+        },
+    }
+
+    assert normalize_video_record(record, checked_at="2026-09-29") is True
+    assert record["video"]["accepts_video_input"] is False
+    assert record["video"]["generation"] is True
+    assert record["video"]["understanding"] is False
+
+
+def test_stale_inferred_capability_is_removed_when_modality_disappears():
+    record = {
+        "provider": "test",
+        "model_id": "plain-text",
+        "input_modalities": ["text"],
+        "output_modalities": ["text"],
+        "audio": {
+            "accepts_audio_input": True,
+            "speech_understanding": True,
+            "status": "inferred",
+        },
+    }
+
+    assert normalize_audio_record(record, checked_at="2026-09-29") is True
+    assert "audio" not in record
+
+
+def test_documented_capability_survives_when_generic_signal_disappears():
+    record = {
+        "provider": "test",
+        "model_id": "plain-text",
+        "input_modalities": ["text"],
+        "output_modalities": ["text"],
+        "audio": {
+            "accepts_audio_input": True,
+            "status": "documented",
+            "source_url": "https://example.test/audio",
+        },
+    }
+
+    assert normalize_audio_record(record, checked_at="2026-09-29") is False
+    assert record["audio"]["status"] == "documented"
+
+
+def test_stale_inferred_decision_block_is_removed():
+    record = {
+        "provider": "test",
+        "model_id": "now-text",
+        "input_modalities": ["text"],
+        "output_modalities": ["text"],
+        "decision": {
+            "decision": True,
+            "free_form_text": False,
+            "status": "inferred",
+        },
+    }
+
+    assert normalize_decision_record(record, checked_at="2026-09-29") is True
+    assert "decision" not in record
+
+
+def test_stale_inferred_embedding_block_is_removed():
+    record = {
+        "provider": "test",
+        "model_id": "plain-text",
+        "input_modalities": ["text"],
+        "output_modalities": ["text"],
+        "embedding": {
+            "embedding": True,
+            "output_formats": ["float"],
+            "status": "inferred",
+        },
+    }
+
+    assert normalize_record(record, checked_at="2026-09-29") is True
+    assert "embedding" not in record
