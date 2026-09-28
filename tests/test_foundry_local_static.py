@@ -96,3 +96,28 @@ def test_integrated_normalizer_preserves_curated_capability_details() -> None:
     assert refreshed["audio"]["curated_detail"] == "keep-me"
     assert refreshed["audio"]["extra"]["curated"] is True
     assert refreshed["audio"]["speech_understanding"] is True
+
+
+def test_foundry_local_generic_image_blocks_remain_refreshable() -> None:
+    import json
+    from pathlib import Path
+
+    path = (
+        Path(__file__).resolve().parents[1]
+        / "src"
+        / "llmcapa"
+        / "data"
+        / "foundry_local.json"
+    )
+    data = json.loads(path.read_text(encoding="utf-8"))
+    checked = 0
+    for record in data.get("models", []):
+        image = record.get("image")
+        extra = record.get("extra") or {}
+        if not isinstance(image, dict):
+            continue
+        if image.get("source_url") != extra.get("source"):
+            continue
+        checked += 1
+        assert image.get("status") == "inferred"
+    assert checked == 9
