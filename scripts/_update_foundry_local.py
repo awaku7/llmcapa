@@ -11,13 +11,19 @@ from __future__ import annotations
 
 import json
 import re
-import shutil
-import tempfile
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 from urllib.request import Request, urlopen
+
+try:
+    from _capability_normalizers import normalize_record, preserve_capability_blocks
+except ImportError:  # package-style imports in tests/tools
+    from scripts._capability_normalizers import (
+        normalize_record,
+        preserve_capability_blocks,
+    )
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "src" / "llmcapa" / "data" / "foundry_local.json"
@@ -352,31 +358,36 @@ def build_models(raw_rows: list[dict[str, Any]], region: str) -> list[dict[str, 
     return models
 
 
-def _postprocess_output() -> None:
-    try:
-        from _audio_capability_postprocess import apply as apply_audio
-        from _structured_capability_postprocess import apply as apply_structured
-    except ImportError:  # package-style imports in tests/tools
-        from scripts._audio_capability_postprocess import apply as apply_audio
-        from scripts._structured_capability_postprocess import apply as apply_structured
+def _load_previous_records() -> dict[tuple[str, str], dict[str, Any]]:
+    if not OUT.exists():
+        return {}
+    data = json.loads(OUT.read_text(encoding="utf-8"))
+    return {
+        (str(model.get("provider", "")), str(model.get("model_id", ""))): model
+        for model in data.get("models", [])
+        if isinstance(model, dict)
+    }
 
-    with tempfile.TemporaryDirectory() as tmp:
-        data_dir = Path(tmp)
-        target = data_dir / OUT.name
-        shutil.copy2(OUT, target)
-        apply_audio(data_dir)
-        apply_structured(data_dir)
-        shutil.copy2(target, OUT)
+
+def _normalize_models(
+    models: list[dict[str, Any]], previous: dict[tuple[str, str], dict[str, Any]]
+) -> None:
+    checked_at = datetime.now(timezone.utc).date().isoformat()
+    for model in models:
+        key = (str(model.get("provider", "")), str(model.get("model_id", "")))
+        preserve_capability_blocks(model, previous.get(key))
+        normalize_record(model, checked_at=checked_at)
 
 
 def main() -> None:
+    previous = _load_previous_records()
     region, raw_rows = fetch_catalog()
     models = build_models(raw_rows, region)
+    _normalize_models(models, previous)
     OUT.write_text(
         json.dumps({"models": models}, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-    _postprocess_output()
     LOG.write_text(
         LOG.read_text(encoding="utf-8")
         + f"\n## Foundry Local refresh ({datetime.now(timezone.utc).date()})\n\n"
