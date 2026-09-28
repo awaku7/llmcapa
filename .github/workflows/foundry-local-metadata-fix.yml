@@ -1,0 +1,109 @@
+name: Foundry Local metadata fix
+
+on:
+  push:
+    branches: [fix/foundry-local-catalog-metadata]
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    if: ${{ !contains(github.event.head_commit.message, '[foundry-local-metadata-fix]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/foundry-local-catalog-metadata
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Apply scraper and regression-test fixes
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("scripts/_update_foundry_local.py")
+          text = path.read_text(encoding="utf-8")
+
+          old = '''    max_output = _as_int(system.get("maxOutputTokens")) or _as_int(\n        tags.get("maxOutputTokens")\n    )\n    return {\n'''
+          new = '''    limits = item.get("limits") if isinstance(item.get("limits"), dict) else {}\n    if not limits and isinstance(properties.get("limits"), dict):\n        limits = properties["limits"]\n\n    context_window = (\n        _as_int(system.get("textContextWindow"))\n        or _as_int(limits.get("maxInputTokens"))\n        or _as_int(limits.get("contextWindow"))\n        or _as_int(tags.get("maxInputTokens"))\n        or _as_int(tags.get("contextWindow"))\n    )\n    max_output = (\n        _as_int(system.get("maxOutputTokens"))\n        or _as_int(limits.get("maxOutputTokens"))\n        or _as_int(tags.get("maxOutputTokens"))\n    )\n    return {\n'''
+          if old not in text:
+              raise SystemExit("max-output anchor not found")
+          text = text.replace(old, new, 1)
+
+          old = '''        "supports_reasoning": _as_bool(tags.get("supportsReasoning")),\n        "max_output_tokens": max_output,\n        "uri": str(item.get("assetId") or "").strip(),\n'''
+          new = '''        "supports_reasoning": _as_bool(tags.get("supportsReasoning")),\n        "context_window": context_window,\n        "max_output_tokens": max_output,\n        "uri": str(item.get("assetId") or "").strip(),\n'''
+          if old not in text:
+              raise SystemExit("variant context anchor not found")
+          text = text.replace(old, new, 1)
+
+          old = '''        max_outputs = [\n            int(row["max_output_tokens"])\n            for row in variants\n            if isinstance(row.get("max_output_tokens"), int)\n            and int(row["max_output_tokens"]) > 0\n        ]\n        official_alias = str(variants[0]["alias"])\n'''
+          new = '''        context_windows = [\n            int(row["context_window"])\n            for row in variants\n            if isinstance(row.get("context_window"), int)\n            and int(row["context_window"]) > 0\n        ]\n        max_outputs = [\n            int(row["max_output_tokens"])\n            for row in variants\n            if isinstance(row.get("max_output_tokens"), int)\n            and int(row["max_output_tokens"]) > 0\n        ]\n        official_alias = str(variants[0]["alias"])\n'''
+          if old not in text:
+              raise SystemExit("logical limits anchor not found")
+          text = text.replace(old, new, 1)
+
+          old = '''                "display_name": str(variants[0].get("display_name") or official_alias),\n                "context_window": 0,\n                "max_output_tokens": min(max_outputs) if max_outputs else 0,\n'''
+          new = '''                "display_name": str(variants[0].get("display_name") or official_alias),\n                "context_window": min(context_windows) if context_windows else 0,\n                "max_output_tokens": min(max_outputs) if max_outputs else 0,\n'''
+          if old not in text:
+              raise SystemExit("context_window anchor not found")
+          text = text.replace(old, new, 1)
+
+          old = '''                "supports_responses_api": False,\n                "pricing": None,\n                "deprecated": False,\n'''
+          new = '''                "supports_responses_api": False,\n                "license_type": licenses[0] if len(licenses) == 1 else "unknown",\n                "pricing": None,\n                "deprecated": False,\n'''
+          if old not in text:
+              raise SystemExit("license_type anchor not found")
+          text = text.replace(old, new, 1)
+          path.write_text(text, encoding="utf-8")
+
+          test = Path("tests/test_foundry_local_static.py")
+          t = test.read_text(encoding="utf-8").rstrip()
+          addition = '''\n\n\ndef test_foundry_local_exposes_catalog_context_windows_and_licenses() -> None:\n    models = llmcapa.list_models(provider="foundry-local")\n    with_context = [model for model in models if model.context_window > 0]\n    assert with_context\n    assert llmcapa.find(provider="foundry-local", min_context_window=1)\n\n    licensed = [model for model in models if model.extra.get("licenses")]\n    assert licensed\n    for model in licensed:\n        licenses = {str(value).strip().lower() for value in model.extra["licenses"] if str(value).strip()}\n        if len(licenses) == 1:\n            assert model.license_type.lower() == next(iter(licenses))\n\n\ndef test_foundry_local_specialized_capabilities_are_postprocessed() -> None:\n    models = llmcapa.list_models(provider="foundry-local")\n    audio_models = [\n        model\n        for model in models\n        if "audio" in model.input_modalities or "audio" in model.output_modalities\n    ]\n    embedding_models = [\n        model\n        for model in models\n        if "embedding" in model.output_modalities or "embeddings" in model.output_modalities\n    ]\n    assert audio_models\n    assert embedding_models\n    assert all(model.audio is not None for model in audio_models)\n    assert all(model.embedding is not None for model in embedding_models)\n'''
+          if "test_foundry_local_exposes_catalog_context_windows_and_licenses" not in t:
+              t += addition
+          test.write_text(t + "\n", encoding="utf-8")
+          PY
+
+      - name: Regenerate official snapshot
+        run: |
+          python scripts/_update_foundry_local.py
+          git checkout HEAD -- provider_update_log.md
+
+      - name: Apply standard postprocessors to Foundry Local only
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import shutil
+          import tempfile
+          from scripts._audio_capability_postprocess import apply as apply_audio
+          from scripts._structured_capability_postprocess import apply as apply_structured
+
+          source = Path("src/llmcapa/data/foundry_local.json")
+          with tempfile.TemporaryDirectory() as tmp:
+              data_dir = Path(tmp)
+              target = data_dir / source.name
+              shutil.copy2(source, target)
+              print(apply_audio(data_dir))
+              print(apply_structured(data_dir))
+              shutil.copy2(target, source)
+          PY
+
+      - name: Validate
+        run: |
+          python -m pip install black ruff pytest
+          python -m black scripts/_update_foundry_local.py tests/test_foundry_local_static.py
+          python -m ruff check scripts/_update_foundry_local.py tests/test_foundry_local_static.py
+          PYTHONPATH=src python -m pytest tests/test_foundry_local_static.py -q
+          python -m py_compile scripts/_update_foundry_local.py tests/test_foundry_local_static.py
+
+      - name: Commit fixes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/_update_foundry_local.py src/llmcapa/data/foundry_local.json tests/test_foundry_local_static.py
+          git commit -m "fix: preserve Foundry Local catalog metadata [foundry-local-metadata-fix]"
+          git push origin HEAD:fix/foundry-local-catalog-metadata
