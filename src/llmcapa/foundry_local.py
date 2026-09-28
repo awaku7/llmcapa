@@ -1,6 +1,6 @@
 """Explicit Microsoft Foundry Local catalog import.
 
-The normal llmcapa lookup path remains offline.  This module performs network I/O
+The normal llmcapa lookup path remains offline. This module performs network I/O
 only when :func:`fetch_foundry_local` is called, and it only accepts loopback
 endpoints because Foundry Local is a machine-local runtime.
 """
@@ -40,12 +40,11 @@ def _normalize_endpoint(endpoint: str) -> str:
         raise ValueError("endpoint must include a host")
     if host.lower() != "localhost":
         try:
-            if not ipaddress.ip_address(host).is_loopback:
-                raise ValueError("endpoint host must be loopback")
+            address = ipaddress.ip_address(host)
         except ValueError as exc:
-            if str(exc) == "endpoint host must be loopback":
-                raise
             raise ValueError("endpoint host must be loopback") from exc
+        if not address.is_loopback:
+            raise ValueError("endpoint host must be loopback")
     if parsed.query or parsed.fragment:
         raise ValueError("endpoint must not contain query or fragment")
     path = parsed.path.rstrip("/")
@@ -64,7 +63,9 @@ def _positive_int(value: Any) -> int | None:
     return None
 
 
-def _model_setting_value(record: dict[str, Any], keys: tuple[str, ...]) -> int | None:
+def _model_setting_value(
+    record: dict[str, Any], keys: tuple[str, ...]
+) -> int | None:
     for key in keys:
         value = _positive_int(record.get(key))
         if value is not None:
@@ -104,23 +105,19 @@ def _conservative_limit(records: list[dict[str, Any]], keys: tuple[str, ...]) ->
 
 def _task_modalities(tasks: set[str]) -> tuple[list[str], list[str], bool, bool]:
     normalized = {task.lower().replace("_", "-") for task in tasks}
-    chat = any(
-        "chat" in task or "text-generation" in task or "text-generation" == task
-        for task in normalized
-    )
+    chat = any("chat" in task or "text-generation" in task for task in normalized)
     vision = any(
         "vision" in task or "image-to-text" in task or "image-text" in task
         for task in normalized
     )
+    audio_markers = (
+        "automatic-speech-recognition",
+        "speech-recognition",
+        "transcription",
+        "audio",
+    )
     audio_input = any(
-        marker in task
-        for task in normalized
-        for marker in (
-            "automatic-speech-recognition",
-            "speech-recognition",
-            "transcription",
-            "audio",
-        )
+        any(marker in task for marker in audio_markers) for task in normalized
     )
     embedding = any("embedding" in task for task in normalized)
 
@@ -173,7 +170,9 @@ def _variant_summary(record: dict[str, Any]) -> dict[str, Any]:
     return result
 
 
-def _build_capability(model_id: str, records: list[dict[str, Any]], endpoint: str) -> Capability:
+def _build_capability(
+    model_id: str, records: list[dict[str, Any]], endpoint: str
+) -> Capability:
     first = records[0]
     tasks = {
         str(record.get("task") or "").strip()
@@ -187,12 +186,13 @@ def _build_capability(model_id: str, records: list[dict[str, Any]], endpoint: st
     supports_tools = bool(tool_flags) and all(flag is True for flag in tool_flags)
 
     aliases: list[str] = []
+    seen_aliases: set[str] = set()
     for record in records:
         name = str(record.get("name") or "").strip()
-        if name and name.lower() != model_id.lower() and name.lower() not in {
-            alias.lower() for alias in aliases
-        }:
+        lowered = name.lower()
+        if name and lowered != model_id.lower() and lowered not in seen_aliases:
             aliases.append(name)
+            seen_aliases.add(lowered)
 
     licenses = {
         str(record.get("license") or "").strip()
@@ -207,7 +207,9 @@ def _build_capability(model_id: str, records: list[dict[str, Any]], endpoint: st
             if str(record.get("publisher") or "").strip()
         }
     )
-    display_name = str(first.get("displayName") or first.get("alias") or model_id).strip()
+    display_name = str(
+        first.get("displayName") or first.get("alias") or model_id
+    ).strip()
 
     return Capability(
         provider="foundry-local",
@@ -245,15 +247,19 @@ def fetch_foundry_local(
     """Fetch and register the machine-local Foundry Local catalog.
 
     ``endpoint`` is the dynamic Foundry Local service endpoint, for example
-    ``http://localhost:5272``.  ``.../v1`` is also accepted and normalized to
+    ``http://localhost:5272``. ``.../v1`` is also accepted and normalized to
     the service root before requesting ``/foundry/list``.
 
-    This function is the only Foundry Local network boundary in llmcapa.  It
+    This function is the only Foundry Local network boundary in llmcapa. It
     requires an explicit caller action, accepts loopback hosts only, applies a
     bounded timeout and response size, and never persists machine-local catalog
     records to the bundled model database.
     """
-    if isinstance(timeout, bool) or not isinstance(timeout, (int, float)) or timeout <= 0:
+    if (
+        isinstance(timeout, bool)
+        or not isinstance(timeout, (int, float))
+        or timeout <= 0
+    ):
         raise ValueError("timeout must be a positive number")
     base = _normalize_endpoint(endpoint)
     request = urllib.request.Request(
@@ -285,6 +291,7 @@ def fetch_foundry_local(
             grouped[model_id].append(record)
 
     target = registry or default_registry()
+    target._ensure_loaded()
     count = 0
     for model_id in sorted(grouped, key=str.lower):
         capability = _build_capability(model_id, grouped[model_id], base)
