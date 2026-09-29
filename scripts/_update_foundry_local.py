@@ -11,6 +11,8 @@ from __future__ import annotations
 
 import json
 import re
+import shutil
+import tempfile
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -366,6 +368,30 @@ def build_models(raw_rows: list[dict[str, Any]], region: str) -> list[dict[str, 
     return models
 
 
+def _postprocess_output(output: Path = OUT) -> None:
+    """Apply existing capability enrichers to Foundry Local only."""
+    try:
+        from _audio_capability_postprocess import apply as apply_audio
+        from _image_capability_postprocess import apply as apply_image
+        from _structured_capability_postprocess import apply as apply_structured
+        from _video_capability_postprocess import apply as apply_video
+    except ImportError:  # package-style test imports
+        from scripts._audio_capability_postprocess import apply as apply_audio
+        from scripts._image_capability_postprocess import apply as apply_image
+        from scripts._structured_capability_postprocess import apply as apply_structured
+        from scripts._video_capability_postprocess import apply as apply_video
+
+    with tempfile.TemporaryDirectory() as tmp_name:
+        tmp = Path(tmp_name)
+        target = tmp / output.name
+        shutil.copy2(output, target)
+        apply_audio(tmp)
+        apply_video(tmp)
+        apply_structured(tmp)
+        apply_image(tmp)
+        shutil.copy2(target, output)
+
+
 def main() -> None:
     region, raw_rows = fetch_catalog()
     models = build_models(raw_rows, region)
@@ -373,6 +399,7 @@ def main() -> None:
         json.dumps({"models": models}, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+    _postprocess_output(OUT)
     LOG.write_text(
         LOG.read_text(encoding="utf-8")
         + f"\n## Foundry Local refresh ({datetime.now(timezone.utc).date()})\n\n"

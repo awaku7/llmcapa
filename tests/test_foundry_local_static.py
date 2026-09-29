@@ -1,6 +1,10 @@
 """Tests for the bundled Microsoft Foundry Local catalog."""
 
+import json
+from pathlib import Path
+
 import llmcapa
+from scripts import _update_foundry_local as updater
 
 
 def test_foundry_local_catalog_is_bundled_and_offline() -> None:
@@ -96,3 +100,42 @@ def test_foundry_local_streaming_audio_preserves_streaming_support() -> None:
     assert all(model.supports_streaming is True for model in streaming_models)
     assert all(model.audio is not None for model in streaming_models)
     assert all(model.audio.supports_streaming is True for model in streaming_models)
+
+
+def test_foundry_local_updater_applies_postprocessors(tmp_path: Path) -> None:
+    output = tmp_path / "foundry_local.json"
+    output.write_text(
+        json.dumps(
+            {
+                "models": [
+                    {
+                        "provider": "foundry-local",
+                        "model_id": "speech-streaming",
+                        "input_modalities": ["audio"],
+                        "output_modalities": ["text"],
+                        "supports_streaming": True,
+                        "extra": {"media_model_type": "asr"},
+                    },
+                    {
+                        "provider": "foundry-local",
+                        "model_id": "text-embedding",
+                        "input_modalities": ["text"],
+                        "output_modalities": ["embedding"],
+                        "supports_streaming": False,
+                        "extra": {},
+                    },
+                ]
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    updater._postprocess_output(output)
+    records = json.loads(output.read_text(encoding="utf-8"))["models"]
+    speech, embedding = records
+    assert speech["audio"]["transcription"] is True
+    assert speech["audio"]["supports_streaming"] is True
+    assert speech["audio"]["endpoints"]["transcription"] is True
+    assert embedding["embedding"]
