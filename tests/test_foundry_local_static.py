@@ -69,3 +69,30 @@ def test_foundry_local_specialized_capabilities_are_postprocessed() -> None:
     assert embedding_models
     assert all(model.audio is not None for model in audio_models)
     assert all(model.embedding is not None for model in embedding_models)
+
+
+def test_foundry_local_asr_tasks_expose_transcription() -> None:
+    models = llmcapa.list_models(provider="foundry-local")
+    asr_models = [
+        model
+        for model in models
+        if "automatic-speech-recognition"
+        in {str(task).lower() for task in model.extra.get("tasks", [])}
+    ]
+    assert asr_models
+    assert all(model.audio is not None for model in asr_models)
+    assert all(model.audio.transcription is True for model in asr_models)
+    assert all(model.audio.endpoints.transcription is True for model in asr_models)
+
+
+def test_foundry_local_streaming_audio_preserves_streaming_support() -> None:
+    models = llmcapa.list_models(provider="foundry-local")
+    streaming_models = [
+        model
+        for model in models
+        if "audio" in model.input_modalities and "streaming" in model.model_id.lower()
+    ]
+    assert streaming_models
+    assert all(model.supports_streaming is True for model in streaming_models)
+    assert all(model.audio is not None for model in streaming_models)
+    assert all(model.audio.supports_streaming is True for model in streaming_models)

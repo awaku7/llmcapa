@@ -288,6 +288,21 @@ def build_models(raw_rows: list[dict[str, Any]], region: str) -> list[dict[str, 
             {str(row["license"]) for row in variants if row.get("license")}
         )
         input_modalities, output_modalities, chat = _task_modalities(tasks)
+        normalized_tasks = {task.lower().strip() for task in tasks}
+        is_asr = any(
+            marker in task
+            for task in normalized_tasks
+            for marker in (
+                "automatic-speech-recognition",
+                "speech-recognition",
+                "speech-to-text",
+                "transcription",
+            )
+        )
+        is_streaming_audio = "audio" in input_modalities and (
+            "streaming" in model_id
+            or any("streaming" in task for task in normalized_tasks)
+        )
         context_windows = [
             int(row["context_window"])
             for row in variants
@@ -317,7 +332,7 @@ def build_models(raw_rows: list[dict[str, Any]], region: str) -> list[dict[str, 
                 "input_modalities": input_modalities,
                 "output_modalities": output_modalities,
                 "supports_chat_completion": chat,
-                "supports_streaming": chat,
+                "supports_streaming": chat or is_streaming_audio,
                 "supports_function_calling": _tri_state(
                     [row.get("supports_tool_calling") for row in variants]
                 ),
@@ -338,6 +353,7 @@ def build_models(raw_rows: list[dict[str, Any]], region: str) -> list[dict[str, 
                     "source_type": "official_foundry_local_catalog_api",
                     "catalog_region": region,
                     "tasks": sorted(tasks),
+                    "media_model_type": "asr" if is_asr else "",
                     "publishers": publishers,
                     "licenses": licenses,
                     "variants": variants,
