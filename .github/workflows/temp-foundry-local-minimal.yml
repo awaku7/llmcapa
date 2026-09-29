@@ -147,6 +147,7 @@ jobs:
           git restore provider_update_log.md
       - name: Validate minimal patch
         run: |
+          python -m black scripts/_update_foundry_local.py tests/test_foundry_local_static.py
           python -m black --check scripts/_update_foundry_local.py tests/test_foundry_local_static.py
           python -m ruff check scripts/_update_foundry_local.py tests/test_foundry_local_static.py
           python -m pytest tests/test_foundry_local_static.py
