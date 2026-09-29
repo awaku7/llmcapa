@@ -9,8 +9,10 @@ from html import unescape
 from urllib.request import Request, urlopen
 
 try:
+    from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
     from playwright.sync_api import sync_playwright
 except ImportError:  # Playwright is optional; urllib is the first path.
+    PlaywrightTimeoutError = TimeoutError
     sync_playwright = None
 
 PRICING_URL = "https://api-docs.deepseek.com/quick_start/pricing/"
@@ -184,7 +186,14 @@ def fetch_official_text(url: str) -> str:
         try:
             page = browser.new_page()
             page.goto(url, wait_until="networkidle", timeout=60000)
-            page.wait_for_timeout(5000)
+            try:
+                page.wait_for_function(
+                    r"""() => /deepseek-[a-z0-9-]+/i.test(document.body?.innerText || '') &&
+                        /\$\s*[0-9]/.test(document.body?.innerText || '')""",
+                    timeout=5000,
+                )
+            except PlaywrightTimeoutError:
+                pass
             return page.inner_text("body")
         finally:
             browser.close()

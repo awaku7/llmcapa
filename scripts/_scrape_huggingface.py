@@ -57,6 +57,7 @@ def fetch_models(min_downloads: int) -> list:
     models = []
     next_url = None
     page = 0
+    session = requests.Session()
 
     # Initial request (no cursor)
     params = {
@@ -68,9 +69,9 @@ def fetch_models(min_downloads: int) -> list:
 
     while True:
         if next_url:
-            resp = requests.get(next_url, timeout=30)
+            resp = session.get(next_url, timeout=30)
         else:
-            resp = requests.get(API_BASE, params=params, timeout=30)
+            resp = session.get(API_BASE, params=params, timeout=30)
 
         if resp.status_code != 200:
             print(f"[ERROR] HTTP {resp.status_code} at page {page}")
@@ -99,6 +100,7 @@ def fetch_models(min_downloads: int) -> list:
 
         time.sleep(0.3)
 
+    session.close()
     return models
 
 

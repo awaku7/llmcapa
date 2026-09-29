@@ -3,6 +3,7 @@ import json
 import sys
 import traceback
 try:
+    from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
     from playwright.sync_api import sync_playwright
 except ImportError:
     print('{"error":"playwright not installed"}')
@@ -15,7 +16,13 @@ try:
         # Models overview page
         page = browser.new_page()
         page.goto("https://platform.claude.com/docs/en/about-claude/models/overview", wait_until="networkidle", timeout=60000)
-        page.wait_for_timeout(5000)
+        try:
+            page.wait_for_function(
+                r"""() => /Claude\s+(?:Opus|Sonnet|Haiku)/i.test(document.body?.innerText || '')""",
+                timeout=5000,
+            )
+        except PlaywrightTimeoutError:
+            pass
         models_text = page.inner_text("body")
         
         # Extract the model comparison table
@@ -29,7 +36,14 @@ try:
         # Pricing page
         page = browser.new_page()
         page.goto("https://platform.claude.com/docs/en/about-claude/pricing", wait_until="networkidle", timeout=60000)
-        page.wait_for_timeout(5000)
+        try:
+            page.wait_for_function(
+                r"""() => /Claude/i.test(document.body?.innerText || '') &&
+                    /\$\s*[0-9]/.test(document.body?.innerText || '')""",
+                timeout=5000,
+            )
+        except PlaywrightTimeoutError:
+            pass
         pricing_html = page.content()
         page.close()
 

@@ -24,6 +24,7 @@ import sys
 from pathlib import Path
 
 try:
+    from playwright.async_api import TimeoutError as PlaywrightTimeoutError
     from playwright.async_api import async_playwright
 except ImportError:
     print('{"error":"playwright not installed"}')
@@ -86,11 +87,16 @@ def _api_item_to_entry(item: dict) -> dict:
 async def get_ssr_page1_names(page) -> set:
     """Get model names from SSR page 1 DOM."""
     await page.goto(CATALOG_URL, timeout=30000, wait_until="domcontentloaded")
-    await page.wait_for_timeout(3000)
+    try:
+        await page.locator('a[href*="/catalog/models/"]').first.wait_for(
+            state="attached", timeout=3000
+        )
+    except PlaywrightTimeoutError:
+        return set()
 
     names = await page.evaluate("""
         () => {
-            const links = document.querySelectorAll('a[class*="_cardLink"]');
+            const links = document.querySelectorAll('a[href*="/catalog/models/"]');
             return Array.from(links).map(a => {
                 const href = a.href || '';
                 return href.replace(/\\/$/, '').split('/').pop();
@@ -108,50 +114,126 @@ async def click_until_no_next(page) -> list:
     all_entries = []
     page_num = 0
     max_pages = 500  # safety limit
+    max_clicks = max_pages * 2 + 10
+    response_queue = asyncio.Queue()
 
-    while page_num < max_pages:
-        # Wait for the Next button to appear and be clickable
-        next_btn = page.locator('button:has-text("Next")')
-        try:
-            await next_btn.wait_for(timeout=5000)
-        except Exception:  # noqa: BLE001
-            print("  No more Next button found.")
-            break
+    def capture_response(response):
+        if "asset-gallery/v1.0/models" in response.url:
+            response_queue.put_nowait(response)
 
-        is_disabled = await next_btn.is_disabled()
-        if is_disabled:
-            print("  Next button is disabled. Reached last page.")
-            break
-
-        # Before clicking, set up a one-shot listener for the API response
-        future_response = asyncio.get_event_loop().create_future()
-
-        def capture_response(response):
-            if "asset-gallery/v1.0/models" in response.url and response.status == 200:
-                if not future_response.done():
-                    future_response.set_result(response)
-
-        page.on("response", capture_response)
-
-        # Click Next
-        await next_btn.click()
+    async def collect_response(response):
+        nonlocal page_num
+        if response.status != 200:
+            raise RuntimeError(
+                f"Azure catalog API returned HTTP {response.status} "
+                f"while fetching page {page_num + 1}"
+            )
+        data = await response.json()
+        values = data.get("value", [])
         page_num += 1
+        for item in values:
+            all_entries.append(_api_item_to_entry(item))
+        print(f"  Page {page_num}: {len(values)} models (total: {len(all_entries)})")
+        await asyncio.sleep(0.5)  # throttle API requests, as the UI requires a click per page
 
-        # Wait a moment for the API response
-        try:
-            resp = await asyncio.wait_for(future_response, timeout=10)
-            data = await resp.json()
-            values = data.get("value", [])
-            for item in values:
-                all_entries.append(_api_item_to_entry(item))
-            print(f"  Page {page_num}: {len(values)} models (total: {len(all_entries)})")
-        except asyncio.TimeoutError:
-            print(f"  Page {page_num}: timeout waiting for API response")
-            break
-        finally:
-            page.remove_listener("response", capture_response)
+    async def ui_state():
+        return await page.evaluate(
+            """() => {
+                const links = Array.from(document.querySelectorAll('a[href*="/catalog/models/"]'));
+                const names = links.map(a => (a.href || '').replace(/\\/$/, '').split('/').pop());
+                const text = (document.body?.innerText || '').slice(-1000);
+                const match = text.match(/Prev\\s+(\\d+)\\s+Next/);
+                return {page: match ? Number(match[1]) : 0, names};
+            }"""
+        )
 
-        await asyncio.sleep(0.5)
+    async def wait_for_ui_advance(previous_state):
+        await page.wait_for_function(
+            """previous => {
+                const links = Array.from(document.querySelectorAll('a[href*="/catalog/models/"]'));
+                const names = links.map(a => (a.href || '').replace(/\\/$/, '').split('/').pop());
+                const text = (document.body?.innerText || '').slice(-1000);
+                const match = text.match(/Prev\\s+(\\d+)\\s+Next/);
+                const page = match ? Number(match[1]) : 0;
+                return (page > previous.page) ||
+                    (names.length > 0 && JSON.stringify(names) !== JSON.stringify(previous.names));
+            }""",
+            arg=previous_state,
+            timeout=15000,
+        )
+
+    page.on("response", capture_response)
+    response_task = asyncio.create_task(response_queue.get())
+    ui_task = None
+    clicks = 0
+    consecutive_stalls = 0
+    try:
+        while page_num < max_pages and clicks < max_clicks:
+            # Azure can deliver a page response and commit it to the visible UI
+            # in separate steps. Drain responses and UI advances independently.
+            if response_task.done():
+                await collect_response(response_task.result())
+                response_task = asyncio.create_task(response_queue.get())
+                continue
+
+            next_btn = page.locator('button:has-text("Next")')
+            try:
+                await next_btn.wait_for(timeout=5000)
+            except PlaywrightTimeoutError:
+                print("  No more Next button found.")
+                break
+            if await next_btn.is_disabled():
+                print("  Next button is disabled. Reached last page.")
+                break
+
+            previous_state = await ui_state()
+            ui_task = asyncio.create_task(wait_for_ui_advance(previous_state))
+            await next_btn.click()
+            clicks += 1
+            done, _ = await asyncio.wait(
+                (response_task, ui_task), timeout=16,
+                return_when=asyncio.FIRST_COMPLETED,
+            )
+
+            progressed = False
+            if response_task in done:
+                await collect_response(response_task.result())
+                response_task = asyncio.create_task(response_queue.get())
+                progressed = True
+
+            if ui_task in done:
+                try:
+                    ui_task.result()
+                    progressed = True
+                except PlaywrightTimeoutError:
+                    pass
+            else:
+                ui_task.cancel()
+                await asyncio.gather(ui_task, return_exceptions=True)
+
+            if not progressed:
+                consecutive_stalls += 1
+                print(
+                    f"  No API or UI progress after click {clicks} "
+                    f"({consecutive_stalls}/3 retries)"
+                )
+                if consecutive_stalls < 3:
+                    await asyncio.sleep(1)
+                    continue
+                raise RuntimeError(
+                    "Azure catalog made no API or UI progress after clicking Next; "
+                    "refusing partial results"
+                )
+            consecutive_stalls = 0
+    finally:
+        page.remove_listener("response", capture_response)
+        for task in (response_task, ui_task):
+            if task is not None and not task.done():
+                task.cancel()
+        await asyncio.gather(
+            *(task for task in (response_task, ui_task) if task is not None),
+            return_exceptions=True,
+        )
 
     return all_entries
 
@@ -160,13 +242,29 @@ async def fetch_ssr_detail(page, model_name: str) -> dict:
     """Visit a model's detail page to get metadata (for SSR-only models)."""
     url = DETAIL_URL.format(name=model_name)
     await page.goto(url, timeout=15000, wait_until="domcontentloaded")
-    await page.wait_for_timeout(1500)
-
-    # Try to click "Technical specs" accordion
+    try:
+        await page.wait_for_function(
+            """() => {
+                const text = document.body?.innerText || '';
+                return text.includes('Model provider') || text.includes('Technical specs');
+            }""",
+            timeout=1500,
+        )
+    except PlaywrightTimeoutError:
+        pass
     btn = page.locator('button:has-text("Technical specs")')
     if await btn.count() > 0:
         await btn.click()
-        await page.wait_for_timeout(500)
+        try:
+            await page.wait_for_function(
+                """() => {
+                    const text = document.body?.innerText || '';
+                    return text.includes('Context window') || text.includes('Token limits');
+                }""",
+                timeout=500,
+            )
+        except PlaywrightTimeoutError:
+            pass
 
     text = await page.evaluate("document.body.innerText")
     lines = [line.strip() for line in text.split("\n") if line.strip()]

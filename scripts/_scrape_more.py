@@ -1,10 +1,22 @@
 """Scrape remaining providers from correct official URLs."""
 import sys, json, traceback
 try:
+    from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
     from playwright.sync_api import sync_playwright
 except ImportError:
     print('{"error":"playwright not installed"}')
     sys.exit(1)
+
+
+def wait_for_body_text(page):
+    """Wait for substantial rendered text, without a fixed post-load delay."""
+    try:
+        page.wait_for_function(
+            "() => (document.body?.innerText || '').trim().length > 1000",
+            timeout=3000,
+        )
+    except PlaywrightTimeoutError:
+        pass
 
 results = {}
 
@@ -15,35 +27,35 @@ try:
         # 1. Qwen - Alibaba Cloud Model Studio models page
         page = browser.new_page()
         page.goto("https://www.alibabacloud.com/help/en/model-studio/getting-started/models", wait_until="networkidle", timeout=30000)
-        page.wait_for_timeout(3000)
+        wait_for_body_text(page)
         results["qwen"] = page.inner_text("body")[:15000]
         page.close()
         
         # 2. NVIDIA build.nvidia.com - try catalog page
         page = browser.new_page()
         page.goto("https://build.nvidia.com/explore/discover", wait_until="networkidle", timeout=30000)
-        page.wait_for_timeout(3000)
+        wait_for_body_text(page)
         results["nvidia_catalog"] = page.inner_text("body")[:10000]
         page.close()
         
         # 3. Microsoft Azure OpenAI pricing
         page = browser.new_page()
         page.goto("https://azure.microsoft.com/en-us/pricing/details/cognitive-services/openai-service/", wait_until="networkidle", timeout=30000)
-        page.wait_for_timeout(3000)
+        wait_for_body_text(page)
         results["azure"] = page.inner_text("body")[:15000]
         page.close()
         
         # 4. xAI/Grok pricing
         page = browser.new_page()
         page.goto("https://x.ai/api", wait_until="networkidle", timeout=30000)
-        page.wait_for_timeout(3000)
+        wait_for_body_text(page)
         results["xai"] = page.inner_text("body")[:10000]
         page.close()
         
         # 5. Cohere pricing
         page = browser.new_page()
         page.goto("https://cohere.com/pricing", wait_until="networkidle", timeout=30000)
-        page.wait_for_timeout(3000)
+        wait_for_body_text(page)
         results["cohere"] = page.inner_text("body")[:10000]
         page.close()
         

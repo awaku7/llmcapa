@@ -3,6 +3,7 @@ import json
 import sys
 import traceback
 try:
+    from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
     from playwright.sync_api import sync_playwright
 except ImportError:
     print('{"error":"playwright not installed"}')
@@ -13,7 +14,10 @@ try:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
         page.goto("https://azure.microsoft.com/ja-jp/pricing/details/ai-foundry-models/aoai/#pricing", wait_until="networkidle", timeout=60000)
-        page.wait_for_timeout(5000)
+        try:
+            page.locator("table tr:nth-child(2)").first.wait_for(timeout=5000)
+        except PlaywrightTimeoutError:
+            pass
         text = page.inner_text("body")
         browser.close()
         result = {"azure_pricing": True, "text_len": len(text), "text": text[:30000]}

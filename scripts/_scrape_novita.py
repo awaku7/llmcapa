@@ -24,6 +24,7 @@ def parse_model_names(text: str) -> list[str]:
             names.append(name)
     return names
 try:
+    from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
     from playwright.sync_api import sync_playwright
 except ImportError:
     print('{"error":"playwright not installed"}')
@@ -34,7 +35,15 @@ try:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
         page.goto("https://novita.ai/pricing", wait_until="networkidle", timeout=60000)
-        page.wait_for_timeout(5000)
+        try:
+            page.wait_for_function(
+                r"""() => /\t[0-9]+(?:\.[0-9]+)?\s*[KM]/i.test(
+                    document.body?.innerText || ''
+                )""",
+                timeout=5000,
+            )
+        except PlaywrightTimeoutError:
+            pass
         text = page.inner_text("body")
         browser.close()
         

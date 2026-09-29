@@ -8,6 +8,7 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
 try:
+    from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
     from playwright.sync_api import sync_playwright
 except ImportError:
     print('{"error":"playwright not installed"}')
@@ -31,7 +32,10 @@ try:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
         page.goto("https://platform.kimi.ai/docs/pricing", wait_until="networkidle", timeout=60000)
-        page.wait_for_timeout(5000)
+        try:
+            page.get_by_text("See detailed pricing for each model:", exact=False).first.wait_for(timeout=5000)
+        except PlaywrightTimeoutError:
+            pass
         text = page.inner_text("body")
         browser.close()
         model_names = parse_model_names(text)

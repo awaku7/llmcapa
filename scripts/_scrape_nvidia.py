@@ -20,6 +20,7 @@ def parse_model_cards(text: str) -> list[str]:
                     names.append(candidate)
     return names
 try:
+    from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
     from playwright.sync_api import sync_playwright
 except ImportError:
     print('{"error":"playwright not installed"}')
@@ -30,7 +31,15 @@ try:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
         page.goto("https://developer.nvidia.com/ai-models", wait_until="networkidle", timeout=60000)
-        page.wait_for_timeout(5000)
+        try:
+            page.wait_for_function(
+                r"""() => /(?:^|\n)Model\r?\n[^\r\n]+/m.test(
+                    document.body?.innerText || ''
+                )""",
+                timeout=5000,
+            )
+        except PlaywrightTimeoutError:
+            pass
         text = page.inner_text("body")
         browser.close()
         

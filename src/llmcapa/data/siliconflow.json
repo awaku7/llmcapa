@@ -2,45 +2,372 @@
   "models": [
     {
       "provider": "siliconflow",
-      "model_id": "DeepSeek-R1",
-      "display_name": "DeepSeek-R1",
+      "model_id": "black-forest-labs/FLUX-1.1-pro",
+      "display_name": "black-forest-labs/FLUX-1.1-pro",
       "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
       ],
       "output_modalities": [
-        "text"
+        "image"
       ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
+      "supports_chat_completion": false,
       "supports_function_calling": null,
       "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": null,
       "supports_reasoning": null,
-      "supports_responses_api": false,
+      "supports_responses_api": null,
       "pricing": null,
       "deprecated": false,
       "aliases": [],
+      "license_type": "api",
       "extra": {
-        "source": "https://docs.siliconflow.com/",
-        "source_type": "official_page_scrape",
-        "spec_status": "listed_only",
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/images",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/images"
+        ],
+        "evidence_categories": [
+          "image_generation"
+        ],
+        "checked_at": "2026-09-29",
         "endpoints": [
           {
-            "base_url": "https://api.siliconflow.cn/v1",
+            "base_url": "https://api.siliconflow.com/v1",
             "protocol": "openai-compatible",
             "auth": "bearer",
-            "source": "https://docs.siliconflow.com/"
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
           }
         ]
       },
-      "supports_fim": false
+      "image": {
+        "generation": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": false,
+        "status": "documented",
+        "source_url": "https://docs.siliconflow.com/en/userguide/capabilities/images",
+        "checked_at": "2026-09-29"
+      }
     },
     {
       "provider": "siliconflow",
-      "model_id": "DeepSeek-V3",
-      "display_name": "DeepSeek-V3",
+      "model_id": "black-forest-labs/FLUX-1.1-pro-Ultra",
+      "display_name": "black-forest-labs/FLUX-1.1-pro-Ultra",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "image"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": null,
+      "supports_reasoning": null,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/images",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/images"
+        ],
+        "evidence_categories": [
+          "image_generation"
+        ],
+        "checked_at": "2026-09-29",
+        "endpoints": [
+          {
+            "base_url": "https://api.siliconflow.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
+          }
+        ]
+      },
+      "image": {
+        "generation": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": false,
+        "status": "documented",
+        "source_url": "https://docs.siliconflow.com/en/userguide/capabilities/images",
+        "checked_at": "2026-09-29"
+      }
+    },
+    {
+      "provider": "siliconflow",
+      "model_id": "black-forest-labs/FLUX.1-dev",
+      "display_name": "black-forest-labs/FLUX.1-dev",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "image"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": null,
+      "supports_reasoning": null,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/images",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/images"
+        ],
+        "evidence_categories": [
+          "image_generation"
+        ],
+        "checked_at": "2026-09-29",
+        "endpoints": [
+          {
+            "base_url": "https://api.siliconflow.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
+          }
+        ]
+      },
+      "image": {
+        "generation": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": false,
+        "status": "documented",
+        "source_url": "https://docs.siliconflow.com/en/userguide/capabilities/images",
+        "checked_at": "2026-09-29"
+      }
+    },
+    {
+      "provider": "siliconflow",
+      "model_id": "black-forest-labs/FLUX.1-Kontext-dev",
+      "display_name": "black-forest-labs/FLUX.1-Kontext-dev",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "image"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": null,
+      "supports_reasoning": null,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/images",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/images"
+        ],
+        "evidence_categories": [
+          "image_generation"
+        ],
+        "checked_at": "2026-09-29",
+        "endpoints": [
+          {
+            "base_url": "https://api.siliconflow.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
+          }
+        ]
+      },
+      "image": {
+        "generation": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": false,
+        "status": "documented",
+        "source_url": "https://docs.siliconflow.com/en/userguide/capabilities/images",
+        "checked_at": "2026-09-29"
+      }
+    },
+    {
+      "provider": "siliconflow",
+      "model_id": "black-forest-labs/FLUX.1-Kontext-max",
+      "display_name": "black-forest-labs/FLUX.1-Kontext-max",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "image"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": null,
+      "supports_reasoning": null,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/images",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/images"
+        ],
+        "evidence_categories": [
+          "image_generation"
+        ],
+        "checked_at": "2026-09-29",
+        "endpoints": [
+          {
+            "base_url": "https://api.siliconflow.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
+          }
+        ]
+      },
+      "image": {
+        "generation": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": false,
+        "status": "documented",
+        "source_url": "https://docs.siliconflow.com/en/userguide/capabilities/images",
+        "checked_at": "2026-09-29"
+      }
+    },
+    {
+      "provider": "siliconflow",
+      "model_id": "black-forest-labs/FLUX.1-Kontext-pro",
+      "display_name": "black-forest-labs/FLUX.1-Kontext-pro",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "image"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": null,
+      "supports_reasoning": null,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/images",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/images"
+        ],
+        "evidence_categories": [
+          "image_generation"
+        ],
+        "checked_at": "2026-09-29",
+        "endpoints": [
+          {
+            "base_url": "https://api.siliconflow.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
+          }
+        ]
+      },
+      "image": {
+        "generation": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": false,
+        "status": "documented",
+        "source_url": "https://docs.siliconflow.com/en/userguide/capabilities/images",
+        "checked_at": "2026-09-29"
+      }
+    },
+    {
+      "provider": "siliconflow",
+      "model_id": "black-forest-labs/FLUX.1-schnell",
+      "display_name": "black-forest-labs/FLUX.1-schnell",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "image"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": null,
+      "supports_reasoning": null,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/images",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/images"
+        ],
+        "evidence_categories": [
+          "image_generation"
+        ],
+        "checked_at": "2026-09-29",
+        "endpoints": [
+          {
+            "base_url": "https://api.siliconflow.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
+          }
+        ]
+      },
+      "image": {
+        "generation": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": false,
+        "status": "documented",
+        "source_url": "https://docs.siliconflow.com/en/userguide/capabilities/images",
+        "checked_at": "2026-09-29"
+      }
+    },
+    {
+      "provider": "siliconflow",
+      "model_id": "deepseek-ai/DeepSeek-R1",
+      "display_name": "deepseek-ai/DeepSeek-R1",
       "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
@@ -50,29 +377,419 @@
         "text"
       ],
       "supports_chat_completion": true,
-      "supports_streaming": true,
       "supports_function_calling": null,
       "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
+      "supports_reasoning": true,
+      "supports_responses_api": null,
       "pricing": null,
       "deprecated": false,
       "aliases": [],
+      "license_type": "api",
       "extra": {
-        "source": "https://docs.siliconflow.com/",
-        "source_type": "official_page_scrape",
-        "spec_status": "listed_only",
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/reasoning",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/reasoning",
+          "https://docs.siliconflow.com/en/userguide/quickstart"
+        ],
+        "evidence_categories": [
+          "reasoning",
+          "text"
+        ],
+        "checked_at": "2026-09-29",
         "endpoints": [
           {
-            "base_url": "https://api.siliconflow.cn/v1",
+            "base_url": "https://api.siliconflow.com/v1",
             "protocol": "openai-compatible",
             "auth": "bearer",
-            "source": "https://docs.siliconflow.com/"
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "siliconflow",
+      "model_id": "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
+      "display_name": "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": null,
+      "supports_reasoning": true,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/reasoning",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/reasoning"
+        ],
+        "evidence_categories": [
+          "reasoning"
+        ],
+        "checked_at": "2026-09-29",
+        "endpoints": [
+          {
+            "base_url": "https://api.siliconflow.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "siliconflow",
+      "model_id": "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B",
+      "display_name": "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": null,
+      "supports_reasoning": true,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/reasoning",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/reasoning"
+        ],
+        "evidence_categories": [
+          "reasoning"
+        ],
+        "checked_at": "2026-09-29",
+        "endpoints": [
+          {
+            "base_url": "https://api.siliconflow.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "siliconflow",
+      "model_id": "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B",
+      "display_name": "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": null,
+      "supports_reasoning": true,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/reasoning",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/reasoning"
+        ],
+        "evidence_categories": [
+          "reasoning"
+        ],
+        "checked_at": "2026-09-29",
+        "endpoints": [
+          {
+            "base_url": "https://api.siliconflow.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "siliconflow",
+      "model_id": "deepseek-ai/DeepSeek-V2.5",
+      "display_name": "deepseek-ai/DeepSeek-V2.5",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": null,
+      "supports_reasoning": null,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/text-generation",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/text-generation"
+        ],
+        "evidence_categories": [
+          "text"
+        ],
+        "checked_at": "2026-09-29",
+        "endpoints": [
+          {
+            "base_url": "https://api.siliconflow.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "siliconflow",
+      "model_id": "deepseek-ai/DeepSeek-V3",
+      "display_name": "deepseek-ai/DeepSeek-V3",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": null,
+      "supports_reasoning": null,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/text-generation",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/text-generation"
+        ],
+        "evidence_categories": [
+          "text"
+        ],
+        "checked_at": "2026-09-29",
+        "endpoints": [
+          {
+            "base_url": "https://api.siliconflow.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "siliconflow",
+      "model_id": "deepseek-ai/deepseek-vl2",
+      "display_name": "deepseek-ai/deepseek-vl2",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/text-generation",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/text-generation",
+          "https://docs.siliconflow.com/en/userguide/capabilities/vision"
+        ],
+        "evidence_categories": [
+          "text",
+          "vision"
+        ],
+        "checked_at": "2026-09-29",
+        "endpoints": [
+          {
+            "base_url": "https://api.siliconflow.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "siliconflow",
+      "model_id": "fish-speech-1.5",
+      "display_name": "fish-speech-1.5",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "audio"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": null,
+      "supports_reasoning": null,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/text-to-speech",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/text-to-speech"
+        ],
+        "evidence_categories": [
+          "audio_generation"
+        ],
+        "checked_at": "2026-09-29",
+        "endpoints": [
+          {
+            "base_url": "https://api.siliconflow.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
           }
         ]
       },
-      "supports_fim": false
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": null,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true
+        },
+        "checked_at": "2026-09-29",
+        "status": "inferred"
+      }
+    },
+    {
+      "provider": "siliconflow",
+      "model_id": "FunAudioLLM/CosyVoice2-0.5B",
+      "display_name": "FunAudioLLM/CosyVoice2-0.5B",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "audio"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": null,
+      "supports_reasoning": null,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/text-to-speech",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/text-to-speech"
+        ],
+        "evidence_categories": [
+          "audio_generation"
+        ],
+        "checked_at": "2026-09-29",
+        "endpoints": [
+          {
+            "base_url": "https://api.siliconflow.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
+          }
+        ]
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": null,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true
+        },
+        "checked_at": "2026-09-29",
+        "status": "inferred"
+      }
     },
     {
       "provider": "siliconflow",
@@ -107,14 +824,15 @@
             "auth": "bearer",
             "source": "https://docs.siliconflow.com/"
           }
-        ]
+        ],
+        "not_confirmed_by_current_public_docs": true
       },
       "supports_fim": false
     },
     {
       "provider": "siliconflow",
-      "model_id": "product",
-      "display_name": "product",
+      "model_id": "MiniMaxAI/MiniMax-M2.1",
+      "display_name": "MiniMaxAI/MiniMax-M2.1",
       "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
@@ -124,34 +842,41 @@
         "text"
       ],
       "supports_chat_completion": true,
-      "supports_streaming": true,
       "supports_function_calling": null,
       "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
+      "supports_reasoning": true,
+      "supports_responses_api": null,
       "pricing": null,
       "deprecated": false,
       "aliases": [],
+      "license_type": "api",
       "extra": {
-        "source": "https://docs.siliconflow.com/",
-        "source_type": "official_page_scrape",
-        "spec_status": "listed_only",
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/reasoning",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/reasoning"
+        ],
+        "evidence_categories": [
+          "reasoning"
+        ],
+        "checked_at": "2026-09-29",
         "endpoints": [
           {
-            "base_url": "https://api.siliconflow.cn/v1",
+            "base_url": "https://api.siliconflow.com/v1",
             "protocol": "openai-compatible",
             "auth": "bearer",
-            "source": "https://docs.siliconflow.com/"
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
           }
         ]
-      },
-      "supports_fim": false
+      }
     },
     {
       "provider": "siliconflow",
-      "model_id": "product-characteristics",
-      "display_name": "product-characteristics",
+      "model_id": "Qwen/QVQ-72B-Preview",
+      "display_name": "Qwen/QVQ-72B-Preview",
       "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
@@ -161,34 +886,86 @@
         "text"
       ],
       "supports_chat_completion": true,
-      "supports_streaming": true,
       "supports_function_calling": null,
       "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": null,
       "supports_reasoning": null,
-      "supports_responses_api": false,
+      "supports_responses_api": null,
       "pricing": null,
       "deprecated": false,
       "aliases": [],
+      "license_type": "api",
       "extra": {
-        "source": "https://docs.siliconflow.com/",
-        "source_type": "official_page_scrape",
-        "spec_status": "listed_only",
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/text-generation",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/text-generation"
+        ],
+        "evidence_categories": [
+          "text"
+        ],
+        "checked_at": "2026-09-29",
         "endpoints": [
           {
-            "base_url": "https://api.siliconflow.cn/v1",
+            "base_url": "https://api.siliconflow.com/v1",
             "protocol": "openai-compatible",
             "auth": "bearer",
-            "source": "https://docs.siliconflow.com/"
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
           }
         ]
-      },
-      "supports_fim": false
+      }
     },
     {
       "provider": "siliconflow",
-      "model_id": "product-features",
-      "display_name": "product-features",
+      "model_id": "Qwen/Qwen2-VL-72B-Instruct",
+      "display_name": "Qwen/Qwen2-VL-72B-Instruct",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/vision",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/vision"
+        ],
+        "evidence_categories": [
+          "vision"
+        ],
+        "checked_at": "2026-09-29",
+        "endpoints": [
+          {
+            "base_url": "https://api.siliconflow.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "siliconflow",
+      "model_id": "Qwen/Qwen2.5-Coder-32B-Instruct",
+      "display_name": "Qwen/Qwen2.5-Coder-32B-Instruct",
       "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
@@ -198,34 +975,41 @@
         "text"
       ],
       "supports_chat_completion": true,
-      "supports_streaming": true,
       "supports_function_calling": null,
       "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": null,
       "supports_reasoning": null,
-      "supports_responses_api": false,
+      "supports_responses_api": null,
       "pricing": null,
       "deprecated": false,
       "aliases": [],
+      "license_type": "api",
       "extra": {
-        "source": "https://docs.siliconflow.com/",
-        "source_type": "official_page_scrape",
-        "spec_status": "listed_only",
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/text-generation",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/text-generation"
+        ],
+        "evidence_categories": [
+          "text"
+        ],
+        "checked_at": "2026-09-29",
         "endpoints": [
           {
-            "base_url": "https://api.siliconflow.cn/v1",
+            "base_url": "https://api.siliconflow.com/v1",
             "protocol": "openai-compatible",
             "auth": "bearer",
-            "source": "https://docs.siliconflow.com/"
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
           }
         ]
-      },
-      "supports_fim": false
+      }
     },
     {
       "provider": "siliconflow",
-      "model_id": "product-introduction",
-      "display_name": "product-introduction",
+      "model_id": "Qwen/Qwen3-14B",
+      "display_name": "Qwen/Qwen3-14B",
       "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
@@ -235,34 +1019,41 @@
         "text"
       ],
       "supports_chat_completion": true,
-      "supports_streaming": true,
       "supports_function_calling": null,
       "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
+      "supports_reasoning": true,
+      "supports_responses_api": null,
       "pricing": null,
       "deprecated": false,
       "aliases": [],
+      "license_type": "api",
       "extra": {
-        "source": "https://docs.siliconflow.com/",
-        "source_type": "official_page_scrape",
-        "spec_status": "listed_only",
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/reasoning",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/reasoning"
+        ],
+        "evidence_categories": [
+          "reasoning"
+        ],
+        "checked_at": "2026-09-29",
         "endpoints": [
           {
-            "base_url": "https://api.siliconflow.cn/v1",
+            "base_url": "https://api.siliconflow.com/v1",
             "protocol": "openai-compatible",
             "auth": "bearer",
-            "source": "https://docs.siliconflow.com/"
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
           }
         ]
-      },
-      "supports_fim": false
+      }
     },
     {
       "provider": "siliconflow",
-      "model_id": "Products",
-      "display_name": "Products",
+      "model_id": "Qwen/Qwen3-235B-A22B",
+      "display_name": "Qwen/Qwen3-235B-A22B",
       "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
@@ -272,34 +1063,41 @@
         "text"
       ],
       "supports_chat_completion": true,
-      "supports_streaming": true,
       "supports_function_calling": null,
       "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
+      "supports_reasoning": true,
+      "supports_responses_api": null,
       "pricing": null,
       "deprecated": false,
       "aliases": [],
+      "license_type": "api",
       "extra": {
-        "source": "https://docs.siliconflow.com/",
-        "source_type": "official_page_scrape",
-        "spec_status": "listed_only",
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/reasoning",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/reasoning"
+        ],
+        "evidence_categories": [
+          "reasoning"
+        ],
+        "checked_at": "2026-09-29",
         "endpoints": [
           {
-            "base_url": "https://api.siliconflow.cn/v1",
+            "base_url": "https://api.siliconflow.com/v1",
             "protocol": "openai-compatible",
             "auth": "bearer",
-            "source": "https://docs.siliconflow.com/"
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
           }
         ]
-      },
-      "supports_fim": false
+      }
     },
     {
       "provider": "siliconflow",
-      "model_id": "professional",
-      "display_name": "professional",
+      "model_id": "Qwen/Qwen3-32B",
+      "display_name": "Qwen/Qwen3-32B",
       "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
@@ -309,34 +1107,41 @@
         "text"
       ],
       "supports_chat_completion": true,
-      "supports_streaming": true,
       "supports_function_calling": null,
       "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
+      "supports_reasoning": true,
+      "supports_responses_api": null,
       "pricing": null,
       "deprecated": false,
       "aliases": [],
+      "license_type": "api",
       "extra": {
-        "source": "https://docs.siliconflow.com/",
-        "source_type": "official_page_scrape",
-        "spec_status": "listed_only",
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/reasoning",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/reasoning"
+        ],
+        "evidence_categories": [
+          "reasoning"
+        ],
+        "checked_at": "2026-09-29",
         "endpoints": [
           {
-            "base_url": "https://api.siliconflow.cn/v1",
+            "base_url": "https://api.siliconflow.com/v1",
             "protocol": "openai-compatible",
             "auth": "bearer",
-            "source": "https://docs.siliconflow.com/"
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
           }
         ]
-      },
-      "supports_fim": false
+      }
     },
     {
       "provider": "siliconflow",
-      "model_id": "promise",
-      "display_name": "promise",
+      "model_id": "Qwen/Qwen3-8B",
+      "display_name": "Qwen/Qwen3-8B",
       "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
@@ -346,34 +1151,41 @@
         "text"
       ],
       "supports_chat_completion": true,
-      "supports_streaming": true,
       "supports_function_calling": null,
       "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
+      "supports_reasoning": true,
+      "supports_responses_api": null,
       "pricing": null,
       "deprecated": false,
       "aliases": [],
+      "license_type": "api",
       "extra": {
-        "source": "https://docs.siliconflow.com/",
-        "source_type": "official_page_scrape",
-        "spec_status": "listed_only",
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/reasoning",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/reasoning"
+        ],
+        "evidence_categories": [
+          "reasoning"
+        ],
+        "checked_at": "2026-09-29",
         "endpoints": [
           {
-            "base_url": "https://api.siliconflow.cn/v1",
+            "base_url": "https://api.siliconflow.com/v1",
             "protocol": "openai-compatible",
             "auth": "bearer",
-            "source": "https://docs.siliconflow.com/"
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
           }
         ]
-      },
-      "supports_fim": false
+      }
     },
     {
       "provider": "siliconflow",
-      "model_id": "property",
-      "display_name": "property",
+      "model_id": "Qwen/QwQ-32B",
+      "display_name": "Qwen/QwQ-32B",
       "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
@@ -383,547 +1195,36 @@
         "text"
       ],
       "supports_chat_completion": true,
-      "supports_streaming": true,
       "supports_function_calling": null,
       "supports_json_mode": null,
+      "supports_streaming": null,
       "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
+      "supports_reasoning": true,
+      "supports_responses_api": null,
       "pricing": null,
       "deprecated": false,
       "aliases": [],
+      "license_type": "api",
       "extra": {
-        "source": "https://docs.siliconflow.com/",
-        "source_type": "official_page_scrape",
-        "spec_status": "listed_only",
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/reasoning",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/reasoning"
+        ],
+        "evidence_categories": [
+          "reasoning"
+        ],
+        "checked_at": "2026-09-29",
         "endpoints": [
           {
-            "base_url": "https://api.siliconflow.cn/v1",
+            "base_url": "https://api.siliconflow.com/v1",
             "protocol": "openai-compatible",
             "auth": "bearer",
-            "source": "https://docs.siliconflow.com/"
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
           }
         ]
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "siliconflow",
-      "model_id": "props",
-      "display_name": "props",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.siliconflow.com/",
-        "source_type": "official_page_scrape",
-        "spec_status": "listed_only",
-        "endpoints": [
-          {
-            "base_url": "https://api.siliconflow.cn/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.siliconflow.com/"
-          }
-        ]
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "siliconflow",
-      "model_id": "props.components",
-      "display_name": "props.components",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.siliconflow.com/",
-        "source_type": "official_page_scrape",
-        "spec_status": "listed_only",
-        "endpoints": [
-          {
-            "base_url": "https://api.siliconflow.cn/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.siliconflow.com/"
-          }
-        ]
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "siliconflow",
-      "model_id": "props:children:1:props:appearance",
-      "display_name": "props:children:1:props:appearance",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.siliconflow.com/",
-        "source_type": "official_page_scrape",
-        "spec_status": "listed_only",
-        "endpoints": [
-          {
-            "base_url": "https://api.siliconflow.cn/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.siliconflow.com/"
-          }
-        ]
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "siliconflow",
-      "model_id": "props:children:1:props:children:6:props:children:props:children:props:children:props:value:docsConfig",
-      "display_name": "props:children:1:props:children:6:props:children:props:children:props:children:props:value:docsConfig",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.siliconflow.com/",
-        "source_type": "official_page_scrape",
-        "spec_status": "listed_only",
-        "endpoints": [
-          {
-            "base_url": "https://api.siliconflow.cn/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.siliconflow.com/"
-          }
-        ]
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "siliconflow",
-      "model_id": "props:children:props:children:props:children:props:value:mdxExtracts",
-      "display_name": "props:children:props:children:props:children:props:value:mdxExtracts",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.siliconflow.com/",
-        "source_type": "official_page_scrape",
-        "spec_status": "listed_only",
-        "endpoints": [
-          {
-            "base_url": "https://api.siliconflow.cn/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.siliconflow.com/"
-          }
-        ]
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "siliconflow",
-      "model_id": "props:children:props:pageMetadata",
-      "display_name": "props:children:props:pageMetadata",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.siliconflow.com/",
-        "source_type": "official_page_scrape",
-        "spec_status": "listed_only",
-        "endpoints": [
-          {
-            "base_url": "https://api.siliconflow.cn/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.siliconflow.com/"
-          }
-        ]
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "siliconflow",
-      "model_id": "prose",
-      "display_name": "prose",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.siliconflow.com/",
-        "source_type": "official_page_scrape",
-        "spec_status": "listed_only",
-        "endpoints": [
-          {
-            "base_url": "https://api.siliconflow.cn/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.siliconflow.com/"
-          }
-        ]
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "siliconflow",
-      "model_id": "prose-gray",
-      "display_name": "prose-gray",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.siliconflow.com/",
-        "source_type": "official_page_scrape",
-        "spec_status": "listed_only",
-        "endpoints": [
-          {
-            "base_url": "https://api.siliconflow.cn/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.siliconflow.com/"
-          }
-        ]
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "siliconflow",
-      "model_id": "prose-invert",
-      "display_name": "prose-invert",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.siliconflow.com/",
-        "source_type": "official_page_scrape",
-        "spec_status": "listed_only",
-        "endpoints": [
-          {
-            "base_url": "https://api.siliconflow.cn/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.siliconflow.com/"
-          }
-        ]
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "siliconflow",
-      "model_id": "protecting",
-      "display_name": "protecting",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.siliconflow.com/",
-        "source_type": "official_page_scrape",
-        "spec_status": "listed_only",
-        "endpoints": [
-          {
-            "base_url": "https://api.siliconflow.cn/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.siliconflow.com/"
-          }
-        ]
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "siliconflow",
-      "model_id": "provide",
-      "display_name": "provide",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.siliconflow.com/",
-        "source_type": "official_page_scrape",
-        "spec_status": "listed_only",
-        "endpoints": [
-          {
-            "base_url": "https://api.siliconflow.cn/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.siliconflow.com/"
-          }
-        ]
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "siliconflow",
-      "model_id": "Provides",
-      "display_name": "Provides",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.siliconflow.com/",
-        "source_type": "official_page_scrape",
-        "spec_status": "listed_only",
-        "endpoints": [
-          {
-            "base_url": "https://api.siliconflow.cn/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.siliconflow.com/"
-          }
-        ]
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "siliconflow",
-      "model_id": "providing",
-      "display_name": "providing",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.siliconflow.com/",
-        "source_type": "official_page_scrape",
-        "spec_status": "listed_only",
-        "endpoints": [
-          {
-            "base_url": "https://api.siliconflow.cn/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.siliconflow.com/"
-          }
-        ]
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "siliconflow",
-      "model_id": "proxy",
-      "display_name": "proxy",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.siliconflow.com/",
-        "source_type": "official_page_scrape",
-        "spec_status": "listed_only",
-        "endpoints": [
-          {
-            "base_url": "https://api.siliconflow.cn/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.siliconflow.com/"
-          }
-        ]
-      },
-      "supports_fim": false
+      }
     },
     {
       "provider": "siliconflow",
@@ -958,7 +1259,8 @@
             "auth": "bearer",
             "source": "https://docs.siliconflow.com/"
           }
-        ]
+        ],
+        "not_confirmed_by_current_public_docs": true
       },
       "supports_fim": false
     },
@@ -995,9 +1297,474 @@
             "auth": "bearer",
             "source": "https://docs.siliconflow.com/"
           }
-        ]
+        ],
+        "not_confirmed_by_current_public_docs": true
       },
       "supports_fim": true
+    },
+    {
+      "provider": "siliconflow",
+      "model_id": "tencent/Hunyuan-A13B-Instruct",
+      "display_name": "tencent/Hunyuan-A13B-Instruct",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": null,
+      "supports_reasoning": true,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/reasoning",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/reasoning"
+        ],
+        "evidence_categories": [
+          "reasoning"
+        ],
+        "checked_at": "2026-09-29",
+        "endpoints": [
+          {
+            "base_url": "https://api.siliconflow.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "siliconflow",
+      "model_id": "THUDM/GLM-Z1-32B-0414",
+      "display_name": "THUDM/GLM-Z1-32B-0414",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": null,
+      "supports_reasoning": true,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/reasoning",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/reasoning"
+        ],
+        "evidence_categories": [
+          "reasoning"
+        ],
+        "checked_at": "2026-09-29",
+        "endpoints": [
+          {
+            "base_url": "https://api.siliconflow.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "siliconflow",
+      "model_id": "THUDM/GLM-Z1-9B-0414",
+      "display_name": "THUDM/GLM-Z1-9B-0414",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": null,
+      "supports_reasoning": true,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/reasoning",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/reasoning"
+        ],
+        "evidence_categories": [
+          "reasoning"
+        ],
+        "checked_at": "2026-09-29",
+        "endpoints": [
+          {
+            "base_url": "https://api.siliconflow.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "siliconflow",
+      "model_id": "Wan-AI/Wan2.1-I2V-14B-720P",
+      "display_name": "Wan-AI/Wan2.1-I2V-14B-720P",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "video"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": null,
+      "supports_reasoning": null,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/video",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/video"
+        ],
+        "evidence_categories": [
+          "video_generation"
+        ],
+        "checked_at": "2026-09-29",
+        "endpoints": [
+          {
+            "base_url": "https://api.siliconflow.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
+          }
+        ]
+      },
+      "video": {
+        "accepts_video_input": false,
+        "generation": true,
+        "understanding": false,
+        "text_to_video": false,
+        "image_to_video": true,
+        "video_to_video": false,
+        "supports_streaming": null,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "generation": true
+        },
+        "output_formats": [
+          "mp4"
+        ],
+        "output_mime_types": [
+          "video/mp4"
+        ],
+        "checked_at": "2026-09-29",
+        "status": "inferred"
+      }
+    },
+    {
+      "provider": "siliconflow",
+      "model_id": "Wan-AI/Wan2.1-T2V-14B",
+      "display_name": "Wan-AI/Wan2.1-T2V-14B",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "video"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": null,
+      "supports_reasoning": null,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/video",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/video"
+        ],
+        "evidence_categories": [
+          "video_generation"
+        ],
+        "checked_at": "2026-09-29",
+        "endpoints": [
+          {
+            "base_url": "https://api.siliconflow.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
+          }
+        ]
+      },
+      "video": {
+        "accepts_video_input": false,
+        "generation": true,
+        "understanding": false,
+        "text_to_video": true,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": null,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "generation": true
+        },
+        "output_formats": [
+          "mp4"
+        ],
+        "output_mime_types": [
+          "video/mp4"
+        ],
+        "checked_at": "2026-09-29",
+        "status": "inferred"
+      }
+    },
+    {
+      "provider": "siliconflow",
+      "model_id": "Wan-AI/Wan2.1-T2V-14B-Turbo",
+      "display_name": "Wan-AI/Wan2.1-T2V-14B-Turbo",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "video"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": null,
+      "supports_reasoning": null,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/video",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/video"
+        ],
+        "evidence_categories": [
+          "video_generation"
+        ],
+        "checked_at": "2026-09-29",
+        "endpoints": [
+          {
+            "base_url": "https://api.siliconflow.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
+          }
+        ]
+      },
+      "video": {
+        "accepts_video_input": false,
+        "generation": true,
+        "understanding": false,
+        "text_to_video": true,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": null,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "generation": true
+        },
+        "output_formats": [
+          "mp4"
+        ],
+        "output_mime_types": [
+          "video/mp4"
+        ],
+        "checked_at": "2026-09-29",
+        "status": "inferred"
+      }
+    },
+    {
+      "provider": "siliconflow",
+      "model_id": "Wan-AI/Wan2.2-I2V-A14B",
+      "display_name": "Wan-AI/Wan2.2-I2V-A14B",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "video"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": null,
+      "supports_reasoning": null,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/video",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/video"
+        ],
+        "evidence_categories": [
+          "video_generation"
+        ],
+        "checked_at": "2026-09-29",
+        "endpoints": [
+          {
+            "base_url": "https://api.siliconflow.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
+          }
+        ]
+      },
+      "video": {
+        "accepts_video_input": false,
+        "generation": true,
+        "understanding": false,
+        "text_to_video": false,
+        "image_to_video": true,
+        "video_to_video": false,
+        "supports_streaming": null,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "generation": true
+        },
+        "output_formats": [
+          "mp4"
+        ],
+        "output_mime_types": [
+          "video/mp4"
+        ],
+        "checked_at": "2026-09-29",
+        "status": "inferred"
+      }
+    },
+    {
+      "provider": "siliconflow",
+      "model_id": "Wan-AI/Wan2.2-T2V-A14B",
+      "display_name": "Wan-AI/Wan2.2-T2V-A14B",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "video"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": null,
+      "supports_reasoning": null,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://docs.siliconflow.com/en/userguide/capabilities/video",
+        "source_type": "official_docs_scrape",
+        "spec_status": "documented_example_or_supported_list",
+        "evidence_pages": [
+          "https://docs.siliconflow.com/en/userguide/capabilities/video"
+        ],
+        "evidence_categories": [
+          "video_generation"
+        ],
+        "checked_at": "2026-09-29",
+        "endpoints": [
+          {
+            "base_url": "https://api.siliconflow.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.siliconflow.com/en/userguide/quickstart"
+          }
+        ]
+      },
+      "video": {
+        "accepts_video_input": false,
+        "generation": true,
+        "understanding": false,
+        "text_to_video": true,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": null,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "generation": true
+        },
+        "output_formats": [
+          "mp4"
+        ],
+        "output_mime_types": [
+          "video/mp4"
+        ],
+        "checked_at": "2026-09-29",
+        "status": "inferred"
+      }
     }
   ]
 }

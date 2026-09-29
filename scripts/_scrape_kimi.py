@@ -15,6 +15,7 @@ def parse_model_names(text: str) -> list[str]:
     pattern = r"Kimi\s+K[0-9]+(?:\.[0-9]+)?(?:\s+Code)?(?:\s+Model)?"
     return list(dict.fromkeys(match.strip() for match in re.findall(pattern, section)))
 try:
+    from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
     from playwright.sync_api import sync_playwright
 except ImportError:
     print('{"error":"playwright not installed"}')
@@ -25,7 +26,10 @@ try:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
         page.goto("https://platform.kimi.ai/docs/models", wait_until="networkidle", timeout=60000)
-        page.wait_for_timeout(5000)
+        try:
+            page.get_by_text("Model List", exact=False).first.wait_for(timeout=5000)
+        except PlaywrightTimeoutError:
+            pass
         text = page.inner_text("body")
         browser.close()
         model_names = parse_model_names(text)

@@ -7,6 +7,7 @@ import traceback
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 try:
+    from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
     from playwright.sync_api import sync_playwright
 except ImportError:
     print('{"error":"playwright not installed"}')
@@ -17,7 +18,15 @@ try:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
         page.goto("https://platform.kimi.ai/docs/pricing", wait_until="networkidle", timeout=60000)
-        page.wait_for_timeout(3000)
+        try:
+            page.wait_for_function(
+                r"""() => /(?:Kimi\s+K[0-9]+|Moonshot\s+V[0-9]+)/i.test(
+                    document.body?.innerText || ''
+                )""",
+                timeout=3000,
+            )
+        except PlaywrightTimeoutError:
+            pass
         
         results = {}
 
@@ -37,8 +46,18 @@ try:
                 # Try clicking the tab button
                 btn = page.query_selector(f"button:has-text('{tab_name}')")
                 if btn:
+                    previous_text = page.inner_text("body")
                     btn.click()
-                    page.wait_for_timeout(1000)
+                    try:
+                        page.wait_for_function(
+                            "previous => document.body && document.body.innerText !== previous",
+                            arg=previous_text,
+                            timeout=1000,
+                        )
+                    except PlaywrightTimeoutError:
+                        # Some tabs share identical text; still capture the
+                        # current panel after the bounded wait.
+                        pass
                 # Get the visible pricing content
                 section = page.query_selector(".kimi-pricing-content, .pricing-content, [class*='pricing']")
                 if section:

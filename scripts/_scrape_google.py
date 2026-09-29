@@ -4,10 +4,24 @@ import re
 import sys
 import traceback
 try:
+    from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
     from playwright.sync_api import sync_playwright
 except ImportError:
     print('{"error":"playwright not installed"}')
     sys.exit(1)
+
+
+def wait_for_model_ids(page) -> None:
+    """Wait for data used by the parser, with a bounded fallback."""
+    try:
+        page.wait_for_function(
+            r"""() => /\b(?:gemini|gemma)-[a-z0-9]+(?:[-.][a-z0-9]+)*\b/i.test(
+                document.body?.innerText || ''
+            )""",
+            timeout=5000,
+        )
+    except PlaywrightTimeoutError:
+        pass
 
 def parse_model_ids(text: str) -> list[str]:
     """Return model IDs discovered in the live Models page."""
@@ -25,11 +39,11 @@ try:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
         page.goto("https://ai.google.dev/gemini-api/docs/models", wait_until="networkidle", timeout=60000)
-        page.wait_for_timeout(5000)
+        wait_for_model_ids(page)
         models_text = page.inner_text("body")
         model_ids = parse_model_ids(models_text)
         page.goto("https://ai.google.dev/gemini-api/docs/pricing", wait_until="networkidle", timeout=60000)
-        page.wait_for_timeout(5000)
+        wait_for_model_ids(page)
         pricing_text = page.inner_text("body")
         pricing_model_ids = parse_pricing_model_ids(pricing_text)
         browser.close()

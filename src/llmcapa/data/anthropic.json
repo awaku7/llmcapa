@@ -2,70 +2,6 @@
   "models": [
     {
       "provider": "anthropic",
-      "model_id": "claude-sonnet-5-5",
-      "display_name": "Claude Sonnet 5.5",
-      "context_window": 1000000,
-      "max_output_tokens": 128000,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": true,
-      "thinking_budget_values": {
-        "type": "token_range",
-        "min": 1024,
-        "max": 128000
-      },
-      "supports_anthropic_api": true,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2026-06",
-      "deprecated": false,
-      "aliases": [
-        "anthropic/claude-sonnet-5-5"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 2.0,
-        "output_per_1m": 10.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://platform.claude.com/docs/en/models/sonnet-5-5/overview",
-        "overview": "https://platform.claude.com/docs/en/models/sonnet-5-5/overview",
-        "cache_write_5m_per_1m": 2.5,
-        "cache_write_1h_per_1m": 4.0,
-        "cache_hit_per_1m": 0.2,
-        "batch_input_per_1m": 1.0,
-        "batch_output_per_1m": 5.0,
-        "batch_max_output_tokens": 300000,
-        "long_context_window": 1000000,
-        "long_context_at_standard_rates": true,
-        "released": "2026-09-28",
-        "retirement_not_before": "2027-09-28"
-      },
-      "reasoning_effort_values": [
-        "low",
-        "medium",
-        "high",
-        "xhigh",
-        "max"
-      ]
-    },
-    {
-      "provider": "anthropic",
       "model_id": "claude-fable-5-1",
       "display_name": "Claude Fable 5.1",
       "context_window": 1000000,
@@ -182,10 +118,10 @@
     },
     {
       "provider": "anthropic",
-      "model_id": "claude-sonnet-5",
-      "display_name": "Claude Sonnet 5",
-      "context_window": 1048576,
-      "max_output_tokens": 131072,
+      "model_id": "claude-sonnet-5-5",
+      "display_name": "Claude Sonnet 5.5",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
       "input_modalities": [
         "text",
         "image"
@@ -202,15 +138,19 @@
       "supports_responses_api": false,
       "supports_reasoning_effort": true,
       "supports_thinking_budget": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 128000
+      },
       "supports_anthropic_api": true,
       "supports_google_api": false,
       "supports_fim": false,
       "tokenizer_name": "",
-      "knowledge_cutoff": "2026-01",
+      "knowledge_cutoff": "2026-06",
       "deprecated": false,
       "aliases": [
-        "claude-sonnet-5-latest",
-        "claude-sonnet-latest"
+        "anthropic/claude-sonnet-5-5"
       ],
       "license_type": "api",
       "pricing": {
@@ -219,37 +159,26 @@
         "currency": "USD"
       },
       "extra": {
-        "source": "https://platform.claude.com/docs/en/about-claude/pricing",
-        "overview": "https://platform.claude.com/docs/en/about-claude/models/overview",
+        "source": "https://platform.claude.com/docs/en/models/sonnet-5-5/overview",
+        "overview": "https://platform.claude.com/docs/en/models/sonnet-5-5/overview",
         "cache_write_5m_per_1m": 2.5,
         "cache_write_1h_per_1m": 4.0,
         "cache_hit_per_1m": 0.2,
         "batch_input_per_1m": 1.0,
         "batch_output_per_1m": 5.0,
+        "batch_max_output_tokens": 300000,
         "long_context_window": 1000000,
         "long_context_at_standard_rates": true,
-        "intro_pricing_until": "2026-08-31",
-        "standard_input_per_1m": 3.0,
-        "standard_output_per_1m": 15.0,
-        "standard_cache_write_5m_per_1m": 3.75,
-        "standard_cache_write_1h_per_1m": 6.0,
-        "standard_cache_hit_per_1m": 0.3,
-        "standard_batch_input_per_1m": 1.5,
-        "standard_batch_output_per_1m": 7.5,
-        "newer_tokenizer": true,
-        "batch_max_output_tokens": 300000,
-        "note": "Intro $2/$10 through 2026-08-31; then $3/$15"
+        "released": "2026-09-28",
+        "retirement_not_before": "2027-09-28"
       },
       "reasoning_effort_values": [
         "low",
         "medium",
-        "high"
-      ],
-      "thinking_budget_values": {
-        "type": "token_range",
-        "min": 1024,
-        "max": 131072
-      }
+        "high",
+        "xhigh",
+        "max"
+      ]
     },
     {
       "provider": "anthropic",
@@ -902,6 +831,77 @@
         "type": "token_range",
         "min": 1024,
         "max": 32000
+      }
+    },
+    {
+      "provider": "anthropic",
+      "model_id": "claude-sonnet-5",
+      "display_name": "Claude Sonnet 5",
+      "context_window": 1048576,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": true,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2026-01",
+      "deprecated": false,
+      "aliases": [
+        "claude-sonnet-5-latest",
+        "claude-sonnet-latest"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "overview": "https://platform.claude.com/docs/en/about-claude/models/overview",
+        "cache_write_5m_per_1m": 2.5,
+        "cache_write_1h_per_1m": 4.0,
+        "cache_hit_per_1m": 0.2,
+        "batch_input_per_1m": 1.0,
+        "batch_output_per_1m": 5.0,
+        "long_context_window": 1000000,
+        "long_context_at_standard_rates": true,
+        "intro_pricing_until": "2026-08-31",
+        "standard_input_per_1m": 3.0,
+        "standard_output_per_1m": 15.0,
+        "standard_cache_write_5m_per_1m": 3.75,
+        "standard_cache_write_1h_per_1m": 6.0,
+        "standard_cache_hit_per_1m": 0.3,
+        "standard_batch_input_per_1m": 1.5,
+        "standard_batch_output_per_1m": 7.5,
+        "newer_tokenizer": true,
+        "batch_max_output_tokens": 300000,
+        "note": "Intro $2/$10 through 2026-08-31; then $3/$15"
+      },
+      "reasoning_effort_values": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1024,
+        "max": 131072
       }
     },
     {

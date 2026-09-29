@@ -1,6 +1,386 @@
 {
   "models": [
     {
+      "provider": "softbank",
+      "model_id": "sarashina3-mini",
+      "display_name": "Sarashina3 mini",
+      "context_window": 128000,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2026-06",
+      "deprecated": false,
+      "aliases": [
+        "softbank/sarashina3-mini",
+        "sarashina-3-mini",
+        "sb-intuitions/sarashina3-mini"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "aggregator": "japanese",
+        "native_provider": "softbank",
+        "source": "https://www.softbank.jp/biz/services/ai/cloud-pf-type-a/",
+        "press": "https://www.sbintuitions.co.jp/news/press/2026/06/30/sarashina3-cloud-pf/",
+        "tech_blog": "https://www.sbintuitions.co.jp/blog/entry/2026/06/30/sarashina3-mini-nano/",
+        "legacy_api": "https://www.softbank.jp/business/service/ai/sarashina-api/",
+        "channel": "cloud_pf_type_a",
+        "available_from": "2026-06-30",
+        "developer": "SB Intuitions",
+        "full_scratch": true,
+        "pretrain_tokens": "30T+",
+        "model_class": "instruct_non_reasoning",
+        "features": [
+          "chat_completions",
+          "tool_use_agent",
+          "math",
+          "coding",
+          "instruction_following"
+        ],
+        "deployment": {
+          "dedicated": "monthly_fixed_gpu",
+          "on_demand": "payg_shared_gpu"
+        },
+        "pricing_note": "Cloud PF Type A: Dedicated monthly fixed / On-Demand payg; per-token table not public — contact SoftBank",
+        "gennai_selected": true,
+        "series": "Sarashina3",
+        "official_source_checked_at": "2026-09-29",
+        "official_source_status": "listed_on_current_source",
+        "current_source": "https://www.softbank.jp/business/news/2026/0630-01"
+      }
+    },
+    {
+      "provider": "softbank",
+      "model_id": "sarashina3-nano",
+      "display_name": "Sarashina3 nano",
+      "context_window": 128000,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2026-06",
+      "deprecated": false,
+      "aliases": [
+        "softbank/sarashina3-nano",
+        "sarashina-3-nano",
+        "sb-intuitions/sarashina3-nano"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "aggregator": "japanese",
+        "native_provider": "softbank",
+        "source": "https://www.softbank.jp/biz/services/ai/cloud-pf-type-a/",
+        "press": "https://www.sbintuitions.co.jp/news/press/2026/06/30/sarashina3-cloud-pf/",
+        "tech_blog": "https://www.sbintuitions.co.jp/blog/entry/2026/06/30/sarashina3-mini-nano/",
+        "channel": "cloud_pf_type_a",
+        "available_from": "2026-06-30",
+        "developer": "SB Intuitions",
+        "full_scratch": true,
+        "model_class": "instruct_lightweight",
+        "features": [
+          "chat_completions",
+          "high_throughput",
+          "extraction",
+          "classification",
+          "summarization"
+        ],
+        "pricing_note": "Cloud PF Type A quote; optimized for bulk simple tasks",
+        "series": "Sarashina3",
+        "official_source_checked_at": "2026-09-29",
+        "official_source_status": "listed_on_current_source",
+        "current_source": "https://www.softbank.jp/business/news/2026/0630-01"
+      }
+    },
+    {
+      "provider": "softbank",
+      "model_id": "sarashina3-guard",
+      "display_name": "Sarashina3 guard",
+      "context_window": 32768,
+      "max_output_tokens": 1024,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2026-06",
+      "deprecated": false,
+      "aliases": [
+        "softbank/sarashina3-guard"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "aggregator": "japanese",
+        "native_provider": "softbank",
+        "source": "https://www.softbank.jp/biz/services/ai/cloud-pf-type-a/",
+        "press": "https://www.sbintuitions.co.jp/news/press/2026/06/30/sarashina3-cloud-pf/",
+        "channel": "cloud_pf_type_a",
+        "available_from": "2026-06-30",
+        "developer": "SB Intuitions",
+        "model_class": "guardrail",
+        "features": [
+          "harmful_category_detection",
+          "input_output_filter",
+          "no_text_generation"
+        ],
+        "pricing_note": "Cloud PF Type A quote",
+        "series": "Sarashina3",
+        "official_source_checked_at": "2026-09-29",
+        "official_source_status": "listed_on_current_source",
+        "current_source": "https://www.softbank.jp/business/news/2026/0630-01"
+      }
+    },
+    {
+      "provider": "softbank",
+      "model_id": "sarashina3-embedding",
+      "display_name": "Sarashina3 embedding",
+      "context_window": 8192,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embedding"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2026-06",
+      "deprecated": false,
+      "aliases": [
+        "softbank/sarashina3-embedding"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "aggregator": "japanese",
+        "native_provider": "softbank",
+        "source": "https://www.softbank.jp/biz/services/ai/cloud-pf-type-a/",
+        "press": "https://www.sbintuitions.co.jp/news/press/2026/06/30/sarashina3-cloud-pf/",
+        "channel": "cloud_pf_type_a",
+        "available_from": "2026-06-30",
+        "developer": "SB Intuitions",
+        "model_class": "embedding",
+        "features": [
+          "embeddings_api",
+          "task_type_switch_7",
+          "dimension_truncation_robust"
+        ],
+        "pricing_note": "Cloud PF Type A quote",
+        "series": "Sarashina3",
+        "official_source_checked_at": "2026-09-29",
+        "official_source_status": "listed_on_current_source",
+        "current_source": "https://www.softbank.jp/business/news/2026/0630-01"
+      },
+      "embedding": {
+        "embedding": true,
+        "output_formats": [
+          "float"
+        ],
+        "status": "inferred",
+        "checked_at": "2026-09-29"
+      }
+    },
+    {
+      "provider": "softbank",
+      "model_id": "sarashina3-rerank",
+      "display_name": "Sarashina3 rerank",
+      "context_window": 8192,
+      "max_output_tokens": 1024,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "rerank"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2026-06",
+      "deprecated": false,
+      "aliases": [
+        "softbank/sarashina3-rerank"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "aggregator": "japanese",
+        "native_provider": "softbank",
+        "source": "https://www.softbank.jp/biz/services/ai/cloud-pf-type-a/",
+        "press": "https://www.sbintuitions.co.jp/news/press/2026/06/30/sarashina3-cloud-pf/",
+        "channel": "cloud_pf_type_a",
+        "available_from": "2026-06-30",
+        "developer": "SB Intuitions",
+        "model_class": "reranker",
+        "features": [
+          "rerank_api",
+          "rag_precision",
+          "task_type_switch_5",
+          "japanese_instruction"
+        ],
+        "pricing_note": "Cloud PF Type A quote",
+        "series": "Sarashina3",
+        "official_source_checked_at": "2026-09-29",
+        "official_source_status": "listed_on_current_source",
+        "current_source": "https://www.softbank.jp/business/news/2026/0630-01"
+      },
+      "rerank": {
+        "rerank": true,
+        "returns_scores": true,
+        "status": "inferred",
+        "checked_at": "2026-09-29"
+      }
+    },
+    {
+      "provider": "ntt",
+      "model_id": "tsuzumi-2",
+      "display_name": "NTT tsuzumi 2",
+      "context_window": 128000,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2025-10",
+      "deprecated": false,
+      "aliases": [
+        "ntt/tsuzumi-2",
+        "tsuzumi2",
+        "nttdata/tsuzumi-2",
+        "nttdata-tsuzumi-2-instruct"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "aggregator": "japanese",
+        "native_provider": "ntt",
+        "source": "https://www.nttdata.com/jp/ja/lineup/tsuzumi/",
+        "rd": "https://www.rd.ntt/research/LLM_tsuzumi.html",
+        "azure_marketplace": "https://marketplace.microsoft.com/en-us/product/1681106214127.nttdata-tsuzumi-2-instruct-offer",
+        "params": "~30B",
+        "full_scratch": true,
+        "single_gpu": true,
+        "domains": [
+          "finance",
+          "government",
+          "medical",
+          "rag",
+          "doc_qa"
+        ],
+        "vision_announced": "2026-05-19",
+        "channels": [
+          "on_prem",
+          "private_cloud",
+          "ntt_group_b2b",
+          "azure_marketplace_managed_compute"
+        ],
+        "azure_pricing": {
+          "model": "managed_compute_not_pure_token",
+          "gpu_hour_usd": 0.76,
+          "meters": [
+            "paygo-surcharge-a100-gpu",
+            "paygo-surcharge-h100-gpu"
+          ],
+          "secondary_token_table_per_1m_usd": {
+            "input": 4.0,
+            "output": 1100.0,
+            "source": "third_party_summary_of_azure_listing",
+            "note": "treat as secondary; Marketplace emphasizes GPU-hour + 'price varies'"
+          }
+        },
+        "contact": "nttd_tsuzumi@hml.nttdata.co.jp",
+        "gennai_selected": true,
+        "pricing_note": "B2B quote / on-prem; Azure = managed GPU-hour (~$0.76/GPU-h) not pure token PAYG",
+        "official_source_checked_at": "2026-09-29",
+        "official_source_status": "listed_on_current_source",
+        "current_source": "https://www.nttdata.com/jp/ja/lineup/tsuzumi/"
+      }
+    },
+    {
       "provider": "pfn",
       "model_id": "plamo-3.0-prime",
       "display_name": "PFN PLaMo 3.0 Prime",
@@ -105,7 +485,9 @@
         },
         "currency_note": "primary pricing USD shell ≈¥60.0/¥250.0 at ~150 JPY/USD; exact bill is JPY on Standard plan",
         "gennai_selected": true,
-        "params_note": "flagship closed weights (Prime); base open separately"
+        "params_note": "flagship closed weights (Prime); base open separately",
+        "official_source_checked_at": "2026-09-29",
+        "official_source_status": "not_reconfirmed_by_current_page_set"
       }
     },
     {
@@ -158,7 +540,9 @@
         "features": [
           "reasoning",
           "openai_compatible"
-        ]
+        ],
+        "official_source_checked_at": "2026-09-29",
+        "official_source_status": "not_reconfirmed_by_current_page_set"
       }
     },
     {
@@ -209,291 +593,9 @@
         "pricing_jpy_per_1m": {
           "input": 60.0,
           "output": 250.0
-        }
-      }
-    },
-    {
-      "provider": "softbank",
-      "model_id": "sarashina3-mini",
-      "display_name": "SoftBank Sarashina3 mini",
-      "context_window": 128000,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2026-06",
-      "deprecated": false,
-      "aliases": [
-        "softbank/sarashina3-mini",
-        "sarashina-3-mini",
-        "sb-intuitions/sarashina3-mini"
-      ],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "aggregator": "japanese",
-        "native_provider": "softbank",
-        "source": "https://www.softbank.jp/biz/services/ai/cloud-pf-type-a/",
-        "press": "https://www.sbintuitions.co.jp/news/press/2026/06/30/sarashina3-cloud-pf/",
-        "tech_blog": "https://www.sbintuitions.co.jp/blog/entry/2026/06/30/sarashina3-mini-nano/",
-        "legacy_api": "https://www.softbank.jp/business/service/ai/sarashina-api/",
-        "channel": "cloud_pf_type_a",
-        "available_from": "2026-06-30",
-        "developer": "SB Intuitions",
-        "full_scratch": true,
-        "pretrain_tokens": "30T+",
-        "model_class": "instruct_non_reasoning",
-        "features": [
-          "chat_completions",
-          "tool_use_agent",
-          "math",
-          "coding",
-          "instruction_following"
-        ],
-        "deployment": {
-          "dedicated": "monthly_fixed_gpu",
-          "on_demand": "payg_shared_gpu"
         },
-        "pricing_note": "Cloud PF Type A: Dedicated monthly fixed / On-Demand payg; per-token table not public — contact SoftBank",
-        "gennai_selected": true,
-        "series": "Sarashina3"
-      }
-    },
-    {
-      "provider": "softbank",
-      "model_id": "sarashina3-nano",
-      "display_name": "SoftBank Sarashina3 nano",
-      "context_window": 128000,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2026-06",
-      "deprecated": false,
-      "aliases": [
-        "softbank/sarashina3-nano",
-        "sarashina-3-nano",
-        "sb-intuitions/sarashina3-nano"
-      ],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "aggregator": "japanese",
-        "native_provider": "softbank",
-        "source": "https://www.softbank.jp/biz/services/ai/cloud-pf-type-a/",
-        "press": "https://www.sbintuitions.co.jp/news/press/2026/06/30/sarashina3-cloud-pf/",
-        "tech_blog": "https://www.sbintuitions.co.jp/blog/entry/2026/06/30/sarashina3-mini-nano/",
-        "channel": "cloud_pf_type_a",
-        "available_from": "2026-06-30",
-        "developer": "SB Intuitions",
-        "full_scratch": true,
-        "model_class": "instruct_lightweight",
-        "features": [
-          "chat_completions",
-          "high_throughput",
-          "extraction",
-          "classification",
-          "summarization"
-        ],
-        "pricing_note": "Cloud PF Type A quote; optimized for bulk simple tasks",
-        "series": "Sarashina3"
-      }
-    },
-    {
-      "provider": "softbank",
-      "model_id": "sarashina3-guard",
-      "display_name": "SoftBank Sarashina3 guard",
-      "context_window": 32768,
-      "max_output_tokens": 1024,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2026-06",
-      "deprecated": false,
-      "aliases": [
-        "softbank/sarashina3-guard"
-      ],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "aggregator": "japanese",
-        "native_provider": "softbank",
-        "source": "https://www.softbank.jp/biz/services/ai/cloud-pf-type-a/",
-        "press": "https://www.sbintuitions.co.jp/news/press/2026/06/30/sarashina3-cloud-pf/",
-        "channel": "cloud_pf_type_a",
-        "available_from": "2026-06-30",
-        "developer": "SB Intuitions",
-        "model_class": "guardrail",
-        "features": [
-          "harmful_category_detection",
-          "input_output_filter",
-          "no_text_generation"
-        ],
-        "pricing_note": "Cloud PF Type A quote",
-        "series": "Sarashina3"
-      }
-    },
-    {
-      "provider": "softbank",
-      "model_id": "sarashina3-embedding",
-      "display_name": "SoftBank Sarashina3 embedding",
-      "context_window": 8192,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "embedding"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2026-06",
-      "deprecated": false,
-      "aliases": [
-        "softbank/sarashina3-embedding"
-      ],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "aggregator": "japanese",
-        "native_provider": "softbank",
-        "source": "https://www.softbank.jp/biz/services/ai/cloud-pf-type-a/",
-        "press": "https://www.sbintuitions.co.jp/news/press/2026/06/30/sarashina3-cloud-pf/",
-        "channel": "cloud_pf_type_a",
-        "available_from": "2026-06-30",
-        "developer": "SB Intuitions",
-        "model_class": "embedding",
-        "features": [
-          "embeddings_api",
-          "task_type_switch_7",
-          "dimension_truncation_robust"
-        ],
-        "pricing_note": "Cloud PF Type A quote",
-        "series": "Sarashina3"
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-09-26"
-      }
-    },
-    {
-      "provider": "softbank",
-      "model_id": "sarashina3-rerank",
-      "display_name": "SoftBank Sarashina3 rerank",
-      "context_window": 8192,
-      "max_output_tokens": 1024,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2026-06",
-      "deprecated": false,
-      "aliases": [
-        "softbank/sarashina3-rerank"
-      ],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "aggregator": "japanese",
-        "native_provider": "softbank",
-        "source": "https://www.softbank.jp/biz/services/ai/cloud-pf-type-a/",
-        "press": "https://www.sbintuitions.co.jp/news/press/2026/06/30/sarashina3-cloud-pf/",
-        "channel": "cloud_pf_type_a",
-        "available_from": "2026-06-30",
-        "developer": "SB Intuitions",
-        "model_class": "reranker",
-        "features": [
-          "rerank_api",
-          "rag_precision",
-          "task_type_switch_5",
-          "japanese_instruction"
-        ],
-        "pricing_note": "Cloud PF Type A quote",
-        "series": "Sarashina3"
-      },
-      "rerank": {
-        "rerank": true,
-        "returns_scores": true,
-        "status": "inferred",
-        "checked_at": "2026-09-26"
+        "official_source_checked_at": "2026-09-29",
+        "official_source_status": "not_reconfirmed_by_current_page_set"
       }
     },
     {
@@ -543,85 +645,9 @@
           "guard_sarashina2_guard"
         ],
         "pricing_note": "legacy quote / annual credit; prefer Sarashina3",
-        "gennai_selected_as": "sarashina2-mini"
-      }
-    },
-    {
-      "provider": "ntt",
-      "model_id": "tsuzumi-2",
-      "display_name": "NTT tsuzumi 2",
-      "context_window": 128000,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": "2025-10",
-      "deprecated": false,
-      "aliases": [
-        "ntt/tsuzumi-2",
-        "tsuzumi2",
-        "nttdata/tsuzumi-2",
-        "nttdata-tsuzumi-2-instruct"
-      ],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "aggregator": "japanese",
-        "native_provider": "ntt",
-        "source": "https://www.nttdata.com/jp/ja/lineup/tsuzumi/",
-        "rd": "https://www.rd.ntt/research/LLM_tsuzumi.html",
-        "azure_marketplace": "https://marketplace.microsoft.com/en-us/product/1681106214127.nttdata-tsuzumi-2-instruct-offer",
-        "params": "~30B",
-        "full_scratch": true,
-        "single_gpu": true,
-        "domains": [
-          "finance",
-          "government",
-          "medical",
-          "rag",
-          "doc_qa"
-        ],
-        "vision_announced": "2026-05-19",
-        "channels": [
-          "on_prem",
-          "private_cloud",
-          "ntt_group_b2b",
-          "azure_marketplace_managed_compute"
-        ],
-        "azure_pricing": {
-          "model": "managed_compute_not_pure_token",
-          "gpu_hour_usd": 0.76,
-          "meters": [
-            "paygo-surcharge-a100-gpu",
-            "paygo-surcharge-h100-gpu"
-          ],
-          "secondary_token_table_per_1m_usd": {
-            "input": 4.0,
-            "output": 1100.0,
-            "source": "third_party_summary_of_azure_listing",
-            "note": "treat as secondary; Marketplace emphasizes GPU-hour + 'price varies'"
-          }
-        },
-        "contact": "nttd_tsuzumi@hml.nttdata.co.jp",
-        "gennai_selected": true,
-        "pricing_note": "B2B quote / on-prem; Azure = managed GPU-hour (~$0.76/GPU-h) not pure token PAYG"
+        "gennai_selected_as": "sarashina2-mini",
+        "official_source_checked_at": "2026-09-29",
+        "official_source_status": "not_reconfirmed_by_current_page_set"
       }
     },
     {
@@ -684,7 +710,9 @@
         },
         "gennai_selected": true,
         "pricing_note": "enterprise quote; sakura AI Engine free tier 3,000 calls/mo",
-        "related_provider_file": "sakura.json"
+        "related_provider_file": "sakura.json",
+        "official_source_checked_at": "2026-09-29",
+        "official_source_status": "not_reconfirmed_by_current_page_set"
       }
     },
     {
@@ -746,7 +774,9 @@
         ],
         "gennai_selected": true,
         "pricing_note": "enterprise inquiry; public demo free",
-        "license_base": "Llama 3.1 Community License (base weights)"
+        "license_base": "Llama 3.1 Community License (base weights)",
+        "official_source_checked_at": "2026-09-29",
+        "official_source_status": "not_reconfirmed_by_current_page_set"
       }
     },
     {
@@ -808,7 +838,9 @@
           "private_cloud"
         ],
         "gennai_selected": true,
-        "pricing_note": "enterprise quote only via Fujitsu"
+        "pricing_note": "enterprise quote only via Fujitsu",
+        "official_source_checked_at": "2026-09-29",
+        "official_source_status": "not_reconfirmed_by_current_page_set"
       }
     },
     {
@@ -864,7 +896,9 @@
         ],
         "gennai_selected": true,
         "pricing_note": "government / enterprise contract; not public API",
-        "license_type_note": "deployed_local_not_public_api"
+        "license_type_note": "deployed_local_not_public_api",
+        "official_source_checked_at": "2026-09-29",
+        "official_source_status": "not_reconfirmed_by_current_page_set"
       }
     }
   ]
