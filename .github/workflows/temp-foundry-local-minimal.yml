@@ -26,67 +26,54 @@ jobs:
           from pathlib import Path
 
           path = Path('scripts/_update_foundry_local.py')
-          text = path.read_text(encoding='utf-8')
+          lines = path.read_text(encoding='utf-8').splitlines()
+          out = []
+          inserted_context_parse = False
+          inserted_variant_context = False
+          inserted_context_aggregate = False
+          replaced_model_context = False
+          inserted_license = False
 
-          old = '''    max_output = _as_int(system.get("maxOutputTokens")) or _as_int(
-              tags.get("maxOutputTokens")
-          )
-          '''
-          new = '''    context_window = (
-              _as_int(system.get("textContextWindow"))
-              or _as_int(system.get("maxInputTokens"))
-              or _as_int(tags.get("contextLength"))
-              or _as_int(tags.get("maxInputTokens"))
-          )
-          max_output = _as_int(system.get("maxOutputTokens")) or _as_int(
-              tags.get("maxOutputTokens")
-          )
-          '''
-          assert old in text
-          text = text.replace(old, new, 1)
+          for line in lines:
+              if line == '    max_output = _as_int(system.get("maxOutputTokens")) or _as_int(':
+                  out.extend([
+                      '    context_window = (',
+                      '        _as_int(system.get("textContextWindow"))',
+                      '        or _as_int(system.get("maxInputTokens"))',
+                      '        or _as_int(tags.get("contextLength"))',
+                      '        or _as_int(tags.get("maxInputTokens"))',
+                      '    )',
+                  ])
+                  inserted_context_parse = True
+              if line == '        "max_output_tokens": max_output,':
+                  out.append('        "context_window": context_window,')
+                  inserted_variant_context = True
+              if line == '        max_outputs = [':
+                  out.extend([
+                      '        context_windows = [',
+                      '            int(row["context_window"])',
+                      '            for row in variants',
+                      '            if isinstance(row.get("context_window"), int)',
+                      '            and int(row["context_window"]) > 0',
+                      '        ]',
+                  ])
+                  inserted_context_aggregate = True
+              if line == '                "context_window": 0,':
+                  line = '                "context_window": min(context_windows) if context_windows else 0,'
+                  replaced_model_context = True
+              if line == '                "pricing": None,':
+                  out.append('                "license_type": licenses[0] if len(licenses) == 1 else "unknown",')
+                  inserted_license = True
+              out.append(line)
 
-          old = '''        "supports_reasoning": _as_bool(tags.get("supportsReasoning")),
-              "max_output_tokens": max_output,
-          '''
-          new = '''        "supports_reasoning": _as_bool(tags.get("supportsReasoning")),
-              "context_window": context_window,
-              "max_output_tokens": max_output,
-          '''
-          assert old in text
-          text = text.replace(old, new, 1)
-
-          old = '''        input_modalities, output_modalities, chat = _task_modalities(tasks)
-              max_outputs = [
-          '''
-          new = '''        input_modalities, output_modalities, chat = _task_modalities(tasks)
-              context_windows = [
-                  int(row["context_window"])
-                  for row in variants
-                  if isinstance(row.get("context_window"), int)
-                  and int(row["context_window"]) > 0
-              ]
-              max_outputs = [
-          '''
-          assert old in text
-          text = text.replace(old, new, 1)
-
-          assert '                "context_window": 0,\n' in text
-          text = text.replace(
-              '                "context_window": 0,\n',
-              '                "context_window": min(context_windows) if context_windows else 0,\n',
-              1,
-          )
-
-          old = '''                "supports_responses_api": False,
-                  "pricing": None,
-          '''
-          new = '''                "supports_responses_api": False,
-                  "license_type": licenses[0] if len(licenses) == 1 else "unknown",
-                  "pricing": None,
-          '''
-          assert old in text
-          text = text.replace(old, new, 1)
-          path.write_text(text, encoding='utf-8')
+          assert all([
+              inserted_context_parse,
+              inserted_variant_context,
+              inserted_context_aggregate,
+              replaced_model_context,
+              inserted_license,
+          ])
+          path.write_text('\n'.join(out) + '\n', encoding='utf-8')
 
           test_path = Path('tests/test_foundry_local_static.py')
           tests = test_path.read_text(encoding='utf-8')
