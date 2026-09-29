@@ -138,4 +138,5 @@ def test_foundry_local_updater_applies_postprocessors(tmp_path: Path) -> None:
     assert speech["audio"]["transcription"] is True
     assert speech["audio"]["supports_streaming"] is True
     assert speech["audio"]["endpoints"]["transcription"] is True
+    assert speech["audio"]["endpoints"]["streaming"] is True
     assert embedding["embedding"]
