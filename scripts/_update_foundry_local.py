@@ -11,6 +11,8 @@ from __future__ import annotations
 
 import json
 import re
+import shutil
+import tempfile
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -238,6 +240,12 @@ def _variant(item: dict[str, Any]) -> dict[str, Any] | None:
         match = re.search(r"/models/([^/]+)", parent_asset)
         alias = match.group(1) if match else name
 
+    context_window = (
+        _as_int(system.get("textContextWindow"))
+        or _as_int(system.get("maxInputTokens"))
+        or _as_int(tags.get("contextLength"))
+        or _as_int(tags.get("maxInputTokens"))
+    )
     max_output = _as_int(system.get("maxOutputTokens")) or _as_int(
         tags.get("maxOutputTokens")
     )
@@ -251,6 +259,7 @@ def _variant(item: dict[str, Any]) -> dict[str, Any] | None:
         "license": str(tags.get("license") or "").strip(),
         "supports_tool_calling": _as_bool(tags.get("supportsToolCalling")),
         "supports_reasoning": _as_bool(tags.get("supportsReasoning")),
+        "context_window": context_window,
         "max_output_tokens": max_output,
         "uri": str(item.get("assetId") or "").strip(),
         "version": properties.get("version"),
@@ -281,6 +290,27 @@ def build_models(raw_rows: list[dict[str, Any]], region: str) -> list[dict[str, 
             {str(row["license"]) for row in variants if row.get("license")}
         )
         input_modalities, output_modalities, chat = _task_modalities(tasks)
+        normalized_tasks = {task.lower().strip() for task in tasks}
+        is_asr = any(
+            marker in task
+            for task in normalized_tasks
+            for marker in (
+                "automatic-speech-recognition",
+                "speech-recognition",
+                "speech-to-text",
+                "transcription",
+            )
+        )
+        is_streaming_audio = "audio" in input_modalities and (
+            "streaming" in model_id
+            or any("streaming" in task for task in normalized_tasks)
+        )
+        context_windows = [
+            int(row["context_window"])
+            for row in variants
+            if isinstance(row.get("context_window"), int)
+            and int(row["context_window"]) > 0
+        ]
         max_outputs = [
             int(row["max_output_tokens"])
             for row in variants
@@ -299,12 +329,12 @@ def build_models(raw_rows: list[dict[str, Any]], region: str) -> list[dict[str, 
                 "provider": "foundry-local",
                 "model_id": model_id,
                 "display_name": str(variants[0].get("display_name") or official_alias),
-                "context_window": 0,
+                "context_window": min(context_windows) if context_windows else 0,
                 "max_output_tokens": min(max_outputs) if max_outputs else 0,
                 "input_modalities": input_modalities,
                 "output_modalities": output_modalities,
                 "supports_chat_completion": chat,
-                "supports_streaming": chat,
+                "supports_streaming": chat or is_streaming_audio,
                 "supports_function_calling": _tri_state(
                     [row.get("supports_tool_calling") for row in variants]
                 ),
@@ -314,6 +344,7 @@ def build_models(raw_rows: list[dict[str, Any]], region: str) -> list[dict[str, 
                     [row.get("supports_reasoning") for row in variants]
                 ),
                 "supports_responses_api": False,
+                "license_type": licenses[0] if len(licenses) == 1 else "unknown",
                 "pricing": None,
                 "deprecated": False,
                 "aliases": sorted(aliases, key=str.lower),
@@ -324,6 +355,7 @@ def build_models(raw_rows: list[dict[str, Any]], region: str) -> list[dict[str, 
                     "source_type": "official_foundry_local_catalog_api",
                     "catalog_region": region,
                     "tasks": sorted(tasks),
+                    "media_model_type": "asr" if is_asr else "",
                     "publishers": publishers,
                     "licenses": licenses,
                     "variants": variants,
@@ -336,6 +368,30 @@ def build_models(raw_rows: list[dict[str, Any]], region: str) -> list[dict[str, 
     return models
 
 
+def _postprocess_output(output: Path = OUT) -> None:
+    """Apply existing capability enrichers to Foundry Local only."""
+    try:
+        from _audio_capability_postprocess import apply as apply_audio
+        from _image_capability_postprocess import apply as apply_image
+        from _structured_capability_postprocess import apply as apply_structured
+        from _video_capability_postprocess import apply as apply_video
+    except ImportError:  # package-style test imports
+        from scripts._audio_capability_postprocess import apply as apply_audio
+        from scripts._image_capability_postprocess import apply as apply_image
+        from scripts._structured_capability_postprocess import apply as apply_structured
+        from scripts._video_capability_postprocess import apply as apply_video
+
+    with tempfile.TemporaryDirectory() as tmp_name:
+        tmp = Path(tmp_name)
+        target = tmp / output.name
+        shutil.copy2(output, target)
+        apply_audio(tmp)
+        apply_video(tmp)
+        apply_structured(tmp)
+        apply_image(tmp)
+        shutil.copy2(target, output)
+
+
 def main() -> None:
     region, raw_rows = fetch_catalog()
     models = build_models(raw_rows, region)
@@ -343,6 +399,7 @@ def main() -> None:
         json.dumps({"models": models}, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+    _postprocess_output(OUT)
     LOG.write_text(
         LOG.read_text(encoding="utf-8")
         + f"\n## Foundry Local refresh ({datetime.now(timezone.utc).date()})\n\n"
