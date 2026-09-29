@@ -21,8 +21,8 @@ def test_claude_sonnet_5_5_catalog() -> None:
         "xhigh",
         "max",
     ]
-    assert cap.pricing.input_per_1m == 2.0
-    assert cap.pricing.output_per_1m == 10.0
+    assert cap.pricing["input_per_1m"] == 2.0
+    assert cap.pricing["output_per_1m"] == 10.0
 
 
 def test_claude_sonnet_5_5_openrouter_style_alias() -> None:
