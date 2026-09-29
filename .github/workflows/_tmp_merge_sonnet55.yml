@@ -1,0 +1,46 @@
+name: Temporary merge Sonnet 5.5 catalog
+
+on:
+  push:
+    branches:
+      - feat/claude-sonnet-5-5
+
+permissions:
+  contents: write
+
+jobs:
+  merge-catalog:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/claude-sonnet-5-5
+      - name: Fold supplemental model into anthropic.json
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          target = Path('src/llmcapa/data/anthropic.json')
+          supplemental = Path('src/llmcapa/data/anthropic_sonnet_5_5.json')
+          data = json.loads(target.read_text(encoding='utf-8'))
+          extra = json.loads(supplemental.read_text(encoding='utf-8'))
+          additions = extra['models']
+          existing = {m['model_id'] for m in data['models']}
+          for model in reversed(additions):
+              if model['model_id'] not in existing:
+                  data['models'].insert(0, model)
+          target.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          PY
+      - name: Commit merged catalog
+        shell: bash
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add src/llmcapa/data/anthropic.json
+          if ! git diff --cached --quiet; then
+            git commit -m "data: fold Claude Sonnet 5.5 into Anthropic catalog"
+            git push origin HEAD:feat/claude-sonnet-5-5
+          fi
