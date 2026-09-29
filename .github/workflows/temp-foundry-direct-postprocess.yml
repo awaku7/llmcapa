@@ -1,0 +1,70 @@
+name: Temporary Foundry direct postprocess fix
+
+on:
+  push:
+    branches:
+      - fix/foundry-local-metadata-minimal
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/foundry-local-metadata-minimal
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Patch updater and regression test
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('scripts/_update_foundry_local.py')
+          text = path.read_text(encoding='utf-8')
+          text = text.replace('import re\n', 'import re\nimport shutil\nimport tempfile\n', 1)
+          anchor = '\n\ndef main() -> None:\n'
+          helper = '''\n\ndef _postprocess_output(output: Path = OUT) -> None:\n    \"\"\"Apply existing capability enrichers to Foundry Local only.\"\"\"\n    try:\n        from _audio_capability_postprocess import apply as apply_audio\n        from _image_capability_postprocess import apply as apply_image\n        from _structured_capability_postprocess import apply as apply_structured\n        from _video_capability_postprocess import apply as apply_video\n    except ImportError:  # package-style test imports\n        from scripts._audio_capability_postprocess import apply as apply_audio\n        from scripts._image_capability_postprocess import apply as apply_image\n        from scripts._structured_capability_postprocess import apply as apply_structured\n        from scripts._video_capability_postprocess import apply as apply_video\n\n    with tempfile.TemporaryDirectory() as tmp_name:\n        tmp = Path(tmp_name)\n        target = tmp / output.name\n        shutil.copy2(output, target)\n        apply_audio(tmp)\n        apply_video(tmp)\n        apply_structured(tmp)\n        apply_image(tmp)\n        shutil.copy2(target, output)\n'''
+          assert anchor in text
+          text = text.replace(anchor, helper + anchor, 1)
+          old = '''    OUT.write_text(\n        json.dumps({\"models\": models}, ensure_ascii=False, indent=2) + \"\\n\",\n        encoding=\"utf-8\",\n    )\n'''
+          new = old + '    _postprocess_output(OUT)\n'
+          assert old in text
+          text = text.replace(old, new, 1)
+          path.write_text(text, encoding='utf-8')
+
+          test_path = Path('tests/test_foundry_local_static.py')
+          tests = test_path.read_text(encoding='utf-8')
+          tests = tests.replace('import llmcapa\n', 'import json\nfrom pathlib import Path\n\nimport llmcapa\nfrom scripts import _update_foundry_local as updater\n', 1)
+          addition = '''\n\ndef test_foundry_local_updater_applies_postprocessors(tmp_path: Path) -> None:\n    output = tmp_path / \"foundry_local.json\"\n    output.write_text(\n        json.dumps(\n            {\n                \"models\": [\n                    {\n                        \"provider\": \"foundry-local\",\n                        \"model_id\": \"speech-streaming\",\n                        \"input_modalities\": [\"audio\"],\n                        \"output_modalities\": [\"text\"],\n                        \"supports_streaming\": True,\n                        \"extra\": {\"media_model_type\": \"asr\"},\n                    },\n                    {\n                        \"provider\": \"foundry-local\",\n                        \"model_id\": \"text-embedding\",\n                        \"input_modalities\": [\"text\"],\n                        \"output_modalities\": [\"embedding\"],\n                        \"supports_streaming\": False,\n                        \"extra\": {},\n                    },\n                ]\n            },\n            indent=2,\n        )\n        + \"\\n\",\n        encoding=\"utf-8\",\n    )\n\n    updater._postprocess_output(output)\n    records = json.loads(output.read_text(encoding=\"utf-8\"))[\"models\"]\n    speech, embedding = records\n    assert speech[\"audio\"][\"transcription\"] is True\n    assert speech[\"audio\"][\"supports_streaming\"] is True\n    assert speech[\"audio\"][\"endpoints\"][\"transcription\"] is True\n    assert embedding[\"embedding\"]\n'''
+          if 'test_foundry_local_updater_applies_postprocessors' not in tests:
+              tests = tests.rstrip() + addition + '\n'
+          test_path.write_text(tests, encoding='utf-8')
+          PY
+      - name: Install tools
+        run: python -m pip install -e . pytest black ruff
+      - name: Regenerate Foundry Local through updater
+        shell: bash
+        run: |
+          python scripts/_update_foundry_local.py
+          git restore provider_update_log.md
+          python -m black scripts/_update_foundry_local.py tests/test_foundry_local_static.py
+      - name: Validate
+        run: |
+          python -m black --check scripts/_update_foundry_local.py tests/test_foundry_local_static.py
+          python -m ruff check scripts/_update_foundry_local.py tests/test_foundry_local_static.py
+          python -m pytest tests/test_foundry_local_static.py
+      - name: Commit fix
+        shell: bash
+        run: |
+          rm .github/workflows/temp-foundry-direct-postprocess.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/_update_foundry_local.py src/llmcapa/data/foundry_local.json tests/test_foundry_local_static.py .github/workflows/temp-foundry-direct-postprocess.yml
+          git commit -m "fix: postprocess Foundry Local updater output"
+          git push
