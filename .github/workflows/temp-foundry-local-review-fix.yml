@@ -1,0 +1,93 @@
+name: Temporary Foundry Local review fix
+
+on:
+  push:
+    branches:
+      - fix/foundry-local-metadata-minimal
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/foundry-local-metadata-minimal
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Patch Foundry Local ASR metadata
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('scripts/_update_foundry_local.py')
+          text = path.read_text(encoding='utf-8')
+          anchor = '        input_modalities, output_modalities, chat = _task_modalities(tasks)\n'
+          insert = '''        input_modalities, output_modalities, chat = _task_modalities(tasks)\n        normalized_tasks = {task.lower().strip() for task in tasks}\n        is_asr = any(\n            marker in task\n            for task in normalized_tasks\n            for marker in (\n                "automatic-speech-recognition",\n                "speech-recognition",\n                "speech-to-text",\n                "transcription",\n            )\n        )\n        is_streaming_audio = "audio" in input_modalities and (\n            "streaming" in model_id\n            or any("streaming" in task for task in normalized_tasks)\n        )\n'''
+          assert anchor in text
+          text = text.replace(anchor, insert, 1)
+
+          old = '                "supports_streaming": chat,\n'
+          new = '                "supports_streaming": chat or is_streaming_audio,\n'
+          assert old in text
+          text = text.replace(old, new, 1)
+
+          old = '                    "tasks": sorted(tasks),\n'
+          new = '''                    "tasks": sorted(tasks),\n                    "media_model_type": "asr" if is_asr else "",\n'''
+          assert old in text
+          text = text.replace(old, new, 1)
+          path.write_text(text, encoding='utf-8')
+
+          test_path = Path('tests/test_foundry_local_static.py')
+          tests = test_path.read_text(encoding='utf-8')
+          addition = '''\n\ndef test_foundry_local_asr_tasks_expose_transcription() -> None:\n    models = llmcapa.list_models(provider="foundry-local")\n    asr_models = [\n        model\n        for model in models\n        if "automatic-speech-recognition"\n        in {str(task).lower() for task in model.extra.get("tasks", [])}\n    ]\n    assert asr_models\n    assert all(model.audio is not None for model in asr_models)\n    assert all(model.audio.transcription is True for model in asr_models)\n    assert all(\n        model.audio.endpoints.get("transcription") is True for model in asr_models\n    )\n\n\ndef test_foundry_local_streaming_audio_preserves_streaming_support() -> None:\n    models = llmcapa.list_models(provider="foundry-local")\n    streaming_models = [\n        model\n        for model in models\n        if "audio" in model.input_modalities\n        and "streaming" in model.model_id.lower()\n    ]\n    assert streaming_models\n    assert all(model.supports_streaming is True for model in streaming_models)\n    assert all(model.audio is not None for model in streaming_models)\n    assert all(model.audio.supports_streaming is True for model in streaming_models)\n'''
+          if 'test_foundry_local_asr_tasks_expose_transcription' not in tests:
+              test_path.write_text(tests.rstrip() + addition + '\n', encoding='utf-8')
+          PY
+      - name: Install tools
+        run: python -m pip install -e . pytest black ruff
+      - name: Refresh Foundry Local only
+        shell: bash
+        run: |
+          python scripts/_update_foundry_local.py
+          python - <<'PY'
+          import shutil
+          import tempfile
+          from pathlib import Path
+          from scripts._audio_capability_postprocess import apply as apply_audio
+          from scripts._video_capability_postprocess import apply as apply_video
+          from scripts._structured_capability_postprocess import apply as apply_structured
+          from scripts._image_capability_postprocess import apply as apply_image
+
+          source = Path('src/llmcapa/data/foundry_local.json')
+          with tempfile.TemporaryDirectory() as tmp_name:
+              tmp = Path(tmp_name)
+              target = tmp / source.name
+              shutil.copy2(source, target)
+              apply_audio(tmp)
+              apply_video(tmp)
+              apply_structured(tmp)
+              apply_image(tmp)
+              shutil.copy2(target, source)
+          PY
+          git restore provider_update_log.md
+          python -m black scripts/_update_foundry_local.py tests/test_foundry_local_static.py
+      - name: Validate
+        run: |
+          python -m black --check scripts/_update_foundry_local.py tests/test_foundry_local_static.py
+          python -m ruff check scripts/_update_foundry_local.py tests/test_foundry_local_static.py
+          python -m pytest tests/test_foundry_local_static.py
+      - name: Commit fix
+        shell: bash
+        run: |
+          rm .github/workflows/temp-foundry-local-review-fix.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/_update_foundry_local.py src/llmcapa/data/foundry_local.json tests/test_foundry_local_static.py .github/workflows/temp-foundry-local-review-fix.yml
+          git commit -m "fix: preserve Foundry Local ASR metadata"
+          git push
