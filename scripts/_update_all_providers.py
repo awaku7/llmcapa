@@ -31,6 +31,7 @@ PROVIDER_SCRIPTS = {
     "cohere": "_update_cohere.py",
     "deepseek": "_update_deepseek.py",
     "fireworks": "provider_updates/fireworks.py",
+    "foundry-local": "_update_foundry_local.py",
     "google": "_update_google.py",
     "ibm-granite": "_update_ibm_granite.py",
     "inception": "_update_inception.py",

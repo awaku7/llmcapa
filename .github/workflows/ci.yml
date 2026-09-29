@@ -1,0 +1,105 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install quality tools
+        run: python -m pip install --upgrade pip black ruff build
+      - name: Determine changed Python files
+        id: changed-python
+        shell: bash
+        run: |
+          if [ -n "${{ github.base_ref }}" ]; then
+            base="origin/${{ github.base_ref }}"
+            range="$base...HEAD"
+          elif git rev-parse HEAD^ >/dev/null 2>&1; then
+            range="HEAD^...HEAD"
+          else
+            range="HEAD"
+          fi
+          git diff --name-only --diff-filter=ACMR "$range" -- '*.py' > changed-python.txt || true
+          if [ -s changed-python.txt ]; then
+            echo "has_files=true" >> "$GITHUB_OUTPUT"
+            cat changed-python.txt
+          else
+            echo "has_files=false" >> "$GITHUB_OUTPUT"
+            echo "No changed Python files."
+          fi
+      - name: Black
+        if: steps.changed-python.outputs.has_files == 'true'
+        shell: bash
+        run: |
+          set -o pipefail
+          xargs -r python -m black --check < changed-python.txt 2>&1 | tee black.log
+      - name: Ruff
+        if: steps.changed-python.outputs.has_files == 'true'
+        shell: bash
+        run: |
+          set -o pipefail
+          xargs -r python -m ruff check < changed-python.txt 2>&1 | tee ruff.log
+      - name: Build
+        run: |
+          set -o pipefail
+          python -m build 2>&1 | tee build.log
+      - name: Upload quality diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quality-diagnostics
+          path: |
+            changed-python.txt
+            black.log
+            ruff.log
+            build.log
+          if-no-files-found: ignore
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e . pytest playwright tiktoken
+      - name: Test
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m pytest -q --junitxml=pytest-${{ matrix.python-version }}.xml 2>&1 | tee pytest-${{ matrix.python-version }}.log
+      - name: Compile
+        if: always()
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m py_compile src/llmcapa/*.py tests/*.py 2>&1 | tee compile-${{ matrix.python-version }}.log
+      - name: Upload test diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-diagnostics-${{ matrix.python-version }}
+          path: |
+            pytest-${{ matrix.python-version }}.log
+            pytest-${{ matrix.python-version }}.xml
+            compile-${{ matrix.python-version }}.log
+          if-no-files-found: ignore

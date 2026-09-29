@@ -19,20 +19,20 @@ from .models import (
     AudioCapability,
     AudioEndpointCapability,
     Capability,
+    ComputerUseCapability,
     DecisionCapability,
-    VideoCapability,
-    VideoEndpointCapability,
     DocumentCapability,
     EmbeddingCapability,
-    RerankCapability,
-    SpatialCapability,
-    ComputerUseCapability,
     Feature,
     ImageAnalysisCapability,
     ImageCapability,
     ImageEndpointCapability,
     ReasoningEffort,
     ReasoningMode,
+    RerankCapability,
+    SpatialCapability,
+    VideoCapability,
+    VideoEndpointCapability,
 )
 from .registry import ModelNotFoundError, Registry, default_registry
 from .tokenizer import count_messages_tokens, count_tokens
@@ -41,20 +41,16 @@ try:
     __version__ = package_version("llmcapa")
 except PackageNotFoundError:
     # Source-tree fallback when the project is not installed yet.
-    __version__ = "0.5.44"
+    __version__ = "0.5.45"
 
 __all__ = [
     "AudioCapability",
     "AudioEndpointCapability",
     "Capability",
+    "ComputerUseCapability",
     "DecisionCapability",
-    "VideoCapability",
-    "VideoEndpointCapability",
     "DocumentCapability",
     "EmbeddingCapability",
-    "RerankCapability",
-    "SpatialCapability",
-    "ComputerUseCapability",
     "Feature",
     "ImageAnalysisCapability",
     "ImageCapability",
@@ -63,6 +59,10 @@ __all__ = [
     "ReasoningEffort",
     "ReasoningMode",
     "Registry",
+    "RerankCapability",
+    "SpatialCapability",
+    "VideoCapability",
+    "VideoEndpointCapability",
     "__version__",
     "count_messages_tokens",
     "count_tokens",
@@ -74,6 +74,7 @@ __all__ = [
     "find_model",
     "get",
     "get_computer_use_capability",
+    "get_reasoning_mode_values",
     "list_models",
     "load_extra",
     "providers",
@@ -85,7 +86,6 @@ __all__ = [
     "supports_json_mode",
     "supports_json_schema",
     "supports_tool_search",
-    "get_reasoning_mode_values",
 ]
 
 
