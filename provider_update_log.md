@@ -9284,3 +9284,11 @@
 - Spark Standard $1.25/$4.25 + cached $0.15; Contributor $0.10/$0.20 + cached $0.002
 - Glimmer 30B recorded as Apache 2.0 open weights (no API pricing)
 - Voice Transcribe ($/hour) and Image 1.0 ($/image) recorded as specialty units
+
+
+## Computer Use compatibility hardening (2026-10-01)
+
+- `ComputerUseCapability.is_compatible_with` now requires the same provider namespace as well as API and tool/schema family, so generic `computer` labels in different Responses API providers are not treated as interchangeable.
+- Beta-header requirements are checked symmetrically; a replacement that needs a different beta header is not declared compatible. Tool version strings remain descriptive metadata, while environment/action subsets continue to be checked.
+- Regression tests cover Meta vs OpenAI Responses `computer` protocol separation and beta-header mismatch.
+- Validation: full suite **22,795 passed**; Ruff and compile checks passed; 0.5.51 wheel/sdist built and `twine check` passed. Follow-up code is pushed to GitHub; 0.5.51 has not been uploaded to PyPI.

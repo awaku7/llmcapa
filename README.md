@@ -670,7 +670,7 @@ OpenRouter and similar gateways are represented separately from direct provider 
 
 ### Computer Use replacement checks
 
-When checking model replacement, request Computer Use explicitly. The replacement check compares the provider/API-specific tool contract, including the tool/schema type, environments, and actions; tool versions are metadata and are not used as a compatibility gate. `required_actions` is currently applicable to Computer Use only. `supports("computer_use")` alone is not treated as cross-provider compatibility.
+When checking model replacement, request Computer Use explicitly. The replacement check requires matching provider and API, tool/schema type, and—when either side is beta—the same beta header. It also checks that the replacement supports the requested environments and actions. Tool versions are descriptive metadata, not a compatibility gate. `required_actions` is currently applicable to Computer Use only. `supports("computer_use")` alone is not treated as cross-provider compatibility; two providers may use the same generic tool label with different request protocols.
 
 ```python
 source.can_be_replaced_by(

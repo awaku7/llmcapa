@@ -98,11 +98,16 @@ class ComputerUseCapability:
         """Return whether *other* can replace this Computer Use capability.
 
         Computer Use is provider/API-specific. A generic ``supported`` flag is
-        therefore insufficient for replacement checks.
+        therefore insufficient for replacement checks; records from different
+        providers are never assumed to share a request protocol.
         """
         if not self.supported or not other.supported:
             return False
         if self.native != other.native:
+            return False
+        source_provider = self.provider.strip().lower()
+        target_provider = other.provider.strip().lower()
+        if source_provider != target_provider and (source_provider or target_provider):
             return False
         if self.api_type != other.api_type:
             return False
@@ -111,7 +116,7 @@ class ComputerUseCapability:
         # version may add actions while retaining the required action subset.
         if self.tool_type != other.tool_type:
             return False
-        if self.requires_beta and self.beta_header != other.beta_header:
+        if (self.requires_beta or other.requires_beta) and self.beta_header != other.beta_header:
             return False
         if not self.environments.issubset(other.environments):
             return False
