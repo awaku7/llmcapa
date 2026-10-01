@@ -3,11 +3,7 @@
 import llmcapa
 
 
-EXPECTED_LAYA_MODELS = {
-    "laya",
-    "laya-multilingual",
-    "laya-typed-decisions",
-}
+EXPECTED_LAYA_MODELS = {"laya", "laya-multilingual", "laya-typed-decisions"}
 
 
 def test_laya_provider_is_registered_and_queryable():
@@ -24,12 +20,13 @@ def test_laya_provider_is_registered_and_queryable():
 
 
 def test_laya_aliases_resolve_within_provider_scope():
-    assert llmcapa.get("english", provider="laya").model_id == "laya"
-    assert llmcapa.get("multilingual", provider="laya").model_id == "laya-multilingual"
-    assert (
-        llmcapa.get("typed-decisions", provider="laya").model_id
-        == "laya-typed-decisions"
-    )
+    english = llmcapa.get("english", provider="laya")
+    multilingual = llmcapa.get("multilingual", provider="laya")
+    typed = llmcapa.get("typed-decisions", provider="laya")
+
+    assert english.model_id == "laya"
+    assert multilingual.model_id == "laya-multilingual"
+    assert typed.model_id == "laya-typed-decisions"
 
 
 def test_laya_models_are_decision_only():
