@@ -3,7 +3,11 @@
 import llmcapa
 
 
-EXPECTED_LAYA_MODELS = {\n    "laya",\n    "laya-multilingual",\n    "laya-typed-decisions",\n}
+EXPECTED_LAYA_MODELS = {
+    "laya",
+    "laya-multilingual",
+    "laya-typed-decisions",
+}
 
 
 def test_laya_provider_is_registered_and_queryable():
@@ -49,7 +53,9 @@ def test_laya_models_are_decision_only():
         assert cap.decision.type_errors_possible is False
         assert cap.decision.deterministic is True
         assert cap.decision.extra["http_endpoint_path"] == "/v1/systemone"
-        assert (\n            cap.decision.extra["wire_protocol"] == "typesafe-systemone-compatible"\n        )
+        assert (
+            cap.decision.extra["wire_protocol"] == "typesafe-systemone-compatible"
+        )
 
 
 def test_laya_checkpoint_context_windows_and_metadata():
