@@ -46,6 +46,33 @@
         "version": "2025-03-11",
         "maas_or_paygo": true,
         "summary": "computer-use-preview is the model for Computer Use Agent for use in Responses API. You can use computer-use-preview model to get instructions to control a browser on your computer screen and take action on a user's behalf."
+      },
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "azure-openai",
+        "model": "computer-use-preview",
+        "api_type": "responses",
+        "tool_type": "computer_use_preview",
+        "tool_version": "2025-03-11",
+        "status": "preview",
+        "environments": [
+          "browser",
+          "desktop"
+        ],
+        "actions": [
+          "screenshot",
+          "click",
+          "double_click",
+          "drag",
+          "move",
+          "scroll",
+          "keypress",
+          "type",
+          "wait"
+        ],
+        "source_url": "https://ai.azure.com/catalog/models",
+        "checked_at": "2026-10-01"
       }
     },
     {
@@ -17460,7 +17487,7 @@
       "azure_type": "Chat completion",
       "azure_lifecycle": "",
       "source": "azure_foundry",
-      "supports_responses_api": false,
+      "supports_responses_api": true,
       "license_type": "open-source",
       "aliases": [
         "azure-foundry/gpt-5.4"
@@ -17506,6 +17533,17 @@
         "pricing_match_key": "gpt-5.4",
         "long_context": true,
         "context_window": 1050000
+      },
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "azure-foundry",
+        "model": "gpt-5.4",
+        "api_type": "responses",
+        "tool_type": "computer",
+        "status": "ga",
+        "source_url": "https://learn.microsoft.com/en-us/azure/foundry-classic/openai/how-to/computer-use",
+        "checked_at": "2026-10-01"
       }
     },
     {
@@ -18819,9 +18857,9 @@
       }
     },
     {
-      "provider": "azure-foundry",
+      "provider": "fireworks",
       "model_id": "FW-GLM-5",
-      "display_name": "FW-GLM-5",
+      "display_name": "GLM 5",
       "context_window": 202752,
       "max_output_tokens": 2048,
       "input_modalities": [
@@ -18831,21 +18869,34 @@
         "text"
       ],
       "supports_chat_completion": true,
-      "supports_function_calling": false,
+      "supports_function_calling": true,
       "supports_json_mode": null,
-      "supports_streaming": null,
+      "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": null,
       "knowledge_cutoff": "",
       "azure_type": "Chat completion",
-      "azure_lifecycle": "",
+      "azure_lifecycle": "GA",
       "source": "azure_foundry",
       "supports_responses_api": false,
-      "license_type": "open-source",
+      "license_type": "custom",
       "aliases": [
         "fw-glm-5",
-        "azure-foundry/FW-GLM-5"
-      ]
+        "fireworks/FW-GLM-5"
+      ],
+      "extra": {
+        "azure_offers": [
+          "PTU"
+        ],
+        "deployment_options": "UnifiedEndpointMaaS,Serverless API",
+        "inference_deprecation_date": "2027-07-01T00:00:00Z",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "GLM 5 is a 744B-parameter Mixture-of-Experts model targeting complex systems engineering and long-horizon agentic tasks, using DeepSeek Sparse Attention for efficient long-context processing.",
+        "long_context": true,
+        "context_window": 202752,
+        "capabilities_source": "https://ai.azure.com/catalog/models/FW-GLM-5"
+      }
     },
     {
       "provider": "azure-foundry",
@@ -19018,7 +19069,25 @@
       "license_type": "open-source",
       "aliases": [
         "azure-foundry/claude-fable-5"
-      ]
+      ],
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "azure-foundry",
+        "model": "claude-fable-5",
+        "api_type": "messages",
+        "tool_type": "computer_20251124",
+        "tool_version": "20251124",
+        "status": "beta",
+        "environments": [
+          "desktop"
+        ],
+        "requires_beta": true,
+        "enable_zoom": true,
+        "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
+        "checked_at": "2026-10-01",
+        "beta_header": "computer-use-2025-11-24"
+      }
     },
     {
       "provider": "azure-foundry",
@@ -19046,7 +19115,25 @@
       "license_type": "open-source",
       "aliases": [
         "azure-foundry/claude-fable-5-1"
-      ]
+      ],
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "azure-foundry",
+        "model": "claude-fable-5-1",
+        "api_type": "messages",
+        "tool_type": "computer_20251124",
+        "tool_version": "20251124",
+        "status": "beta",
+        "environments": [
+          "desktop"
+        ],
+        "requires_beta": true,
+        "enable_zoom": true,
+        "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
+        "checked_at": "2026-10-01",
+        "beta_header": "computer-use-2025-11-24"
+      }
     },
     {
       "provider": "azure-foundry",
@@ -19074,7 +19161,25 @@
       "license_type": "open-source",
       "aliases": [
         "azure-foundry/claude-mythos-5"
-      ]
+      ],
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "azure-foundry",
+        "model": "claude-mythos-5",
+        "api_type": "messages",
+        "tool_type": "computer_20251124",
+        "tool_version": "20251124",
+        "status": "beta",
+        "environments": [
+          "desktop"
+        ],
+        "requires_beta": true,
+        "enable_zoom": true,
+        "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
+        "checked_at": "2026-10-01",
+        "beta_header": "computer-use-2025-11-24"
+      }
     },
     {
       "provider": "azure-foundry",
@@ -19102,7 +19207,25 @@
       "license_type": "open-source",
       "aliases": [
         "azure-foundry/claude-mythos-5-1"
-      ]
+      ],
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "azure-foundry",
+        "model": "claude-mythos-5-1",
+        "api_type": "messages",
+        "tool_type": "computer_20251124",
+        "tool_version": "20251124",
+        "status": "beta",
+        "environments": [
+          "desktop"
+        ],
+        "requires_beta": true,
+        "enable_zoom": true,
+        "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
+        "checked_at": "2026-10-01",
+        "beta_header": "computer-use-2025-11-24"
+      }
     },
     {
       "provider": "azure-foundry",
@@ -19130,7 +19253,25 @@
       "license_type": "open-source",
       "aliases": [
         "azure-foundry/claude-opus-4-6"
-      ]
+      ],
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "azure-foundry",
+        "model": "claude-opus-4-6",
+        "api_type": "messages",
+        "tool_type": "computer_20251124",
+        "tool_version": "20251124",
+        "status": "beta",
+        "environments": [
+          "desktop"
+        ],
+        "requires_beta": true,
+        "enable_zoom": true,
+        "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
+        "checked_at": "2026-10-01",
+        "beta_header": "computer-use-2025-11-24"
+      }
     },
     {
       "provider": "azure-foundry",
@@ -19158,7 +19299,25 @@
       "license_type": "open-source",
       "aliases": [
         "azure-foundry/claude-opus-4-7"
-      ]
+      ],
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "azure-foundry",
+        "model": "claude-opus-4-7",
+        "api_type": "messages",
+        "tool_type": "computer_20251124",
+        "tool_version": "20251124",
+        "status": "beta",
+        "environments": [
+          "desktop"
+        ],
+        "requires_beta": true,
+        "enable_zoom": true,
+        "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
+        "checked_at": "2026-10-01",
+        "beta_header": "computer-use-2025-11-24"
+      }
     },
     {
       "provider": "azure-foundry",
@@ -19186,7 +19345,25 @@
       "license_type": "open-source",
       "aliases": [
         "azure-foundry/claude-opus-4-8"
-      ]
+      ],
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "azure-foundry",
+        "model": "claude-opus-4-8",
+        "api_type": "messages",
+        "tool_type": "computer_20251124",
+        "tool_version": "20251124",
+        "status": "beta",
+        "environments": [
+          "desktop"
+        ],
+        "requires_beta": true,
+        "enable_zoom": true,
+        "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
+        "checked_at": "2026-10-01",
+        "beta_header": "computer-use-2025-11-24"
+      }
     },
     {
       "provider": "azure-foundry",
@@ -19214,7 +19391,25 @@
       "license_type": "open-source",
       "aliases": [
         "azure-foundry/claude-opus-5"
-      ]
+      ],
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "azure-foundry",
+        "model": "claude-opus-5",
+        "api_type": "messages",
+        "tool_type": "computer_20251124",
+        "tool_version": "20251124",
+        "status": "beta",
+        "environments": [
+          "desktop"
+        ],
+        "requires_beta": true,
+        "enable_zoom": true,
+        "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
+        "checked_at": "2026-10-01",
+        "beta_header": "computer-use-2025-11-24"
+      }
     },
     {
       "provider": "azure-foundry",
@@ -19242,7 +19437,25 @@
       "license_type": "open-source",
       "aliases": [
         "azure-foundry/claude-sonnet-4-6"
-      ]
+      ],
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "azure-foundry",
+        "model": "claude-sonnet-4-6",
+        "api_type": "messages",
+        "tool_type": "computer_20251124",
+        "tool_version": "20251124",
+        "status": "beta",
+        "environments": [
+          "desktop"
+        ],
+        "requires_beta": true,
+        "enable_zoom": true,
+        "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
+        "checked_at": "2026-10-01",
+        "beta_header": "computer-use-2025-11-24"
+      }
     },
     {
       "provider": "azure-foundry",
@@ -19270,7 +19483,25 @@
       "license_type": "open-source",
       "aliases": [
         "azure-foundry/claude-sonnet-5"
-      ]
+      ],
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "azure-foundry",
+        "model": "claude-sonnet-5",
+        "api_type": "messages",
+        "tool_type": "computer_20251124",
+        "tool_version": "20251124",
+        "status": "beta",
+        "environments": [
+          "desktop"
+        ],
+        "requires_beta": true,
+        "enable_zoom": true,
+        "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
+        "checked_at": "2026-10-01",
+        "beta_header": "computer-use-2025-11-24"
+      }
     },
     {
       "provider": "azure-foundry",

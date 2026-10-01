@@ -21,6 +21,11 @@ from pathlib import Path
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 from playwright.sync_api import sync_playwright
 
+try:
+    from scripts._computer_use_metadata import meta_computer_use_capability
+except ModuleNotFoundError:  # Direct execution: python scripts/_update_meta.py
+    from _computer_use_metadata import meta_computer_use_capability
+
 ROOT = Path(__file__).resolve().parents[1]
 LOG = ROOT / "provider_update_log.md"
 DATA = ROOT / "src" / "llmcapa" / "data" / "meta.json"
@@ -233,6 +238,9 @@ def spark_row(*, model_id: str, display: str, tier: str, table: dict) -> dict:
         row["reasoning_effort_values"] = list(SPARK_13_REASONING_EFFORTS)
         if model_id == "muse-spark-1.3" and tier == "standard":
             row["reasoning_effort_values"].append("max")
+    computer_use = meta_computer_use_capability(model_id)
+    if computer_use is not None:
+        row["computer_use"] = computer_use
     return row
 
 

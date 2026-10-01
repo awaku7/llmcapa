@@ -11,6 +11,11 @@ from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
 
+from _computer_use_metadata import (
+    GOOGLE_COMPUTER_USE_MODELS,
+    google_computer_use_capability,
+)
+
 ROOT = Path(__file__).resolve().parents[1]
 GOOGLE = ROOT / "src" / "llmcapa" / "data" / "google.json"
 OUT = ROOT / "src" / "llmcapa" / "data" / "vertex-ai.json"
@@ -19,6 +24,12 @@ SOURCE = "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models"
 THINKING_SOURCE = (
     "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/thinking"
 )
+COMPUTER_USE_SOURCE = (
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/computer-use"
+)
+VERTEX_COMPUTER_USE_MODELS = GOOGLE_COMPUTER_USE_MODELS - {
+    "gemini-3.5-flash-lite"
+}
 
 # First-party Vertex Gemini controls. These are model-specific and deliberately
 # kept separate from OpenAI-compatible reasoning_effort.
@@ -209,12 +220,25 @@ def enrich_modalities(row: dict) -> None:
 
 def main() -> None:
     discovered = discover_models()
+    if not discovered:
+        raise RuntimeError(
+            "Vertex AI SDK returned no models; refusing to overwrite catalog"
+        )
     old = json.loads(OUT.read_text(encoding="utf-8"))["models"] if OUT.exists() else []
     old_by_id = {m["model_id"]: m for m in old}
     google_by_id = {
         m["model_id"]: m
         for m in json.loads(GOOGLE.read_text(encoding="utf-8"))["models"]
     }
+    # Vertex's official Computer Use guide documents these Gemini model
+    # families even when the SDK discovery list has not caught up yet.
+    discovered_ids = {model_id for model_id, _ in discovered}
+    for model_id in sorted(VERTEX_COMPUTER_USE_MODELS & google_by_id.keys()):
+        if model_id not in discovered_ids:
+            discovered.append(
+                (model_id, google_by_id[model_id].get("display_name", model_id))
+            )
+            discovered_ids.add(model_id)
     rows = []
     for model_id, label in discovered:
         row = deepcopy(
@@ -227,6 +251,15 @@ def main() -> None:
         row["extra"]["platform"] = "Google Cloud Vertex AI / Model Garden"
         enrich_modalities(row)
         enrich_thinking(row)
+        computer_use = google_computer_use_capability(model_id, "vertex-ai")
+        if computer_use is not None and model_id in VERTEX_COMPUTER_USE_MODELS:
+            computer_use["source_url"] = COMPUTER_USE_SOURCE
+            row["computer_use"] = computer_use
+        elif (row.get("computer_use") or {}).get("provider") in {
+            "google",
+            "vertex-ai",
+        }:
+            row.pop("computer_use", None)
         rows.append(row)
     OUT.write_text(
         json.dumps({"models": rows}, ensure_ascii=False, indent=2) + "\n",

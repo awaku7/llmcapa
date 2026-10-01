@@ -484,12 +484,14 @@
         "output_per_1m": 10.0,
         "currency": "USD"
       },
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [],
       "reasoning_effort_values": null,
       "extra": {
         "source": "https://ai.google.dev/gemini-api/docs/pricing",
-        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing"
+        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing",
+        "computer_use_shutdown_date": "2026-07-28",
+        "computer_use_source_url": "https://ai.google.dev/gemini-api/docs/deprecations"
       },
       "thinking_budget_values": {
         "type": "token_range",
@@ -1918,21 +1920,10 @@
           "desktop",
           "mobile"
         ],
-        "actions": [
-          "screenshot",
-          "click",
-          "double_click",
-          "drag",
-          "move",
-          "scroll",
-          "keypress",
-          "type",
-          "wait"
-        ],
         "requires_beta": false,
         "enable_zoom": false,
         "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/computer-use",
-        "checked_at": "2026-08-15"
+        "checked_at": "2026-10-01"
       },
       "extra": {
         "source": "https://ai.google.dev/gemini-api/docs/pricing",
@@ -3841,6 +3832,25 @@
         ],
         "status": "inferred",
         "checked_at": "2026-09-29"
+      },
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "google",
+        "model": "gemini-3.5-flash",
+        "api_type": "generate_content",
+        "tool_type": "computer_use",
+        "tool_version": null,
+        "status": "preview",
+        "environments": [
+          "browser",
+          "desktop",
+          "mobile"
+        ],
+        "requires_beta": false,
+        "enable_zoom": false,
+        "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/computer-use",
+        "checked_at": "2026-10-01"
       }
     },
     {
@@ -3971,6 +3981,25 @@
         ],
         "status": "inferred",
         "checked_at": "2026-09-29"
+      },
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "google",
+        "model": "gemini-3.5-flash-lite",
+        "api_type": "generate_content",
+        "tool_type": "computer_use",
+        "tool_version": null,
+        "status": "preview",
+        "environments": [
+          "browser",
+          "desktop",
+          "mobile"
+        ],
+        "requires_beta": false,
+        "enable_zoom": false,
+        "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/computer-use",
+        "checked_at": "2026-10-01"
       }
     },
     {
@@ -4469,36 +4498,6 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [],
-      "computer_use": {
-        "supported": true,
-        "native": true,
-        "provider": "google",
-        "model": "gemini-3.6-flash",
-        "api_type": "generate_content",
-        "tool_type": "computer_use",
-        "tool_version": null,
-        "status": "preview",
-        "environments": [
-          "browser",
-          "desktop",
-          "mobile"
-        ],
-        "actions": [
-          "screenshot",
-          "click",
-          "double_click",
-          "drag",
-          "move",
-          "scroll",
-          "keypress",
-          "type",
-          "wait"
-        ],
-        "requires_beta": false,
-        "enable_zoom": false,
-        "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/computer-use",
-        "checked_at": "2026-08-15"
-      },
       "pricing": {
         "input_per_1m": 0.75,
         "output_per_1m": 3.75,
@@ -4824,6 +4823,25 @@
         ],
         "checked_at": "2026-09-29",
         "status": "inferred"
+      },
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "google",
+        "model": "gemini-3.7-flash",
+        "api_type": "generate_content",
+        "tool_type": "computer_use",
+        "tool_version": null,
+        "status": "preview",
+        "environments": [
+          "browser",
+          "desktop",
+          "mobile"
+        ],
+        "requires_beta": false,
+        "enable_zoom": false,
+        "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/computer-use",
+        "checked_at": "2026-10-01"
       }
     },
     {
@@ -4882,6 +4900,25 @@
           "medium",
           "high"
         ]
+      },
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "google",
+        "model": "gemini-3.8-flash",
+        "api_type": "generate_content",
+        "tool_type": "computer_use",
+        "tool_version": null,
+        "status": "preview",
+        "environments": [
+          "browser",
+          "desktop",
+          "mobile"
+        ],
+        "requires_beta": false,
+        "enable_zoom": false,
+        "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/computer-use",
+        "checked_at": "2026-10-01"
       }
     },
     {

@@ -9103,3 +9103,184 @@
 - Discovery: `vertexai.model_garden.list_deployable_models(list_hf_models=True)`
 - OpenRouter was not used; `google.json` was not modified.
 - Result: 4937 SDK-listed deployable Model Garden models. Detailed limits/pricing remain unknown where the SDK does not expose them.
+
+## OpenAI (2026-10-01)
+
+- Source: https://developers.openai.com/api/docs/models/all.md
+- Source: https://developers.openai.com/api/docs/pricing.md
+- Dynamically discovered 101 official model pages; legacy records preserved: 67
+
+## OpenAI (2026-10-01)
+
+- Source: https://developers.openai.com/api/docs/models/all.md
+- Source: https://developers.openai.com/api/docs/pricing.md
+- Dynamically discovered 101 official model pages; legacy records preserved: 67
+
+## OpenAI (2026-10-01)
+
+- Source: https://developers.openai.com/api/docs/models/all.md
+- Source: https://developers.openai.com/api/docs/pricing.md
+- Dynamically discovered 101 official model pages; legacy records preserved: 67
+
+## Amazon Nova / Bedrock refresh (2026-10-01)
+
+### Source
+- Bedrock pricing: https://aws.amazon.com/bedrock/pricing/
+- Nova pricing: https://aws.amazon.com/nova/pricing/
+- Metered unit map: https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json
+- Scratch: `_scratch_amazon_nova_pricing_live.html`
+- Apply: `scripts/_update_amazon.py`
+
+### Result
+- amazon.json: **32** models (active=32, deprecated=0, priced=20)
+- Nova pricing mode: bundled-cache
+- Current Nova token prices are refreshed only when the optional scraper is available
+- Historical Titan and specialty metadata remains static
+- Claude Bedrock Computer Use capabilities are reconciled from official model cards
+- Bedrock aliases are generated as amazon.*:0
+
+## Anthropic refresh (2026-10-01)
+
+### Source
+- Live HTML fetch: official overview and pricing pages
+- Docs: https://platform.claude.com/docs/en/about-claude/models/overview / https://platform.claude.com/docs/en/about-claude/pricing
+- Apply: `scripts/_update_anthropic.py`
+
+### Result
+- anthropic.json: **22** models (active=15, deprecated=7, priced=22)
+- Parsed 22 model price rows from the official pricing table; cache and batch prices are derived from the same rows
+- Existing metadata retained where model IDs matched; historical rows kept
+- Install copy synced
+
+## Google refresh (2026-10-01)
+
+### Source
+- Pricing: https://ai.google.dev/gemini-api/docs/pricing
+- Apply: `scripts/_update_google.py`
+
+### Result
+- google.json: **79** models (active=71, token-priced=61)
+- Inserted (discovered): none
+- Lyria-3 clip/pro: $0.04 / $0.08 per song (extra)
+- Deprecations: discovered from official model pricing sections
+- Install copy synced
+
+## Vertex AI / Model Garden SDK refresh (2026-10-01)
+
+- Source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/models
+- Discovery: `vertexai.model_garden.list_deployable_models(list_hf_models=True)`
+- OpenRouter was not used; `google.json` was not modified.
+- Result: 4 SDK-listed deployable Model Garden models. Detailed limits/pricing remain unknown where the SDK does not expose them.
+
+## Amazon Nova / Bedrock refresh (2026-10-01)
+
+### Source
+- Bedrock pricing: https://aws.amazon.com/bedrock/pricing/
+- Nova pricing: https://aws.amazon.com/nova/pricing/
+- Metered unit map: https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json
+- Scratch: `_scratch_amazon_nova_pricing_live.html`
+- Apply: `scripts/_update_amazon.py`
+
+### Result
+- amazon.json: **32** models (active=32, deprecated=0, priced=20)
+- Nova pricing mode: bundled-cache
+- Current Nova token prices are refreshed only when the optional scraper is available
+- Historical Titan and specialty metadata remains static
+- Claude Bedrock Computer Use capabilities are reconciled from official model cards
+- Bedrock aliases are generated as amazon.*:0
+
+## Amazon Nova / Bedrock refresh (2026-10-01)
+
+### Source
+- Bedrock pricing: https://aws.amazon.com/bedrock/pricing/
+- Nova pricing: https://aws.amazon.com/nova/pricing/
+- Metered unit map: https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json
+- Scratch: `_scratch_amazon_nova_pricing_live.html`
+- Apply: `scripts/_update_amazon.py`
+
+### Result
+- amazon.json: **32** models (active=32, deprecated=0, priced=20)
+- Nova pricing mode: bundled-cache
+- Current Nova token prices are refreshed only when the optional scraper is available
+- Historical Titan and specialty metadata remains static
+- Claude Bedrock Computer Use capabilities are reconciled from official model cards
+- Bedrock aliases are generated as amazon.*:0
+
+
+## Computer Use provider audit (2026-10-01)
+
+- Audited the bundled provider catalogs and added source-backed reconciliation to OpenAI, Anthropic, Amazon Bedrock, Google Gemini, Meta Model API, Azure Foundry, Vertex AI, and OpenRouter refresh paths.
+- Official sources: [OpenAI model docs](https://developers.openai.com/api/docs/models/all.md), [Anthropic Computer Use](https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool), [Amazon Bedrock Computer Use](https://docs.aws.amazon.com/bedrock/latest/userguide/computer-use.html), [Google Gemini Computer Use](https://ai.google.dev/gemini-api/docs/generate-content/computer-use), [Meta Computer Use](https://dev.meta.ai/docs/computer-use), [Vertex AI Computer Use](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/computer-use), [Azure Foundry catalog](https://ai.azure.com/catalog/models), and [Azure GPT Computer Use](https://learn.microsoft.com/en-us/azure/foundry-classic/openai/how-to/computer-use).
+- Current catalog reconciliation: **105 model/provider records** are marked supported (104 active; the OpenAI `computer-use-preview` record is deprecated). Counts: OpenAI 15, Anthropic 15, Amazon Bedrock 11, Google 5, Meta 2, Vertex AI 4, Azure Foundry 11, Azure OpenAI 1, Ollama 33, Qwen 7, Vercel 1.
+- Native API support is distinguished from custom harness support: the 33 Ollama, 7 Qwen, and 1 Vercel records use `native=false`; they require the relevant local/custom computer-use harness. Provider/API tool versions are recorded separately for Anthropic, Bedrock, and Foundry.
+- Google’s retired `gemini-2.5-computer-use-preview-10-2025` is marked deprecated and no longer advertises active Computer Use. OpenAI’s specialized `computer-use-preview` remains listed for historical compatibility but is deprecated.
+- OpenRouter is intentionally not assigned model-native Computer Use: its September 2026 [Opus 5.5 migration guide](https://openrouter.ai/docs/cookbook/evaluate-and-optimize/model-migrations/opus-5-5) says its Messages API rejects both Anthropic computer tool forms. Its refresh preserves explicitly curated per-model metadata without inferring capability from generic Responses API/function calling support.
+- Amazon Nova pricing refresh still reports `bundled-cache` when the optional scraper is unavailable; this does not affect Bedrock Claude Computer Use metadata.
+- Regression coverage: `tests/test_computer_use_updaters.py`; full suite **22,780 passed**.
+
+## OpenRouter refresh (2026-10-01)
+
+### Source
+- API: `https://openrouter.ai/api/v1/models` (live → `_scratch_openrouter_models.json`)
+- /models fallback: `https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards` (adds frontend-only active model cards)
+- Docs: https://openrouter.ai/docs
+- Apply: `scripts/_update_openrouter.py`
+
+### Result
+- openrouter.json: **639** models (active=639, deprecated=0, priced=524, free=108, dynamic=6, extra=639)
+- vision=376, reasoning=342, tools=401, cache_pricing=303
+- native providers: 79 (top: [('openai', 117), ('qwen', 64), ('google', 52), ('mistralai', 31), ('anthropic', 29), ('z-ai', 18), ('nvidia', 16), ('recraft', 16), ('deepseek', 15), ('x-ai', 14)])
+- Frontend-only records added: 174
+- Pricing: API per-token ×1e6 → USD/1M; router prompt=-1 → catalog -1000000.0
+- Cache: input_cache_read/write(/1h) in extra when present
+- Synthetic `~*/…-latest` aliases retained (9)
+- Replaced thin 14-model placeholder catalog
+- Install copy synced
+
+
+## Post-0.5.49 catalog audit and corrections (2026-10-01)
+
+- Compared the 0.5.48 PyPI wheel with the 0.5.49 workspace package across all 72 provider catalog files; no provider data file is missing, and Python library modules are unchanged apart from the version fallback.
+- Corrected regressions across Microsoft Foundry `FW-GLM-5` (restored as Fireworks with official function-calling/streaming and GA metadata), three Mistral model lifecycle statuses (refreshed from official cards), and Novita `moonshotai/kimi-k3-p` (restored from the live model API with Responses endpoint, cached-input price and previously curated video capability).
+- Refreshed OpenRouter from the current Models API; `unbiased/pareto` now correctly reports structured-output support. The refresh keeps curated nested capability metadata while treating current API capability/pricing values as authoritative.
+- Investigated removed model IDs: the two remaining removed OpenRouter batch routes return 404 from the live model API; three removed Vertex records are absent from the current SDK-derived catalog; Azure's 41 removed Hugging Face aliases were publisher-feed entries and were not restored without current source evidence. Google Gemini 3.6 Computer Use remains excluded per the current official supported-model list.
+- Regression tests added for Novita Responses/cache-price mapping, Mistral official deprecation state, OpenRouter metadata reconciliation and Azure FW-GLM-5 capability facts.
+- Validation: full suite **22,794 passed**; Ruff and Python compilation passed after import-order cleanup; 0.5.50 wheel/sdist built with Core Metadata 2.4 and `twine check` passed. The 0.5.50 artifacts are local only and have not been uploaded.
+- Sources: [Azure Foundry FW-GLM-5](https://ai.azure.com/catalog/models/FW-GLM-5), [Mistral model cards](https://docs.mistral.ai/models), [Novita model API](https://api.novita.ai/openai/v1/models), [OpenRouter Models API](https://openrouter.ai/api/v1/models).
+
+## Meta Model API refresh (2026-10-01)
+
+### Source
+- Models: https://dev.meta.ai/docs/models (status=200, table=5)
+- Pricing: https://dev.meta.ai/docs/pricing-rate-limits (status=200)
+- Image generation: https://dev.meta.ai/docs/image-generation (status=200)
+- Top: https://dev.meta.ai/ (status=200, spark-1.3=True)
+- Glimmer: https://research.meta.ai/blog/introducing-muse-glimmer-open-agentic-model (text_len=9297)
+- Computer Use: https://dev.meta.ai/docs/computer-use ; Muse Spark 1.1 launch announcement: https://ai.meta.com/blog/introducing-muse-spark-meta-model-api/
+- Apply: `scripts/_update_meta.py`
+- OpenRouter was not used.
+
+### Result
+- meta.json: **8** models (active=8, token-priced=5)
+- Native Computer Use metadata: Muse Spark 1.1 and 1.3 (Responses API, `type=computer`); 1.2 and Contributor variants are not inferred.
+- Validation: full suite **22,795 passed**, Ruff and compile checks passed; rebuilt 0.5.50 wheel/sdist and `twine check` passed. Not uploaded.
+- Spark Standard $1.25/$4.25 + cached $0.15; Contributor $0.10/$0.20 + cached $0.002
+- Glimmer 30B recorded as Apache 2.0 open weights (no API pricing)
+- Voice Transcribe ($/hour) and Image 1.0 ($/image) recorded as specialty units
+
+## Meta Model API refresh (2026-10-01)
+
+### Source
+- Models: https://dev.meta.ai/docs/models (status=200, table=5)
+- Pricing: https://dev.meta.ai/docs/pricing-rate-limits (status=200)
+- Image generation: https://dev.meta.ai/docs/image-generation (status=200)
+- Top: https://dev.meta.ai/ (status=200, spark-1.3=True)
+- Glimmer: https://research.meta.ai/blog/introducing-muse-glimmer-open-agentic-model (text_len=9297)
+- Apply: `scripts/_update_meta.py`
+- OpenRouter was not used.
+
+### Result
+- meta.json: **8** models (active=8, token-priced=5)
+- Spark Standard $1.25/$4.25 + cached $0.15; Contributor $0.10/$0.20 + cached $0.002
+- Glimmer 30B recorded as Apache 2.0 open weights (no API pricing)
+- Voice Transcribe ($/hour) and Image 1.0 ($/image) recorded as specialty units

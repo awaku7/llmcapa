@@ -16,6 +16,11 @@ from pathlib import Path
 from urllib.error import URLError
 from urllib.request import Request, urlopen
 
+from _computer_use_metadata import (
+    GOOGLE_COMPUTER_USE_SHUTDOWNS,
+    google_computer_use_capability,
+)
+
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "google.json"
 INSTALLED = (
@@ -250,6 +255,32 @@ def base_model(
     }
 
 
+def reconcile_computer_use(models: list[dict]) -> None:
+    """Apply Google's current official Computer Use compatibility list."""
+    for model in models:
+        model_id = str(model.get("model_id", ""))
+        capability = google_computer_use_capability(model_id, "google")
+        if capability is not None:
+            model["computer_use"] = capability
+        elif model_id in GOOGLE_COMPUTER_USE_SHUTDOWNS:
+            model["deprecated"] = True
+            extra = model.get("extra") or {}
+            extra["computer_use_shutdown_date"] = (
+                GOOGLE_COMPUTER_USE_SHUTDOWNS[model_id]
+            )
+            extra["computer_use_source_url"] = (
+                "https://ai.google.dev/gemini-api/docs/deprecations"
+            )
+            model["extra"] = extra
+            model.pop("computer_use", None)
+        elif (
+            model_id.startswith("gemini-3")
+            and (model.get("computer_use") or {}).get("source_url")
+            == "https://ai.google.dev/gemini-api/docs/generate-content/computer-use"
+        ):
+            model.pop("computer_use", None)
+
+
 def main() -> None:
     data = json.loads(OUT.read_text(encoding="utf-8"))
     models: list[dict] = data["models"]
@@ -344,6 +375,8 @@ def main() -> None:
         m["supports_google_api"] = True
         m.setdefault("supports_responses_api", False)
         m.setdefault("supports_fim", False)
+
+    reconcile_computer_use(models)
 
     for model in models:
         normalize_native_endpoint(model)

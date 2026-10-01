@@ -143,6 +143,14 @@ def load_web_models(prefix: str = "") -> list[dict]:
     return records
 
 
+def preserve_curated_computer_use(entry: dict, previous: dict | None) -> dict:
+    """Retain separately sourced Computer Use metadata during API refreshes."""
+    capability = (previous or {}).get("computer_use")
+    if isinstance(capability, dict):
+        entry["computer_use"] = capability
+    return entry
+
+
 def main() -> None:
     records = load_models(SNAPSHOT)
     grouped: dict[str, list[dict]] = {}
@@ -177,6 +185,11 @@ def main() -> None:
     # are then added as a fallback.
     for entries in grouped.values():
         for entry in entries:
+            # Do not erase a separately curated Computer Use harness annotation
+            # when rebuilding the generic OpenRouter API capability record.
+            preserve_curated_computer_use(
+                entry, openrouter_by_id.get(entry["model_id"].lower())
+            )
             openrouter_by_id[entry["model_id"].lower()] = entry
     for web_record in load_web_models():
         entry = map_record(web_record)

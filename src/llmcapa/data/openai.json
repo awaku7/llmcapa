@@ -12,7 +12,7 @@
       "output_modalities": [
         "text"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "babbage-002"
       ],
@@ -142,7 +142,7 @@
       "aliases": [
         "chatgpt-image-latest"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "input_modalities": [
         "text",
         "image"
@@ -217,7 +217,7 @@
       "output_modalities": [
         "text"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "codex-mini-latest"
       ],
@@ -282,7 +282,7 @@
         "output_per_1m": null,
         "currency": "USD"
       },
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "computer-use-preview-2025-03-11"
       ],
@@ -340,7 +340,7 @@
       "output_modalities": [
         "text"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "davinci-002"
       ],
@@ -384,7 +384,7 @@
       "output_modalities": [
         "text"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "gpt-3.5-turbo-0125",
         "gpt-3.5-turbo-1106",
@@ -635,7 +635,7 @@
         "output_per_1m": 60.0,
         "currency": "USD"
       },
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "gpt-4-0613",
         "gpt-4-0314"
@@ -666,7 +666,7 @@
       "output_modalities": [
         "text"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "gpt-4-turbo-2024-04-09"
       ],
@@ -715,7 +715,7 @@
       "output_modalities": [
         "text"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "gpt-4-0125-preview",
         "gpt-4-1106-vision-preview"
@@ -978,7 +978,7 @@
       "output_modalities": [
         "text"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "gpt-4.1-nano-2025-04-14"
       ],
@@ -1449,7 +1449,7 @@
         "text",
         "audio"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "gpt-4o-audio-preview-2025-06-03",
         "gpt-4o-audio-preview-2024-12-17",
@@ -1628,7 +1628,7 @@
         "text",
         "audio"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "gpt-4o-mini-audio-preview-2024-12-17"
       ],
@@ -1690,7 +1690,7 @@
         "text",
         "audio"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "gpt-4o-mini-realtime-preview-2024-12-17"
       ],
@@ -1748,7 +1748,7 @@
       "output_modalities": [
         "text"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "gpt-4o-mini-search-preview-2025-03-11"
       ],
@@ -2037,7 +2037,7 @@
         "text",
         "audio"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "gpt-4o-realtime-preview-2025-06-03",
         "gpt-4o-realtime-preview-2024-12-17",
@@ -2097,7 +2097,7 @@
       "output_modalities": [
         "text"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "gpt-4o-search-preview-2025-03-11"
       ],
@@ -2499,7 +2499,7 @@
       "output_modalities": [
         "text"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "gpt-5-chat-latest"
       ],
@@ -2546,7 +2546,7 @@
       "output_modalities": [
         "text"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "gpt-5-codex"
       ],
@@ -3259,7 +3259,7 @@
       "output_modalities": [
         "text"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "gpt-5.1-chat-latest"
       ],
@@ -3305,7 +3305,7 @@
       "output_modalities": [
         "text"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "gpt-5.1-codex"
       ],
@@ -3356,7 +3356,7 @@
       "output_modalities": [
         "text"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "gpt-5.1-codex-max"
       ],
@@ -3407,7 +3407,7 @@
       "output_modalities": [
         "text"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "gpt-5.1-codex-mini"
       ],
@@ -3690,7 +3690,7 @@
       "output_modalities": [
         "text"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "gpt-5.2-codex"
       ],
@@ -4131,7 +4131,18 @@
         "high",
         "xhigh"
       ],
-      "supports_tool_search": true
+      "supports_tool_search": true,
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "openai",
+        "model": "gpt-5.4",
+        "api_type": "responses",
+        "tool_type": "computer_use",
+        "status": "documented",
+        "source_url": "https://developers.openai.com/api/docs/models/gpt-5.4",
+        "checked_at": "2026-10-01"
+      }
     },
     {
       "provider": "openai",
@@ -4303,7 +4314,18 @@
         "high",
         "xhigh"
       ],
-      "supports_tool_search": true
+      "supports_tool_search": true,
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "openai",
+        "model": "gpt-5.4-mini",
+        "api_type": "responses",
+        "tool_type": "computer_use",
+        "status": "documented",
+        "source_url": "https://developers.openai.com/api/docs/models/gpt-5.4-mini",
+        "checked_at": "2026-10-01"
+      }
     },
     {
       "provider": "openai",
@@ -4545,7 +4567,18 @@
         "high",
         "xhigh"
       ],
-      "supports_tool_search": true
+      "supports_tool_search": true,
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "openai",
+        "model": "gpt-5.4-pro",
+        "api_type": "responses",
+        "tool_type": "computer_use",
+        "status": "documented",
+        "source_url": "https://developers.openai.com/api/docs/models/gpt-5.4-pro",
+        "checked_at": "2026-10-01"
+      }
     },
     {
       "provider": "openai",
@@ -4731,7 +4764,18 @@
         "high",
         "xhigh"
       ],
-      "supports_tool_search": true
+      "supports_tool_search": true,
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "openai",
+        "model": "gpt-5.5",
+        "api_type": "responses",
+        "tool_type": "computer_use",
+        "status": "documented",
+        "source_url": "https://developers.openai.com/api/docs/models/gpt-5.5",
+        "checked_at": "2026-10-01"
+      }
     },
     {
       "provider": "openai",
@@ -5095,7 +5139,18 @@
       "reasoning_mode_values": [
         "standard",
         "pro"
-      ]
+      ],
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "openai",
+        "model": "gpt-5.6-cyber",
+        "api_type": "responses",
+        "tool_type": "computer_use",
+        "status": "documented",
+        "source_url": "https://developers.openai.com/api/docs/models/gpt-5.6-cyber",
+        "checked_at": "2026-10-01"
+      }
     },
     {
       "provider": "openai",
@@ -5159,7 +5214,18 @@
       "reasoning_mode_values": [
         "standard",
         "pro"
-      ]
+      ],
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "api_type": "responses",
+        "tool_type": "computer_use",
+        "status": "documented",
+        "source_url": "https://developers.openai.com/api/docs/models/gpt-5.6-luna",
+        "checked_at": "2026-10-01"
+      }
     },
     {
       "provider": "openai",
@@ -5416,7 +5482,18 @@
       "reasoning_mode_values": [
         "standard",
         "pro"
-      ]
+      ],
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "openai",
+        "model": "gpt-5.6-sol",
+        "api_type": "responses",
+        "tool_type": "computer_use",
+        "status": "documented",
+        "source_url": "https://developers.openai.com/api/docs/models/gpt-5.6-sol",
+        "checked_at": "2026-10-01"
+      }
     },
     {
       "provider": "openai",
@@ -5672,7 +5749,18 @@
       "reasoning_mode_values": [
         "standard",
         "pro"
-      ]
+      ],
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "openai",
+        "model": "gpt-5.6-terra",
+        "api_type": "responses",
+        "tool_type": "computer_use",
+        "status": "documented",
+        "source_url": "https://developers.openai.com/api/docs/models/gpt-5.6-terra",
+        "checked_at": "2026-10-01"
+      }
     },
     {
       "provider": "openai",
@@ -5986,7 +6074,18 @@
       "reasoning_mode_values": [
         "standard",
         "pro"
-      ]
+      ],
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "openai",
+        "model": "gpt-6-astra",
+        "api_type": "responses",
+        "tool_type": "computer_use",
+        "status": "documented",
+        "source_url": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+        "checked_at": "2026-10-01"
+      }
     },
     {
       "provider": "openai",
@@ -6044,7 +6143,18 @@
       "reasoning_mode_values": [
         "standard",
         "pro"
-      ]
+      ],
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "api_type": "responses",
+        "tool_type": "computer_use",
+        "status": "documented",
+        "source_url": "https://developers.openai.com/api/docs/models/gpt-6-luna",
+        "checked_at": "2026-10-01"
+      }
     },
     {
       "provider": "openai",
@@ -6094,7 +6204,74 @@
       "reasoning_mode_values": [
         "standard",
         "pro"
-      ]
+      ],
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "openai",
+        "model": "gpt-6-sol",
+        "api_type": "responses",
+        "tool_type": "computer_use",
+        "status": "documented",
+        "source_url": "https://developers.openai.com/api/docs/models/gpt-6-sol",
+        "checked_at": "2026-10-01"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-6.1-sol",
+      "display_name": "GPT-6.1 Sol",
+      "context_window": 1050000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [
+        "gpt-6.1-sol"
+      ],
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/models/gpt-6.1-sol.md",
+        "endpoints": [
+          {
+            "base_url": "https://api.openai.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://platform.openai.com/docs/api-reference"
+          }
+        ],
+        "default_snapshot": "gpt-6.1-sol"
+      },
+      "supports_vision": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_chat_completion": true,
+      "supports_tool_search": true,
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "openai",
+        "model": "gpt-6.1-sol",
+        "api_type": "responses",
+        "tool_type": "computer_use",
+        "status": "documented",
+        "source_url": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+        "checked_at": "2026-10-01"
+      },
+      "supports_reasoning": true,
+      "supports_reasoning_effort": false,
+      "knowledge_cutoff": "Apr 30, 2026",
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      }
     },
     {
       "provider": "openai",
@@ -6128,7 +6305,7 @@
       "aliases": [
         "gpt-audio-2025-08-28"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "extra": {
         "source": "https://developers.openai.com/api/docs/models/gpt-audio.md",
         "category": "realtime_audio",
@@ -6234,7 +6411,7 @@
         "gpt-audio-mini-2025-10-06",
         "gpt-audio-mini-2025-12-15"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "input_modalities": [
         "text",
         "audio"
@@ -6405,7 +6582,18 @@
       },
       "supports_reasoning_effort": false,
       "supports_fim": false,
-      "supports_tool_search": true
+      "supports_tool_search": true,
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "openai",
+        "model": "gpt-daybreak-blue-latest",
+        "api_type": "responses",
+        "tool_type": "computer_use",
+        "status": "documented",
+        "source_url": "https://developers.openai.com/api/docs/models/gpt-daybreak-blue-latest",
+        "checked_at": "2026-10-01"
+      }
     },
     {
       "provider": "openai",
@@ -6452,14 +6640,25 @@
       },
       "supports_reasoning_effort": false,
       "supports_fim": false,
-      "supports_tool_search": true
+      "supports_tool_search": true,
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "openai",
+        "model": "gpt-daybreak-red-latest",
+        "api_type": "responses",
+        "tool_type": "computer_use",
+        "status": "documented",
+        "source_url": "https://developers.openai.com/api/docs/models/gpt-daybreak-red-latest",
+        "checked_at": "2026-10-01"
+      }
     },
     {
       "provider": "openai",
       "aliases": [
         "gpt-image-1"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "input_modalities": [
         "text",
         "image"
@@ -6524,7 +6723,7 @@
       "aliases": [
         "gpt-image-1-mini"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "input_modalities": [
         "text",
         "image"
@@ -6589,7 +6788,7 @@
       "aliases": [
         "gpt-image-1.5-2025-12-16"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "input_modalities": [
         "text",
         "image"
@@ -7487,7 +7686,7 @@
       "aliases": [
         "gpt-realtime-2025-08-28"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "extra": {
         "source": "https://developers.openai.com/api/docs/models/gpt-realtime.md",
         "category": "realtime_audio",
@@ -7808,7 +8007,7 @@
         "gpt-realtime-mini-2025-10-06",
         "gpt-realtime-mini-2025-12-15"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "extra": {
         "source": "https://developers.openai.com/api/docs/models/gpt-realtime-mini.md",
         "category": "realtime_audio",
@@ -8067,7 +8266,7 @@
         "output_per_1m": 60.0,
         "currency": "USD"
       },
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "o1-2024-12-17"
       ],
@@ -8102,7 +8301,7 @@
       "output_modalities": [
         "text"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "o1-mini-2024-09-12"
       ],
@@ -8152,7 +8351,7 @@
       "output_modalities": [
         "text"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "o1-preview-2024-09-12"
       ],
@@ -8202,7 +8401,7 @@
       "output_modalities": [
         "text"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "o1-pro-2025-03-19"
       ],
@@ -8442,7 +8641,7 @@
       "output_modalities": [
         "text"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "o3-deep-research-2025-06-26"
       ],
@@ -8497,7 +8696,7 @@
       "output_modalities": [
         "text"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "o3-mini-2025-01-31"
       ],
@@ -8926,7 +9125,7 @@
       "output_modalities": [
         "text"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "o4-mini-2025-04-16"
       ],
@@ -8982,7 +9181,7 @@
       "output_modalities": [
         "text"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "o4-mini-deep-research-2025-06-26"
       ],
@@ -9622,7 +9821,7 @@
       "output_modalities": [
         "text"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "text-moderation-007"
       ],
@@ -9666,7 +9865,7 @@
       "output_modalities": [
         "text"
       ],
-      "deprecated": false,
+      "deprecated": true,
       "aliases": [
         "text-moderation-007"
       ],

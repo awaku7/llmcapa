@@ -79,7 +79,7 @@ def api_to_entry(m: dict) -> dict | None:
             "currency": "USD",
         }
 
-    return {
+    entry = {
         "provider": "novita",
         "model_id": mid,
         "display_name": m.get("display_name", mid),
@@ -93,7 +93,7 @@ def api_to_entry(m: dict) -> dict | None:
         "supports_vision": "image" in input_mods,
         "supports_reasoning": "reasoning" in features,
         "supports_chat_completion": True,
-        "supports_responses_api": False,
+        "supports_responses_api": "responses" in (m.get("endpoints", []) or []),
         "supports_reasoning_effort": "reasoning" in features,
         "supports_thinking_budget": False,
         "supports_anthropic_api": "anthropic" in (m.get("endpoints", []) or []),
@@ -106,6 +106,15 @@ def api_to_entry(m: dict) -> dict | None:
         "aliases": [mid.lower()],
         "license_type": "api",
     }
+    pricing_details = m.get("pricing") or {}
+    cache_read = pricing_details.get("input_cache_read") or {}
+    cache_read_price = cache_read.get("price_per_m")
+    if cache_read_price is not None:
+        entry["extra"] = {
+            "source": API_URL,
+            "cache_read_per_1m": round(float(cache_read_price) / 100000, 6),
+        }
+    return entry
 
 
 def update_novita(dry_run: bool = False) -> dict:
@@ -142,17 +151,31 @@ def update_novita(dry_run: bool = False) -> dict:
                 "context_window",
                 "max_output_tokens",
                 "pricing",
+                "input_modalities",
+                "output_modalities",
+                "supports_chat_completion",
                 "supports_function_calling",
                 "supports_json_mode",
                 "supports_streaming",
                 "supports_vision",
                 "supports_reasoning",
+                "supports_responses_api",
+                "supports_reasoning_effort",
+                "supports_thinking_budget",
+                "supports_anthropic_api",
+                "supports_google_api",
+                "supports_fim",
                 "deprecated",
                 "display_name",
-                "supports_anthropic_api",
+                "license_type",
             ):
                 if entry.get(field) != old.get(field):
                     old[field] = entry[field]
+                    changed = True
+            if entry.get("extra"):
+                merged_extra = {**(old.get("extra") or {}), **entry["extra"]}
+                if merged_extra != old.get("extra"):
+                    old["extra"] = merged_extra
                     changed = True
             if changed:
                 updated += 1
