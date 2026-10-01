@@ -151,7 +151,11 @@ def test_find_decision_models(capsys):
     assert rc == 0
     data = json.loads(capsys.readouterr().out)
     assert data and all(d["decision"]["decision"] is True for d in data)
-    assert {d["provider"] for d in data} == {"typesafe", "openrouter", "laya"}
+    assert {d["provider"] for d in data} == {
+        "typesafe",
+        "openrouter",
+        "laya",
+    }
 
 
 def test_find_bare_name_and_min_context(capsys):
