@@ -1,0 +1,291 @@
+{
+  "models": [
+    {
+      "provider": "laya",
+      "model_id": "laya",
+      "display_name": "Laya (English)",
+      "context_window": 512,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "decision"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "supports_json_schema": false,
+      "license_type": "open",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "english",
+        "en",
+        "default"
+      ],
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "choice",
+          "score",
+          "noul"
+        ],
+        "answer_fields": [
+          "choice",
+          "score",
+          "noul",
+          "legend",
+          "probabilities",
+          "confidence",
+          "answer_confidence",
+          "action"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "calibrated_confidence": false,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "deterministic": true,
+        "state_shapes": [
+          "string",
+          "json_object"
+        ],
+        "max_state_tokens": null,
+        "max_total_tokens": 512,
+        "output_token_billing": false,
+        "language_values": [
+          "en"
+        ],
+        "endpoints": [],
+        "source_url": "https://github.com/NandhaKishorM/laya",
+        "checked_at": "2026-10-02",
+        "status": "documented",
+        "extra": {
+          "runtime": "local-python",
+          "http_endpoint_path": "/v1/systemone",
+          "wire_protocol": "typesafe-systemone-compatible",
+          "calibration_note": "Shipped checkpoints are over-confident; fit and validate temperatures on held-out data for the checkpoint and option count before using confidence thresholds."
+        }
+      },
+      "extra": {
+        "official_source": "https://github.com/NandhaKishorM/laya",
+        "official_source_checked_at": "2026-10-02",
+        "docs": "https://nandhakishorm.github.io/laya/",
+        "pypi": "https://pypi.org/project/laya/",
+        "huggingface_model": "convaiinnovations/laya",
+        "checkpoint_key": "english",
+        "encoder": "ModernBERT-large",
+        "parameters": 421000000,
+        "package_version_checked": "0.3.23",
+        "local_inference": true,
+        "self_hosted_http": true,
+        "license_spdx": "Apache-2.0"
+      }
+    },
+    {
+      "provider": "laya",
+      "model_id": "laya-multilingual",
+      "display_name": "Laya Multilingual",
+      "context_window": 8192,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "decision"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "supports_json_schema": false,
+      "license_type": "open",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "multilingual",
+        "multi",
+        "ml"
+      ],
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "choice",
+          "score",
+          "noul"
+        ],
+        "answer_fields": [
+          "choice",
+          "score",
+          "noul",
+          "legend",
+          "probabilities",
+          "confidence",
+          "answer_confidence",
+          "action"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "calibrated_confidence": false,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "deterministic": true,
+        "state_shapes": [
+          "string",
+          "json_object"
+        ],
+        "max_state_tokens": null,
+        "max_total_tokens": 8192,
+        "output_token_billing": false,
+        "language_values": [],
+        "endpoints": [],
+        "source_url": "https://github.com/NandhaKishorM/laya",
+        "checked_at": "2026-10-02",
+        "status": "documented",
+        "extra": {
+          "runtime": "local-python",
+          "http_endpoint_path": "/v1/systemone",
+          "wire_protocol": "typesafe-systemone-compatible",
+          "language_scope": "100+ languages",
+          "default_max_len": 1024,
+          "max_len": 8192,
+          "calibration_note": "Shipped checkpoints are over-confident; fit and validate temperatures on held-out data for the checkpoint and option count before using confidence thresholds."
+        }
+      },
+      "extra": {
+        "official_source": "https://github.com/NandhaKishorM/laya",
+        "official_source_checked_at": "2026-10-02",
+        "docs": "https://nandhakishorm.github.io/laya/",
+        "pypi": "https://pypi.org/project/laya/",
+        "huggingface_model": "convaiinnovations/laya-multilingual",
+        "checkpoint_key": "multilingual",
+        "encoder": "mmBERT-base",
+        "parameters": 322000000,
+        "default_context_window": 1024,
+        "max_context_window": 8192,
+        "package_version_checked": "0.3.23",
+        "local_inference": true,
+        "self_hosted_http": true,
+        "license_spdx": "Apache-2.0"
+      }
+    },
+    {
+      "provider": "laya",
+      "model_id": "laya-typed-decisions",
+      "display_name": "Laya Typed Decisions",
+      "context_window": 1024,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "decision"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "supports_json_schema": false,
+      "license_type": "open",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "typed-decisions",
+        "typed_decisions",
+        "typed",
+        "decisions"
+      ],
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "choice",
+          "score",
+          "noul"
+        ],
+        "answer_fields": [
+          "choice",
+          "score",
+          "noul",
+          "legend",
+          "probabilities",
+          "confidence",
+          "answer_confidence",
+          "action"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "calibrated_confidence": false,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "deterministic": true,
+        "state_shapes": [
+          "string",
+          "json_object"
+        ],
+        "max_state_tokens": null,
+        "max_total_tokens": 1024,
+        "output_token_billing": false,
+        "language_values": [
+          "en"
+        ],
+        "endpoints": [],
+        "source_url": "https://github.com/NandhaKishorM/laya",
+        "checked_at": "2026-10-02",
+        "status": "documented",
+        "extra": {
+          "runtime": "local-python",
+          "http_endpoint_path": "/v1/systemone",
+          "wire_protocol": "typesafe-systemone-compatible",
+          "task_scope": "typed-decisions workflows; not selected automatically unless explicitly requested or auto task detection is enabled",
+          "calibration_note": "Shipped checkpoints are over-confident; fit and validate temperatures on held-out data for the checkpoint and option count before using confidence thresholds."
+        }
+      },
+      "extra": {
+        "official_source": "https://github.com/NandhaKishorM/laya",
+        "official_source_checked_at": "2026-10-02",
+        "docs": "https://nandhakishorm.github.io/laya/",
+        "pypi": "https://pypi.org/project/laya/",
+        "huggingface_model": "convaiinnovations/laya-typed-decisions",
+        "checkpoint_key": "typed-decisions",
+        "encoder": "ModernBERT-large",
+        "parameters": 421000000,
+        "package_version_checked": "0.3.23",
+        "local_inference": true,
+        "self_hosted_http": true,
+        "license_spdx": "Apache-2.0"
+      }
+    }
+  ]
+}
