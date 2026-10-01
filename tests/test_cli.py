@@ -71,7 +71,16 @@ def test_unknown_sort_key_is_error(capsys):
 
 def test_unknown_units_render_dash(capsys):
     rc = cli.main(
-        ["search", "kling", "--columns", "provider,model_id,ctx", "--format", "csv", "--limit", "3"]
+        [
+            "search",
+            "kling",
+            "--columns",
+            "provider,model_id,ctx",
+            "--format",
+            "csv",
+            "--limit",
+            "3",
+        ]
     )
     assert rc == 0
     lines = capsys.readouterr().out.strip().splitlines()
@@ -88,7 +97,16 @@ def test_machine_formats_use_explicit_deprecated_column(capsys):
 
 def test_columns_csv_and_unknown_column(capsys):
     rc = cli.main(
-        ["search", PREFIX, "--columns", "provider,model_id", "--format", "csv", "--limit", "2"]
+        [
+            "search",
+            PREFIX,
+            "--columns",
+            "provider,model_id",
+            "--format",
+            "csv",
+            "--limit",
+            "2",
+        ]
     )
     assert rc == 0
     lines = capsys.readouterr().out.strip().splitlines()
@@ -121,7 +139,16 @@ def test_no_deprecated_flag_is_accepted(capsys):
 
 def test_markdown_format(capsys):
     rc = cli.main(
-        ["search", PREFIX, "--format", "md", "--columns", "provider,model_id", "--limit", "2"]
+        [
+            "search",
+            PREFIX,
+            "--format",
+            "md",
+            "--columns",
+            "provider,model_id",
+            "--limit",
+            "2",
+        ]
     )
     assert rc == 0
     lines = capsys.readouterr().out.strip().splitlines()
@@ -180,7 +207,16 @@ def test_find_no_match_exit_code(capsys):
 
 
 def test_find_render_options(capsys):
-    rc = cli.main(["find", "embedding=true", "--columns", "provider,model_id,embedding", "--limit", "2"])
+    rc = cli.main(
+        [
+            "find",
+            "embedding=true",
+            "--columns",
+            "provider,model_id,embedding",
+            "--limit",
+            "2",
+        ]
+    )
     out = capsys.readouterr().out
     assert rc == 0
     header = out.splitlines()[0].split()
@@ -248,9 +284,7 @@ def test_fetch_github_cli_forces_refresh_when_requested(monkeypatch, capsys):
 
     monkeypatch.setattr(cli, "default_registry", lambda: DummyRegistry())
     assert (
-        cli.main(
-            ["fetch-github", "--provider", "openai", "--ref", "main", "--refresh"]
-        )
+        cli.main(["fetch-github", "--provider", "openai", "--ref", "main", "--refresh"])
         == 0
     )
     assert calls == {"provider": "openai", "ref": "main", "cache_ttl": 0}
