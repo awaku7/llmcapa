@@ -31,6 +31,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from _computer_use_metadata import anthropic_computer_use_capability
+
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "azure_foundry.json"
 INSTALLED = (
@@ -1051,6 +1053,31 @@ def azure_tool_search_support(
     return True if (major, minor) >= (5, 4) else None
 
 
+def apply_verified_catalog_metadata(row: dict[str, Any]) -> None:
+    """Correct documented Foundry fields that the catalog API omits or mislabels."""
+    if str(row.get("model_id") or "").lower() != "fw-glm-5":
+        return
+    # Microsoft currently labels this GA Fireworks model as FW-GLM-5 on its
+    # catalog page, which explicitly lists function calling/tool use and
+    # streaming. Keep the publisher and those capabilities stable if the
+    # catalog API only returns the generic Azure SSR card.
+    row.update(
+        {
+            "provider": "fireworks",
+            "display_name": "GLM 5",
+            "supports_chat_completion": True,
+            "supports_function_calling": True,
+            "supports_streaming": True,
+            "azure_lifecycle": "GA",
+            "license_type": "custom",
+            "aliases": ["fw-glm-5", "fireworks/FW-GLM-5"],
+        }
+    )
+    row.setdefault("extra", {})["capabilities_source"] = (
+        "https://ai.azure.com/catalog/models/FW-GLM-5"
+    )
+
+
 def build_entry(item: dict, price_map: dict[str, dict]) -> dict:
     scd = item.get("systemCatalogData") or {}
     tags = item.get("tags") or {}
@@ -1238,7 +1265,68 @@ def build_entry(item: dict, price_map: dict[str, dict]) -> dict:
         pv = _PREV_LIMITS.get(name)
         row["max_output_tokens"] = (pv or {}).get("max_output_tokens") or 2048
 
+    # Restore curated capability metadata when the catalog refresh rebuilds a
+    # row, and refresh Anthropic model tool versions from the official matrix.
+    previous = _PREV_LIMITS.get(name) or _PREV_LIMITS.get(str(name).lower()) or {}
+    computer_use = anthropic_computer_use_capability(name, "azure-foundry")
+    if computer_use is not None:
+        row["computer_use"] = computer_use
+    elif provider == "azure-openai" and str(name).lower() == "computer-use-preview":
+        row["supports_responses_api"] = True
+        row["computer_use"] = {
+            "supported": True,
+            "native": True,
+            "provider": "azure-openai",
+            "model": name,
+            "api_type": "responses",
+            "tool_type": "computer_use_preview",
+            "tool_version": "2025-03-11",
+            "status": "preview",
+            "environments": ["browser", "desktop"],
+            "actions": [
+                "screenshot",
+                "click",
+                "double_click",
+                "drag",
+                "move",
+                "scroll",
+                "keypress",
+                "type",
+                "wait",
+            ],
+            "source_url": SOURCE_CATALOG,
+            "checked_at": datetime.now(timezone.utc).date().isoformat(),
+        }
+    elif provider == "azure-foundry" and str(name).lower() == "gpt-5.4":
+        row["supports_responses_api"] = True
+        row["computer_use"] = {
+            "supported": True,
+            "native": True,
+            "provider": "azure-foundry",
+            "model": name,
+            "api_type": "responses",
+            "tool_type": "computer",
+            "status": "ga",
+            "source_url": "https://learn.microsoft.com/en-us/azure/foundry-classic/openai/how-to/computer-use",
+            "checked_at": datetime.now(timezone.utc).date().isoformat(),
+        }
+    elif isinstance(previous.get("computer_use"), dict):
+        row["computer_use"] = previous["computer_use"]
+
+    apply_verified_catalog_metadata(row)
     return row
+
+
+def reconcile_computer_use(models: list[dict]) -> None:
+    """Apply the official Microsoft Foundry Claude tool/version matrix."""
+    for model in models:
+        if model.get("provider") != "azure-foundry":
+            continue
+        capability = anthropic_computer_use_capability(
+            str(model.get("model_id") or ""), "azure-foundry"
+        )
+        if capability is not None:
+            model["computer_use"] = capability
 
 
 def load_price_map() -> dict[str, dict]:
@@ -1404,6 +1492,7 @@ def main() -> None:
         if _score(m) > _score(prev):
             by_id[key] = m
     models = [by_id[k] for k in sorted(by_id)]
+    reconcile_computer_use(models)
 
     models.sort(key=sort_key)
 

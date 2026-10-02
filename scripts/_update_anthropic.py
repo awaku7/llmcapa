@@ -16,6 +16,8 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
+from _computer_use_metadata import anthropic_computer_use_capability
+
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "anthropic.json"
 INSTALLED = (
@@ -357,10 +359,20 @@ def build() -> list[dict]:
     # Keep historical models that are no longer listed in current pricing.
     discovered_ids = {m["model_id"] for m in models}
     models.extend(m for mid, m in previous.items() if mid not in discovered_ids)
+    # Apply the current official Computer Use model/tool-version matrix after
+    # the pricing refresh. This keeps the specialized capability from being
+    # lost when model records are rebuilt or merged.
+    for model in models:
+        computer_use = anthropic_computer_use_capability(
+            model.get("model_id", ""), "anthropic"
+        )
+        if computer_use is not None:
+            model["computer_use"] = computer_use
+        elif (model.get("computer_use") or {}).get("provider") == "anthropic":
+            model.pop("computer_use", None)
     for model in models:
         if model.get("supports_thinking_budget"):
             model["thinking_budget_values"] = {
-                "type": "token_range",
                 "min": 1024,
                 "max": model.get("max_output_tokens") or 128000,
             }

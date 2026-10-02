@@ -81,6 +81,31 @@ def parse_supported_tools(text: str) -> set[str] | None:
     )
 
 
+def parse_computer_use_capability(
+    model_id: str, path: str, supported_tools: set[str] | None
+) -> dict | None:
+    """Build normalized Computer Use metadata when OpenAI documents the tool.
+
+    The model pages' supported-tools list is authoritative for whether a model
+    can use Computer Use through the Responses API. The list does not document
+    the individual action schema or supported environments, so leave those
+    optional fields unset rather than inferring them from the legacy preview.
+    """
+    if supported_tools is None or "computer_use" not in supported_tools:
+        return None
+    return {
+        "supported": True,
+        "native": True,
+        "provider": "openai",
+        "model": model_id,
+        "api_type": "responses",
+        "tool_type": "computer_use",
+        "status": "documented",
+        "source_url": BASE + path.removesuffix(".md"),
+        "checked_at": datetime.now(timezone.utc).date().isoformat(),
+    }
+
+
 def parse_reasoning_mode_values(model_id: str, supports_responses_api: bool) -> list[str]:
     """Return modes documented by OpenAI's GPT-5.6/GPT-6 reasoning guide."""
     if supports_responses_api and re.match(r"^gpt-(?:5\.6|6)(?:-|$)", model_id.lower()):
@@ -166,6 +191,9 @@ def detail(path: str) -> dict:
         entry["supports_tool_search"] = bool(
             entry["supports_responses_api"] and "tool_search" in supported_tools
         )
+    computer_use = parse_computer_use_capability(mid, path, supported_tools)
+    if computer_use is not None:
+        entry["computer_use"] = computer_use
     entry["supports_reasoning"] = (
         "reasoning token support" in text.lower() or "reasoning" in features
     )
@@ -214,12 +242,26 @@ def prices(markdown: str) -> dict[str, tuple[float, float]]:
     return result
 
 
+def parse_model_index(index: str) -> tuple[list[str], set[str]]:
+    """Return model-page paths and those explicitly marked Deprecated."""
+    rows = re.findall(
+        r"^- \[[^\]]+\]\((/api/docs/models/[^)]+\.md)\)(?::\s*([^\n]*))?",
+        index,
+        re.MULTILINE,
+    )
+    paths = [path for path, _ in rows]
+    deprecated = {
+        path
+        for path, description in rows
+        if re.match(r"\s*Deprecated\b", description or "", re.IGNORECASE)
+    }
+    return paths, deprecated
+
+
 def main() -> None:
     index = fetch(MODELS_URL)
     pricing = prices(fetch(PRICING_URL).split("### Batch pricing data", 1)[0])
-    links = re.findall(
-        r"^- \[[^\]]+\]\((/api/docs/models/[^)]+\.md)\)", index, re.MULTILINE
-    )
+    links, deprecated_paths = parse_model_index(index)
     current = json.loads(DATA.read_text(encoding="utf-8"))
     current_by_id = {m.get("model_id"): m for m in current.get("models", [])}
     updated, seen = [], set()
@@ -232,6 +274,8 @@ def main() -> None:
         if not entry:
             continue
         mid = entry["model_id"]
+        if path in deprecated_paths:
+            entry["deprecated"] = True
         # Preserve library-specific metadata unless the official page replaces it.
         if mid in current_by_id:
             old = current_by_id[mid]

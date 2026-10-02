@@ -179,6 +179,19 @@ def test_computer_use_tool_version_is_metadata_not_compatibility_gate():
     )
     assert source.is_compatible_with(target) is True
 
+    beta = ComputerUseCapability(
+        supported=True,
+        native=True,
+        api_type="messages",
+        tool_type="computer",
+        requires_beta=True,
+        beta_header="computer-use-2025-11-24",
+        environments=frozenset({"desktop"}),
+        actions=frozenset({"screenshot", "left_click"}),
+    )
+    assert source.is_compatible_with(beta) is False
+    assert beta.is_compatible_with(source) is False
+
 
 def test_computer_use_cross_provider_compatibility_is_not_assumed():
     common_actions = frozenset({"screenshot", "left_click", "type"})
@@ -220,6 +233,21 @@ def test_computer_use_cross_provider_compatibility_is_not_assumed():
     assert openai.is_compatible_with(claude) is False
     assert gemini.is_compatible_with(openai) is False
     assert openai.is_compatible_with(gemini) is False
+
+    # Provider-specific request protocols must not be conflated even if both
+    # use the same broad Responses API and the generic tool type "computer".
+    meta = ComputerUseCapability(
+        supported=True,
+        native=True,
+        provider="meta",
+        model="muse-spark-1.3",
+        api_type="responses",
+        tool_type="computer",
+        environments=frozenset({"desktop", "browser"}),
+        actions=common_actions,
+    )
+    assert openai.is_compatible_with(meta) is False
+    assert meta.is_compatible_with(openai) is False
 
 
 def test_can_be_replaced_by_rejects_cross_provider_computer_use():

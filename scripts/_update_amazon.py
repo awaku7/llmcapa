@@ -19,10 +19,15 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
+from _computer_use_metadata import anthropic_computer_use_capability
+
 try:
-    from scripts._scrape_amazon import fetch_nova_prices
-except ModuleNotFoundError:  # Direct execution: python scripts/_update_amazon.py
-    from _scrape_amazon import fetch_nova_prices
+    from scripts._scrape_amazon import fetch_nova_prices as _fetch_nova_prices
+except ModuleNotFoundError:
+    try:
+        from _scrape_amazon import fetch_nova_prices as _fetch_nova_prices
+    except ModuleNotFoundError:
+        _fetch_nova_prices = None
 
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "amazon.json"
@@ -32,11 +37,56 @@ INSTALLED = (
 LOG = WORKDIR / "provider_update_log.md"
 SOURCE_BEDROCK = "https://aws.amazon.com/bedrock/pricing/"
 SOURCE_NOVA = "https://aws.amazon.com/nova/pricing/"
+ANTHROPIC_DATA = WORKDIR / "src" / "llmcapa" / "data" / "anthropic.json"
+BEDROCK_CLAUDE_MODELS = {
+    "anthropic.claude-opus-5-5": ("claude-opus-5-5", "anthropic-claude-opus-5-5"),
+    "anthropic.claude-sonnet-5-5": ("claude-sonnet-5-5", "anthropic-claude-sonnet-5-5"),
+    "anthropic.claude-opus-5": ("claude-opus-5", "anthropic-claude-opus-5"),
+    "anthropic.claude-sonnet-5": ("claude-sonnet-5", "anthropic-claude-sonnet-5"),
+    "anthropic.claude-opus-4-8": ("claude-opus-4-8", "anthropic-claude-opus-4-8"),
+    "anthropic.claude-opus-4-7": ("claude-opus-4-7", "anthropic-claude-opus-4-7"),
+    "anthropic.claude-opus-4-6-v1": ("claude-opus-4-6", "anthropic-claude-opus-4-6"),
+    "anthropic.claude-sonnet-4-6": ("claude-sonnet-4-6", "anthropic-claude-sonnet-4-6"),
+    "anthropic.claude-opus-4-5-20251101-v1:0": ("claude-opus-4-5", "anthropic-claude-opus-4-5"),
+    "anthropic.claude-sonnet-4-5-20250929-v1:0": ("claude-sonnet-4-5", "anthropic-claude-sonnet-4-5"),
+    "anthropic.claude-haiku-4-5-20251001-v1:0": ("claude-haiku-4-5", "anthropic-claude-haiku-4-5"),
+}
 SOURCE_API = (
     "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/"
     "bedrock/USD/current/bedrock.json"
 )
 REGION_NOTE = "US East (N. Virginia) on-demand standard"
+NOVA_PRICING_MODE = "live"
+
+
+def fetch_nova_prices() -> dict[str, dict[str, float]]:
+    """Use the official Nova scraper, or reuse bundled pricing if absent.
+
+    The repository snapshot may not include the optional legacy pricing
+    scraper. In that case, reuse the last bundled Nova prices so catalog
+    reconciliation remains runnable without claiming a live price refresh.
+    """
+    global NOVA_PRICING_MODE
+    if _fetch_nova_prices is not None:
+        NOVA_PRICING_MODE = "live"
+        return _fetch_nova_prices()
+    data = json.loads(OUT.read_text(encoding="utf-8"))
+    cached = {}
+    for model in data.get("models", []):
+        model_id = str(model.get("model_id", ""))
+        pricing = model.get("pricing") or {}
+        if not model_id.startswith("nova-"):
+            continue
+        if pricing.get("input_per_1m") is None or pricing.get("output_per_1m") is None:
+            continue
+        cached[model_id] = {
+            "input": pricing["input_per_1m"],
+            "output": pricing["output_per_1m"],
+        }
+    if not cached:
+        raise RuntimeError("Nova price scraper unavailable and no bundled prices to reuse")
+    NOVA_PRICING_MODE = "bundled-cache"
+    return cached
 
 
 def base(
@@ -159,6 +209,66 @@ def text_extra(
     return e
 
 
+def add_bedrock_claude_models(models: list[dict]) -> int:
+    """Add Claude models whose AWS model cards explicitly expose Computer use."""
+    anthropic_models = {
+        model.get("model_id"): model
+        for model in json.loads(ANTHROPIC_DATA.read_text(encoding="utf-8")).get(
+            "models", []
+        )
+    }
+    by_id = {model.get("model_id"): model for model in models}
+    inserted = 0
+    for bedrock_id, (anthropic_id, card_slug) in BEDROCK_CLAUDE_MODELS.items():
+        if bedrock_id in by_id:
+            continue
+        source = anthropic_models.get(anthropic_id)
+        if source is None:
+            continue
+        card_url = (
+            "https://docs.aws.amazon.com/bedrock/latest/userguide/"
+            f"model-card-{card_slug}.html"
+        )
+        model = base(
+            model_id=bedrock_id,
+            display=f"Anthropic {source.get('display_name', anthropic_id)} (Amazon Bedrock)",
+            ctx=source.get("context_window") or 0,
+            max_out=source.get("max_output_tokens") or 0,
+            pricing=None,
+            input_modalities=source.get("input_modalities") or ["text"],
+            output_modalities=source.get("output_modalities") or ["text"],
+            vision=source.get("supports_vision", False),
+            reasoning=source.get("supports_reasoning", False),
+            function_calling=source.get("supports_function_calling", True),
+            extra={
+                "bedrock_model_family": "anthropic-claude",
+                "source": card_url,
+                "computer_use_note": "Computer Use is documented on this Bedrock model card.",
+            },
+        )
+        model["display_name"] = (
+            f"Anthropic {source.get('display_name', anthropic_id)} (Amazon Bedrock)"
+        )
+        model["supports_anthropic_api"] = False
+        model["extra"]["endpoints"] = [
+            {
+                "base_url": "https://bedrock-runtime.{region}.amazonaws.com",
+                "protocol": "aws-bedrock",
+                "auth": "sigv4",
+                "source": card_url,
+            }
+        ]
+        capability = anthropic_computer_use_capability(bedrock_id, "amazon")
+        if capability is None:
+            continue
+        capability["source_url"] = card_url
+        model["computer_use"] = capability
+        models.append(model)
+        by_id[bedrock_id] = model
+        inserted += 1
+    return inserted
+
+
 def build(nova_prices: dict[str, dict[str, float]]) -> list[dict]:
     """Refresh Nova prices and carry forward records from the published catalog.
 
@@ -173,6 +283,15 @@ def build(nova_prices: dict[str, dict[str, float]]) -> list[dict]:
         models = [dict(model) for model in current.get("models", [])]
     except (OSError, json.JSONDecodeError):
         models = []
+
+    # AWS's current model card uses the versioned programmatic ID.
+    for model in models:
+        if model.get("model_id") == "anthropic.claude-opus-4-6":
+            model["model_id"] = "anthropic.claude-opus-4-6-v1"
+            model["computer_use"] = anthropic_computer_use_capability(
+                model["model_id"], "amazon"
+            )
+    bedrock_claude_inserted = add_bedrock_claude_models(models)
 
     by_id = {str(model.get("model_id", "")): model for model in models}
     for model_id, rate in nova_prices.items():
@@ -195,6 +314,18 @@ def build(nova_prices: dict[str, dict[str, float]]) -> list[dict]:
                 "currency": "USD",
             }
             model.setdefault("extra", {})["pricing_source"] = SOURCE_NOVA
+    # Bedrock Claude entries are carried forward from the curated model
+    # catalog. Reconcile their Computer Use beta/tool versions against the
+    # current Anthropic/AWS compatibility table on every refresh.
+    for model in models:
+        computer_use = anthropic_computer_use_capability(
+            model.get("model_id", ""), "amazon"
+        )
+        if computer_use is not None:
+            model["computer_use"] = computer_use
+        elif (model.get("computer_use") or {}).get("provider") == "amazon":
+            model.pop("computer_use", None)
+    print(f"Bedrock Claude Computer Use models inserted={bedrock_claude_inserted}")
     return dedupe_model_ids(models)
 
 
@@ -253,6 +384,7 @@ def main() -> None:
         f"(active={active} / deprecated={deprecated} / priced={priced})",
         flush=True,
     )
+    print(f"Nova pricing source mode: {NOVA_PRICING_MODE}", flush=True)
     for m in models:
         p = m.get("pricing") or {}
         pin = p.get("input_per_1m")
@@ -281,8 +413,10 @@ def main() -> None:
         f"### Result\n"
         f"- amazon.json: **{len(models)}** models "
         f"(active={active}, deprecated={deprecated}, priced={priced})\n"
-        f"- Current Nova token prices are fetched from official AWS sources\n"
+        f"- Nova pricing mode: {NOVA_PRICING_MODE}\n"
+        f"- Current Nova token prices are refreshed only when the optional scraper is available\n"
         f"- Historical Titan and specialty metadata remains static\n"
+        f"- Claude Bedrock Computer Use capabilities are reconciled from official model cards\n"
         f"- Bedrock aliases are generated as amazon.*:0\n"
     )
     if LOG.exists():

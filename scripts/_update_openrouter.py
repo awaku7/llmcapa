@@ -748,17 +748,100 @@ def dedupe(models: list[dict]) -> list[dict]:
     return [by_id[i] for i in order]
 
 
+def preserve_openrouter_metadata(record: dict, previous: dict | None) -> dict:
+    """Carry forward useful provider-specific metadata omitted by the live API.
+
+    The API response remains authoritative for fields it supplies. Separately
+    curated nested capability records and unknown extension fields survive a
+    refresh when the response has no replacement for them.
+    """
+    if not previous:
+        return record
+    merged = {**previous, **record}
+    old_extra = previous.get("extra") or {}
+    new_extra = record.get("extra") or {}
+    api_extra_fields = {
+        "source",
+        "docs",
+        "models_page",
+        "base_url",
+        "native_provider",
+        "canonical_slug",
+        "hugging_face_id",
+        "modality",
+        "tokenizer",
+        "instruct_type",
+        "top_provider",
+        "supported_parameters",
+        "created",
+        "description",
+        "expiration_date",
+        "pricing_note",
+        "dynamic_pricing",
+        "free_tier",
+        "cache_read_per_1m",
+        "cache_write_per_1m",
+        "cache_write_1h_per_1m",
+        "web_search_per_request_usd",
+        "image_input_per_1m",
+        "image_output_per_1m",
+        "audio_input_per_1m",
+        "audio_output_per_1m",
+        "internal_reasoning_per_1m",
+        "pricing_overrides",
+        "default_parameters",
+        "per_request_limits",
+        "reasoning_meta",
+        "links",
+        "benchmarks_present",
+        "features",
+    }
+    curated_extra = {
+        key: value for key, value in old_extra.items() if key not in api_extra_fields
+    }
+    merged["extra"] = {**curated_extra, **new_extra}
+    for key in (
+        "audio",
+        "computer_use",
+        "document",
+        "embedding",
+        "image",
+        "rerank",
+        "spatial",
+        "video",
+        "decision",
+    ):
+        if key not in record and key in previous:
+            merged[key] = previous[key]
+    aliases = list(record.get("aliases") or [])
+    seen = set(aliases)
+    aliases.extend(a for a in previous.get("aliases") or [] if a not in seen)
+    merged["aliases"] = aliases
+    return merged
+
+
 def main() -> None:
     raw_models = fetch_models()
     api_model_count = len(raw_models)
     raw_models = add_frontend_models(raw_models)
     frontend_only_count = len(raw_models) - api_model_count
+    previous_by_id = {}
+    if OUT.exists():
+        previous_by_id = {
+            model.get("model_id"): model
+            for model in json.loads(OUT.read_text(encoding="utf-8")).get("models", [])
+            if model.get("model_id")
+        }
     models = [map_model(r) for r in raw_models if r.get("id")]
     # append synthetic ~latest aliases (not in API)
     models.extend(build_latest_aliases())
     # append synthetic decision routes (not in the models API)
     models.extend(build_decision_routes())
     models = dedupe(models)
+    models = [
+        preserve_openrouter_metadata(model, previous_by_id.get(model.get("model_id")))
+        for model in models
+    ]
 
     # sort: openrouter/* specials first, then ~aliases, then alpha by id
     def sort_key(m: dict) -> tuple:

@@ -141,11 +141,13 @@ def test_reasoning_mode_is_separate_from_reasoning_effort():
     assert unsupported.get_reasoning_mode_values() == []
 
 
-def test_openai_effort_parser_accepts_current_markdown_syntax():
+def test_openai_effort_parser_accepts_current_markdown_syntax(monkeypatch):
     scripts_path = str(Path(__file__).resolve().parents[1] / "scripts")
     sys.path.insert(0, scripts_path)
     try:
+        import _update_openai
         from _update_openai import (
+            parse_computer_use_capability,
             parse_reasoning_effort_values,
             parse_reasoning_mode_values,
             parse_supported_tools,
@@ -160,8 +162,54 @@ def test_openai_effort_parser_accepts_current_markdown_syntax():
     assert parse_reasoning_effort_values(f"Reasoning.effort supports: {values}") == [
         "none", "low", "medium", "high", "xhigh", "max"
     ]
-    tools_page = "## Supported tools\n- function_calling\n- tool_search\n\n## Snapshots\n"
-    assert parse_supported_tools(tools_page) == {"function_calling", "tool_search"}
+    tools_page = (
+        "## Supported tools\n- function_calling\n- tool_search\n"
+        "- computer_use\n\n## Snapshots\n"
+    )
+    supported_tools = parse_supported_tools(tools_page)
+    assert supported_tools == {"function_calling", "tool_search", "computer_use"}
+    computer_use = parse_computer_use_capability(
+        "gpt-5.4", "/api/docs/models/gpt-5.4.md", supported_tools
+    )
+    assert computer_use is not None
+    assert computer_use["supported"] is True
+    assert computer_use["native"] is True
+    assert computer_use["provider"] == "openai"
+    assert computer_use["model"] == "gpt-5.4"
+    assert computer_use["api_type"] == "responses"
+    assert computer_use["tool_type"] == "computer_use"
+    assert computer_use["source_url"] == (
+        "https://developers.openai.com/api/docs/models/gpt-5.4"
+    )
+    assert computer_use["checked_at"]
+    assert parse_computer_use_capability(
+        "gpt-5.4-nano", "/unused.md", set()
+    ) is None
+    assert parse_computer_use_capability("unknown", "/unused.md", None) is None
+
+    model_page = """# GPT-5.4
+
+Model ID: `gpt-5.4`
+Input modalities: text, image
+Output modalities: text
+
+## Endpoints
+| Endpoint | Route | Support |
+| --- | --- | --- |
+| Responses | `v1/responses` | Supported |
+
+## Supported tools
+- function_calling
+- computer_use
+
+## Snapshots
+- `gpt-5.4-2026-03-05`
+"""
+    monkeypatch.setattr(_update_openai, "fetch", lambda _url: model_page)
+    entry = _update_openai.detail("/api/docs/models/gpt-5.4.md")
+    assert entry["computer_use"]["supported"] is True
+    assert entry["computer_use"]["model"] == "gpt-5.4"
+
     assert parse_supported_tools("No supported tools section") is None
     assert parse_reasoning_mode_values("gpt-5.6-sol", True) == ["standard", "pro"]
     assert parse_reasoning_mode_values("gpt-6-luna", True) == ["standard", "pro"]

@@ -235,6 +235,21 @@ print(route.decision.endpoints)           # ('https://openrouter.ai/api/alpha/de
 
 決定出力は独立した出力モダリティとして扱われるため、`can_be_replaced_by()` は決定モデルをテキスト生成モデルで代替可能とは判定しません。
 
+Laya もローカル Decision Provider として、公式の3チェックポイントを同梱しています。
+
+```python
+english = llmcapa.get("laya", provider="laya")
+multi = llmcapa.get("laya-multilingual", provider="laya")
+typed = llmcapa.get("laya-typed-decisions", provider="laya")
+
+print(multi.supports("decision_output"))       # True
+print(multi.decision.question_kinds)           # ('choice', 'score', 'noul')
+print(multi.extra["default_context_window"])   # 1024
+print(multi.extra["max_context_window"])       # 8192
+```
+
+Laya は確率と confidence を返しますが、同梱データでは意図的に `calibrated_confidence == False` としています。上流ドキュメントでは、配布時のチェックポイントは過信傾向があり、confidence の閾値を利用する前に、対象ワークフローの held-out データで temperature をfit・検証することを推奨しています。Laya は Python でローカル実行できるほか、Jev互換の `/v1/systemone` HTTPプロトコルでも公開できます。
+
 ### 推論（Reasoning）と思考（Thinking）の確認
 
 プロバイダー共通APIの仕様は [docs/API_SPECIFICATION.md](docs/API_SPECIFICATION.md) を参照してください。

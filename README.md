@@ -235,6 +235,21 @@ print(route.decision.endpoints)           # ('https://openrouter.ai/api/alpha/de
 
 Because decision output is a distinct output modality, `can_be_replaced_by()` will not treat a text-generation model as a valid replacement for a decision model.
 
+Laya is also bundled as a local decision provider with its three official checkpoints:
+
+```python
+english = llmcapa.get("laya", provider="laya")
+multi = llmcapa.get("laya-multilingual", provider="laya")
+typed = llmcapa.get("laya-typed-decisions", provider="laya")
+
+print(multi.supports("decision_output"))       # True
+print(multi.decision.question_kinds)           # ('choice', 'score', 'noul')
+print(multi.extra["default_context_window"])   # 1024
+print(multi.extra["max_context_window"])       # 8192
+```
+
+Laya returns probabilities and confidence, but the bundled records deliberately report `calibrated_confidence == False`: upstream documents that the shipped checkpoints are over-confident and recommends fitting and validating temperatures on held-out data before using confidence thresholds. Laya can run locally in Python or expose the Jev-compatible `/v1/systemone` HTTP protocol.
+
 ### Reasoning & Thinking Checks
 
 See the full provider-neutral API specification in [docs/API_SPECIFICATION.md](https://github.com/awaku7/llmcapa/blob/main/docs/API_SPECIFICATION.md).
@@ -670,7 +685,7 @@ OpenRouter and similar gateways are represented separately from direct provider 
 
 ### Computer Use replacement checks
 
-When checking model replacement, request Computer Use explicitly. The replacement check compares the provider/API-specific tool contract, including the tool/schema type, environments, and actions; tool versions are metadata and are not used as a compatibility gate. `required_actions` is currently applicable to Computer Use only. `supports("computer_use")` alone is not treated as cross-provider compatibility.
+When checking model replacement, request Computer Use explicitly. The replacement check requires matching provider and API, tool/schema type, and—when either side is beta—the same beta header. It also checks that the replacement supports the requested environments and actions. Tool versions are descriptive metadata, not a compatibility gate. `required_actions` is currently applicable to Computer Use only. `supports("computer_use")` alone is not treated as cross-provider compatibility; two providers may use the same generic tool label with different request protocols.
 
 ```python
 source.can_be_replaced_by(
