@@ -2,6 +2,43 @@
   "models": [
     {
       "provider": "novita",
+      "model_id": "apodex/apodex-1.1-mini",
+      "display_name": "Apodex 1.1 Mini",
+      "context_window": 262144,
+      "max_output_tokens": 262144,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "apodex/apodex-1.1-mini"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
       "model_id": "baichuan/baichuan-m2-32b",
       "display_name": "Baichuan M2 32B",
       "context_window": 131072,
@@ -91,7 +128,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.007
       }
     },
     {
@@ -377,7 +416,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -710,7 +749,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.035
       }
     },
     {
@@ -1342,12 +1383,12 @@
       "supports_vision": false,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": true,
       "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": true,
       "supports_google_api": false,
-      "supports_fim": true,
+      "supports_fim": false,
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
@@ -1368,7 +1409,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.0028
       }
     },
     {
@@ -1389,12 +1432,12 @@
       "supports_vision": false,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": true,
       "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": true,
       "supports_google_api": false,
-      "supports_fim": true,
+      "supports_fim": false,
       "license_type": "api",
       "tokenizer_name": "",
       "knowledge_cutoff": null,
@@ -1415,7 +1458,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.0028
       }
     },
     {
@@ -1436,7 +1481,7 @@
       "supports_vision": false,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": true,
       "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": true,
@@ -1453,7 +1498,11 @@
       "aliases": [
         "deepseek/deepseek-v4-flash-0731-p"
       ],
-      "license_type": "api"
+      "license_type": "api",
+      "extra": {
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.00148
+      }
     },
     {
       "provider": "novita",
@@ -1474,12 +1523,12 @@
       "supports_vision": true,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": true,
       "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": true,
       "supports_google_api": false,
-      "supports_fim": true,
+      "supports_fim": false,
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
@@ -1500,7 +1549,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.0028
       }
     },
     {
@@ -1521,12 +1572,12 @@
       "supports_vision": false,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": true,
       "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": true,
       "supports_google_api": false,
-      "supports_fim": true,
+      "supports_fim": false,
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
@@ -1547,7 +1598,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.0135
       }
     },
     {
@@ -1568,12 +1621,12 @@
       "supports_vision": false,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": true,
       "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": true,
       "supports_google_api": false,
-      "supports_fim": true,
+      "supports_fim": false,
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
@@ -1594,7 +1647,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.0044
       }
     },
     {
@@ -1615,7 +1670,7 @@
       "supports_vision": false,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": true,
       "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": true,
@@ -1632,7 +1687,11 @@
       "aliases": [
         "deepseek/deepseek-v4-pro-0813-p"
       ],
-      "license_type": "api"
+      "license_type": "api",
+      "extra": {
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.0044
+      }
     },
     {
       "provider": "novita",
@@ -1653,12 +1712,12 @@
       "supports_vision": true,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": true,
       "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": true,
       "supports_google_api": false,
-      "supports_fim": true,
+      "supports_fim": false,
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
@@ -1670,7 +1729,11 @@
       "aliases": [
         "deepseek/deepseek-v4.1-flash"
       ],
-      "license_type": "api"
+      "license_type": "api",
+      "extra": {
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.0006
+      }
     },
     {
       "provider": "novita",
@@ -1691,7 +1754,7 @@
       "supports_vision": true,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": true,
       "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": true,
@@ -1708,7 +1771,11 @@
       "aliases": [
         "deepseek/deepseek-v4.1-flash-dst"
       ],
-      "license_type": "api"
+      "license_type": "api",
+      "extra": {
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.0006
+      }
     },
     {
       "provider": "novita",
@@ -1729,7 +1796,7 @@
       "supports_vision": true,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": true,
       "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": true,
@@ -1746,7 +1813,11 @@
       "aliases": [
         "deepseek/deepseek-v4.1-flash-p"
       ],
-      "license_type": "api"
+      "license_type": "api",
+      "extra": {
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.0006
+      }
     },
     {
       "provider": "novita",
@@ -2304,7 +2375,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.0012
       }
     },
     {
@@ -2398,7 +2471,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.0015
       }
     },
     {
@@ -2504,8 +2579,12 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
+      },
+      "extra": {
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.0015
       }
     },
     {
@@ -3155,7 +3234,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.0044
       }
     },
     {
@@ -3176,7 +3257,7 @@
       "supports_vision": false,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": true,
       "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": true,
@@ -3202,7 +3283,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.0165
       }
     },
     {
@@ -3296,7 +3379,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.003
       }
     },
     {
@@ -3343,7 +3428,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.003
       }
     },
     {
@@ -3390,7 +3477,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.003
       }
     },
     {
@@ -3437,7 +3526,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.003
       }
     },
     {
@@ -3484,7 +3575,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.006
       }
     },
     {
@@ -3531,7 +3624,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.006
       }
     },
     {
@@ -3580,7 +3675,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.006
       },
       "video": {
         "accepts_video_input": true,
@@ -3610,7 +3707,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -3846,7 +3943,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.015
       }
     },
     {
@@ -3895,7 +3994,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.01
       },
       "video": {
         "accepts_video_input": true,
@@ -3925,7 +4026,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -3975,7 +4076,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.016
       },
       "video": {
         "accepts_video_input": true,
@@ -4005,7 +4108,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -4055,7 +4158,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.019
       },
       "video": {
         "accepts_video_input": true,
@@ -4085,7 +4190,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -4109,7 +4214,7 @@
       "supports_vision": true,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": true,
       "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": true,
@@ -4135,7 +4240,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.03
       },
       "video": {
         "accepts_video_input": true,
@@ -4165,7 +4272,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -4239,7 +4346,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-30",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -4940,7 +5047,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -5302,7 +5409,7 @@
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
-      "supports_fim": true,
+      "supports_fim": false,
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
@@ -5349,7 +5456,7 @@
       "supports_thinking_budget": false,
       "supports_anthropic_api": true,
       "supports_google_api": false,
-      "supports_fim": true,
+      "supports_fim": false,
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
@@ -5396,7 +5503,7 @@
       "supports_thinking_budget": false,
       "supports_anthropic_api": true,
       "supports_google_api": false,
-      "supports_fim": true,
+      "supports_fim": false,
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
@@ -5439,7 +5546,7 @@
       "supports_reasoning": true,
       "supports_chat_completion": true,
       "supports_responses_api": false,
-      "supports_reasoning_effort": false,
+      "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
@@ -5617,7 +5724,7 @@
         "speech_understanding": true,
         "supports_streaming": true,
         "supports_realtime": null,
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred",
         "endpoints": {
           "speech_generation": true,
@@ -5654,7 +5761,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -5713,7 +5820,7 @@
         "speech_understanding": true,
         "supports_streaming": true,
         "supports_realtime": null,
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred",
         "endpoints": {
           "speech_understanding": true,
@@ -5749,7 +5856,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -5829,7 +5936,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -5909,7 +6016,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -5989,7 +6096,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -6069,7 +6176,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -6149,7 +6256,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -6229,7 +6336,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -6309,7 +6416,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -6389,7 +6496,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -6469,7 +6576,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -6549,7 +6656,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -6629,7 +6736,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -6709,7 +6816,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -6789,7 +6896,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -6837,7 +6944,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.025
       }
     },
     {
@@ -6858,7 +6967,7 @@
       "supports_vision": false,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": true,
       "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
@@ -6884,7 +6993,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.025
       }
     },
     {
@@ -6907,7 +7018,7 @@
       "supports_vision": true,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": true,
       "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": true,
@@ -6933,7 +7044,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.0085
       },
       "video": {
         "accepts_video_input": true,
@@ -6963,7 +7076,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -6987,7 +7100,7 @@
       "supports_vision": true,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": true,
       "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": true,
@@ -7013,7 +7126,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.0016
       },
       "video": {
         "accepts_video_input": true,
@@ -7043,7 +7158,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -7067,7 +7182,7 @@
       "supports_vision": true,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": true,
       "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": true,
@@ -7093,7 +7208,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.025
       },
       "video": {
         "accepts_video_input": true,
@@ -7123,7 +7240,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -7361,7 +7478,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.004
       },
       "video": {
         "accepts_video_input": true,
@@ -7391,7 +7510,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -7486,7 +7605,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.0035
       }
     },
     {
@@ -7507,7 +7628,7 @@
       "supports_vision": false,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": true,
       "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": true,
@@ -7524,7 +7645,11 @@
       "aliases": [
         "tencent/hy4-preview"
       ],
-      "license_type": "api"
+      "license_type": "api",
+      "extra": {
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.0042
+      }
     },
     {
       "provider": "novita",
@@ -7725,7 +7850,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.00034
       },
       "video": {
         "accepts_video_input": true,
@@ -7755,7 +7882,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -7803,7 +7930,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.00043
       }
     },
     {
@@ -7827,7 +7956,7 @@
       "supports_vision": true,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": true,
       "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": true,
@@ -7856,7 +7985,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       },
       "video": {
@@ -7887,8 +8016,12 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
+      },
+      "extra": {
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.00028
       }
     },
     {
@@ -7912,7 +8045,7 @@
       "supports_vision": true,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": true,
       "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": true,
@@ -7941,7 +8074,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       },
       "video": {
@@ -7972,8 +8105,12 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
+      },
+      "extra": {
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.00036
       }
     },
     {
@@ -8115,7 +8252,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.0025
       }
     },
     {
@@ -8164,7 +8303,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.011
       },
       "video": {
         "accepts_video_input": true,
@@ -8194,7 +8335,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -8242,7 +8383,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.011
       }
     },
     {
@@ -8291,7 +8434,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.0055
       },
       "video": {
         "accepts_video_input": true,
@@ -8321,7 +8466,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -8369,7 +8514,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.011
       }
     },
     {
@@ -8416,7 +8563,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.001
       }
     },
     {
@@ -8463,7 +8612,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.011
       }
     },
     {
@@ -8510,7 +8661,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.02
       }
     },
     {
@@ -8557,7 +8710,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.024
       }
     },
     {
@@ -8604,7 +8759,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.026
       }
     },
     {
@@ -8651,7 +8808,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.026
       }
     },
     {
@@ -8672,7 +8831,7 @@
       "supports_vision": false,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": true,
       "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": true,
@@ -8698,7 +8857,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.026
       }
     },
     {
@@ -8721,7 +8882,7 @@
       "supports_vision": true,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": true,
       "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": true,
@@ -8747,7 +8908,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.003
       },
       "video": {
         "accepts_video_input": true,
@@ -8777,7 +8940,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     },
@@ -8799,7 +8962,7 @@
       "supports_vision": false,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": true,
       "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": true,
@@ -8816,7 +8979,11 @@
       "aliases": [
         "zai-org/glm-5.3-p"
       ],
-      "license_type": "api"
+      "license_type": "api",
+      "extra": {
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.026
+      }
     },
     {
       "provider": "novita",
@@ -8864,7 +9031,9 @@
             "auth": "bearer",
             "source": "https://novita.ai/docs/"
           }
-        ]
+        ],
+        "source": "https://api.novita.ai/openai/v1/models",
+        "cache_read_per_1m": 0.024
       },
       "video": {
         "accepts_video_input": true,
@@ -8894,7 +9063,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred"
       }
     }

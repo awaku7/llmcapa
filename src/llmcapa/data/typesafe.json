@@ -69,8 +69,8 @@
         "max_state_tokens": 32000,
         "max_total_tokens": 64000,
         "output_token_billing": false,
-        "rate_limit_tokens_per_second": 250000,
-        "rate_limit_requests_per_minute": 1200,
+        "rate_limit_tokens_per_second": 100000,
+        "rate_limit_requests_per_minute": 2400,
         "language_values": [
           "en"
         ],
@@ -78,7 +78,7 @@
           "https://api.typesafe.ai/v1/systemone"
         ],
         "source_url": "https://docs.typesafe.ai/models",
-        "checked_at": "2026-09-19",
+        "checked_at": "2026-10-02",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "systemone",
@@ -88,12 +88,12 @@
           "openrouter_availability": "alpha",
           "not_a_language_model": true,
           "language_note": "English is the primary training language; other languages including CJK are accepted with lower accuracy.",
-          "notes": "System One model. Returns typed decisions with calibrated probabilities instead of generated text; output tokens are not billed. Images, audio, and video input are not supported."
+          "notes": "System One model. Returns typed decisions with calibrated probabilities instead of generated text; output tokens are not billed. Images, audio, and video input are not supported. Official docs list 100,000 tokens/s and 40 requests/s; rate limits may change dynamically without notice."
         }
       },
       "extra": {
         "official_source": "https://typesafe.ai/",
-        "official_source_checked_at": "2026-09-19",
+        "official_source_checked_at": "2026-10-02",
         "model_docs": "https://docs.typesafe.ai/models",
         "api_reference": "https://docs.typesafe.ai/api",
         "announcement": "https://typesafe.ai/blog/introducing-system-one-models-and-jev",

@@ -102,51 +102,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-09-29"
-      }
-    },
-    {
-      "provider": "mistral",
-      "model_id": "labs-leanstral-1-5",
-      "display_name": "Leanstral 1.5",
-      "context_window": 256000,
-      "max_output_tokens": 128000,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": true,
-      "aliases": [],
-      "license_type": "api",
-      "pricing": {
-        "currency": "USD",
-        "input_per_1m": 0.0
-      },
-      "extra": {
-        "source": "https://docs.mistral.ai/models/leanstral-1-5",
-        "card_slug": "leanstral-1-5",
-        "status": "Deprecated",
-        "version": "1",
-        "release_date": "June 30, 2026",
-        "description": "An updated Lean 4 formal proof engineering model optimised for automated theorem proving and autoformalization. 119B total parameters, 6.5B active.",
-        "supports_agents": true,
-        "deprecation_date": "9/29/2026"
+        "checked_at": "2026-10-02"
       }
     },
     {
@@ -346,7 +302,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-09-29"
+        "checked_at": "2026-10-02"
       }
     },
     {
@@ -542,53 +498,6 @@
         "description": "Our OCR service powering our Document AI stack that enables our users to extract interleaved text and images. OCR 4 is available as the newer model. OCR 3 remains available for existing integrations and production workloads.",
         "supports_batching": true,
         "supports_ocr_annotations": true
-      }
-    },
-    {
-      "provider": "mistral",
-      "model_id": "mistral-ocr-4-0",
-      "display_name": "OCR 4.0",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": false,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": true,
-      "aliases": [
-        "mistral-ocr-latest",
-        "mistral-ocr"
-      ],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://docs.mistral.ai/models/ocr-4-0",
-        "card_slug": "ocr-4-0",
-        "status": "Deprecated",
-        "version": "1",
-        "release_date": "June 23, 2026",
-        "description": "Our latest OCR service powering our Document AI stack, with native paragraph-level bounding box extraction and structural block labels.",
-        "supports_batching": true,
-        "supports_ocr_annotations": true,
-        "supports_bbox_extraction": true,
-        "deprecation_date": "9/29/2026",
-        "replacement": "OCR 4.1"
       }
     },
     {
@@ -795,7 +704,7 @@
           "audio/webm"
         ],
         "source_url": "https://docs.mistral.ai/capabilities/audio/",
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "documented",
         "endpoints": {
           "transcription": true,
@@ -859,7 +768,7 @@
           "audio/pcm"
         ],
         "source_url": "https://docs.mistral.ai/capabilities/audio/",
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "documented",
         "endpoints": {
           "transcription": true,
@@ -925,7 +834,7 @@
           "audio/wav"
         ],
         "source_url": "https://docs.mistral.ai/capabilities/audio/",
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "documented",
         "endpoints": {
           "speech_generation": true,
@@ -988,62 +897,13 @@
         "speech_understanding": true,
         "supports_streaming": true,
         "supports_realtime": null,
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred",
         "endpoints": {
           "speech_understanding": true,
           "streaming": true
         },
         "extra": {}
-      }
-    },
-    {
-      "provider": "mistral",
-      "model_id": "zai-glm-5-2",
-      "display_name": "Z.ai GLM 5.2",
-      "context_window": 1000000,
-      "max_output_tokens": 128000,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": true,
-      "aliases": [],
-      "license_type": "api",
-      "pricing": {
-        "currency": "USD",
-        "input_per_1m": 1.4,
-        "output_per_1m": 4.4
-      },
-      "extra": {
-        "source": "https://docs.mistral.ai/models/zai-glm-5-2",
-        "card_slug": "zai-glm-5-2",
-        "cached_input_per_1m": 0.14,
-        "status": "Deprecated",
-        "version": "1",
-        "release_date": "August 6, 2026",
-        "description": "A third-party open weight text model from Z.ai, hosted by Mistral for long-context coding and agentic workflows. The model is served without Mistral modifications.",
-        "supports_batching": true,
-        "supports_prefix": true,
-        "supports_predicted_outputs": true,
-        "deprecation_date": "9/29/2026",
-        "replacement": "Z.ai GLM 5.3"
       }
     },
     {
@@ -1084,7 +944,7 @@
         "source": "https://docs.mistral.ai/models/zai-glm-5-3",
         "card_slug": "zai-glm-5-3",
         "cached_input_per_1m": 0.14,
-        "status": "Public Preview",
+        "status": "GA",
         "version": "1",
         "release_date": "September 15, 2026",
         "alias_count": "2",
@@ -1407,6 +1267,50 @@
         "supports_batching": true,
         "supports_prefix": true,
         "supports_document_qna": true
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "labs-leanstral-1-5",
+      "display_name": "Leanstral 1.5",
+      "context_window": 256000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "currency": "USD",
+        "input_per_1m": 0.0
+      },
+      "extra": {
+        "source": "https://docs.mistral.ai/models/leanstral-1-5",
+        "card_slug": "leanstral-1-5",
+        "status": "Deprecated",
+        "version": "1",
+        "release_date": "June 30, 2026",
+        "deprecation_date": "9/29/2026",
+        "description": "An updated Lean 4 formal proof engineering model optimised for automated theorem proving and autoformalization. 119B total parameters, 6.5B active.",
+        "supports_agents": true
       }
     },
     {
@@ -2443,6 +2347,53 @@
     },
     {
       "provider": "mistral",
+      "model_id": "mistral-ocr-4-0",
+      "display_name": "OCR 4.0",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [
+        "mistral-ocr-latest",
+        "mistral-ocr"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://docs.mistral.ai/models/ocr-4-0",
+        "card_slug": "ocr-4-0",
+        "status": "Deprecated",
+        "version": "1",
+        "release_date": "June 23, 2026",
+        "deprecation_date": "9/29/2026",
+        "replacement": "OCR 4.1",
+        "description": "Our latest OCR service powering our Document AI stack, with native paragraph-level bounding box extraction and structural block labels.",
+        "supports_batching": true,
+        "supports_ocr_annotations": true,
+        "supports_bbox_extraction": true
+      }
+    },
+    {
+      "provider": "mistral",
       "model_id": "mistral-saba-2502",
       "display_name": "Mistral Saba",
       "context_window": 32000,
@@ -3099,7 +3050,7 @@
         "speech_understanding": true,
         "supports_streaming": true,
         "supports_realtime": null,
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred",
         "endpoints": {
           "speech_understanding": true,
@@ -3156,7 +3107,7 @@
         "supports_streaming": true,
         "supports_realtime": null,
         "transcription": true,
-        "checked_at": "2026-09-29",
+        "checked_at": "2026-10-02",
         "status": "inferred",
         "endpoints": {
           "transcription": true,
@@ -3164,6 +3115,54 @@
           "streaming": true
         },
         "extra": {}
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "zai-glm-5-2",
+      "display_name": "Z.ai GLM 5.2",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "currency": "USD",
+        "input_per_1m": 1.4,
+        "output_per_1m": 4.4
+      },
+      "extra": {
+        "source": "https://docs.mistral.ai/models/zai-glm-5-2",
+        "card_slug": "zai-glm-5-2",
+        "status": "Deprecated",
+        "version": "1",
+        "release_date": "August 6, 2026",
+        "deprecation_date": "9/29/2026",
+        "replacement": "Z.ai GLM 5.3",
+        "description": "A third-party open weight text model from Z.ai, hosted by Mistral for long-context coding and agentic workflows. The model is served without Mistral modifications.",
+        "supports_batching": true,
+        "supports_prefix": true,
+        "supports_predicted_outputs": true
       }
     }
   ]
