@@ -19,6 +19,8 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
+from _metadata_loader import context_window_override
+
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "nvidia.json"
 INSTALLED_DIR = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data"
@@ -30,7 +32,6 @@ def base_row(
     *,
     model_id: str,
     display: str,
-    ctx: int,
     max_out: int,
     inp: float | None,
     out: float | None,
@@ -55,11 +56,13 @@ def base_row(
     if bare != model_id and bare not in aliases:
         aliases.append(bare)
     model_id = bare
+    context_spec = context_window_override("nvidia", model_id) or {}
+    context_window = int(context_spec.get("context_window") or 0)
     row: dict = {
         "provider": "nvidia",
         "model_id": model_id,
         "display_name": display,
-        "context_window": ctx,
+        "context_window": context_window,
         "max_output_tokens": max_out,
         "input_modalities": modalities_in,
         "output_modalities": modalities_out,
@@ -92,6 +95,11 @@ def base_row(
             **(extra or {}),
         },
     }
+    if context_spec.get("source"):
+        row["extra"]["context_window_source"] = context_spec["source"]
+        row["extra"]["context_window_basis"] = context_spec.get(
+            "basis", "official_metadata_fallback"
+        )
     if inp is not None and out is not None:
         row["pricing"] = {
             "input_per_1m": inp,
@@ -106,7 +114,6 @@ UPSERTS: list[dict] = [
     base_row(
         model_id="nemotron-3-ultra-550b-a55b",
         display="NVIDIA Nemotron 3 Ultra 550B-A55B",
-        ctx=1_048_576,
         max_out=16384,
         inp=0.50,
         out=2.20,
@@ -136,7 +143,6 @@ UPSERTS: list[dict] = [
     base_row(
         model_id="nemotron-3-super-120b-a12b",
         display="NVIDIA Nemotron 3 Super 120B-A12B",
-        ctx=1_048_576,
         max_out=16384,
         inp=0.20,
         out=0.80,
@@ -163,7 +169,6 @@ UPSERTS: list[dict] = [
     base_row(
         model_id="nemotron-3-nano-30b-a3b",
         display="NVIDIA Nemotron 3 Nano 30B-A3B",
-        ctx=1_048_576,
         max_out=16384,
         inp=0.05,
         out=0.20,
@@ -186,7 +191,6 @@ UPSERTS: list[dict] = [
     base_row(
         model_id="nemotron-3-nano-omni-30b-a3b-reasoning",
         display="NVIDIA Nemotron 3 Nano Omni 30B-A3B Reasoning",
-        ctx=1_048_576,
         max_out=16384,
         inp=0.0,
         out=0.0,
@@ -211,7 +215,6 @@ UPSERTS: list[dict] = [
     base_row(
         model_id="nemotron-3-embed-1b",
         display="NVIDIA Nemotron 3 Embed 1B",
-        ctx=8192,
         max_out=0,
         inp=0.0,
         out=0.0,
@@ -230,7 +233,6 @@ UPSERTS: list[dict] = [
     base_row(
         model_id="nemotron-3.5-content-safety",
         display="NVIDIA Nemotron 3.5 Content Safety",
-        ctx=32768,
         max_out=4096,
         inp=0.0,
         out=0.0,
@@ -249,7 +251,6 @@ UPSERTS: list[dict] = [
     base_row(
         model_id="cosmos3-nano",
         display="NVIDIA Cosmos 3 Nano",
-        ctx=0,
         max_out=0,
         inp=None,
         out=None,
@@ -268,7 +269,6 @@ UPSERTS: list[dict] = [
     base_row(
         model_id="cosmos3-nano-reasoner",
         display="NVIDIA Cosmos 3 Nano Reasoner",
-        ctx=131072,
         max_out=8192,
         inp=0.0,
         out=0.0,

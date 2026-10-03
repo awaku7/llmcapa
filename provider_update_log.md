@@ -10042,3 +10042,18 @@
 - Added `deepinfra.json` from DeepInfra's public `/models/list` API: 130 public text-generation and embedding entries; private, deprecated, and non-LLM media endpoints are excluded.
 - Added `baseten.json` with 11 documented Baseten Model APIs. The live management catalog requires `BASETEN_API_KEY`; its updater keeps the verified bundled snapshot unchanged when the key is unavailable.
 - Update entry point: `scripts/_update_all_providers.py` (provider keys: `nebius`, `deepinfra`, `baseten`). Official sources are recorded in each model's `extra.source`.
+
+## Sakura (さくらのAI Engine) refresh (2026-10-03)
+
+### Source
+- Product: https://ai.sakura.ad.jp/sakura-ai/ai-engine/
+- Playground: https://playground.aipf.sakura.ad.jp/
+- Apply: `scripts/_update_sakura.py`
+
+### Result
+- sakura.json: **24** models (active=24, deprecated=0, priced=11, extra=24)
+- Tiers: {'closed': 3, 'standard': 12, 'preview': 9}
+- Model IDs, categories, and prices come from the live product tables. Selected context_window values use official upstream base-model specifications and are marked in extra; Sakura deployment-specific limits remain unpublished. Other missing values remain unknown.
+- Token/audio/TTS prices are parsed from the current table; quote-only closed models remain unpriced.
+- No local sakura_legacy_models.json manifest or hard-coded model catalog is used.
+- Install copy synced

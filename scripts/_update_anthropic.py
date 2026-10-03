@@ -17,6 +17,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from _computer_use_metadata import anthropic_computer_use_capability
+from _metadata_loader import apply_context_window_overrides, context_window_override
 
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "anthropic.json"
@@ -102,7 +103,8 @@ def cache_extra(
     *,
     batch_in: float | None = None,
     batch_out: float | None = None,
-    long_ctx: bool = True,
+    long_context_window: int | None = None,
+    long_context_at_standard_rates: bool | None = None,
     notes: dict | None = None,
 ) -> dict:
     e: dict = {
@@ -114,9 +116,10 @@ def cache_extra(
         e["batch_input_per_1m"] = batch_in
     if batch_out is not None:
         e["batch_output_per_1m"] = batch_out
-    if long_ctx:
-        e["long_context_window"] = 1_000_000
-        e["long_context_at_standard_rates"] = True
+    if long_context_window is not None:
+        e["long_context_window"] = long_context_window
+    if long_context_at_standard_rates is not None:
+        e["long_context_at_standard_rates"] = long_context_at_standard_rates
     if notes:
         e.update(notes)
     return e
@@ -267,21 +270,7 @@ def _model_id(name: str) -> str:
 
 def _template(row: dict) -> dict:
     mid = _model_id(row["name"])
-    long_ctx = any(
-        x in mid
-        for x in (
-            "opus-4-6",
-            "opus-4-7",
-            "opus-4-8",
-            "opus-5",
-            "sonnet-4-6",
-            "sonnet-5",
-            "fable-5-1",
-            "mythos-5-1",
-        )
-    )
-    ctx = 1_000_000 if long_ctx else 200_000
-    max_out = 128_000 if long_ctx or "5" in mid else 64_000
+    max_out = 128_000 if "5" in mid else 64_000
     extra = {
         "cache_write_5m_per_1m": row["cache_5m"],
         "cache_write_1h_per_1m": row["cache_1h"],
@@ -290,14 +279,10 @@ def _template(row: dict) -> dict:
         "batch_output_per_1m": row["output"] / 2,
     }
     extra = {k: v for k, v in extra.items() if v is not None}
-    if long_ctx:
-        extra.update(
-            {"long_context_window": 1_000_000, "long_context_at_standard_rates": True}
-        )
     return base(
         model_id=mid,
         display=row["name"],
-        ctx=ctx,
+        ctx=0,
         max_out=max_out,
         pricing={"input": row["input"], "output": row["output"]},
         extra=extra,
@@ -359,6 +344,13 @@ def build() -> list[dict]:
     # Keep historical models that are no longer listed in current pricing.
     discovered_ids = {m["model_id"] for m in models}
     models.extend(m for mid, m in previous.items() if mid not in discovered_ids)
+    # The pricing-page parser does not expose context lengths; refresh these
+    # snapshot values from cited metadata rather than retaining the old model-name heuristic.
+    for model in models:
+        if context_window_override("anthropic", str(model.get("model_id", ""))):
+            model["context_window"] = 0
+    apply_context_window_overrides(models)
+
     # Apply the current official Computer Use model/tool-version matrix after
     # the pricing refresh. This keeps the specialized capability from being
     # lost when model records are rebuilt or merged.

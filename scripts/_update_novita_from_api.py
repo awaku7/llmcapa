@@ -83,7 +83,7 @@ def api_to_entry(m: dict) -> dict | None:
         "provider": "novita",
         "model_id": mid,
         "display_name": m.get("display_name", mid),
-        "context_window": m.get("context_size", 4096),
+        "context_window": m.get("context_size", 0),
         "max_output_tokens": m.get("max_output_tokens", 2048),
         "input_modalities": input_mods,
         "output_modalities": output_mods,

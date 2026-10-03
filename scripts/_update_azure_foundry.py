@@ -1257,10 +1257,10 @@ def build_entry(item: dict, price_map: dict[str, dict]) -> dict:
     if extra:
         row["extra"] = extra
 
-    # Backfill missing context/max_out from the previous bundled catalog, then fall back to safe defaults.
+    # Backfill known limits from the previous bundled catalog; missing context remains unknown.
     if row.get("context_window") is None:
         pv = _PREV_LIMITS.get(name)
-        row["context_window"] = (pv or {}).get("context_window") or 4096
+        row["context_window"] = (pv or {}).get("context_window") or 0
     if row.get("max_output_tokens") is None:
         pv = _PREV_LIMITS.get(name)
         row["max_output_tokens"] = (pv or {}).get("max_output_tokens") or 2048

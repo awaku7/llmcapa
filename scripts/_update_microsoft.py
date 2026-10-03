@@ -35,6 +35,8 @@ from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
+from _metadata_loader import context_window_override
+
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "microsoft.json"
 INSTALLED = (
@@ -118,6 +120,8 @@ def base(
     # de-dupe preserve order
     seen: set[str] = set()
     aliases = [a for a in aliases if not (a in seen or seen.add(a))]
+    context_spec = context_window_override("microsoft", model_id) or {}
+    ctx = int(context_spec.get("context_window") or 0)
 
     in_mod = list(input_modalities or (["text", "image"] if vision else ["text"]))
     out_mod = list(output_modalities or ["text"])
@@ -163,6 +167,13 @@ def base(
         "catalog": SOURCE_CATALOG,
         **(extra or {}),
     }
+    if context_spec.get("source"):
+        row["extra"]["context_window_source"] = context_spec["source"]
+        row["extra"]["context_window_basis"] = context_spec.get(
+            "basis", "official_metadata_fallback"
+        )
+        if context_spec.get("note"):
+            row["extra"]["context_window_note"] = context_spec["note"]
     return row
 
 
@@ -193,7 +204,7 @@ def service(
     model_id: str,
     display: str,
     *,
-    ctx: int = 128_000,
+    ctx: int = 0,
     max_out: int = 16_384,
     input_modalities: list[str] | None = None,
     output_modalities: list[str] | None = None,
@@ -228,7 +239,7 @@ def free_weight(
     model_id: str,
     display: str,
     *,
-    ctx: int = 128_000,
+    ctx: int = 0,
     max_out: int = 16_384,
     vision: bool = False,
     reasoning: bool = False,
@@ -270,7 +281,7 @@ def build() -> list[dict]:
         base(
             model_id="Phi-4",
             display="Phi-4",
-            ctx=16_384,  # catalog/OpenRouter; pricing table incorrectly lists 128K
+            ctx=0,
             max_out=16_384,
             pricing={"input": 0.125, "output": 0.50},
             knowledge_cutoff="2024-06",
@@ -294,7 +305,7 @@ def build() -> list[dict]:
         base(
             model_id="Phi-4-mini-instruct",
             display="Phi-4 mini instruct",
-            ctx=128_000,
+            ctx=0,
             max_out=4_096,
             pricing={"input": 0.075, "output": 0.30},
             function_calling=True,
@@ -313,7 +324,7 @@ def build() -> list[dict]:
         base(
             model_id="Phi-4-multimodal-instruct",
             display="Phi-4 multimodal instruct",
-            ctx=128_000,
+            ctx=0,
             max_out=4_096,
             pricing={"input": 0.08, "output": 0.32},
             input_modalities=["text", "image", "audio"],
@@ -340,7 +351,7 @@ def build() -> list[dict]:
         base(
             model_id="Phi-4-mini-reasoning",
             display="Phi-4 mini reasoning",
-            ctx=128_000,
+            ctx=0,
             max_out=4_096,
             pricing={"input": 0.075, "output": 0.30},
             reasoning=True,
@@ -356,7 +367,7 @@ def build() -> list[dict]:
         base(
             model_id="Phi-4-reasoning",
             display="Phi-4 reasoning",
-            ctx=32_768,
+            ctx=0,
             max_out=4_096,
             pricing={"input": 0.125, "output": 0.50},
             reasoning=True,
@@ -373,7 +384,7 @@ def build() -> list[dict]:
         base(
             model_id="Phi-4-reasoning-plus",
             display="Phi-4 reasoning plus",
-            ctx=32_768,  # Foundry pricing table; some catalog rows show 128K
+            ctx=0,
             max_out=4_096,
             pricing={"input": 0.125, "output": 0.50},
             reasoning=True,
@@ -399,7 +410,7 @@ def build() -> list[dict]:
         free_weight(
             "Phi-4-mini-flash-reasoning",
             "Phi-4 mini flash reasoning",
-            ctx=128_000,
+            ctx=0,
             reasoning=True,
             chat=True,
             extra={"foundry_payg": False, "family": "phi-4"},
@@ -409,7 +420,7 @@ def build() -> list[dict]:
         free_weight(
             "Phi-4-Reasoning-Vision-15B",
             "Phi-4 Reasoning Vision 15B",
-            ctx=128_000,
+            ctx=0,
             vision=True,
             reasoning=True,
             chat=True,
@@ -421,7 +432,7 @@ def build() -> list[dict]:
         free_weight(
             "Phi-4-mini-reasoning-onnx",
             "Phi-4 mini reasoning (ONNX)",
-            ctx=128_000,
+            ctx=0,
             reasoning=True,
             chat=True,
             extra={"foundry_payg": False, "runtime": "onnx", "family": "phi-4"},
@@ -431,7 +442,7 @@ def build() -> list[dict]:
         free_weight(
             "Phi-4-reasoning-plus-onnx",
             "Phi-4 reasoning plus (ONNX)",
-            ctx=128_000,
+            ctx=0,
             reasoning=True,
             chat=True,
             extra={"foundry_payg": False, "runtime": "onnx", "family": "phi-4"},
@@ -443,11 +454,10 @@ def build() -> list[dict]:
     # Retirement: 2025-08-30 (Learn retired models)
     # =====================================================================
     retired_phi = "2025-08-30"
-    for mid, display, ctx, pin, pout, repl, ft in [
+    for mid, display, pin, pout, repl, ft in [
         (
             "Phi-3-mini-4k-instruct",
             "Phi-3 mini 4k instruct",
-            4_096,
             0.13,
             0.52,
             "Phi-4-mini-instruct",
@@ -456,7 +466,6 @@ def build() -> list[dict]:
         (
             "Phi-3-mini-128k-instruct",
             "Phi-3 mini 128k instruct",
-            128_000,
             0.13,
             0.52,
             "Phi-4-mini-instruct",
@@ -465,7 +474,6 @@ def build() -> list[dict]:
         (
             "Phi-3-small-8k-instruct",
             "Phi-3 small 8k instruct",
-            8_192,
             0.15,
             0.60,
             "Phi-4-mini-instruct",
@@ -474,7 +482,6 @@ def build() -> list[dict]:
         (
             "Phi-3-small-128k-instruct",
             "Phi-3 small 128k instruct",
-            128_000,
             0.15,
             0.60,
             "Phi-4-mini-instruct",
@@ -483,7 +490,6 @@ def build() -> list[dict]:
         (
             "Phi-3-medium-4k-instruct",
             "Phi-3 medium 4k instruct",
-            4_096,
             0.17,
             0.68,
             "Phi-4",
@@ -492,7 +498,6 @@ def build() -> list[dict]:
         (
             "Phi-3-medium-128k-instruct",
             "Phi-3 medium 128k instruct",
-            128_000,
             0.17,
             0.68,
             "Phi-4",
@@ -501,7 +506,6 @@ def build() -> list[dict]:
         (
             "Phi-3.5-mini-instruct",
             "Phi-3.5 mini instruct",
-            131_072,
             0.13,
             0.52,
             "Phi-4-mini-instruct",
@@ -510,7 +514,6 @@ def build() -> list[dict]:
         (
             "Phi-3.5-MoE-instruct",
             "Phi-3.5 MoE instruct",
-            128_000,
             0.16,
             0.64,
             "Phi-4-mini-instruct",
@@ -521,8 +524,8 @@ def build() -> list[dict]:
             base(
                 model_id=mid,
                 display=display,
-                ctx=ctx,
-                max_out=min(ctx, 4_096) if ctx <= 8_192 else 4_096,
+                ctx=0,
+                max_out=4_096,
                 pricing={"input": pin, "output": pout},
                 deprecated=True,
                 function_calling=True,
@@ -541,7 +544,7 @@ def build() -> list[dict]:
         base(
             model_id="Phi-3.5-vision-instruct",
             display="Phi-3.5 vision instruct",
-            ctx=131_072,
+            ctx=0,
             max_out=4_096,
             pricing={"input": 0.13, "output": 0.52},  # same class as mini when listed
             deprecated=True,
@@ -567,7 +570,7 @@ def build() -> list[dict]:
         base(
             model_id="Phi-3-vision-128k-instruct",
             display="Phi-3 vision 128k instruct",
-            ctx=128_000,
+            ctx=0,
             max_out=4_096,
             pricing=None,
             deprecated=True,
@@ -591,7 +594,7 @@ def build() -> list[dict]:
         base(
             model_id="phi-3-mini-instruct",
             display="Phi-3 mini instruct (legacy id)",
-            ctx=128_000,
+            ctx=0,
             max_out=4_096,
             pricing={"input": 0.13, "output": 0.52},
             deprecated=True,
@@ -613,7 +616,7 @@ def build() -> list[dict]:
         base(
             model_id="MAI-DS-R1",
             display="MAI-DS-R1",
-            ctx=163_840,  # OpenRouter 164K class
+            ctx=0,
             max_out=16_384,
             pricing={"input": 1.35, "output": 5.40},
             deprecated=True,
@@ -642,7 +645,7 @@ def build() -> list[dict]:
         base(
             model_id="MAI-Image-2",
             display="MAI Image 2",
-            ctx=128_000,
+            ctx=0,
             max_out=16_384,
             pricing={"input": 5.0, "output": 33.0},
             input_modalities=["text"],
@@ -665,7 +668,7 @@ def build() -> list[dict]:
         base(
             model_id="MAI-Image-2e",
             display="MAI Image 2e (Efficient)",
-            ctx=128_000,
+            ctx=0,
             max_out=16_384,
             pricing={"input": 5.0, "output": 19.50},
             input_modalities=["text"],
@@ -692,7 +695,7 @@ def build() -> list[dict]:
         base(
             model_id="MAI-Image-2.5",
             display="MAI Image 2.5",
-            ctx=128_000,
+            ctx=0,
             max_out=16_384,
             pricing={"input": 5.0, "output": 33.0},
             input_modalities=["text", "image"],
@@ -725,7 +728,7 @@ def build() -> list[dict]:
         base(
             model_id="MAI-Image-2.5-Flash",
             display="MAI Image 2.5 Flash",
-            ctx=128_000,
+            ctx=0,
             max_out=16_384,
             pricing={"input": 5.0, "output": 19.50},
             input_modalities=["text", "image"],
@@ -754,7 +757,7 @@ def build() -> list[dict]:
         base(
             model_id="MAI-Voice-1",
             display="MAI Voice 1",
-            ctx=25_000,
+            ctx=0,
             max_out=16_384,
             pricing=None,
             input_modalities=["text", "audio"],
@@ -774,7 +777,7 @@ def build() -> list[dict]:
         base(
             model_id="MAI-Voice-2",
             display="MAI Voice 2",
-            ctx=25_000,
+            ctx=0,
             max_out=16_384,
             pricing=None,
             input_modalities=["text", "audio"],
@@ -799,7 +802,7 @@ def build() -> list[dict]:
         base(
             model_id="MAI-Transcribe-1",
             display="MAI Transcribe 1",
-            ctx=25_000,
+            ctx=0,
             max_out=16_384,
             pricing=None,
             input_modalities=["audio"],
@@ -819,7 +822,7 @@ def build() -> list[dict]:
         base(
             model_id="MAI-Transcribe-1.5",
             display="MAI Transcribe 1.5",
-            ctx=25_000,
+            ctx=0,
             max_out=16_384,
             pricing=None,
             input_modalities=["audio"],
@@ -845,7 +848,7 @@ def build() -> list[dict]:
         base(
             model_id="MAI-Thinking-1",
             display="MAI Thinking 1",
-            ctx=256_000,
+            ctx=0,
             max_out=16_384,
             pricing=None,
             reasoning=True,
@@ -865,7 +868,7 @@ def build() -> list[dict]:
         base(
             model_id="MAI-Code-1-Flash",
             display="MAI Code 1 Flash",
-            ctx=128_000,
+            ctx=0,
             max_out=16_384,
             pricing=None,
             function_calling=True,
@@ -887,7 +890,7 @@ def build() -> list[dict]:
         base(
             model_id="model-router",
             display="Model Router",
-            ctx=128_000,
+            ctx=0,
             max_out=16_384,
             pricing=None,
             function_calling=True,
@@ -917,7 +920,7 @@ def build() -> list[dict]:
         service(
             "Azure-AI-Content-Understanding",
             "Azure AI Content Understanding",
-            ctx=25_000,
+            ctx=0,
             input_modalities=["text", "image", "audio"],
             vision=True,
             extra={"family": "ai_services"},
@@ -983,7 +986,7 @@ def build() -> list[dict]:
         service(
             "Azure-Speech-Speech-to-text",
             "Azure Speech to text",
-            ctx=25_000,
+            ctx=0,
             input_modalities=["audio"],
             extra={"family": "speech"},
         )
@@ -992,7 +995,7 @@ def build() -> list[dict]:
         service(
             "Azure-Speech-Text-to-speech",
             "Azure Text to speech",
-            ctx=25_000,
+            ctx=0,
             input_modalities=["text"],
             output_modalities=["audio"],
             extra={"family": "speech"},
@@ -1002,7 +1005,7 @@ def build() -> list[dict]:
         service(
             "Azure-Speech-Text-to-speech-Avatar",
             "Azure Text to speech Avatar",
-            ctx=25_000,
+            ctx=0,
             input_modalities=["text"],
             output_modalities=["video"],
             extra={"family": "speech"},
@@ -1012,7 +1015,7 @@ def build() -> list[dict]:
         service(
             "Azure-Speech-Voice-Live",
             "Azure Speech Voice Live",
-            ctx=25_000,
+            ctx=0,
             input_modalities=["text", "audio"],
             output_modalities=["text", "audio"],
             extra={"family": "speech"},
@@ -1037,41 +1040,41 @@ def build() -> list[dict]:
     # Community / open-weight forks (catalog pollution kept as free)
     # =====================================================================
     for mid, disp, kwargs in [
-        ("unsloth-phi-4", "Unsloth Phi-4", {"ctx": 16_384}),
-        ("unsloth-phi-4-unsloth-bnb-4bit", "Unsloth Phi-4 bnb 4bit", {"ctx": 16_384}),
+        ("unsloth-phi-4", "Unsloth Phi-4", {}),
+        ("unsloth-phi-4-unsloth-bnb-4bit", "Unsloth Phi-4 bnb 4bit", {}),
         ("unsloth-phi-3.5-mini-instruct", "Unsloth Phi-3.5 mini instruct", {}),
         (
             "unsloth-phi-3-medium-4k-instruct",
             "Unsloth Phi-3 medium 4k instruct",
-            {"ctx": 4_096},
+            {},
         ),
         (
             "sreenington-phi-3-mini-4k-instruct-awq",
             "sreenington Phi-3 mini 4k AWQ",
-            {"ctx": 4_096},
+            {},
         ),
         (
             "vonjack-phi-3-mini-4k-instruct-llamafied",
             "vonjack Phi-3 mini 4k llamafied",
-            {"ctx": 4_096},
+            {},
         ),
         ("ba2han-llama-phi-3-dora", "ba2han llama phi-3 dora", {}),
         (
             "third-intellect-phi-3-mini-4k-instruct-orca-math-word-problems-200k-model-16bit",
             "third-intellect Phi-3 mini orca-math 16bit",
-            {"ctx": 4_096},
+            {},
         ),
         (
             "localai-io-localai-functioncall-phi-4-v0.3",
             "LocalAI functioncall Phi-4 v0.3",
-            {"ctx": 16_384, "chat": True},
+            {"chat": True},
         ),
     ]:
         models.append(
             free_weight(
                 mid,
                 disp,
-                ctx=kwargs.get("ctx", 128_000),
+                ctx=0,
                 chat=kwargs.get("chat", False),
                 extra={"upstream_family": "phi"},
             )

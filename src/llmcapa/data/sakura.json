@@ -49,7 +49,7 @@
       "provider": "sakura",
       "model_id": "llm-jp-3.1-8x13b-instruct4",
       "display_name": "llm-jp-3.1-8x13b-instruct4",
-      "context_window": 0,
+      "context_window": 4096,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -98,7 +98,10 @@
           "currency": "JPY",
           "tax": "included"
         },
-        "tier": "standard"
+        "tier": "standard",
+        "context_window_basis": "upstream_base_model",
+        "context_window_source": "https://huggingface.co/llm-jp/llm-jp-3.1-8x13b-instruct4",
+        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification."
       }
     },
     {
@@ -715,7 +718,7 @@
       "provider": "sakura",
       "model_id": "PLaMo 3.0 Prime",
       "display_name": "PLaMo 3.0 Prime",
-      "context_window": 0,
+      "context_window": 262144,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -753,14 +756,17 @@
         "fx_jpy_per_usd_shell": 150.0,
         "official_catalog_checked_at": "2026-10-03",
         "tier": "closed",
-        "pricing_status": "quote/application; price not published on product page"
+        "pricing_status": "quote/application; price not published on product page",
+        "context_window_basis": "upstream_base_model",
+        "context_window_source": "https://www.preferred.jp/ja/blog/tech/plamo-3-0-prime-release",
+        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification."
       }
     },
     {
       "provider": "sakura",
       "model_id": "cotomi v3",
       "display_name": "cotomi v3",
-      "context_window": 0,
+      "context_window": 131072,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -798,14 +804,17 @@
         "fx_jpy_per_usd_shell": 150.0,
         "official_catalog_checked_at": "2026-10-03",
         "tier": "closed",
-        "pricing_status": "quote/application; price not published on product page"
+        "pricing_status": "quote/application; price not published on product page",
+        "context_window_basis": "upstream_base_model",
+        "context_window_source": "https://jpn.nec.com/techrep/journal/g25/n01/250104.html",
+        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification."
       }
     },
     {
       "provider": "sakura",
       "model_id": "Qwen3-0.6B-cpu",
       "display_name": "Qwen3-0.6B-cpu",
-      "context_window": 0,
+      "context_window": 32768,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -855,14 +864,17 @@
           "tax": "included"
         },
         "free_requests_per_month": 3000,
-        "tier": "preview"
+        "tier": "preview",
+        "context_window_basis": "upstream_base_model",
+        "context_window_source": "https://huggingface.co/Qwen/Qwen3-0.6B",
+        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification."
       }
     },
     {
       "provider": "sakura",
       "model_id": "Phi-4-mini-instruct-cpu",
       "display_name": "Phi-4-mini-instruct-cpu",
-      "context_window": 0,
+      "context_window": 131072,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -911,14 +923,17 @@
           "currency": "JPY",
           "tax": "included"
         },
-        "tier": "preview"
+        "tier": "preview",
+        "context_window_basis": "upstream_base_model",
+        "context_window_source": "https://huggingface.co/microsoft/Phi-4-mini-instruct",
+        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification."
       }
     },
     {
       "provider": "sakura",
       "model_id": "Qwen3-VL-30B-A3B-Instruct",
       "display_name": "Qwen3-VL-30B-A3B-Instruct",
-      "context_window": 0,
+      "context_window": 262144,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -967,14 +982,17 @@
           "currency": "JPY",
           "tax": "included"
         },
-        "tier": "preview"
+        "tier": "preview",
+        "context_window_basis": "upstream_base_model",
+        "context_window_source": "https://huggingface.co/Qwen/Qwen3-VL-30B-A3B-Instruct",
+        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification."
       }
     },
     {
       "provider": "sakura",
       "model_id": "Kimi-K2.6",
       "display_name": "Kimi-K2.6",
-      "context_window": 0,
+      "context_window": 262144,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -1023,14 +1041,17 @@
           "currency": "JPY",
           "tax": "included"
         },
-        "tier": "preview"
+        "tier": "preview",
+        "context_window_basis": "upstream_base_model",
+        "context_window_source": "https://platform.kimi.ai/docs/guide/kimi-k2-6-quickstart",
+        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification."
       }
     },
     {
       "provider": "sakura",
       "model_id": "Qwen3.6-35B-A3B",
       "display_name": "Qwen3.6-35B-A3B",
-      "context_window": 0,
+      "context_window": 262144,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -1079,14 +1100,17 @@
           "currency": "JPY",
           "tax": "included"
         },
-        "tier": "preview"
+        "tier": "preview",
+        "context_window_basis": "upstream_base_model",
+        "context_window_source": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B",
+        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification."
       }
     },
     {
       "provider": "sakura",
       "model_id": "gemma-4-31B-it",
       "display_name": "gemma-4-31B-it",
-      "context_window": 0,
+      "context_window": 262144,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -1135,14 +1159,17 @@
           "currency": "JPY",
           "tax": "included"
         },
-        "tier": "preview"
+        "tier": "preview",
+        "context_window_basis": "upstream_base_model",
+        "context_window_source": "https://ai.google.dev/gemma/docs/core/model_card_4",
+        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification."
       }
     },
     {
       "provider": "sakura",
       "model_id": "Kimi-K2.7-Code",
       "display_name": "Kimi-K2.7-Code",
-      "context_window": 0,
+      "context_window": 262144,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -1191,14 +1218,17 @@
           "currency": "JPY",
           "tax": "included"
         },
-        "tier": "preview"
+        "tier": "preview",
+        "context_window_basis": "upstream_base_model",
+        "context_window_source": "https://platform.kimi.ai/docs/guide/kimi-k2-7-code-quickstart",
+        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification."
       }
     },
     {
       "provider": "sakura",
       "model_id": "Qwen3-Embedding-4B(FP16)",
       "display_name": "Qwen3-Embedding-4B(FP16)",
-      "context_window": 0,
+      "context_window": 32768,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -1248,7 +1278,10 @@
           "tax": "included"
         },
         "free_requests_per_month": 10000,
-        "tier": "preview"
+        "tier": "preview",
+        "context_window_basis": "upstream_base_model",
+        "context_window_source": "https://huggingface.co/Qwen/Qwen3-Embedding-4B",
+        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification."
       },
       "embedding": {
         "embedding": true,
@@ -1263,7 +1296,7 @@
       "provider": "sakura",
       "model_id": "Weblab-MedLLM-gpt-oss-120b",
       "display_name": "Weblab-MedLLM-gpt-oss-120b",
-      "context_window": 0,
+      "context_window": 131072,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -1312,7 +1345,10 @@
           "currency": "JPY",
           "tax": "included"
         },
-        "tier": "preview"
+        "tier": "preview",
+        "context_window_basis": "upstream_base_model",
+        "context_window_source": "https://developers.openai.com/api/docs/models/gpt-oss-120b",
+        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification."
       }
     }
   ]

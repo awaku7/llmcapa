@@ -12,6 +12,11 @@ Rules:
   it describes a documented capability or price.
 - Values obtained from live provider catalogs take precedence over these
   fallbacks.
+- `context_window_overrides.json` is the source-attributed snapshot store for
+  model context windows that the updater cannot parse live. A value of `0` in
+  a generated catalog means unknown; do not substitute a generic default.
+  Provider limits must not be inferred from a base-model spec unless the
+  catalog explicitly describes an upstream-model context value.
 - Legacy values are compatibility fallbacks and must not be presented as a
   fresh live discovery.
 - Do not use OpenRouter data to replace native provider catalogs.

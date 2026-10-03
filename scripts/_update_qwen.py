@@ -18,8 +18,10 @@ from pathlib import Path
 
 try:
     from scripts._scrape_qwen import fetch_qwen_catalog
+    from scripts._metadata_loader import apply_context_window_overrides
 except ModuleNotFoundError:  # Direct execution: python scripts/_update_qwen.py
     from _scrape_qwen import fetch_qwen_catalog
+    from _metadata_loader import apply_context_window_overrides
 
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "qwen.json"
@@ -34,7 +36,6 @@ SOURCE = "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
 FLAGSHIP_TEXT: dict[str, dict] = {
     "qwen3.7-max": {
         "display_name": "Qwen3.7 Max",
-        "context_window": 1_000_000,
         "max_output_tokens": 65_536,
         "input_per_1m": 2.5,
         "output_per_1m": 7.5,
@@ -50,7 +51,6 @@ FLAGSHIP_TEXT: dict[str, dict] = {
     },
     "qwen3.7-plus": {
         "display_name": "Qwen3.7 Plus",
-        "context_window": 1_000_000,
         "max_output_tokens": 65_536,
         "input_per_1m": 0.4,
         "output_per_1m": 1.6,
@@ -68,7 +68,6 @@ FLAGSHIP_TEXT: dict[str, dict] = {
     },
     "qwen3.6-flash": {
         "display_name": "Qwen3.6 Flash",
-        "context_window": 1_000_000,
         "max_output_tokens": 65_536,
         "input_per_1m": 0.25,
         "output_per_1m": 1.5,
@@ -82,7 +81,6 @@ FLAGSHIP_TEXT: dict[str, dict] = {
     },
     "qwen3.6-plus": {
         "display_name": "Qwen3.6 Plus",
-        "context_window": 1_000_000,
         "max_output_tokens": 65_536,
         "input_per_1m": 0.5,
         "output_per_1m": 3.0,
@@ -97,7 +95,6 @@ FLAGSHIP_TEXT: dict[str, dict] = {
     },
     "qwen3.6-max-preview": {
         "display_name": "Qwen3.6 Max Preview",
-        "context_window": 262_144,
         "max_output_tokens": 65_536,
         "input_per_1m": 1.3,
         "output_per_1m": 7.8,
@@ -109,7 +106,6 @@ FLAGSHIP_TEXT: dict[str, dict] = {
     },
     "qwen3.5-flash": {
         "display_name": "Qwen3.5 Flash",
-        "context_window": 1_000_000,
         "max_output_tokens": 65_536,
         "input_per_1m": 0.1,
         "output_per_1m": 0.4,
@@ -120,7 +116,6 @@ FLAGSHIP_TEXT: dict[str, dict] = {
     },
     "qwen3.5-plus": {
         "display_name": "Qwen3.5 Plus",
-        "context_window": 1_000_000,
         "max_output_tokens": 65_536,
         "input_per_1m": 0.4,
         "output_per_1m": 2.4,
@@ -136,7 +131,6 @@ FLAGSHIP_TEXT: dict[str, dict] = {
     },
     "qwen3.5-omni-plus": {
         "display_name": "Qwen3.5 Omni Plus",
-        "context_window": 1_000_000,
         "max_output_tokens": 65_536,
         "input_per_1m": 1.4,  # text/image/video input
         "output_per_1m": 8.3,  # text out
@@ -154,7 +148,6 @@ FLAGSHIP_TEXT: dict[str, dict] = {
     },
     "qwen-plus": {
         "display_name": "Qwen-Plus",
-        "context_window": 1_000_000,
         "max_output_tokens": 32_768,
         "input_per_1m": 0.4,
         "output_per_1m": 1.2,
@@ -168,7 +161,6 @@ FLAGSHIP_TEXT: dict[str, dict] = {
     },
     "qwen-flash": {
         "display_name": "Qwen-Flash",
-        "context_window": 1_000_000,
         "max_output_tokens": 32_768,
         "input_per_1m": 0.05,
         "output_per_1m": 0.4,
@@ -179,7 +171,6 @@ FLAGSHIP_TEXT: dict[str, dict] = {
     },
     "qwen-max": {
         "display_name": "Qwen-Max",
-        "context_window": 262_144,
         "max_output_tokens": 32_768,
         "input_per_1m": 1.6,
         "output_per_1m": 6.4,
@@ -191,7 +182,6 @@ FLAGSHIP_TEXT: dict[str, dict] = {
     },
     "qwen3-max": {
         "display_name": "Qwen3 Max",
-        "context_window": 262_144,
         "max_output_tokens": 65_536,
         "input_per_1m": 1.2,
         "output_per_1m": 6.0,
@@ -283,7 +273,7 @@ def make_text_model(model_id: str, spec: dict) -> dict:
         "provider": "qwen",
         "model_id": model_id,
         "display_name": spec["display_name"],
-        "context_window": spec.get("context_window", 128_000),
+        "context_window": int(spec.get("context_window") or 0),
         "max_output_tokens": spec.get("max_output_tokens", 32_768),
         "input_modalities": spec.get("input_modalities", ["text"]),
         "output_modalities": spec.get("output_modalities", ["text"]),
@@ -455,7 +445,7 @@ def main() -> None:
                 "output_per_1m": spec["output_per_1m"],
                 "currency": "USD",
             }
-            m["context_window"] = spec.get("context_window", m.get("context_window", 0))
+            m["context_window"] = int(spec.get("context_window") or 0)
             m["display_name"] = spec["display_name"]
             m["aliases"] = []  # no OR cross-alias
             extra = m.get("extra") or {}
@@ -500,6 +490,7 @@ def main() -> None:
         if model.get("provider") == "qwen":
             apply_thinking_metadata(model)
 
+    apply_context_window_overrides(models)
     models.sort(key=lambda x: x["model_id"])
     data["models"] = models
     OUT.write_text(

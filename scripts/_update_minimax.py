@@ -16,8 +16,10 @@ from pathlib import Path
 
 try:
     from scripts._scrape_minimax import fetch_minimax_catalog
+    from scripts._metadata_loader import apply_context_window_overrides
 except ModuleNotFoundError:  # Direct execution: python scripts/_update_minimax.py
     from _scrape_minimax import fetch_minimax_catalog
+    from _metadata_loader import apply_context_window_overrides
 
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "minimax.json"
@@ -35,7 +37,6 @@ TEXT_MODELS = [
     {
         "model_id": "MiniMax-M3",
         "display_name": "MiniMax M3",
-        "context_window": 1_000_000,
         "max_output_tokens": 524_288,
         "input_modalities": ["text", "image", "video"],
         "output_modalities": ["text"],
@@ -74,7 +75,6 @@ TEXT_MODELS = [
     {
         "model_id": "MiniMax-M2.7",
         "display_name": "MiniMax M2.7",
-        "context_window": 1_000_000,
         "max_output_tokens": 131_072,
         "input_modalities": ["text"],
         "output_modalities": ["text"],
@@ -92,7 +92,6 @@ TEXT_MODELS = [
     {
         "model_id": "MiniMax-M2.7-highspeed",
         "display_name": "MiniMax M2.7 Highspeed",
-        "context_window": 1_000_000,
         "max_output_tokens": 131_072,
         "input_modalities": ["text"],
         "output_modalities": ["text"],
@@ -106,7 +105,6 @@ TEXT_MODELS = [
     {
         "model_id": "MiniMax-M2.5",
         "display_name": "MiniMax M2.5",
-        "context_window": 1_000_000,
         "max_output_tokens": 131_072,
         "input_modalities": ["text"],
         "output_modalities": ["text"],
@@ -120,7 +118,6 @@ TEXT_MODELS = [
     {
         "model_id": "MiniMax-M2.5-highspeed",
         "display_name": "MiniMax M2.5 Highspeed",
-        "context_window": 1_000_000,
         "max_output_tokens": 131_072,
         "input_modalities": ["text"],
         "output_modalities": ["text"],
@@ -134,7 +131,6 @@ TEXT_MODELS = [
     {
         "model_id": "MiniMax-M2.1",
         "display_name": "MiniMax M2.1",
-        "context_window": 1_000_000,
         "max_output_tokens": 131_072,
         "input_modalities": ["text"],
         "output_modalities": ["text"],
@@ -147,7 +143,6 @@ TEXT_MODELS = [
     {
         "model_id": "MiniMax-M2.1-highspeed",
         "display_name": "MiniMax M2.1 Highspeed",
-        "context_window": 1_000_000,
         "max_output_tokens": 131_072,
         "input_modalities": ["text"],
         "output_modalities": ["text"],
@@ -160,7 +155,6 @@ TEXT_MODELS = [
     {
         "model_id": "MiniMax-M2",
         "display_name": "MiniMax M2",
-        "context_window": 1_000_000,
         "max_output_tokens": 131_072,
         "input_modalities": ["text"],
         "output_modalities": ["text"],
@@ -174,7 +168,6 @@ TEXT_MODELS = [
     {
         "model_id": "minimax-m1",
         "display_name": "MiniMax M1",
-        "context_window": 1_000_000,
         "max_output_tokens": 100_000,
         "input_modalities": ["text"],
         "output_modalities": ["text"],
@@ -190,7 +183,6 @@ TEXT_MODELS = [
     {
         "model_id": "minimax-01",
         "display_name": "MiniMax-01",
-        "context_window": 1_000_192,
         "max_output_tokens": 100_000,
         "input_modalities": ["text", "image"],
         "output_modalities": ["text"],
@@ -374,6 +366,7 @@ def build_models() -> list[dict]:
         )
         return (specialty, m["model_id"].lower())
 
+    apply_context_window_overrides(models)
     models.sort(key=sort_key)
     return models
 

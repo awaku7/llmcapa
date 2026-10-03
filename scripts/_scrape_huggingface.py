@@ -19,7 +19,7 @@ Output format (huggingface.json):
                 "provider": "huggingface",
                 "model_id": "org/model-name",
                 "display_name": "org/model-name",
-                "context_window": 4096,    # default, often unknown
+                "context_window": 0,       # unknown unless read from model config
                 "max_output_tokens": 2048, # default
                 "input_modalities": ["text"],
                 "output_modalities": ["text"],
@@ -151,7 +151,7 @@ def convert_to_catalog_format(raw_models: list) -> list:
             "provider": "huggingface",
             "model_id": model_id,
             "display_name": model_id,
-            "context_window": 4096,
+            "context_window": 0,
             "max_output_tokens": 2048,
             "input_modalities": input_mods,
             "output_modalities": output_mods,

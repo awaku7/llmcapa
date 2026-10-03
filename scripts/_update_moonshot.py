@@ -15,6 +15,8 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
+from _metadata_loader import context_window_override
+
 WORKDIR = Path(__file__).resolve().parents[1]
 DATA = WORKDIR / "src" / "llmcapa" / "data"
 INSTALLED_DIR = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data"
@@ -26,7 +28,6 @@ def row(
     *,
     model_id: str,
     display: str,
-    ctx: int,
     inp: float,
     out: float,
     cache_hit: float | None = None,
@@ -40,6 +41,8 @@ def row(
     extra_notes: dict | None = None,
 ) -> dict:
     aliases = list(aliases or [])
+    context_override = context_window_override("moonshot", model_id) or {}
+    context_window = int(context_override.get("context_window", 0) or 0)
     # Native catalog only. Route-qualified IDs such as
     # moonshotai/<id> belong to aggregator catalogs (openrouter,
     # together) and must not be added as native aliases.
@@ -49,6 +52,12 @@ def row(
     if video:
         modalities.append("video")
     extra: dict = {"source": SOURCE}
+    override_source = context_override.get("source")
+    if override_source:
+        extra["context_window_source"] = override_source
+        extra["context_window_basis"] = context_override.get(
+            "basis", "official_metadata_fallback"
+        )
     if cache_hit is not None:
         extra["cached_input_per_1m"] = cache_hit
         # official tables: Cache Hit / Cache Miss / Output
@@ -60,7 +69,7 @@ def row(
         "provider": "moonshot",
         "model_id": model_id,
         "display_name": display,
-        "context_window": ctx,
+        "context_window": context_window,
         "max_output_tokens": max_out,
         "input_modalities": modalities,
         "output_modalities": ["text"],
@@ -99,7 +108,6 @@ def build() -> list[dict]:
         row(
             model_id="kimi-k3",
             display="Kimi K3",
-            ctx=1_048_576,
             inp=3.0,
             out=15.0,
             cache_hit=0.30,
@@ -123,7 +131,6 @@ def build() -> list[dict]:
             model_id="kimi-k2.7-code",
             display="Kimi K2.7 Code",
             aliases=["kimi/kimi-k2.7-code"],
-            ctx=262_144,
             inp=0.95,
             out=4.0,
             cache_hit=0.19,
@@ -146,7 +153,6 @@ def build() -> list[dict]:
                 "moonshotai/kimi-k2.7-code-highspeed",
                 "kimi/kimi-k2.7-code-highspeed",
             ],
-            ctx=262_144,
             inp=1.90,
             out=8.0,
             cache_hit=0.38,
@@ -169,7 +175,6 @@ def build() -> list[dict]:
             model_id="kimi-k2.6",
             display="Kimi K2.6",
             aliases=["kimi/kimi-k2.6"],
-            ctx=262_144,
             inp=0.95,
             out=4.0,
             cache_hit=0.16,
@@ -188,7 +193,6 @@ def build() -> list[dict]:
             model_id="kimi-k2.5",
             display="Kimi K2.5",
             aliases=["kimi/kimi-k2.5"],
-            ctx=262_144,
             inp=0.60,
             out=3.0,
             cache_hit=0.10,
@@ -206,7 +210,6 @@ def build() -> list[dict]:
             model_id="kimi-k2-thinking",
             display="Kimi K2 Thinking",
             aliases=["kimi/kimi-k2-thinking"],
-            ctx=262_144,
             inp=0.60,
             out=2.50,
             cache_hit=0.15,
@@ -220,7 +223,6 @@ def build() -> list[dict]:
             model_id="kimi-k2-0905",
             display="Kimi K2 0905",
             aliases=["kimi/kimi-k2-0905"],
-            ctx=262_144,
             inp=0.60,
             out=2.50,
             reasoning=True,
@@ -232,7 +234,6 @@ def build() -> list[dict]:
             model_id="kimi-k2",
             display="Kimi K2",
             aliases=["kimi/kimi-k2"],
-            ctx=131_072,
             inp=0.57,
             out=2.30,
             reasoning=True,
@@ -241,16 +242,15 @@ def build() -> list[dict]:
     )
 
     # Moonshot V1 legacy family
-    for mid, disp, ctx, inp, out in [
-        ("moonshot-v1-8k", "Moonshot V1 8K", 8192, 0.20, 2.0),
-        ("moonshot-v1-32k", "Moonshot V1 32K", 32768, 1.0, 3.0),
-        ("moonshot-v1-128k", "Moonshot V1 128K", 131072, 2.0, 5.0),
+    for mid, disp, inp, out in [
+        ("moonshot-v1-8k", "Moonshot V1 8K", 0.20, 2.0),
+        ("moonshot-v1-32k", "Moonshot V1 32K", 1.0, 3.0),
+        ("moonshot-v1-128k", "Moonshot V1 128K", 2.0, 5.0),
     ]:
         models.append(
             row(
                 model_id=mid,
                 display=disp,
-                ctx=ctx,
                 inp=inp,
                 out=out,
                 reasoning=False,

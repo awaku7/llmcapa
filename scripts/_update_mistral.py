@@ -263,9 +263,7 @@ def build_row(slug: str, m: dict) -> dict:
     # version string misread as context) must never inflate a bundled value:
     # only grow ctx when the card has header-row Features (real card) or when
     # there is no bundled value yet. Specialty cards keep ctx=0.
-    ctx_tokens = (int(float(ctx) * 1000) if ctx else 0) or (
-        0 if _is_specialty(mid) else 4096
-    )
+    ctx_tokens = int(float(ctx) * 1000) if ctx else 0
     max_out_tokens = int(float(max_out) * 1000) if max_out else 0
 
     # Pricing: only token pricing goes into pricing{}; specialty units in extra
@@ -517,9 +515,9 @@ def main() -> None:
                 # Card has no header-row CONTEXT (retired prototype / OCR stub):
                 # keep the bundled value instead of zeroing it.
                 row["context_window"] = old_ctx
-            elif new_ctx in (4096, 2000000) and old_ctx not in (0, 4096, 2000000):
-                # 4096 is the chat-default fallback and 2000000 is version-string
-                # noise (v26.04 etc.); a real bundled value wins over those.
+            elif new_ctx == 2000000 and old_ctx not in (0, 2000000):
+                # 2000000 is version-string noise (v26.04 etc.); a real
+                # bundled value wins over it, while an explicit 4096 is valid.
                 row["context_window"] = old_ctx
             if row.get("pricing") is None and old.get("pricing"):
                 row["pricing"] = old["pricing"]

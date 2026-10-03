@@ -20,6 +20,8 @@ from pathlib import Path
 from urllib.error import URLError
 from urllib.request import Request, urlopen
 
+from _metadata_loader import apply_context_window_overrides
+
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "inception.json"
 LOG = ROOT / "provider_update_log.md"
@@ -129,7 +131,7 @@ def _edit_entry(today: str) -> dict[str, object]:
         "provider": "inception",
         "model_id": "mercury-edit-2",
         "display_name": "Inception: Mercury Edit 2",
-        "context_window": 32768,
+        "context_window": 0,
         "max_output_tokens": 8192,
         "input_modalities": ["text"],
         "output_modalities": ["text"],
@@ -165,7 +167,6 @@ def _edit_entry(today: str) -> dict[str, object]:
                 "v1/fim/completions",
                 "v1/edit/completions",
             ],
-            "context_windows": {"fim": 32768, "next_edit": 32768},
         },
     }
 
@@ -185,7 +186,15 @@ def update_catalog(*, dry_run: bool = False) -> dict[str, int]:
     old = json.loads(DATA.read_text(encoding="utf-8"))
     old_by_id = {str(row.get("model_id")): row for row in old.get("models", [])}
     rows = [_chat_entry(record, today) for record in records if record.get("id")]
-    rows.append(_edit_entry(today))
+    edit_entry = _edit_entry(today)
+    apply_context_window_overrides([edit_entry])
+    edit_context = int(edit_entry.get("context_window") or 0)
+    if edit_context:
+        edit_entry.setdefault("extra", {})["context_windows"] = {
+            "fim": edit_context,
+            "next_edit": edit_context,
+        }
+    rows.append(edit_entry)
     official_ids = {str(row["model_id"]) for row in rows}
 
     # Retain previously known records as deprecated rather than silently

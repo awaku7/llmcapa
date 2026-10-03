@@ -371,8 +371,56 @@ def dedupe(models: list[dict]) -> list[dict]:
     return [by_id[i] for i in order]
 
 
+def preserve_upstream_context_specs(
+    models: list[dict], previous_models: list[dict]
+) -> int:
+    """Carry forward context specs and citations stored in the prior catalog.
+
+    Sakura's public product page omits per-model context limits. The verified
+    upstream context values are therefore catalog metadata, not updater constants;
+    model rows retain their source and upstream basis in ``extra``.
+    """
+    previous_by_id = {
+        str(row.get("model_id", "")).casefold(): row
+        for row in previous_models
+        if isinstance(row, dict)
+    }
+    metadata_keys = (
+        "context_window_basis",
+        "context_window_source",
+        "context_window_note",
+    )
+    preserved = 0
+    for row in models:
+        previous = previous_by_id.get(str(row.get("model_id", "")).casefold())
+        if not previous:
+            continue
+        previous_extra = previous.get("extra") or {}
+        previous_context = previous.get("context_window")
+        if (
+            previous_extra.get("context_window_basis") != "upstream_base_model"
+            or not isinstance(previous_context, int)
+            or previous_context <= 0
+            or not previous_extra.get("context_window_source")
+        ):
+            continue
+        row["context_window"] = previous_context
+        extra = row.setdefault("extra", {})
+        for key in metadata_keys:
+            if key in previous_extra:
+                extra[key] = previous_extra[key]
+        preserved += 1
+    return preserved
+
+
 def main() -> None:
+    previous_models = []
+    if OUT.exists():
+        previous_models = json.loads(OUT.read_text(encoding="utf-8")).get("models", [])
     models = build()
+    upstream_contexts_preserved = preserve_upstream_context_specs(
+        models, previous_models
+    )
     OUT.parent.mkdir(parents=True, exist_ok=True)
     payload = {"models": models}
     OUT.write_text(
@@ -399,6 +447,10 @@ def main() -> None:
         flush=True,
     )
     print(f"  tiers: {by_tier}", flush=True)
+    print(
+        f"  preserved upstream context specs: {upstream_contexts_preserved}",
+        flush=True,
+    )
     for m in models:
         p = m.get("pricing") or {}
         pin, pout = p.get("input_per_1m"), p.get("output_per_1m")
@@ -429,7 +481,7 @@ def main() -> None:
         f"(active={active}, deprecated={deprecated}, "
         f"priced={priced}, extra={extra_n})\n"
         f"- Tiers: {by_tier}\n"
-        f"- Model IDs and categories were discovered from the live product tables; values absent from the page remain unknown.\n"
+        f"- Model IDs, categories, and prices come from the live product tables. Selected context_window values use official upstream base-model specifications and are marked in extra; Sakura deployment-specific limits remain unpublished. Other missing values remain unknown.\n"
         f"- Token/audio/TTS prices are parsed from the current table; quote-only closed models remain unpriced.\n"
         f"- No local sakura_legacy_models.json manifest or hard-coded model catalog is used.\n"
         f"- Install copy synced\n"

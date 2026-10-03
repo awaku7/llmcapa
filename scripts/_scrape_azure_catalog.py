@@ -66,7 +66,7 @@ def _api_item_to_entry(item: dict) -> dict:
             supports_audio_output = True
 
     limits = props.get("limits", {})
-    ctx = limits.get("maxContextLength", 4096) or 4096
+    ctx = limits.get("maxContextLength") or 0
     max_out = limits.get("maxOutputTokens", 2048) or 2048
 
     return {
@@ -280,7 +280,7 @@ async def fetch_ssr_detail(page, model_name: str) -> dict:
     # Parse context window (e.g. "400k" -> 400000)
     ctx_raw = qf.get("Context window", "")
     ctx_match = re.search(r"([\d,.]+)\s*k", ctx_raw, re.I)
-    ctx = int(float(ctx_match.group(1).replace(",", "")) * 1000) if ctx_match else 4096
+    ctx = int(float(ctx_match.group(1).replace(",", "")) * 1000) if ctx_match else 0
 
     # Parse token limits
     tok_raw = qf.get("Token limits", "")

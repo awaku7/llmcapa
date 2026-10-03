@@ -23,8 +23,10 @@ from playwright.sync_api import sync_playwright
 
 try:
     from scripts._computer_use_metadata import meta_computer_use_capability
+    from scripts._metadata_loader import apply_context_window_overrides
 except ModuleNotFoundError:  # Direct execution: python scripts/_update_meta.py
     from _computer_use_metadata import meta_computer_use_capability
+    from _metadata_loader import apply_context_window_overrides
 
 ROOT = Path(__file__).resolve().parents[1]
 LOG = ROOT / "provider_update_log.md"
@@ -191,7 +193,7 @@ def spark_row(*, model_id: str, display: str, tier: str, table: dict) -> dict:
         "provider": "meta",
         "model_id": model_id,
         "display_name": display,
-        "context_window": table.get("context", 1_048_576),
+        "context_window": table.get("context", 0),
         "max_output_tokens": 0,
         "input_modalities": ["text", "image", "video", "file", "audio"],
         "output_modalities": ["text"],
@@ -306,7 +308,7 @@ def build() -> tuple[list[dict], dict]:
         "provider": "meta",
         "model_id": "muse-glimmer-30b",
         "display_name": "Meta: Muse Glimmer 30B",
-        "context_window": 131072,
+        "context_window": 0,
         "max_output_tokens": 0,
         "input_modalities": ["text", "image"],
         "output_modalities": ["text"],
@@ -439,6 +441,7 @@ def build() -> tuple[list[dict], dict]:
         }
     )
 
+    apply_context_window_overrides(models)
     meta = {
         "home_status": home_status,
         "models_status": models_status,

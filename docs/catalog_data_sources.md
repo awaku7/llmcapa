@@ -74,6 +74,7 @@ any SSR (Server-Side Rendering) limitations and known issues.
 | Baseten | Model APIs catalog; authenticated refresh (`BASETEN_API_KEY`), initial snapshot from official docs | None |
 | DeepInfra | Public Models List API (text-generation and embedding records) | None |
 | Nebius Token Factory | Public `models_info` catalog API | None |
+| Sakura AI Engine | Official product tables; upstream model cards for selected context windows | Sakura deployment limits are not published; upstream values are marked in `extra` |
 | Anthropic | API | None |
 | Google (Gemini) | API | None |
 | DeepSeek | Web scraping | None |

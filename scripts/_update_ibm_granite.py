@@ -12,6 +12,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.request import Request, urlopen
 
+from _metadata_loader import apply_context_window_overrides
+
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "ibm-granite.json"
 LOG = ROOT / "provider_update_log.md"
@@ -30,12 +32,11 @@ def fetch_page() -> str:
 
 
 def base_model(model_id: str, size: str) -> dict:
-    is_30b = size == "30B"
     return {
         "provider": "ibm-granite",
         "model_id": model_id,
         "display_name": f"IBM: Granite 4.2 {size}",
-        "context_window": 512000 if is_30b else 128000,
+        "context_window": 0,
         "max_output_tokens": 0,
         "input_modalities": ["text"],
         "output_modalities": ["text"],
@@ -98,7 +99,7 @@ def main() -> None:
         model.update(
             {
                 "display_name": f"IBM: Granite 4.2 {size}",
-                "context_window": 512000 if size == "30B" else 128000,
+                "context_window": 0,
                 "max_output_tokens": 0,
                 "supports_function_calling": True,
                 "supports_reasoning": True,
@@ -118,11 +119,18 @@ def main() -> None:
                 "granite_4_2_size": size,
                 "reasoning": "native chain-of-thought thinking",
                 "tool_calling": "reasoning-augmented tool calling",
-                "context_note": "128K for all Granite 4.2 models; 30B supports long-context extension to 512K",
+                "context_note": "See source-attributed context metadata.",
                 "pricing_status": "not specified on IBM Granite model page",
             }
         )
 
+    granite_ids = set(granite_42)
+    for model in models:
+        if model.get("model_id") in granite_ids:
+            extra = model.setdefault("extra", {})
+            extra.pop("long_context_window", None)
+            model["context_window"] = 0
+    apply_context_window_overrides(models)
     models.sort(key=lambda m: m.get("model_id", ""))
     DATA.write_text(
         json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"

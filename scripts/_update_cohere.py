@@ -15,6 +15,8 @@ from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
+from _metadata_loader import apply_context_window_overrides
+
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "cohere.json"
 INSTALLED = (
@@ -37,6 +39,20 @@ PAGES = {
     "cohere/command-r-plus-08-2024": "https://docs.cohere.com/docs/command-r-plus",
     "cohere/command-r-08-2024": "https://docs.cohere.com/docs/command-r",
 }
+
+
+def _parse_token_count(label: str, source: str) -> int | None:
+    hit = re.search(
+        label + r"\s*([0-9][0-9,]*(?:\.[0-9]+)?)\s*([kmb]?)\b",
+        source,
+        re.IGNORECASE,
+    )
+    if not hit:
+        return None
+    value = float(hit.group(1).replace(",", ""))
+    suffix = hit.group(2).lower()
+    multiplier = {"": 1, "k": 1_000, "m": 1_000_000, "b": 1_000_000_000}[suffix]
+    return int(value * multiplier)
 
 
 def main() -> None:
@@ -72,9 +88,12 @@ def main() -> None:
                 and "Context Window:" in text
                 and "Pricing" in text
             ):
+                ctx = _parse_token_count(r"Context Window:", text)
+                if ctx is not None:
+                    model["context_window"] = ctx
+                    extra["official_context_window"] = ctx
                 model.update(
                     {
-                        "context_window": 256000,
                         "max_output_tokens": 8000,
                         "supports_function_calling": True,
                         "supports_json_mode": True,
@@ -89,7 +108,6 @@ def main() -> None:
                 extra.update(
                     {
                         "official_endpoint_model_id": "command-a-plus-05-2026",
-                        "official_context_window": 256000,
                         "official_max_output_tokens": 8000,
                         "official_input_per_1m": 2.5,
                         "official_output_per_1m": 10.0,
@@ -97,10 +115,6 @@ def main() -> None:
                     }
                 )
             elif "Context Window:" in text and "Pricing" in text:
-
-                def num(label: str, source: str = text):
-                    hit = re.search(label + r"\s*([0-9][0-9,]*)", source, re.IGNORECASE)
-                    return int(hit.group(1).replace(",", "")) if hit else None
 
                 def price(label: str, source: str = text):
                     hit = re.search(
@@ -110,8 +124,8 @@ def main() -> None:
                     )
                     return float(hit.group(1)) if hit else None
 
-                ctx = num(r"Context Window:")
-                max_out = num(r"Max Output Tokens:")
+                ctx = _parse_token_count(r"Context Window:", text)
+                max_out = _parse_token_count(r"Max Output Tokens:", text)
                 inp = price(r"Input")
                 outp = price(r"Output")
                 if ctx is not None:
@@ -145,6 +159,7 @@ def main() -> None:
             checked += 1
             changed += extra != before
         browser.close()
+    apply_context_window_overrides(data.get("models", []))
     DATA.write_text(
         json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )

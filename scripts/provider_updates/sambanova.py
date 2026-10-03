@@ -8,22 +8,29 @@ from pathlib import Path
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[2]
+try:
+    from scripts._metadata_loader import apply_context_window_overrides
+except ModuleNotFoundError:  # Direct execution from scripts/provider_updates
+    import sys
+
+    sys.path.insert(0, str(ROOT / "scripts"))
+    from _metadata_loader import apply_context_window_overrides
+
+
 DATA = ROOT / "src" / "llmcapa" / "data" / "sambanova.json"
 LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://docs.sambanova.ai/docs/en/models/sambacloud-models"
 
 MODELS = {
-    "MiniMax-M2.7": {"context": 192000, "stage": "production", "input": ["text"]},
-    "DeepSeek-V3.1": {"context": 128000, "stage": "production", "input": ["text"]},
+    "MiniMax-M2.7": {"stage": "production", "input": ["text"]},
+    "DeepSeek-V3.1": {"stage": "production", "input": ["text"]},
     "Meta-Llama-3.3-70B-Instruct": {
-        "context": 128000,
         "stage": "production",
         "input": ["text"],
     },
-    "gpt-oss-120b": {"context": 128000, "stage": "production", "input": ["text"]},
-    "DeepSeek-V3.2": {"context": 32000, "stage": "preview", "input": ["text"]},
+    "gpt-oss-120b": {"stage": "production", "input": ["text"]},
+    "DeepSeek-V3.2": {"stage": "preview", "input": ["text"]},
     "gemma-4-31B-it": {
-        "context": 128000,
         "stage": "preview",
         "input": ["text", "image", "video"],
     },
@@ -51,7 +58,7 @@ def main() -> None:
             "provider": "sambanova",
             "model_id": model_id,
             "display_name": model_id,
-            "context_window": spec["context"],
+            "context_window": 0,
             "max_output_tokens": 0,
             "input_modalities": input_modalities,
             "output_modalities": ["text"],
@@ -82,6 +89,7 @@ def main() -> None:
         }
         rows.append(row)
 
+    apply_context_window_overrides(rows)
     DATA.write_text(
         json.dumps({"models": rows}, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
@@ -90,7 +98,7 @@ def main() -> None:
         LOG.read_text(encoding="utf-8")
         + f"\n## SambaNova official refresh ({datetime.now(timezone.utc).date().isoformat()})\n\n"
         + f"- Source: {SOURCE}\n"
-        + "- Parsed 4 production and 2 preview SambaCloud models, including context lengths and modalities.\n"
+        + "- Recorded availability and modalities for 4 production and 2 preview SambaCloud models.\n"
         + "- Pricing was not inferred because it is not specified on the model overview page.\n",
         encoding="utf-8",
     )

@@ -7,6 +7,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.request import Request, urlopen
 
+from _metadata_loader import apply_context_window_overrides
+
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src/llmcapa/data/stepfun.json"
 INSTALLED = (
@@ -18,13 +20,11 @@ RULES = {
     "step-3.5-flash": {
         "input": 0.10,
         "output": 0.30,
-        "context": 262144,
         "max_output": 65536,
     },
     "step-3.7-flash": {
         "input": 0.20,
         "output": 1.15,
-        "context": 262144,
         "max_output": 256000,
     },
 }
@@ -45,7 +45,7 @@ def main():
             continue
         m.update(
             {
-                "context_window": rule["context"],
+                "context_window": 0,
                 "max_output_tokens": rule["max_output"],
                 "pricing": {
                     "input_per_1m": rule["input"],
@@ -63,6 +63,7 @@ def main():
             }
         )
         updated += 1
+    apply_context_window_overrides(data.get("models", []))
     DATA.write_text(
         json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )

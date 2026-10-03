@@ -7,6 +7,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.request import Request, urlopen
 
+from _metadata_loader import context_window_override
+
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "aion-labs.json"
 INSTALLED = (
@@ -15,11 +17,11 @@ INSTALLED = (
 LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://www.aionlabs.ai/docs/models/"
 RULES = {
-    "aion-labs/aion-2.0": (128000, 32768, 0.80, 1.60, True),
-    "aion-labs/aion-3.0": (128000, 32768, 3.00, 6.00, True),
-    "aion-labs/aion-3.0-mini": (128000, 32768, 0.70, 1.40, True),
-    "aion-labs/aion-rp-llama-3.1-8b": (32768, 32768, 0.80, 1.60, False),
-    "aion-labs/aion-2.5": (128000, 32768, 1.00, 3.00, True),
+    "aion-labs/aion-2.0": (32768, 0.80, 1.60, True),
+    "aion-labs/aion-3.0": (32768, 3.00, 6.00, True),
+    "aion-labs/aion-3.0-mini": (32768, 0.70, 1.40, True),
+    "aion-labs/aion-rp-llama-3.1-8b": (32768, 0.80, 1.60, False),
+    "aion-labs/aion-2.5": (32768, 1.00, 3.00, True),
 }
 
 
@@ -33,8 +35,10 @@ def main() -> None:
     today = datetime.now(timezone.utc).date().isoformat()
     by_id = {m.get("model_id"): m for m in data.get("models", [])}
     updated = 0
-    for mid, (ctx, max_out, inp, out, reasoning) in RULES.items():
+    for mid, (max_out, inp, out, reasoning) in RULES.items():
         bare = mid.split("/", 1)[1] if "/" in mid else mid
+        context_spec = context_window_override("aion-labs", bare) or {}
+        ctx = int(context_spec.get("context_window") or 0)
         # drop legacy slash-duplicate; the native catalog uses bare ids
         # (slash routes such as aion-labs/aion-3.0 belong to the openrouter catalog)
         data["models"][:] = [
@@ -47,7 +51,7 @@ def main() -> None:
                 "provider": "aion-labs",
                 "model_id": bare,
                 "display_name": bare,
-                "context_window": ctx,
+                "context_window": 0,
                 "max_output_tokens": max_out,
                 "input_modalities": ["text"],
                 "output_modalities": ["text"],
@@ -93,6 +97,11 @@ def main() -> None:
                 "official_models_api": "https://api.aionlabs.ai/v1/models",
             }
         )
+        if context_spec.get("source"):
+            extra["context_window_source"] = context_spec["source"]
+            extra["context_window_basis"] = context_spec.get(
+                "basis", "official_metadata_fallback"
+            )
         updated += 1
     data["models"].sort(key=lambda m: m.get("model_id", ""))
     DATA.write_text(
@@ -102,7 +111,7 @@ def main() -> None:
     INSTALLED.write_text(DATA.read_text(encoding="utf-8"), encoding="utf-8")
     LOG.write_text(
         LOG.read_text(encoding="utf-8")
-        + f"\n## Aion Labs official refresh ({today})\n\n- Source: {SOURCE}\n- Parsed official context, max output, reasoning flag, and USD pricing for {updated} Aion records, including expired Aion 2.5.\n- OpenRouter was not used.\n",
+        + f"\n## Aion Labs official refresh ({today})\n\n- Source: {SOURCE}\n- Updated official model availability, max output, reasoning flag, and USD pricing for {updated} Aion records, including expired Aion 2.5.\n- Context windows come from source-attributed metadata fallbacks because the updater does not parse them from the page.\n- OpenRouter was not used.\n",
         encoding="utf-8",
     )
     print(f"aion-labs.json: official_models_updated={updated}")

@@ -39,7 +39,7 @@ def entry(raw: dict, old: dict | None) -> dict:
             "provider": "ollama",
             "model_id": name,
             "display_name": name,
-            "context_window": 4096,
+            "context_window": 0,
             "max_output_tokens": 2048,
             "input_modalities": ["text"],
             "output_modalities": ["text"],
@@ -55,6 +55,15 @@ def entry(raw: dict, old: dict | None) -> dict:
             "deprecated": False,
         }
     )
+    if old is not None:
+        old_extra = old.get("extra") or {}
+        # Older runs applied 4096 as a generic tags-API default. The tags
+        # endpoint has no context field, so clear only that unproven sentinel.
+        if (
+            old.get("context_window") == 4096
+            and not old_extra.get("context_window_source")
+        ):
+            d["context_window"] = 0
     d["provider"] = "ollama"
     d["model_id"] = name
     d["display_name"] = d.get("display_name") or name
