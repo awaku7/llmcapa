@@ -28,6 +28,9 @@ def test_new_provider_catalogs_are_registered_and_resolvable() -> None:
     assert baseten.context_window == 1_048_000
     assert baseten.supports("vision") is True
 
+    deepinfra_audio = llmcapa.get("google/gemini-2.5-flash", provider="deepinfra")
+    assert deepinfra_audio.supports("audio_input") is True
+
 
 def test_nebius_parser_maps_official_context_pricing_and_features() -> None:
     rows = [
@@ -68,7 +71,7 @@ def test_deepinfra_parser_converts_prices_and_skips_non_llm_models() -> None:
         "type": "text-generation",
         "reported_type": "text-generation",
         "description": "Vision model with reasoning and tools.",
-        "tags": ["openai", "multimodal", "reasoning", "tools", "json"],
+        "tags": ["openai", "multimodal", "input-audio", "reasoning", "tools", "json"],
         "pricing": {
             "type": "tokens",
             "cents_per_input_token": 0.000009,
@@ -83,6 +86,7 @@ def test_deepinfra_parser_converts_prices_and_skips_non_llm_models() -> None:
     assert parsed["pricing"]["input_per_1m"] == 0.09
     assert parsed["pricing"]["output_per_1m"] == 0.34
     assert parsed["supports_vision"] is True
+    assert parsed["input_modalities"] == ["text", "image", "audio"]
     assert parsed["supports_function_calling"] is True
     assert parsed["supports_reasoning"] is True
     assert parsed["supports_json_mode"] is True

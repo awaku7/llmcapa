@@ -64,6 +64,8 @@ def model_to_entry(model: dict[str, Any]) -> dict[str, Any] | None:
     input_modalities = ["text"]
     if not is_embedding and ({"vision", "multimodal", "image-input"} & tags):
         input_modalities.append("image")
+    if not is_embedding and "input-audio" in tags:
+        input_modalities.append("audio")
     if not is_embedding and "input-video" in tags:
         input_modalities.append("video")
     output_modalities = ["embedding"] if is_embedding else ["text"]
