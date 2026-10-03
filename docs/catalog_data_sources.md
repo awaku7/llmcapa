@@ -71,6 +71,9 @@ any SSR (Server-Side Rendering) limitations and known issues.
 
 | Provider | Method | SSR issue |
 |---|---|---|
+| Baseten | Model APIs catalog; authenticated refresh (`BASETEN_API_KEY`), initial snapshot from official docs | None |
+| DeepInfra | Public Models List API (text-generation and embedding records) | None |
+| Nebius Token Factory | Public `models_info` catalog API | None |
 | Anthropic | API | None |
 | Google (Gemini) | API | None |
 | DeepSeek | Web scraping | None |

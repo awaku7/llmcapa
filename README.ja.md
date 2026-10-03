@@ -4,7 +4,7 @@
 
 ## 特徴
 
-- **包括的な同梱データ**: OpenAI、Anthropic、Google (Gemini)、Microsoft (Phi)、Amazon (Nova/Titan)、Meta (Llama)、Mistral、Qwen、DeepSeek、xAI (Grok)、NVIDIA、MoonshotAI (Kimi)、zhipu-ai (GLM)、Sakana AI (Fugu)、**Azure AI Foundry**、Novita AI、**Together AI（98モデル）**、OpenRouter、**HuggingFace（人気モデル 2,904）**、**Modellix LLM・メディアモデル**（LLM 29件、メディア178件）、**TypeSafe（Jev / System One の決定出力モデル）**、および日本の国内モデル（デジタル庁の「GENNAI」プラットフォームで採用されているNTT tsuzumi、PFN PLaMo、ELYZA、SoftBank、NEC、Fujitsuなど）のオフライン機能データを同梱しています。
+- **包括的な同梱データ**: OpenAI、Anthropic、Google (Gemini)、Microsoft (Phi)、Amazon (Nova/Titan)、Meta (Llama)、Mistral、Qwen、DeepSeek、xAI (Grok)、NVIDIA、MoonshotAI (Kimi)、zhipu-ai (GLM)、Sakana AI (Fugu)、**Azure AI Foundry**、Baseten、DeepInfra、Nebius Token Factory、Novita AI、**Together AI（98モデル）**、OpenRouter、**HuggingFace（人気モデル 2,904）**、**Modellix LLM・メディアモデル**（LLM 29件、メディア178件）、**TypeSafe（Jev / System One の決定出力モデル）**、および日本の国内モデル（デジタル庁の「GENNAI」プラットフォームで採用されているNTT tsuzumi、PFN PLaMo、ELYZA、SoftBank、NEC、Fujitsuなど）のオフライン機能データを同梱しています。
 - **実行時依存関係ゼロ**: Python標準ライブラリのみで動作します。外部パッケージ（`pytest` や `build` など）は開発・テスト用のみです。
 - **エイリアス解決**: モデルのエイリアスやプロバイダー固有の名前を自動的に解決します（例: `gpt-4o-2024-08-06` -> `gpt-4o`、`gemini-1.5-pro-preview-0409` -> `gemini-1.5-pro`）。
 - **プロバイダーエイリアス**: プロバイダー引数は一般的な別名と正規化形式を受け付けます（例: `grok`/`x-ai` → `xai`、`bedrock`/`aws-bedrock`/`aws` → `amazon`、`vertexai` → `vertex-ai`、`open-ai` → `openai`、`google-ai` → `google`、`azure` → `azure-openai`、`hf` → `huggingface`、`alibaba`/`dashscope` → `qwen`、`lm-studio` → `lmstudio`、`modellix-ai` → `modellix`）。区切り文字 `_. ` は `-` として扱われます。
@@ -699,6 +699,12 @@ llmcapa update
 
 # 開発用: OpenAI公式カタログを動的に再取得
 python scripts/_update_all_providers.py --provider openai
+
+# 公式カタログの更新
+python scripts/_update_all_providers.py --provider deepinfra
+python scripts/_update_all_providers.py --provider nebius
+# BasetenはBASETEN_API_KEYが必要。未設定時は同梱スナップショットを維持します。
+python scripts/_update_all_providers.py --provider baseten
 ```
 
 ## 注意事項

@@ -10035,3 +10035,10 @@
 - ASR hourly rates, TTS promotional pricing, batch pricing, and deprecation dates are parsed when published.
 - No local xiaomi_legacy_models.json manifest or hard-coded model list is used.
 - Install copy synced
+
+## New inference providers (2026-10-03)
+
+- Added `nebius.json` from Nebius Token Factory's public `models_info` API: 25 active text, vision, embedding, and reranking model entries.
+- Added `deepinfra.json` from DeepInfra's public `/models/list` API: 130 public text-generation and embedding entries; private, deprecated, and non-LLM media endpoints are excluded.
+- Added `baseten.json` with 11 documented Baseten Model APIs. The live management catalog requires `BASETEN_API_KEY`; its updater keeps the verified bundled snapshot unchanged when the key is unavailable.
+- Update entry point: `scripts/_update_all_providers.py` (provider keys: `nebius`, `deepinfra`, `baseten`). Official sources are recorded in each model's `extra.source`.

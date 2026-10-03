@@ -4,7 +4,7 @@ Lookup capabilities (context window, modalities, supported features) of various 
 
 ## Features
 
-- **Comprehensive Bundled Data**: Offline capability data for OpenAI, Anthropic, Google (Gemini), Microsoft (Phi), Amazon (Nova/Titan), Meta (Llama), Mistral, Cohere (Command), Qwen, DeepSeek, xAI (Grok), NVIDIA, MoonshotAI (Kimi), zhipu-ai (GLM), Sakana AI (Fugu), **Azure AI Foundry**, Novita AI, **Together AI (98 models)**, OpenRouter, **HuggingFace (2,904 popular models)**, **Modellix LLM and Media models** (29 LLM and 178 media records), **TypeSafe (Jev / System One decision-output models)**, and Japanese domestic models (NTT tsuzumi, PFN PLaMo, ELYZA, SoftBank, NEC, Fujitsu, etc. adopted by the Digital Agency's "GENNAI" platform).
+- **Comprehensive Bundled Data**: Offline capability data for OpenAI, Anthropic, Google (Gemini), Microsoft (Phi), Amazon (Nova/Titan), Meta (Llama), Mistral, Cohere (Command), Qwen, DeepSeek, xAI (Grok), NVIDIA, MoonshotAI (Kimi), zhipu-ai (GLM), Sakana AI (Fugu), **Azure AI Foundry**, Baseten, DeepInfra, Nebius Token Factory, Novita AI, **Together AI (98 models)**, OpenRouter, **HuggingFace (2,904 popular models)**, **Modellix LLM and Media models** (29 LLM and 178 media records), **TypeSafe (Jev / System One decision-output models)**, and Japanese domestic models (NTT tsuzumi, PFN PLaMo, ELYZA, SoftBank, NEC, Fujitsu, etc. adopted by the Digital Agency's "GENNAI" platform).
 - **Zero Runtime Dependencies**: Built entirely on the Python standard library.
 - **Alias Resolution**: Automatically resolves model aliases and provider-specific names (e.g., `gpt-4o-2024-08-06` -> `gpt-4o`, `gemini-1.5-pro-preview-0409` -> `gemini-1.5-pro`).
 - **Provider Aliases**: Provider arguments accept common aliases and normalized forms (e.g., `grok`/`x-ai` → `xai`, `bedrock`/`aws-bedrock`/`aws` → `amazon`, `vertexai` → `vertex-ai`, `open-ai` → `openai`, `google-ai` → `google`, `azure` → `azure-openai`, `hf` → `huggingface`, `alibaba`/`dashscope` → `qwen`, `lm-studio` → `lmstudio`, `modellix-ai` → `modellix`). Separators `_. ` are treated as `-`.
@@ -742,6 +742,12 @@ llmcapa update
 
 # Development: refresh the OpenAI catalog from official documentation
 python scripts/_update_all_providers.py --provider openai
+
+# Refresh additional official provider catalogs
+python scripts/_update_all_providers.py --provider deepinfra
+python scripts/_update_all_providers.py --provider nebius
+# Baseten refresh requires BASETEN_API_KEY; otherwise the bundled snapshot is retained.
+python scripts/_update_all_providers.py --provider baseten
 
 # Fetch and register popular models from HuggingFace
 llmcapa fetch-hf
