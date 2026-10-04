@@ -247,9 +247,10 @@ def test_google_gemini_provider_alias_and_strict_scope(monkeypatch) -> None:
     assert llmcapa.get("gemini-2.5-flash", provider="gemini").provider == "google"
     assert llmcapa.get("gemini-2.5-flash", provider="vertex-ai").provider == "vertex-ai"
     assert llmcapa.get("gemini-2.5-flash", provider="vertexai").provider == "vertex-ai"
-    assert llmcapa.get("Llama-3.3-70B-Instruct", provider="meta").provider == "meta"
+    assert llmcapa.get("muse-glimmer-30b", provider="meta").provider == "meta"
     assert (
-        llmcapa.get("Llama-3.3-70B-Instruct", provider="meta-llama").provider == "meta"
+        llmcapa.get("meta-llama/llama-3.3-70b-instruct", provider="meta-llama").provider
+        == "meta-llama"
     )
 
     for model_id, provider in (
@@ -324,9 +325,9 @@ def test_new_providers_registered() -> None:
 
 def test_new_provider_models_accessible() -> None:
     """A model from the current Sakura catalog is accessible via get()."""
-    sakura = llmcapa.get("gpt-oss-120b", provider="sakura")
+    sakura = llmcapa.get("Weblab-MedLLM-gpt-oss-120b", provider="sakura")
     assert sakura.provider == "sakura"
-    assert sakura.model_id == "gpt-oss-120b"
+    assert sakura.model_id == "Weblab-MedLLM-gpt-oss-120b"
 
     # huggingface.json now holds real HF API records (2900+ models);
     # the old "huggingface-default" placeholder no longer exists.
@@ -396,8 +397,8 @@ def test_data_from_bundled_json_not_hardcoded() -> None:
     assert len(sakura_models) > 0
     # Check a model that is actually present in the current Sakura snapshot.
     assert any(
-        m.model_id == "gpt-oss-120b" for m in sakura_models
-    ), "gpt-oss-120b should be in sakura models"
+        m.model_id == "Weblab-MedLLM-gpt-oss-120b" for m in sakura_models
+    ), "Weblab-MedLLM-gpt-oss-120b should be in sakura models"
 
     hf_models = reg.list_models(provider="huggingface")
     assert len(hf_models) > 1  # now contains real models from HF API
