@@ -147,7 +147,7 @@ def test_anthropic_tool_versions_are_platform_specific():
     ) is None
 
 
-def test_openrouter_refresh_preserves_only_existing_curated_computer_use():
+def test_openrouter_refresh_preserves_curated_computer_use_and_decision():
     updater = _script_module("update_catalog_from_openrouter")
     capability = {
         "supported": True,
@@ -161,9 +161,34 @@ def test_openrouter_refresh_preserves_only_existing_curated_computer_use():
     )
     assert entry["computer_use"] == capability
 
+    decision = {
+        "decision": True,
+        "endpoints": ["https://openrouter.ai/api/alpha/decisions"],
+    }
+    decision_entry = {"model_id": "typesafe/jev-1.13", "supports_responses_api": True}
+    updater.preserve_curated_computer_use(
+        decision_entry,
+        {
+            "decision": decision,
+            "audio": {"transcription": True},
+            "extra": {"curated_note": "retain"},
+            "input_modalities": ["text"],
+            "output_modalities": ["decision"],
+            "supports_chat_completion": False,
+            "supports_responses_api": False,
+        },
+    )
+    assert decision_entry["decision"] == decision
+    assert decision_entry["audio"] == {"transcription": True}
+    assert decision_entry["extra"] == {"curated_note": "retain"}
+    assert decision_entry["output_modalities"] == ["decision"]
+    assert decision_entry["supports_chat_completion"] is False
+    assert decision_entry["supports_responses_api"] is False
+
     new_entry = {"model_id": "anthropic/claude-opus-4.5"}
     updater.preserve_curated_computer_use(new_entry, None)
     assert "computer_use" not in new_entry
+    assert "decision" not in new_entry
 
 
 def test_azure_foundry_builder_preserves_and_detects_computer_use(monkeypatch):

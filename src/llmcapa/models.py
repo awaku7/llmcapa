@@ -75,6 +75,46 @@ class ReasoningMode(str, Enum):
 
 
 @dataclass(frozen=True)
+class ResponsesApiCapability:
+    """Feature-level support for a provider's Responses API implementation.
+
+    ``None`` means that support for a feature has not been verified. This
+    object supplements the legacy :attr:`Capability.supports_responses_api`
+    endpoint flag; it does not imply support for the Responses API by itself.
+    """
+
+    previous_response_id: bool | None = None
+    conversation_state: bool | None = None
+    streaming: bool | None = None
+    function_calling: bool | None = None
+    structured_outputs: bool | None = None
+    built_in_tools: tuple[str, ...] | None = None
+    extra: dict[str, Any] = field(default_factory=dict)
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> ResponsesApiCapability:
+        """Create feature-level Responses API metadata from JSON data."""
+        values = dict(data)
+        known = {field for field in cls.__dataclass_fields__ if field != "extra"}  # type: ignore[attr-defined]
+        extra = dict(values.get("extra") or {})
+        for key in tuple(values):
+            if key != "extra" and key not in known:
+                extra[key] = values.pop(key)
+        values["extra"] = extra
+        tools = values.get("built_in_tools")
+        if tools is not None:
+            values["built_in_tools"] = tuple(tools)
+        return cls(**values)
+
+    def to_dict(self) -> dict[str, Any]:
+        """Return Responses API metadata in JSON-compatible form."""
+        result = asdict(self)
+        if self.built_in_tools is not None:
+            result["built_in_tools"] = list(self.built_in_tools)
+        return result
+
+
+@dataclass(frozen=True)
 class ComputerUseCapability:
     """Normalized Computer Use / CUA capability information."""
 
@@ -656,6 +696,8 @@ class Capability:
     supports_tool_search: bool | None = None
     supports_reasoning_mode: bool | None = None
     reasoning_mode_values: list[str] | None = None
+    # Appended after all existing fields for positional compatibility.
+    responses_api: ResponsesApiCapability | None = None
 
     def supports(self, feature: Feature | str) -> bool | None:
         """Return True if the model supports the given feature.
@@ -1109,6 +1151,10 @@ class Capability:
             d.pop("computer_use", None)
         else:
             d["computer_use"] = self.computer_use.to_dict()
+        if self.responses_api is None:
+            d.pop("responses_api", None)
+        else:
+            d["responses_api"] = self.responses_api.to_dict()
         if self.image is None:
             d.pop("image", None)
         else:
@@ -1155,6 +1201,12 @@ class Capability:
                         value
                         if isinstance(value, ComputerUseCapability)
                         else ComputerUseCapability.from_dict(value)
+                    )
+                elif key == "responses_api" and value is not None:
+                    kwargs[key] = (
+                        value
+                        if isinstance(value, ResponsesApiCapability)
+                        else ResponsesApiCapability.from_dict(value)
                     )
                 elif key == "image" and value is not None:
                     kwargs[key] = (

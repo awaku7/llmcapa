@@ -21,6 +21,7 @@ import llmcapa
 
 llmcapa.Capability
 llmcapa.ComputerUseCapability
+llmcapa.ResponsesApiCapability
 llmcapa.Feature
 llmcapa.ReasoningEffort
 llmcapa.Registry
@@ -108,6 +109,21 @@ serves `POST /api/v1/responses` (stateless: `store: true` and `previous_response
 with a 400 error). Native provider routes report that provider's own Responses API support, and the
 two are tracked separately.
 
+`Capability.supports_responses_api` remains the endpoint-availability flag. The optional
+`Capability.responses_api` object records individual Responses API features; each Boolean is
+tri-state (`True` documented, `False` documented unsupported, `None` unknown):
+
+```python
+details = cap.responses_api
+if details is not None:
+    print(details.previous_response_id)
+    print(details.built_in_tools)  # tuple of tool names, or None if unknown
+```
+
+The feature object includes `previous_response_id`, `conversation_state`, `streaming`,
+`function_calling`, `structured_outputs`, and `built_in_tools`. It is provider/endpoint metadata,
+not a model-quality tier. Provider-specific fields are preserved in `extra`.
+
 `decision_output` is the output modality for models that return typed decisions with calibrated probabilities instead of generated text (System One style, such as TypeSafe's Jev). Such models report `output_modalities == ["decision"]`, `text_output == False`, `chat_completion == False`, and a populated `decision` block. Because decision output is a distinct modality, a text-generation model is never a valid `can_be_replaced_by()` replacement for a decision model.
 
 `multimodal` is inferred when more than one input or output modality is present. `file_input` includes `file` and `pdf` input modalities; `embedding_output` includes `embedding` and `embeddings`.
@@ -146,6 +162,7 @@ Fields and defaults:
 | `supports_reasoning` | `bool` | `False` |
 | `supports_chat_completion` | `bool` | `True` |
 | `supports_responses_api` | `bool` | `False` |
+| `responses_api` | `ResponsesApiCapability \| None` | `None`; per-feature Responses API support |
 | `supports_reasoning_effort` | `bool` | `False` |
 | `supports_thinking_budget` | `bool` | `False` |
 | `supports_anthropic_api` | `bool` | `False` |
@@ -167,7 +184,23 @@ Fields and defaults:
 | `thinking_level_values` | `list[str] \| None` | `None` |
 | `thinking_control` | `dict \| None` | `None` |
 
-The order of fields is part of positional-constructor compatibility; new fields are appended. Optional capability objects (`image`, `audio`, `video`, `document`, `embedding`, `rerank`, `spatial`, `decision`) are appended after the core fields and are omitted from `to_dict()` when unset.
+The order of fields is part of positional-constructor compatibility; new fields are appended. Optional capability objects (`image`, `audio`, `video`, `document`, `embedding`, `rerank`, `spatial`, `decision`, `responses_api`) are appended after the core fields and are omitted from `to_dict()` when unset.
+
+### `ResponsesApiCapability`
+
+```python
+ResponsesApiCapability(
+    previous_response_id=None,
+    conversation_state=None,
+    streaming=None,
+    function_calling=None,
+    structured_outputs=None,
+    built_in_tools=None,
+    extra={},
+)
+```
+
+`built_in_tools` is a tuple of verified tool names; `None` means unknown and an empty tuple means that no built-in tools are documented. The existing `supports_responses_api` field is retained for backward compatibility.
 
 ## 6. Capability methods
 

@@ -309,6 +309,15 @@ print(cap3.get_reasoning_effort_values())
 
 `tool_search` は Responses API の公式ツール一覧をモデルごとに記録します。`None` は対応可否が未確認であることを示します。Reasoning mode は reasoning effort とは独立した設定です。
 
+`cap.responses_api` は `previous_response_id`、会話状態、Responses API 上のストリーミング、function calling、構造化出力、組み込みツールなどを個別に記録します。各 Boolean の `None` は未確認です。既存の `cap.supports_responses_api` はエンドポイント自体の対応フラグとして維持されます。
+
+```python
+cap = llmcapa.get("some-model", provider="some-provider")
+if cap.responses_api is not None:
+    print(cap.responses_api.previous_response_id)  # True / False / None
+    print(cap.responses_api.built_in_tools)         # tuple または None（未確認）
+```
+
 ```python
 nano = llmcapa.get("gpt-5.4-nano", provider="openai")
 print(nano.supports("tool_search"))  # False

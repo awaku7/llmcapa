@@ -249,8 +249,7 @@ def test_google_gemini_provider_alias_and_strict_scope(monkeypatch) -> None:
     assert llmcapa.get("gemini-2.5-flash", provider="vertexai").provider == "vertex-ai"
     assert llmcapa.get("muse-glimmer-30b", provider="meta").provider == "meta"
     assert (
-        llmcapa.get("meta-llama/llama-3.3-70b-instruct", provider="meta-llama").provider
-        == "meta-llama"
+        llmcapa.get("muse-glimmer-30b", provider="meta-llama").provider == "meta"
     )
 
     for model_id, provider in (

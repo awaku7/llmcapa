@@ -19,6 +19,8 @@ ALIASES = {
     ("cohere", "command-a"): ["cohere-command-a", "command-a"],
     ("mistralai", "mistral-large-2512"): ["Mistral-Large-3"],
     ("mistralai", "ministral-3b-2512"): ["Ministral-3B"],
+    ("google", "gemini-2.5-flash"): ["gemini-2.5-flash"],
+    ("x-ai", "grok-4.7"): ["grok-4.7"],
 }
 
 
@@ -34,7 +36,7 @@ def map_record(r: dict) -> dict:
     aliases = [model_id.lower()]
     aliases.extend(ALIASES.get((prefix, native_id), []))
     return {
-        "provider": prefix,
+        "provider": "openrouter",
         "model_id": model_id,
         "display_name": r.get("name", model_id),
         "context_window": int(r.get("context_length") or 0),
@@ -144,10 +146,36 @@ def load_web_models(prefix: str = "") -> list[dict]:
 
 
 def preserve_curated_computer_use(entry: dict, previous: dict | None) -> dict:
-    """Retain separately sourced Computer Use metadata during API refreshes."""
-    capability = (previous or {}).get("computer_use")
-    if isinstance(capability, dict):
-        entry["computer_use"] = capability
+    """Retain separately curated capabilities omitted by the route API."""
+    previous = previous or {}
+    for field in (
+        "computer_use",
+        "decision",
+        "image",
+        "audio",
+        "video",
+        "document",
+        "embedding",
+        "rerank",
+        "spatial",
+    ):
+        capability = previous.get(field)
+        if isinstance(capability, dict) and field not in entry:
+            entry[field] = capability
+    previous_extra = previous.get("extra")
+    if isinstance(previous_extra, dict):
+        entry["extra"] = {**previous_extra, **(entry.get("extra") or {})}
+    if isinstance(previous.get("decision"), dict):
+        # Decision routes use OpenRouter's Alpha Decisions endpoint, not
+        # its generic Responses API. Preserve route-specific flags.
+        for field in (
+            "input_modalities",
+            "output_modalities",
+            "supports_chat_completion",
+            "supports_responses_api",
+        ):
+            if field in previous:
+                entry[field] = previous[field]
     return entry
 
 
@@ -179,7 +207,9 @@ def main() -> None:
     openrouter_payload = json.loads(openrouter_path.read_text(encoding="utf-8"))
     openrouter_existing = openrouter_payload.get("models", [])
     openrouter_by_id = {
-        e.get("model_id").lower(): e for e in openrouter_existing if e.get("model_id")
+        e.get("model_id").lower(): {**e, "provider": "openrouter"}
+        for e in openrouter_existing
+        if e.get("model_id")
     }
     # The API snapshot is authoritative for exact IDs; frontend-only records
     # are then added as a fallback.

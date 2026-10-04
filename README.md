@@ -309,6 +309,15 @@ print(cap3.get_reasoning_effort_values())
 
 `tool_search` is recorded per model from its documented Responses API tools. `None` means the catalog has no verified answer. Reasoning mode is separate from reasoning effort:
 
+`cap.responses_api` records individual endpoint features such as `previous_response_id`, conversation state, Responses API streaming, function calling, structured outputs, and built-in tools. Each Boolean is tri-state; `None` means unknown. The legacy `cap.supports_responses_api` continues to report endpoint availability.
+
+```python
+cap = llmcapa.get("some-model", provider="some-provider")
+if cap.responses_api is not None:
+    print(cap.responses_api.previous_response_id)  # True / False / None
+    print(cap.responses_api.built_in_tools)         # tuple or None (unknown)
+```
+
 ```python
 nano = llmcapa.get("gpt-5.4-nano", provider="openai")
 print(nano.supports("tool_search"))  # False
