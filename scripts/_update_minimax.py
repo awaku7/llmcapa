@@ -15,11 +15,19 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 try:
-    from scripts._scrape_minimax import fetch_minimax_catalog
     from scripts._metadata_loader import apply_context_window_overrides
 except ModuleNotFoundError:  # Direct execution: python scripts/_update_minimax.py
-    from _scrape_minimax import fetch_minimax_catalog
     from _metadata_loader import apply_context_window_overrides
+
+try:
+    from scripts._scrape_minimax import fetch_minimax_catalog
+except ModuleNotFoundError:
+    try:
+        from _scrape_minimax import fetch_minimax_catalog
+    except ModuleNotFoundError:
+        # The optional Playwright scraper is not bundled with the repository;
+        # the updater then reuses the bundled snapshot instead of live prices.
+        fetch_minimax_catalog = None
 
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "minimax.json"
@@ -372,7 +380,7 @@ def build_models() -> list[dict]:
 
 
 def main() -> None:
-    live_catalog = fetch_minimax_catalog()
+    live_catalog = fetch_minimax_catalog() if fetch_minimax_catalog else {}
     known_ids = {spec["model_id"] for spec in TEXT_MODELS}
     live_updates = 0
     for spec in TEXT_MODELS:
