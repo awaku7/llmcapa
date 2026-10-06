@@ -44,7 +44,7 @@
           "immediate": true,
           "batch": true
         },
-        "description": "NII-developed Japanese/English 32B reasoning model (from mdx-MaaS model list).",
+        "description": "国立情報学研究所（NII）が開発した最新の日英対応の32B推論モデル",
         "context_window_note": "The mdx-MaaS model list does not publish a deployment-specific limit."
       }
     },
@@ -92,7 +92,7 @@
           "immediate": true,
           "batch": true
         },
-        "description": "NII-developed Japanese/English 8B reasoning model (from mdx-MaaS model list).",
+        "description": "国立情報学研究所（NII）が開発した最新の日英対応の8B推論モデル",
         "context_window_note": "The mdx-MaaS model list does not publish a deployment-specific limit."
       }
     },
@@ -140,7 +140,7 @@
           "immediate": true,
           "batch": true
         },
-        "description": "OpenAI open-weight reasoning model; mdx-MaaS lists a context length of up to 128k.",
+        "description": "OpenAI が公開した、最大 128k の長コンテキストと推論機能を有したモデル。",
         "context_window_basis": "mdx-MaaS official model list"
       }
     },
@@ -189,11 +189,8 @@
           "immediate": true,
           "batch": true
         },
-        "description": "Gemma 4 31B multimodal model, quantized to 4-bit; mdx-MaaS documents image input and tool calls.",
-        "documented_capabilities": [
-          "image_input",
-          "tool_calling"
-        ]
+        "description": "Google DeepMindが開発したGemma 4系の31Bパラメータのマルチモーダルモデルを、4bitに量子化したもの（量子化を前提に学習しており、精度の低下が小さい）。テキスト・画像入力とツール呼び出しに対応。",
+        "context_window_note": "The mdx-MaaS model list does not publish a deployment-specific limit."
       }
     },
     {
@@ -243,12 +240,40 @@
           "batch": true,
           "may_require_cold_start": true
         },
-        "description": "Qwen 3.6 27B multimodal model; mdx-MaaS documents text/image/video input and Thinking mode.",
-        "documented_capabilities": [
-          "image_input",
-          "video_input",
-          "thinking_mode"
-        ]
+        "description": "Alibaba Qwenチームが開発した約27Bパラメータのマルチモーダル言語モデル。テキスト・画像・動画入力に対応し、Thinkingモードによる高度な推論が可能。",
+        "context_window_note": "The mdx-MaaS model list does not publish a deployment-specific limit."
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "source_url": "https://maas.mdx1.jp/",
+        "status": "documented",
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-06"
       }
     },
     {
@@ -297,10 +322,8 @@
           "batch": true,
           "may_require_cold_start": true
         },
-        "description": "DeepSeek OCR 2 vision-language model for OCR and document image understanding.",
-        "documented_capabilities": [
-          "image_input"
-        ]
+        "description": "DeepSeekが開発した約3BパラメータのOCR特化ビジョン言語モデル。画像からのテキスト抽出・Markdown変換を得意とする。",
+        "context_window_note": "The mdx-MaaS model list does not publish a deployment-specific limit."
       }
     }
   ]
