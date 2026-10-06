@@ -33,7 +33,8 @@ import csv
 import json
 import shutil
 import sys
-from typing import Any, Callable, Sequence
+from collections.abc import Sequence
+from typing import Any, Callable
 
 from . import (
     __version__,
@@ -488,7 +489,7 @@ def _render_table(
             overflow = total(widths) - max_width
             widths[i] = max(minimum, widths[i] - overflow)
 
-    fmt = "  ".join("{:<%d}" % w for w in widths)
+    fmt = "  ".join(f"{{:<{width}}}" for width in widths)
     lines = [
         fmt.format(*[_clip(h, widths[i]) for i, h in enumerate(headers)]).rstrip(),
         fmt.format(*["-" * w for w in widths]).rstrip(),

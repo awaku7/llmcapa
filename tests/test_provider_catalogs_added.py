@@ -9,10 +9,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 sys.path.insert(0, str(ROOT / "src"))
 
-import llmcapa  # noqa: E402
-import _update_baseten  # noqa: E402
-import _update_deepinfra  # noqa: E402
-import _update_nebius  # noqa: E402
+import _update_baseten
+import _update_deepinfra
+import _update_nebius
+
+import llmcapa
 
 
 def test_new_provider_catalogs_are_registered_and_resolvable() -> None:

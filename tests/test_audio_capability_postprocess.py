@@ -5,7 +5,6 @@ import json
 import llmcapa
 from scripts._audio_capability_postprocess import apply
 
-
 MODEL_ID = "MAI-Transcribe-2-Streaming"
 MODEL_CARD_URL = (
     "https://microsoft.ai/pdf/MAI-Transcribe-2-Streaming-Model-Card-Memo.pdf"

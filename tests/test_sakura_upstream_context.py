@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 sys.path.insert(0, str(ROOT / "src"))
 
-import _update_sakura  # noqa: E402
+import _update_sakura
 
 EXPECTED_CONTEXTS = {
     "llm-jp-3.1-8x13b-instruct4": 4096,
