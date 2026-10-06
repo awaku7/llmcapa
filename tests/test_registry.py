@@ -90,6 +90,8 @@ def test_providers():
     assert isinstance(p, list)
     assert len(p) > 10
     assert "openai" in p
+    assert "mdx-maas" in p
+    assert "cloudflare-workers-ai" in p
     assert "novita" in p
 
 
@@ -128,6 +130,60 @@ def test_modellix_media_catalog():
     assert media.supports("image_output")
     assert media.extra["gateway_base_url"] == "https://api.modellix.ai"
     assert media.extra["media_model_type"] == "text-to-image"
+
+
+def test_cloudflare_workers_ai_catalog_and_aliases():
+    models = llmcapa.list_models(provider="cloudflare-workers-ai")
+    assert len(models) >= 50
+    assert all(cap.provider == "cloudflare-workers-ai" for cap in models)
+    assert llmcapa.list_models(provider="cloudflare") == models
+    assert llmcapa.list_models(provider="workers-ai") == models
+
+    gpt_oss = llmcapa.get("@cf/openai/gpt-oss-20b", provider="cloudflare")
+    assert gpt_oss.context_window == 128000
+    assert gpt_oss.supports_chat_completion
+    assert gpt_oss.supports_function_calling
+    assert gpt_oss.supports_responses_api
+
+    embedding = llmcapa.get("@cf/baai/bge-m3", provider="cloudflare")
+    assert embedding.supports("embedding_output")
+
+    image_model = llmcapa.get(
+        "@cf/black-forest-labs/flux-1-schnell", provider="cloudflare"
+    )
+    assert image_model.supports("image_output")
+
+
+def test_mdx_maas_catalog_and_provider_aliases():
+    models = llmcapa.list_models(provider="mdx-maas")
+    assert len(models) == 6
+    assert all(cap.provider == "mdx-maas" for cap in models)
+    assert llmcapa.list_models(provider="mdx.MaaS") == models
+    assert llmcapa.list_models(provider="mdx") == models
+    assert llmcapa.list_models(provider="mdxmaas") == models
+
+    cap = llmcapa.get("llm-jp/llm-jp-4-32b-a3b-thinking", provider="mdx-maas")
+    assert cap.supports_chat_completion
+    assert cap.supports_reasoning
+    assert not cap.supports_responses_api
+    assert cap.context_window == 0  # mdx.MaaS does not publish this model limit
+    assert cap.extra["api_base_url"] == "https://api.maas.mdx1.jp/v1"
+
+
+def test_mdx_maas_documented_multimodal_and_tool_capabilities():
+    gemma = llmcapa.get(
+        "google/gemma-4-31B-it-qat-w4a16-ct", provider="mdx-maas"
+    )
+    assert gemma.supports("image_input")
+    assert gemma.supports_function_calling
+
+    qwen = llmcapa.get("Qwen/Qwen3.6-27B-FP8", provider="mdx-maas")
+    assert qwen.supports("video_input")
+    assert qwen.extra["api_availability"]["may_require_cold_start"]
+
+    ocr = llmcapa.get("deepseek-ai/DeepSeek-OCR-2", provider="mdx-maas")
+    assert ocr.supports("image_input")
+    assert ocr.extra["api_availability"]["batch"]
 
 
 def test_modellix_provider_alias():

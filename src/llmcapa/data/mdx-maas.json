@@ -1,0 +1,307 @@
+{
+  "models": [
+    {
+      "provider": "mdx-maas",
+      "model_id": "llm-jp/llm-jp-4-32b-a3b-thinking",
+      "display_name": "llm-jp/llm-jp-4-32b-a3b-thinking",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "official_source": "https://maas.mdx1.jp/",
+        "official_model_list_source": "https://docs.google.com/spreadsheets/d/18eMqI3kPDjVVBLRdyHSuinkJ-6ZVQ-Uh-8BWXHNBO0g/edit?gid=0#gid=0",
+        "official_api_source": "https://github.com/mdx-jp/mdx-maas-docs/blob/main/chat_completions_api_document.md",
+        "official_catalog_checked_at": "2026-10-06",
+        "protocol": "openai-compatible",
+        "api_base_url": "https://api.maas.mdx1.jp/v1",
+        "supported_endpoints": [
+          "/v1/chat/completions"
+        ],
+        "api_availability": {
+          "immediate": true,
+          "batch": true
+        },
+        "description": "NII-developed Japanese/English 32B reasoning model (from mdx-MaaS model list).",
+        "context_window_note": "The mdx-MaaS model list does not publish a deployment-specific limit."
+      }
+    },
+    {
+      "provider": "mdx-maas",
+      "model_id": "llm-jp/llm-jp-4-8b-thinking",
+      "display_name": "llm-jp/llm-jp-4-8b-thinking",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "official_source": "https://maas.mdx1.jp/",
+        "official_model_list_source": "https://docs.google.com/spreadsheets/d/18eMqI3kPDjVVBLRdyHSuinkJ-6ZVQ-Uh-8BWXHNBO0g/edit?gid=0#gid=0",
+        "official_api_source": "https://github.com/mdx-jp/mdx-maas-docs/blob/main/chat_completions_api_document.md",
+        "official_catalog_checked_at": "2026-10-06",
+        "protocol": "openai-compatible",
+        "api_base_url": "https://api.maas.mdx1.jp/v1",
+        "supported_endpoints": [
+          "/v1/chat/completions"
+        ],
+        "api_availability": {
+          "immediate": true,
+          "batch": true
+        },
+        "description": "NII-developed Japanese/English 8B reasoning model (from mdx-MaaS model list).",
+        "context_window_note": "The mdx-MaaS model list does not publish a deployment-specific limit."
+      }
+    },
+    {
+      "provider": "mdx-maas",
+      "model_id": "openai/gpt-oss-20b",
+      "display_name": "openai/gpt-oss-20b",
+      "context_window": 128000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "official_source": "https://maas.mdx1.jp/",
+        "official_model_list_source": "https://docs.google.com/spreadsheets/d/18eMqI3kPDjVVBLRdyHSuinkJ-6ZVQ-Uh-8BWXHNBO0g/edit?gid=0#gid=0",
+        "official_api_source": "https://github.com/mdx-jp/mdx-maas-docs/blob/main/chat_completions_api_document.md",
+        "official_catalog_checked_at": "2026-10-06",
+        "protocol": "openai-compatible",
+        "api_base_url": "https://api.maas.mdx1.jp/v1",
+        "supported_endpoints": [
+          "/v1/chat/completions"
+        ],
+        "api_availability": {
+          "immediate": true,
+          "batch": true
+        },
+        "description": "OpenAI open-weight reasoning model; mdx-MaaS lists a context length of up to 128k.",
+        "context_window_basis": "mdx-MaaS official model list"
+      }
+    },
+    {
+      "provider": "mdx-maas",
+      "model_id": "google/gemma-4-31B-it-qat-w4a16-ct",
+      "display_name": "google/gemma-4-31B-it-qat-w4a16-ct",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "official_source": "https://maas.mdx1.jp/",
+        "official_model_list_source": "https://docs.google.com/spreadsheets/d/18eMqI3kPDjVVBLRdyHSuinkJ-6ZVQ-Uh-8BWXHNBO0g/edit?gid=0#gid=0",
+        "official_api_source": "https://github.com/mdx-jp/mdx-maas-docs/blob/main/chat_completions_api_document.md",
+        "official_catalog_checked_at": "2026-10-06",
+        "protocol": "openai-compatible",
+        "api_base_url": "https://api.maas.mdx1.jp/v1",
+        "supported_endpoints": [
+          "/v1/chat/completions"
+        ],
+        "api_availability": {
+          "immediate": true,
+          "batch": true
+        },
+        "description": "Gemma 4 31B multimodal model, quantized to 4-bit; mdx-MaaS documents image input and tool calls.",
+        "documented_capabilities": [
+          "image_input",
+          "tool_calling"
+        ]
+      }
+    },
+    {
+      "provider": "mdx-maas",
+      "model_id": "Qwen/Qwen3.6-27B-FP8",
+      "display_name": "Qwen/Qwen3.6-27B-FP8",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "official_source": "https://maas.mdx1.jp/",
+        "official_model_list_source": "https://docs.google.com/spreadsheets/d/18eMqI3kPDjVVBLRdyHSuinkJ-6ZVQ-Uh-8BWXHNBO0g/edit?gid=0#gid=0",
+        "official_api_source": "https://github.com/mdx-jp/mdx-maas-docs/blob/main/chat_completions_api_document.md",
+        "official_catalog_checked_at": "2026-10-06",
+        "protocol": "openai-compatible",
+        "api_base_url": "https://api.maas.mdx1.jp/v1",
+        "supported_endpoints": [
+          "/v1/chat/completions"
+        ],
+        "api_availability": {
+          "immediate": true,
+          "batch": true,
+          "may_require_cold_start": true
+        },
+        "description": "Qwen 3.6 27B multimodal model; mdx-MaaS documents text/image/video input and Thinking mode.",
+        "documented_capabilities": [
+          "image_input",
+          "video_input",
+          "thinking_mode"
+        ]
+      }
+    },
+    {
+      "provider": "mdx-maas",
+      "model_id": "deepseek-ai/DeepSeek-OCR-2",
+      "display_name": "deepseek-ai/DeepSeek-OCR-2",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "official_source": "https://maas.mdx1.jp/",
+        "official_model_list_source": "https://docs.google.com/spreadsheets/d/18eMqI3kPDjVVBLRdyHSuinkJ-6ZVQ-Uh-8BWXHNBO0g/edit?gid=0#gid=0",
+        "official_api_source": "https://github.com/mdx-jp/mdx-maas-docs/blob/main/chat_completions_api_document.md",
+        "official_catalog_checked_at": "2026-10-06",
+        "protocol": "openai-compatible",
+        "api_base_url": "https://api.maas.mdx1.jp/v1",
+        "supported_endpoints": [
+          "/v1/chat/completions"
+        ],
+        "api_availability": {
+          "immediate": true,
+          "batch": true,
+          "may_require_cold_start": true
+        },
+        "description": "DeepSeek OCR 2 vision-language model for OCR and document image understanding.",
+        "documented_capabilities": [
+          "image_input"
+        ]
+      }
+    }
+  ]
+}

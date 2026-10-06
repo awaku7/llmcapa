@@ -11169,3 +11169,25 @@
 - Synthetic `~*/…-latest` aliases retained (9)
 - Replaced thin 14-model placeholder catalog
 - Install copy synced
+
+## Fireworks official catalog refresh (2026-10-06)
+
+- Source: https://fireworks.ai/models
+- Structured model cards: 306
+- Model specs/pricing only from card fields; unknown values left unset.
+
+## Cloudflare Workers AI official catalog refresh (2026-10-06)
+
+- Model source: https://developers.cloudflare.com/workers-ai/llms.txt
+- OpenAI compatibility: https://developers.cloudflare.com/workers-ai/configuration/open-ai-compatibility/index.md
+- Models parsed: 69
+- Task types: Automatic Speech Recognition, Dumb Pipe, Image Classification, Image-to-Text, Text Classification, Text Embeddings, Text Generation, Text-to-Image, Text-to-Speech, Translation
+- Model IDs and per-model fields were read from the official index and detail pages; unlisted values remain unknown.
+
+## Cloudflare Workers AI official catalog refresh (2026-10-06)
+
+- Model source: https://developers.cloudflare.com/workers-ai/llms.txt
+- OpenAI compatibility: https://developers.cloudflare.com/workers-ai/configuration/open-ai-compatibility/index.md
+- Models parsed: 69
+- Task types: Automatic Speech Recognition, Dumb Pipe, Image Classification, Image-to-Text, Text Classification, Text Embeddings, Text Generation, Text-to-Image, Text-to-Speech, Translation
+- Model IDs and per-model fields were read from the official index and detail pages; unlisted values remain unknown.

@@ -70,6 +70,8 @@ llmcapa/
 | `huggingface` | `hf` |
 | `qwen` | `alibaba`, `dashscope` |
 | `lmstudio` | `lm-studio`, `lm_studio` |
+| `mdx-maas` | `mdx`, `mdxmaas` (`mdx.MaaS` normalizes to `mdx-maas`) |
+| `cloudflare-workers-ai` | `cloudflare`, `workers-ai` |
 
 Examples:
 
@@ -100,6 +102,26 @@ Route-qualified IDs such as `meta/muse-spark-1.3` belong to the `openrouter` cat
 Provider catalogs are updated by provider-specific scripts using each provider's official sources. There is no supported script that bulk-replaces all provider catalogs with OpenRouter data.
 
 Native provider catalogs must never fetch OpenRouter for record data. `openrouter.json` is the only file built from the OpenRouter API (`scripts/_update_openrouter.py`); all other `scripts/_update_*.py` scripts parse official documentation pages or official model APIs directly. The `scripts/openrouter_providers/` shims exist only for historical reference and must not be imported by active updaters.
+
+### mdx.MaaS
+
+`src/llmcapa/data/mdx-maas.json` contains the models currently listed for the mdx.MaaS immediate-response API. Refresh it from the provider's official public model sheet with:
+
+```bash
+python scripts/_update_mdx_maas.py
+```
+
+The catalog records the OpenAI-compatible `/v1/chat/completions` endpoint and Batch API availability. It does not claim Responses API support. Unpublished deployment context/output limits and pricing remain `0`/`null`; the model sheet's 128k context statement is retained for `openai/gpt-oss-20b`. Tool calling is marked supported only for the Gemma entry, where the official sheet explicitly documents it.
+
+### Cloudflare Workers AI
+
+`src/llmcapa/data/cloudflare-workers-ai.json` is generated from the official Workers AI model index and each linked model page. The updater also reads Cloudflare's OpenAI compatibility documentation for the account-scoped base URL and GPT-OSS Responses API support.
+
+```bash
+python scripts/_update_cloudflare_workers_ai.py
+```
+
+Model IDs, task types, feature badges, context windows, and token prices are parsed from official pages; the script does not maintain a model-ID roster or infer features from free-form descriptions. Only documented task labels are mapped to modalities; unknown task labels keep empty modalities. Unpublished limits/prices remain `0`/`null`.
 
 ### OpenAI
 

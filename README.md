@@ -4,10 +4,10 @@ Lookup capabilities (context window, modalities, supported features) of various 
 
 ## Features
 
-- **Comprehensive Bundled Data**: Offline capability data for OpenAI, Anthropic, Google (Gemini), Microsoft (Phi), Amazon (Nova/Titan), Meta (Llama), Mistral, Cohere (Command), Qwen, DeepSeek, xAI (Grok), NVIDIA, MoonshotAI (Kimi), zhipu-ai (GLM), Sakana AI (Fugu), **Azure AI Foundry**, Baseten, DeepInfra, Nebius Token Factory, Novita AI, **Together AI (98 models)**, OpenRouter, **HuggingFace (2,904 popular models)**, **Modellix LLM and Media models** (29 LLM and 178 media records), **TypeSafe (Jev / System One decision-output models)**, and Japanese domestic models (NTT tsuzumi, PFN PLaMo, ELYZA, SoftBank, NEC, Fujitsu, etc. adopted by the Digital Agency's "GENNAI" platform).
+- **Comprehensive Bundled Data**: Offline capability data for OpenAI, Anthropic, Google (Gemini), Microsoft (Phi), Amazon (Nova/Titan), Meta (Llama), Mistral, Cohere (Command), Qwen, DeepSeek, xAI (Grok), NVIDIA, MoonshotAI (Kimi), zhipu-ai (GLM), Sakana AI (Fugu), **Azure AI Foundry**, Baseten, DeepInfra, Nebius Token Factory, Novita AI, **Together AI (98 models)**, OpenRouter, **HuggingFace (2,904 popular models)**, **Modellix LLM and Media models** (29 LLM and 178 media records), **mdx.MaaS (6 models)**, **Cloudflare Workers AI (69 models)**, **TypeSafe (Jev / System One decision-output models)**, and Japanese domestic models (NTT tsuzumi, PFN PLaMo, ELYZA, SoftBank, NEC, Fujitsu, etc. adopted by the Digital Agency's "GENNAI" platform).
 - **Zero Runtime Dependencies**: Built entirely on the Python standard library.
 - **Alias Resolution**: Automatically resolves model aliases and provider-specific names (e.g., `gpt-4o-2024-08-06` -> `gpt-4o`, `gemini-1.5-pro-preview-0409` -> `gemini-1.5-pro`).
-- **Provider Aliases**: Provider arguments accept common aliases and normalized forms (e.g., `grok`/`x-ai` → `xai`, `bedrock`/`aws-bedrock`/`aws` → `amazon`, `vertexai` → `vertex-ai`, `open-ai` → `openai`, `google-ai` → `google`, `azure` → `azure-openai`, `hf` → `huggingface`, `alibaba`/`dashscope` → `qwen`, `lm-studio` → `lmstudio`, `modellix-ai` → `modellix`). Separators `_. ` are treated as `-`.
+- **Provider Aliases**: Provider arguments accept common aliases and normalized forms (e.g., `grok`/`x-ai` → `xai`, `bedrock`/`aws-bedrock`/`aws` → `amazon`, `vertexai` → `vertex-ai`, `open-ai` → `openai`, `google-ai` → `google`, `azure` → `azure-openai`, `hf` → `huggingface`, `alibaba`/`dashscope` → `qwen`, `lm-studio` → `lmstudio`, `modellix-ai` → `modellix`, `mdx`/`mdxmaas` → `mdx-maas`, `cloudflare`/`workers-ai` → `cloudflare-workers-ai`). Separators `_. ` are treated as `-`.
 - **Advanced Feature Queries**: Check support for `vision`, `multimodal`, `chat_completion`, `responses_api`, `realtime`, `tool_search`, `reasoning_effort`, `reasoning_mode`, `thinking_budget`, and specific input/output modalities (e.g., `image_input`, `audio_input`, `file_input`, `speech_input`, `embedding_output`). PDF is treated as a subtype of `file_input`.
 - **High Performance**: Evaluated feature checks are cached internally using memoization to avoid redundant calculations.
 - **Cost Estimation**: Estimate API costs based on input and output token counts.
@@ -59,8 +59,49 @@ print(cap.features())
 # ['chat_completion', 'file', 'file_input', 'function_calling', 'image', 'image_input', 'json_mode', 'multimodal', 'responses_api', 'streaming', 'text', 'text_input', 'text_output', 'vision']
 ```
 
-### Token & Cost Estimation
+#### mdx.MaaS catalog
 
+The published mdx.MaaS models can be queried by provider. `mdx.MaaS` normalizes to `mdx-maas`.
+
+```python
+import llmcapa
+
+models = llmcapa.list_models(provider="mdx.MaaS")
+gemma = llmcapa.get(
+    "google/gemma-4-31B-it-qat-w4a16-ct", provider="mdx-maas"
+)
+
+print(len(models))                       # 6 published models
+print(gemma.supports("image_input"))    # True
+print(gemma.supports_function_calling)   # True (documented by mdx.MaaS)
+print(gemma.supports_responses_api)       # False
+print(gemma.extra["api_availability"])  # Immediate and Batch API availability
+```
+
+Deployment-specific context/output limits remain `0` when mdx.MaaS does not publish them. Its model list states a maximum 128k context for `openai/gpt-oss-20b`.
+
+The catalog records the OpenAI-compatible Chat Completions API and does not claim Responses API support.
+
+#### Cloudflare Workers AI
+
+Workers AI models are discovered from Cloudflare's official documentation index. The `cloudflare` and `workers-ai` provider aliases resolve to `cloudflare-workers-ai`.
+
+```python
+import llmcapa
+
+models = llmcapa.list_models(provider="cloudflare")
+embedding = llmcapa.get("@cf/baai/bge-m3", provider="workers-ai")
+gpt_oss = llmcapa.get("@cf/openai/gpt-oss-20b", provider="cloudflare-workers-ai")
+
+print(len(models))                         # current bundled model count
+print(gpt_oss.context_window)              # 128000 (official model page)
+print(gpt_oss.supports_responses_api)       # True (documented GPT-OSS support)
+print(embedding.supports("embedding_output"))  # True
+```
+
+The catalog updater reads model IDs, task types, feature badges, context windows, and pricing from the official index/model pages. Unpublished values remain unknown; the Responses API flag is derived from Cloudflare's compatibility documentation.
+
+### Token & Cost Estimation
 Roughly estimate the number of tokens for a given text (supporting 30+ major languages) and calculate API costs:
 
 > [!NOTE]

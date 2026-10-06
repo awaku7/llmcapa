@@ -30,6 +30,7 @@ PROVIDER_SCRIPTS = {
     "baidu": "_update_baidu.py",
     "bytedance": "_update_bytedance.py",
     "cohere": "_update_cohere.py",
+    "cloudflare-workers-ai": "_update_cloudflare_workers_ai.py",
     "deepseek": "_update_deepseek.py",
     "deepinfra": "_update_deepinfra.py",
     "fireworks": "provider_updates/fireworks.py",
@@ -43,6 +44,7 @@ PROVIDER_SCRIPTS = {
     "minimax": "_update_minimax.py",
     "mistral": "_update_mistral.py",
     "moonshot": "_update_moonshot.py",
+    "mdx-maas": "_update_mdx_maas.py",
     "nebius": "_update_nebius.py",
     "novita": "_update_novita_from_api.py",
     "nvidia": "_update_nvidia.py",
@@ -65,6 +67,10 @@ ALIASES = {
     "ibm": "ibm-granite",
     "azure": "azure-foundry",
     "kimi": "moonshot",
+    "mdx": "mdx-maas",
+    "mdxmaas": "mdx-maas",
+    "cloudflare": "cloudflare-workers-ai",
+    "workers-ai": "cloudflare-workers-ai",
 }
 
 CAPABILITY_FIELDS = (

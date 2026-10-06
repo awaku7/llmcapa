@@ -4,10 +4,10 @@
 
 ## 特徴
 
-- **包括的な同梱データ**: OpenAI、Anthropic、Google (Gemini)、Microsoft (Phi)、Amazon (Nova/Titan)、Meta (Llama)、Mistral、Qwen、DeepSeek、xAI (Grok)、NVIDIA、MoonshotAI (Kimi)、zhipu-ai (GLM)、Sakana AI (Fugu)、**Azure AI Foundry**、Baseten、DeepInfra、Nebius Token Factory、Novita AI、**Together AI（98モデル）**、OpenRouter、**HuggingFace（人気モデル 2,904）**、**Modellix LLM・メディアモデル**（LLM 29件、メディア178件）、**TypeSafe（Jev / System One の決定出力モデル）**、および日本の国内モデル（デジタル庁の「GENNAI」プラットフォームで採用されているNTT tsuzumi、PFN PLaMo、ELYZA、SoftBank、NEC、Fujitsuなど）のオフライン機能データを同梱しています。
+- **包括的な同梱データ**: OpenAI、Anthropic、Google (Gemini)、Microsoft (Phi)、Amazon (Nova/Titan)、Meta (Llama)、Mistral、Qwen、DeepSeek、xAI (Grok)、NVIDIA、MoonshotAI (Kimi)、zhipu-ai (GLM)、Sakana AI (Fugu)、**Azure AI Foundry**、Baseten、DeepInfra、Nebius Token Factory、Novita AI、**Together AI（98モデル）**、OpenRouter、**HuggingFace（人気モデル 2,904）**、**Modellix LLM・メディアモデル**（LLM 29件、メディア178件）、**mdx.MaaS（6モデル）**、**Cloudflare Workers AI（69モデル）**、**TypeSafe（Jev / System One の決定出力モデル）**、および日本の国内モデル（デジタル庁の「GENNAI」プラットフォームで採用されているNTT tsuzumi、PFN PLaMo、ELYZA、SoftBank、NEC、Fujitsuなど）のオフライン機能データを同梱しています。
 - **実行時依存関係ゼロ**: Python標準ライブラリのみで動作します。外部パッケージ（`pytest` や `build` など）は開発・テスト用のみです。
 - **エイリアス解決**: モデルのエイリアスやプロバイダー固有の名前を自動的に解決します（例: `gpt-4o-2024-08-06` -> `gpt-4o`、`gemini-1.5-pro-preview-0409` -> `gemini-1.5-pro`）。
-- **プロバイダーエイリアス**: プロバイダー引数は一般的な別名と正規化形式を受け付けます（例: `grok`/`x-ai` → `xai`、`bedrock`/`aws-bedrock`/`aws` → `amazon`、`vertexai` → `vertex-ai`、`open-ai` → `openai`、`google-ai` → `google`、`azure` → `azure-openai`、`hf` → `huggingface`、`alibaba`/`dashscope` → `qwen`、`lm-studio` → `lmstudio`、`modellix-ai` → `modellix`）。区切り文字 `_. ` は `-` として扱われます。
+- **プロバイダーエイリアス**: プロバイダー引数は一般的な別名と正規化形式を受け付けます（例: `grok`/`x-ai` → `xai`、`bedrock`/`aws-bedrock`/`aws` → `amazon`、`vertexai` → `vertex-ai`、`open-ai` → `openai`、`google-ai` → `google`、`azure` → `azure-openai`、`hf` → `huggingface`、`alibaba`/`dashscope` → `qwen`、`lm-studio` → `lmstudio`、`modellix-ai` → `modellix`、`mdx`/`mdxmaas` → `mdx-maas`、`cloudflare`/`workers-ai` → `cloudflare-workers-ai`）。区切り文字 `_. ` は `-` として扱われます。
 - **高度な機能クエリ**: `vision`、`multimodal`、`chat_completion`、`responses_api`、`realtime`、`tool_search`、`reasoning_effort`、`reasoning_mode`、`thinking_budget`、および特定の入力/出力モダリティ（例: `image_input`、`audio_input`、`file_input`、`speech_input`、`embedding_output`）のサポート状況を確認できます。PDFは`file_input`のサブタイプとして扱われます。
 - **高いパフォーマンス**: 評価された機能チェックは、冗長な計算を避けるためにメモ化（内部キャッシュ）されます。
 - **コスト見積もり**: 入力および出力トークン数に基づいてAPIコストを見積もります。
@@ -58,6 +58,46 @@ print(ReasoningEffort.LLMC_EFFORT_HIGH)                   # "high"
 print(cap.features())
 # ['chat_completion', 'file', 'file_input', 'function_calling', 'image', 'image_input', 'json_mode', 'multimodal', 'responses_api', 'streaming', 'text', 'text_input', 'text_output', 'vision']
 ```
+
+#### mdx.MaaS カタログ
+
+mdx.MaaS の掲載モデルもプロバイダー別に検索できます。`mdx.MaaS` は `mdx-maas` に正規化されます。
+
+```python
+import llmcapa
+
+models = llmcapa.list_models(provider="mdx.MaaS")
+gemma = llmcapa.get(
+    "google/gemma-4-31B-it-qat-w4a16-ct", provider="mdx-maas"
+)
+
+print(len(models))                       # 6 (掲載モデル数)
+print(gemma.supports("image_input"))    # True
+print(gemma.supports_function_calling)   # True (公式一覧で確認済み)
+print(gemma.supports_responses_api)       # False
+print(gemma.extra["api_availability"])  # 即時応答API / Batch API の提供状況
+```
+
+デプロイ固有のコンテキスト長・出力上限が公式に公開されていないモデルは `0` のままです。`openai/gpt-oss-20b` は mdx.MaaS の一覧に最大128kと記載されています。カタログは OpenAI 互換の Chat Completions API を記録し、Responses API 対応は主張しません。
+
+#### Cloudflare Workers AI
+
+モデルID、タスク種別、機能タグ、コンテキスト長、料金をCloudflareの公式ドキュメントから取得しています。`cloudflare` と `workers-ai` は `cloudflare-workers-ai` に解決されます。
+
+```python
+import llmcapa
+
+models = llmcapa.list_models(provider="cloudflare")
+gpt_oss = llmcapa.get("@cf/openai/gpt-oss-20b", provider="cloudflare-workers-ai")
+embedding = llmcapa.get("@cf/baai/bge-m3", provider="workers-ai")
+
+print(len(models))                    # 現在同梱されているモデル数
+print(gpt_oss.context_window)          # 128000（公式モデルページ）
+print(gpt_oss.supports_responses_api)   # True（GPT-OSSのみ公式対応）
+print(embedding.supports("embedding_output"))  # True
+```
+
+公開されていない値は推測せず、未確認のまま保持します。カタログ更新にはリポジトリ内で `python scripts/_update_cloudflare_workers_ai.py` を実行します。
 
 ### トークン数とコストの見積もり
 

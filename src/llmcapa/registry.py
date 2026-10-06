@@ -64,6 +64,9 @@ class Registry:
         "vercel": ["vercel-ai-gateway", "vercel-gateway", "ai-gateway"],
         # Modellix is a gateway with its own provider/name model IDs.
         "modellix": ["modellix-ai"],
+        "cloudflare-workers-ai": ["cloudflare", "workers-ai"],
+        # mdx.MaaS exposes models through an OpenAI-compatible inference API.
+        "mdx-maas": ["mdx", "mdxmaas"],
         # llama.cpp is a local inference backend, kept distinct from Ollama.
         "llama-cpp": ["llama", "llama_cpp"],
     }

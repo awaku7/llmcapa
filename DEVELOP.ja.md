@@ -88,6 +88,8 @@ llmcapa/
 | `together` | `together-ai`, `togethercomputer` |
 | `vercel` | `vercel-ai-gateway`, `vercel-gateway`, `ai-gateway` |
 | `modellix` | `modellix-ai` |
+| `mdx-maas` | `mdx`, `mdxmaas`（`mdx.MaaS` は `mdx-maas` に正規化） |
+| `cloudflare-workers-ai` | `cloudflare`, `workers-ai` |
 | `llama-cpp` | `llama`, `llama_cpp` |
 
 例:
@@ -119,6 +121,26 @@ llmcapa.search("gpt-4o", provider="azure")          # → azure-openai
 プロバイダーのカタログ更新は、プロバイダーごとの公式ソースを使う個別スクリプトで行います。全プロバイダーをOpenRouterのデータで一括置換するスクリプトは使用しません。
 
 ネイティブプロバイダーのカタログは、レコード取得に OpenRouter を使ってはなりません。OpenRouter API から構築するのは `openrouter.json` だけです（`scripts/_update_openrouter.py`）。他の `scripts/_update_*.py` は公式ドキュメントページまたは公式モデル API を直接解析します。`scripts/openrouter_providers/` 配下のシムは歴史的参照用であり、現役の更新スクリプトから import してはなりません。
+
+### mdx.MaaS
+
+`src/llmcapa/data/mdx-maas.json` は、mdx.MaaS の公式モデル一覧に掲載された即時応答APIモデルのスナップショットです。次のスクリプトで公式の公開スプレッドシートから更新できます。
+
+```bash
+python scripts/_update_mdx_maas.py
+```
+
+カタログは OpenAI互換の `/v1/chat/completions` と Batch APIの提供状況を記録し、Responses API対応は主張しません。公開されていないデプロイ固有のコンテキスト長・出力上限・料金は `0` / `null` のままにします（例外として、公式一覧に最大128kと記載された `openai/gpt-oss-20b` のコンテキスト長を記録）。ツール呼び出しは公式一覧で明記された Gemma のみ対応として記録します。
+
+### Cloudflare Workers AI
+
+`src/llmcapa/data/cloudflare-workers-ai.json` は公式 Workers AI モデル一覧と各モデル詳細ページから生成します。更新スクリプトは公式の `llms.txt` インデックスからモデルIDと詳細ページを取得し、OpenAI互換APIドキュメントからChat Completions、Embeddings、GPT-OSS Responses APIの対応を読み取ります。
+
+```bash
+python scripts/_update_cloudflare_workers_ai.py
+```
+
+モデルIDをスクリプトに列挙せず、公式ページのタスク種別・機能タグ・モデル情報表を使います。未知のタスク種別からモダリティを推測せず、公式に公開されていない上限・料金は `0` / `null` のまま保持します。
 
 ### OpenAI
 
