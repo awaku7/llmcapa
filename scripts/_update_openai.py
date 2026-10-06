@@ -258,6 +258,19 @@ def parse_model_index(index: str) -> tuple[list[str], set[str]]:
     return paths, deprecated
 
 
+def preserve_curated_decision(old: dict, refreshed: dict) -> dict:
+    """Keep endpoint-specific Decisions metadata across model-page refreshes."""
+    if old.get("decision") is None:
+        return refreshed
+    if refreshed.get("decision") is None:
+        refreshed["decision"] = old["decision"]
+    if "decision" in old.get("output_modalities", []):
+        modalities = refreshed.setdefault("output_modalities", [])
+        if "decision" not in modalities:
+            modalities.append("decision")
+    return refreshed
+
+
 def main() -> None:
     index = fetch(MODELS_URL)
     pricing = prices(fetch(PRICING_URL).split("### Batch pricing data", 1)[0])
@@ -313,6 +326,7 @@ def main() -> None:
                 merged["supports_reasoning_mode"] = old.get(
                     "supports_reasoning_mode", True
                 )
+            merged = preserve_curated_decision(old, merged)
             entry = merged
         price_id = entry.get("extra", {}).get("default_snapshot", mid)
         rate = pricing.get(price_id) or pricing.get(mid)

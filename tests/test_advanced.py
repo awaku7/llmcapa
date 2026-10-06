@@ -216,6 +216,16 @@ Output modalities: text
     assert parse_reasoning_mode_values("gpt-5.4", True) == []
     assert parse_reasoning_mode_values("gpt-6-luna", False) == []
 
+    refreshed = _update_openai.preserve_curated_decision(
+        {
+            "decision": {"decision": True},
+            "output_modalities": ["text", "decision"],
+        },
+        {"output_modalities": ["text"]},
+    )
+    assert refreshed["decision"] == {"decision": True}
+    assert refreshed["output_modalities"] == ["text", "decision"]
+
 
 def test_azure_tool_search_support_requires_responses_api_and_excludes_nano():
     scripts_path = str(Path(__file__).resolve().parents[1] / "scripts")

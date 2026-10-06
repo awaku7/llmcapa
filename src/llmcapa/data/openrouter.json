@@ -1147,8 +1147,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.019474,
-        "output_per_1m": 1.2,
+        "input_per_1m": 0.002,
+        "output_per_1m": 2.4,
         "currency": "USD"
       },
       "extra": {
@@ -1189,7 +1189,7 @@
         ],
         "created": "2026-09-14",
         "description": "This model always redirects to the latest model in the DeepSeek Flash family.",
-        "cache_read_per_1m": 0.015,
+        "cache_read_per_1m": 0.002,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -1253,7 +1253,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.267,
+        "input_per_1m": 0.2514,
         "output_per_1m": 4.2,
         "currency": "USD"
       },
@@ -1295,7 +1295,7 @@
         ],
         "created": "2026-09-14",
         "description": "This model always redirects to the latest model in the DeepSeek Pro family.",
-        "cache_read_per_1m": 0.27,
+        "cache_read_per_1m": 0.25,
         "default_parameters": {
           "temperature": 1,
           "top_p": 1
@@ -1361,7 +1361,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.009,
+        "input_per_1m": 0.015,
         "output_per_1m": 1.28,
         "currency": "USD"
       },
@@ -1405,7 +1405,7 @@
         ],
         "created": "2026-08-01",
         "description": "This model always redirects to the latest model in the DeepSeek V4 Flash family.",
-        "cache_read_per_1m": 0.009,
+        "cache_read_per_1m": 0.015,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -1823,8 +1823,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.83,
-        "output_per_1m": 13.0,
+        "input_per_1m": 0.795,
+        "output_per_1m": 13.013,
         "currency": "USD"
       },
       "extra": {
@@ -1865,7 +1865,7 @@
         ],
         "created": "2026-04-27",
         "description": "This model always redirects to the latest model in the Kimi family.",
-        "cache_read_per_1m": 0.45,
+        "cache_read_per_1m": 0.278,
         "default_parameters": {
           "top_p": 0.95
         },
@@ -2886,7 +2886,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.036,
+        "input_per_1m": 0.0244,
         "output_per_1m": 0.5,
         "currency": "USD"
       },
@@ -2929,7 +2929,7 @@
         ],
         "created": "2026-08-27",
         "description": "This model always redirects to the latest model in the GLM Flash family.",
-        "cache_read_per_1m": 0.036,
+        "cache_read_per_1m": 0.0244,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -13259,7 +13259,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.0264,
+        "input_per_1m": 0.0299,
         "output_per_1m": 1.28,
         "currency": "USD"
       },
@@ -13304,7 +13304,7 @@
         ],
         "created": "2026-04-24",
         "description": "DeepSeek V4 Flash is an efficiency-optimized Mixture-of-Experts model from DeepSeek with 284B total parameters and 13B activated parameters, supporting a 1M-token context window. It is designed for fast inference and...",
-        "cache_read_per_1m": 0.0264,
+        "cache_read_per_1m": 0.0299,
         "reasoning_meta": {
           "mandatory": false,
           "supported_efforts": [
@@ -13372,7 +13372,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.009,
+        "input_per_1m": 0.015,
         "output_per_1m": 1.28,
         "currency": "USD"
       },
@@ -13417,7 +13417,7 @@
         ],
         "created": "2026-07-31",
         "description": "DeepSeek V4 Flash 0731 is a sparse mixture-of-experts model from DeepSeek, with 13B active parameters out of 284B total. This re-post-trained revision is suited for coding, reasoning, and agent workflows....",
-        "cache_read_per_1m": 0.009,
+        "cache_read_per_1m": 0.015,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -13916,8 +13916,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.021421,
-        "output_per_1m": 1.32,
+        "input_per_1m": 0.3,
+        "output_per_1m": 1.2,
         "currency": "USD"
       },
       "extra": {
@@ -13959,7 +13959,7 @@
         ],
         "created": "2026-09-10",
         "description": "DeepSeek V4.1 Flash is a sparse mixture-of-experts model from DeepSeek, and the first built on the company's Causal Encoder-Decoder (CED) architecture. It activates 8B parameters on input and 16B on...",
-        "cache_read_per_1m": 0.0165,
+        "cache_read_per_1m": 0.006,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -20431,6 +20431,107 @@
     },
     {
       "provider": "openrouter",
+      "model_id": "google/gemini-nano-banana-2.1",
+      "display_name": "Google: Nano Banana 2.1",
+      "context_window": 65536,
+      "max_output_tokens": 58982,
+      "input_modalities": [
+        "image",
+        "text"
+      ],
+      "output_modalities": [
+        "image",
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Gemini",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "gemini-nano-banana-2.1",
+        "openrouter/google/gemini-nano-banana-2.1",
+        "google/gemini-nano-banana-2.1-20261006"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 1.5,
+        "output_per_1m": 7.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "google",
+        "canonical_slug": "google/gemini-nano-banana-2.1-20261006",
+        "modality": "text+image->text+image",
+        "tokenizer": "Gemini",
+        "top_provider": {
+          "context_length": 65536,
+          "max_completion_tokens": 58982,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "include_reasoning",
+          "max_tokens",
+          "reasoning",
+          "reasoning_effort",
+          "response_format",
+          "seed",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_p"
+        ],
+        "created": "2026-10-06",
+        "description": "Nano Banana 2.1 (Gemini Nano Banana 2.1) is Google's image generation and editing model on the Flash tier, succeeding Nano Banana 2 and Nano Banana Pro. It improves product recontextualization,...",
+        "web_search_per_request_usd": 0.014,
+        "image_output_per_1m": 30.0,
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "high",
+            "minimal"
+          ],
+          "default_effort": "minimal"
+        },
+        "links": {
+          "details": "/api/v1/models/google/gemini-nano-banana-2.1-20261006/endpoints"
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "reasoning_effort",
+          "vision",
+          "image_output"
+        ]
+      },
+      "reasoning_effort_values": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ]
+    },
+    {
+      "provider": "openrouter",
       "model_id": "google/gemma-2-27b-it",
       "display_name": "Google: Gemma 2 27B",
       "context_window": 8192,
@@ -20811,8 +20912,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.09,
-        "output_per_1m": 0.3,
+        "input_per_1m": 0.0765,
+        "output_per_1m": 0.255,
         "currency": "USD"
       },
       "video": {
@@ -20884,7 +20985,7 @@
         ],
         "created": "2026-04-03",
         "description": "Gemma 4 26B A4B IT is an instruction-tuned Mixture-of-Experts (MoE) model from Google DeepMind. Despite 25.2B total parameters, only 3.8B activate per token during inference — delivering near-31B quality at...",
-        "cache_read_per_1m": 0.05,
+        "cache_read_per_1m": 0.0425,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95,
@@ -25219,6 +25320,7 @@
         ],
         "created": "2025-04-05",
         "description": "Llama 4 Maverick 17B Instruct (128E) is a high-capacity multimodal language model from Meta, built on a mixture-of-experts (MoE) architecture with 128 experts and 17 billion active parameters per forward...",
+        "cache_read_per_1m": 0.05,
         "links": {
           "details": "/api/v1/models/meta-llama/llama-4-maverick-17b-128e-instruct/endpoints"
         },
@@ -25406,7 +25508,7 @@
       "model_id": "meta/muse-glimmer-30b",
       "display_name": "Meta: Muse Glimmer 30B",
       "context_window": 131072,
-      "max_output_tokens": 117964,
+      "max_output_tokens": 16384,
       "input_modalities": [
         "text",
         "image"
@@ -25438,8 +25540,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.35,
-        "output_per_1m": 1.5,
+        "input_per_1m": 0.3,
+        "output_per_1m": 1.2,
         "currency": "USD"
       },
       "extra": {
@@ -25454,7 +25556,7 @@
         "tokenizer": "Other",
         "top_provider": {
           "context_length": 131072,
-          "max_completion_tokens": 117964,
+          "max_completion_tokens": 16384,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -29806,6 +29908,108 @@
     },
     {
       "provider": "openrouter",
+      "model_id": "mistralai/mistral-large-4-0",
+      "display_name": "Mistral: Mistral Large 4",
+      "context_window": 524288,
+      "max_output_tokens": 262144,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Mistral",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mistral-large-4-0",
+        "openrouter/mistralai/mistral-large-4-0",
+        "mistralai/mistral-large-4-0-20261006"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.68,
+        "output_per_1m": 2.09,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "mistralai",
+        "canonical_slug": "mistralai/mistral-large-4-0-20261006",
+        "modality": "text+image->text",
+        "tokenizer": "Mistral",
+        "top_provider": {
+          "context_length": 524288,
+          "max_completion_tokens": 262144,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "logprobs",
+          "max_tokens",
+          "presence_penalty",
+          "reasoning",
+          "reasoning_effort",
+          "response_format",
+          "seed",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_logprobs",
+          "top_p"
+        ],
+        "created": "2026-10-06",
+        "description": "Mistral Large 4 is a frontier multimodal (text and image input) model from Mistral AI built for reasoning, coding, and agentic workloads. It offers a 512K-token context window with up...",
+        "cache_read_per_1m": 0.07,
+        "reasoning_meta": {
+          "mandatory": false,
+          "supported_efforts": [
+            "high",
+            "none"
+          ],
+          "default_effort": "high"
+        },
+        "links": {
+          "details": "/api/v1/models/mistralai/mistral-large-4-0-20261006/endpoints"
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "reasoning_effort",
+          "vision"
+        ]
+      },
+      "reasoning_effort_values": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ]
+    },
+    {
+      "provider": "openrouter",
       "model_id": "mistralai/mistral-medium-3",
       "display_name": "Mistral: Mistral Medium 3",
       "context_window": 131072,
@@ -32156,8 +32360,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.95,
-        "output_per_1m": 14.0,
+        "input_per_1m": 0.89,
+        "output_per_1m": 15.0,
         "currency": "USD"
       },
       "video": {
@@ -32230,7 +32434,7 @@
         ],
         "created": "2026-07-16",
         "description": "Kimi K3 is a 2.8T parameter open-weight multimodal reasoning model from Moonshot AI. It is suited for complex coding, knowledge work, and long-horizon agentic workflows, and is particularly strong at...",
-        "cache_read_per_1m": 0.31,
+        "cache_read_per_1m": 0.29,
         "default_parameters": {
           "top_p": 0.95
         },
@@ -43435,6 +43639,66 @@
         "high",
         "xhigh"
       ]
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "openai/gpt-6-luna-decisions",
+      "display_name": "OpenAI: GPT-6 Luna Decisions",
+      "context_window": 1050000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "decisions"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "gpt-6-luna-decisions",
+        "openrouter/openai/gpt-6-luna-decisions"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "openai",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 1050000,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "GPT-6 Luna Decisions is [GPT-6 Luna](/openai/gpt-6-luna) served through OpenAI's Decisions API. Instead of generating text, it reads the content passed as `state` (text, JSON, or images) and returns typed, probabilistic answers to named questions in a single request: the probability of yes for a yes/no question (`noul`), a probability for every option plus the most likely one (`choice`), or a prob",
+        "cache_read_per_1m": 0.0,
+        "cache_write_per_1m": 0.0,
+        "web_search_per_request_usd": 0.01,
+        "features": [
+          "vision"
+        ]
+      }
     },
     {
       "provider": "openrouter",
@@ -58830,8 +59094,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.132,
-        "output_per_1m": 0.528,
+        "input_per_1m": 0.0825,
+        "output_per_1m": 0.33,
         "currency": "USD"
       },
       "extra": {
@@ -58872,7 +59136,7 @@
         ],
         "created": "2026-07-06",
         "description": "Hy3 is a 295B-parameter Mixture-of-Experts model from Tencent (21B active, 192 experts with top-8 routing) built for reasoning, agentic workflows, and real-world production use. It supports a configurable reasoning effort:...",
-        "cache_read_per_1m": 0.033,
+        "cache_read_per_1m": 0.020625,
         "pricing_overrides": [
           {
             "utc_start": 0,
@@ -59066,8 +59330,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.834,
-        "output_per_1m": 2.501,
+        "input_per_1m": 0.7506,
+        "output_per_1m": 2.2509,
         "currency": "USD"
       },
       "extra": {
@@ -59108,7 +59372,7 @@
         ],
         "created": "2026-08-28",
         "description": "Tencent: Hy4 preview is a mixture-of-experts model from Tencent, with 49B active parameters out of 770B total. It is designed for coding agents, complex tool-use workflows, and productivity tasks that...",
-        "cache_read_per_1m": 0.042,
+        "cache_read_per_1m": 0.0378,
         "pricing_overrides": [
           {
             "utc_start": 0,
@@ -62976,6 +63240,96 @@
           "structured_outputs",
           "vision"
         ]
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "x-ai/grok-imagine-video-1.5-lite",
+      "display_name": "SpaceXAI: Grok Imagine Video 1.5 Lite",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "video"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "grok-imagine-video-1.5-lite",
+        "openrouter/x-ai/grok-imagine-video-1.5-lite"
+      ],
+      "license_type": "free",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "x-ai",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 0,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [
+          "max_tokens",
+          "temperature",
+          "top_p",
+          "seed",
+          "logprobs",
+          "top_logprobs",
+          "response_format"
+        ],
+        "description": "Grok Imagine Video 1.5 Lite is a faster, lower-cost video generation model from SpaceXAI, distilled from [Grok Imagine Video 1.5](/x-ai/grok-imagine-video-1.5). It supports text-to-video and image-to-video, trading some quality for speed and price. 1080p output is rendered at 720p and upscaled.",
+        "free_tier": true,
+        "features": [
+          "structured_outputs",
+          "vision"
+        ]
+      },
+      "video": {
+        "accepts_video_input": false,
+        "generation": true,
+        "understanding": false,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "generation": true,
+          "streaming": true
+        },
+        "output_formats": [
+          "mp4"
+        ],
+        "output_mime_types": [
+          "video/mp4"
+        ],
+        "checked_at": "2026-10-06",
+        "status": "inferred"
       }
     },
     {

@@ -11601,3 +11601,419 @@
 - Synthetic `~*/…-latest` aliases retained (9)
 - Replaced thin 14-model placeholder catalog
 - Install copy synced
+
+## Aion Labs official refresh (2026-10-06)
+
+- Source: https://www.aionlabs.ai/docs/models/
+- Updated official model availability, max output, reasoning flag, and USD pricing for 5 Aion records, including expired Aion 2.5.
+- Context windows come from source-attributed metadata fallbacks because the updater does not parse them from the page.
+- OpenRouter was not used.
+
+## Amazon Nova / Bedrock refresh (2026-10-06)
+
+### Source
+- Bedrock pricing: https://aws.amazon.com/bedrock/pricing/
+- Nova pricing: https://aws.amazon.com/nova/pricing/
+- Metered unit map: https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json
+- Scratch: `_scratch_amazon_nova_pricing_live.html`
+- Apply: `scripts/_update_amazon.py`
+
+### Result
+- amazon.json: **32** models (active=32, deprecated=0, priced=20)
+- Nova pricing mode: live
+- Current Nova token prices are refreshed only when the optional scraper is available
+- Historical Titan and specialty metadata remains static
+- Claude Bedrock Computer Use capabilities are reconciled from official model cards
+- Bedrock aliases are generated as amazon.*:0
+
+## Anthropic refresh (2026-10-06)
+
+### Source
+- Live HTML fetch: official overview and pricing pages
+- Docs: https://platform.claude.com/docs/en/about-claude/models/overview / https://platform.claude.com/docs/en/about-claude/pricing
+- Apply: `scripts/_update_anthropic.py`
+
+### Result
+- anthropic.json: **22** models (active=15, deprecated=7, priced=22)
+- Parsed 22 model price rows from the official pricing table; cache and batch prices are derived from the same rows
+- Existing metadata retained where model IDs matched; historical rows kept
+- Install copy synced
+
+## azure_foundry — 2026-10-06 23:26 UTC
+
+- Catalog: official API scrape + supported-task/modality selection (`_scratch_azure_catalog_raw.json`, raw=11729, selected=7633, unique=7633)
+- Pricing: AOAI + Foundry partner pages (`_scratch_azure_pricing_tables.json`), price_keys=156
+- Output: n=7562 priced=122 maas_or_paygo=349 extra=7546
+- Providers (top): huggingface=6893, microsoft=274, azure-foundrylocalonazurelocal=54, azure-openai=52, azure-foundry=46, fireworks=43, meta=33, nvidia=25, azureml=19, mistral=17, cohere=9, voyage-ai=7
+- Sources: https://ai.azure.com/catalog/models ; https://azure.microsoft.com/en-us/pricing/details/azure-openai/ ; https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/*
+- Script: `scripts/_update_azure_foundry.py` (+ `scripts/_scrape_azure_foundry_full.py`)
+- Installed copy: `F:\KAIHATSU\llmcapa\src\llmcapa\data\azure_foundry.json`
+
+## Baidu Qianfan official refresh (2026-10-06)
+
+- Source: https://cloud.baidu.com/doc/qianfan/index.html
+- Parsed official featured model catalog metadata for 1 existing Baidu record(s).
+- No pricing/context values were inferred because the official pricing page is separate and was not reliably exposed in this pass.
+- OpenRouter was not used.
+
+## ByteDance/Seed official refresh (2026-10-06)
+
+- Source: https://docs.volcengine.com/docs/82379/1544106?lang=zh
+- Parsed official CNY video-token pricing for 0 existing Seedance records.
+- Resolution/input-video dependent prices remain in `extra`; no FX conversion or invented context window was applied.
+- OpenRouter was not used.
+
+## Cloudflare Workers AI official catalog refresh (2026-10-06)
+
+- Model source: https://developers.cloudflare.com/workers-ai/llms.txt
+- OpenAI compatibility: https://developers.cloudflare.com/workers-ai/configuration/open-ai-compatibility/index.md
+- Models parsed: 69
+- Task types: Automatic Speech Recognition, Dumb Pipe, Image Classification, Image-to-Text, Text Classification, Text Embeddings, Text Generation, Text-to-Image, Text-to-Speech, Translation
+- Model IDs and per-model fields were read from the official index and detail pages; unlisted values remain unknown.
+
+## Cohere official model-page refresh (2026-10-06)
+
+- Source: https://docs.cohere.com/docs/models
+- Official model pages checked: 0
+- Provenance entries changed: 0
+- Numeric capability fields preserved unless an explicit parser rule exists.
+- OpenRouter was not used.
+
+## DeepSeek refresh (2026-10-06)
+
+### Source
+- Pricing: https://api-docs.deepseek.com/quick_start/pricing/
+- Change log: https://api-docs.deepseek.com/updates/
+- Thinking mode: https://api-docs.deepseek.com/guides/thinking_mode/
+- Scratch: `_scratch_deepseek_pricing_live.html`
+- Apply: `scripts/_update_deepseek.py`
+
+### Result
+- deepseek.json: **9** models (active=3, deprecated=6, priced=8)
+- Official models fetched: deepseek-flash, deepseek-v4-pro
+- Pricing, capabilities, context length, max output, versions, and concurrency were fetched from the official page
+- Historical model records are retained as static deprecated metadata
+- OpenRouter was not used
+
+## Fireworks official catalog refresh (2026-10-06)
+
+- Source: https://fireworks.ai/models
+- Structured model cards: 306
+- Model specs/pricing only from card fields; unknown values left unset.
+
+## Foundry Local refresh (2026-10-06)
+
+- Source: https://ai.azure.com/api/japaneast/ux/v1.0/entities/crossRegion
+- Official implementation: https://github.com/microsoft/Foundry-Local
+- Result: 49 logical models from 238 variants.
+
+## Google refresh (2026-10-06)
+
+### Source
+- Pricing: https://ai.google.dev/gemini-api/docs/pricing
+- Apply: `scripts/_update_google.py`
+
+### Result
+- google.json: **80** models (active=72, token-priced=62)
+- Inserted (discovered): gemini-nano-banana-2.1
+- Lyria-3 clip/pro: $0.04 / $0.08 per song (extra)
+- Deprecations: discovered from official model pricing sections
+- Install copy synced
+
+## IBM Granite official refresh (2026-10-06)
+
+- Source: https://www.ibm.com/granite/docs/models/granite4-2
+- Added/updated Granite 4.2 models: 3 (new: 0).
+- Recorded official 128K context, 30B long-context extension to 512K, Apache 2.0, reasoning, and tool-calling metadata.
+- Granite 4.0 records were marked deprecated; pricing was not inferred.
+- OpenRouter was not used.
+
+## Inception official refresh (2026-10-06)
+
+- Sources: https://api.inceptionlabs.ai/v1/models; https://docs.inceptionlabs.ai/get-started/models
+- Updated 3 existing records and added 1 records (4 total).
+- Mercury 2.5 pricing uses the current API promotional rates; list prices are retained in `extra.list_pricing`.
+- OpenRouter was not used.
+
+## Japanese (multi-vendor) refresh (2026-10-06)
+
+### Source
+- PLaMo API: https://plamo.preferredai.jp/api
+- PLaMo PR GA: https://www.preferred.jp/ja/news/pr20260622
+- PLaMo blog: https://www.preferred.jp/ja/blog/tech/plamo-3-0-prime-release
+- Cloud PF Type A: https://www.softbank.jp/business/service/platform/cloud-pf-type-a/
+- Sarashina3 blog: https://www.sbintuitions.co.jp/blog/entry/2026/06/30/sarashina3-mini-nano/
+- tsuzumi 2: https://www.nttdata.com/jp/ja/lineup/tsuzumi/
+- Azure tsuzumi: https://marketplace.microsoft.com/en-us/product/1681106214127.nttdata-tsuzumi-2-instruct-offer
+- GENNAI / 7-model synthesis: https://ai-revolution.co.jp/media/japan-llm-7-comparison/
+- Scratch: `_scratch_jp_*.html`, `_scratch_jp_plamo_api3.html`
+- Apply: `scripts/_update_japanese.py`
+
+### Result
+- japanese.json: **14** models (active=11, deprecated=3, priced=3, extra=14)
+- Providers: {'softbank': 6, 'ntt': 1, 'pfn': 3, 'nec': 1, 'elyza': 1, 'fujitsu': 1, 'customer-cloud': 1}
+- Current model names and modalities are discovered from the official pages above.
+- Prices and limits are updated only where the official source publishes them; unknowns remain unset.
+- Carried-forward rows are marked as not reconfirmed by the current page set.
+- sakura kept separate (sakura.json) — next refresh
+- Install copy synced
+
+## Meta Model API refresh (2026-10-06)
+
+### Source
+- Models: https://dev.meta.ai/docs/models (status=200, table=5)
+- Pricing: https://dev.meta.ai/docs/pricing-rate-limits (status=200)
+- Image generation: https://dev.meta.ai/docs/image-generation (status=200)
+- Top: https://dev.meta.ai/ (status=200, spark-1.3=True)
+- Glimmer: https://research.meta.ai/blog/introducing-muse-glimmer-open-agentic-model (text_len=9297)
+- Apply: `scripts/_update_meta.py`
+- OpenRouter was not used.
+
+### Result
+- meta.json: **8** models (active=8, token-priced=5)
+- Spark Standard $1.25/$4.25 + cached $0.15; Contributor $0.10/$0.20 + cached $0.002
+- Glimmer 30B recorded as Apache 2.0 open weights (no API pricing)
+- Voice Transcribe ($/hour) and Image 1.0 ($/image) recorded as specialty units
+
+## Microsoft refresh (2026-10-06)
+
+### Source
+- Pricing: https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/
+- Retired: https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-lifecycle-retirement
+- MAI docs: https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-mai
+- Catalog: https://ai.azure.com/catalog/publishers/microsoft
+- MAI news: https://microsoft.ai/news/today-were-announcing-3-new-world-class-mai-models-available-in-foundry/
+- Scratch: `_scratch_ms_pricing_live2.html`, `_scratch_ms_retired_text.txt`, `_scratch_ms_mai_docs.html`, `_scratch_ms_catalog_publisher.html`
+- Apply: `scripts/_update_microsoft.py`
+
+### Result
+- microsoft.json: **60** models (active=48, deprecated=12, priced=22, extra=60)
+- Official Microsoft pricing rows parsed and applied: 22
+- Phi-3/3.5 family marked deprecated (retired 2025-08-30) with Foundry rates kept
+- MAI-DS-R1 Global $1.35/$5.40 deprecated (retired 2026-02-27); MAI-Image-2 $5/$33, Efficient/2e $5/$19.50; Voice/Transcribe unpriced meters
+- Added MAI-Thinking-1 (256K) + MAI-Code-1-Flash product surface (unpriced)
+- Deduped phi-4 / microsoft/phi-4; modalities fixed on multimodal/vision
+- Azure AI services retained as license/unpriced; community forks free
+- Install copy synced
+
+## MiniMax refresh (2026-10-06)
+
+### Source
+- Models: https://platform.minimax.io/docs/guides/models-intro
+- PayGO: https://platform.minimax.io/docs/guides/pricing-paygo
+- Chat enum: https://platform.minimax.io/docs/api-reference/text-chat
+- Apply: `scripts/_update_minimax.py`
+
+### Result
+- minimax.json: **17** models (active=17, token-priced=11)
+- Official MiniMax pricing rows applied to 13 text models
+- New official token-priced model IDs are added with generic metadata
+- Specialty model metadata remains static until corresponding tables are parsed
+
+## Mistral refresh (2026-10-06) — quality pass
+
+### Fixes
+- Voxtral Mini chat vs pure-transcribe classification (no longer force all non-small Voxtral to transcribe)
+- Voxtral Small token pricing: use 3-amount cards as audio/min + input/output token
+- Research cards with null feature flags default to chat=True (mathstral/next/mamba/7b)
+- pick_model_id accepts open-* ids (e.g. open-codestral-mamba)
+
+### Result
+- mistral.json: **67** models (active=19, deprecated=48, token-priced=37)
+- Install copy synced
+- Skipped 404 slugs: none
+
+## Moonshot / Kimi refresh (2026-10-06)
+
+### Source
+- Official: https://platform.kimi.ai/docs/pricing/chat + chat-k27-code / chat-k26 / chat-k25 (Playwright live)
+- Apply: `scripts/_update_moonshot.py`
+
+### Result
+- moonshot.json: **11** models (active=8, deprecated=3, priced=11)
+- **Kimi K3**: $3/$15 @1M; cache hit $0.30 (fixed cache_miss mapping)
+- **K2.7 Code**: $0.95/$4.00; cache hit $0.19 (was $1.0/$4.4)
+- **K2.7 Code HighSpeed** added: $1.90/$8.00; cache hit $0.38
+- **K2.6**: $0.95/$4.00; cache hit $0.16
+- **K2.5**: $0.60/$3.00; cache hit $0.10 (was $0.57/$2.85)
+- Multimodal (image+video) for K3 / K2.7 Code / K2.6 / K2.5
+- Install copy synced
+
+## NVIDIA NIM refresh (2026-10-06)
+
+### Source
+- Catalog: https://build.nvidia.com/models
+- Model pages: nemotron-3-ultra / super / nano (Playwright live)
+- Docs: https://docs.api.nvidia.com/nim/reference/llm-apis
+- Apply: `scripts/_update_nvidia.py`
+
+### Result
+- nvidia.json: **74** models (active=74, priced=21)
+- **nemotron-3-ultra-550b-a55b**: $0.50/$2.20 (Deep Infra); partners $0.41–$0.90 in
+- **nemotron-3-super-120b-a12b**: $0.20/$0.80 (Bitdeer/CoreWeave)
+- **nemotron-3-nano-30b-a3b**: $0.05/$0.20
+- Free endpoint twins synced; omni / embed / cosmos3-nano* added
+- Free NVIDIA trial endpoints remain available for evaluation
+- Install copy synced
+- Changes: updated:nemotron-3-ultra-550b-a55b, updated:nemotron-3-super-120b-a12b, updated:nemotron-3-nano-30b-a3b, updated:nemotron-3-nano-omni-30b-a3b-reasoning, updated:nemotron-3-embed-1b, updated:nemotron-3.5-content-safety, updated:cosmos3-nano, updated:cosmos3-nano-reasoner, synced_free:nemotron-3-ultra-550b-a55b:free, synced_free:nemotron-3-super-120b-a12b:free, synced_free:nemotron-3-nano-30b-a3b:free
+
+## Ollama refresh (2026-10-06)
+
+- Source: https://ollama.com/api/tags
+- Live tags merged: 18
+- Historical bundled entries preserved: 1657
+
+## OpenAI (2026-10-06)
+
+- Source: https://developers.openai.com/api/docs/models/all.md
+- Source: https://developers.openai.com/api/docs/pricing.md
+- Dynamically discovered 101 official model pages; legacy records preserved: 67
+
+## Qwen / Alibaba Model Studio refresh (2026-10-06)
+
+### Source
+- Pricing: https://www.alibabacloud.com/help/en/model-studio/model-pricing
+- Apply: `scripts/_update_qwen.py`
+
+### Result
+- qwen.json: **149** models (active=146, token-priced=113)
+- Official Alibaba pricing rows applied to 9 maintained text models
+- Current Qwen model IDs and first International pricing tiers are fetched automatically
+- Media metadata remains static until official media pricing tables are parsed
+- OpenRouter `qwen/...` entries kept; alibaba_list_pricing annotated in extra
+- Install copy synced
+
+## Reka AI official refresh (2026-10-06)
+
+- Source: https://docs.reka.ai/chat/models
+- Parsed official public baseline models: reka-flash and reka-edge-2603.
+- Updated provenance/availability metadata for 2 existing Reka records; numeric pricing/context values were not inferred.
+- OpenRouter was not used.
+
+## Sakura (さくらのAI Engine) refresh (2026-10-06)
+
+### Source
+- Product: https://ai.sakura.ad.jp/sakura-ai/ai-engine/
+- Playground: https://playground.aipf.sakura.ad.jp/
+- Apply: `scripts/_update_sakura.py`
+
+### Result
+- sakura.json: **24** models (active=24, deprecated=0, priced=11, extra=24)
+- Tiers: {'closed': 3, 'standard': 12, 'preview': 9}
+- Model IDs, categories, and prices come from the live product tables. Selected context_window values use official upstream base-model specifications and are marked in extra; Sakura deployment-specific limits remain unpublished. Other missing values remain unknown.
+- Token/audio/TTS prices are parsed from the current table; quote-only closed models remain unpriced.
+- No local sakura_legacy_models.json manifest or hard-coded model catalog is used.
+- Install copy synced
+
+## SiliconFlow public documentation scrape (2026-10-06)
+
+- Extracted 33 documented model IDs; no API key or model-list API was used.
+- Evidence pages:
+- quickstart: https://docs.siliconflow.com/en/userguide/quickstart
+- text_generation: https://docs.siliconflow.com/en/userguide/capabilities/text-generation
+- vision: https://docs.siliconflow.com/en/userguide/capabilities/vision
+- image_generation: https://docs.siliconflow.com/en/userguide/capabilities/images
+- video_generation: https://docs.siliconflow.com/en/userguide/capabilities/video
+- text_to_speech: https://docs.siliconflow.com/en/userguide/capabilities/text-to-speech
+- reasoning: https://docs.siliconflow.com/en/userguide/capabilities/reasoning
+- Malformed model-like fragments from prior broad HTML scraping were discarded.
+
+## StepFun official refresh (2026-10-06)
+
+- Source: https://platform.stepfun.ai/docs/en/guides/pricing/details.md
+- Updated: 2 models (Step 3.5 Flash and Step 3.7 Flash).
+- OpenRouter was not used.
+
+## Tencent Hunyuan official refresh (2026-10-06)
+
+- Source: https://cloud.tencent.com/document/product/1729/97731
+- Parsed official Hunyuan-a13b pricing: CNY 0.5/2.0 per 1M input/output tokens.
+- Existing context/capability fields were preserved; other Tencent model prices were not inferred.
+- OpenRouter was not used.
+
+## Upstage official model refresh (2026-10-06)
+
+- Source: https://console.upstage.ai/docs/models/solar-pro-4
+- Checked: 1; updated: 1
+- Context, output limit, prices, cached price, endpoint version, and cutoff were parsed from the official page.
+- OpenRouter was not used.
+
+## Xiaomi MiMo refresh (2026-10-06)
+
+### Source
+- Models: https://mimo.mi.com/docs/en-US/quick-start/summary/model
+- Pricing: https://mimo.mi.com/docs/en-US/price/pay-as-you-go (Playwright live)
+- Apply: `scripts/_update_xiaomi.py`
+
+### Result
+- xiaomi.json: **9** models (active=9, deprecated=0, priced=5)
+- Catalog rows, limits, capabilities, and published prices are parsed from live official tables.
+- ASR hourly rates, TTS promotional pricing, batch pricing, and deprecation dates are parsed when published.
+- No local xiaomi_legacy_models.json manifest or hard-coded model list is used.
+- Install copy synced
+
+## xAI refresh (2026-10-06)
+
+### Source
+- ListModels: `_scratch_xai_listmodels_parsed.json`
+- Docs: https://docs.x.ai/developers/models (+ pricing / Voice / Imagine)
+- Apply: `scripts/_update_xai.py`
+
+### Result
+- xai.json: **22** models (active=16, deprecated=6, token-priced=13)
+- Text: grok-4.5 $2/$6 @500k (cache $0.5, long $4); grok-4.3 / 4.20 family $1.25/$2.5 @1M (cache $0.2, long $2.5)
+- Imagine + Voice specialty entries included
+- Install copy synced
+
+## xAI refresh (2026-10-06)
+
+### Source
+- ListModels: `_scratch_xai_listmodels_parsed.json`
+- Docs: https://docs.x.ai/developers/models (+ pricing / Voice / Imagine)
+- Apply: `scripts/_update_xai.py`
+
+### Result
+- xai.json: **22** models (active=16, deprecated=6, token-priced=13)
+- Text: grok-4.5 $2/$6 @500k (cache $0.5, long $4); grok-4.3 / 4.20 family $1.25/$2.5 @1M (cache $0.2, long $2.5)
+- Imagine + Voice specialty entries included
+- Install copy synced
+
+## Hugging Face official organization refresh (2026-10-06)
+
+
+- Source: official Hugging Face organization APIs (`huggingface.co/api/models`).
+- Recorded provider organization model catalogs only; no prices or capabilities were inferred.
+- OpenRouter was not used.
+
+- anthracite-org: 0 record(s), updated
+- cognitivecomputations: 0 record(s), empty
+- deepcogito: 0 record(s), updated
+- gryphe: 0 record(s), updated
+- inclusionai: 5 record(s), updated
+- kwaipilot: 0 record(s), updated
+- mancer: 0 record(s), empty
+- meituan: 0 record(s), updated
+- nex-agi: 0 record(s), empty
+- perceptron: 0 record(s), empty
+- sao10k: 0 record(s), updated
+- thedrummer: 4 record(s), updated
+- undi95: 0 record(s), empty
+
+## OpenRouter refresh (2026-10-06)
+
+### Source
+- API: `https://openrouter.ai/api/v1/models` (live → `_scratch_openrouter_models.json`)
+- /models fallback: `https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards` (adds frontend-only active model cards)
+- Docs: https://openrouter.ai/docs
+- Apply: `scripts/_update_openrouter.py`
+
+### Result
+- openrouter.json: **654** models (active=654, deprecated=0, priced=535, free=111, dynamic=7, extra=654)
+- vision=384, reasoning=345, tools=405, cache_pricing=309
+- native providers: 80 (top: [('openai', 117), ('qwen', 63), ('google', 53), ('mistralai', 32), ('anthropic', 29), ('z-ai', 18), ('nvidia', 17), ('recraft', 16), ('deepseek', 15), ('x-ai', 15)])
+- Frontend-only records added: 185
+- Pricing: API per-token ×1e6 → USD/1M; router prompt=-1 → catalog -1000000.0
+- Cache: input_cache_read/write(/1h) in extra when present
+- Synthetic `~*/…-latest` aliases retained (9)
+- Replaced thin 14-model placeholder catalog
+- Install copy synced

@@ -6098,8 +6098,53 @@
         "image"
       ],
       "output_modalities": [
-        "text"
+        "text",
+        "decision"
       ],
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "predicate",
+          "choice",
+          "score"
+        ],
+        "answer_fields": [
+          "probability",
+          "choice",
+          "score",
+          "probabilities",
+          "confidence"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "calibrated_confidence": null,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "deterministic": null,
+        "state_shapes": [
+          "string",
+          "message_array"
+        ],
+        "max_state_tokens": null,
+        "max_total_tokens": null,
+        "output_token_billing": false,
+        "language_values": [],
+        "endpoints": [
+          "https://api.openai.com/v1/decisions"
+        ],
+        "source_url": "https://developers.openai.com/api/docs/guides/decisions",
+        "status": "beta",
+        "extra": {
+          "availability": "public beta",
+          "pricing": {
+            "input_per_1m": 0.1,
+            "output_per_1m": 0.0,
+            "currency": "USD"
+          },
+          "image_input": "Inline base64 data URLs only; hosted URLs and file_id are unsupported."
+        }
+      },
       "deprecated": false,
       "aliases": [
         "gpt-6-luna"

@@ -115,3 +115,18 @@ def test_decision_model_is_not_replaced_by_a_text_model():
     text = llmcapa.get("gpt-4o", provider="openai")
 
     assert decision.can_be_replaced_by(text) is False
+
+
+def test_openai_decisions_api_is_catalogued_on_gpt_6_luna():
+    cap = llmcapa.get("gpt-6-luna", provider="openai")
+
+    assert cap.output_modalities == ["text", "decision"]
+    assert cap.supports("decision_output") is True
+    assert cap.supports("responses_api") is True
+    assert cap.decision is not None
+    assert cap.decision.question_kinds == ("predicate", "choice", "score")
+    assert cap.decision.returns_probabilities is True
+    assert cap.decision.parallel_questions is True
+    assert cap.decision.output_token_billing is False
+    assert cap.decision.endpoints == ("https://api.openai.com/v1/decisions",)
+    assert cap.decision.status == "beta"

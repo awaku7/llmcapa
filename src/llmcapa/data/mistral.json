@@ -360,6 +360,57 @@
     },
     {
       "provider": "mistral",
+      "model_id": "mistral-large-4",
+      "display_name": "Mistral Large 4",
+      "context_window": 1000000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "currency": "USD",
+        "input_per_1m": 0.68,
+        "output_per_1m": 2.09
+      },
+      "extra": {
+        "source": "https://docs.mistral.ai/models/mistral-large-4-0",
+        "card_slug": "mistral-large-4-0",
+        "cached_input_per_1m": 0.07,
+        "status": "Public Preview",
+        "version": "1",
+        "release_date": "October 6, 2026",
+        "alias_count": "1",
+        "description": "Mistral Large 4 is a state-of-the-art, open-weight, general-purpose multimodal model with a granular Mixture-of-Experts architecture. It features 52B active parameters and 1.05T total parameters, and a 1.6B vision encoder.",
+        "supports_batching": true,
+        "supports_prefix": true,
+        "supports_agents": true,
+        "supports_built_in_tools": true,
+        "supports_document_qna": true
+      }
+    },
+    {
+      "provider": "mistral",
       "model_id": "mistral-medium-3-5",
       "display_name": "Mistral Medium 3.5",
       "context_window": 256000,
