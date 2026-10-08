@@ -6,11 +6,11 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
-from _update_anthropic import apply_legacy_price_snapshot
 from _audio_capability_postprocess import apply as apply_audio_capabilities
 from _image_capability_postprocess import apply as apply_image_capabilities
-from _video_capability_postprocess import apply as apply_video_capabilities
 from _structured_capability_postprocess import apply as apply_structured_capabilities
+from _update_anthropic import apply_legacy_price_snapshot
+from _video_capability_postprocess import apply as apply_video_capabilities
 
 DATA = r"F:\KAIHATSU\llmcapa\src\llmcapa\data"
 INSTALLED = r"F:\Python314\Lib\site-packages\llmcapa\data"
