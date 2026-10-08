@@ -54,7 +54,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -85,7 +85,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -103,7 +103,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -227,7 +227,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -258,7 +258,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -276,7 +276,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -758,15 +758,15 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
       "provider": "openrouter",
       "model_id": "~anthropic/claude-haiku-latest",
       "display_name": "Anthropic: Claude Haiku Latest",
-      "context_window": 200000,
-      "max_output_tokens": 64000,
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
       "input_modalities": [
         "text",
         "image",
@@ -782,7 +782,7 @@
       "supports_reasoning": true,
       "supports_chat_completion": true,
       "supports_responses_api": true,
-      "supports_reasoning_effort": false,
+      "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": false,
       "supports_google_api": false,
@@ -797,8 +797,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 1.0,
-        "output_per_1m": 5.0,
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.5,
         "currency": "USD"
       },
       "extra": {
@@ -811,8 +811,8 @@
         "modality": "text+image+file->text",
         "tokenizer": "Router",
         "top_provider": {
-          "context_length": 200000,
-          "max_completion_tokens": 64000,
+          "context_length": 1000000,
+          "max_completion_tokens": 128000,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -820,23 +820,40 @@
           "max_completion_tokens",
           "max_tokens",
           "reasoning",
+          "reasoning_effort",
           "response_format",
           "stop",
           "structured_outputs",
-          "temperature",
           "tool_choice",
           "tools",
-          "top_k",
-          "top_p"
+          "verbosity"
         ],
         "created": "2026-04-27",
         "description": "This model always redirects to the latest model in the Claude Haiku family.",
-        "cache_read_per_1m": 0.1,
-        "cache_write_per_1m": 1.25,
-        "cache_write_1h_per_1m": 2.0,
+        "cache_read_per_1m": 0.01,
+        "cache_write_per_1m": 0.125,
+        "cache_write_1h_per_1m": 0.2,
         "web_search_per_request_usd": 0.01,
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 100000,
+            "prompt": "0.0000005",
+            "completion": "0.0000025",
+            "input_cache_read": "0.00000005",
+            "input_cache_write": "0.000000625",
+            "input_cache_write_1h": "0.000001"
+          }
+        ],
         "reasoning_meta": {
-          "mandatory": false
+          "mandatory": false,
+          "supported_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low"
+          ],
+          "default_effort": "medium"
         },
         "links": {
           "details": "/api/v1/models/~anthropic/claude-haiku-latest/endpoints"
@@ -845,6 +862,7 @@
           "tools",
           "structured_outputs",
           "reasoning",
+          "reasoning_effort",
           "vision",
           "file_input"
         ]
@@ -864,8 +882,16 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
-      }
+        "checked_at": "2026-10-08"
+      },
+      "reasoning_effort_values": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ]
     },
     {
       "provider": "openrouter",
@@ -930,7 +956,6 @@
           "response_format",
           "stop",
           "structured_outputs",
-          "temperature",
           "tool_choice",
           "tools",
           "verbosity"
@@ -987,7 +1012,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -1053,14 +1078,13 @@
           "response_format",
           "stop",
           "structured_outputs",
-          "temperature",
           "tool_choice",
           "tools",
           "verbosity"
         ],
         "created": "2026-04-27",
         "description": "This model always redirects to the latest model in the Claude Sonnet family.",
-        "cache_read_per_1m": 0.2,
+        "cache_read_per_1m": 0.1,
         "cache_write_per_1m": 2.5,
         "cache_write_1h_per_1m": 4.0,
         "web_search_per_request_usd": 0.01,
@@ -1110,7 +1134,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -1147,8 +1171,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.002,
-        "output_per_1m": 2.4,
+        "input_per_1m": 0.0184,
+        "output_per_1m": 1.0,
         "currency": "USD"
       },
       "extra": {
@@ -1189,7 +1213,7 @@
         ],
         "created": "2026-09-14",
         "description": "This model always redirects to the latest model in the DeepSeek Flash family.",
-        "cache_read_per_1m": 0.002,
+        "cache_read_per_1m": 0.01,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -1253,7 +1277,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.2514,
+        "input_per_1m": 0.1575,
         "output_per_1m": 4.2,
         "currency": "USD"
       },
@@ -1295,7 +1319,7 @@
         ],
         "created": "2026-09-14",
         "description": "This model always redirects to the latest model in the DeepSeek Pro family.",
-        "cache_read_per_1m": 0.25,
+        "cache_read_per_1m": 0.12,
         "default_parameters": {
           "temperature": 1,
           "top_p": 1
@@ -1361,8 +1385,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.015,
-        "output_per_1m": 1.28,
+        "input_per_1m": 0.00368,
+        "output_per_1m": 1.24416,
         "currency": "USD"
       },
       "extra": {
@@ -1405,7 +1429,7 @@
         ],
         "created": "2026-08-01",
         "description": "This model always redirects to the latest model in the DeepSeek V4 Flash family.",
-        "cache_read_per_1m": 0.015,
+        "cache_read_per_1m": 0.00368,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -1555,7 +1579,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -1586,7 +1610,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -1604,7 +1628,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -1736,7 +1760,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -1767,7 +1791,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -1785,7 +1809,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -1823,8 +1847,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.795,
-        "output_per_1m": 13.013,
+        "input_per_1m": 0.71,
+        "output_per_1m": 13.0,
         "currency": "USD"
       },
       "extra": {
@@ -1865,7 +1889,7 @@
         ],
         "created": "2026-04-27",
         "description": "This model always redirects to the latest model in the Kimi family.",
-        "cache_read_per_1m": 0.278,
+        "cache_read_per_1m": 0.45,
         "default_parameters": {
           "top_p": 0.95
         },
@@ -1926,7 +1950,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -2057,7 +2081,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -2248,7 +2272,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -2369,7 +2393,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -2499,7 +2523,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -2630,7 +2654,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -2848,7 +2872,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -2856,7 +2880,7 @@
       "model_id": "~z-ai/glm-flash-latest",
       "display_name": "Z.ai: GLM Flash Latest",
       "context_window": 1048576,
-      "max_output_tokens": 131072,
+      "max_output_tokens": 943718,
       "input_modalities": [
         "text",
         "image",
@@ -2886,8 +2910,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.0244,
-        "output_per_1m": 0.5,
+        "input_per_1m": 0.032,
+        "output_per_1m": 0.7986,
         "currency": "USD"
       },
       "extra": {
@@ -2901,7 +2925,7 @@
         "tokenizer": "Router",
         "top_provider": {
           "context_length": 1048576,
-          "max_completion_tokens": 131072,
+          "max_completion_tokens": 943718,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -2929,7 +2953,7 @@
         ],
         "created": "2026-08-27",
         "description": "This model always redirects to the latest model in the GLM Flash family.",
-        "cache_read_per_1m": 0.0244,
+        "cache_read_per_1m": 0.02,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -2991,7 +3015,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -3028,7 +3052,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.03,
+        "input_per_1m": 0.0392,
         "output_per_1m": 12.0,
         "currency": "USD"
       },
@@ -3071,7 +3095,7 @@
         ],
         "created": "2026-08-19",
         "description": "This model always redirects to the latest GLM model from Z.ai.",
-        "cache_read_per_1m": 0.03,
+        "cache_read_per_1m": 0.0365,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -3687,7 +3711,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -3776,7 +3800,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -3861,7 +3885,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -3946,7 +3970,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -4035,7 +4059,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -4124,7 +4148,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -4198,7 +4222,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -4216,7 +4240,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -4710,7 +4734,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -4838,7 +4862,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -4966,7 +4990,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -5093,7 +5117,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -5220,7 +5244,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -5332,7 +5356,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -5384,6 +5408,277 @@
           "vision",
           "file_input"
         ]
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "anthropic/claude-haiku-5.5",
+      "display_name": "Anthropic: Claude Haiku 5.5",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Claude",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "claude-haiku-5.5",
+        "openrouter/anthropic/claude-haiku-5.5",
+        "anthropic/claude-haiku-5.5-20261007"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "anthropic",
+        "canonical_slug": "anthropic/claude-haiku-5.5-20261007",
+        "modality": "text+image+file->text",
+        "tokenizer": "Claude",
+        "top_provider": {
+          "context_length": 1000000,
+          "max_completion_tokens": 128000,
+          "is_moderated": true
+        },
+        "supported_parameters": [
+          "include_reasoning",
+          "max_completion_tokens",
+          "max_tokens",
+          "reasoning",
+          "reasoning_effort",
+          "response_format",
+          "stop",
+          "structured_outputs",
+          "tool_choice",
+          "tools",
+          "verbosity"
+        ],
+        "created": "2026-10-07",
+        "description": "Claude Haiku 5.5 is Anthropic's small, fast model for high-volume, cost-sensitive work such as summarization, subagents, and browser use. It succeeds Claude Haiku 4.5 with stronger coding, computer use, and...",
+        "cache_read_per_1m": 0.01,
+        "cache_write_per_1m": 0.125,
+        "cache_write_1h_per_1m": 0.2,
+        "web_search_per_request_usd": 0.01,
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 100000,
+            "prompt": "0.0000005",
+            "completion": "0.0000025",
+            "input_cache_read": "0.00000005",
+            "input_cache_write": "0.000000625",
+            "input_cache_write_1h": "0.000001"
+          }
+        ],
+        "reasoning_meta": {
+          "mandatory": false,
+          "supported_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low"
+          ],
+          "default_effort": "medium"
+        },
+        "links": {
+          "details": "/api/v1/models/anthropic/claude-haiku-5.5-20261007/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 0,
+          "artificial_analysis": 1
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "reasoning_effort",
+          "vision",
+          "file_input"
+        ]
+      },
+      "reasoning_effort_values": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ],
+      "document": {
+        "accepts_file": true,
+        "input_formats": [
+          "file"
+        ],
+        "input_mime_types": [
+          "application/pdf",
+          "text/plain",
+          "text/markdown",
+          "text/csv",
+          "application/json",
+          "application/xml",
+          "text/html"
+        ],
+        "status": "inferred",
+        "checked_at": "2026-10-08"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "anthropic/claude-haiku-5.5:batch",
+      "display_name": "Anthropic: Claude Haiku 5.5 (batch)",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Claude",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "claude-haiku-5.5:batch",
+        "openrouter/anthropic/claude-haiku-5.5:batch",
+        "anthropic/claude-haiku-5.5-20261007"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.05,
+        "output_per_1m": 0.25,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "anthropic",
+        "canonical_slug": "anthropic/claude-haiku-5.5-20261007",
+        "modality": "text+image+file->text",
+        "tokenizer": "Claude",
+        "top_provider": {
+          "context_length": 1000000,
+          "max_completion_tokens": 128000,
+          "is_moderated": true
+        },
+        "supported_parameters": [
+          "include_reasoning",
+          "max_tokens",
+          "reasoning",
+          "reasoning_effort",
+          "response_format",
+          "stop",
+          "structured_outputs",
+          "tool_choice",
+          "tools",
+          "verbosity"
+        ],
+        "created": "2026-10-07",
+        "description": "Claude Haiku 5.5 is Anthropic's small, fast model for high-volume, cost-sensitive work such as summarization, subagents, and browser use. It succeeds Claude Haiku 4.5 with stronger coding, computer use, and...",
+        "cache_read_per_1m": 0.005,
+        "cache_write_per_1m": 0.0625,
+        "cache_write_1h_per_1m": 0.1,
+        "web_search_per_request_usd": 0.01,
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 100000,
+            "prompt": "0.00000025",
+            "completion": "0.00000125",
+            "input_cache_read": "0.000000025",
+            "input_cache_write": "0.0000003125",
+            "input_cache_write_1h": "0.0000005"
+          }
+        ],
+        "reasoning_meta": {
+          "mandatory": false,
+          "supported_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low"
+          ],
+          "default_effort": "medium"
+        },
+        "links": {
+          "details": "/api/v1/models/anthropic/claude-haiku-5.5-20261007/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 0,
+          "artificial_analysis": 1
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "reasoning_effort",
+          "vision",
+          "file_input"
+        ]
+      },
+      "reasoning_effort_values": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ],
+      "document": {
+        "accepts_file": true,
+        "input_formats": [
+          "file"
+        ],
+        "input_mime_types": [
+          "application/pdf",
+          "text/plain",
+          "text/markdown",
+          "text/csv",
+          "application/json",
+          "application/xml",
+          "text/html"
+        ],
+        "status": "inferred",
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -5443,7 +5738,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -5551,7 +5846,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -5660,7 +5955,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -5772,7 +6067,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -5882,7 +6177,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -6014,7 +6309,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -6144,7 +6439,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -6273,7 +6568,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -6401,7 +6696,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -6426,7 +6721,6 @@
           "response_format",
           "stop",
           "structured_outputs",
-          "temperature",
           "tool_choice",
           "tools",
           "verbosity"
@@ -6531,7 +6825,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -6659,7 +6953,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -6684,7 +6978,6 @@
           "response_format",
           "stop",
           "structured_outputs",
-          "temperature",
           "tool_choice",
           "tools",
           "verbosity"
@@ -6789,7 +7082,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -6814,7 +7107,6 @@
           "response_format",
           "stop",
           "structured_outputs",
-          "temperature",
           "tool_choice",
           "tools",
           "verbosity"
@@ -6918,7 +7210,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -7045,7 +7337,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -7173,7 +7465,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -7291,7 +7583,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -7417,7 +7709,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -7542,7 +7834,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -7672,7 +7964,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -7800,7 +8092,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -7929,7 +8221,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -7954,14 +8246,13 @@
           "response_format",
           "stop",
           "structured_outputs",
-          "temperature",
           "tool_choice",
           "tools",
           "verbosity"
         ],
         "created": "2026-09-28",
         "description": "Claude Sonnet 5.5 is Anthropic's Sonnet-class model for well-scoped everyday work, succeeding Claude Sonnet 5 as a direct upgrade. It is especially strong at building features, fixing bugs, and producing...",
-        "cache_read_per_1m": 0.2,
+        "cache_read_per_1m": 0.1,
         "cache_write_per_1m": 2.5,
         "cache_write_1h_per_1m": 4.0,
         "web_search_per_request_usd": 0.01,
@@ -7980,7 +8271,7 @@
           "details": "/api/v1/models/anthropic/claude-sonnet-5.5-20260928/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 1,
+          "design_arena": 4,
           "artificial_analysis": 1
         },
         "features": [
@@ -8058,7 +8349,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -8088,7 +8379,7 @@
         ],
         "created": "2026-09-28",
         "description": "Claude Sonnet 5.5 is Anthropic's Sonnet-class model for well-scoped everyday work, succeeding Claude Sonnet 5 as a direct upgrade. It is especially strong at building features, fixing bugs, and producing...",
-        "cache_read_per_1m": 0.1,
+        "cache_read_per_1m": 0.05,
         "cache_write_per_1m": 1.25,
         "cache_write_1h_per_1m": 2.0,
         "web_search_per_request_usd": 0.01,
@@ -8107,7 +8398,7 @@
           "details": "/api/v1/models/anthropic/claude-sonnet-5.5-20260928/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 1,
+          "design_arena": 4,
           "artificial_analysis": 1
         },
         "features": [
@@ -8185,7 +8476,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -8573,7 +8864,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -8638,7 +8929,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -8702,7 +8993,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -8766,7 +9057,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -9014,7 +9305,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -9111,7 +9402,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -9208,7 +9499,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -9562,7 +9853,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -9686,7 +9977,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -9810,7 +10101,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -9926,7 +10217,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -10066,7 +10357,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -10206,7 +10497,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -10326,7 +10617,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -10709,7 +11000,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -10787,7 +11078,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -10824,7 +11115,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -10903,7 +11194,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -10940,7 +11231,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -11019,7 +11310,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -11056,7 +11347,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -11135,7 +11426,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -11172,7 +11463,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -11343,7 +11634,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -11352,7 +11643,7 @@
       "model_id": "cloudflare/clef",
       "display_name": "Cloudflare: Clef",
       "context_window": 65536,
-      "max_output_tokens": 65536,
+      "max_output_tokens": 0,
       "input_modalities": [
         "text",
         "image"
@@ -11383,7 +11674,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.24,
+        "input_per_1m": 0.042,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
@@ -11395,8 +11686,8 @@
         "native_provider": "cloudflare",
         "tokenizer": "",
         "top_provider": {
-          "context_length": 65536,
-          "max_completion_tokens": 65536,
+          "context_length": 16384,
+          "max_completion_tokens": null,
           "is_moderated": null
         },
         "supported_parameters": [],
@@ -11411,7 +11702,7 @@
       "model_id": "cloudflare/clef-flash",
       "display_name": "Cloudflare: Clef Flash",
       "context_window": 65536,
-      "max_output_tokens": 65536,
+      "max_output_tokens": 0,
       "input_modalities": [
         "text",
         "image"
@@ -11442,7 +11733,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.09,
+        "input_per_1m": 0.021,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
@@ -11454,8 +11745,8 @@
         "native_provider": "cloudflare",
         "tokenizer": "",
         "top_provider": {
-          "context_length": 65536,
-          "max_completion_tokens": 65536,
+          "context_length": 16384,
+          "max_completion_tokens": null,
           "is_moderated": null
         },
         "supported_parameters": [],
@@ -12144,7 +12435,7 @@
         "rerank": true,
         "returns_scores": true,
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
@@ -12206,7 +12497,7 @@
         "rerank": true,
         "returns_scores": true,
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
@@ -12268,7 +12559,7 @@
         "rerank": true,
         "returns_scores": true,
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
@@ -12350,7 +12641,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -12417,7 +12708,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -12487,7 +12778,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -13036,7 +13327,7 @@
       "model_id": "deepseek/deepseek-v3.2",
       "display_name": "DeepSeek: DeepSeek V3.2",
       "context_window": 163840,
-      "max_output_tokens": 65536,
+      "max_output_tokens": 147456,
       "input_modalities": [
         "text"
       ],
@@ -13067,7 +13358,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.28,
+        "input_per_1m": 0.259,
         "output_per_1m": 0.42,
         "currency": "USD"
       },
@@ -13082,8 +13373,8 @@
         "modality": "text->text",
         "tokenizer": "DeepSeek",
         "top_provider": {
-          "context_length": 131072,
-          "max_completion_tokens": 65536,
+          "context_length": 163840,
+          "max_completion_tokens": 147456,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -13109,7 +13400,7 @@
         ],
         "created": "2025-12-01",
         "description": "DeepSeek-V3.2 is a large language model designed to harmonize high computational efficiency with strong reasoning and agentic tool-use performance. It introduces DeepSeek Sparse Attention (DSA), a fine-grained sparse attention mechanism...",
-        "cache_read_per_1m": 0.028,
+        "cache_read_per_1m": 0.135,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -13259,7 +13550,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.0299,
+        "input_per_1m": 0.0057,
         "output_per_1m": 1.28,
         "currency": "USD"
       },
@@ -13304,7 +13595,7 @@
         ],
         "created": "2026-04-24",
         "description": "DeepSeek V4 Flash is an efficiency-optimized Mixture-of-Experts model from DeepSeek with 284B total parameters and 13B activated parameters, supporting a 1M-token context window. It is designed for fast inference and...",
-        "cache_read_per_1m": 0.0299,
+        "cache_read_per_1m": 0.0057,
         "reasoning_meta": {
           "mandatory": false,
           "supported_efforts": [
@@ -13372,7 +13663,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.015,
+        "input_per_1m": 0.0046,
         "output_per_1m": 1.28,
         "currency": "USD"
       },
@@ -13417,7 +13708,7 @@
         ],
         "created": "2026-07-31",
         "description": "DeepSeek V4 Flash 0731 is a sparse mixture-of-experts model from DeepSeek, with 13B active parameters out of 284B total. This re-post-trained revision is suited for coding, reasoning, and agent workflows....",
-        "cache_read_per_1m": 0.015,
+        "cache_read_per_1m": 0.0046,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -13602,8 +13893,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.2088,
-        "output_per_1m": 0.4176,
+        "input_per_1m": 0.95526,
+        "output_per_1m": 1.91052,
         "currency": "USD"
       },
       "extra": {
@@ -13646,7 +13937,7 @@
         ],
         "created": "2026-04-24",
         "description": "DeepSeek V4 Pro is a large-scale Mixture-of-Experts model from DeepSeek with 1.6T total parameters and 49B activated parameters, supporting a 1M-token context window. It is designed for advanced reasoning, coding,...",
-        "cache_read_per_1m": 0.0174,
+        "cache_read_per_1m": 0.079605,
         "default_parameters": {
           "temperature": 1,
           "top_p": 1
@@ -14266,6 +14557,749 @@
     },
     {
       "provider": "openrouter",
+      "model_id": "elevenlabs/eleven-flash-v2",
+      "display_name": "ElevenLabs: Eleven Flash v2",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "speech"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "eleven-flash-v2",
+        "openrouter/elevenlabs/eleven-flash-v2"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 20.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "elevenlabs",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 0,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "Eleven Flash v2 is an English-only, ultra-low-latency text-to-speech model from ElevenLabs. It is suited for conversational and real-time English use cases, and has a 30,000-character request limit."
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-08",
+        "status": "inferred"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "elevenlabs/eleven-flash-v2.5",
+      "display_name": "ElevenLabs: Eleven Flash v2.5",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "speech"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "eleven-flash-v2.5",
+        "openrouter/elevenlabs/eleven-flash-v2.5"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 20.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "elevenlabs",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 0,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "Eleven Flash v2.5 is an ultra-low-latency text-to-speech model from ElevenLabs. It is suited for conversational and real-time use cases, supports 32 languages, and has a 40,000-character request limit."
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-08",
+        "status": "inferred"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "elevenlabs/eleven-multilingual-v2",
+      "display_name": "ElevenLabs: Eleven Multilingual v2",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "speech"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "eleven-multilingual-v2",
+        "openrouter/elevenlabs/eleven-multilingual-v2"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 40.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "elevenlabs",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 0,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "Eleven Multilingual v2 is a text-to-speech model from ElevenLabs. It is suited for lifelike, consistent long-form narration such as voice-overs and audiobooks, supports 29 languages, and has a 10,000-character request limit."
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-08",
+        "status": "inferred"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "elevenlabs/eleven-turbo-v2",
+      "display_name": "ElevenLabs: Eleven Turbo v2",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "speech"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "eleven-turbo-v2",
+        "openrouter/elevenlabs/eleven-turbo-v2"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 20.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "elevenlabs",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 0,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "Eleven Turbo v2 is an English-only, low-latency text-to-speech model from ElevenLabs. It is suited for developer use cases where speed matters and only English is needed, and has a 30,000-character request limit."
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-08",
+        "status": "inferred"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "elevenlabs/eleven-turbo-v2.5",
+      "display_name": "ElevenLabs: Eleven Turbo v2.5",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "speech"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "eleven-turbo-v2.5",
+        "openrouter/elevenlabs/eleven-turbo-v2.5"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 20.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "elevenlabs",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 0,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "Eleven Turbo v2.5 is a low-latency text-to-speech model from ElevenLabs. It balances quality and speed for developer use cases that need non-English languages, supports 32 languages, and has a 40,000-character request limit."
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-08",
+        "status": "inferred"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "elevenlabs/eleven-v3",
+      "display_name": "ElevenLabs: Eleven v3",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "speech"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "eleven-v3",
+        "openrouter/elevenlabs/eleven-v3"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 40.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "elevenlabs",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 0,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "Eleven v3 is a text-to-speech model from ElevenLabs. It produces emotionally rich, highly expressive speech with inline audio tags, supports 70+ languages, and has a 5,000-character request limit."
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-08",
+        "status": "inferred"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "elevenlabs/eleven-v3-conversational",
+      "display_name": "ElevenLabs: Eleven v3 Conversational",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "speech"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "eleven-v3-conversational",
+        "openrouter/elevenlabs/eleven-v3-conversational"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 20.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "elevenlabs",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 0,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "Eleven v3 Conversational is a text-to-speech model from ElevenLabs, a variant of Eleven v3 optimized for natural dialogue in conversational agents. It supports 70+ languages and has a 5,000-character request limit."
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-08",
+        "status": "inferred"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "elevenlabs/eleven-v4",
+      "display_name": "ElevenLabs: Eleven v4",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "speech"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "eleven-v4",
+        "openrouter/elevenlabs/eleven-v4"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 40.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "elevenlabs",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 0,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "Eleven v4 is a text-to-speech model from ElevenLabs. It is ElevenLabs' most expressive model, with inline audio tags for emotional and delivery control, support for 90+ languages, and a 10,000-character request limit."
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-08",
+        "status": "inferred"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "elevenlabs/eleven-v4-turbo",
+      "display_name": "ElevenLabs: Eleven v4 Turbo",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "speech"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "eleven-v4-turbo",
+        "openrouter/elevenlabs/eleven-v4-turbo"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 20.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "elevenlabs",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 0,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "Eleven v4 Turbo is a low-latency text-to-speech model from ElevenLabs. It keeps Eleven v4's expressive delivery and audio tags while being tuned for faster generation, with support for 90+ languages and a 10,000-character request limit."
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-08",
+        "status": "inferred"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "elevenlabs/scribe-v2",
+      "display_name": "ElevenLabs: Scribe v2",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "audio"
+      ],
+      "output_modalities": [
+        "transcription"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "scribe-v2",
+        "openrouter/elevenlabs/scribe-v2"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 30.555556,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "elevenlabs",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 0,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "ElevenLabs Scribe v2 is a speech-to-text model that transcribes audio in 90+ languages with word-level timestamps, optional speaker diarization, and audio-event tagging.",
+        "features": [
+          "audio_input"
+        ]
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-08",
+        "status": "inferred"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "elevenlabs/scribe-v2-medical",
+      "display_name": "ElevenLabs: Scribe v2 Medical",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "audio"
+      ],
+      "output_modalities": [
+        "transcription"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "scribe-v2-medical",
+        "openrouter/elevenlabs/scribe-v2-medical"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 30.555556,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "elevenlabs",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 0,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "ElevenLabs Scribe v2 Medical is a speech-to-text model tuned for clinical and medical terminology, with word-level timestamps, optional speaker diarization, and audio-event tagging.",
+        "features": [
+          "audio_input"
+        ]
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-08",
+        "status": "inferred"
+      }
+    },
+    {
+      "provider": "openrouter",
       "model_id": "fireworks/ember-1",
       "display_name": "Fireworks: Ember-1",
       "context_window": 1048576,
@@ -14435,7 +15469,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -14502,7 +15536,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -14569,7 +15603,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -14637,7 +15671,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -14709,7 +15743,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -14781,7 +15815,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -14835,7 +15869,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -14911,7 +15945,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -14942,7 +15976,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -14960,7 +15994,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -15166,7 +16200,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -15197,7 +16231,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -15215,7 +16249,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -15328,7 +16362,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -15359,7 +16393,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -15377,7 +16411,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -15488,7 +16522,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -15519,7 +16553,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -15537,7 +16571,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -15648,7 +16682,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -15679,7 +16713,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -15697,7 +16731,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -15819,7 +16853,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -15837,7 +16871,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -15955,7 +16989,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -15986,7 +17020,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -16004,7 +17038,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -16126,7 +17160,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -16157,7 +17191,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -16175,7 +17209,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -16304,7 +17338,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -16335,7 +17369,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -16353,7 +17387,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -16901,7 +17935,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -16932,7 +17966,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -16950,7 +17984,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -17183,7 +18217,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -17214,7 +18248,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -17232,7 +18266,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -17361,7 +18395,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -17392,7 +18426,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -17410,7 +18444,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -17530,7 +18564,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -17604,7 +18638,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -17635,7 +18669,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -17653,7 +18687,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -17791,7 +18825,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -17822,7 +18856,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -17840,7 +18874,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -17973,7 +19007,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -18004,7 +19038,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -18022,7 +19056,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -18156,7 +19190,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -18187,7 +19221,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -18205,7 +19239,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -18335,7 +19369,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -18366,7 +19400,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -18384,7 +19418,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -18514,7 +19548,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -18545,7 +19579,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -18563,7 +19597,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -18690,7 +19724,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -18721,7 +19755,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -18739,7 +19773,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -18865,7 +19899,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -18942,7 +19976,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -18973,7 +20007,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -18991,7 +20025,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -19121,7 +20155,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -19152,7 +20186,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -19170,7 +20204,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -19298,7 +20332,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -19329,7 +20363,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -19347,7 +20381,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -19476,7 +20510,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -19507,7 +20541,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -19525,7 +20559,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -19652,7 +20686,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -19683,7 +20717,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -19701,7 +20735,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -19825,7 +20859,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -19894,7 +20928,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -19968,7 +21002,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -19999,7 +21033,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -20017,7 +21051,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -20134,7 +21168,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
@@ -20211,7 +21245,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -20241,7 +21275,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -20259,7 +21293,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "embedding": {
         "embedding": true,
@@ -20267,7 +21301,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
@@ -20347,7 +21381,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -20377,7 +21411,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -20395,7 +21429,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "embedding": {
         "embedding": true,
@@ -20403,7 +21437,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
@@ -20944,7 +21978,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -21080,7 +22114,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -21206,7 +22240,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -21342,7 +22376,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -21451,7 +22485,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -21541,7 +22575,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -21638,7 +22672,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -21728,7 +22762,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -21818,7 +22852,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -21994,7 +23028,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -22068,7 +23102,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -22092,7 +23126,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -22167,7 +23201,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -22204,7 +23238,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -23098,7 +24132,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -23631,7 +24665,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -23695,7 +24729,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -23759,7 +24793,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -23997,89 +25031,6 @@
     },
     {
       "provider": "openrouter",
-      "model_id": "kwaipilot/kat-coder-pro-v2.5",
-      "display_name": "Kwaipilot: KAT-Coder-Pro V2.5",
-      "context_window": 262144,
-      "max_output_tokens": 235929,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_json_schema": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "kat-coder-pro-v2.5",
-        "openrouter/kwaipilot/kat-coder-pro-v2.5",
-        "kwaipilot/kat-coder-pro-v2.5-20260710",
-        "kwaipilot/kat-coder-pro-v2.5"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.74,
-        "output_per_1m": 2.96,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "kwaipilot",
-        "canonical_slug": "kwaipilot/kat-coder-pro-v2.5-20260710",
-        "modality": "text->text",
-        "tokenizer": "Other",
-        "top_provider": {
-          "context_length": 262144,
-          "max_completion_tokens": 235929,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "frequency_penalty",
-          "logit_bias",
-          "max_tokens",
-          "min_p",
-          "presence_penalty",
-          "repetition_penalty",
-          "response_format",
-          "seed",
-          "stop",
-          "structured_outputs",
-          "temperature",
-          "tool_choice",
-          "tools",
-          "top_k",
-          "top_p"
-        ],
-        "created": "2026-07-10",
-        "description": "KAT-Coder-Pro V2.5 is a flagship-level Agentic Coding model that can directly hand over an entire issue or an entire business workflow to it, allowing it to autonomously locate and make...",
-        "cache_read_per_1m": 0.15,
-        "links": {
-          "details": "/api/v1/models/kwaipilot/kat-coder-pro-v2.5-20260710/endpoints"
-        },
-        "features": [
-          "tools",
-          "structured_outputs"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
       "model_id": "kwaivgi/kling-v3.0-pro",
       "display_name": "Kling: Video v3.0 Pro",
       "context_window": 0,
@@ -24159,7 +25110,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -24244,7 +25195,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -24329,7 +25280,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -24616,7 +25567,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
@@ -25188,8 +26139,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.22,
-        "output_per_1m": 0.5,
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.32,
         "currency": "USD"
       },
       "extra": {
@@ -25229,7 +26180,6 @@
         ],
         "created": "2024-12-06",
         "description": "The Meta Llama 3.3 multilingual large language model (LLM) is a pretrained and instruction tuned generative model in 70B (text in/text out). The Llama 3.3 instruction tuned text only model...",
-        "cache_read_per_1m": 0.11,
         "links": {
           "details": "/api/v1/models/meta-llama/llama-3.3-70b-instruct/endpoints"
         },
@@ -25782,7 +26732,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -25800,7 +26750,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -25955,7 +26905,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -25973,7 +26923,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -26128,7 +27078,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -26146,7 +27096,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -26297,7 +27247,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -26315,7 +27265,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -26471,7 +27421,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -26489,7 +27439,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -26608,7 +27558,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -26974,7 +27924,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -27048,7 +27998,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -27120,7 +28070,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -27189,7 +28139,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -27258,7 +28208,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -27327,7 +28277,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -27566,7 +28516,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -27646,7 +28596,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -27683,7 +28633,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -27771,7 +28721,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -28482,7 +29432,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -28596,7 +29546,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -28665,7 +29615,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -28739,7 +29689,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -28844,7 +29794,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -28938,7 +29888,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
@@ -29014,7 +29964,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -29463,7 +30413,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
@@ -29539,7 +30489,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -29643,7 +30593,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -29749,7 +30699,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -29856,7 +30806,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -29982,6 +30932,7 @@
         "cache_read_per_1m": 0.07,
         "reasoning_meta": {
           "mandatory": false,
+          "default_enabled": true,
           "supported_efforts": [
             "high",
             "none"
@@ -29990,6 +30941,9 @@
         },
         "links": {
           "details": "/api/v1/models/mistralai/mistral-large-4-0-20261006/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 3
         },
         "features": [
           "tools",
@@ -30064,7 +31018,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -30171,7 +31125,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -30295,7 +31249,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -30418,7 +31372,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -30525,7 +31479,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -30718,7 +31672,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -31305,7 +32259,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -31406,7 +32360,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -31480,7 +32434,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -31552,7 +32506,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -31623,7 +32577,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -31641,7 +32595,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -31742,7 +32696,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -32159,8 +33113,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.95,
-        "output_per_1m": 4.0,
+        "input_per_1m": 0.465,
+        "output_per_1m": 2.45,
         "currency": "USD"
       },
       "extra": {
@@ -32202,7 +33156,7 @@
         ],
         "created": "2026-04-20",
         "description": "Kimi K2.6 is Moonshot AI's next-generation multimodal model, designed for long-horizon coding, coding-driven UI/UX generation, and multi-agent orchestration. It handles complex end-to-end coding tasks across Python, Rust, and Go, and...",
-        "cache_read_per_1m": 0.16,
+        "cache_read_per_1m": 0.0975,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true
@@ -32360,7 +33314,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.89,
+        "input_per_1m": 0.72,
         "output_per_1m": 15.0,
         "currency": "USD"
       },
@@ -32392,7 +33346,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -32434,7 +33388,7 @@
         ],
         "created": "2026-07-16",
         "description": "Kimi K3 is a 2.8T parameter open-weight multimodal reasoning model from Moonshot AI. It is suited for complex coding, knowledge work, and long-horizon agentic workflows, and is particularly strong at...",
-        "cache_read_per_1m": 0.29,
+        "cache_read_per_1m": 0.43,
         "default_parameters": {
           "top_p": 0.95
         },
@@ -32542,7 +33496,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -33265,7 +34219,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
@@ -33332,7 +34286,7 @@
         "rerank": true,
         "returns_scores": true,
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
@@ -33399,7 +34353,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
@@ -33456,8 +34410,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.05,
-        "output_per_1m": 0.2,
+        "input_per_1m": 0.06,
+        "output_per_1m": 0.24,
         "currency": "USD"
       },
       "extra": {
@@ -33498,7 +34452,6 @@
         ],
         "created": "2025-12-14",
         "description": "NVIDIA Nemotron 3 Nano 30B A3B is a small language MoE model with highest compute efficiency and accuracy for developers to build specialized agentic AI systems. The model is fully...",
-        "cache_read_per_1m": 0.03,
         "reasoning_meta": {
           "mandatory": false
         },
@@ -33569,7 +34522,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -33600,7 +34553,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -33689,7 +34642,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -33720,7 +34673,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -33780,7 +34733,7 @@
       "model_id": "nvidia/nemotron-3-super-120b-a12b",
       "display_name": "NVIDIA: Nemotron 3 Super",
       "context_window": 262144,
-      "max_output_tokens": 235929,
+      "max_output_tokens": 16384,
       "input_modalities": [
         "text"
       ],
@@ -33811,8 +34764,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.08,
-        "output_per_1m": 0.45,
+        "input_per_1m": 0.085,
+        "output_per_1m": 0.4,
         "currency": "USD"
       },
       "extra": {
@@ -33827,7 +34780,7 @@
         "tokenizer": "Other",
         "top_provider": {
           "context_length": 262144,
-          "max_completion_tokens": 235929,
+          "max_completion_tokens": 16384,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -34271,7 +35224,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -34464,7 +35417,7 @@
       "model_id": "nvidia/nemotron-3.5-lightning",
       "display_name": "NVIDIA: Nemotron 3.5 Lightning",
       "context_window": 262144,
-      "max_output_tokens": 32768,
+      "max_output_tokens": 131072,
       "input_modalities": [
         "text"
       ],
@@ -34495,8 +35448,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.06,
-        "output_per_1m": 0.16,
+        "input_per_1m": 0.049,
+        "output_per_1m": 0.14,
         "currency": "USD"
       },
       "extra": {
@@ -34511,7 +35464,7 @@
         "tokenizer": "Other",
         "top_provider": {
           "context_length": 262144,
-          "max_completion_tokens": 32768,
+          "max_completion_tokens": 131072,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -34537,7 +35490,7 @@
         ],
         "created": "2026-08-11",
         "description": "NVIDIA Nemotron 3.5 Lightning is an open mixture-of-experts model from NVIDIA, with 3B active parameters out of 30B total. It is suited for high-throughput agentic workloads and specialized tasks that...",
-        "cache_read_per_1m": 0.03,
+        "cache_read_per_1m": 0.0245,
         "reasoning_meta": {
           "mandatory": false
         },
@@ -34689,7 +35642,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -35502,7 +36455,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -35605,7 +36558,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -35708,7 +36661,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -35810,7 +36763,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -35913,7 +36866,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -36015,7 +36968,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -36116,7 +37069,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -36225,7 +37178,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -36334,7 +37287,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -36444,7 +37397,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -36553,7 +37506,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -36663,7 +37616,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -36764,7 +37717,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -36843,7 +37796,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -36949,7 +37902,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -37028,7 +37981,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -37138,7 +38091,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -37271,7 +38224,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -37388,7 +38341,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -37497,7 +38450,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -37622,7 +38575,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -37746,7 +38699,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -37871,7 +38824,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -37995,7 +38948,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -38111,7 +39064,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -38227,7 +39180,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -38662,7 +39615,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -38787,7 +39740,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -38913,7 +39866,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -39115,7 +40068,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -39233,7 +40186,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -39351,7 +40304,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -39476,7 +40429,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -39602,7 +40555,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -39746,7 +40699,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -39869,7 +40822,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -39996,7 +40949,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -40122,7 +41075,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -40249,7 +41202,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -40375,7 +41328,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -40501,7 +41454,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -40626,7 +41579,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -40760,7 +41713,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -40895,7 +41848,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -41020,7 +41973,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -41145,7 +42098,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -41279,7 +42232,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -41417,7 +42370,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -41551,7 +42504,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -41682,7 +42635,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -41817,7 +42770,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -41955,7 +42908,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -42089,7 +43042,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -42222,7 +43175,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -42359,7 +43312,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -42497,7 +43450,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -42631,7 +43584,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -42762,7 +43715,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -42897,7 +43850,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -43021,7 +43974,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -43158,7 +44111,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -43291,7 +44244,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -43423,7 +44376,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -43559,7 +44512,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -43757,7 +44710,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -43891,7 +44844,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -44024,7 +44977,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -44161,7 +45114,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -44299,7 +45252,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -44433,7 +45386,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -44566,7 +45519,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -44703,7 +45656,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -44762,7 +45715,7 @@
           "details": "/api/v1/models/openai/gpt-6.1-sol-20260929/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 0,
+          "design_arena": 1,
           "artificial_analysis": 1
         },
         "features": [
@@ -44840,7 +45793,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -44969,7 +45922,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -45070,7 +46023,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -45175,7 +46128,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -46174,7 +47127,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -46253,7 +47206,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -46358,7 +47311,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -46460,7 +47413,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -46565,7 +47518,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -46669,7 +47622,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -46787,7 +47740,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -46892,7 +47845,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -46997,7 +47950,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -47103,7 +48056,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -47209,7 +48162,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -47325,7 +48278,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -47419,7 +48372,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
@@ -47485,7 +48438,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
@@ -47551,7 +48504,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
@@ -47624,7 +48577,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -47698,7 +48651,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -47772,7 +48725,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -47864,7 +48817,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -47961,7 +48914,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -47992,7 +48945,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -48059,8 +49012,8 @@
     },
     {
       "provider": "openrouter",
-      "model_id": "perplexity/pplx-decider-v1-27b",
-      "display_name": "Perplexity: Decider V1 27B",
+      "model_id": "perplexity/pplx-decider-v1.1-27b",
+      "display_name": "Perplexity: Decider V1.1 27B",
       "context_window": 262144,
       "max_output_tokens": 0,
       "input_modalities": [
@@ -48072,7 +49025,6 @@
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
-      "supports_json_schema": null,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": false,
@@ -48087,13 +49039,12 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "pplx-decider-v1-27b",
-        "openrouter/perplexity/pplx-decider-v1-27b",
-        "perplexity/pplx-decider-v1-27b"
+        "pplx-decider-v1.1-27b",
+        "openrouter/perplexity/pplx-decider-v1.1-27b"
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.04,
+        "input_per_1m": 0.02,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
@@ -48110,7 +49061,7 @@
           "is_moderated": null
         },
         "supported_parameters": [],
-        "description": "Decider V1 27B is a decision model from Perplexity. Instead of generating text, it reads content passed as `state` and returns typed, probabilistic answers to one or more named questions in a single request: the probability of yes for a yes/no question (`noul`), a probability for every option plus the most likely one (`choice`), or a probability for every level of an ordered rubric plus the expect",
+        "description": "Decider V1.1 27B is a new checkpoint of Perplexity's decision model, succeeding [Decider V1 27B](/perplexity/pplx-decider-v1-27b) with the same API contract. Instead of generating text, it reads content passed as `state` (text, JSON, or images) and returns typed, probabilistic answers to one or more named questions in a single request: the probability of yes for a yes/no question (`noul`), a proba",
         "features": [
           "vision"
         ]
@@ -48161,7 +49112,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
@@ -48227,7 +49178,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
@@ -49391,7 +50342,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -49460,7 +50411,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -50373,7 +51324,7 @@
       "model_id": "qwen/qwen3-30b-a3b-instruct-2507",
       "display_name": "Qwen: Qwen3 30B A3B Instruct 2507",
       "context_window": 262144,
-      "max_output_tokens": 235929,
+      "max_output_tokens": 32000,
       "input_modalities": [
         "text"
       ],
@@ -50403,8 +51354,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.1,
-        "output_per_1m": 0.3,
+        "input_per_1m": 0.04815,
+        "output_per_1m": 0.19305,
         "currency": "USD"
       },
       "extra": {
@@ -50418,8 +51369,8 @@
         "modality": "text->text",
         "tokenizer": "Qwen3",
         "top_provider": {
-          "context_length": 262144,
-          "max_completion_tokens": 235929,
+          "context_length": 128000,
+          "max_completion_tokens": 32000,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -50790,7 +51741,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -50864,7 +51815,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -50938,7 +51889,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -51470,7 +52421,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
@@ -51536,7 +52487,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
@@ -51777,7 +52728,7 @@
       "model_id": "qwen/qwen3-next-80b-a3b-instruct",
       "display_name": "Qwen: Qwen3 Next 80B A3B Instruct",
       "context_window": 262144,
-      "max_output_tokens": 235929,
+      "max_output_tokens": 32768,
       "input_modalities": [
         "text"
       ],
@@ -51808,8 +52759,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.1,
-        "output_per_1m": 1.1,
+        "input_per_1m": 0.15,
+        "output_per_1m": 1.5,
         "currency": "USD"
       },
       "extra": {
@@ -51823,8 +52774,8 @@
         "modality": "text->text",
         "tokenizer": "Qwen3",
         "top_provider": {
-          "context_length": 262144,
-          "max_completion_tokens": 235929,
+          "context_length": 131072,
+          "max_completion_tokens": 32768,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -51848,7 +52799,7 @@
         ],
         "created": "2025-09-11",
         "description": "Qwen3-Next-80B-A3B-Instruct is an instruction-tuned chat model in the Qwen3-Next series optimized for fast, stable responses without “thinking” traces. It targets complex tasks across reasoning, code generation, knowledge QA, and multilingual...",
-        "cache_read_per_1m": 0.07,
+        "expiration_date": "2026-10-08",
         "links": {
           "details": "/api/v1/models/qwen/qwen3-next-80b-a3b-instruct-2509/endpoints"
         },
@@ -51999,7 +52950,7 @@
         "rerank": true,
         "returns_scores": true,
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
@@ -52766,7 +53717,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -52835,7 +53786,7 @@
       "model_id": "qwen/qwen3.5-27b",
       "display_name": "Qwen: Qwen3.5-27B",
       "context_window": 262144,
-      "max_output_tokens": 65536,
+      "max_output_tokens": 81920,
       "input_modalities": [
         "text",
         "image",
@@ -52868,8 +53819,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.195,
-        "output_per_1m": 1.56,
+        "input_per_1m": 0.26,
+        "output_per_1m": 2.6,
         "currency": "USD"
       },
       "video": {
@@ -52900,7 +53851,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -52915,7 +53866,7 @@
         "tokenizer": "Qwen3",
         "top_provider": {
           "context_length": 262144,
-          "max_completion_tokens": 65536,
+          "max_completion_tokens": 81920,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -52969,7 +53920,7 @@
       "model_id": "qwen/qwen3.5-35b-a3b",
       "display_name": "Qwen: Qwen3.5-35B-A3B",
       "context_window": 262144,
-      "max_output_tokens": 32768,
+      "max_output_tokens": 235929,
       "input_modalities": [
         "text",
         "image",
@@ -53002,8 +53953,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.08,
-        "output_per_1m": 0.75,
+        "input_per_1m": 0.15,
+        "output_per_1m": 1.0,
         "currency": "USD"
       },
       "video": {
@@ -53034,7 +53985,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -53049,7 +54000,7 @@
         "tokenizer": "Qwen3",
         "top_provider": {
           "context_length": 262144,
-          "max_completion_tokens": 32768,
+          "max_completion_tokens": 235929,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -53075,7 +54026,7 @@
         ],
         "created": "2026-02-25",
         "description": "The Qwen3.5 Series 35B-A3B is a native vision-language model designed with a hybrid architecture that integrates linear attention mechanisms and a sparse mixture-of-experts model, achieving higher inference efficiency. Its overall...",
-        "cache_read_per_1m": 0.04,
+        "cache_read_per_1m": 0.05,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95,
@@ -53169,7 +54120,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -53304,7 +54255,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -53345,6 +54296,7 @@
         ],
         "created": "2026-03-10",
         "description": "Qwen3.5-9B is a multimodal foundation model from the Qwen3.5 family, designed to deliver strong reasoning, coding, and visual understanding in an efficient 9B-parameter architecture. It uses a unified vision-language design...",
+        "expiration_date": "2026-10-21",
         "reasoning_meta": {
           "mandatory": false
         },
@@ -53433,7 +54385,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -53552,7 +54504,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -53682,7 +54634,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -53747,7 +54699,7 @@
       "model_id": "qwen/qwen3.6-27b",
       "display_name": "Qwen: Qwen3.6 27B",
       "context_window": 262144,
-      "max_output_tokens": 262140,
+      "max_output_tokens": 65536,
       "input_modalities": [
         "text",
         "image",
@@ -53780,8 +54732,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.32,
-        "output_per_1m": 3.25,
+        "input_per_1m": 0.3,
+        "output_per_1m": 2.0,
         "currency": "USD"
       },
       "video": {
@@ -53812,7 +54764,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -53827,7 +54779,7 @@
         "tokenizer": "Qwen3",
         "top_provider": {
           "context_length": 262144,
-          "max_completion_tokens": 262140,
+          "max_completion_tokens": 65536,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -53943,7 +54895,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -54078,7 +55030,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -54310,7 +55262,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -54444,7 +55396,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -54761,7 +55713,7 @@
         "modality": "text->text",
         "tokenizer": "Qwen",
         "top_provider": {
-          "context_length": 1000000,
+          "context_length": 1048576,
           "max_completion_tokens": 131072,
           "is_moderated": false
         },
@@ -54898,7 +55850,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -55052,7 +56004,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -55178,7 +56130,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -55324,7 +56276,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -55449,7 +56401,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -55480,7 +56432,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -56563,7 +57515,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -57038,7 +57990,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -57119,7 +58071,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -57180,7 +58132,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -57405,7 +58357,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -57531,7 +58483,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -57896,7 +58848,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -57960,7 +58912,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -58024,7 +58976,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -58088,7 +59040,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -58152,7 +59104,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -58218,7 +59170,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -58623,7 +59575,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -59094,8 +60046,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.0825,
-        "output_per_1m": 0.33,
+        "input_per_1m": 0.132,
+        "output_per_1m": 0.528,
         "currency": "USD"
       },
       "extra": {
@@ -59136,7 +60088,7 @@
         ],
         "created": "2026-07-06",
         "description": "Hy3 is a 295B-parameter Mixture-of-Experts model from Tencent (21B active, 192 experts with top-8 routing) built for reasoning, agentic workflows, and real-world production use. It supports a configurable reasoning effort:...",
-        "cache_read_per_1m": 0.020625,
+        "cache_read_per_1m": 0.033,
         "pricing_overrides": [
           {
             "utc_start": 0,
@@ -59330,8 +60282,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.7506,
-        "output_per_1m": 2.2509,
+        "input_per_1m": 0.834,
+        "output_per_1m": 2.501,
         "currency": "USD"
       },
       "extra": {
@@ -59372,7 +60324,7 @@
         ],
         "created": "2026-08-28",
         "description": "Tencent: Hy4 preview is a mixture-of-experts model from Tencent, with 49B active parameters out of 770B total. It is designed for coding agents, complex tool-use workflows, and productivity tasks that...",
-        "cache_read_per_1m": 0.0378,
+        "cache_read_per_1m": 0.042,
         "pricing_overrides": [
           {
             "utc_start": 0,
@@ -59721,7 +60673,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -59785,7 +60737,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -59793,7 +60745,7 @@
       "model_id": "thinkingmachines/inkling",
       "display_name": "Thinking Machines: Inkling",
       "context_window": 524288,
-      "max_output_tokens": 262144,
+      "max_output_tokens": 471859,
       "input_modalities": [
         "text",
         "image",
@@ -59826,7 +60778,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.95,
+        "input_per_1m": 1.0,
         "output_per_1m": 4.05,
         "currency": "USD"
       },
@@ -59841,7 +60793,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -59856,7 +60808,7 @@
         "tokenizer": "Other",
         "top_provider": {
           "context_length": 524288,
-          "max_completion_tokens": 262144,
+          "max_completion_tokens": 471859,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -59879,7 +60831,7 @@
         ],
         "created": "2026-07-17",
         "description": "Inkling is an open-weight multimodal mixture-of-experts model from Thinking Machines Lab, with 41B active parameters out of 975B total. It is designed for general-purpose reasoning, coding, agentic and tool-use systems,...",
-        "cache_read_per_1m": 0.16,
+        "cache_read_per_1m": 0.17,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -59970,7 +60922,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -60099,7 +61051,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -60223,7 +61175,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -60486,7 +61438,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -60517,7 +61469,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "document": {
@@ -60535,7 +61487,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -60890,6 +61842,60 @@
         },
         "supported_parameters": [],
         "description": "Solar Decide is Upstage's structured decision model, served as a System One endpoint on Solar Mini 4. Send a state along with typed questions, and it returns a choice, a score, or a yes/no answer, each with a calibrated probability taken directly from the model rather than written out as text. Because it generates no prose, each decision takes a single forward pass and output tokens are free. With",
+        "cache_read_per_1m": 0.05
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "upstage/solar-decide-flash",
+      "display_name": "Upstage: Solar Decide Flash",
+      "context_window": 524288,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "decisions"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "solar-decide-flash",
+        "openrouter/upstage/solar-decide-flash"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.05,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "upstage",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 524288,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "Solar Decide Flash is Upstage's low-latency structured decision model, a faster variant of [Solar Decide](/upstage/solar-decide) built on Solar Mini 4 and served through the System One (`/v1/systemone`) API. Instead of generating text, it reads a `state` and answers typed questions, returning a choice, a score, or a yes/no answer, each with a probability taken directly from the model. Each decisio",
         "cache_read_per_1m": 0.05
       }
     },
@@ -61274,7 +62280,7 @@
         "rerank": true,
         "returns_scores": true,
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -61334,7 +62340,7 @@
         "rerank": true,
         "returns_scores": true,
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -61394,7 +62400,7 @@
         "rerank": true,
         "returns_scores": true,
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -61454,7 +62460,7 @@
         "rerank": true,
         "returns_scores": true,
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -61518,7 +62524,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -61582,7 +62588,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -61646,7 +62652,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -61710,7 +62716,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -61776,7 +62782,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       }
     },
     {
@@ -61904,7 +62910,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -62023,7 +63029,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -62152,7 +63158,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -62288,7 +63294,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -62424,7 +63430,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -62559,7 +63565,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -62697,7 +63703,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -62759,7 +63765,7 @@
           "details": "/api/v1/models/x-ai/grok-4.7-20260916/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 4,
+          "design_arena": 6,
           "artificial_analysis": 1
         },
         "features": [
@@ -62837,7 +63843,7 @@
           "text/html"
         ],
         "status": "inferred",
-        "checked_at": "2026-10-06"
+        "checked_at": "2026-10-08"
       },
       "extra": {
         "source": "https://openrouter.ai/api/v1/models",
@@ -63118,7 +64124,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -63210,7 +64216,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -63328,7 +64334,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       }
     },
@@ -63384,7 +64390,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -63456,7 +64462,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -63529,7 +64535,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -63560,7 +64566,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -63773,7 +64779,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -63804,7 +64810,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -63924,7 +64930,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -63955,7 +64961,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -64073,7 +65079,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "video": {
@@ -64104,7 +65110,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -64599,7 +65605,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -64635,7 +65641,7 @@
         ],
         "created": "2025-12-08",
         "description": "GLM-4.6V is a large multimodal model designed for high-fidelity visual understanding and long-context reasoning across images, documents, and mixed media. It supports up to 128K tokens, processes complex page layouts...",
-        "cache_read_per_1m": 0.05,
+        "cache_read_per_1m": 0.055,
         "default_parameters": {
           "temperature": 0.8,
           "top_p": 0.6
@@ -65053,7 +66059,7 @@
       "model_id": "z-ai/glm-5.1",
       "display_name": "Z.ai: GLM 5.1",
       "context_window": 204800,
-      "max_output_tokens": 131072,
+      "max_output_tokens": 128000,
       "input_modalities": [
         "text"
       ],
@@ -65084,8 +66090,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 1.4,
-        "output_per_1m": 4.4,
+        "input_per_1m": 0.966,
+        "output_per_1m": 3.036,
         "currency": "USD"
       },
       "extra": {
@@ -65099,8 +66105,8 @@
         "modality": "text->text",
         "tokenizer": "Other",
         "top_provider": {
-          "context_length": 202752,
-          "max_completion_tokens": 131072,
+          "context_length": 200000,
+          "max_completion_tokens": 128000,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -65126,7 +66132,7 @@
         ],
         "created": "2026-04-07",
         "description": "GLM-5.1 delivers a major leap in coding capability, with particularly significant gains in handling long-horizon tasks. Unlike previous models built around minute-level interactions, GLM-5.1 can work independently and continuously on...",
-        "cache_read_per_1m": 0.26,
+        "cache_read_per_1m": 0.1794,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -65185,8 +66191,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.152,
-        "output_per_1m": 12.0,
+        "input_per_1m": 0.171,
+        "output_per_1m": 10.0,
         "currency": "USD"
       },
       "extra": {
@@ -65302,8 +66308,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.07,
-        "output_per_1m": 7.0,
+        "input_per_1m": 0.049,
+        "output_per_1m": 3.39,
         "currency": "USD"
       },
       "extra": {
@@ -65346,7 +66352,7 @@
         ],
         "created": "2026-08-18",
         "description": "GLM-5.3 is a large-scale reasoning model from Z.ai, built for complex software engineering and long-horizon agent tasks. It supports text input and output with a 1M-token context window, and improves...",
-        "cache_read_per_1m": 0.065,
+        "cache_read_per_1m": 0.048,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -65454,7 +66460,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -65606,7 +66612,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -65755,7 +66761,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {
@@ -66114,7 +67120,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-06",
+        "checked_at": "2026-10-08",
         "status": "inferred"
       },
       "extra": {

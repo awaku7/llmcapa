@@ -238,6 +238,9 @@ async def scrape_catalog(page, max_pages: int = 500) -> list[dict]:
     async def collect_response(response) -> list[str]:
         nonlocal api_pages
         if response.status != 200:
+            # On 2026-10-08 the pagination API intermittently returned HTTP 500;
+            # a complete rerun later succeeded. No retry/backoff is implemented,
+            # so fail rather than silently saving a partial catalog.
             raise RuntimeError(f"Azure catalog API returned HTTP {response.status}")
         data = await response.json()
         values = data.get("value") or []
@@ -319,6 +322,9 @@ async def scrape_catalog(page, max_pages: int = 500) -> list[dict]:
             await collect_response(response_task.result())
             response_task = asyncio.create_task(response_queue.get())
 
+        # The catalog showed about 11.9k models in 2026-10 (over 230 pages at
+        # 51/page). A full sequential sweep can take several minutes; quiet output
+        # during pagination is not by itself evidence that the scraper is stuck.
         while api_pages < max_pages and clicks < max_clicks:
             if response_task.done():
                 await collect_response(response_task.result())
