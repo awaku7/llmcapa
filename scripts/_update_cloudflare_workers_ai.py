@@ -374,10 +374,7 @@ def parse_model_page(
     return enrich_clef_decision(record)
 
 
-CLEF_INPUT_PRICES = {
-    "@cf/cloudflare/clef": 0.24,
-    "@cf/cloudflare/clef-flash": 0.09,
-}
+CLEF_MODEL_IDS = {"@cf/cloudflare/clef", "@cf/cloudflare/clef-flash"}
 
 
 def enrich_clef_decision(record: dict[str, object]) -> dict[str, object]:
@@ -388,7 +385,7 @@ def enrich_clef_decision(record: dict[str, object]) -> dict[str, object]:
     price is input-only, which the general text-model parser cannot represent.
     """
     model_id = str(record.get("model_id") or "")
-    if model_id not in CLEF_INPUT_PRICES:
+    if model_id not in CLEF_MODEL_IDS:
         return record
 
     selector = model_id.rsplit("/", 1)[-1]
@@ -399,6 +396,12 @@ def enrich_clef_decision(record: dict[str, object]) -> dict[str, object]:
     # The generic parser adds a Chat Completions base URL for every model;
     # Clef's typed-decision endpoint is not OpenAI chat compatible.
     extra.pop("openai_compatible_base_url_template", None)
+    # Clef's published rate is input-only. The generic Text Generation
+    # parser expects an output rate, so parse this like other input-only
+    # billing records rather than assigning a fixed snapshot price.
+    pricing = _parse_pricing(
+        str(extra.get("official_unit_pricing") or ""), "text embeddings"
+    )
     extra.update(
         official_model_source=official_model_source,
         official_api_source=official_model_source,
@@ -441,11 +444,7 @@ def enrich_clef_decision(record: dict[str, object]) -> dict[str, object]:
         supports_json_schema=False,
         license_type="api",
         aliases=[selector, f"cloudflare/{selector}"],
-        pricing={
-            "input_per_1m": CLEF_INPUT_PRICES[model_id],
-            "output_per_1m": 0.0,
-            "currency": "USD",
-        },
+        pricing=pricing,
         decision={
             "decision": True,
             "question_kinds": ["noul", "choice", "score"],
