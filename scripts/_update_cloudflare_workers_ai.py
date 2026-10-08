@@ -396,6 +396,9 @@ def enrich_clef_decision(record: dict[str, object]) -> dict[str, object]:
         f"https://developers.cloudflare.com/workers-ai/models/{selector}/"
     )
     extra = dict(record.get("extra") or {})
+    # The generic parser adds a Chat Completions base URL for every model;
+    # Clef's typed-decision endpoint is not OpenAI chat compatible.
+    extra.pop("openai_compatible_base_url_template", None)
     extra.update(
         official_model_source=official_model_source,
         official_api_source=official_model_source,
