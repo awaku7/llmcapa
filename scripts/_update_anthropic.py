@@ -279,7 +279,7 @@ def _template(row: dict) -> dict:
         "batch_output_per_1m": row["output"] / 2,
     }
     extra = {k: v for k, v in extra.items() if v is not None}
-    return base(
+    model = base(
         model_id=mid,
         display=row["name"],
         ctx=0,
@@ -295,6 +295,8 @@ def _template(row: dict) -> dict:
             else ["low", "medium", "high"] if "haiku" not in mid else None
         ),
     )
+    _reconcile_haiku_55(model)
+    return model
 
 
 def _reconcile_haiku_55(model: dict) -> None:
