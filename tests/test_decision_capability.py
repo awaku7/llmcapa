@@ -174,9 +174,10 @@ def test_cloudflare_clef_models_are_typed_decisions_not_chat_models():
         assert cap.extra["max_images"] == 4
         assert cap.extra["open_weights_license"] == "Apache-2.0"
         assert llmcapa.get(name, provider="workers-ai").model_id == model_id
-        assert llmcapa.get(
-            f"cloudflare/{name}", provider="cloudflare-workers-ai"
-        ).model_id == model_id
+        assert (
+            llmcapa.get(f"cloudflare/{name}", provider="cloudflare-workers-ai").model_id
+            == model_id
+        )
         assert Capability.from_dict(cap.to_dict()).decision == cap.decision
 
 
