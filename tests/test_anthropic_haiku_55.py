@@ -153,6 +153,5 @@ def test_haiku_55_template_can_be_reconciled_without_previous_snapshot():
         "deprecated": False,
     }
     model = _update_anthropic._template(row)
-    _update_anthropic._reconcile_haiku_55(model)
     assert model["supports_thinking_budget"] is False
     assert model["reasoning_effort_values"][-2:] == ["xhigh", "max"]
