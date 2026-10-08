@@ -156,7 +156,9 @@ class ComputerUseCapability:
         # version may add actions while retaining the required action subset.
         if self.tool_type != other.tool_type:
             return False
-        if (self.requires_beta or other.requires_beta) and self.beta_header != other.beta_header:
+        if (
+            self.requires_beta or other.requires_beta
+        ) and self.beta_header != other.beta_header:
             return False
         if not self.environments.issubset(other.environments):
             return False
