@@ -166,7 +166,9 @@ def test_clef_models_keep_decision_metadata_during_official_refresh(monkeypatch)
             "| Model Info | |\\n| --- | --- |\\n"
             "| Context Window | 65,536 tokens |\\n"
             "| Unit Pricing | ${price:.2f} per M input tokens |\\n"
-        ).format(name=name, price=price).replace("\\n", "\n")
+        )
+        .format(name=name, price=price)
+        .replace("\\n", "\n")
         for name, price in (("clef", 0.24), ("clef-flash", 0.09))
     }
     index = "\n".join(
