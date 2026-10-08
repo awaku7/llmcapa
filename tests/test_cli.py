@@ -183,6 +183,7 @@ def test_find_decision_models(capsys):
         "typesafe",
         "openrouter",
         "laya",
+        "cloudflare-workers-ai",
     }
 
 
