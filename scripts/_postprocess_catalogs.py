@@ -6,6 +6,7 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
+from _update_anthropic import apply_legacy_price_snapshot
 from _audio_capability_postprocess import apply as apply_audio_capabilities
 from _image_capability_postprocess import apply as apply_image_capabilities
 from _video_capability_postprocess import apply as apply_video_capabilities
@@ -27,18 +28,7 @@ ANTHRO_PRICES = json.loads(
     )
 )
 
-anthro_count = 0
-for m in anthro["models"]:
-    mid = m["model_id"]
-    if mid in ANTHRO_PRICES:
-        inp, out, ctx, mxo = ANTHRO_PRICES[mid]
-        m["pricing"] = {"input_per_1m": inp, "output_per_1m": out, "currency": "USD"}
-        m["context_window"] = ctx
-        m["max_output_tokens"] = mxo
-        m["supports_thinking_budget"] = True
-        m["supports_anthropic_api"] = True
-        m["supports_responses_api"] = False
-        anthro_count += 1
+anthro_count = apply_legacy_price_snapshot(anthro["models"], ANTHRO_PRICES)
 
 with open(anthro_path, "w", encoding="utf-8") as f:
     json.dump(anthro, f, ensure_ascii=False, indent=2)
