@@ -289,8 +289,83 @@ def _template(row: dict) -> dict:
         deprecated=row["deprecated"],
         reasoning=True,
         effort=True,
-        effort_values=["low", "medium", "high"] if "haiku" not in mid else None,
+        effort_values=(
+            ["low", "medium", "high", "xhigh", "max"]
+            if mid == "claude-haiku-5-5"
+            else ["low", "medium", "high"] if "haiku" not in mid else None
+        ),
     )
+
+
+def _reconcile_haiku_55(model: dict) -> None:
+    """Keep official Haiku 5.5 metadata intact across pricing-page refreshes."""
+    if model.get("model_id") != "claude-haiku-5-5":
+        return
+    source = "https://platform.claude.com/docs/en/models/haiku-5-5/overview"
+    model.update(
+        context_window=1_000_000,
+        max_output_tokens=128_000,
+        knowledge_cutoff="2026-06",
+        supports_reasoning=True,
+        supports_reasoning_effort=True,
+        reasoning_effort_values=["low", "medium", "high", "xhigh", "max"],
+        supports_thinking_budget=False,
+        thinking_control={
+            "kind": "effort",
+            "parameter": "output_config.effort",
+            "values": ["low", "medium", "high", "xhigh", "max"],
+            "default": "medium",
+            "thinking_type": "adaptive",
+        },
+        aliases=[],
+    )
+    model.pop("thinking_budget_values", None)
+    model["pricing"] = {
+        "input_per_1m": 0.10,
+        "output_per_1m": 0.50,
+        "currency": "USD",
+        "prompt_length_threshold_tokens": 100_000,
+        "long_input_per_1m": 0.50,
+        "long_output_per_1m": 2.50,
+    }
+    extra = dict(model.get("extra") or {})
+    extra.update(
+        source=source,
+        overview=source,
+        migration_guide=(
+            "https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide"
+        ),
+        cache_write_5m_per_1m=0.125,
+        cache_write_1h_per_1m=0.20,
+        cache_hit_per_1m=0.01,
+        cache_write_5m_long_per_1m=0.625,
+        cache_write_1h_long_per_1m=1.0,
+        cache_hit_long_per_1m=0.05,
+        batch_input_per_1m=0.05,
+        batch_output_per_1m=0.25,
+        batch_input_long_per_1m=0.25,
+        batch_output_long_per_1m=1.25,
+        batch_max_output_tokens=300_000,
+        batch_output_beta_header="output-300k-2026-03-24",
+        adaptive_thinking=True,
+        default_effort="medium",
+        thinking_disabled_allowed_effort=["low", "medium", "high"],
+        thinking_budget_parameter_supported=False,
+        sampling_parameters_non_default_supported=False,
+        assistant_prefill_supported=False,
+        tokenizer_note=(
+            "Claude 4.7+ tokenizer; approximately 30% more tokens for the "
+            "same text than Haiku 4.5"
+        ),
+        browser_use={
+            "supported": True,
+            "tool_type": "browser_toolset_20260801",
+            "platforms": ["anthropic", "google-cloud"],
+        },
+        context_window_source=source,
+        context_window_basis="official_catalog_snapshot",
+    )
+    model["extra"] = extra
 
 
 def build() -> list[dict]:
@@ -334,12 +409,15 @@ def build() -> list[dict]:
                 if value is not None:
                     extra[key] = value
             old["extra"] = extra
-        old["supports_thinking_budget"] = True
-        old["thinking_budget_values"] = {
-            "type": "token_range",
-            "min": 1024,
-            "max": old.get("max_output_tokens") or 128000,
-        }
+        if mid == "claude-haiku-5-5":
+            _reconcile_haiku_55(old)
+        else:
+            old["supports_thinking_budget"] = True
+            old["thinking_budget_values"] = {
+                "type": "token_range",
+                "min": 1024,
+                "max": old.get("max_output_tokens") or 128000,
+            }
         models.append(old)
     # Keep historical models that are no longer listed in current pricing.
     discovered_ids = {m["model_id"] for m in models}
@@ -350,6 +428,11 @@ def build() -> list[dict]:
         if context_window_override("anthropic", str(model.get("model_id", ""))):
             model["context_window"] = 0
     apply_context_window_overrides(models)
+
+    # The pricing scraper cannot see prompt-length tiers or thinking controls.
+    # Reconcile both discovered and carried-forward Haiku 5.5 records.
+    for model in models:
+        _reconcile_haiku_55(model)
 
     # Apply the current official Computer Use model/tool-version matrix after
     # the pricing refresh. This keeps the specialized capability from being
