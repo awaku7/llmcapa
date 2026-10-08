@@ -371,6 +371,114 @@ def parse_model_page(
     }
     if reasoning_values:
         record["reasoning_effort_values"] = reasoning_values
+    return enrich_clef_decision(record)
+
+
+CLEF_MODEL_IDS = {"@cf/cloudflare/clef", "@cf/cloudflare/clef-flash"}
+
+
+def enrich_clef_decision(record: dict[str, object]) -> dict[str, object]:
+    """Apply official Clef decision metadata to the generic Workers AI parser.
+
+    The documentation labels Clef as 'Text Generation', but its Workers AI
+    endpoint returns typed decisions, not generated chat text. Its published
+    price is input-only, which the general text-model parser cannot represent.
+    """
+    model_id = str(record.get("model_id") or "")
+    if model_id not in CLEF_MODEL_IDS:
+        return record
+
+    selector = model_id.rsplit("/", 1)[-1]
+    official_model_source = (
+        f"https://developers.cloudflare.com/workers-ai/models/{selector}/"
+    )
+    extra = dict(record.get("extra") or {})
+    # The generic parser adds a Chat Completions base URL for every model;
+    # Clef's typed-decision endpoint is not OpenAI chat compatible.
+    extra.pop("openai_compatible_base_url_template", None)
+    # Clef's published rate is input-only. The generic Text Generation
+    # parser expects an output rate, so parse this like other input-only
+    # billing records rather than assigning a fixed snapshot price.
+    pricing = _parse_pricing(
+        str(extra.get("official_unit_pricing") or ""), "text embeddings"
+    )
+    extra.update(
+        official_model_source=official_model_source,
+        official_api_source=official_model_source,
+        cloudflare_model_id=model_id,
+        cloudflare_model_selector=selector,
+        cloudflare_rest_run_url_template=REST_RUN_URL,
+        endpoints=[
+            {
+                "path": f"/ai/run/{model_id}",
+                "protocol": "systemone-compatible",
+                "url_template": REST_RUN_URL.replace("{model_id}", model_id),
+                "auth": "bearer",
+                "source": official_model_source,
+            }
+        ],
+        open_weights_url=f"https://huggingface.co/Cloudflare/{selector}",
+        open_weights_license="Apache-2.0",
+        parameters_billion=27 if selector == "clef" else 9,
+        max_images=4,
+        images_embedded_only=True,
+        image_formats=["png", "jpeg", "webp"],
+        video_input_note=(
+            "The model card mentions video input; the Workers AI request "
+            "schema documents images but does not document a videos field."
+        ),
+    )
+    record.update(
+        context_window=65_536,
+        max_output_tokens=0,
+        input_modalities=["text", "image"],
+        output_modalities=["decision"],
+        supports_vision=True,
+        supports_function_calling=False,
+        supports_json_mode=False,
+        supports_chat_completion=False,
+        supports_responses_api=False,
+        supports_reasoning=False,
+        supports_reasoning_effort=False,
+        supports_streaming=False,
+        supports_json_schema=False,
+        license_type="api",
+        aliases=[selector, f"cloudflare/{selector}"],
+        pricing=pricing,
+        decision={
+            "decision": True,
+            "question_kinds": ["noul", "choice", "score"],
+            "answer_fields": [
+                "noul",
+                "choice",
+                "score",
+                "probabilities",
+                "confidence",
+                "legend",
+            ],
+            "returns_probabilities": True,
+            "returns_confidence": True,
+            "parallel_questions": True,
+            "free_form_text": False,
+            "type_errors_possible": False,
+            "state_shapes": ["string", "json_object", "text_array"],
+            "max_total_tokens": 65_536,
+            "max_questions": 64,
+            "output_token_billing": False,
+            "endpoints": [REST_RUN_URL.replace("{model_id}", model_id)],
+            "source_url": official_model_source,
+            "checked_at": extra.get("official_catalog_checked_at"),
+            "status": "documented",
+            "extra": {
+                "endpoint_protocol": "systemone-compatible",
+                "request_model": selector,
+                "request_fields": ["model", "state", "questions", "images"],
+                "max_images": 4,
+                "not_openai_chat_completions": True,
+            },
+        },
+        extra=extra,
+    )
     return record
 
 

@@ -768,10 +768,10 @@
         "image"
       ],
       "output_modalities": [
-        "text"
+        "decision"
       ],
       "supports_function_calling": false,
-      "supports_json_mode": null,
+      "supports_json_mode": false,
       "supports_streaming": false,
       "supports_vision": true,
       "supports_reasoning": false,
@@ -785,14 +785,21 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "deprecated": false,
-      "aliases": [],
+      "aliases": [
+        "clef",
+        "cloudflare/clef"
+      ],
       "license_type": "api",
-      "pricing": null,
+      "pricing": {
+        "input_per_1m": 0.24,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
       "extra": {
         "official_source": "https://developers.cloudflare.com/workers-ai/models/",
-        "official_model_source": "https://developers.cloudflare.com/workers-ai/models/clef/index.md",
-        "official_api_source": "https://developers.cloudflare.com/workers-ai/configuration/open-ai-compatibility/index.md",
-        "official_catalog_checked_at": "2026-10-06",
+        "official_model_source": "https://developers.cloudflare.com/workers-ai/models/clef/",
+        "official_api_source": "https://developers.cloudflare.com/workers-ai/models/clef/",
+        "official_catalog_checked_at": "2026-10-08",
         "description": "Clef is a 27B multimodal decision model that turns a state and a schema of typed questions into decisions. It reads the state as text, JSON, images, or video, and returns a probability for every allowed option of every question.",
         "cloudflare_task_type": "Text Generation",
         "cloudflare_author": "Cloudflare",
@@ -803,12 +810,79 @@
         "cloudflare_model_id": "@cf/cloudflare/clef",
         "cloudflare_rest_api_source": "https://developers.cloudflare.com/workers-ai/get-started/rest-api/index.md",
         "cloudflare_rest_run_url_template": "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{model_id}",
-        "openai_compatible_base_url_template": "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/v1",
         "batch_available": false,
-        "endpoints": [],
+        "endpoints": [
+          {
+            "path": "/ai/run/@cf/cloudflare/clef",
+            "protocol": "systemone-compatible",
+            "url_template": "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/cloudflare/clef",
+            "auth": "bearer",
+            "source": "https://developers.cloudflare.com/workers-ai/models/clef/"
+          }
+        ],
         "official_unit_pricing": "$0.24 per M input tokens",
         "terms_and_license": "link ↗",
-        "terms_and_license_url": "https://huggingface.co/Cloudflare/clef/blob/main/LICENSE"
+        "terms_and_license_url": "https://huggingface.co/Cloudflare/clef/blob/main/LICENSE",
+        "cloudflare_model_selector": "clef",
+        "open_weights_url": "https://huggingface.co/Cloudflare/clef",
+        "open_weights_license": "Apache-2.0",
+        "parameters_billion": 27,
+        "max_images": 4,
+        "images_embedded_only": true,
+        "image_formats": [
+          "png",
+          "jpeg",
+          "webp"
+        ],
+        "video_input_note": "The model card mentions video input; the Workers AI request schema documents images but does not document a videos field."
+      },
+      "supports_json_schema": false,
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "noul",
+          "choice",
+          "score"
+        ],
+        "answer_fields": [
+          "noul",
+          "choice",
+          "score",
+          "probabilities",
+          "confidence",
+          "legend"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "state_shapes": [
+          "string",
+          "json_object",
+          "text_array"
+        ],
+        "max_total_tokens": 65536,
+        "max_questions": 64,
+        "output_token_billing": false,
+        "endpoints": [
+          "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/cloudflare/clef"
+        ],
+        "source_url": "https://developers.cloudflare.com/workers-ai/models/clef/",
+        "checked_at": "2026-10-08",
+        "status": "documented",
+        "extra": {
+          "endpoint_protocol": "systemone-compatible",
+          "request_model": "clef",
+          "request_fields": [
+            "model",
+            "state",
+            "questions",
+            "images"
+          ],
+          "max_images": 4,
+          "not_openai_chat_completions": true
+        }
       }
     },
     {
@@ -822,10 +896,10 @@
         "image"
       ],
       "output_modalities": [
-        "text"
+        "decision"
       ],
       "supports_function_calling": false,
-      "supports_json_mode": null,
+      "supports_json_mode": false,
       "supports_streaming": false,
       "supports_vision": true,
       "supports_reasoning": false,
@@ -839,14 +913,21 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "deprecated": false,
-      "aliases": [],
+      "aliases": [
+        "clef-flash",
+        "cloudflare/clef-flash"
+      ],
       "license_type": "api",
-      "pricing": null,
+      "pricing": {
+        "input_per_1m": 0.09,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
       "extra": {
         "official_source": "https://developers.cloudflare.com/workers-ai/models/",
-        "official_model_source": "https://developers.cloudflare.com/workers-ai/models/clef-flash/index.md",
-        "official_api_source": "https://developers.cloudflare.com/workers-ai/configuration/open-ai-compatibility/index.md",
-        "official_catalog_checked_at": "2026-10-06",
+        "official_model_source": "https://developers.cloudflare.com/workers-ai/models/clef-flash/",
+        "official_api_source": "https://developers.cloudflare.com/workers-ai/models/clef-flash/",
+        "official_catalog_checked_at": "2026-10-08",
         "description": "Clef-flash is a fast 9B multimodal decision model that turns a state and a schema of typed questions into decisions. It reads the state as text, JSON, images, or video, and returns a probability for every allowed option of every question.",
         "cloudflare_task_type": "Text Generation",
         "cloudflare_author": "Cloudflare",
@@ -857,12 +938,79 @@
         "cloudflare_model_id": "@cf/cloudflare/clef-flash",
         "cloudflare_rest_api_source": "https://developers.cloudflare.com/workers-ai/get-started/rest-api/index.md",
         "cloudflare_rest_run_url_template": "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{model_id}",
-        "openai_compatible_base_url_template": "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/v1",
         "batch_available": false,
-        "endpoints": [],
+        "endpoints": [
+          {
+            "path": "/ai/run/@cf/cloudflare/clef-flash",
+            "protocol": "systemone-compatible",
+            "url_template": "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/cloudflare/clef-flash",
+            "auth": "bearer",
+            "source": "https://developers.cloudflare.com/workers-ai/models/clef-flash/"
+          }
+        ],
         "official_unit_pricing": "$0.09 per M input tokens",
         "terms_and_license": "link ↗",
-        "terms_and_license_url": "https://huggingface.co/Cloudflare/clef-flash/blob/main/LICENSE"
+        "terms_and_license_url": "https://huggingface.co/Cloudflare/clef-flash/blob/main/LICENSE",
+        "cloudflare_model_selector": "clef-flash",
+        "open_weights_url": "https://huggingface.co/Cloudflare/clef-flash",
+        "open_weights_license": "Apache-2.0",
+        "parameters_billion": 9,
+        "max_images": 4,
+        "images_embedded_only": true,
+        "image_formats": [
+          "png",
+          "jpeg",
+          "webp"
+        ],
+        "video_input_note": "The model card mentions video input; the Workers AI request schema documents images but does not document a videos field."
+      },
+      "supports_json_schema": false,
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "noul",
+          "choice",
+          "score"
+        ],
+        "answer_fields": [
+          "noul",
+          "choice",
+          "score",
+          "probabilities",
+          "confidence",
+          "legend"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "state_shapes": [
+          "string",
+          "json_object",
+          "text_array"
+        ],
+        "max_total_tokens": 65536,
+        "max_questions": 64,
+        "output_token_billing": false,
+        "endpoints": [
+          "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/cloudflare/clef-flash"
+        ],
+        "source_url": "https://developers.cloudflare.com/workers-ai/models/clef-flash/",
+        "checked_at": "2026-10-08",
+        "status": "documented",
+        "extra": {
+          "endpoint_protocol": "systemone-compatible",
+          "request_model": "clef-flash",
+          "request_fields": [
+            "model",
+            "state",
+            "questions",
+            "images"
+          ],
+          "max_images": 4,
+          "not_openai_chat_completions": true
+        }
       }
     },
     {

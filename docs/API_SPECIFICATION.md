@@ -126,6 +126,21 @@ not a model-quality tier. Provider-specific fields are preserved in `extra`.
 
 `decision_output` is the output modality for models that return typed decisions with calibrated probabilities instead of generated text (System One style, such as TypeSafe's Jev). Such models report `output_modalities == ["decision"]`, `text_output == False`, `chat_completion == False`, and a populated `decision` block. Because decision output is a distinct modality, a text-generation model is never a valid `can_be_replaced_by()` replacement for a decision model.
 
+Cloudflare Workers AI **Clef** and **Clef-flash** are listed under the existing
+`cloudflare-workers-ai` provider as `@cf/cloudflare/clef` and
+`@cf/cloudflare/clef-flash`. They implement Jev/System One-compatible
+`noul`, `choice`, and `score` questions (up to 64 per call) but are **not**
+OpenAI Chat Completions or Responses API models. Their decision endpoint is
+`https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{model_id}`;
+the request's `model` field uses `clef` or `clef-flash`. Both have a 65,536-token
+context and support embedded images (up to four); output is a probability
+distribution, not free-form text. Hosted Workers AI charges input tokens
+only ($0.24 / 1M for Clef; $0.09 / 1M for Clef-flash), so
+`pricing.output_per_1m == 0` and `decision.output_token_billing == False`.
+The model weights are separately released under Apache-2.0; their open-source
+license does not mean the hosted endpoint is free. See each model's
+`decision.source_url` and `extra.open_weights_url` for sources.
+
 `multimodal` is inferred when more than one input or output modality is present. `file_input` includes `file` and `pdf` input modalities; `embedding_output` includes `embedding` and `embeddings`.
 
 ### 4.2 `ReasoningEffort`

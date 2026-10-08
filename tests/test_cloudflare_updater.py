@@ -153,3 +153,93 @@ Text Embeddings • BAAI
     assert unknown["output_modalities"] == []
     assert unknown["supports_chat_completion"] is False
     assert unknown["extra"]["cloudflare_task_type"] == "Unlisted Task"
+
+
+def test_clef_models_keep_decision_metadata_during_official_refresh(monkeypatch):
+    base_url = "https://developers.cloudflare.com/workers-ai/models/"
+    pages = {
+        f"{base_url}{name}/index.md": (
+            f"---\\ntitle: {name}\\n---\\n# {name}\\n\\n"
+            "Text Generation • Cloudflare\\n\\n"
+            f"`@cf/cloudflare/{name}`\\n\\n"
+            "- Cloudflare-hosted\\n- Vision\\n\\n"
+            "| Model Info | |\\n| --- | --- |\\n"
+            "| Context Window | 65,536 tokens |\\n"
+            f"| Unit Pricing | ${price:.2f} per M input tokens |\\n"
+        ).replace("\\n", "\n")
+        for name, price in (("clef", 0.24), ("clef-flash", 0.09))
+    }
+    index = "\n".join(
+        "- [@cf/cloudflare/{name}]({url}): Decision model".format(
+            name=name, url=f"{base_url}{name}/index.md"
+        )
+        for name in ("clef", "clef-flash")
+    )
+
+    def offline_fetch(url):
+        if url == _UPDATER.MODEL_INDEX_URL:
+            return index
+        if url == _UPDATER.OPENAI_COMPAT_URL:
+            return "### Responses API\nNo Clef models listed.\n"
+        return pages[url]
+
+    monkeypatch.setattr(_UPDATER, "_fetch_text", offline_fetch)
+    rows = _UPDATER.fetch_catalog()
+    assert len(rows) == 2
+    assert [row["model_id"] for row in rows] == [
+        "@cf/cloudflare/clef",
+        "@cf/cloudflare/clef-flash",
+    ]
+    for row, price in zip(rows, (0.24, 0.09)):
+        assert row["output_modalities"] == ["decision"]
+        assert row["supports_chat_completion"] is False
+        assert row["supports_responses_api"] is False
+        assert row["supports_json_mode"] is False
+        assert row["pricing"]["input_per_1m"] == price
+        assert row["pricing"]["output_per_1m"] == 0.0
+        assert row["decision"]["max_questions"] == 64
+        assert row["decision"]["question_kinds"] == ["noul", "choice", "score"]
+        assert row["decision"]["endpoints"][0].endswith(row["model_id"])
+        assert row["extra"]["endpoints"][0]["protocol"] == "systemone-compatible"
+        assert "openai_compatible_base_url_template" not in row["extra"]
+
+
+def test_non_decision_model_keeps_generic_cloudflare_mapping():
+    row = {
+        "model_id": "@cf/example/text-generation",
+        "output_modalities": ["text"],
+        "pricing": {"input_per_1m": 1.0, "output_per_1m": 2.0},
+    }
+    assert _UPDATER.enrich_clef_decision(row) is row
+    assert row["output_modalities"] == ["text"]
+    assert row["pricing"]["output_per_1m"] == 2.0
+
+
+def test_clef_refresh_uses_new_published_input_rate_instead_of_static_price():
+    record = {
+        "model_id": "@cf/cloudflare/clef",
+        "pricing": None,
+        "output_modalities": ["text"],
+        "extra": {
+            "official_unit_pricing": "$0.30 per M input tokens",
+            "official_catalog_checked_at": "2026-10-08",
+            "openai_compatible_base_url_template": "https://unused.example.test",
+        },
+    }
+    updated = _UPDATER.enrich_clef_decision(record)
+    assert updated["pricing"] == {
+        "input_per_1m": 0.30,
+        "output_per_1m": 0.0,
+        "currency": "USD",
+    }
+    assert updated["extra"]["official_unit_pricing"] == "$0.30 per M input tokens"
+    assert "openai_compatible_base_url_template" not in updated["extra"]
+
+
+def test_clef_refresh_does_not_guess_missing_price():
+    record = {
+        "model_id": "@cf/cloudflare/clef-flash",
+        "pricing": None,
+        "extra": {},
+    }
+    assert _UPDATER.enrich_clef_decision(record)["pricing"] is None
