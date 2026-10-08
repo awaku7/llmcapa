@@ -213,3 +213,33 @@ def test_non_decision_model_keeps_generic_cloudflare_mapping():
     assert _UPDATER.enrich_clef_decision(row) is row
     assert row["output_modalities"] == ["text"]
     assert row["pricing"]["output_per_1m"] == 2.0
+
+
+def test_clef_refresh_uses_new_published_input_rate_instead_of_static_price():
+    record = {
+        "model_id": "@cf/cloudflare/clef",
+        "pricing": None,
+        "output_modalities": ["text"],
+        "extra": {
+            "official_unit_pricing": "$0.30 per M input tokens",
+            "official_catalog_checked_at": "2026-10-08",
+            "openai_compatible_base_url_template": "https://unused.example.test",
+        },
+    }
+    updated = _UPDATER.enrich_clef_decision(record)
+    assert updated["pricing"] == {
+        "input_per_1m": 0.30,
+        "output_per_1m": 0.0,
+        "currency": "USD",
+    }
+    assert updated["extra"]["official_unit_pricing"] == "$0.30 per M input tokens"
+    assert "openai_compatible_base_url_template" not in updated["extra"]
+
+
+def test_clef_refresh_does_not_guess_missing_price():
+    record = {
+        "model_id": "@cf/cloudflare/clef-flash",
+        "pricing": None,
+        "extra": {},
+    }
+    assert _UPDATER.enrich_clef_decision(record)["pricing"] is None
