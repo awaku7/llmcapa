@@ -156,7 +156,9 @@ class ComputerUseCapability:
         # version may add actions while retaining the required action subset.
         if self.tool_type != other.tool_type:
             return False
-        if (self.requires_beta or other.requires_beta) and self.beta_header != other.beta_header:
+        if (
+            self.requires_beta or other.requires_beta
+        ) and self.beta_header != other.beta_header:
             return False
         if not self.environments.issubset(other.environments):
             return False
@@ -934,6 +936,13 @@ class Capability:
         in_rate = float(self.pricing.get("input_per_1m") or 0.0)
         out_rate = float(self.pricing.get("output_per_1m") or 0.0)
         currency = self.pricing.get("currency", "USD")
+
+        # Price the entire request at higher rates when the input prompt
+        # crosses a provider-defined threshold, not just the excess tokens.
+        threshold = self.pricing.get("prompt_length_threshold_tokens")
+        if threshold is not None and input_tokens > int(threshold):
+            in_rate = float(self.pricing.get("long_input_per_1m") or in_rate)
+            out_rate = float(self.pricing.get("long_output_per_1m") or out_rate)
 
         cost = ((input_tokens * in_rate) + (output_tokens * out_rate)) / 1000000.0
         return {"cost": cost, "currency": currency}

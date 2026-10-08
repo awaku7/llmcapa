@@ -20,7 +20,9 @@ VERTEX_COMPUTER_USE_SOURCE = (
     "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/computer-use"
 )
 META_COMPUTER_USE_SOURCE = "https://dev.meta.ai/docs/computer-use"
-META_MUSE_SPARK_11_SOURCE = "https://ai.meta.com/blog/introducing-muse-spark-meta-model-api/"
+META_MUSE_SPARK_11_SOURCE = (
+    "https://ai.meta.com/blog/introducing-muse-spark-meta-model-api/"
+)
 META_COMPUTER_USE_MODELS = frozenset({"muse-spark-1.1", "muse-spark-1.3"})
 
 # These model IDs are explicitly listed in Google's current Computer Use guide.
@@ -49,6 +51,7 @@ ANTHROPIC_TOOLSET_MODELS = frozenset(
         "claude-opus-5-5",
         "claude-opus-5",
         "claude-sonnet-5-5",
+        "claude-haiku-5-5",
         "claude-sonnet-5",
         "claude-opus-4-8",
     }
@@ -155,7 +158,11 @@ def google_computer_use_capability(
     """Return documented Gemini Computer Use metadata for a supported model."""
     if model_id not in GOOGLE_COMPUTER_USE_MODELS:
         return None
-    source = VERTEX_COMPUTER_USE_SOURCE if provider == "vertex-ai" else GOOGLE_COMPUTER_USE_SOURCE
+    source = (
+        VERTEX_COMPUTER_USE_SOURCE
+        if provider == "vertex-ai"
+        else GOOGLE_COMPUTER_USE_SOURCE
+    )
     return _computer_use_record(
         provider=provider,
         model_id=model_id,
