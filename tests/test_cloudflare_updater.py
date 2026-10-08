@@ -201,6 +201,7 @@ def test_clef_models_keep_decision_metadata_during_official_refresh(monkeypatch)
         assert row["decision"]["question_kinds"] == ["noul", "choice", "score"]
         assert row["decision"]["endpoints"][0].endswith(row["model_id"])
         assert row["extra"]["endpoints"][0]["protocol"] == "systemone-compatible"
+        assert "openai_compatible_base_url_template" not in row["extra"]
 
 
 def test_non_decision_model_keeps_generic_cloudflare_mapping():
