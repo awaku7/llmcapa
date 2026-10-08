@@ -218,7 +218,9 @@ def test_legacy_postprocessor_preserves_haiku_55_tiers_and_thinking():
 
 def test_prefixed_haiku_55_alias_resolves_in_bundled_catalog(monkeypatch):
     monkeypatch.setattr(llmcapa.Registry, "_load_github_catalog_caches", lambda _: None)
-    monkeypatch.setattr(llmcapa.Registry, "_load_persistent_github_catalogs", lambda _: None)
+    monkeypatch.setattr(
+        llmcapa.Registry, "_load_persistent_github_catalogs", lambda _: None
+    )
     registry = llmcapa.Registry()
     cap = registry.get("anthropic/claude-haiku-5-5", "anthropic")
     assert cap is not None
