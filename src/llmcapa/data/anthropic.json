@@ -236,6 +236,120 @@
     },
     {
       "provider": "anthropic",
+      "model_id": "claude-haiku-5-5",
+      "display_name": "Claude Haiku 5.5",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2026-06",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.5,
+        "currency": "USD",
+        "prompt_length_threshold_tokens": 100000,
+        "long_input_per_1m": 0.5,
+        "long_output_per_1m": 2.5
+      },
+      "extra": {
+        "source": "https://platform.claude.com/docs/en/models/haiku-5-5/overview",
+        "overview": "https://platform.claude.com/docs/en/models/haiku-5-5/overview",
+        "migration_guide": "https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide",
+        "cache_write_5m_per_1m": 0.125,
+        "cache_write_1h_per_1m": 0.2,
+        "cache_hit_per_1m": 0.01,
+        "cache_write_5m_long_per_1m": 0.625,
+        "cache_write_1h_long_per_1m": 1,
+        "cache_hit_long_per_1m": 0.05,
+        "batch_input_per_1m": 0.05,
+        "batch_output_per_1m": 0.25,
+        "batch_input_long_per_1m": 0.25,
+        "batch_output_long_per_1m": 1.25,
+        "batch_max_output_tokens": 300000,
+        "batch_output_beta_header": "output-300k-2026-03-24",
+        "adaptive_thinking": true,
+        "default_effort": "medium",
+        "thinking_disabled_allowed_effort": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "thinking_budget_parameter_supported": false,
+        "sampling_parameters_non_default_supported": false,
+        "assistant_prefill_supported": false,
+        "tokenizer_note": "Claude 4.7+ tokenizer; approximately 30% more tokens for the same text than Haiku 4.5",
+        "browser_use": {
+          "supported": true,
+          "tool_type": "browser_toolset_20260801",
+          "platforms": [
+            "anthropic",
+            "google-cloud"
+          ]
+        },
+        "context_window_source": "https://platform.claude.com/docs/en/models/haiku-5-5/overview",
+        "context_window_basis": "official_catalog_snapshot"
+      },
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "anthropic",
+        "model": "claude-haiku-5-5",
+        "api_type": "messages",
+        "tool_type": "computer_toolset_20260801",
+        "tool_version": "20260801",
+        "status": "ga",
+        "environments": [
+          "desktop"
+        ],
+        "requires_beta": false,
+        "enable_zoom": true,
+        "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
+        "checked_at": "2026-10-08"
+      },
+      "reasoning_effort_values": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "thinking_control": {
+        "kind": "effort",
+        "parameter": "output_config.effort",
+        "values": [
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "max"
+        ],
+        "default": "medium",
+        "thinking_type": "adaptive"
+      }
+    },
+    {
+      "provider": "anthropic",
       "model_id": "claude-haiku-4-5",
       "display_name": "Claude Haiku 4.5",
       "context_window": 200000,
