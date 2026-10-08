@@ -2716,7 +2716,8 @@
         "type_errors_possible": false,
         "output_token_billing": false,
         "endpoints": [
-          "https://openrouter.ai/api/alpha/decisions"
+          "https://openrouter.ai/api/alpha/decisions",
+          "https://openrouter.ai/api/v1/systemone"
         ],
         "source_url": "https://openrouter.ai/docs",
         "checked_at": "2026-09-19",
@@ -2724,7 +2725,12 @@
         "extra": {
           "openai_compatible": false,
           "availability": "alpha",
-          "upstream_route": "typesafe/jev-1.13"
+          "upstream_route": "typesafe/jev-1.13",
+          "endpoint_protocol": "openrouter-alpha-decisions",
+          "systemone_schema_compatible": true,
+          "typesafe_sdk_compatibility": true,
+          "endpoint_docs": "https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-questions-and-answers-request",
+          "systemone_endpoint": "https://openrouter.ai/api/v1/systemone"
         }
       },
       "extra": {
@@ -2738,7 +2744,9 @@
         "features": [
           "decision_output",
           "decisions_api"
-        ]
+        ],
+        "systemone_endpoint": "https://openrouter.ai/api/v1/systemone",
+        "endpoint_protocol": "openrouter-alpha-decisions"
       }
     },
     {
@@ -11649,7 +11657,7 @@
         "image"
       ],
       "output_modalities": [
-        "decisions"
+        "decision"
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -11695,6 +11703,52 @@
         "features": [
           "vision"
         ]
+      },
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "noul",
+          "choice",
+          "score"
+        ],
+        "answer_fields": [
+          "type",
+          "noul",
+          "choice",
+          "score",
+          "probabilities",
+          "confidence",
+          "legend"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "calibrated_confidence": true,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "deterministic": null,
+        "state_shapes": [
+          "string",
+          "json_object",
+          "array"
+        ],
+        "max_state_tokens": null,
+        "max_total_tokens": 65536,
+        "output_token_billing": false,
+        "endpoints": [
+          "https://openrouter.ai/api/alpha/decisions"
+        ],
+        "source_url": "https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-questions-and-answers-request",
+        "checked_at": "2026-10-08",
+        "status": "documented",
+        "extra": {
+          "endpoint_protocol": "openrouter-alpha-decisions",
+          "systemone_schema_compatible": true,
+          "upstream_provider": "cloudflare",
+          "upstream_protocol": "systemone-compatible",
+          "endpoint_docs": "https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-questions-and-answers-request",
+          "upstream_endpoint": "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/cloudflare/clef"
+        }
       }
     },
     {
@@ -11708,7 +11762,7 @@
         "image"
       ],
       "output_modalities": [
-        "decisions"
+        "decision"
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -11754,6 +11808,52 @@
         "features": [
           "vision"
         ]
+      },
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "noul",
+          "choice",
+          "score"
+        ],
+        "answer_fields": [
+          "type",
+          "noul",
+          "choice",
+          "score",
+          "probabilities",
+          "confidence",
+          "legend"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "calibrated_confidence": true,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "deterministic": null,
+        "state_shapes": [
+          "string",
+          "json_object",
+          "array"
+        ],
+        "max_state_tokens": null,
+        "max_total_tokens": 65536,
+        "output_token_billing": false,
+        "endpoints": [
+          "https://openrouter.ai/api/alpha/decisions"
+        ],
+        "source_url": "https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-questions-and-answers-request",
+        "checked_at": "2026-10-08",
+        "status": "documented",
+        "extra": {
+          "endpoint_protocol": "openrouter-alpha-decisions",
+          "systemone_schema_compatible": true,
+          "upstream_provider": "cloudflare",
+          "upstream_protocol": "systemone-compatible",
+          "endpoint_docs": "https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-questions-and-answers-request",
+          "upstream_endpoint": "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/cloudflare/clef-flash"
+        }
       }
     },
     {
@@ -23662,7 +23762,7 @@
         "text"
       ],
       "output_modalities": [
-        "decisions"
+        "decision"
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -23706,6 +23806,52 @@
         "supported_parameters": [],
         "description": "Mercury Decide is Inception's structured decision model, served as a System One endpoint. Send a state along with typed questions, and it returns a choice, a score, or a yes/no answer, each with a calibrated probability taken directly from the model rather than written out as text, so output tokens are free. It makes up to 14 decisions per second and reports how certain it is, so a decision system",
         "free_tier": true
+      },
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "noul",
+          "choice",
+          "score"
+        ],
+        "answer_fields": [
+          "type",
+          "noul",
+          "choice",
+          "score",
+          "probabilities",
+          "confidence",
+          "legend"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "calibrated_confidence": true,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "deterministic": null,
+        "state_shapes": [
+          "string",
+          "json_object",
+          "array"
+        ],
+        "max_state_tokens": null,
+        "max_total_tokens": 32768,
+        "output_token_billing": false,
+        "endpoints": [
+          "https://openrouter.ai/api/alpha/decisions"
+        ],
+        "source_url": "https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-questions-and-answers-request",
+        "checked_at": "2026-10-08",
+        "status": "documented",
+        "extra": {
+          "endpoint_protocol": "openrouter-alpha-decisions",
+          "systemone_schema_compatible": true,
+          "upstream_provider": "inception",
+          "upstream_protocol": "systemone-compatible",
+          "endpoint_docs": "https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-questions-and-answers-request",
+          "upstream_endpoint_path": "/v1/systemone"
+        }
       }
     },
     {
@@ -24806,7 +24952,7 @@
         "text"
       ],
       "output_modalities": [
-        "decisions"
+        "decision"
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -24847,6 +24993,52 @@
         },
         "supported_parameters": [],
         "description": "Kev 4B is a small open-weight decision model from Jared Palmer, built as a LoRA adapter and pointer head on Qwen3.5-4B-Base and served over the same /v1/systemone contract as TypeSafe's Jev. Send a state and typed questions (yes/no, multiple choice, or score) and it returns a calibrated probability per question in one forward pass, with no generated text. It is the recommended checkpoint in the Ke"
+      },
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "noul",
+          "choice",
+          "score"
+        ],
+        "answer_fields": [
+          "type",
+          "noul",
+          "choice",
+          "score",
+          "probabilities",
+          "confidence",
+          "legend"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "calibrated_confidence": true,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "deterministic": null,
+        "state_shapes": [
+          "string",
+          "json_object",
+          "array"
+        ],
+        "max_state_tokens": null,
+        "max_total_tokens": 8192,
+        "output_token_billing": false,
+        "endpoints": [
+          "https://openrouter.ai/api/alpha/decisions"
+        ],
+        "source_url": "https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-questions-and-answers-request",
+        "checked_at": "2026-10-08",
+        "status": "documented",
+        "extra": {
+          "endpoint_protocol": "openrouter-alpha-decisions",
+          "systemone_schema_compatible": true,
+          "upstream_provider": "jaredpalmer",
+          "upstream_protocol": "typesafe-systemone-compatible",
+          "endpoint_docs": "https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-questions-and-answers-request",
+          "upstream_endpoint_path": "/v1/systemone"
+        }
       }
     },
     {
@@ -25294,7 +25486,7 @@
         "text"
       ],
       "output_modalities": [
-        "decisions"
+        "decision"
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -25338,6 +25530,52 @@
         "supported_parameters": [],
         "description": "d1 is Liquid AI's structured decision model, served as a System One endpoint. Send a state along with typed questions, and it returns a choice, a score, or a yes/no answer, each with a probability taken directly from the model rather than written out as text. It uses the same /v1/systemone schema as other OpenRouter Decisions models, so it suits routing, classification, and policy checks that need",
         "cache_read_per_1m": 0.04
+      },
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "noul",
+          "choice",
+          "score"
+        ],
+        "answer_fields": [
+          "type",
+          "noul",
+          "choice",
+          "score",
+          "probabilities",
+          "confidence",
+          "legend"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "calibrated_confidence": true,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "deterministic": null,
+        "state_shapes": [
+          "string",
+          "json_object",
+          "array"
+        ],
+        "max_state_tokens": null,
+        "max_total_tokens": 65536,
+        "output_token_billing": false,
+        "endpoints": [
+          "https://openrouter.ai/api/alpha/decisions"
+        ],
+        "source_url": "https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-questions-and-answers-request",
+        "checked_at": "2026-10-08",
+        "status": "documented",
+        "extra": {
+          "endpoint_protocol": "openrouter-alpha-decisions",
+          "systemone_schema_compatible": true,
+          "upstream_provider": "liquid",
+          "upstream_protocol": "typesafe-systemone-compatible",
+          "endpoint_docs": "https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-questions-and-answers-request",
+          "upstream_endpoint": "https://api.liquid.ai/decisions/v1/systemone"
+        }
       }
     },
     {
@@ -44604,7 +44842,7 @@
         "image"
       ],
       "output_modalities": [
-        "decisions"
+        "decision"
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -44651,6 +44889,51 @@
         "features": [
           "vision"
         ]
+      },
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "predicate",
+          "choice",
+          "score"
+        ],
+        "answer_fields": [
+          "type",
+          "probability",
+          "choice",
+          "score",
+          "probabilities",
+          "confidence"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "calibrated_confidence": null,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "deterministic": null,
+        "state_shapes": [
+          "string",
+          "json_object",
+          "array"
+        ],
+        "max_state_tokens": null,
+        "max_total_tokens": 1050000,
+        "output_token_billing": false,
+        "endpoints": [
+          "https://openrouter.ai/api/alpha/decisions"
+        ],
+        "source_url": "https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-questions-and-answers-request",
+        "checked_at": "2026-10-08",
+        "status": "documented",
+        "extra": {
+          "endpoint_protocol": "openrouter-alpha-decisions",
+          "systemone_schema_compatible": true,
+          "upstream_provider": "openai",
+          "upstream_protocol": "openai-decisions-v1",
+          "endpoint_docs": "https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-questions-and-answers-request",
+          "upstream_endpoint": "https://api.openai.com/v1/decisions"
+        }
       }
     },
     {
@@ -49021,7 +49304,7 @@
         "image"
       ],
       "output_modalities": [
-        "decisions"
+        "decision"
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -49065,6 +49348,53 @@
         "features": [
           "vision"
         ]
+      },
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "noul",
+          "choice",
+          "score"
+        ],
+        "answer_fields": [
+          "type",
+          "noul",
+          "choice",
+          "score",
+          "probabilities",
+          "confidence",
+          "legend"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "calibrated_confidence": null,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "deterministic": null,
+        "state_shapes": [
+          "string",
+          "json_object",
+          "array"
+        ],
+        "max_state_tokens": null,
+        "max_total_tokens": 262144,
+        "output_token_billing": false,
+        "endpoints": [
+          "https://openrouter.ai/api/alpha/decisions"
+        ],
+        "source_url": "https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-questions-and-answers-request",
+        "checked_at": "2026-10-08",
+        "status": "documented",
+        "extra": {
+          "endpoint_protocol": "openrouter-alpha-decisions",
+          "systemone_schema_compatible": true,
+          "upstream_provider": "perplexity",
+          "upstream_protocol": "perplexity-decisions-v1",
+          "endpoint_docs": "https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-questions-and-answers-request",
+          "upstream_endpoint": "https://api.perplexity.ai/v1/decisions",
+          "typesafe_sdk_compatibility": "not-documented"
+        }
       }
     },
     {
@@ -57801,7 +58131,7 @@
         "text"
       ],
       "output_modalities": [
-        "decisions"
+        "decision"
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -57842,6 +58172,44 @@
         },
         "supported_parameters": [],
         "description": "Span-01 is a behavior scoring model from Respan. It reads a conversation span and returns, for each plain-language behavior you define, the probability that the behavior is present. It is suited for evaluation, guardrails, and monitoring of LLM and agent outputs at scale.\n\nIt is the higher-accuracy tier of the family. Span-01 Lite is the free, lighter tier."
+      },
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "noul"
+        ],
+        "answer_fields": [
+          "noul",
+          "probabilities"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": false,
+        "calibrated_confidence": null,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "deterministic": null,
+        "state_shapes": [
+          "string",
+          "json_object",
+          "array"
+        ],
+        "max_state_tokens": null,
+        "max_total_tokens": null,
+        "output_token_billing": false,
+        "endpoints": [
+          "https://openrouter.ai/api/alpha/decisions"
+        ],
+        "source_url": "https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-questions-and-answers-request",
+        "checked_at": "2026-10-08",
+        "status": "documented",
+        "extra": {
+          "endpoint_protocol": "openrouter-alpha-decisions",
+          "systemone_schema_compatible": true,
+          "upstream_provider": "respan",
+          "upstream_protocol": "not-documented",
+          "endpoint_docs": "https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-questions-and-answers-request"
+        }
       }
     },
     {
@@ -57854,7 +58222,7 @@
         "text"
       ],
       "output_modalities": [
-        "decisions"
+        "decision"
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -57896,6 +58264,44 @@
         "supported_parameters": [],
         "description": "Span-01 Lite is the free, lighter tier of Span-01, a behavior scoring model from Respan. It returns, for each plain-language behavior you define, the probability that the behavior is present in a conversation span, and is suited for high-volume evaluation and monitoring where cost matters more than peak accuracy.",
         "free_tier": true
+      },
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "noul"
+        ],
+        "answer_fields": [
+          "noul",
+          "probabilities"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": false,
+        "calibrated_confidence": null,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "deterministic": null,
+        "state_shapes": [
+          "string",
+          "json_object",
+          "array"
+        ],
+        "max_state_tokens": null,
+        "max_total_tokens": null,
+        "output_token_billing": false,
+        "endpoints": [
+          "https://openrouter.ai/api/alpha/decisions"
+        ],
+        "source_url": "https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-questions-and-answers-request",
+        "checked_at": "2026-10-08",
+        "status": "documented",
+        "extra": {
+          "endpoint_protocol": "openrouter-alpha-decisions",
+          "systemone_schema_compatible": true,
+          "upstream_provider": "respan",
+          "upstream_protocol": "not-documented",
+          "endpoint_docs": "https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-questions-and-answers-request"
+        }
       }
     },
     {
@@ -61256,7 +61662,7 @@
         "text"
       ],
       "output_modalities": [
-        "decisions"
+        "decision"
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -61297,6 +61703,44 @@
         },
         "supported_parameters": [],
         "description": "Tev1 4B Experimental is an experimental decision model from Together AI, a supervised fine-tune of Qwen3.5-4B trained to choose one option from a structured state, question, and list of 2-24 labeled options. It keeps Qwen's standard next-token head, so it is served through the regular chat completions API rather than a dedicated decisions runtime.\n\nSend a system instruction followed by a JSON deci"
+      },
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "choice"
+        ],
+        "answer_fields": [
+          "choice"
+        ],
+        "returns_probabilities": false,
+        "returns_confidence": null,
+        "calibrated_confidence": null,
+        "parallel_questions": false,
+        "free_form_text": true,
+        "type_errors_possible": true,
+        "deterministic": null,
+        "state_shapes": [
+          "string",
+          "json_object",
+          "array"
+        ],
+        "max_state_tokens": null,
+        "max_total_tokens": 32768,
+        "output_token_billing": false,
+        "endpoints": [
+          "https://openrouter.ai/api/v1/chat/completions"
+        ],
+        "source_url": "https://openrouter.ai/togethercomputer/tev1-4b-experimental",
+        "checked_at": "2026-10-08",
+        "status": "documented",
+        "extra": {
+          "endpoint_protocol": "openai-compatible-chat-completions",
+          "systemone_schema_compatible": false,
+          "upstream_provider": "togethercomputer",
+          "upstream_protocol": "openai-compatible-chat-completions",
+          "endpoint_docs": "https://openrouter.ai/docs/api-reference",
+          "upstream_endpoint_path": "/v1/chat/completions"
+        }
       }
     },
     {
@@ -61359,7 +61803,8 @@
         "type_errors_possible": false,
         "output_token_billing": false,
         "endpoints": [
-          "https://openrouter.ai/api/alpha/decisions"
+          "https://openrouter.ai/api/alpha/decisions",
+          "https://openrouter.ai/api/v1/systemone"
         ],
         "source_url": "https://openrouter.ai/docs",
         "checked_at": "2026-09-19",
@@ -61367,7 +61812,12 @@
         "extra": {
           "openai_compatible": false,
           "availability": "alpha",
-          "upstream_route": "typesafe/jev-1.13"
+          "upstream_route": "typesafe/jev-1.13",
+          "endpoint_protocol": "openrouter-alpha-decisions",
+          "systemone_schema_compatible": true,
+          "typesafe_sdk_compatibility": true,
+          "endpoint_docs": "https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-questions-and-answers-request",
+          "systemone_endpoint": "https://openrouter.ai/api/v1/systemone"
         }
       },
       "extra": {
@@ -61381,7 +61831,9 @@
         "features": [
           "decision_output",
           "decisions_api"
-        ]
+        ],
+        "systemone_endpoint": "https://openrouter.ai/api/v1/systemone",
+        "endpoint_protocol": "openrouter-alpha-decisions"
       }
     },
     {
@@ -61799,7 +62251,7 @@
         "text"
       ],
       "output_modalities": [
-        "decisions"
+        "decision"
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -61843,6 +62295,52 @@
         "supported_parameters": [],
         "description": "Solar Decide is Upstage's structured decision model, served as a System One endpoint on Solar Mini 4. Send a state along with typed questions, and it returns a choice, a score, or a yes/no answer, each with a calibrated probability taken directly from the model rather than written out as text. Because it generates no prose, each decision takes a single forward pass and output tokens are free. With",
         "cache_read_per_1m": 0.05
+      },
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "noul",
+          "choice",
+          "score"
+        ],
+        "answer_fields": [
+          "type",
+          "noul",
+          "choice",
+          "score",
+          "probabilities",
+          "confidence",
+          "legend"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "calibrated_confidence": true,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "deterministic": null,
+        "state_shapes": [
+          "string",
+          "json_object",
+          "array"
+        ],
+        "max_state_tokens": null,
+        "max_total_tokens": 524288,
+        "output_token_billing": false,
+        "endpoints": [
+          "https://openrouter.ai/api/alpha/decisions"
+        ],
+        "source_url": "https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-questions-and-answers-request",
+        "checked_at": "2026-10-08",
+        "status": "documented",
+        "extra": {
+          "endpoint_protocol": "openrouter-alpha-decisions",
+          "systemone_schema_compatible": true,
+          "upstream_provider": "upstage",
+          "upstream_protocol": "systemone-compatible",
+          "endpoint_docs": "https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-questions-and-answers-request",
+          "upstream_endpoint_path": "/v1/systemone"
+        }
       }
     },
     {
@@ -61855,7 +62353,7 @@
         "text"
       ],
       "output_modalities": [
-        "decisions"
+        "decision"
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -61897,6 +62395,52 @@
         "supported_parameters": [],
         "description": "Solar Decide Flash is Upstage's low-latency structured decision model, a faster variant of [Solar Decide](/upstage/solar-decide) built on Solar Mini 4 and served through the System One (`/v1/systemone`) API. Instead of generating text, it reads a `state` and answers typed questions, returning a choice, a score, or a yes/no answer, each with a probability taken directly from the model. Each decisio",
         "cache_read_per_1m": 0.05
+      },
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "noul",
+          "choice",
+          "score"
+        ],
+        "answer_fields": [
+          "type",
+          "noul",
+          "choice",
+          "score",
+          "probabilities",
+          "confidence",
+          "legend"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "calibrated_confidence": true,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "deterministic": null,
+        "state_shapes": [
+          "string",
+          "json_object",
+          "array"
+        ],
+        "max_state_tokens": null,
+        "max_total_tokens": 524288,
+        "output_token_billing": false,
+        "endpoints": [
+          "https://openrouter.ai/api/alpha/decisions"
+        ],
+        "source_url": "https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-questions-and-answers-request",
+        "checked_at": "2026-10-08",
+        "status": "documented",
+        "extra": {
+          "endpoint_protocol": "openrouter-alpha-decisions",
+          "systemone_schema_compatible": true,
+          "upstream_provider": "upstage",
+          "upstream_protocol": "systemone-compatible",
+          "endpoint_docs": "https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-questions-and-answers-request",
+          "upstream_endpoint_path": "/v1/systemone"
+        }
       }
     },
     {

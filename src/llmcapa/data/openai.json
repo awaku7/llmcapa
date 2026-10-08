@@ -6142,7 +6142,11 @@
             "output_per_1m": 0.0,
             "currency": "USD"
           },
-          "image_input": "Inline base64 data URLs only; hosted URLs and file_id are unsupported."
+          "image_input": "Inline base64 data URLs only; hosted URLs and file_id are unsupported.",
+          "endpoint_protocol": "openai-decisions-v1",
+          "endpoint_path": "/v1/decisions",
+          "systemone_schema_compatible": false,
+          "notes": "Uses OpenAI-specific input/predicate schema; it is not the TypeSafe System One request contract."
         }
       },
       "deprecated": false,

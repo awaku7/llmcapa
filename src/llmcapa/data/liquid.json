@@ -1,0 +1,298 @@
+{
+  "models": [
+    {
+      "provider": "liquid",
+      "model_id": "d1",
+      "display_name": "Liquid AI d1",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "decision"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_json_schema": false,
+      "supports_streaming": false,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "choice",
+          "score",
+          "noul"
+        ],
+        "answer_fields": [
+          "choice",
+          "score",
+          "noul",
+          "confidence",
+          "probabilities",
+          "legend"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "calibrated_confidence": true,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "deterministic": null,
+        "state_shapes": [
+          "string",
+          "json_object",
+          "image"
+        ],
+        "max_state_tokens": null,
+        "max_total_tokens": null,
+        "output_token_billing": null,
+        "language_values": [],
+        "endpoints": [
+          "https://api.liquid.ai/decisions/v1/systemone"
+        ],
+        "source_url": "https://docs.liquid.ai/lfm/models/d1",
+        "checked_at": "2026-10-08",
+        "status": "documented",
+        "extra": {
+          "client_sdk": "typesafe-sdk",
+          "base_url": "https://api.liquid.ai",
+          "wire_protocol": "typesafe-systemone-compatible",
+          "endpoint_path": "/decisions/v1/systemone",
+          "setup_guide": "https://docs.liquid.ai/guides/decision-model-guide#setup",
+          "deployment": "hosted-liquid-api",
+          "note": "Liquid's official d1 API docs show the System One request/response schema and use the TypeSafe SDK. The path is Liquid-specific; do not substitute Jev's /v1/systemone URL. The context limit is not published in the consulted model documentation."
+        }
+      },
+      "extra": {
+        "official_source": "https://docs.liquid.ai/lfm/models/decision-models",
+        "official_source_checked_at": "2026-10-08",
+        "docs": "https://docs.liquid.ai/lfm/models/decision-models",
+        "model_family": "d1",
+        "not_a_language_model": true
+      }
+    },
+    {
+      "provider": "liquid",
+      "model_id": "d1-3B",
+      "display_name": "Liquid AI d1-3B",
+      "context_window": 32768,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "decision"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_json_schema": false,
+      "supports_streaming": false,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "open",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "LiquidAI/d1-3B"
+      ],
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "choice",
+          "score",
+          "noul"
+        ],
+        "answer_fields": [
+          "choice",
+          "score",
+          "noul",
+          "confidence",
+          "probabilities",
+          "legend"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "calibrated_confidence": true,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "deterministic": null,
+        "state_shapes": [
+          "string",
+          "json_object",
+          "image"
+        ],
+        "max_state_tokens": null,
+        "max_total_tokens": 32768,
+        "output_token_billing": false,
+        "language_values": [
+          "ar",
+          "zh",
+          "en",
+          "fr",
+          "de",
+          "hi",
+          "id",
+          "it",
+          "ja",
+          "ko",
+          "pl",
+          "pt",
+          "ru",
+          "es",
+          "th",
+          "vi"
+        ],
+        "endpoints": [],
+        "source_url": "https://huggingface.co/LiquidAI/d1-3B",
+        "checked_at": "2026-10-08",
+        "status": "documented",
+        "extra": {
+          "architecture": "LFM2.5-VL-3B fine-tuned for structured decisions",
+          "local_api_method": "system_one",
+          "notes": "Local/open-weight decision model. Answers typed questions in one forward pass; accepts text, JSON, and images, and does not generate free-form text."
+        }
+      },
+      "extra": {
+        "official_source": "https://huggingface.co/LiquidAI/d1-3B",
+        "official_source_checked_at": "2026-10-08",
+        "docs": "https://docs.liquid.ai/lfm/models/decision-models",
+        "model_card": "https://huggingface.co/LiquidAI/d1-3B",
+        "license_name": "LFM Open License v1.0",
+        "license_url": "https://huggingface.co/LiquidAI/d1-3B/blob/main/LICENSE",
+        "parameters": 3120000000,
+        "local_inference": true,
+        "model_family": "d1"
+      }
+    },
+    {
+      "provider": "liquid",
+      "model_id": "d1-omni-600M",
+      "display_name": "Liquid AI d1-omni-600M",
+      "context_window": 16384,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image",
+        "audio"
+      ],
+      "output_modalities": [
+        "decision"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_json_schema": false,
+      "supports_streaming": false,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "open",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "LiquidAI/d1-omni-600M"
+      ],
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "choice",
+          "score",
+          "noul"
+        ],
+        "answer_fields": [
+          "choice",
+          "score",
+          "noul",
+          "confidence",
+          "probabilities",
+          "legend"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "calibrated_confidence": null,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "deterministic": null,
+        "state_shapes": [
+          "string",
+          "json_object",
+          "image",
+          "audio"
+        ],
+        "max_state_tokens": null,
+        "max_total_tokens": 16384,
+        "output_token_billing": false,
+        "language_values": [
+          "en",
+          "de",
+          "es",
+          "fr",
+          "it",
+          "nl",
+          "pl",
+          "pt",
+          "ar",
+          "hi",
+          "ja",
+          "ru",
+          "tr",
+          "vi",
+          "zh"
+        ],
+        "endpoints": [],
+        "source_url": "https://huggingface.co/LiquidAI/d1-omni-600M",
+        "checked_at": "2026-10-08",
+        "status": "documented",
+        "extra": {
+          "architecture": "LFM2.5-Encoder-350M fine-tuned for structured decisions",
+          "audio_max_duration_seconds": 30,
+          "local_api_method": "system_one",
+          "notes": "Local/open-weight decision model. Supports text, JSON, image, and audio input. Text confidence is calibrated; image/audio confidence is not documented as calibrated."
+        }
+      },
+      "extra": {
+        "official_source": "https://huggingface.co/LiquidAI/d1-omni-600M",
+        "official_source_checked_at": "2026-10-08",
+        "docs": "https://docs.liquid.ai/lfm/models/decision-models",
+        "model_card": "https://huggingface.co/LiquidAI/d1-omni-600M",
+        "license_name": "LFM Open License v1.0",
+        "license_url": "https://huggingface.co/LiquidAI/d1-omni-600M/blob/main/LICENSE",
+        "parameters": 587000000,
+        "local_inference": true,
+        "model_family": "d1"
+      }
+    }
+  ]
+}

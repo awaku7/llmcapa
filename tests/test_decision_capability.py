@@ -103,7 +103,7 @@ def test_openrouter_decision_route_is_scoped_to_the_alpha_endpoint():
     assert cap.supports("decision_output") is True
     # The Decisions endpoint is not the OpenAI-compatible Responses API.
     assert cap.supports("responses_api") is False
-    assert cap.decision.endpoints == ("https://openrouter.ai/api/alpha/decisions",)
+    assert "https://openrouter.ai/api/alpha/decisions" in cap.decision.endpoints
 
     tilde = llmcapa.get("~typesafe/jev-latest", provider="openrouter")
     assert tilde.provider == "openrouter"

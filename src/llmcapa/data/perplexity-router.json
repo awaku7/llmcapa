@@ -1,0 +1,236 @@
+{
+  "models": [
+    {
+      "provider": "perplexity-router",
+      "model_id": "perplexity/kimi-k3",
+      "display_name": "Perplexity Router: Kimi K3",
+      "context_window": 1048576,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_json_schema": null,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "kimi-k3"
+      ],
+      "pricing": {
+        "input_per_1m": 3.0,
+        "output_per_1m": 15.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "official_source": "https://docs.perplexity.ai/docs/router/models",
+        "official_source_checked_at": "2026-10-08",
+        "router_api_base_url": "https://api.perplexity.ai/router/v1",
+        "chat_completions_endpoint": "https://api.perplexity.ai/router/v1/chat/completions",
+        "responses_endpoint": "https://api.perplexity.ai/router/v1/responses",
+        "messages_endpoint": "https://api.perplexity.ai/router/v1/messages",
+        "model_catalog_endpoint": "https://api.perplexity.ai/router/v1/models",
+        "router_preview": true,
+        "native_provider": "moonshotai",
+        "native_model_source": "https://huggingface.co/moonshotai/Kimi-K3",
+        "parameters": 2800000000000,
+        "cache_read_per_1m": 0.3,
+        "cache_write_per_1m": 3.0,
+        "api_schema_support": [
+          "openai-chat-completions",
+          "openai-responses",
+          "anthropic-messages"
+        ]
+      }
+    },
+    {
+      "provider": "perplexity-router",
+      "model_id": "perplexity/glm-5.3",
+      "display_name": "Perplexity Router: GLM-5.3",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "reasoning_effort_values": [
+        "low",
+        "high",
+        "max"
+      ],
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "glm-5.3"
+      ],
+      "pricing": {
+        "input_per_1m": 1.4,
+        "output_per_1m": 4.4,
+        "currency": "USD"
+      },
+      "extra": {
+        "official_source": "https://docs.perplexity.ai/docs/router/models",
+        "official_source_checked_at": "2026-10-08",
+        "router_api_base_url": "https://api.perplexity.ai/router/v1",
+        "chat_completions_endpoint": "https://api.perplexity.ai/router/v1/chat/completions",
+        "responses_endpoint": "https://api.perplexity.ai/router/v1/responses",
+        "messages_endpoint": "https://api.perplexity.ai/router/v1/messages",
+        "model_catalog_endpoint": "https://api.perplexity.ai/router/v1/models",
+        "router_preview": true,
+        "native_provider": "z-ai",
+        "native_model_source": "https://docs.z.ai/guides/llm/glm-5.3",
+        "cache_read_per_1m": 0.26,
+        "cache_write_per_1m": 1.4,
+        "context_window_note": "Z.ai documents a 1M-token context and 128K maximum output. GLM-5.3 accepts text input only."
+      }
+    },
+    {
+      "provider": "perplexity-router",
+      "model_id": "perplexity/glm-5.3-flash",
+      "display_name": "Perplexity Router: GLM-5.3-Flash",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": null,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "reasoning_effort_values": [
+        "low",
+        "high",
+        "max"
+      ],
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "glm-5.3-flash"
+      ],
+      "pricing": {
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "official_source": "https://docs.perplexity.ai/docs/router/models",
+        "official_source_checked_at": "2026-10-08",
+        "router_api_base_url": "https://api.perplexity.ai/router/v1",
+        "chat_completions_endpoint": "https://api.perplexity.ai/router/v1/chat/completions",
+        "responses_endpoint": "https://api.perplexity.ai/router/v1/responses",
+        "messages_endpoint": "https://api.perplexity.ai/router/v1/messages",
+        "model_catalog_endpoint": "https://api.perplexity.ai/router/v1/models",
+        "router_preview": true,
+        "native_provider": "z-ai",
+        "native_model_source": "https://docs.z.ai/guides/vlm/glm-5.3-flash",
+        "parameters": 320000000000,
+        "active_parameters": 18000000000,
+        "cache_read_per_1m": 0.03,
+        "cache_write_per_1m": 0.15,
+        "context_window_note": "Z.ai documents 1M context, 128K maximum output, and text/image/video/file input for the native model. This Router catalog conservatively records text and image input."
+      }
+    },
+    {
+      "provider": "perplexity-router",
+      "model_id": "perplexity/nemotron-3-ultra-550b-a55b",
+      "display_name": "Perplexity Router: Nemotron 3 Ultra 550B A55B",
+      "context_window": 1000000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_json_schema": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "nemotron-3-ultra-550b-a55b"
+      ],
+      "pricing": {
+        "input_per_1m": 0.25,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "official_source": "https://docs.perplexity.ai/docs/router/models",
+        "official_source_checked_at": "2026-10-08",
+        "router_api_base_url": "https://api.perplexity.ai/router/v1",
+        "chat_completions_endpoint": "https://api.perplexity.ai/router/v1/chat/completions",
+        "responses_endpoint": "https://api.perplexity.ai/router/v1/responses",
+        "messages_endpoint": "https://api.perplexity.ai/router/v1/messages",
+        "model_catalog_endpoint": "https://api.perplexity.ai/router/v1/models",
+        "router_preview": true,
+        "native_provider": "nvidia",
+        "native_model_source": "https://build.nvidia.com/nvidia/nemotron-3-ultra-550b-a55b/modelcard",
+        "parameters": 550000000000,
+        "active_parameters": 55000000000,
+        "cache_read_per_1m": 0.25,
+        "cache_write_per_1m": 0.25
+      }
+    }
+  ]
+}
