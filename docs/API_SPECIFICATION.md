@@ -224,6 +224,26 @@ Capability.from_dict(data) -> Capability
 
 `estimate_cost()` expects `pricing.input_per_1m`, `pricing.output_per_1m`, and optionally `pricing.currency`. It returns `{"cost": float, "currency": str}`. Missing or unknown rates produce zero cost, not an exception.
 
+For prompt-length-based pricing, a catalog may additionally provide
+`pricing.prompt_length_threshold_tokens`, `pricing.long_input_per_1m`,
+and `pricing.long_output_per_1m`. If `input_tokens` is **strictly greater**
+than the threshold, `estimate_cost()` applies the higher rates to **all**
+input and output tokens (not just tokens above the threshold). For Claude Haiku
+5.5, the boundary is 100,000 input tokens and the regular/high rates are
+$0.10/$0.50 and $0.50/$2.50 per million input/output tokens respectively.
+Cached token classes and batch discounts are recorded in `extra`; they are
+not currently included in `estimate_cost()`. For Haiku 5.5, use the official
+model-specific token count rather than reusing Haiku 4.5 token estimates.
+
+Claude Haiku 5.5 publishes adaptive thinking controls as
+`thinking_control.parameter = "output_config.effort"` and
+`thinking_control.thinking_type = "adaptive"`. It does **not** support manual
+`thinking_budget`, even though older Claude models do. Its Computer Use tool
+uses `computer_toolset_20260801` on the Claude API and Google Cloud, and is
+not interchangeable with the older `computer_20250124` tool. The catalog
+describes these capabilities; it does not rewrite Messages API requests.
+See the [official migration guide](https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide).
+
 `can_be_replaced_by()` requires an equal-or-larger context window and equivalent required capabilities. Computer Use replacement additionally checks provider/API type, tool type, environments, and required actions.
 
 ## 7. Reasoning and thinking controls
