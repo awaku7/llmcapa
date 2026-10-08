@@ -935,6 +935,13 @@ class Capability:
         out_rate = float(self.pricing.get("output_per_1m") or 0.0)
         currency = self.pricing.get("currency", "USD")
 
+        # Price the entire request at higher rates when the input prompt
+        # crosses a provider-defined threshold, not just the excess tokens.
+        threshold = self.pricing.get("prompt_length_threshold_tokens")
+        if threshold is not None and input_tokens > int(threshold):
+            in_rate = float(self.pricing.get("long_input_per_1m") or in_rate)
+            out_rate = float(self.pricing.get("long_output_per_1m") or out_rate)
+
         cost = ((input_tokens * in_rate) + (output_tokens * out_rate)) / 1000000.0
         return {"cost": cost, "currency": currency}
 
