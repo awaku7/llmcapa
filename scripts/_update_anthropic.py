@@ -319,8 +319,13 @@ def _reconcile_haiku_55(model: dict) -> None:
             "default": "medium",
             "thinking_type": "adaptive",
         },
-        aliases=[],
     )
+    # Keep existing aliases, including custom/provider-prefixed identifiers.
+    aliases = list(model.get("aliases") or [])
+    prefixed = "anthropic/claude-haiku-5-5"
+    if prefixed not in aliases:
+        aliases.append(prefixed)
+    model["aliases"] = aliases
     model.pop("thinking_budget_values", None)
     model["pricing"] = {
         "input_per_1m": 0.10,
@@ -368,6 +373,32 @@ def _reconcile_haiku_55(model: dict) -> None:
         context_window_basis="official_catalog_snapshot",
     )
     model["extra"] = extra
+
+
+def apply_legacy_price_snapshot(models: list[dict], prices: dict) -> int:
+    """Apply legacy price snapshots without erasing model-specific metadata."""
+    updated = 0
+    for model in models:
+        model_id = model.get("model_id")
+        if model_id not in prices:
+            continue
+        inp, out, context, max_output = prices[model_id]
+        if model_id == "claude-haiku-5-5":
+            # Flat legacy rates must not replace Haiku 5.5's tiered pricing.
+            _reconcile_haiku_55(model)
+        else:
+            model["pricing"] = {
+                "input_per_1m": inp,
+                "output_per_1m": out,
+                "currency": "USD",
+            }
+            model["supports_thinking_budget"] = True
+        model["context_window"] = context
+        model["max_output_tokens"] = max_output
+        model["supports_anthropic_api"] = True
+        model["supports_responses_api"] = False
+        updated += 1
+    return updated
 
 
 def build() -> list[dict]:
