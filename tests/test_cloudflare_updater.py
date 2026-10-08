@@ -159,16 +159,14 @@ def test_clef_models_keep_decision_metadata_during_official_refresh(monkeypatch)
     base_url = "https://developers.cloudflare.com/workers-ai/models/"
     pages = {
         f"{base_url}{name}/index.md": (
-            "---\\ntitle: {name}\\n---\\n# {name}\\n\\n"
+            f"---\\ntitle: {name}\\n---\\n# {name}\\n\\n"
             "Text Generation • Cloudflare\\n\\n"
-            "`@cf/cloudflare/{name}`\\n\\n"
+            f"`@cf/cloudflare/{name}`\\n\\n"
             "- Cloudflare-hosted\\n- Vision\\n\\n"
             "| Model Info | |\\n| --- | --- |\\n"
             "| Context Window | 65,536 tokens |\\n"
-            "| Unit Pricing | ${price:.2f} per M input tokens |\\n"
-        )
-        .format(name=name, price=price)
-        .replace("\\n", "\n")
+            f"| Unit Pricing | ${price:.2f} per M input tokens |\\n"
+        ).replace("\\n", "\n")
         for name, price in (("clef", 0.24), ("clef-flash", 0.09))
     }
     index = "\n".join(
