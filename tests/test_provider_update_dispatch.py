@@ -60,16 +60,23 @@ def test_catalog_filename_aliases_resolve_to_dispatch_keys():
 
 def test_catalogs_without_verified_updaters_are_not_silently_substituted():
     dispatcher = _dispatcher()
-    assert set(dispatcher.UNSUPPORTED_CATALOGS) == {
-        "laya",
-        "liquid",
-        "modellix",
-        "modellix_media",
-        "perplexity-router",
-        "typesafe",
-    }
+    assert dispatcher.UNSUPPORTED_CATALOGS == {}
     assert all("openrouter_providers" not in path for path in dispatcher.PROVIDER_SCRIPTS.values())
     assert dispatcher.PROVIDER_SCRIPTS["openrouter"] == "_update_openrouter.py"
+
+
+def test_newly_supported_catalogs_have_individual_update_scripts():
+    dispatcher = _dispatcher()
+    expected = {
+        "laya": "_update_laya.py",
+        "liquid": "_update_liquid.py",
+        "modellix": "_update_modellix.py",
+        "modellix_media": "_update_modellix_media.py",
+        "perplexity-router": "_update_perplexity_router.py",
+        "typesafe": "_update_typesafe.py",
+    }
+    for provider, script in expected.items():
+        assert dispatcher.PROVIDER_SCRIPTS[provider] == script
 
 
 def test_hf_org_updater_can_be_invoked_for_a_single_provider():

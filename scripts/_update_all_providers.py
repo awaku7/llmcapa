@@ -51,12 +51,16 @@ PROVIDER_SCRIPTS = {
     "ibm-granite": "_update_ibm_granite.py",
     "inception": "_update_inception.py",
     "japanese": "_update_japanese.py",
+    "laya": "_update_laya.py",
     "kwaipilot": "_update_hf_official_orgs.py",
     "llama-cpp": "provider_updates/llama_cpp.py",
     "lmstudio": "provider_updates/lmstudio.py",
+    "liquid": "_update_liquid.py",
     "mancer": "_update_hf_official_orgs.py",
     "meta": "_update_meta.py",
     "meituan": "_update_hf_official_orgs.py",
+    "modellix": "_update_modellix.py",
+    "modellix_media": "_update_modellix_media.py",
     "microsoft": "_update_microsoft.py",
     "minimax": "_update_minimax.py",
     "mistral": "_update_mistral.py",
@@ -73,6 +77,7 @@ PROVIDER_SCRIPTS = {
     "openrouter": "_update_openrouter.py",
     "perceptron": "_update_hf_official_orgs.py",
     "perplexity": "provider_updates/perplexity.py",
+    "perplexity-router": "_update_perplexity_router.py",
     "poolside": "provider_updates/poolside.py",
     "qwen": "_update_qwen.py",
     "relace": "provider_updates/relace.py",
@@ -88,6 +93,7 @@ PROVIDER_SCRIPTS = {
     "thedrummer": "_update_hf_official_orgs.py",
     "thinkingmachines": "provider_updates/thinkingmachines.py",
     "together": "_update_together.py",
+    "typesafe": "_update_typesafe.py",
     "upstage": "_update_upstage.py",
     "vercel": "_update_vercel.py",
     "vertex-ai": "_update_vertex_ai.py",
@@ -135,14 +141,7 @@ ALIASES = {
 # These catalogs currently have no provider-specific refresh implementation.
 # Keep them visible rather than substituting OpenRouter or another provider's
 # catalog data.
-UNSUPPORTED_CATALOGS = {
-    "laya": "no verified provider updater",
-    "liquid": "no verified provider updater",
-    "modellix": "official catalog updater not yet implemented",
-    "modellix_media": "official media catalog updater not yet implemented",
-    "perplexity-router": "separate router catalog updater not yet implemented",
-    "typesafe": "official catalog updater not yet implemented",
-}
+UNSUPPORTED_CATALOGS: dict[str, str] = {}
 
 CATALOG_NAME_ALIASES = {
     "azure_foundry": "azure-foundry",
