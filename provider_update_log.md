@@ -12957,3 +12957,21 @@
 - Decision models listed by Liquid: 3
 - Context lengths/parameter counts were refreshed only from explicitly labeled model-page specifications.
 - Historical records absent from the current index were retained.
+
+## Baseten public model docs refresh (2026-10-12)
+
+- Source: https://docs.baseten.co/inference/model-apis/overview
+- Public supported models scraped: 12
+
+## Vertex AI / Model Garden SDK refresh (2026-10-12)
+
+- Source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/models
+- Discovery: `vertexai.model_garden.list_deployable_models(list_hf_models=True)`
+- OpenRouter was not used; `google.json` was not modified.
+- Result: 4952 SDK-listed deployable Model Garden models. Detailed limits/pricing remain unknown where the SDK does not expose them.
+
+## OpenAI life-sciences models refresh (2026-10-12)
+
+- Source: https://developers.openai.com/api/docs/pricing
+- Models added from the official Life sciences models pricing table: gpt-rosalind-research, gpt-rosalind-discovery
+- Access is limited to approved organizations; capabilities not documented on individual model pages remain unknown.

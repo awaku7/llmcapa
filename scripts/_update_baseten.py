@@ -1,68 +1,98 @@
-"""Refresh Baseten's Model APIs catalog when an API key is available.
+"""Refresh Baseten's public Model APIs inventory by scraping official docs.
 
-Source: https://api.baseten.co/v1/model_apis
-Set BASETEN_API_KEY to query the official authenticated catalog. Without a key,
-the checked-in, manually verified model snapshot is left unchanged.
+Baseten's authenticated management API lists account/deployment-specific Model
+APIs. The bundled catalog represents Baseten's public hosted catalog instead,
+so this updater scrapes its public supported-model and feature tables. No API
+key is needed.
 """
 
 from __future__ import annotations
 
 import json
-import math
-import os
-import urllib.parse
-import urllib.request
+import re
+from datetime import datetime, timezone
 from pathlib import Path
+from urllib.error import HTTPError, URLError
+from urllib.request import Request, urlopen
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "baseten.json"
-SOURCE = "https://api.baseten.co/v1/model_apis"
-DOCS = "https://docs.baseten.co/inference/model-apis/overview"
+LOG = ROOT / "provider_update_log.md"
+SOURCE = "https://docs.baseten.co/inference/model-apis/overview"
+
+_SUPPORTED_ROW = re.compile(
+    r'model:\s*"([^"]+)"\s*,\s*slug:\s*"([^"]+)"\s*,\s*'
+    r"context:\s*(\d+)\s*,\s*maxOutput:\s*(\d+)",
+    re.S,
+)
+_FEATURE_ROW = re.compile(
+    r'model:\s*"([^"]+)"\s*,\s*reasoning:\s*"([^"]+)"\s*,\s*'
+    r'vision:\s*"([^"]+)"\s*,\s*sampling:\s*"([^"]+)"',
+    re.S,
+)
 
 
-def _number(value: Any) -> float | None:
-    if isinstance(value, bool):
-        return None
+def fetch_docs() -> str:
+    request = Request(
+        SOURCE + ".md",
+        headers={"Accept": "text/markdown,text/plain,*/*", "User-Agent": "llmcapa-provider-updater/1.0"},
+    )
     try:
-        number = float(str(value).replace("$", "").replace(",", "").strip())
-    except (TypeError, ValueError):
-        return None
-    return number if math.isfinite(number) else None
+        with urlopen(request, timeout=30) as response:
+            page = response.read(4_000_000).decode("utf-8", "replace")
+    except (HTTPError, URLError) as exc:
+        raise RuntimeError(f"Baseten public Model APIs docs could not be fetched: {exc}") from exc
+    if "SupportedModelsTable" not in page or "FeatureSupportTable" not in page:
+        raise RuntimeError("Baseten public Model APIs docs did not contain the expected catalog tables")
+    return page
 
 
-def fetch_catalog(auth_token: str) -> list[dict[str, Any]]:
-    rows: list[dict[str, Any]] = []
-    cursor: str | None = None
-    seen_cursors: set[str] = set()
-    while True:
-        params = {"limit": "100"}
-        if cursor:
-            if cursor in seen_cursors:
-                raise RuntimeError("Baseten API repeated a pagination cursor")
-            seen_cursors.add(cursor)
-            params["cursor"] = cursor
-        request = urllib.request.Request(
-            f"{SOURCE}?{urllib.parse.urlencode(params)}",
-            headers={
-                "Authorization": f"Bearer {auth_token}",
-                "Accept": "application/json",
-                "User-Agent": "llmcapa provider catalog updater",
-            },
+def parse_model_inventory(markdown: str) -> list[dict[str, Any]]:
+    """Parse the public supported-model list and model-specific feature table."""
+    supported_section = markdown.split("export const SupportedModelsTable", 1)
+    feature_section = markdown.split("export const FeatureSupportTable", 1)
+    if len(supported_section) != 2 or len(feature_section) != 2:
+        raise ValueError("Baseten docs are missing public model/feature table data")
+    supported_matches = list(_SUPPORTED_ROW.finditer(supported_section[1]))
+    feature_matches = list(_FEATURE_ROW.finditer(feature_section[1].split("export const SupportedModelsTable", 1)[0]))
+    features = {match.group(1).casefold(): match.groups()[1:] for match in feature_matches}
+    rows = []
+    seen: set[str] = set()
+    for match in supported_matches:
+        name, slug, context_k, output_k = match.groups()
+        model_id = slug.strip()
+        key = model_id.casefold()
+        if not model_id or key in seen:
+            continue
+        feature = features.get(name.casefold(), ("", "", ""))
+        reasoning_label, vision_label, sampling = feature
+        vision = vision_label.strip() in {"✓", "✔", "yes", "Yes"}
+        context_window = int(context_k) * 1_000
+        max_output_tokens = int(output_k) * 1_000
+        rows.append(
+            {
+                "model_id": model_id,
+                "display_name": name.strip(),
+                "context_window": context_window,
+                "max_output_tokens": max_output_tokens,
+                "input_modalities": ["text", "image"] if vision else ["text"],
+                "output_modalities": ["text"],
+                "supports_vision": vision,
+                "supports_reasoning": bool(reasoning_label.strip()),
+                "supports_function_calling": True,
+                "supports_json_mode": True,
+                "supports_json_schema": True,
+                "supports_streaming": True,
+                "supports_chat_completion": True,
+                "supports_responses_api": False,
+                "sampling_parameters": [item.strip() for item in sampling.split(",") if item.strip()],
+            }
         )
-        with urllib.request.urlopen(request, timeout=30) as response:
-            payload = json.loads(response.read().decode("utf-8"))
-        if not isinstance(payload, dict) or not isinstance(payload.get("items"), list):
-            raise ValueError("Unexpected Baseten Model APIs response")
-        rows.extend(row for row in payload["items"] if isinstance(row, dict))
-        pagination = payload.get("pagination") or {}
-        if not pagination.get("has_more"):
-            break
-        cursor_value = pagination.get("cursor")
-        if not cursor_value:
-            raise ValueError("Baseten API indicated more results without a cursor")
-        cursor = str(cursor_value)
-    return rows
+        seen.add(key)
+    if not rows:
+        raise ValueError("Baseten public docs contained no supported model rows")
+    return sorted(rows, key=lambda row: row["model_id"].casefold())
 
 
 def catalog_to_models(
@@ -71,74 +101,77 @@ def catalog_to_models(
     old_by_id = {
         str(model.get("model_id", "")).casefold(): model
         for model in (existing or [])
-        if isinstance(model, dict)
+        if isinstance(model, dict) and model.get("model_id")
     }
     by_id: dict[str, dict[str, Any]] = {}
-    for row in rows:
-        model_id = str(row.get("name", "")).strip()
-        if not model_id:
-            continue
-        old = old_by_id.get(model_id.casefold(), {})
+    for snapshot in rows:
+        model_id = str(snapshot["model_id"])
+        key = model_id.casefold()
+        old = old_by_id.get(key, {})
         entry = dict(old)
         entry.update(
             {
                 "provider": "baseten",
                 "model_id": model_id,
-                "display_name": row.get("display_name") or old.get("display_name") or model_id,
-                "context_window": int(_number(row.get("context_length")) or old.get("context_window", 0)),
-                "max_output_tokens": int(old.get("max_output_tokens", 0) or 0),
-                "input_modalities": list(old.get("input_modalities") or ["text"]),
-                "output_modalities": list(old.get("output_modalities") or ["text"]),
-                "supports_chat_completion": True,
-                "supports_streaming": old.get("supports_streaming", True),
+                "display_name": snapshot["display_name"],
+                "context_window": snapshot["context_window"],
+                "max_output_tokens": snapshot["max_output_tokens"],
+                "input_modalities": snapshot["input_modalities"],
+                "output_modalities": snapshot["output_modalities"],
+                "supports_vision": snapshot["supports_vision"],
+                "supports_reasoning": snapshot["supports_reasoning"],
+                "supports_function_calling": snapshot["supports_function_calling"],
+                "supports_json_mode": snapshot["supports_json_mode"],
+                "supports_json_schema": snapshot["supports_json_schema"],
+                "supports_streaming": snapshot["supports_streaming"],
+                "supports_chat_completion": snapshot["supports_chat_completion"],
+                "supports_responses_api": snapshot["supports_responses_api"],
                 "deprecated": False,
-                "aliases": list(old.get("aliases") or []),
                 "license_type": "api",
             }
         )
-        input_price = _number(row.get("cost_per_million_input_tokens"))
-        output_price = _number(row.get("cost_per_million_output_tokens"))
-        if input_price is not None and output_price is not None:
-            entry["pricing"] = {
-                "input_per_1m": input_price,
-                "output_per_1m": output_price,
-                "currency": "USD",
-            }
-        elif "pricing" not in old:
-            entry["pricing"] = None
         extra = dict(old.get("extra") or {})
         extra.update(
             {
-                "source": DOCS,
-                "model_api_catalog": SOURCE,
-                "model_family": row.get("model_family"),
-                "invoke_url": row.get("invoke_url"),
+                "source": SOURCE,
+                "official_source_checked_at": datetime.now(timezone.utc).date().isoformat(),
+                "catalog_source": "official_baseten_public_model_apis_docs",
+                "model_family": model_id.split("/", 1)[0],
+                "sampling_parameters": snapshot["sampling_parameters"],
+                "not_listed_in_current_docs": False,
             }
         )
         entry["extra"] = extra
-        by_id[model_id.casefold()] = entry
+        by_id[key] = entry
+    for old in existing or []:
+        if not isinstance(old, dict):
+            continue
+        key = str(old.get("model_id", "")).casefold()
+        if key and key not in by_id:
+            row = dict(old)
+            extra = dict(row.get("extra") or {})
+            extra.update(
+                {
+                    "official_source_checked_at": datetime.now(timezone.utc).date().isoformat(),
+                    "not_listed_in_current_docs": True,
+                }
+            )
+            row["extra"] = extra
+            by_id[key] = row
     return [by_id[key] for key in sorted(by_id)]
 
 
 def main() -> None:
-    auth_token = os.environ.get("BASETEN_API_KEY", "").strip()
-    if not auth_token:
-        print(
-            "Baseten refresh skipped: set BASETEN_API_KEY to query the official "
-            "catalog; bundled documentation snapshot is unchanged."
-        )
-        return
-
     existing_payload = json.loads(DATA.read_text(encoding="utf-8"))
-    rows = fetch_catalog(auth_token)
+    rows = parse_model_inventory(fetch_docs())
     models = catalog_to_models(rows, existing_payload.get("models", []))
     if not models:
-        raise RuntimeError("Baseten API returned no usable Model APIs")
-    DATA.write_text(
-        json.dumps({"models": models}, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
-    print(f"baseten.json: {len(models)} models refreshed from official catalog")
+        raise RuntimeError("Baseten public docs returned no usable models")
+    DATA.write_text(json.dumps({"models": models}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    heading = f"## Baseten public model docs refresh ({datetime.now(timezone.utc).date().isoformat()})"
+    old_log = LOG.read_text(encoding="utf-8")
+    LOG.write_text(old_log.rstrip() + f"\n\n{heading}\n\n- Source: {SOURCE}\n- Public supported models scraped: {len(rows)}\n", encoding="utf-8")
+    print(f"baseten.json: {len(rows)} public models scraped; total={len(models)}")
 
 
 if __name__ == "__main__":

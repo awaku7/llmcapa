@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -9,11 +10,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 sys.path.insert(0, str(ROOT / "src"))
 
-import _update_baseten
-import _update_deepinfra
-import _update_nebius
+import _update_baseten  # noqa: E402
+import _update_deepinfra  # noqa: E402
+import _update_nebius  # noqa: E402
 
-import llmcapa
+import llmcapa  # noqa: E402
 
 
 def test_new_provider_catalogs_are_registered_and_resolvable() -> None:
@@ -100,50 +101,40 @@ def test_deepinfra_parser_converts_prices_and_skips_non_llm_models() -> None:
     ) is None
 
 
-def test_baseten_parser_merges_api_metadata_without_losing_documented_features() -> None:
-    existing = [
-        {
-            "provider": "baseten",
-            "model_id": "example/model",
-            "context_window": 8192,
-            "max_output_tokens": 2048,
-            "input_modalities": ["text", "image"],
-            "output_modalities": ["text"],
-            "supports_vision": True,
-            "supports_function_calling": True,
-            "extra": {"source": "official docs"},
-        }
-    ]
-    rows = [
-        {
-            "name": "example/model",
-            "display_name": "Example Model",
-            "context_length": 65536,
-            "cost_per_million_input_tokens": "0.25",
-            "cost_per_million_output_tokens": "1.00",
-            "model_family": "Example",
-        }
-    ]
-    [model] = _update_baseten.catalog_to_models(rows, existing)
-    assert model["context_window"] == 65536
-    assert model["max_output_tokens"] == 2048
+def _baseten_public_docs_fixture() -> str:
+    return '''
+export const FeatureSupportTable = () => {
+  const rows = [{model: "Example Vision", reasoning: "Enabled by default", vision: "✓", sampling: "temperature, stop"}];
+};
+export const SupportedModelsTable = () => {
+  const rows = [{model: "Example Vision", slug: "example/vision-model", context: 65, maxOutput: 2}];
+};
+'''
+
+
+def test_baseten_parser_scrapes_public_model_and_feature_tables() -> None:
+    rows = _update_baseten.parse_model_inventory(_baseten_public_docs_fixture())
+    [model] = _update_baseten.catalog_to_models(rows)
+    assert model["model_id"] == "example/vision-model"
+    assert model["context_window"] == 65_000
+    assert model["max_output_tokens"] == 2_000
     assert model["supports_vision"] is True
     assert model["supports_function_calling"] is True
-    assert model["pricing"] == {
-        "input_per_1m": 0.25,
-        "output_per_1m": 1.0,
-        "currency": "USD",
-    }
+    assert model["supports_reasoning"] is True
 
 
-def test_baseten_refresh_without_key_is_a_noop(tmp_path, monkeypatch, capsys) -> None:
+def test_baseten_refresh_scrapes_public_docs_without_api_key(tmp_path, monkeypatch) -> None:
     destination = tmp_path / "baseten.json"
-    original = '{"models": [{"model_id": "snapshot"}]}' + chr(10)
-    destination.write_text(original, encoding="utf-8")
+    log = tmp_path / "provider_update_log.md"
+    destination.write_text('{"models": []}' + chr(10), encoding="utf-8")
+    log.write_text("", encoding="utf-8")
     monkeypatch.setattr(_update_baseten, "DATA", destination)
+    monkeypatch.setattr(_update_baseten, "LOG", log)
+    monkeypatch.setattr(_update_baseten, "fetch_docs", _baseten_public_docs_fixture)
     monkeypatch.delenv("BASETEN_API_KEY", raising=False)
 
     _update_baseten.main()
 
-    assert destination.read_text(encoding="utf-8") == original
-    assert "skipped" in capsys.readouterr().out.lower()
+    saved = json.loads(destination.read_text(encoding="utf-8"))
+    assert [model["model_id"] for model in saved["models"]] == ["example/vision-model"]
+    assert "public supported models scraped: 1" in log.read_text(encoding="utf-8").lower()

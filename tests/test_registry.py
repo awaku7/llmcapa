@@ -74,6 +74,23 @@ def test_get_by_alias():
     assert cap.model_id == "gpt-4o"
 
 
+def test_rosalind_models_are_bundled_as_approval_gated_pricing_only_records():
+    research = llmcapa.get("gpt-rosalind-research", provider="openai")
+    discovery = llmcapa.get("gpt-rosalind-discovery", provider="openai")
+
+    assert research.model_id == "gpt-rosalind-research"
+    assert discovery.model_id == "gpt-rosalind-discovery"
+    assert research.extra["required_approval"] is True
+    assert research.extra["spec_status"] == "pricing_only"
+    assert research.extra["cached_input_per_1m"] == 0.5
+    assert research.pricing == {
+        "input_per_1m": 5.0,
+        "output_per_1m": 25.0,
+        "currency": "USD",
+    }
+    assert research.supports("responses_api") is None
+
+
 def test_get_unknown():
     with pytest.raises(ModelNotFoundError):
         llmcapa.get("this-model-does-not-exist")

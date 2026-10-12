@@ -42,8 +42,12 @@ def test_all_dispatch_targets_exist_and_are_provider_specific():
         assert "openrouter_providers" not in script.parts
 
     for provider, args in dispatcher.PROVIDER_ARGS.items():
-        assert dispatcher.PROVIDER_SCRIPTS[provider] == "_update_hf_official_orgs.py"
-        assert args == ["--provider", provider]
+        if provider == "huggingface":
+            assert dispatcher.PROVIDER_SCRIPTS[provider] == "_scrape_huggingface.py"
+            assert args == ["--save"]
+        else:
+            assert dispatcher.PROVIDER_SCRIPTS[provider] == "_update_hf_official_orgs.py"
+            assert args == ["--provider", provider]
 
 
 def test_catalog_filename_aliases_resolve_to_dispatch_keys():
@@ -97,7 +101,11 @@ def test_dispatcher_does_not_schedule_global_postprocessors():
     source = (SCRIPTS / "_update_all_providers.py").read_text(encoding="utf-8")
     assert "_run_capability_postprocessors" not in source
     assert "_image_capability_postprocess.py" not in source
-    assert "unrelated providers" in source
+    assert "_preserve_capabilities" not in source
+    assert "_read_catalogs" not in source
+    assert "_write_catalog" not in source
+    assert ".write_text(" not in source
+    assert ".write_bytes(" not in source
 
 
 def test_provider_update_logs_interpolate_dynamic_fields():
@@ -111,3 +119,34 @@ def test_provider_update_logs_interpolate_dynamic_fields():
         if placeholder_pattern.search(source):
             broken.append(script.name)
     assert not broken, f"non-interpolated log templates: {broken}"
+
+
+def test_all_29_previously_metadata_only_catalogs_have_inventory_updaters():
+    dispatcher = _dispatcher()
+    hf_updater = importlib.util.spec_from_file_location(
+        "test_hf_inventory_updater", SCRIPTS / "_update_hf_official_orgs.py"
+    )
+    assert hf_updater and hf_updater.loader
+    hf_module = importlib.util.module_from_spec(hf_updater)
+    hf_updater.loader.exec_module(hf_module)
+    hf_publishers = set(hf_module.ORGS)
+    provider_level = {
+        "ai21": "provider_updates/ai21.py",
+        "bytedance-seed": "provider_updates/bytedance-seed.py",
+        "huggingface": "_scrape_huggingface.py",
+        "llama-cpp": "provider_updates/llama_cpp.py",
+        "lmstudio": "provider_updates/lmstudio.py",
+        "morph": "provider_updates/morph.py",
+        "perplexity": "provider_updates/perplexity.py",
+        "poolside": "provider_updates/poolside.py",
+        "relace": "provider_updates/relace.py",
+        "sakana": "provider_updates/sakana.py",
+        "thinkingmachines": "provider_updates/thinkingmachines.py",
+        "writer": "provider_updates/writer.py",
+        "z-ai": "provider_updates/z-ai.py",
+    }
+    assert len(hf_publishers) == 16
+    assert len(provider_level) == 13
+    assert len(hf_publishers) + len(provider_level) == 29
+    assert all(dispatcher.PROVIDER_SCRIPTS[name] == "_update_hf_official_orgs.py" for name in hf_publishers)
+    assert all(dispatcher.PROVIDER_SCRIPTS[name] == script for name, script in provider_level.items())

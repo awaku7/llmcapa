@@ -13,7 +13,6 @@ Examples:
 from __future__ import annotations
 
 import argparse
-import json
 import subprocess
 import sys
 from pathlib import Path
@@ -24,11 +23,11 @@ SCRIPTS = ROOT / "scripts"
 PROVIDER_SCRIPTS = {
     "ai21": "provider_updates/ai21.py",
     "aion-labs": "_update_aion_labs.py",
-    "allenai": "provider_updates/allenai.py",
     "amazon": "_update_amazon.py",
     "anthropic": "_update_anthropic.py",
     "anthracite-org": "_update_hf_official_orgs.py",
-    "arcee-ai": "provider_updates/arcee-ai.py",
+    "allenai": "_update_hf_official_orgs.py",
+    "arcee-ai": "_update_hf_official_orgs.py",
     "baseten": "_update_baseten.py",
     "azure-foundry": "_update_azure_foundry.py",
     "baidu": "_update_baidu.py",
@@ -46,7 +45,7 @@ PROVIDER_SCRIPTS = {
     "google": "_update_google.py",
     "groq": "provider_updates/groq.py",
     "gryphe": "_update_hf_official_orgs.py",
-    "huggingface": "provider_updates/huggingface.py",
+    "huggingface": "_scrape_huggingface.py",
     "inclusionai": "_update_hf_official_orgs.py",
     "ibm-granite": "_update_ibm_granite.py",
     "inception": "_update_inception.py",
@@ -70,7 +69,7 @@ PROVIDER_SCRIPTS = {
     "nebius": "_update_nebius.py",
     "novita": "_update_novita_from_api.py",
     "nex-agi": "_update_hf_official_orgs.py",
-    "nousresearch": "provider_updates/nousresearch.py",
+    "nousresearch": "_update_hf_official_orgs.py",
     "nvidia": "_update_nvidia.py",
     "ollama": "_update_ollama.py",
     "openai": "_update_openai.py",
@@ -109,6 +108,8 @@ PROVIDER_SCRIPTS = {
 PROVIDER_ARGS = {
     name: ["--provider", name]
     for name in (
+        "allenai",
+        "arcee-ai",
         "anthracite-org",
         "cognitivecomputations",
         "deepcogito",
@@ -118,13 +119,14 @@ PROVIDER_ARGS = {
         "mancer",
         "meituan",
         "nex-agi",
+        "nousresearch",
         "perceptron",
         "sao10k",
         "thedrummer",
         "undi95",
     )
 }
-
+PROVIDER_ARGS["huggingface"] = ["--save"]
 ALIASES = {
     "ibm": "ibm-granite",
     "azure": "azure-foundry",
@@ -148,59 +150,6 @@ CATALOG_NAME_ALIASES = {
     "foundry_local": "foundry-local",
     "llama_cpp": "llama-cpp",
 }
-
-CAPABILITY_FIELDS = (
-    "audio",
-    "video",
-    "image",
-    "document",
-    "embedding",
-    "rerank",
-    "spatial",
-)
-
-
-def _read_catalogs() -> dict[Path, dict]:
-    catalogs = {}
-    for path in sorted((ROOT / "src" / "llmcapa" / "data").glob("*.json")):
-        raw = path.read_bytes()
-        catalogs[path] = json.loads(raw.decode("utf-8"))
-    return catalogs
-
-
-def _write_catalog(path: Path, data: dict) -> None:
-    raw = path.read_bytes()
-    newline = "\r\n" if b"\r\n" in raw else "\n"
-    payload = json.dumps(data, ensure_ascii=False, indent=2) + "\n"
-    path.write_bytes(payload.replace("\n", newline).encode("utf-8"))
-
-
-def _preserve_capabilities(before: dict[Path, dict]) -> int:
-    """Restore documented capability blocks omitted by a provider refresh."""
-    restored = 0
-    for path, old_data in before.items():
-        if not path.exists():
-            continue
-        current = json.loads(path.read_text(encoding="utf-8"))
-        old_by_id = {
-            (str(model.get("provider", "")), str(model.get("model_id", ""))): model
-            for model in old_data.get("models", [])
-        }
-        changed = False
-        for model in current.get("models", []):
-            key = (str(model.get("provider", "")), str(model.get("model_id", "")))
-            old_model = old_by_id.get(key)
-            if old_model is None:
-                continue
-            for field in CAPABILITY_FIELDS:
-                if field not in model and field in old_model:
-                    model[field] = old_model[field]
-                    restored += 1
-                    changed = True
-        if changed:
-            _write_catalog(path, current)
-    return restored
-
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
@@ -231,19 +180,10 @@ def main() -> int:
         parser.error(f"provider script not found: {script}")
 
     print(f"Running provider updater: {provider} ({script_name})", flush=True)
-    before = _read_catalogs()
+    # No shared catalog rewrite/postprocessor: this process only invokes the
+    # chosen provider's own update script.
     command = [sys.executable, str(script), *PROVIDER_ARGS.get(provider, [])]
-    completed = subprocess.run(command, cwd=ROOT, check=False)
-    if completed.returncode != 0:
-        return completed.returncode
-
-    restored = _preserve_capabilities(before)
-    if restored:
-        print(f"Preserved capability blocks: {restored}", flush=True)
-    # Capability postprocessors scan every bundled catalog and would mutate
-    # unrelated providers during a provider-scoped refresh. Run them explicitly
-    # as a separate full-catalog audit instead.
-    return 0
+    return subprocess.run(command, cwd=ROOT, check=False).returncode
 
 
 if __name__ == "__main__":

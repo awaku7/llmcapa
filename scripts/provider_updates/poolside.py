@@ -1,47 +1,176 @@
-"""Audit Structured Outputs for poolside only."""
+"""Refresh Poolside's public supported-model inventory by scraping its official docs."""
+
+from __future__ import annotations
 
 import json
+import re
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[2]
-DATA = ROOT / "src/llmcapa/data/poolside.json"
+DATA = ROOT / "src" / "llmcapa" / "data" / "poolside.json"
 LOG = ROOT / "provider_update_log.md"
-SOURCE = "https://docs.poolside.ai/"
-DOCUMENTED = False
+SOURCE_MODELS = "https://docs.poolside.ai/get-started/supported-models"
+SOURCE_API = "https://docs.poolside.ai/api/openai-api-examples"
+BASE_URL = "https://inference.poolside.ai/v1"
 
 
-def main():
-    req = Request(SOURCE, headers={"User-Agent": "llmcapa-structured-audit/1.0"})
-    with urlopen(req, timeout=30) as response:
-        response.read(100000)
-    data = json.loads(DATA.read_text(encoding="utf-8"))
-    n = 0
-    for model in data.get("models", []):
-        extra = model.setdefault("extra", {})
-        extra.update(
+def _fetch_markdown(url: str) -> str:
+    request = Request(
+        url + ".md",
+        headers={"Accept": "text/markdown,text/plain,*/*", "User-Agent": "llmcapa-provider-updater/1.0"},
+    )
+    try:
+        with urlopen(request, timeout=30) as response:
+            return response.read(2_000_000).decode("utf-8", "replace")
+    except (HTTPError, URLError) as exc:
+        raise RuntimeError(f"Poolside official documentation fetch failed ({url}): {exc}") from exc
+
+
+def fetch_inventory() -> dict[str, str]:
+    models = _fetch_markdown(SOURCE_MODELS)
+    api = _fetch_markdown(SOURCE_API)
+    if "Compare models" not in models or "List available models" not in api:
+        raise RuntimeError("Poolside supported-model/API docs were not recognizable")
+    return {"models": models, "api": api}
+
+
+def _context(value: str) -> int:
+    match = re.search(r"([\d,.]+)\s*([KM]?)", value, re.I)
+    if not match:
+        return 0
+    size = float(match.group(1).replace(",", ""))
+    return int(size * {"k": 1_000, "m": 1_000_000}.get(match.group(2).casefold(), 1))
+
+
+def parse_model_inventory(docs: dict[str, str]) -> list[dict]:
+    """Parse the public supported-model table and its documented API ID convention."""
+    if not isinstance(docs, dict) or not isinstance(docs.get("models"), str) or not isinstance(docs.get("api"), str):
+        raise ValueError("Poolside scraper expects supported-model and API documentation")
+    model_doc, api_doc = docs["models"], docs["api"]
+    headings = re.findall(r"\[([^]]*Laguna[^]]*)\]\(/release-notes/models#([a-z0-9-]+)\)", model_doc, re.I)
+    if not headings:
+        raise ValueError("Poolside public supported-model page had no Laguna model anchors")
+    contexts: list[int] = []
+    for line in model_doc.splitlines():
+        if line.lstrip().startswith("|") and re.search(r"\|\s*Context window\s*\|", line, re.I):
+            cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+            contexts = [_context(cell) for cell in cells[1:]]
+            break
+    api_ids = set(re.findall(r"poolside/([a-z0-9][a-z0-9._-]*)", api_doc, re.I))
+    rows: dict[str, dict] = {}
+    for index, (name, anchor) in enumerate(headings):
+        # Poolside's release-note anchors spell version separators as hyphens;
+        # the public API example establishes dotted Laguna 2.1 IDs.
+        model_id = anchor
+        if anchor.endswith("-2-1"):
+            model_id = anchor[:-4] + "-2.1"
+        if model_id.casefold() in {value.casefold() for value in rows}:
+            continue
+        api_model_id = next(
+            (value for value in api_ids if value.casefold() == model_id.casefold()),
+            None,
+        )
+        # The API quickstart publishes the provider namespace on its sample ID.
+        # Keep canonical IDs unqualified in llmcapa, and preserve the exact API ID.
+        api_model_id = api_model_id or f"poolside/{model_id}"
+        rows[model_id.casefold()] = {
+            "model_id": model_id,
+            "display_name": name.strip(),
+            "context_window": contexts[index] if index < len(contexts) else 0,
+            "input_modalities": ["text"],
+            "output_modalities": ["text"],
+            "supports_vision": False,
+            "supports_reasoning": True,
+            "supports_function_calling": True,
+            "deprecated": False,
+            "api_model_id": api_model_id,
+        }
+    if not rows:
+        raise ValueError("Poolside docs contained no supported model IDs")
+    return sorted(rows.values(), key=lambda row: row["model_id"].casefold())
+
+
+def merge_inventory(snapshots: list[dict], previous: list[dict], checked_at: str) -> list[dict]:
+    old_by_id = {
+        str(row.get("model_id", "")).casefold(): row
+        for row in previous
+        if isinstance(row, dict) and row.get("model_id")
+    }
+    merged = []
+    seen: set[str] = set()
+    for snapshot in snapshots:
+        key = snapshot["model_id"].casefold()
+        row = dict(old_by_id.get(key) or {})
+        row.update(
             {
-                "structured_output_source": SOURCE,
-                "structured_output_checked_at": datetime.now(timezone.utc)
-                .date()
-                .isoformat(),
-                "structured_output_api_documented": DOCUMENTED,
+                "provider": "poolside",
+                "model_id": snapshot["model_id"],
+                "display_name": snapshot["display_name"],
+                "context_window": snapshot["context_window"] or row.get("context_window", 0),
+                "input_modalities": snapshot["input_modalities"],
+                "output_modalities": snapshot["output_modalities"],
+                "supports_vision": snapshot["supports_vision"],
+                "supports_reasoning": snapshot["supports_reasoning"],
+                "supports_function_calling": snapshot["supports_function_calling"],
+                "deprecated": snapshot["deprecated"],
             }
         )
-        if DOCUMENTED:
-            model["supports_json_mode"] = True
-            model["supports_json_schema"] = True
-        n += 1
-    DATA.write_text(
-        json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        extra = dict(row.get("extra") or {})
+        extra.update(
+            {
+                "official_source": SOURCE_MODELS,
+                "official_api_id_source": SOURCE_API,
+                "official_source_checked_at": checked_at,
+                "official_spec_refresh": "official_poolside_docs_inventory",
+                "api_base_url": BASE_URL,
+                "api_model_id": snapshot["api_model_id"],
+                "not_listed_in_current_docs": False,
+                "endpoints": [{"base_url": BASE_URL, "protocol": "openai-compatible", "auth": "bearer", "source": SOURCE_API}],
+            }
+        )
+        row["extra"] = extra
+        merged.append(row)
+        seen.add(key)
+    for old in previous:
+        if not isinstance(old, dict):
+            continue
+        key = str(old.get("model_id", "")).casefold()
+        if key and key not in seen:
+            row = dict(old)
+            extra = dict(row.get("extra") or {})
+            extra.update({"official_source_checked_at": checked_at, "not_listed_in_current_docs": True})
+            row["extra"] = extra
+            merged.append(row)
+    return merged
+
+
+def update_catalog(snapshots: list[dict], *, checked_at: str | None = None) -> int:
+    data = json.loads(DATA.read_text(encoding="utf-8"))
+    checked_at = checked_at or datetime.now(timezone.utc).date().isoformat()
+    models = merge_inventory(snapshots, data.get("models") or [], checked_at)
+    DATA.write_text(json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    heading = f"## Poolside public-doc model inventory refresh ({checked_at})"
+    old_log = LOG.read_text(encoding="utf-8")
+    if heading in old_log:
+        start = old_log.index(heading)
+        end = old_log.find("\n## ", start + len(heading))
+        old_log = old_log[:start].rstrip() + "\n" + (old_log[end + 1 :] if end >= 0 else "")
+    entry = (
+        f"\n{heading}\n\n- Sources: {SOURCE_MODELS} and {SOURCE_API}\n"
+        f"- Publicly documented supported model IDs: {len(snapshots)}\n"
+        "- Inventory is based on Poolside docs, not an account-specific authenticated listing.\n"
     )
-    LOG.write_text(
-        LOG.read_text(encoding="utf-8")
-        + f"\n## poolside Structured Outputs audit ({datetime.now(timezone.utc).date()})\n\n- Source: {SOURCE}\n- Updated: {n} models; documented={DOCUMENTED}.\n",
-        encoding="utf-8",
-    )
-    print("poolside: structured outputs audited", n)
+    LOG.write_text(old_log.rstrip() + "\n" + entry, encoding="utf-8")
+    print(f"poolside.json: refreshed {len(snapshots)} public-doc model IDs; total={len(models)}")
+    return len(snapshots)
+
+
+def main() -> None:
+    checked_at = datetime.now(timezone.utc).date().isoformat()
+    update_catalog(parse_model_inventory(fetch_inventory()), checked_at=checked_at)
 
 
 if __name__ == "__main__":
