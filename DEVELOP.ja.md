@@ -118,7 +118,14 @@ llmcapa.search("gpt-4o", provider="azure")          # → azure-openai
 
 ## カタログ更新スクリプトの方針
 
-プロバイダーのカタログ更新は、プロバイダーごとの公式ソースを使う個別スクリプトで行います。全プロバイダーをOpenRouterのデータで一括置換するスクリプトは使用しません。
+プロバイダーのカタログ更新は、プロバイダーごとの公式ソースを使う個別スクリプトで行います。全プロバイダーをOpenRouterのデータで一括置換するスクリプトは使用しません。個別の更新スクリプトがあるプロバイダーは、次のディスパッチャーで一覧・実行できます。`--provider` は1プロバイダーだけを実行し、全カタログに触る後処理は自動実行しません。
+
+```bash
+python scripts/_update_all_providers.py --list
+python scripts/_update_all_providers.py --provider openai
+```
+
+`--list` に `no updater` と表示されるカタログは、公式ソースを確認できる個別更新スクリプトがまだありません。別プロバイダーやOpenRouterのデータで代用せず、未対応として扱います。
 
 ネイティブプロバイダーのカタログは、レコード取得に OpenRouter を使ってはなりません。OpenRouter API から構築するのは `openrouter.json` だけです（`scripts/_update_openrouter.py`）。他の `scripts/_update_*.py` は公式ドキュメントページまたは公式モデル API を直接解析します。`scripts/openrouter_providers/` 配下のシムは歴史的参照用であり、現役の更新スクリプトから import してはなりません。
 
@@ -168,7 +175,7 @@ python scripts/update_catalog_from_openrouter.py
 
 `scripts/_image_capability_postprocess.py` は画像生成レコード用の共有後処理です。画像出力を持ち、認識可能な画像生成ファミリーに属するカタログレコードにのみ、保守的な `ImageCapability` メタデータを付与します。画像入力だけでは画像生成とみなしません。未確認の入力形式・MIME・バイト上限・ピクセル上限は推測で補完せず未設定のままにします。
 
-`_update_all_providers.py` はプロバイダー更新の成功後にこのステップを実行します。直接監査する場合は以下を実行します:
+この後処理は全プロバイダーのカタログを対象にするため、個別プロバイダーの更新ディスパッチャーからは自動実行しません。明示的に全体を監査・更新する場合にのみ、以下を実行します:
 
 ```bash
 python scripts/_image_capability_postprocess.py

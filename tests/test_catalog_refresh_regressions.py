@@ -50,3 +50,26 @@ def test_mistral_deprecation_flag_uses_official_card_status():
             "replacement": "OCR 4.1",
         }
     )
+
+
+def test_azure_foundry_retains_and_enriches_microsoft_decision_ssr_card():
+    updater = _script_module("_update_azure_foundry")
+    card = {
+        "name": "Microsoft-Decision-1",
+        "displayName": "Microsoft-Decision-1",
+        "source": "ssr_card",
+    }
+
+    assert updater.is_supported_catalog_item(card)
+    row = updater.build_entry(card, {})
+
+    assert row["provider"] == "microsoft"
+    assert row["model_id"] == "Microsoft-Decision-1"
+    assert row["context_window"] == 32768
+    assert row["input_modalities"] == ["text"]
+    assert row["output_modalities"] == ["decision"]
+    assert row["azure_lifecycle"] == "GA"
+    assert row["decision"]["question_kinds"] == ["noul", "choice", "score"]
+    assert row["decision"]["endpoints"] == [
+        "https://{azure_endpoint}/providers/microsoft/v1/systemone"
+    ]

@@ -38,7 +38,7 @@ def main():
     )
     LOG.write_text(
         LOG.read_text(encoding="utf-8")
-        + "\n## cognitivecomputations Structured Outputs audit ({datetime.now(timezone.utc).date()})\n\n- Source: {SOURCE}\n- Updated: {n} models; documented={DOCUMENTED}.\n",
+        + f"\n## cognitivecomputations Structured Outputs audit ({datetime.now(timezone.utc).date()})\n\n- Source: {SOURCE}\n- Updated: {n} models; documented={DOCUMENTED}.\n",
         encoding="utf-8",
     )
     print("cognitivecomputations: structured outputs audited", n)

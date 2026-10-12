@@ -186,6 +186,7 @@ def test_find_decision_models(capsys):
         "cloudflare-workers-ai",
         "liquid",
         "perplexity",
+        "microsoft",
     }
 
 

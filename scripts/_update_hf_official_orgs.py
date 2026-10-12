@@ -7,6 +7,7 @@ official organization page; capability/price fields are not inferred.
 
 from __future__ import annotations
 
+import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
@@ -49,9 +50,17 @@ def fetch_models(org: str) -> list[str]:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--provider",
+        choices=sorted(ORGS),
+        help="refresh only one provider catalog (default: all listed organizations)",
+    )
+    args = parser.parse_args()
     today = datetime.now(timezone.utc).date().isoformat()
     results = []
-    for provider, org in ORGS.items():
+    selected = {args.provider: ORGS[args.provider]} if args.provider else ORGS
+    for provider, org in selected.items():
         try:
             models = fetch_models(org)
             if not models:

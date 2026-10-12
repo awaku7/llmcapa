@@ -38,7 +38,7 @@ def main():
     )
     LOG.write_text(
         LOG.read_text(encoding="utf-8")
-        + "\n## llama_cpp Structured Outputs audit ({datetime.now(timezone.utc).date()})\n\n- Source: {SOURCE}\n- Updated: {n} models; documented={DOCUMENTED}.\n",
+        + f"\n## llama_cpp Structured Outputs audit ({datetime.now(timezone.utc).date()})\n\n- Source: {SOURCE}\n- Updated: {n} models; documented={DOCUMENTED}.\n",
         encoding="utf-8",
     )
     print("llama_cpp: structured outputs audited", n)

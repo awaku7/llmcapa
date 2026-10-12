@@ -73,7 +73,7 @@ def update_structured():
     )
     LOG.write_text(
         LOG.read_text(encoding="utf-8")
-        + "\n## ai21 Structured Outputs audit ({datetime.now(timezone.utc).date()})\n\n- Source: {SOURCE}\n- Updated: {n} models; documented={DOCUMENTED}.\n",
+        + f"\n## ai21 Structured Outputs audit ({datetime.now(timezone.utc).date()})\n\n- Source: {SOURCE}\n- Updated: {n} models; documented={DOCUMENTED}.\n",
         encoding="utf-8",
     )
     print("ai21: structured outputs audited", n)

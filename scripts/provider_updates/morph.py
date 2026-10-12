@@ -38,7 +38,7 @@ def main():
     )
     LOG.write_text(
         LOG.read_text(encoding="utf-8")
-        + "\n## morph Structured Outputs audit ({datetime.now(timezone.utc).date()})\n\n- Source: {SOURCE}\n- Updated: {n} models; documented={DOCUMENTED}.\n",
+        + f"\n## morph Structured Outputs audit ({datetime.now(timezone.utc).date()})\n\n- Source: {SOURCE}\n- Updated: {n} models; documented={DOCUMENTED}.\n",
         encoding="utf-8",
     )
     print("morph: structured outputs audited", n)

@@ -49,6 +49,22 @@ def test_perplexity_decision_model_has_explicit_endpoint_and_schema_metadata():
     assert cap.decision.extra["typesafe_sdk_compatibility"] == "not-documented"
 
 
+def test_microsoft_decision_1_is_registered_from_azure_foundry():
+    cap = llmcapa.get("Microsoft-Decision-1", provider="microsoft")
+
+    assert cap.provider == "microsoft"
+    assert cap.context_window == 32768
+    assert cap.input_modalities == ["text"]
+    assert cap.output_modalities == ["decision"]
+    assert cap.supports("decision_output") is True
+    assert cap.supports_chat_completion is False
+    assert cap.decision is not None
+    assert cap.decision.question_kinds == ("noul", "choice", "score")
+    assert cap.decision.endpoints == (
+        "https://{azure_endpoint}/providers/microsoft/v1/systemone",
+    )
+
+
 def test_openrouter_decision_routes_have_explicit_gateway_endpoints():
     payload = json.loads((DATA_DIR / "openrouter.json").read_text(encoding="utf-8"))
     models = {
