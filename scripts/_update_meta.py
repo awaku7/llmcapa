@@ -43,6 +43,7 @@ OFFICIAL_GLIMMER = (
 # Source: OFFICIAL_PRICING.
 STANDARD = {"input": 1.25, "output": 4.25, "cached_input": 0.15}
 CONTRIBUTOR = {"input": 0.10, "output": 0.20, "cached_input": 0.002}
+WONDER_STANDARD = {"input": 4.0, "output": 20.0, "cached_input": 0.20}
 
 # Meta's reasoning documentation lists these values for Muse Spark 1.3.
 # ``none`` is rejected by Muse Spark, and ``max`` is available only on the
@@ -70,17 +71,67 @@ def _visit(page, url: str):
 
 
 def parse_pricing(text: str) -> dict:
-    """Extract Standard / Contributor / Voice / Image pricing from the page."""
+    """Extract Muse Wonder/Spark table pricing and specialty unit rates."""
     out: dict = {}
-    # Playwright inner_text() renders HTML tables as tab/newline-separated text,
-    # not as Markdown pipes. Normalize both forms before applying the patterns.
     normalized = re.sub(r"\s+", " ", text.replace("|", " "))
+    lower = normalized.casefold()
+
+    def price_columns(section: str) -> dict[str, tuple[float, float | None]]:
+        rows: dict[str, tuple[float, float | None]] = {}
+        pattern = re.compile(
+            r"(Cached\s+input|Input|Output)\s+\$([0-9]+(?:\.[0-9]+)?)\s+"
+            r"(\$[0-9]+(?:\.[0-9]+)?|Not available)",
+            re.IGNORECASE,
+        )
+        for match in pattern.finditer(section):
+            label = re.sub(r"\s+", " ", match.group(1)).lower()
+            standard = float(match.group(2))
+            contributor = (
+                float(match.group(3)[1:]) if match.group(3).startswith("$") else None
+            )
+            rows[label] = (standard, contributor)
+        return rows
+
+    def pack(rows: dict[str, tuple[float, float | None]], column: int):
+        input_price = rows.get("input", (None, None))[column]
+        output_price = rows.get("output", (None, None))[column]
+        cached_price = rows.get("cached input", (None, None))[column]
+        if input_price is None or output_price is None:
+            return None
+        return {
+            "cached_input": cached_price,
+            "input": input_price,
+            "output": output_price,
+        }
+
+    # Current Meta docs have separate Muse Wonder and Muse Spark sections, each
+    # with Standard / Contributor table columns.
+    pricing_start = lower.find("model pricing")
+    if pricing_start >= 0:
+        wonder_start = lower.find("muse wonder", pricing_start)
+        spark_start = lower.find("muse spark", wonder_start + 1)
+        notes_start = lower.find("token pricing notes", spark_start)
+        if wonder_start >= 0 and spark_start > wonder_start:
+            wonder = pack(price_columns(normalized[wonder_start:spark_start]), 0)
+            if wonder:
+                out["wonder"] = wonder
+        if spark_start >= 0:
+            spark_end = notes_start if notes_start > spark_start else len(normalized)
+            spark_rows = price_columns(normalized[spark_start:spark_end])
+            standard = pack(spark_rows, 0)
+            contributor = pack(spark_rows, 1)
+            if standard:
+                out["standard"] = standard
+            if contributor:
+                out["contributor"] = contributor
+
+    # Retain compatibility with the older prose-formatted docs.
     std = re.search(
         r"Standard pricing.*?Cached input \$([0-9.]+).*?Input \$([0-9.]+).*?Output \$([0-9.]+)",
         normalized,
         re.DOTALL,
     )
-    if std:
+    if std and "standard" not in out:
         out["standard"] = {
             "cached_input": float(std.group(1)),
             "input": float(std.group(2)),
@@ -91,7 +142,7 @@ def parse_pricing(text: str) -> dict:
         normalized,
         re.DOTALL,
     )
-    if con:
+    if con and "contributor" not in out:
         out["contributor"] = {
             "cached_input": float(con.group(1)),
             "input": float(con.group(2)),
@@ -107,26 +158,44 @@ def parse_pricing(text: str) -> dict:
 
 
 def parse_models_page(text: str) -> dict:
-    """Extract the Available-models table from the official models page."""
+    """Extract model metadata from legacy tables and the current prose page."""
     out: dict = {}
-    # Playwright's inner_text() returns table cells separated by whitespace.
-    # Normalize both rendered tables and pipe-formatted text first.
     normalized = re.sub(r"\s+", " ", text.replace("|", " "))
-    # e.g. "muse-spark-1.1 Standard Text, image, video, PDF Text 1,048,576 tokens"
-    for m in re.finditer(
+    for match in re.finditer(
         r"(muse-[\w.\-]+)\s+(?:(?:Standard|Contributor)\s+)?(.+?)\s+Text\s+([\d,]+)\s+tokens",
         normalized,
     ):
-        mid, inp, ctx = (
-            m.group(1),
-            m.group(2),
-            m.group(3),
-        )
-        out[mid] = {
-            "input": inp.strip(),
+        model_id, modalities, context = match.groups()
+        out[model_id] = {
+            "input": modalities.strip(),
             "output": "Text",
-            "context": int(ctx.replace(",", "")),
+            "context": int(context.replace(",", "")),
         }
+
+    # The current official page describes Muse Wonder and Muse Spark in prose.
+    # Both model families are explicitly documented with 1,048,576-token context.
+    lower = normalized.casefold()
+    million_context = "1,048,576-token context window" in lower
+    if "muse-wonder-1.0" in lower and million_context:
+        out["muse-wonder-1.0"] = {
+            "input": "Text, image, video, audio, and PDF",
+            "output": "Text",
+            "context": 1_048_576,
+        }
+    if million_context:
+        for model_id in (
+            "muse-spark-1.3",
+            "muse-spark-1.3-contributor",
+            "muse-spark-1.2",
+            "muse-spark-1.2-contributor",
+            "muse-spark-1.1",
+        ):
+            if model_id in lower:
+                out[model_id] = {
+                    "input": "Text, image, video, audio, and PDF",
+                    "output": "Text",
+                    "context": 1_048_576,
+                }
     return out
 
 
@@ -258,10 +327,16 @@ def build() -> tuple[list[dict], dict]:
         _, glimmer_text = _visit(page, OFFICIAL_GLIMMER)
         browser.close()
 
-    if models_status != 200 or "Available Muse Spark models" not in models_text:
-        raise RuntimeError("official Meta models page did not render")
-    if pricing_status != 200 or "Price per 1M tokens" not in pricing_text:
-        raise RuntimeError("official Meta pricing page did not render")
+    models_lower = models_text.casefold()
+    if (
+        models_status != 200
+        or "muse-spark-1.3" not in models_lower
+        or "muse-wonder-1.0" not in models_lower
+    ):
+        raise RuntimeError("official Meta models page did not render the current model list")
+    pricing_lower = pricing_text.casefold()
+    if pricing_status != 200 or "per 1m tokens" not in pricing_lower:
+        raise RuntimeError("official Meta pricing page did not render current token rates")
 
     table = parse_models_page(models_text)
     prices = parse_pricing(pricing_text)
@@ -272,6 +347,7 @@ def build() -> tuple[list[dict], dict]:
         image_capability["status"] = "documented"
     std = prices.get("standard", STANDARD)
     con = prices.get("contributor", CONTRIBUTOR)
+    wonder_prices = prices.get("wonder", WONDER_STANDARD)
 
     models: list[dict] = []
     specs = [
@@ -302,6 +378,22 @@ def build() -> tuple[list[dict], dict]:
         }
         row["extra"]["cached_input_per_1m"] = live["cached_input"]
         models.append(row)
+
+    wonder = spark_row(
+        model_id="muse-wonder-1.0",
+        display="Meta: Muse Wonder 1.0",
+        tier="standard",
+        table=table.get("muse-wonder-1.0", {}),
+    )
+    wonder["pricing"] = {
+        "input_per_1m": wonder_prices["input"],
+        "output_per_1m": wonder_prices["output"],
+        "currency": "USD",
+    }
+    wonder["extra"]["cached_input_per_1m"] = wonder_prices["cached_input"]
+    wonder["extra"]["preview"] = True
+    wonder["reasoning_effort_values"] = ["minimal", "low", "medium", "high", "xhigh", "max"]
+    models.append(wonder)
 
     # Muse Glimmer 30B: Apache 2.0 open weights for local agents (no API pricing).
     glimmer = {

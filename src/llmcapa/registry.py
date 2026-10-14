@@ -172,7 +172,8 @@ class Registry:
         now = time.time()
         for cache_path in cache_paths:
             try:
-                if now - cache_path.stat().st_mtime >= 86400:
+                cache_mtime = cache_path.stat().st_mtime
+                if now - cache_mtime >= 86400:
                     continue
                 cache_data = json.loads(cache_path.read_text(encoding="utf-8"))
                 if not isinstance(cache_data, dict) or cache_data.get("ref") != "main":
@@ -186,9 +187,25 @@ class Registry:
                 ):
                     continue
                 provider_set = {self._normalize_provider(name) for name in providers}
-                for text in files.values():
+                for filename, text in files.items():
+                    if (
+                        not isinstance(filename, str)
+                        or Path(filename).name != filename
+                    ):
+                        continue
                     if not isinstance(text, str):
                         continue
+                    bundled_path = Path(__file__).resolve().parent / "data" / filename
+                    try:
+                        # A cache fetched before an explicit bundled refresh must
+                        # not overwrite the newer local catalog on the next load.
+                        if (
+                            bundled_path.is_file()
+                            and bundled_path.stat().st_mtime > cache_mtime
+                        ):
+                            continue
+                    except OSError:
+                        pass
                     payload = json.loads(text)
                     records = (
                         payload.get("models", [])
@@ -865,6 +882,21 @@ class Registry:
             except (OSError, ValueError, TypeError):
                 cached_files = None
 
+        cache_is_older_than_bundle = False
+        if cached_files is not None:
+            bundle_dir = Path(__file__).resolve().parent / "data"
+            for filename in catalog_files:
+                bundled_path = bundle_dir / filename
+                try:
+                    if (
+                        bundled_path.is_file()
+                        and bundled_path.stat().st_mtime > cache_path.stat().st_mtime
+                    ):
+                        cache_is_older_than_bundle = True
+                        break
+                except OSError:
+                    continue
+
         downloaded_files: dict[str, str] = cached_files or {}
         if cached_files is None:
             raw_ref = quote(ref, safe="/")
@@ -914,12 +946,13 @@ class Registry:
             )
 
         bundled_updated = False
-        if write_bundled:
-            bundled_updated = self._write_bundled_catalog_files(downloaded_files)
-        if not bundled_updated:
-            self._write_user_catalog_override(
-                cache_key, ref, target_providers, capabilities
-            )
+        if not cache_is_older_than_bundle:
+            if write_bundled:
+                bundled_updated = self._write_bundled_catalog_files(downloaded_files)
+            if not bundled_updated:
+                self._write_user_catalog_override(
+                    cache_key, ref, target_providers, capabilities
+                )
 
         if cached_files is None:
             try:
@@ -939,7 +972,13 @@ class Registry:
                 pass
 
         for cap in capabilities:
-            self._register_refreshed_catalog_record(cap)
+            if cache_is_older_than_bundle:
+                provider = self._normalize_provider(cap.provider)
+                existing = self._by_provider.get(provider, {})
+                if cap.model_id.lower() not in existing:
+                    self.register(cap)
+            else:
+                self._register_refreshed_catalog_record(cap)
         return len(capabilities)
 
     def _lookup_candidates(self, model_id: str) -> list[str]:

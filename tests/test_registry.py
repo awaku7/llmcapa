@@ -1,6 +1,8 @@
 """Tests for llmcapa registry and data files."""
 
+import hashlib
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -619,3 +621,56 @@ def test_persistent_user_catalog_is_loaded_by_new_registry(tmp_path, monkeypatch
     )
     assert loaded.model_id == capability.model_id
     assert loaded.context_window == 4096
+
+
+def test_older_github_cache_does_not_override_newer_bundled_catalog(
+    tmp_path, monkeypatch
+) -> None:
+    """A stale provider snapshot must not replace a newer bundled correction."""
+    import llmcapa.registry as registry_module
+
+    bundled_path = DATA_DIR / "openrouter.json"
+    bundled = json.loads(bundled_path.read_text(encoding="utf-8"))
+    record = next(
+        model
+        for model in bundled["models"]
+        if model.get("model_id") == "typesafe/jev-1.13"
+    )
+    stale_record = json.loads(json.dumps(record))
+    stale_record["decision"]["endpoints"] = [
+        "https://openrouter.ai/api/alpha/decisions",
+        "https://api.typesafe.ai/v1/systemone",
+    ]
+
+    cache_home = tmp_path
+    cache_dir = cache_home / ".llmcapa" / "github_catalog_cache"
+    cache_dir.mkdir(parents=True)
+    cache_key = hashlib.sha256(b"main\0openrouter.json").hexdigest()
+    cache_path = cache_dir / f"{cache_key}.json"
+    cache_path.write_text(
+        json.dumps(
+            {
+                "ref": "main",
+                "providers": ["openrouter"],
+                "files": {
+                    "openrouter.json": json.dumps({"models": [stale_record]}),
+                },
+            }
+        ),
+        encoding="utf-8",
+    )
+    bundled_mtime = bundled_path.stat().st_mtime
+    os.utime(cache_path, (bundled_mtime - 1, bundled_mtime - 1))
+
+    monkeypatch.setattr(Path, "home", classmethod(lambda cls: cache_home))
+    monkeypatch.setattr(registry_module.time, "time", lambda: bundled_mtime + 30)
+
+    bundled_bytes = bundled_path.read_bytes()
+    registry = Registry()
+    assert registry.fetch_github_catalog("openrouter") == 1
+    cap = registry.get("typesafe/jev-1.13", provider="openrouter")
+
+    assert cap.decision is not None
+    assert cap.decision.endpoints == ("https://openrouter.ai/api/alpha/decisions",)
+    assert bundled_path.read_bytes() == bundled_bytes
+    assert not list((cache_home / ".llmcapa" / "catalogs" / "github").glob("*.json"))

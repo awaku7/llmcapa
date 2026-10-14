@@ -1,0 +1,469 @@
+{
+  "models": [
+    {
+      "provider": "sarashina",
+      "model_id": "sarashina3-embedding",
+      "display_name": "Sarashina3 embedding",
+      "context_window": 8000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embedding"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_json_schema": false,
+      "supports_streaming": false,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_thinking_level": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "JPY"
+      },
+      "extra": {
+        "service": "Sarashina API",
+        "developer": "SB Intuitions",
+        "source": "https://docs.sarashina.ai/models",
+        "official_source_checked_at": "2026-10-14",
+        "official_sources": [
+          "https://docs.sarashina.ai/introduction",
+          "https://docs.sarashina.ai/models",
+          "https://docs.sarashina.ai/api-reference/embeddings",
+          "https://docs.sarashina.ai/rate-limits"
+        ],
+        "endpoints": [
+          {
+            "base_url": "https://api.sarashina.ai/v1",
+            "path": "/embeddings",
+            "protocol": "sarashina-embeddings",
+            "auth": "bearer",
+            "source": "https://docs.sarashina.ai/api-reference/embeddings"
+          }
+        ],
+        "pricing_status": "zero_jpy_user_confirmed",
+        "requests_per_minute": 60,
+        "max_input_texts_per_request": 1,
+        "task_types": [
+          "RETRIEVAL_DOCUMENT",
+          "SEMANTIC_SIMILARITY",
+          "RETRIEVAL_QUERY",
+          "QUESTION_ANSWERING",
+          "FACT_VERIFICATION",
+          "CLASSIFICATION",
+          "CLUSTERING"
+        ],
+        "pricing_source": "user_confirmation",
+        "pricing_note": "The user confirmed that Sarashina API usage costs JPY 0; official docs do not publish a numeric price table."
+      },
+      "embedding": {
+        "embedding": true,
+        "dimensions": 1536,
+        "max_input_tokens": 8000,
+        "max_input_items": 1,
+        "output_formats": [
+          "float"
+        ],
+        "normalized": false,
+        "distance_metrics": [
+          "cosine"
+        ],
+        "source_url": "https://docs.sarashina.ai/api-reference/embeddings",
+        "checked_at": "2026-10-14",
+        "status": "documented"
+      }
+    },
+    {
+      "provider": "sarashina",
+      "model_id": "sarashina3-guard",
+      "display_name": "Sarashina3 guard",
+      "context_window": 64000,
+      "max_output_tokens": 8000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_json_schema": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_thinking_level": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "JPY"
+      },
+      "extra": {
+        "service": "Sarashina API",
+        "developer": "SB Intuitions",
+        "source": "https://docs.sarashina.ai/models",
+        "official_source_checked_at": "2026-10-14",
+        "official_sources": [
+          "https://docs.sarashina.ai/introduction",
+          "https://docs.sarashina.ai/models",
+          "https://docs.sarashina.ai/api-reference/chat-completions",
+          "https://docs.sarashina.ai/rate-limits"
+        ],
+        "endpoints": [
+          {
+            "base_url": "https://api.sarashina.ai/v1",
+            "path": "/chat/completions",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.sarashina.ai/api-reference/chat-completions"
+          }
+        ],
+        "pricing_status": "zero_jpy_user_confirmed",
+        "requests_per_minute": 6,
+        "api_max_completion_tokens": 8000,
+        "model_class": "moderation",
+        "moderation_categories": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8",
+          "T9",
+          "T10",
+          "T11",
+          "T12"
+        ],
+        "generates_free_form_text": false,
+        "pricing_source": "user_confirmation",
+        "pricing_note": "The user confirmed that Sarashina API usage costs JPY 0; official docs do not publish a numeric price table."
+      }
+    },
+    {
+      "provider": "sarashina",
+      "model_id": "sarashina3-mini",
+      "display_name": "Sarashina3 mini",
+      "context_window": 128000,
+      "max_output_tokens": 8000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_thinking_level": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "JPY"
+      },
+      "extra": {
+        "service": "Sarashina API",
+        "developer": "SB Intuitions",
+        "source": "https://docs.sarashina.ai/models",
+        "official_source_checked_at": "2026-10-14",
+        "official_sources": [
+          "https://docs.sarashina.ai/introduction",
+          "https://docs.sarashina.ai/models",
+          "https://docs.sarashina.ai/api-reference/chat-completions",
+          "https://docs.sarashina.ai/rate-limits"
+        ],
+        "endpoints": [
+          {
+            "base_url": "https://api.sarashina.ai/v1",
+            "path": "/chat/completions",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.sarashina.ai/api-reference/chat-completions"
+          }
+        ],
+        "pricing_status": "zero_jpy_user_confirmed",
+        "requests_per_minute": 6,
+        "api_max_completion_tokens": 8000,
+        "supported_response_formats": [
+          "text",
+          "json_object",
+          "json_schema"
+        ],
+        "compatibility_note": "OpenAI Chat Completions subset; undocumented parameters are rejected.",
+        "pricing_source": "user_confirmation",
+        "pricing_note": "The user confirmed that Sarashina API usage costs JPY 0; official docs do not publish a numeric price table."
+      }
+    },
+    {
+      "provider": "sarashina",
+      "model_id": "sarashina3-nano",
+      "display_name": "Sarashina3 nano",
+      "context_window": 128000,
+      "max_output_tokens": 8000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_thinking_level": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "JPY"
+      },
+      "extra": {
+        "service": "Sarashina API",
+        "developer": "SB Intuitions",
+        "source": "https://docs.sarashina.ai/models",
+        "official_source_checked_at": "2026-10-14",
+        "official_sources": [
+          "https://docs.sarashina.ai/introduction",
+          "https://docs.sarashina.ai/models",
+          "https://docs.sarashina.ai/api-reference/chat-completions",
+          "https://docs.sarashina.ai/rate-limits"
+        ],
+        "endpoints": [
+          {
+            "base_url": "https://api.sarashina.ai/v1",
+            "path": "/chat/completions",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.sarashina.ai/api-reference/chat-completions"
+          }
+        ],
+        "pricing_status": "zero_jpy_user_confirmed",
+        "requests_per_minute": 60,
+        "api_max_completion_tokens": 8000,
+        "supported_response_formats": [
+          "text",
+          "json_object",
+          "json_schema"
+        ],
+        "compatibility_note": "OpenAI Chat Completions subset; undocumented parameters are rejected.",
+        "pricing_source": "user_confirmation",
+        "pricing_note": "The user confirmed that Sarashina API usage costs JPY 0; official docs do not publish a numeric price table."
+      }
+    },
+    {
+      "provider": "sarashina",
+      "model_id": "sarashina3-rerank",
+      "display_name": "Sarashina3 rerank",
+      "context_window": 8000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "rerank"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_json_schema": false,
+      "supports_streaming": false,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_thinking_level": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "JPY"
+      },
+      "extra": {
+        "service": "Sarashina API",
+        "developer": "SB Intuitions",
+        "source": "https://docs.sarashina.ai/models",
+        "official_source_checked_at": "2026-10-14",
+        "official_sources": [
+          "https://docs.sarashina.ai/introduction",
+          "https://docs.sarashina.ai/models",
+          "https://docs.sarashina.ai/api-reference/rerank",
+          "https://docs.sarashina.ai/rate-limits"
+        ],
+        "endpoints": [
+          {
+            "base_url": "https://api.sarashina.ai/v1",
+            "path": "/rerank",
+            "protocol": "sarashina-rerank",
+            "auth": "bearer",
+            "source": "https://docs.sarashina.ai/api-reference/rerank"
+          }
+        ],
+        "pricing_status": "zero_jpy_user_confirmed",
+        "requests_per_minute": 60,
+        "max_query_document_pair_tokens": 8000,
+        "task_types": [
+          "GENERAL_RETRIEVAL",
+          "GENERAL_QA",
+          "NEWS_RETRIEVAL",
+          "SEMANTIC_SIMILARITY",
+          "CUSTOMIZE"
+        ],
+        "customize_requires_query_instruction": true,
+        "top_n_filtering_supported": false,
+        "pricing_source": "user_confirmation",
+        "pricing_note": "The user confirmed that Sarashina API usage costs JPY 0; official docs do not publish a numeric price table."
+      },
+      "rerank": {
+        "rerank": true,
+        "max_documents": 20,
+        "returns_scores": true,
+        "returns_documents": false,
+        "score_range": [
+          0.0,
+          1.0
+        ],
+        "source_url": "https://docs.sarashina.ai/api-reference/rerank",
+        "checked_at": "2026-10-14",
+        "status": "documented"
+      }
+    },
+    {
+      "provider": "sarashina",
+      "model_id": "sarashina3-translate",
+      "display_name": "Sarashina3 translate",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_json_schema": false,
+      "supports_streaming": false,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_thinking_level": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "JPY"
+      },
+      "extra": {
+        "service": "Sarashina API",
+        "developer": "SB Intuitions",
+        "source": "https://docs.sarashina.ai/models",
+        "official_source_checked_at": "2026-10-14",
+        "official_sources": [
+          "https://docs.sarashina.ai/introduction",
+          "https://docs.sarashina.ai/models",
+          "https://docs.sarashina.ai/api-reference/translate",
+          "https://docs.sarashina.ai/rate-limits"
+        ],
+        "endpoints": [
+          {
+            "base_url": "https://api.sarashina.ai/v1",
+            "path": "/translate",
+            "protocol": "sarashina-translate",
+            "auth": "bearer",
+            "source": "https://docs.sarashina.ai/api-reference/translate"
+          }
+        ],
+        "pricing_status": "zero_jpy_user_confirmed",
+        "requests_per_minute": 6,
+        "model_parameter_required": false,
+        "input_limit": 5000,
+        "input_limit_unit": "unicode_code_points",
+        "source_language_values": [
+          "ja",
+          "en"
+        ],
+        "target_language_values": [
+          "ja",
+          "en"
+        ],
+        "same_source_and_target_language_allowed": false,
+        "streaming_supported": false,
+        "pricing_source": "user_confirmation",
+        "pricing_note": "The user confirmed that Sarashina API usage costs JPY 0; official docs do not publish a numeric price table."
+      }
+    }
+  ]
+}

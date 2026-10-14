@@ -238,6 +238,17 @@ print(cap.document.input_formats)
 print(cap.spatial.kind_values)
 ```
 
+Sarashina API の同梱カタログでは、チャット、Embedding、Rerank、翻訳のモデルと公式 API エンドポイントを確認できます（[公式ドキュメント](https://docs.sarashina.ai/)）。料金はユーザーからの確認に基づき0円（JPY）として収録しています（公式ドキュメントには金額表なし）。
+
+```python
+sarashina = llmcapa.get("sarashina3-mini", provider="sarashina")
+print(sarashina.context_window)  # 128000
+embedding = llmcapa.get("sarashina3-embedding", provider="sarashina")
+reranker = llmcapa.get("sarashina3-rerank", provider="sarashina")
+print(embedding.embedding.dimensions)  # 1536
+print(reranker.rerank.max_documents)   # 20
+```
+
 `document`、`embedding`、`rerank`、`spatial`、`decision` も、既存の位置引数互換性を壊さないよう `Capability` の末尾に追加されています。
 
 ### 決定出力（Decision / System One）

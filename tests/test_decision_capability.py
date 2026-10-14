@@ -135,7 +135,7 @@ def test_openai_decisions_api_is_catalogued_on_gpt_6_luna():
 def test_cloudflare_clef_models_are_typed_decisions_not_chat_models():
     for name, price, params in (
         ("clef", 0.24, 27),
-        ("clef-flash", 0.09, 9),
+        ("clef-flash", 0.038, 9),
     ):
         model_id = f"@cf/cloudflare/{name}"
         cap = llmcapa.get(model_id, provider="cloudflare")

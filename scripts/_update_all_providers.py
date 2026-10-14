@@ -53,6 +53,7 @@ PROVIDER_SCRIPTS = {
     "qwen": "_update_qwen.py",
     "rekaai": "_update_rekaai.py",
     "sakura": "_update_sakura.py",
+    "sarashina": "_update_sarashina.py",
     "siliconflow": "provider_updates/siliconflow.py",
     "stepfun": "_update_stepfun.py",
     "tencent": "_update_tencent.py",

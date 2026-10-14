@@ -102,6 +102,7 @@ print(embedding.supports("embedding_output"))  # True
 The catalog updater reads model IDs, task types, feature badges, context windows, and pricing from the official index/model pages. Unpublished values remain unknown; the Responses API flag is derived from Cloudflare's compatibility documentation.
 
 ### Token & Cost Estimation
+
 Roughly estimate the number of tokens for a given text (supporting 30+ major languages) and calculate API costs:
 
 > [!NOTE]
@@ -237,6 +238,17 @@ print(cap.document.input_formats)
 
 # Geospatial / 3D-image models
 print(cap.spatial.kind_values)
+```
+
+The bundled Sarashina API catalog covers chat, embeddings, reranking, translation, and official API endpoints ([official docs](https://docs.sarashina.ai/)). Pricing is recorded as JPY 0 based on user confirmation; the official documentation does not publish a numeric price table.
+
+```python
+sarashina = llmcapa.get("sarashina3-mini", provider="sarashina")
+print(sarashina.context_window)  # 128000
+embedding = llmcapa.get("sarashina3-embedding", provider="sarashina")
+reranker = llmcapa.get("sarashina3-rerank", provider="sarashina")
+print(embedding.embedding.dimensions)  # 1536
+print(reranker.rerank.max_documents)   # 20
 ```
 
 `document`, `embedding`, `rerank`, `spatial`, and `decision` are appended to the end of `Capability` to preserve positional-constructor compatibility.
