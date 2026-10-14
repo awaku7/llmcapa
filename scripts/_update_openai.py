@@ -28,6 +28,10 @@ DATA = ROOT / "src" / "llmcapa" / "data" / "openai.json"
 MODELS_URL = "https://developers.openai.com/api/docs/models/all.md"
 PRICING_URL = "https://developers.openai.com/api/docs/pricing.md"
 BASE = "https://developers.openai.com"
+LIFE_SCIENCES_SOURCE = PRICING_URL.removesuffix(".md")
+LIFE_SCIENCES_ACCESS_URL = (
+    "https://help.openai.com/en/articles/20001193-gpt-rosalind-for-life-sciences-research"
+)
 ENDPOINT = {
     "base_url": "https://api.openai.com/v1",
     "protocol": "openai-compatible",
@@ -242,6 +246,105 @@ def prices(markdown: str) -> dict[str, tuple[float, float]]:
     return result
 
 
+def parse_life_sciences_models(markdown: str) -> list[dict]:
+    """Parse Rosalind models from the dedicated official pricing section.
+
+    Rosalind entries are not linked to individual model pages in the all-models
+    index. Their current IDs, per-token prices, and trusted-access notice are
+    published in a separate life-sciences table on the pricing page.
+    """
+    section_match = re.search(
+        r"(?ims)^Life sciences models[ \t]*\r?\n(.*?)(?=^Multimodal models[ \t]*$|\Z)",
+        markdown,
+    )
+    if not section_match:
+        return []
+
+    section = section_match.group(1)
+    approval_required = bool(
+        re.search(r"Access is limited to approved", section, re.IGNORECASE)
+    )
+    access_link = re.search(
+        r"\[trusted-access program\]\((https?://[^)]+)\)",
+        section,
+        re.IGNORECASE,
+    )
+    models = []
+    for model_id, input_price, cached_price, output_price in re.findall(
+        r"^\|\s*(gpt-rosalind-[a-z0-9-]+)\s*\|\s*\$?([\d,.]+)\s*"
+        r"\|\s*\$?([\d,.]+)\s*\|\s*\$?([\d,.]+)\s*\|\s*$",
+        section,
+        re.IGNORECASE | re.MULTILINE,
+    ):
+        models.append(
+            {
+                "model_id": model_id,
+                "input_per_1m": float(input_price.replace(",", "")),
+                "cached_input_per_1m": float(cached_price.replace(",", "")),
+                "output_per_1m": float(output_price.replace(",", "")),
+                "required_approval": approval_required,
+                "access_program_url": access_link.group(1) if access_link else (LIFE_SCIENCES_ACCESS_URL if approval_required else None),
+            }
+        )
+    return models
+
+
+def life_sciences_catalog_entry(model: dict, previous: dict | None = None) -> dict:
+    """Create/update a pricing-only Rosalind record without guessing capabilities."""
+    entry = dict(previous or {})
+    entry.update(
+        {
+            "provider": "openai",
+            "model_id": model["model_id"],
+            "display_name": "GPT-Rosalind "
+            + model["model_id"].removeprefix("gpt-rosalind-").replace("-", " ").title(),
+            "context_window": entry.get("context_window", 0),
+            "max_output_tokens": entry.get("max_output_tokens", 0),
+            "input_modalities": entry.get("input_modalities", ["text"]),
+            "output_modalities": entry.get("output_modalities", ["text"]),
+            "deprecated": entry.get("deprecated", False),
+            "aliases": entry.get("aliases", []),
+            "pricing": {
+                "input_per_1m": model["input_per_1m"],
+                "output_per_1m": model["output_per_1m"],
+                "currency": "USD",
+            },
+        }
+    )
+    # Pricing is documented, but a separate model page does not document these
+    # API features. Keep them unknown instead of inheriting dataclass defaults.
+    for field in (
+        "supports_chat_completion",
+        "supports_responses_api",
+        "supports_streaming",
+        "supports_function_calling",
+        "supports_json_mode",
+        "supports_vision",
+        "supports_reasoning",
+        "supports_reasoning_effort",
+        "supports_thinking_budget",
+        "supports_thinking_level",
+        "supports_fim",
+        "supports_anthropic_api",
+        "supports_google_api",
+        "supports_realtime",
+    ):
+        entry.setdefault(field, None)
+    extra = dict(entry.get("extra") or {})
+    extra.update(
+        {
+            "source": LIFE_SCIENCES_SOURCE,
+            "spec_status": "pricing_only",
+            "required_approval": model["required_approval"],
+            "cached_input_per_1m": model["cached_input_per_1m"],
+        }
+    )
+    if model["access_program_url"]:
+        extra["access_program_url"] = model["access_program_url"]
+    entry["extra"] = extra
+    return entry
+
+
 def parse_model_index(index: str) -> tuple[list[str], set[str]]:
     """Return model-page paths and those explicitly marked Deprecated."""
     rows = re.findall(
@@ -273,7 +376,9 @@ def preserve_curated_decision(old: dict, refreshed: dict) -> dict:
 
 def main() -> None:
     index = fetch(MODELS_URL)
-    pricing = prices(fetch(PRICING_URL).split("### Batch pricing data", 1)[0])
+    pricing_markdown = fetch(PRICING_URL)
+    pricing = prices(pricing_markdown.split("### Batch pricing data", 1)[0])
+    life_sciences_models = parse_life_sciences_models(pricing_markdown)
     links, deprecated_paths = parse_model_index(index)
     current = json.loads(DATA.read_text(encoding="utf-8"))
     current_by_id = {m.get("model_id"): m for m in current.get("models", [])}
@@ -345,6 +450,23 @@ def main() -> None:
             }
         updated.append(entry)
         seen.add(mid)
+    pages_discovered = len(seen)
+    updated_by_id = {entry.get("model_id"): i for i, entry in enumerate(updated)}
+    for model in life_sciences_models:
+        mid = model["model_id"]
+        index_in_updated = updated_by_id.get(mid)
+        previous = (
+            updated[index_in_updated]
+            if index_in_updated is not None
+            else current_by_id.get(mid)
+        )
+        entry = life_sciences_catalog_entry(model, previous)
+        if index_in_updated is None:
+            updated_by_id[mid] = len(updated)
+            updated.append(entry)
+        else:
+            updated[index_in_updated] = entry
+        seen.add(mid)
     for old in current.get("models", []):
         if old.get("model_id") not in seen:
             updated.append(old)
@@ -353,9 +475,12 @@ def main() -> None:
     DATA.write_bytes(payload.replace("\n", "\r\n").encode("utf-8"))
     with (ROOT / "provider_update_log.md").open("a", encoding="utf-8", newline="") as f:
         f.write(
-            f"\r\n## OpenAI ({datetime.now(timezone.utc).date():%Y-%m-%d})\r\n\r\n- Source: {MODELS_URL}\r\n- Source: {PRICING_URL}\r\n- Dynamically discovered {len(seen)} official model pages; legacy records preserved: {len(updated)-len(seen)}\r\n"
+            f"\r\n## OpenAI ({datetime.now(timezone.utc).date():%Y-%m-%d})\r\n\r\n- Source: {MODELS_URL}\r\n- Source: {PRICING_URL}\r\n- Dynamically discovered {pages_discovered} official model pages; life-sciences models added from pricing: {len(life_sciences_models)}; legacy records preserved: {len(updated)-len(seen)}\r\n"
         )
-    print(f"openai.json: {len(updated)} models; discovered {len(seen)} official models")
+    print(
+        f"openai.json: {len(updated)} models; discovered {pages_discovered} official "
+        f"model pages and {len(life_sciences_models)} life-sciences pricing entries"
+    )
 
 
 if __name__ == "__main__":

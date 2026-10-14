@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib
+import json
 import sys
 from pathlib import Path
 
@@ -102,6 +103,54 @@ def test_openai_model_index_deprecation_is_detected():
         "/api/docs/models/computer-use-preview.md",
     ]
     assert deprecated == {"/api/docs/models/computer-use-preview.md"}
+
+
+def test_openai_updater_adds_life_sciences_models_from_pricing_section(
+    tmp_path, monkeypatch
+):
+    updater = _script_module("_update_openai")
+    pricing_markdown = """Life sciences models
+
+Our latest Rosalind models.
+
+### Grouped Pricing Table data
+| Model | Input | Cached input | Output |
+| --- | --- | --- | --- |
+| gpt-rosalind-research | $5.00 | $0.50 | $25.00 |
+| gpt-rosalind-discovery | $5.00 | $0.50 | $25.00 |
+
+Access is limited to approved internal research through the [trusted-access program](https://help.openai.com/en/articles/20001193-gpt-rosalind-for-life-sciences-research).
+
+Multimodal models
+"""
+    catalog = tmp_path / "openai.json"
+    catalog.write_text('{"models": []}\n', encoding="utf-8")
+    monkeypatch.setattr(updater, "DATA", catalog)
+    monkeypatch.setattr(updater, "ROOT", tmp_path)
+    monkeypatch.setattr(
+        updater,
+        "fetch",
+        lambda url: "" if url == updater.MODELS_URL else pricing_markdown,
+    )
+
+    updater.main()
+
+    models = {
+        model["model_id"]: model
+        for model in json.loads(catalog.read_text(encoding="utf-8"))["models"]
+    }
+    assert set(models) == {"gpt-rosalind-research", "gpt-rosalind-discovery"}
+    research = models["gpt-rosalind-research"]
+    assert research["display_name"] == "GPT-Rosalind Research"
+    assert research["pricing"] == {
+        "input_per_1m": 5.0,
+        "output_per_1m": 25.0,
+        "currency": "USD",
+    }
+    assert research["extra"]["cached_input_per_1m"] == 0.5
+    assert research["extra"]["required_approval"] is True
+    assert research["supports_responses_api"] is None
+    assert research["extra"]["spec_status"] == "pricing_only"
 
 
 def test_anthropic_tool_versions_are_platform_specific():

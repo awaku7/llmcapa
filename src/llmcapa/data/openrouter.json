@@ -2810,7 +2810,8 @@
         "type_errors_possible": false,
         "output_token_billing": false,
         "endpoints": [
-          "https://openrouter.ai/api/alpha/decisions"
+          "https://openrouter.ai/api/alpha/decisions",
+          "https://openrouter.ai/api/v1/systemone"
         ],
         "source_url": "https://openrouter.ai/docs",
         "checked_at": "2026-09-19",
@@ -2818,6 +2819,10 @@
         "extra": {
           "openai_compatible": false,
           "availability": "alpha",
+          "endpoint_protocol": "openrouter-alpha-decisions",
+          "systemone_schema_compatible": true,
+          "typesafe_sdk_compatibility": true,
+          "systemone_endpoint": "https://openrouter.ai/api/v1/systemone",
           "upstream_route": "typesafe/jev-1.13"
         }
       },
@@ -3049,7 +3054,7 @@
       "model_id": "~z-ai/glm-flash-latest",
       "display_name": "Z.ai: GLM Flash Latest",
       "context_window": 1048576,
-      "max_output_tokens": 943718,
+      "max_output_tokens": 131072,
       "input_modalities": [
         "text",
         "image",
@@ -3094,7 +3099,7 @@
         "tokenizer": "Router",
         "top_provider": {
           "context_length": 1048576,
-          "max_completion_tokens": 943718,
+          "max_completion_tokens": 131072,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -3193,7 +3198,7 @@
       "model_id": "~z-ai/glm-latest",
       "display_name": "Z.ai: GLM Latest",
       "context_window": 1048576,
-      "max_output_tokens": 131072,
+      "max_output_tokens": 943718,
       "input_modalities": [
         "text"
       ],
@@ -3236,7 +3241,7 @@
         "tokenizer": "Router",
         "top_provider": {
           "context_length": 1048576,
-          "max_completion_tokens": 131072,
+          "max_completion_tokens": 943718,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -11571,7 +11576,7 @@
         "image"
       ],
       "output_modalities": [
-        "decisions"
+        "decision"
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -11596,7 +11601,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.042,
+        "input_per_1m": 0.24,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
@@ -11676,7 +11681,7 @@
         "image"
       ],
       "output_modalities": [
-        "decisions"
+        "decision"
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -11701,7 +11706,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.021,
+        "input_per_1m": 0.038,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
@@ -13967,8 +13972,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.95526,
-        "output_per_1m": 1.91052,
+        "input_per_1m": 0.280314,
+        "output_per_1m": 0.560628,
         "currency": "USD"
       },
       "extra": {
@@ -14011,7 +14016,7 @@
         ],
         "created": "2026-04-24",
         "description": "DeepSeek V4 Pro is a large-scale Mixture-of-Experts model from DeepSeek with 1.6T total parameters and 49B activated parameters, supporting a 1M-token context window. It is designed for advanced reasoning, coding,...",
-        "cache_read_per_1m": 0.079605,
+        "cache_read_per_1m": 0.02336,
         "default_parameters": {
           "temperature": 1,
           "top_p": 1
@@ -24122,7 +24127,7 @@
         "image"
       ],
       "output_modalities": [
-        "decisions"
+        "decision"
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -24897,7 +24902,7 @@
         "text"
       ],
       "output_modalities": [
-        "decisions"
+        "decision"
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -25431,7 +25436,7 @@
         "text"
       ],
       "output_modalities": [
-        "decisions"
+        "decision"
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -26455,7 +26460,6 @@
         ],
         "created": "2024-12-06",
         "description": "The Meta Llama 3.3 multilingual large language model (LLM) is a pretrained and instruction tuned generative model in 70B (text in/text out). The Llama 3.3 instruction tuned text only model...",
-        "cache_read_per_1m": 0.295,
         "links": {
           "details": "/api/v1/models/meta-llama/llama-3.3-70b-instruct/endpoints"
         },
@@ -26466,7 +26470,8 @@
         "features": [
           "tools",
           "structured_outputs"
-        ]
+        ],
+        "cache_read_per_1m": 0.295
       }
     },
     {
@@ -33750,7 +33755,7 @@
       "license_type": "api",
       "pricing": {
         "input_per_1m": 0.7,
-        "output_per_1m": 15.0,
+        "output_per_1m": 13.5,
         "currency": "USD"
       },
       "video": {
@@ -45144,7 +45149,7 @@
         "image"
       ],
       "output_modalities": [
-        "decisions"
+        "decision"
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -49836,7 +49841,7 @@
         "image"
       ],
       "output_modalities": [
-        "decisions"
+        "decision"
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -53746,8 +53751,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.15,
-        "output_per_1m": 1.0,
+        "input_per_1m": 0.08,
+        "output_per_1m": 0.75,
         "currency": "USD"
       },
       "video": {
@@ -53819,7 +53824,7 @@
         ],
         "created": "2026-02-25",
         "description": "The Qwen3.5 Series 35B-A3B is a native vision-language model designed with a hybrid architecture that integrates linear attention mechanisms and a sparse mixture-of-experts model, achieving higher inference efficiency. Its overall...",
-        "cache_read_per_1m": 0.05,
+        "cache_read_per_1m": 0.04,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95,
@@ -57488,7 +57493,7 @@
         "text"
       ],
       "output_modalities": [
-        "decisions"
+        "decision"
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -57579,7 +57584,7 @@
         "text"
       ],
       "output_modalities": [
-        "decisions"
+        "decision"
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -61314,7 +61319,7 @@
         "text"
       ],
       "output_modalities": [
-        "decisions"
+        "decision"
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -61455,7 +61460,8 @@
         "type_errors_possible": false,
         "output_token_billing": false,
         "endpoints": [
-          "https://openrouter.ai/api/alpha/decisions"
+          "https://openrouter.ai/api/alpha/decisions",
+          "https://openrouter.ai/api/v1/systemone"
         ],
         "source_url": "https://openrouter.ai/docs",
         "checked_at": "2026-09-19",
@@ -61463,6 +61469,10 @@
         "extra": {
           "openai_compatible": false,
           "availability": "alpha",
+          "endpoint_protocol": "openrouter-alpha-decisions",
+          "systemone_schema_compatible": true,
+          "typesafe_sdk_compatibility": true,
+          "systemone_endpoint": "https://openrouter.ai/api/v1/systemone",
           "upstream_route": "typesafe/jev-1.13"
         }
       },
@@ -61896,7 +61906,7 @@
         "text"
       ],
       "output_modalities": [
-        "decisions"
+        "decision"
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -61998,7 +62008,7 @@
         "text"
       ],
       "output_modalities": [
-        "decisions"
+        "decision"
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
@@ -67361,6 +67371,582 @@
           "tools",
           "structured_outputs",
           "reasoning",
+          "vision"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "apodex/apodex-1.1-mini",
+      "display_name": "Apodex: Apodex 1.1 Mini (free)",
+      "context_window": 262144,
+      "max_output_tokens": 262144,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "apodex-1.1-mini",
+        "openrouter/apodex/apodex-1.1-mini",
+        "apodex/apodex-1.1-mini"
+      ],
+      "license_type": "free",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "apodex",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 262144,
+          "max_completion_tokens": 262144,
+          "is_moderated": null
+        },
+        "supported_parameters": [
+          "reasoning",
+          "include_reasoning",
+          "max_tokens",
+          "temperature",
+          "top_p",
+          "stop",
+          "frequency_penalty",
+          "presence_penalty",
+          "seed",
+          "top_k",
+          "repetition_penalty",
+          "response_format",
+          "structured_outputs",
+          "tools",
+          "tool_choice"
+        ],
+        "description": "Apodex 1.1 Mini is a reasoning-first model from Apodex, built for complex, long-horizon research and forecasting tasks. It works directly with files, data, code, and tools to produce verifiable results, and is designed for agentic research workflows where answers need to be grounded in evidence.",
+        "free_tier": true,
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "apodex/apodex-1.1-mini:free",
+      "display_name": "Apodex: Apodex 1.1 Mini (free)",
+      "context_window": 262144,
+      "max_output_tokens": 235929,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "apodex-1.1-mini:free",
+        "openrouter/apodex/apodex-1.1-mini:free",
+        "apodex/apodex-1.1-mini-20261001",
+        "apodex/apodex-1.1-mini:free"
+      ],
+      "license_type": "free",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "apodex",
+        "canonical_slug": "apodex/apodex-1.1-mini-20261001",
+        "modality": "text->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 262144,
+          "max_completion_tokens": 235929,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "max_tokens",
+          "presence_penalty",
+          "reasoning",
+          "repetition_penalty",
+          "response_format",
+          "seed",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_k",
+          "top_p"
+        ],
+        "created": "2026-10-01",
+        "description": "Apodex 1.1 Mini is a reasoning-first model from Apodex, built for complex, long-horizon research and forecasting tasks. It works directly with files, data, code, and tools to produce verifiable results,...",
+        "free_tier": true,
+        "reasoning_meta": {
+          "mandatory": false
+        },
+        "links": {
+          "details": "/api/v1/models/apodex/apodex-1.1-mini-20261001/endpoints"
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "inclusionai/ling-3.0-flash-fin",
+      "display_name": "inclusionAI: Ling 3.0 Flash Fin",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "ling-3.0-flash-fin",
+        "openrouter/inclusionai/ling-3.0-flash-fin",
+        "inclusionai/ling-3.0-flash-fin-20260827",
+        "inclusionai/ling-3.0-flash-fin"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.042,
+        "output_per_1m": 0.1232,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "inclusionai",
+        "canonical_slug": "inclusionai/ling-3.0-flash-fin-20260827",
+        "modality": "text->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 262144,
+          "max_completion_tokens": 32768,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "logprobs",
+          "max_tokens",
+          "presence_penalty",
+          "reasoning",
+          "repetition_penalty",
+          "seed",
+          "stop",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_k",
+          "top_logprobs",
+          "top_p"
+        ],
+        "created": "2026-08-27",
+        "description": "Ling 3.0 Flash Fin is a finance-focused mixture-of-experts model from InclusionAI, built on Ling 3.0 Flash with 5.1B active parameters out of 124B total. It is designed for real-world investment...",
+        "cache_read_per_1m": 0.0084,
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": true
+        },
+        "links": {
+          "details": "/api/v1/models/inclusionai/ling-3.0-flash-fin-20260827/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 0,
+          "artificial_analysis": 1
+        },
+        "features": [
+          "tools",
+          "reasoning"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "inclusionai/ling-3.0-flash-sante",
+      "display_name": "inclusionAI: Ling 3.0 Flash Sante",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_json_schema": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "ling-3.0-flash-sante",
+        "openrouter/inclusionai/ling-3.0-flash-sante",
+        "inclusionai/ling-3.0-flash-sante-20260904",
+        "inclusionai/ling-3.0-flash-sante"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.042,
+        "output_per_1m": 0.1232,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "inclusionai",
+        "canonical_slug": "inclusionai/ling-3.0-flash-sante-20260904",
+        "modality": "text->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 262144,
+          "max_completion_tokens": 32768,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "logprobs",
+          "max_tokens",
+          "presence_penalty",
+          "reasoning",
+          "repetition_penalty",
+          "seed",
+          "stop",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_k",
+          "top_logprobs",
+          "top_p"
+        ],
+        "created": "2026-09-04",
+        "description": "Ling 3.0 Flash Sante is a health and medicine-focused mixture-of-experts model from InclusionAI, built on Ling 3.0 Flash with 5.1B active parameters out of 124B total. It is designed for...",
+        "cache_read_per_1m": 0.0084,
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": true
+        },
+        "links": {
+          "details": "/api/v1/models/inclusionai/ling-3.0-flash-sante-20260904/endpoints"
+        },
+        "features": [
+          "tools",
+          "reasoning"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "inclusionai/ming-image-0.1-design",
+      "display_name": "inclusionAI: Ming Image 0.1 Design",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "image"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_json_schema": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "ming-image-0.1-design",
+        "openrouter/inclusionai/ming-image-0.1-design",
+        "inclusionai/ming-image-0.1-design"
+      ],
+      "license_type": "free",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "image": {
+        "generation": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": false,
+        "status": "documented",
+        "source_url": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "checked_at": "2026-09-26"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "inclusionai",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 0,
+          "max_completion_tokens": 0,
+          "is_moderated": null
+        },
+        "supported_parameters": [
+          "max_tokens",
+          "temperature",
+          "top_p",
+          "stop",
+          "frequency_penalty",
+          "presence_penalty",
+          "seed",
+          "top_k",
+          "repetition_penalty"
+        ],
+        "description": "Ming Image 0.1 Design is a text-to-image model from inclusionAI aimed at graphic-design output, with an emphasis on legible text rendering inside the generated image. It generates from a prompt only and does not accept reference images. Output format can be requested as PNG, JPEG, or WebP. Image dimensions are chosen by the model rather than by the request, so explicit sizes and aspect ratios are ",
+        "free_tier": true,
+        "image_output_per_1m": 0.0,
+        "features": [
+          "image_output"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "inclusionai/ming-image-0.1-design-layer",
+      "display_name": "inclusionAI: Ming Image 0.1 Design Layer",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "image"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_json_schema": null,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "ming-image-0.1-design-layer",
+        "openrouter/inclusionai/ming-image-0.1-design-layer",
+        "inclusionai/ming-image-0.1-design-layer"
+      ],
+      "license_type": "free",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "image": {
+        "generation": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": true,
+        "status": "documented",
+        "source_url": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "checked_at": "2026-09-26"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "inclusionai",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 0,
+          "max_completion_tokens": 0,
+          "is_moderated": null
+        },
+        "supported_parameters": [
+          "max_tokens",
+          "temperature",
+          "top_p",
+          "stop",
+          "frequency_penalty",
+          "presence_penalty",
+          "seed",
+          "top_k",
+          "repetition_penalty"
+        ],
+        "description": "Ming Image 0.1 Design Layer is an image-to-image model from inclusionAI that decomposes a flattened design image into separate RGBA layers, such as a background layer and foreground elements, and returns one image per layer. It requires exactly one reference image and a prompt describing the layer plan. Output format can be requested as PNG or WebP. Output dimensions follow the input image, so exp",
+        "free_tier": true,
+        "image_output_per_1m": 0.0,
+        "features": [
+          "vision",
+          "image_output"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "unbiased/pareto",
+      "display_name": "Pareto",
+      "context_window": 262144,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": null,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "pareto",
+        "openrouter/unbiased/pareto",
+        "unbiased/pareto-20260917",
+        "unbiased/pareto"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 2.5,
+        "output_per_1m": 7.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "unbiased",
+        "canonical_slug": "unbiased/pareto-20260917",
+        "modality": "text+image->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 262144,
+          "max_completion_tokens": 131072,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "max_tokens",
+          "response_format",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_p"
+        ],
+        "created": "2026-09-17",
+        "description": "Pareto is a multimodal composite model built for research, coding, and agentic workflows, while delivering frontier-level performance across a broad range of general-purpose tasks.",
+        "cache_read_per_1m": 0.25,
+        "links": {
+          "details": "/api/v1/models/unbiased/pareto-20260917/endpoints"
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
           "vision"
         ]
       }

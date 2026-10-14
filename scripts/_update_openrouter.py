@@ -33,6 +33,11 @@ API_URL = "https://openrouter.ai/api/v1/models"
 SOURCE_DOCS = "https://openrouter.ai/docs"
 SOURCE_MODELS = "https://openrouter.ai/models"
 BASE_URL = "https://openrouter.ai/api/v1"
+DECISIONS_URL = "https://openrouter.ai/api/alpha/decisions"
+DECISIONS_DOCS = (
+    "https://openrouter.ai/docs/api/api-reference/alphadecisions/"
+    "submit-a-decisions-questions-and-answers-request"
+)
 FRONTEND_API_URL = (
     "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards"
 )
@@ -271,9 +276,26 @@ DECISION_ROUTES: list[dict[str, Any]] = [
         "input": 0.042,
         "output": 0.0,
         "endpoint": "https://openrouter.ai/api/alpha/decisions",
+        "systemone_endpoint": "https://openrouter.ai/api/v1/systemone",
         "resolves_hint": "typesafe/jev-*",
     },
 ]
+
+
+OPENROUTER_DECISION_MODEL_META: dict[str, dict[str, Any]] = {
+    "cloudflare/clef": {"question_kinds": ["noul", "choice", "score"], "upstream_protocol": "systemone-compatible", "upstream_endpoint": "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/cloudflare/clef", "calibrated_confidence": True},
+    "cloudflare/clef-flash": {"question_kinds": ["noul", "choice", "score"], "upstream_protocol": "systemone-compatible", "upstream_endpoint": "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/cloudflare/clef-flash", "calibrated_confidence": True},
+    "inception/mercury-decide": {"question_kinds": ["noul", "choice", "score"], "upstream_protocol": "systemone-compatible", "upstream_endpoint_path": "/v1/systemone", "calibrated_confidence": True},
+    "jaredpalmer/kev-4b": {"question_kinds": ["noul", "choice", "score"], "upstream_protocol": "typesafe-systemone-compatible", "upstream_endpoint_path": "/v1/systemone", "calibrated_confidence": True},
+    "liquid/d1": {"question_kinds": ["noul", "choice", "score"], "upstream_protocol": "typesafe-systemone-compatible", "upstream_endpoint": "https://api.liquid.ai/decisions/v1/systemone", "calibrated_confidence": True},
+    "openai/gpt-6-luna-decisions": {"question_kinds": ["predicate", "choice", "score"], "answer_fields": ["type", "probability", "choice", "score", "probabilities", "confidence"], "upstream_protocol": "openai-decisions-v1", "upstream_endpoint": "https://api.openai.com/v1/decisions"},
+    "perplexity/pplx-decider-v1.1-27b": {"question_kinds": ["noul", "choice", "score"], "upstream_protocol": "perplexity-decisions-v1", "upstream_endpoint": "https://api.perplexity.ai/v1/decisions", "systemone_schema_compatible": True, "typesafe_sdk_compatibility": "not-documented"},
+    "respan/span-01": {"question_kinds": ["noul"], "answer_fields": ["noul", "probabilities"], "returns_confidence": False, "upstream_protocol": "not-documented"},
+    "respan/span-01-lite": {"question_kinds": ["noul"], "answer_fields": ["noul", "probabilities"], "returns_confidence": False, "upstream_protocol": "not-documented"},
+    "togethercomputer/tev1-4b-experimental": {"question_kinds": ["choice"], "answer_fields": ["choice"], "returns_probabilities": False, "returns_confidence": None, "parallel_questions": False, "free_form_text": True, "type_errors_possible": True, "upstream_protocol": "openai-compatible-chat-completions", "upstream_endpoint_path": "/v1/chat/completions", "systemone_schema_compatible": False, "chat_completion": True},
+    "upstage/solar-decide": {"question_kinds": ["noul", "choice", "score"], "upstream_protocol": "systemone-compatible", "upstream_endpoint_path": "/v1/systemone", "calibrated_confidence": True},
+    "upstage/solar-decide-flash": {"question_kinds": ["noul", "choice", "score"], "upstream_protocol": "systemone-compatible", "upstream_endpoint_path": "/v1/systemone", "calibrated_confidence": True},
+}
 
 
 def per_token_to_1m(v: Any) -> float | None:
@@ -571,6 +593,59 @@ def map_model(raw: dict) -> dict:
     if effort:
         row["reasoning_effort_values"] = list(DEFAULT_EFFORT)
 
+    decision_spec = OPENROUTER_DECISION_MODEL_META.get(mid)
+    if decision_spec is not None:
+        chat_decision = bool(decision_spec.get("chat_completion"))
+        row["output_modalities"] = [
+            "decision" if modality == "decisions" else modality
+            for modality in out_mod
+        ]
+        endpoint = f"{BASE_URL}/chat/completions" if chat_decision else DECISIONS_URL
+        decision_extra = {
+            "endpoint_protocol": (
+                "openai-compatible-chat-completions"
+                if chat_decision
+                else "openrouter-alpha-decisions"
+            ),
+            "systemone_schema_compatible": decision_spec.get(
+                "systemone_schema_compatible", not chat_decision
+            ),
+            "upstream_provider": native_provider,
+            "upstream_protocol": decision_spec["upstream_protocol"],
+            "endpoint_docs": DECISIONS_DOCS if not chat_decision else SOURCE_DOCS,
+        }
+        for key in (
+            "upstream_endpoint",
+            "upstream_endpoint_path",
+            "typesafe_sdk_compatibility",
+        ):
+            if key in decision_spec:
+                decision_extra[key] = decision_spec[key]
+        row["decision"] = {
+            "decision": True,
+            "question_kinds": decision_spec["question_kinds"],
+            "answer_fields": decision_spec.get(
+                "answer_fields",
+                ["type", "noul", "choice", "score", "probabilities", "confidence", "legend"],
+            ),
+            "returns_probabilities": decision_spec.get("returns_probabilities", True),
+            "returns_confidence": decision_spec.get("returns_confidence", True),
+            "calibrated_confidence": decision_spec.get("calibrated_confidence"),
+            "parallel_questions": decision_spec.get("parallel_questions", True),
+            "free_form_text": decision_spec.get("free_form_text", False),
+            "type_errors_possible": decision_spec.get("type_errors_possible", False),
+            "deterministic": None,
+            "state_shapes": ["string", "json_object", "array"],
+            "max_state_tokens": None,
+            "max_total_tokens": ctx or None,
+            "output_token_billing": False if pout == 0.0 else None,
+            "endpoints": [endpoint],
+            "source_url": f"https://openrouter.ai/{mid}",
+            "checked_at": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+            "status": "documented",
+            "extra": decision_extra,
+        }
+
     return row
 
 
@@ -653,13 +728,17 @@ def build_decision_routes() -> list[dict]:
             "free_form_text": False,
             "type_errors_possible": False,
             "output_token_billing": False,
-            "endpoints": [d["endpoint"]],
+            "endpoints": [d["endpoint"], d["systemone_endpoint"]],
             "source_url": SOURCE_DOCS,
             "checked_at": "2026-09-19",
             "status": "documented",
             "extra": {
                 "openai_compatible": False,
                 "availability": "alpha",
+                "endpoint_protocol": "openrouter-alpha-decisions",
+                "systemone_schema_compatible": True,
+                "typesafe_sdk_compatibility": True,
+                "systemone_endpoint": d["systemone_endpoint"],
                 "upstream_route": mid,
             },
         }
@@ -670,6 +749,8 @@ def build_decision_routes() -> list[dict]:
             "tier": "decisions",
             "synthetic": True,
             "endpoint": d["endpoint"],
+            "systemone_endpoint": d["systemone_endpoint"],
+            "endpoint_protocol": "openrouter-alpha-decisions",
             "resolves_hint": d["resolves_hint"],
             "features": ["decision_output", "decisions_api"],
         }

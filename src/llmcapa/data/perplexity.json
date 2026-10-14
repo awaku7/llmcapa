@@ -376,6 +376,110 @@
         ]
       },
       "supports_json_schema": true
+    },
+    {
+      "provider": "perplexity",
+      "model_id": "pplx-decider-v1.1-27b",
+      "display_name": "Perplexity: Decider V1.1 27B",
+      "context_window": 262144,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "decision"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_json_schema": false,
+      "supports_streaming": false,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.02,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "noul",
+          "choice",
+          "score"
+        ],
+        "answer_fields": [
+          "type",
+          "noul",
+          "choice",
+          "score",
+          "confidence",
+          "probabilities",
+          "legend"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "calibrated_confidence": null,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "deterministic": null,
+        "state_shapes": [
+          "string",
+          "json_object",
+          "array"
+        ],
+        "max_state_tokens": null,
+        "max_total_tokens": 262144,
+        "output_token_billing": false,
+        "max_questions": 128,
+        "endpoints": [
+          "https://api.perplexity.ai/v1/decisions"
+        ],
+        "source_url": "https://docs.perplexity.ai/docs/decisions/quickstart",
+        "checked_at": "2026-10-08",
+        "status": "documented",
+        "extra": {
+          "endpoint_protocol": "perplexity-decisions-v1",
+          "endpoint_path": "/v1/decisions",
+          "systemone_schema_compatible": true,
+          "typesafe_sdk_compatibility": "not-documented",
+          "max_input_tokens": 262144,
+          "max_choice_options": 255,
+          "max_score_levels": 10,
+          "requests_per_second": 10,
+          "output_tokens": "May be reported in usage; not billed.",
+          "image_formats": [
+            "png",
+            "jpeg",
+            "webp"
+          ],
+          "notes": "Request/answer schema matches System One primitives and named-question structure. The endpoint path is Perplexity-specific; SDK drop-in compatibility is not stated in the API docs."
+        }
+      },
+      "extra": {
+        "official_source": "https://docs.perplexity.ai/docs/decisions/quickstart",
+        "official_source_checked_at": "2026-10-08",
+        "model_family": "pplx-decider",
+        "api_base_url": "https://api.perplexity.ai",
+        "api_endpoint": "https://api.perplexity.ai/v1/decisions",
+        "endpoint_protocol": "perplexity-decisions-v1",
+        "systemone_schema_compatible": true,
+        "typesafe_sdk_compatibility": "not-documented",
+        "notes": "Decision API usage examples report output_tokens, while output tokens are not billed."
+      }
     }
   ]
 }

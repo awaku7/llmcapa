@@ -6142,7 +6142,11 @@
             "output_per_1m": 0.0,
             "currency": "USD"
           },
-          "image_input": "Inline base64 data URLs only; hosted URLs and file_id are unsupported."
+          "image_input": "Inline base64 data URLs only; hosted URLs and file_id are unsupported.",
+          "endpoint_protocol": "openai-decisions-v1",
+          "endpoint_path": "/v1/decisions",
+          "systemone_schema_compatible": false,
+          "notes": "Uses OpenAI-specific input/predicate schema; it is not the TypeSafe System One request contract."
         }
       },
       "deprecated": false,
@@ -10221,6 +10225,88 @@
           "speech_understanding": true
         },
         "extra": {}
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-rosalind-discovery",
+      "display_name": "GPT-Rosalind Discovery",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [],
+      "pricing": {
+        "input_per_1m": 5.0,
+        "output_per_1m": 25.0,
+        "currency": "USD"
+      },
+      "supports_chat_completion": null,
+      "supports_responses_api": null,
+      "supports_streaming": null,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_vision": null,
+      "supports_reasoning": null,
+      "supports_reasoning_effort": null,
+      "supports_thinking_budget": null,
+      "supports_thinking_level": null,
+      "supports_fim": null,
+      "supports_anthropic_api": null,
+      "supports_google_api": null,
+      "supports_realtime": null,
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/pricing",
+        "spec_status": "pricing_only",
+        "required_approval": true,
+        "cached_input_per_1m": 0.5,
+        "access_program_url": "https://help.openai.com/en/articles/20001193-gpt-rosalind-for-life-sciences-research"
+      }
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-rosalind-research",
+      "display_name": "GPT-Rosalind Research",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "deprecated": false,
+      "aliases": [],
+      "pricing": {
+        "input_per_1m": 5.0,
+        "output_per_1m": 25.0,
+        "currency": "USD"
+      },
+      "supports_chat_completion": null,
+      "supports_responses_api": null,
+      "supports_streaming": null,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_vision": null,
+      "supports_reasoning": null,
+      "supports_reasoning_effort": null,
+      "supports_thinking_budget": null,
+      "supports_thinking_level": null,
+      "supports_fim": null,
+      "supports_anthropic_api": null,
+      "supports_google_api": null,
+      "supports_realtime": null,
+      "extra": {
+        "source": "https://developers.openai.com/api/docs/pricing",
+        "spec_status": "pricing_only",
+        "required_approval": true,
+        "cached_input_per_1m": 0.5,
+        "access_program_url": "https://help.openai.com/en/articles/20001193-gpt-rosalind-for-life-sciences-research"
       }
     }
   ]

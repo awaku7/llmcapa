@@ -184,6 +184,9 @@ def test_find_decision_models(capsys):
         "openrouter",
         "laya",
         "cloudflare-workers-ai",
+        "liquid",
+        "perplexity",
+        "microsoft",
     }
 
 

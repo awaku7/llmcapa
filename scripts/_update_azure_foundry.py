@@ -20,6 +20,8 @@ Notes:
 - Include documented chat/text-generation, embedding/rerank, and non-text modality
   inference records; omit unrelated text-only task families not represented by this
   capability schema unless they also expose a supported non-text modality.
+- Preserve Microsoft-Decision-1 when Foundry returns only its SSR card, then enrich
+  its decision API metadata from Microsoft's official catalog and usage documentation.
 """
 
 from __future__ import annotations
@@ -887,7 +889,14 @@ def is_supported_catalog_item(
         return True
     if _declared_modalities(item) & NON_TEXT_MODALITIES:
         return True
-    return item.get("source") == "ssr_card" and str(item.get("name") or "").lower() in (
+    name = str(item.get("name") or "").lower()
+    # The Foundry SSR catalog card for Microsoft-Decision-1 currently contains
+    # only its name. Its documented decision API is enriched below from the
+    # official model and Learn pages instead of dropping this new model as an
+    # unconfirmed text-only card.
+    if item.get("source") == "ssr_card" and name == "microsoft-decision-1":
+        return True
+    return item.get("source") == "ssr_card" and name in (
         previously_confirmed_model_names or set()
     )
 
@@ -1055,7 +1064,75 @@ def azure_tool_search_support(
 
 def apply_verified_catalog_metadata(row: dict[str, Any]) -> None:
     """Correct documented Foundry fields that the catalog API omits or mislabels."""
-    if str(row.get("model_id") or "").lower() != "fw-glm-5":
+    model_id = str(row.get("model_id") or "").lower()
+    if model_id == "microsoft-decision-1":
+        checked_at = datetime.now(timezone.utc).date().isoformat()
+        learn_url = (
+            "https://learn.microsoft.com/en-us/azure/foundry/"
+            "foundry-models/how-to/use-foundry-models-microsoft-decision"
+        )
+        row.update(
+            {
+                "provider": "microsoft",
+                "model_id": "Microsoft-Decision-1",
+                "display_name": "Microsoft-Decision-1",
+                "context_window": 32768,
+                "max_output_tokens": 0,
+                "input_modalities": ["text"],
+                "output_modalities": ["decision"],
+                "supports_chat_completion": False,
+                "supports_function_calling": False,
+                "supports_json_mode": False,
+                "supports_json_schema": False,
+                "supports_streaming": None,
+                "supports_vision": False,
+                "supports_reasoning": False,
+                "supports_responses_api": False,
+                "azure_type": "Decision",
+                "azure_lifecycle": "GA",
+                "source": "azure_foundry",
+                "license_type": "api",
+                "knowledge_cutoff": None,
+                "aliases": [
+                    "microsoft-decision-1",
+                    "microsoft/Microsoft-Decision-1",
+                ],
+            }
+        )
+        extra = row.setdefault("extra", {})
+        extra.update(
+            {
+                "official_model_catalog_url": (
+                    "https://ai.azure.com/catalog/models/Microsoft-Decision-1"
+                ),
+                "official_usage_docs": learn_url,
+                "official_catalog_checked_at": checked_at,
+                "deployment_types": ["DataZoneStandard", "GlobalStandard"],
+                "version": 1,
+                "summary": (
+                    "Decision-scoring model that returns calibrated probabilities "
+                    "for fixed answer options instead of generated text."
+                ),
+            }
+        )
+        row["decision"] = {
+            "decision": True,
+            "question_kinds": ["noul", "choice", "score"],
+            "returns_probabilities": True,
+            "calibrated_confidence": True,
+            "parallel_questions": True,
+            "free_form_text": False,
+            "type_errors_possible": False,
+            "state_shapes": ["text", "json"],
+            "max_total_tokens": 32768,
+            "endpoints": ["https://{azure_endpoint}/providers/microsoft/v1/systemone"],
+            "source_url": learn_url,
+            "checked_at": checked_at,
+            "status": "documented",
+            "extra": {"endpoint_protocol": "microsoft-foundry-systemone"},
+        }
+        return
+    if model_id != "fw-glm-5":
         return
     # Microsoft currently labels this GA Fireworks model as FW-GLM-5 on its
     # catalog page, which explicitly lists function calling/tool use and

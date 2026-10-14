@@ -69,6 +69,7 @@ class Registry:
         "mdx-maas": ["mdx", "mdxmaas"],
         # llama.cpp is a local inference backend, kept distinct from Ollama.
         "llama-cpp": ["llama", "llama_cpp"],
+        "liquid": ["liquid-ai", "liquidai"],
     }
 
     @staticmethod

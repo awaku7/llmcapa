@@ -12900,3 +12900,65 @@
 - Synthetic `~*/…-latest` aliases retained (9)
 - Replaced thin 14-model placeholder catalog
 - Install copy synced
+
+## Azure Foundry Microsoft-Decision-1 supplemental registration (2026-10-11)
+
+- The official catalog lists Microsoft-Decision-1 as Direct from Azure, GA, with a 32,768-token context window.
+- The catalog scrape returned only an SSR card (name/display name), which the generic task/modality filter could not classify. The Azure updater now preserves this verified card and enriches it from Microsoft's official catalog and usage documentation.
+- Recorded the documented text-to-decision modalities, typed question kinds, deployment types, and `/providers/microsoft/v1/systemone` endpoint. No price was inferred.
+- Sources: https://ai.azure.com/catalog/models/Microsoft-Decision-1 ; https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-microsoft-decision
+
+## Laya official package/checkpoint refresh (2026-10-12)
+
+- Sources: https://pypi.org/pypi/laya/json; https://huggingface.co/api/models?author=convaiinnovations&limit=100&full=false
+- PyPI package version: 0.4.5
+- Official Hugging Face checkpoints observed: 3
+- Existing capability records were preserved; new capabilities were not inferred.
+- Unregistered official checkpoint IDs for manual review: none
+
+## Modellix official media-model catalog refresh (2026-10-12)
+
+- Source: https://docs.modellix.ai/llms.txt
+- Classified official media model pages: 168
+- Unclassified official model pages held for manual review: none
+- Pricing and numeric limits were not inferred from model descriptions.
+- Historical records absent from the current index were retained.
+
+## Perplexity Router official model refresh (2026-10-12)
+
+- Source: https://docs.perplexity.ai/docs/router/models
+- Official hosted routes parsed: 4
+- Token/cache-read pricing and native model links were taken from the Router docs.
+- Existing model-specific capabilities were preserved; undocumented fields for new routes remain unknown.
+
+## Modellix official LLM catalog refresh (2026-10-12)
+
+- Source: https://www.modellix.ai/llm
+- Models parsed: 37
+- Context, modalities, pricing, and pricing tiers were read from the official table.
+- Unlisted historical records were retained without inferred deprecation.
+
+## TypeSafe official model refresh (2026-10-12)
+
+- Source: https://docs.typesafe.ai/models
+- Current version: jev-1.13.0
+- Documented aliases: jev-latest, jev-preview
+- Context, per-input pricing, and rate limits were read from the official docs; no output price was inferred.
+
+## Liquid decision-model documentation refresh (2026-10-12)
+
+- Sources: https://docs.liquid.ai/lfm/models/complete-library.md; https://docs.liquid.ai/lfm/models/decision-models.md
+- Decision models listed by Liquid: 3
+- Context lengths/parameter counts were refreshed only from explicitly labeled model-page specifications.
+- Historical records absent from the current index were retained.
+
+## Baseten public model docs refresh (2026-10-12)
+
+- Source: https://docs.baseten.co/inference/model-apis/overview
+- Public supported models scraped: 12
+
+## OpenAI life-sciences models refresh (2026-10-12)
+
+- Source: https://developers.openai.com/api/docs/pricing
+- Models added from the official Life sciences models pricing table: gpt-rosalind-research, gpt-rosalind-discovery
+- Access is limited to approved organizations; capabilities not documented on individual model pages remain unknown.
