@@ -8871,6 +8871,64 @@
     },
     {
       "provider": "modellix",
+      "model_id": "xai/grok-imagine-video-1-5-lite-i2v",
+      "display_name": "Grok Imagine Video 1.5 Lite I2V",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "video"
+      ],
+      "media_model_type": "image-to-video",
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": false,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "official_source": "https://docs.modellix.ai/xai/grok-imagine-video-1-5-lite-i2v.md",
+        "gateway_base_url": "https://api.modellix.ai",
+        "media_model_type": "image-to-video",
+        "official_description": "[Core Function] Grok Imagine Video 1.5 Lite I2V animates a single starting image into a video with native audio. [Strengths] It uses the input image as the first frame, keeps the output aspect ratio aligned with that image, and adds lip-synced speech. [Best For] Highly recommended for: animating a p…",
+        "checked_at": "2026-10-15"
+      },
+      "video": {
+        "accepts_video_input": false,
+        "generation": true,
+        "understanding": false,
+        "text_to_video": false,
+        "image_to_video": true,
+        "video_to_video": false,
+        "supports_streaming": false,
+        "supports_realtime": null,
+        "source_url": "https://docs.modellix.ai/xai/grok-imagine-video-1-5-lite-i2v.md",
+        "status": "documented",
+        "extra": {
+          "media_model_type": "image-to-video"
+        },
+        "endpoints": {
+          "generation": true
+        },
+        "output_formats": [
+          "mp4"
+        ],
+        "output_mime_types": [
+          "video/mp4"
+        ],
+        "checked_at": "2026-10-15"
+      }
+    },
+    {
+      "provider": "modellix",
       "model_id": "xai/grok-imagine-video",
       "display_name": "Grok Imagine Video",
       "context_window": 0,

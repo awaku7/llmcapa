@@ -4975,55 +4975,6 @@
     },
     {
       "provider": "azure-openai",
-      "model_id": "gpt-image-2.5-sunburst",
-      "display_name": "gpt-image-2.5-sunburst",
-      "context_window": 4096,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "image"
-      ],
-      "supports_chat_completion": false,
-      "supports_function_calling": false,
-      "supports_json_mode": null,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": null,
-      "knowledge_cutoff": "",
-      "azure_type": "Image generation,Image to image",
-      "azure_lifecycle": "GA",
-      "source": "azure_foundry",
-      "supports_responses_api": false,
-      "license_type": "api",
-      "aliases": [
-        "azure-openai/gpt-image-2.5-sunburst"
-      ],
-      "extra": {
-        "deployment_types": [
-          "maap-inference",
-          "batch-enabled"
-        ],
-        "azure_offers": [
-          "VM"
-        ],
-        "deployment_options": "AOAI,UnifiedEndpointMaaS,Serverless API",
-        "version": "2026-09-08",
-        "maas_or_paygo": true,
-        "summary": "An advanced image model for high-quality creation, editing, and production-ready visuals."
-      },
-      "image": {
-        "generation": true,
-        "accepts_text_prompt": true,
-        "accepts_image_input": true,
-        "status": "unknown",
-        "checked_at": "2026-10-15"
-      }
-    },
-    {
-      "provider": "azure-openai",
       "model_id": "gpt-live-1",
       "display_name": "OpenAI gpt-live-1",
       "context_window": 128000,
@@ -5404,6 +5355,46 @@
       }
     },
     {
+      "provider": "azure-openai",
+      "model_id": "whisper",
+      "display_name": "whisper",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Automatic speech recognition",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "api",
+      "aliases": [
+        "azure-openai/whisper"
+      ],
+      "extra": {
+        "deployment_types": [
+          "aoai-deployment"
+        ],
+        "azure_offers": [
+          "standard-paygo",
+          "VM"
+        ],
+        "deployment_options": "AOAI,UnifiedEndpointMaaS,MaaP,Serverless API",
+        "version": 1,
+        "maas_or_paygo": true
+      }
+    },
+    {
       "provider": "azure-openai-preview",
       "model_id": "gpt-4-32k",
       "display_name": "gpt-4-32k",
@@ -5635,6 +5626,55 @@
         ],
         "version": 800259,
         "maas_or_paygo": true
+      }
+    },
+    {
+      "provider": "black-forest-labs",
+      "model_id": "FLUX.2-flex",
+      "display_name": "FLUX.2-flex",
+      "context_window": 32768,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "image"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Image generation,Image to image",
+      "azure_lifecycle": "Preview",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "flux.2-flex",
+        "black-forest-labs/FLUX.2-flex"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maas-inference"
+        ],
+        "azure_offers": [
+          "standard-paygo"
+        ],
+        "deployment_options": "UnifiedEndpointMaaS,ServerlessMaaS,Serverless API",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "Professional text-to-image generation with adjustable inference steps and guidance scale for fine-tuned control. Features superior typography and text rendering, supports up to 4MP resolution, 32K prompt tokens, and up to 8 reference images. Ideal for deve"
+      },
+      "image": {
+        "generation": true,
+        "accepts_text_prompt": true,
+        "accepts_image_input": true,
+        "status": "unknown",
+        "checked_at": "2026-10-15"
       }
     },
     {
@@ -5993,6 +6033,49 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Embed V5 Fast is SOTA on search & retrieval benchmarks,establishing itself as the leader in performance for embedding models."
+      }
+    },
+    {
+      "provider": "cohere",
+      "model_id": "Cohere-Embed-V5-Pro",
+      "display_name": "Cohere Embed V5 Pro",
+      "context_window": 128000,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "image",
+        "text"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Embeddings,Summarization",
+      "azure_lifecycle": "Preview",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "cohere-embed-v5-pro",
+        "cohere/Cohere-Embed-V5-Pro"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maas-inference"
+        ],
+        "azure_offers": [
+          "standard-paygo"
+        ],
+        "deployment_options": "UnifiedEndpointMaaS,ServerlessMaaS,Serverless API",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "Embed V5 Pro is SOTA on search & retrieval benchmarks,establishing itself as the leader in performance for embedding models."
       }
     },
     {
@@ -14523,65 +14606,6 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Multimodal web agent for browser-based task automation."
-      }
-    },
-    {
-      "provider": "microsoft",
-      "model_id": "MAI-Image-2.6",
-      "display_name": "MAI-Image-2.6",
-      "context_window": 32000,
-      "max_output_tokens": 4096,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "image"
-      ],
-      "supports_chat_completion": false,
-      "supports_function_calling": false,
-      "supports_json_mode": null,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": null,
-      "knowledge_cutoff": "",
-      "azure_type": "Image generation",
-      "azure_lifecycle": "Preview",
-      "source": "azure_foundry",
-      "supports_responses_api": false,
-      "license_type": "custom",
-      "aliases": [
-        "mai-image-2.6",
-        "microsoft/MAI-Image-2.6"
-      ],
-      "extra": {
-        "deployment_types": [
-          "maas-inference"
-        ],
-        "azure_offers": [
-          "standard-paygo"
-        ],
-        "deployment_options": "UnifiedEndpointMaaS,ServerlessMaaS,Serverless API",
-        "version": "2026-07-31",
-        "maas_or_paygo": true,
-        "summary": "Built for creatives, delivering enhanced photorealism at scale."
-      },
-      "image": {
-        "generation": true,
-        "accepts_text_prompt": true,
-        "accepts_image_input": true,
-        "status": "documented",
-        "editing": true,
-        "input_formats": [
-          "jpeg",
-          "png"
-        ],
-        "input_mime_types": [
-          "image/jpeg",
-          "image/png"
-        ],
-        "source_url": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-mai-image",
-        "checked_at": "2026-10-15"
       }
     },
     {
