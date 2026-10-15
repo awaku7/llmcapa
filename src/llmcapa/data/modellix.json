@@ -34,7 +34,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "First input-context tier; Modellix may apply a displayed discount.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -75,13 +75,64 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
       "supports_fim": false,
       "license_type": "api",
       "deprecated": false
+    },
+    {
+      "provider": "modellix",
+      "model_id": "anthropic/claude-haiku-5.5",
+      "display_name": "Claude Haiku 5.5",
+      "context_window": 1000000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_vision": true,
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_anthropic_api": true,
+      "license_type": "api",
+      "deprecated": false,
+      "aliases": [],
+      "pricing": {
+        "input_per_1m": 0.09,
+        "output_per_1m": 0.45,
+        "currency": "USD",
+        "cache_read_per_1m": 0.009,
+        "cache_write_per_1m": 0.1125
+      },
+      "extra": {
+        "official_source": "https://www.modellix.ai/llm",
+        "gateway_base_url": "https://llm.modellix.ai/v1",
+        "checked_at": "2026-10-15",
+        "catalog_source": "official_modellix_llm_price_table",
+        "input_context_pricing_tiers": [
+          {
+            "input_context": "≤ 100K",
+            "input_per_1m": 0.09,
+            "output_per_1m": 0.45,
+            "cache_read_per_1m": 0.009,
+            "cache_write_per_1m": 0.1125
+          },
+          {
+            "input_context": "> 100K",
+            "input_per_1m": 0.45,
+            "output_per_1m": 2.25,
+            "cache_read_per_1m": 0.045,
+            "cache_write_per_1m": 0.5625
+          }
+        ]
+      },
+      "max_output_tokens": 0
     },
     {
       "provider": "modellix",
@@ -116,13 +167,48 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
       "supports_fim": false,
       "license_type": "api",
       "deprecated": false
+    },
+    {
+      "provider": "modellix",
+      "model_id": "anthropic/claude-opus-5.5",
+      "display_name": "Claude Opus 5.5",
+      "context_window": 1000000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_vision": true,
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_anthropic_api": true,
+      "license_type": "api",
+      "deprecated": false,
+      "aliases": [],
+      "pricing": {
+        "input_per_1m": 3.6,
+        "output_per_1m": 18.0,
+        "currency": "USD",
+        "cache_read_per_1m": 0.18,
+        "cache_write_per_1m": 2.25
+      },
+      "extra": {
+        "official_source": "https://www.modellix.ai/llm",
+        "gateway_base_url": "https://llm.modellix.ai/v1",
+        "checked_at": "2026-10-15",
+        "catalog_source": "official_modellix_llm_price_table"
+      },
+      "max_output_tokens": 0
     },
     {
       "provider": "modellix",
@@ -158,13 +244,48 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
       "supports_fim": false,
       "license_type": "api",
       "deprecated": false
+    },
+    {
+      "provider": "modellix",
+      "model_id": "anthropic/claude-sonnet-5.5",
+      "display_name": "Claude Sonnet 5.5",
+      "context_window": 1000000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_vision": true,
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_anthropic_api": true,
+      "license_type": "api",
+      "deprecated": false,
+      "aliases": [],
+      "pricing": {
+        "input_per_1m": 1.8,
+        "output_per_1m": 9.0,
+        "currency": "USD",
+        "cache_read_per_1m": 0.09,
+        "cache_write_per_1m": 2.25
+      },
+      "extra": {
+        "official_source": "https://www.modellix.ai/llm",
+        "gateway_base_url": "https://llm.modellix.ai/v1",
+        "checked_at": "2026-10-15",
+        "catalog_source": "official_modellix_llm_price_table"
+      },
+      "max_output_tokens": 0
     },
     {
       "provider": "modellix",
@@ -193,7 +314,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -233,7 +354,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -270,7 +391,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -280,6 +401,41 @@
       "license_type": "api",
       "deprecated": false,
       "aliases": []
+    },
+    {
+      "provider": "modellix",
+      "model_id": "deepseek/deepseek-v4.1-flash",
+      "display_name": "Deepseek V4.1 Flash",
+      "context_window": 1000000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_vision": true,
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_anthropic_api": true,
+      "license_type": "api",
+      "deprecated": false,
+      "aliases": [],
+      "pricing": {
+        "input_per_1m": 0.3,
+        "output_per_1m": 1.2,
+        "currency": "USD",
+        "cache_read_per_1m": 0.006,
+        "cache_write_per_1m": 0.0
+      },
+      "extra": {
+        "official_source": "https://www.modellix.ai/llm",
+        "gateway_base_url": "https://llm.modellix.ai/v1",
+        "checked_at": "2026-10-15",
+        "catalog_source": "official_modellix_llm_price_table"
+      },
+      "max_output_tokens": 0
     },
     {
       "provider": "modellix",
@@ -315,7 +471,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "First input-context tier; Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table",
         "input_context_pricing_tiers": [
@@ -342,7 +498,7 @@
         "speech_understanding": true,
         "supports_streaming": true,
         "supports_realtime": null,
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "documented",
         "endpoints": {
           "speech_understanding": true,
@@ -381,7 +537,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-14"
+        "checked_at": "2026-10-15"
       },
       "supports_anthropic_api": true,
       "license_type": "api",
@@ -418,7 +574,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -429,7 +585,7 @@
         "speech_understanding": true,
         "supports_streaming": true,
         "supports_realtime": null,
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "documented",
         "endpoints": {
           "speech_understanding": true,
@@ -468,7 +624,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-14"
+        "checked_at": "2026-10-15"
       },
       "supports_anthropic_api": true,
       "license_type": "api",
@@ -506,7 +662,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -517,7 +673,7 @@
         "speech_understanding": true,
         "supports_streaming": true,
         "supports_realtime": null,
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "documented",
         "endpoints": {
           "speech_understanding": true,
@@ -556,7 +712,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-14"
+        "checked_at": "2026-10-15"
       },
       "supports_anthropic_api": true,
       "license_type": "api",
@@ -597,7 +753,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -608,7 +764,7 @@
         "speech_understanding": true,
         "supports_streaming": true,
         "supports_realtime": null,
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "documented",
         "endpoints": {
           "speech_understanding": true,
@@ -647,11 +803,95 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-14"
+        "checked_at": "2026-10-15"
       },
       "supports_anthropic_api": true,
       "license_type": "api",
       "deprecated": false
+    },
+    {
+      "provider": "modellix",
+      "model_id": "google/gemini-4-argon",
+      "display_name": "Gemini 4 Argon",
+      "context_window": 1050000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_vision": true,
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_anthropic_api": true,
+      "license_type": "api",
+      "deprecated": false,
+      "aliases": [],
+      "pricing": {
+        "input_per_1m": 1.8,
+        "output_per_1m": 9.0,
+        "currency": "USD",
+        "cache_read_per_1m": 0.09,
+        "cache_write_per_1m": 0.0
+      },
+      "extra": {
+        "official_source": "https://www.modellix.ai/llm",
+        "gateway_base_url": "https://llm.modellix.ai/v1",
+        "checked_at": "2026-10-15",
+        "catalog_source": "official_modellix_llm_price_table"
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "source_url": "https://www.modellix.ai/llm",
+        "status": "documented",
+        "extra": {},
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-15"
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "source_url": "https://www.modellix.ai/llm",
+        "status": "documented",
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-15"
+      }
     },
     {
       "provider": "modellix",
@@ -683,7 +923,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "Modellix displayed price; availability may vary.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -718,7 +958,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-14"
+        "checked_at": "2026-10-15"
       },
       "supports_anthropic_api": true,
       "license_type": "api",
@@ -754,7 +994,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -796,7 +1036,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -834,7 +1074,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "First input-context tier; Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table",
         "input_context_pricing_tiers": [
@@ -889,7 +1129,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "First input-context tier; Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table",
         "input_context_pricing_tiers": [
@@ -945,7 +1185,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "First input-context tier; Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table",
         "input_context_pricing_tiers": [
@@ -999,7 +1239,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "First input-context tier; Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table",
         "input_context_pricing_tiers": [
@@ -1057,7 +1297,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "First input-context tier; Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table",
         "input_context_pricing_tiers": [
@@ -1081,6 +1321,159 @@
       "supports_anthropic_api": true,
       "license_type": "api",
       "deprecated": false
+    },
+    {
+      "provider": "modellix",
+      "model_id": "openai/gpt-6-luna",
+      "display_name": "GPT 6 Luna",
+      "context_window": 1050000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_vision": true,
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_anthropic_api": true,
+      "license_type": "api",
+      "deprecated": false,
+      "aliases": [],
+      "pricing": {
+        "input_per_1m": 0.09,
+        "output_per_1m": 0.45,
+        "currency": "USD",
+        "cache_read_per_1m": 0.009,
+        "cache_write_per_1m": 0.1125
+      },
+      "extra": {
+        "official_source": "https://www.modellix.ai/llm",
+        "gateway_base_url": "https://llm.modellix.ai/v1",
+        "checked_at": "2026-10-15",
+        "catalog_source": "official_modellix_llm_price_table",
+        "input_context_pricing_tiers": [
+          {
+            "input_context": "≤ 272K",
+            "input_per_1m": 0.09,
+            "output_per_1m": 0.45,
+            "cache_read_per_1m": 0.009,
+            "cache_write_per_1m": 0.1125
+          },
+          {
+            "input_context": "> 272K",
+            "input_per_1m": 0.18,
+            "output_per_1m": 0.675,
+            "cache_read_per_1m": 0.018,
+            "cache_write_per_1m": 0.225
+          }
+        ]
+      },
+      "max_output_tokens": 0
+    },
+    {
+      "provider": "modellix",
+      "model_id": "openai/gpt-6-sol",
+      "display_name": "GPT 6 Sol",
+      "context_window": 1050000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_vision": true,
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_anthropic_api": true,
+      "license_type": "api",
+      "deprecated": false,
+      "aliases": [],
+      "pricing": {
+        "input_per_1m": 1.8,
+        "output_per_1m": 9.0,
+        "currency": "USD",
+        "cache_read_per_1m": 0.18,
+        "cache_write_per_1m": 2.25
+      },
+      "extra": {
+        "official_source": "https://www.modellix.ai/llm",
+        "gateway_base_url": "https://llm.modellix.ai/v1",
+        "checked_at": "2026-10-15",
+        "catalog_source": "official_modellix_llm_price_table",
+        "input_context_pricing_tiers": [
+          {
+            "input_context": "≤ 272K",
+            "input_per_1m": 1.8,
+            "output_per_1m": 9.0,
+            "cache_read_per_1m": 0.18,
+            "cache_write_per_1m": 2.25
+          },
+          {
+            "input_context": "> 272K",
+            "input_per_1m": 3.6,
+            "output_per_1m": 13.5,
+            "cache_read_per_1m": 0.36,
+            "cache_write_per_1m": 4.5
+          }
+        ]
+      },
+      "max_output_tokens": 0
+    },
+    {
+      "provider": "modellix",
+      "model_id": "openai/gpt-6.1-sol",
+      "display_name": "GPT 6.1 Sol",
+      "context_window": 1050000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_vision": true,
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_anthropic_api": true,
+      "license_type": "api",
+      "deprecated": false,
+      "aliases": [],
+      "pricing": {
+        "input_per_1m": 1.8,
+        "output_per_1m": 9.0,
+        "currency": "USD",
+        "cache_read_per_1m": 0.09,
+        "cache_write_per_1m": 2.25
+      },
+      "extra": {
+        "official_source": "https://www.modellix.ai/llm",
+        "gateway_base_url": "https://llm.modellix.ai/v1",
+        "checked_at": "2026-10-15",
+        "catalog_source": "official_modellix_llm_price_table",
+        "input_context_pricing_tiers": [
+          {
+            "input_context": "≤ 272K",
+            "input_per_1m": 1.8,
+            "output_per_1m": 9.0,
+            "cache_read_per_1m": 0.09,
+            "cache_write_per_1m": 2.25
+          },
+          {
+            "input_context": "> 272K",
+            "input_per_1m": 3.6,
+            "output_per_1m": 13.5,
+            "cache_read_per_1m": 0.18,
+            "cache_write_per_1m": 4.5
+          }
+        ]
+      },
+      "max_output_tokens": 0
     },
     {
       "provider": "modellix",
@@ -1109,7 +1502,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -1149,7 +1542,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -1189,7 +1582,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -1224,7 +1617,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-14"
+        "checked_at": "2026-10-15"
       },
       "supports_anthropic_api": true,
       "license_type": "api",
@@ -1264,7 +1657,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -1299,7 +1692,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-14"
+        "checked_at": "2026-10-15"
       },
       "supports_anthropic_api": true,
       "license_type": "api",
@@ -1334,7 +1727,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "First input-context tier; Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table",
         "input_context_pricing_tiers": [
@@ -1392,7 +1785,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "First input-context tier; Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table",
         "input_context_pricing_tiers": [
@@ -1416,6 +1809,57 @@
       "supports_anthropic_api": true,
       "license_type": "api",
       "deprecated": false
+    },
+    {
+      "provider": "modellix",
+      "model_id": "xai/grok-4.7",
+      "display_name": "Grok 4.7",
+      "context_window": 500000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_vision": true,
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_anthropic_api": true,
+      "license_type": "api",
+      "deprecated": false,
+      "aliases": [],
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 6.0,
+        "currency": "USD",
+        "cache_read_per_1m": 0.5,
+        "cache_write_per_1m": 0.0
+      },
+      "extra": {
+        "official_source": "https://www.modellix.ai/llm",
+        "gateway_base_url": "https://llm.modellix.ai/v1",
+        "checked_at": "2026-10-15",
+        "catalog_source": "official_modellix_llm_price_table",
+        "input_context_pricing_tiers": [
+          {
+            "input_context": "≤ 200K",
+            "input_per_1m": 2.0,
+            "output_per_1m": 6.0,
+            "cache_read_per_1m": 0.5,
+            "cache_write_per_1m": 0.0
+          },
+          {
+            "input_context": "> 200K",
+            "input_per_1m": 4.0,
+            "output_per_1m": 12.0,
+            "cache_read_per_1m": 1.0,
+            "cache_write_per_1m": 0.0
+          }
+        ]
+      },
+      "max_output_tokens": 0
     },
     {
       "provider": "modellix",
@@ -1444,7 +1888,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -1482,7 +1926,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -1523,7 +1967,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -1563,7 +2007,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -1598,372 +2042,12 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-14"
+        "checked_at": "2026-10-15"
       },
       "supports_anthropic_api": true,
       "license_type": "api",
       "deprecated": false,
       "aliases": []
-    },
-    {
-      "provider": "modellix",
-      "model_id": "anthropic/claude-haiku-5.5",
-      "display_name": "Claude Haiku 5.5",
-      "context_window": 1000000,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_vision": true,
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_responses_api": true,
-      "supports_anthropic_api": true,
-      "license_type": "api",
-      "deprecated": false,
-      "aliases": [],
-      "pricing": {
-        "input_per_1m": 0.09,
-        "output_per_1m": 0.45,
-        "currency": "USD",
-        "cache_read_per_1m": 0.009,
-        "cache_write_per_1m": 0.1125
-      },
-      "extra": {
-        "official_source": "https://www.modellix.ai/llm",
-        "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
-        "catalog_source": "official_modellix_llm_price_table",
-        "input_context_pricing_tiers": [
-          {
-            "input_context": "≤ 100K",
-            "input_per_1m": 0.09,
-            "output_per_1m": 0.45,
-            "cache_read_per_1m": 0.009,
-            "cache_write_per_1m": 0.1125
-          },
-          {
-            "input_context": "> 100K",
-            "input_per_1m": 0.45,
-            "output_per_1m": 2.25,
-            "cache_read_per_1m": 0.045,
-            "cache_write_per_1m": 0.5625
-          }
-        ]
-      },
-      "max_output_tokens": 0
-    },
-    {
-      "provider": "modellix",
-      "model_id": "anthropic/claude-opus-5.5",
-      "display_name": "Claude Opus 5.5",
-      "context_window": 1000000,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_vision": true,
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_responses_api": true,
-      "supports_anthropic_api": true,
-      "license_type": "api",
-      "deprecated": false,
-      "aliases": [],
-      "pricing": {
-        "input_per_1m": 3.6,
-        "output_per_1m": 18.0,
-        "currency": "USD",
-        "cache_read_per_1m": 0.18,
-        "cache_write_per_1m": 2.25
-      },
-      "extra": {
-        "official_source": "https://www.modellix.ai/llm",
-        "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
-        "catalog_source": "official_modellix_llm_price_table"
-      },
-      "max_output_tokens": 0
-    },
-    {
-      "provider": "modellix",
-      "model_id": "anthropic/claude-sonnet-5.5",
-      "display_name": "Claude Sonnet 5.5",
-      "context_window": 1000000,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_vision": true,
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_responses_api": true,
-      "supports_anthropic_api": true,
-      "license_type": "api",
-      "deprecated": false,
-      "aliases": [],
-      "pricing": {
-        "input_per_1m": 1.8,
-        "output_per_1m": 9.0,
-        "currency": "USD",
-        "cache_read_per_1m": 0.09,
-        "cache_write_per_1m": 2.25
-      },
-      "extra": {
-        "official_source": "https://www.modellix.ai/llm",
-        "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
-        "catalog_source": "official_modellix_llm_price_table"
-      },
-      "max_output_tokens": 0
-    },
-    {
-      "provider": "modellix",
-      "model_id": "deepseek/deepseek-v4.1-flash",
-      "display_name": "Deepseek V4.1 Flash",
-      "context_window": 1000000,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_vision": true,
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_responses_api": true,
-      "supports_anthropic_api": true,
-      "license_type": "api",
-      "deprecated": false,
-      "aliases": [],
-      "pricing": {
-        "input_per_1m": 0.3,
-        "output_per_1m": 1.2,
-        "currency": "USD",
-        "cache_read_per_1m": 0.006,
-        "cache_write_per_1m": 0.0
-      },
-      "extra": {
-        "official_source": "https://www.modellix.ai/llm",
-        "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
-        "catalog_source": "official_modellix_llm_price_table"
-      },
-      "max_output_tokens": 0
-    },
-    {
-      "provider": "modellix",
-      "model_id": "openai/gpt-6-luna",
-      "display_name": "GPT 6 Luna",
-      "context_window": 1050000,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_vision": true,
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_responses_api": true,
-      "supports_anthropic_api": true,
-      "license_type": "api",
-      "deprecated": false,
-      "aliases": [],
-      "pricing": {
-        "input_per_1m": 0.09,
-        "output_per_1m": 0.45,
-        "currency": "USD",
-        "cache_read_per_1m": 0.009,
-        "cache_write_per_1m": 0.1125
-      },
-      "extra": {
-        "official_source": "https://www.modellix.ai/llm",
-        "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
-        "catalog_source": "official_modellix_llm_price_table",
-        "input_context_pricing_tiers": [
-          {
-            "input_context": "≤ 272K",
-            "input_per_1m": 0.09,
-            "output_per_1m": 0.45,
-            "cache_read_per_1m": 0.009,
-            "cache_write_per_1m": 0.1125
-          },
-          {
-            "input_context": "> 272K",
-            "input_per_1m": 0.18,
-            "output_per_1m": 0.675,
-            "cache_read_per_1m": 0.018,
-            "cache_write_per_1m": 0.225
-          }
-        ]
-      },
-      "max_output_tokens": 0
-    },
-    {
-      "provider": "modellix",
-      "model_id": "openai/gpt-6-sol",
-      "display_name": "GPT 6 Sol",
-      "context_window": 1050000,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_vision": true,
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_responses_api": true,
-      "supports_anthropic_api": true,
-      "license_type": "api",
-      "deprecated": false,
-      "aliases": [],
-      "pricing": {
-        "input_per_1m": 1.8,
-        "output_per_1m": 9.0,
-        "currency": "USD",
-        "cache_read_per_1m": 0.18,
-        "cache_write_per_1m": 2.25
-      },
-      "extra": {
-        "official_source": "https://www.modellix.ai/llm",
-        "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
-        "catalog_source": "official_modellix_llm_price_table",
-        "input_context_pricing_tiers": [
-          {
-            "input_context": "≤ 272K",
-            "input_per_1m": 1.8,
-            "output_per_1m": 9.0,
-            "cache_read_per_1m": 0.18,
-            "cache_write_per_1m": 2.25
-          },
-          {
-            "input_context": "> 272K",
-            "input_per_1m": 3.6,
-            "output_per_1m": 13.5,
-            "cache_read_per_1m": 0.36,
-            "cache_write_per_1m": 4.5
-          }
-        ]
-      },
-      "max_output_tokens": 0
-    },
-    {
-      "provider": "modellix",
-      "model_id": "openai/gpt-6.1-sol",
-      "display_name": "GPT 6.1 Sol",
-      "context_window": 1050000,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_vision": true,
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_responses_api": true,
-      "supports_anthropic_api": true,
-      "license_type": "api",
-      "deprecated": false,
-      "aliases": [],
-      "pricing": {
-        "input_per_1m": 1.8,
-        "output_per_1m": 9.0,
-        "currency": "USD",
-        "cache_read_per_1m": 0.09,
-        "cache_write_per_1m": 2.25
-      },
-      "extra": {
-        "official_source": "https://www.modellix.ai/llm",
-        "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
-        "catalog_source": "official_modellix_llm_price_table",
-        "input_context_pricing_tiers": [
-          {
-            "input_context": "≤ 272K",
-            "input_per_1m": 1.8,
-            "output_per_1m": 9.0,
-            "cache_read_per_1m": 0.09,
-            "cache_write_per_1m": 2.25
-          },
-          {
-            "input_context": "> 272K",
-            "input_per_1m": 3.6,
-            "output_per_1m": 13.5,
-            "cache_read_per_1m": 0.18,
-            "cache_write_per_1m": 4.5
-          }
-        ]
-      },
-      "max_output_tokens": 0
-    },
-    {
-      "provider": "modellix",
-      "model_id": "xai/grok-4.7",
-      "display_name": "Grok 4.7",
-      "context_window": 500000,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_vision": true,
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_responses_api": true,
-      "supports_anthropic_api": true,
-      "license_type": "api",
-      "deprecated": false,
-      "aliases": [],
-      "pricing": {
-        "input_per_1m": 2.0,
-        "output_per_1m": 6.0,
-        "currency": "USD",
-        "cache_read_per_1m": 0.5,
-        "cache_write_per_1m": 0.0
-      },
-      "extra": {
-        "official_source": "https://www.modellix.ai/llm",
-        "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-10-12",
-        "catalog_source": "official_modellix_llm_price_table",
-        "input_context_pricing_tiers": [
-          {
-            "input_context": "≤ 200K",
-            "input_per_1m": 2.0,
-            "output_per_1m": 6.0,
-            "cache_read_per_1m": 0.5,
-            "cache_write_per_1m": 0.0
-          },
-          {
-            "input_context": "> 200K",
-            "input_per_1m": 4.0,
-            "output_per_1m": 12.0,
-            "cache_read_per_1m": 1.0,
-            "cache_write_per_1m": 0.0
-          }
-        ]
-      },
-      "max_output_tokens": 0
     }
   ]
 }

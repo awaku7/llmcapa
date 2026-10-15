@@ -2,8 +2,52 @@
   "models": [
     {
       "provider": "z-ai",
+      "model_id": "glm-4-32b-0414-128k",
+      "display_name": "GLM-4-32B-0414-128K",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_json_schema": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.1,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "official_source": "https://docs.z.ai/guides/overview/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_z_ai_pricing_model_inventory",
+        "model_type": "chat",
+        "endpoints": [
+          {
+            "base_url": "https://api.z.ai/api/paas/v4",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.z.ai/guides/overview/pricing"
+          }
+        ],
+        "not_listed_in_current_docs": false
+      }
+    },
+    {
+      "provider": "z-ai",
       "model_id": "glm-4.5",
-      "display_name": "Z.ai: GLM 4.5",
+      "display_name": "GLM-4.5",
       "context_window": 131072,
       "max_output_tokens": 98304,
       "input_modalities": [
@@ -35,9 +79,9 @@
         "currency": "USD"
       },
       "extra": {
-        "official_source": "https://docs.z.ai/guides/overview/quick-start",
-        "official_source_checked_at": "2026-08-21",
-        "official_spec_refresh": "official_source_checked",
+        "official_source": "https://docs.z.ai/guides/overview/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_z_ai_pricing_model_inventory",
         "structured_output_source": "https://docs.z.ai/guides/capabilities/struct-output",
         "structured_output_evidence": "Official API docs specify response_format={type: json_object}; schema validation is application-side.",
         "structured_output_checked_at": "2026-09-01",
@@ -45,19 +89,21 @@
         "structured_output_api_documented": true,
         "endpoints": [
           {
-            "base_url": "https://open.bigmodel.cn/api/paas/v4",
+            "base_url": "https://api.z.ai/api/paas/v4",
             "protocol": "openai-compatible",
             "auth": "bearer",
-            "source": "https://docs.z.ai/guides/capabilities/struct-output"
+            "source": "https://docs.z.ai/guides/overview/pricing"
           }
-        ]
+        ],
+        "model_type": "chat",
+        "not_listed_in_current_docs": false
       },
       "supports_json_schema": true
     },
     {
       "provider": "z-ai",
       "model_id": "glm-4.5-air",
-      "display_name": "Z.ai: GLM 4.5 Air",
+      "display_name": "GLM-4.5-Air",
       "context_window": 131072,
       "max_output_tokens": 98304,
       "input_modalities": [
@@ -84,33 +130,167 @@
       "aliases": [],
       "license_type": "unknown",
       "pricing": {
-        "input_per_1m": 0.13,
-        "output_per_1m": 0.85,
+        "input_per_1m": 0.2,
+        "output_per_1m": 1.1,
         "currency": "USD"
       },
       "extra": {
-        "official_source": "https://docs.z.ai/guides/overview/quick-start",
-        "official_source_checked_at": "2026-08-21",
-        "official_spec_refresh": "official_source_checked",
+        "official_source": "https://docs.z.ai/guides/overview/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_z_ai_pricing_model_inventory",
         "structured_output_source": "https://docs.z.ai/guides/capabilities/struct-output",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
         "structured_output_api_documented": true,
         "endpoints": [
           {
-            "base_url": "https://open.bigmodel.cn/api/paas/v4",
+            "base_url": "https://api.z.ai/api/paas/v4",
             "protocol": "openai-compatible",
             "auth": "bearer",
-            "source": "https://docs.z.ai/guides/capabilities/struct-output"
+            "source": "https://docs.z.ai/guides/overview/pricing"
           }
-        ]
+        ],
+        "model_type": "chat",
+        "not_listed_in_current_docs": false
       },
       "supports_json_schema": true
     },
     {
       "provider": "z-ai",
+      "model_id": "glm-4.5-airx",
+      "display_name": "GLM-4.5-AirX",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_json_schema": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 1.1,
+        "output_per_1m": 4.5,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "official_source": "https://docs.z.ai/guides/overview/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_z_ai_pricing_model_inventory",
+        "model_type": "chat",
+        "endpoints": [
+          {
+            "base_url": "https://api.z.ai/api/paas/v4",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.z.ai/guides/overview/pricing"
+          }
+        ],
+        "not_listed_in_current_docs": false
+      }
+    },
+    {
+      "provider": "z-ai",
+      "model_id": "glm-4.5-flash",
+      "display_name": "GLM-4.5-Flash",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_json_schema": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "official_source": "https://docs.z.ai/guides/overview/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_z_ai_pricing_model_inventory",
+        "model_type": "chat",
+        "endpoints": [
+          {
+            "base_url": "https://api.z.ai/api/paas/v4",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.z.ai/guides/overview/pricing"
+          }
+        ],
+        "not_listed_in_current_docs": false
+      }
+    },
+    {
+      "provider": "z-ai",
+      "model_id": "glm-4.5-x",
+      "display_name": "GLM-4.5-X",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_json_schema": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 2.2,
+        "output_per_1m": 8.9,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "official_source": "https://docs.z.ai/guides/overview/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_z_ai_pricing_model_inventory",
+        "model_type": "chat",
+        "endpoints": [
+          {
+            "base_url": "https://api.z.ai/api/paas/v4",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.z.ai/guides/overview/pricing"
+          }
+        ],
+        "not_listed_in_current_docs": false
+      }
+    },
+    {
+      "provider": "z-ai",
       "model_id": "glm-4.5v",
-      "display_name": "Z.ai: GLM 4.5V",
+      "display_name": "GLM-4.5V",
       "context_window": 65536,
       "max_output_tokens": 16384,
       "input_modalities": [
@@ -139,32 +319,34 @@
       "license_type": "unknown",
       "pricing": {
         "input_per_1m": 0.6,
-        "output_per_1m": 1.7999999999999998,
+        "output_per_1m": 1.8,
         "currency": "USD"
       },
       "extra": {
-        "official_source": "https://docs.z.ai/guides/overview/quick-start",
-        "official_source_checked_at": "2026-08-21",
-        "official_spec_refresh": "official_source_checked",
+        "official_source": "https://docs.z.ai/guides/overview/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_z_ai_pricing_model_inventory",
         "structured_output_source": "https://docs.z.ai/guides/capabilities/struct-output",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
         "structured_output_api_documented": true,
         "endpoints": [
           {
-            "base_url": "https://open.bigmodel.cn/api/paas/v4",
+            "base_url": "https://api.z.ai/api/paas/v4",
             "protocol": "openai-compatible",
             "auth": "bearer",
-            "source": "https://docs.z.ai/guides/capabilities/struct-output"
+            "source": "https://docs.z.ai/guides/overview/pricing"
           }
-        ]
+        ],
+        "model_type": "vision",
+        "not_listed_in_current_docs": false
       },
       "supports_json_schema": true
     },
     {
       "provider": "z-ai",
       "model_id": "glm-4.6",
-      "display_name": "Z.ai: GLM 4.6",
+      "display_name": "GLM-4.6",
       "context_window": 204800,
       "max_output_tokens": 131072,
       "input_modalities": [
@@ -191,14 +373,14 @@
       "aliases": [],
       "license_type": "unknown",
       "pricing": {
-        "input_per_1m": 0.5,
-        "output_per_1m": 2.0,
+        "input_per_1m": 0.6,
+        "output_per_1m": 2.2,
         "currency": "USD"
       },
       "extra": {
-        "official_source": "https://docs.z.ai/guides/overview/quick-start",
-        "official_source_checked_at": "2026-08-21",
-        "official_spec_refresh": "official_source_checked",
+        "official_source": "https://docs.z.ai/guides/overview/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_z_ai_pricing_model_inventory",
         "structured_output_source": "https://docs.z.ai/guides/capabilities/struct-output",
         "structured_output_evidence": "Official API docs specify response_format={type: json_object}; schema validation is application-side.",
         "structured_output_checked_at": "2026-09-01",
@@ -206,19 +388,21 @@
         "structured_output_api_documented": true,
         "endpoints": [
           {
-            "base_url": "https://open.bigmodel.cn/api/paas/v4",
+            "base_url": "https://api.z.ai/api/paas/v4",
             "protocol": "openai-compatible",
             "auth": "bearer",
-            "source": "https://docs.z.ai/guides/capabilities/struct-output"
+            "source": "https://docs.z.ai/guides/overview/pricing"
           }
-        ]
+        ],
+        "model_type": "chat",
+        "not_listed_in_current_docs": false
       },
       "supports_json_schema": true
     },
     {
       "provider": "z-ai",
       "model_id": "glm-4.6v",
-      "display_name": "Z.ai: GLM 4.6V",
+      "display_name": "GLM-4.6V",
       "context_window": 131072,
       "max_output_tokens": 32768,
       "input_modalities": [
@@ -248,25 +432,27 @@
       "license_type": "unknown",
       "pricing": {
         "input_per_1m": 0.3,
-        "output_per_1m": 0.8999999999999999,
+        "output_per_1m": 0.9,
         "currency": "USD"
       },
       "extra": {
-        "official_source": "https://docs.z.ai/guides/overview/quick-start",
-        "official_source_checked_at": "2026-08-21",
-        "official_spec_refresh": "official_source_checked",
+        "official_source": "https://docs.z.ai/guides/overview/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_z_ai_pricing_model_inventory",
         "structured_output_source": "https://docs.z.ai/guides/capabilities/struct-output",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
         "structured_output_api_documented": true,
         "endpoints": [
           {
-            "base_url": "https://open.bigmodel.cn/api/paas/v4",
+            "base_url": "https://api.z.ai/api/paas/v4",
             "protocol": "openai-compatible",
             "auth": "bearer",
-            "source": "https://docs.z.ai/guides/capabilities/struct-output"
+            "source": "https://docs.z.ai/guides/overview/pricing"
           }
-        ]
+        ],
+        "model_type": "vision",
+        "not_listed_in_current_docs": false
       },
       "supports_json_schema": true,
       "video": {
@@ -278,7 +464,7 @@
         "video_to_video": false,
         "supports_streaming": true,
         "supports_realtime": null,
-        "source_url": "https://docs.z.ai/guides/overview/quick-start",
+        "source_url": "https://docs.z.ai/guides/overview/pricing",
         "status": "documented",
         "extra": {},
         "endpoints": {
@@ -299,13 +485,103 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-14"
+        "checked_at": "2026-10-15"
+      }
+    },
+    {
+      "provider": "z-ai",
+      "model_id": "glm-4.6v-flash",
+      "display_name": "GLM-4.6V-Flash",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_json_schema": null,
+      "supports_streaming": null,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "official_source": "https://docs.z.ai/guides/overview/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_z_ai_pricing_model_inventory",
+        "model_type": "vision",
+        "endpoints": [
+          {
+            "base_url": "https://api.z.ai/api/paas/v4",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.z.ai/guides/overview/pricing"
+          }
+        ],
+        "not_listed_in_current_docs": false
+      }
+    },
+    {
+      "provider": "z-ai",
+      "model_id": "glm-4.6v-flashx",
+      "display_name": "GLM-4.6V-FlashX",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_json_schema": null,
+      "supports_streaming": null,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 0.04,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "official_source": "https://docs.z.ai/guides/overview/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_z_ai_pricing_model_inventory",
+        "model_type": "vision",
+        "endpoints": [
+          {
+            "base_url": "https://api.z.ai/api/paas/v4",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.z.ai/guides/overview/pricing"
+          }
+        ],
+        "not_listed_in_current_docs": false
       }
     },
     {
       "provider": "z-ai",
       "model_id": "glm-4.7",
-      "display_name": "Z.ai: GLM 4.7",
+      "display_name": "GLM-4.7",
       "context_window": 204800,
       "max_output_tokens": 131072,
       "input_modalities": [
@@ -332,14 +608,14 @@
       "aliases": [],
       "license_type": "unknown",
       "pricing": {
-        "input_per_1m": 0.39999999999999997,
-        "output_per_1m": 1.75,
+        "input_per_1m": 0.6,
+        "output_per_1m": 2.2,
         "currency": "USD"
       },
       "extra": {
-        "official_source": "https://docs.z.ai/guides/overview/quick-start",
-        "official_source_checked_at": "2026-08-21",
-        "official_spec_refresh": "official_source_checked",
+        "official_source": "https://docs.z.ai/guides/overview/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_z_ai_pricing_model_inventory",
         "structured_output_source": "https://docs.z.ai/guides/capabilities/struct-output",
         "structured_output_evidence": "Official API docs specify response_format={type: json_object}; schema validation is application-side.",
         "structured_output_checked_at": "2026-09-01",
@@ -347,19 +623,21 @@
         "structured_output_api_documented": true,
         "endpoints": [
           {
-            "base_url": "https://open.bigmodel.cn/api/paas/v4",
+            "base_url": "https://api.z.ai/api/paas/v4",
             "protocol": "openai-compatible",
             "auth": "bearer",
-            "source": "https://docs.z.ai/guides/capabilities/struct-output"
+            "source": "https://docs.z.ai/guides/overview/pricing"
           }
-        ]
+        ],
+        "model_type": "chat",
+        "not_listed_in_current_docs": false
       },
       "supports_json_schema": true
     },
     {
       "provider": "z-ai",
       "model_id": "glm-4.7-flash",
-      "display_name": "Z.ai: GLM 4.7 Flash",
+      "display_name": "GLM-4.7-Flash",
       "context_window": 202752,
       "max_output_tokens": 16384,
       "input_modalities": [
@@ -386,33 +664,79 @@
       "aliases": [],
       "license_type": "unknown",
       "pricing": {
-        "input_per_1m": 0.06,
-        "output_per_1m": 0.39999999999999997,
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
         "currency": "USD"
       },
       "extra": {
-        "official_source": "https://docs.z.ai/guides/overview/quick-start",
-        "official_source_checked_at": "2026-08-21",
-        "official_spec_refresh": "official_source_checked",
+        "official_source": "https://docs.z.ai/guides/overview/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_z_ai_pricing_model_inventory",
         "structured_output_source": "https://docs.z.ai/guides/capabilities/struct-output",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
         "structured_output_api_documented": true,
         "endpoints": [
           {
-            "base_url": "https://open.bigmodel.cn/api/paas/v4",
+            "base_url": "https://api.z.ai/api/paas/v4",
             "protocol": "openai-compatible",
             "auth": "bearer",
-            "source": "https://docs.z.ai/guides/capabilities/struct-output"
+            "source": "https://docs.z.ai/guides/overview/pricing"
           }
-        ]
+        ],
+        "model_type": "chat",
+        "not_listed_in_current_docs": false
       },
       "supports_json_schema": true
     },
     {
       "provider": "z-ai",
+      "model_id": "glm-4.7-flashx",
+      "display_name": "GLM-4.7-FlashX",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_json_schema": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 0.07,
+        "output_per_1m": 0.4,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "official_source": "https://docs.z.ai/guides/overview/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_z_ai_pricing_model_inventory",
+        "model_type": "chat",
+        "endpoints": [
+          {
+            "base_url": "https://api.z.ai/api/paas/v4",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.z.ai/guides/overview/pricing"
+          }
+        ],
+        "not_listed_in_current_docs": false
+      }
+    },
+    {
+      "provider": "z-ai",
       "model_id": "glm-5",
-      "display_name": "Z.ai: GLM 5",
+      "display_name": "GLM-5",
       "context_window": 204800,
       "max_output_tokens": 131072,
       "input_modalities": [
@@ -439,14 +763,14 @@
       "aliases": [],
       "license_type": "unknown",
       "pricing": {
-        "input_per_1m": 0.95,
-        "output_per_1m": 2.5500000000000003,
+        "input_per_1m": 1.0,
+        "output_per_1m": 3.2,
         "currency": "USD"
       },
       "extra": {
-        "official_source": "https://docs.z.ai/guides/overview/quick-start",
-        "official_source_checked_at": "2026-08-21",
-        "official_spec_refresh": "official_source_checked",
+        "official_source": "https://docs.z.ai/guides/overview/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_z_ai_pricing_model_inventory",
         "structured_output_source": "https://docs.z.ai/guides/capabilities/struct-output",
         "structured_output_evidence": "Official API docs specify response_format={type: json_object}; schema validation is application-side.",
         "structured_output_checked_at": "2026-09-01",
@@ -454,14 +778,376 @@
         "structured_output_api_documented": true,
         "endpoints": [
           {
-            "base_url": "https://open.bigmodel.cn/api/paas/v4",
+            "base_url": "https://api.z.ai/api/paas/v4",
             "protocol": "openai-compatible",
             "auth": "bearer",
-            "source": "https://docs.z.ai/guides/capabilities/struct-output"
+            "source": "https://docs.z.ai/guides/overview/pricing"
           }
-        ]
+        ],
+        "model_type": "chat",
+        "not_listed_in_current_docs": false
       },
       "supports_json_schema": true
+    },
+    {
+      "provider": "z-ai",
+      "model_id": "glm-5.1",
+      "display_name": "GLM-5.1",
+      "context_window": 204800,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 1.4,
+        "output_per_1m": 4.4,
+        "currency": "USD"
+      },
+      "extra": {
+        "official_source": "https://docs.z.ai/guides/overview/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_z_ai_pricing_model_inventory",
+        "structured_output_source": "https://docs.z.ai/guides/capabilities/struct-output",
+        "structured_output_checked_at": "2026-09-01",
+        "structured_output_source_status": "reachable",
+        "structured_output_api_documented": true,
+        "endpoints": [
+          {
+            "base_url": "https://api.z.ai/api/paas/v4",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.z.ai/guides/overview/pricing"
+          }
+        ],
+        "model_type": "chat",
+        "not_listed_in_current_docs": false
+      },
+      "supports_json_schema": true
+    },
+    {
+      "provider": "z-ai",
+      "model_id": "glm-5.2",
+      "display_name": "GLM-5.2",
+      "context_window": 1048576,
+      "max_output_tokens": 262144,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 1.4,
+        "output_per_1m": 4.4,
+        "currency": "USD"
+      },
+      "extra": {
+        "official_source": "https://docs.z.ai/guides/overview/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_z_ai_pricing_model_inventory",
+        "structured_output_source": "https://docs.z.ai/guides/capabilities/struct-output",
+        "structured_output_checked_at": "2026-09-01",
+        "structured_output_source_status": "reachable",
+        "structured_output_api_documented": true,
+        "endpoints": [
+          {
+            "base_url": "https://api.z.ai/api/paas/v4",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.z.ai/guides/overview/pricing"
+          }
+        ],
+        "model_type": "chat",
+        "not_listed_in_current_docs": false
+      },
+      "supports_json_schema": true
+    },
+    {
+      "provider": "z-ai",
+      "model_id": "glm-5.3",
+      "display_name": "GLM-5.3",
+      "context_window": 1000000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "glm-5.3"
+      ],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 1.4,
+        "output_per_1m": 4.4,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://z.ai/blog/glm-5.3",
+        "availability": "GLM Coding Plan / ZCode",
+        "pricing_note": "No public pay-as-you-go token price confirmed; zero denotes plan-based availability, not free API usage.",
+        "official_context_window": "1M tokens",
+        "official_source": "https://docs.z.ai/guides/overview/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_z_ai_pricing_model_inventory",
+        "structured_output_source": "https://docs.z.ai/guides/capabilities/struct-output",
+        "structured_output_checked_at": "2026-09-01",
+        "structured_output_source_status": "reachable",
+        "structured_output_api_documented": true,
+        "endpoints": [
+          {
+            "base_url": "https://api.z.ai/api/paas/v4",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.z.ai/guides/overview/pricing"
+          }
+        ],
+        "model_type": "chat",
+        "not_listed_in_current_docs": false
+      },
+      "supports_json_schema": true
+    },
+    {
+      "provider": "z-ai",
+      "model_id": "glm-5.3-flash",
+      "display_name": "GLM-5.3-Flash",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_json_schema": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.5,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "official_source": "https://docs.z.ai/guides/overview/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_z_ai_pricing_model_inventory",
+        "model_type": "chat",
+        "endpoints": [
+          {
+            "base_url": "https://api.z.ai/api/paas/v4",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.z.ai/guides/overview/pricing"
+          }
+        ],
+        "not_listed_in_current_docs": false
+      }
+    },
+    {
+      "provider": "z-ai",
+      "model_id": "glm-5.3-flashx",
+      "display_name": "GLM-5.3-FlashX",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_json_schema": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 0.37,
+        "output_per_1m": 1.25,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "official_source": "https://docs.z.ai/guides/overview/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_z_ai_pricing_model_inventory",
+        "model_type": "chat",
+        "endpoints": [
+          {
+            "base_url": "https://api.z.ai/api/paas/v4",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.z.ai/guides/overview/pricing"
+          }
+        ],
+        "not_listed_in_current_docs": false
+      }
+    },
+    {
+      "provider": "z-ai",
+      "model_id": "glm-asr-2512",
+      "display_name": "GLM-ASR-2512",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_json_schema": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": null,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "official_source": "https://docs.z.ai/guides/overview/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_z_ai_pricing_model_inventory",
+        "model_type": "audio",
+        "endpoints": [
+          {
+            "base_url": "https://api.z.ai/api/paas/v4",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.z.ai/guides/overview/pricing"
+          }
+        ],
+        "not_listed_in_current_docs": false
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": null,
+        "supports_realtime": null,
+        "transcription": true,
+        "source_url": "https://docs.z.ai/guides/overview/pricing",
+        "status": "documented",
+        "extra": {},
+        "endpoints": {
+          "transcription": true,
+          "speech_understanding": true
+        },
+        "checked_at": "2026-10-15"
+      }
+    },
+    {
+      "provider": "z-ai",
+      "model_id": "glm-ocr",
+      "display_name": "GLM-OCR",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_json_schema": null,
+      "supports_streaming": null,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 0.03,
+        "output_per_1m": 0.03,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "official_source": "https://docs.z.ai/guides/overview/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_z_ai_pricing_model_inventory",
+        "model_type": "vision",
+        "endpoints": [
+          {
+            "base_url": "https://api.z.ai/api/paas/v4",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.z.ai/guides/overview/pricing"
+          }
+        ],
+        "not_listed_in_current_docs": false
+      }
     },
     {
       "provider": "z-ai",
@@ -499,7 +1185,7 @@
       },
       "extra": {
         "official_source": "https://docs.z.ai/guides/overview/quick-start",
-        "official_source_checked_at": "2026-08-21",
+        "official_source_checked_at": "2026-10-15",
         "official_spec_refresh": "official_source_checked",
         "structured_output_source": "https://docs.z.ai/guides/capabilities/struct-output",
         "structured_output_checked_at": "2026-09-01",
@@ -512,113 +1198,8 @@
             "auth": "bearer",
             "source": "https://docs.z.ai/guides/capabilities/struct-output"
           }
-        ]
-      },
-      "supports_json_schema": true
-    },
-    {
-      "provider": "z-ai",
-      "model_id": "glm-5.1",
-      "display_name": "Z.ai: GLM 5.1",
-      "context_window": 204800,
-      "max_output_tokens": 131072,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 1.4,
-        "output_per_1m": 4.4,
-        "currency": "USD"
-      },
-      "extra": {
-        "official_source": "https://docs.z.ai/guides/overview/quick-start",
-        "official_source_checked_at": "2026-08-21",
-        "official_spec_refresh": "official_source_checked",
-        "structured_output_source": "https://docs.z.ai/guides/capabilities/struct-output",
-        "structured_output_checked_at": "2026-09-01",
-        "structured_output_source_status": "reachable",
-        "structured_output_api_documented": true,
-        "endpoints": [
-          {
-            "base_url": "https://open.bigmodel.cn/api/paas/v4",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.z.ai/guides/capabilities/struct-output"
-          }
-        ]
-      },
-      "supports_json_schema": true
-    },
-    {
-      "provider": "z-ai",
-      "model_id": "glm-5.2",
-      "display_name": "Z.ai: GLM 5.2",
-      "context_window": 1048576,
-      "max_output_tokens": 262144,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.76,
-        "output_per_1m": 2.42,
-        "currency": "USD"
-      },
-      "extra": {
-        "official_source": "https://docs.z.ai/guides/overview/quick-start",
-        "official_source_checked_at": "2026-08-21",
-        "official_spec_refresh": "official_source_checked",
-        "structured_output_source": "https://docs.z.ai/guides/capabilities/struct-output",
-        "structured_output_checked_at": "2026-09-01",
-        "structured_output_source_status": "reachable",
-        "structured_output_api_documented": true,
-        "endpoints": [
-          {
-            "base_url": "https://open.bigmodel.cn/api/paas/v4",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.z.ai/guides/capabilities/struct-output"
-          }
-        ]
+        ],
+        "not_listed_in_current_docs": true
       },
       "supports_json_schema": true
     },
@@ -658,7 +1239,7 @@
       },
       "extra": {
         "official_source": "https://docs.z.ai/guides/overview/quick-start",
-        "official_source_checked_at": "2026-08-21",
+        "official_source_checked_at": "2026-10-15",
         "official_spec_refresh": "official_source_checked",
         "structured_output_source": "https://docs.z.ai/guides/capabilities/struct-output",
         "structured_output_checked_at": "2026-09-01",
@@ -671,66 +1252,8 @@
             "auth": "bearer",
             "source": "https://docs.z.ai/guides/capabilities/struct-output"
           }
-        ]
-      },
-      "supports_json_schema": true
-    },
-    {
-      "provider": "z-ai",
-      "model_id": "glm-5.3",
-      "display_name": "Z.ai: GLM 5.3",
-      "context_window": 1000000,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "glm-5.3"
-      ],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://z.ai/blog/glm-5.3",
-        "availability": "GLM Coding Plan / ZCode",
-        "pricing_note": "No public pay-as-you-go token price confirmed; zero denotes plan-based availability, not free API usage.",
-        "official_context_window": "1M tokens",
-        "official_source": "https://docs.z.ai/guides/overview/quick-start",
-        "official_source_checked_at": "2026-08-21",
-        "official_spec_refresh": "official_source_checked",
-        "structured_output_source": "https://docs.z.ai/guides/capabilities/struct-output",
-        "structured_output_checked_at": "2026-09-01",
-        "structured_output_source_status": "reachable",
-        "structured_output_api_documented": true,
-        "endpoints": [
-          {
-            "base_url": "https://open.bigmodel.cn/api/paas/v4",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.z.ai/guides/capabilities/struct-output"
-          }
-        ]
+        ],
+        "not_listed_in_current_docs": true
       },
       "supports_json_schema": true
     },
@@ -772,7 +1295,7 @@
       },
       "extra": {
         "official_source": "https://docs.z.ai/guides/overview/quick-start",
-        "official_source_checked_at": "2026-08-21",
+        "official_source_checked_at": "2026-10-15",
         "official_spec_refresh": "official_source_checked",
         "structured_output_source": "https://docs.z.ai/guides/capabilities/struct-output",
         "structured_output_checked_at": "2026-09-01",
@@ -785,7 +1308,8 @@
             "auth": "bearer",
             "source": "https://docs.z.ai/guides/capabilities/struct-output"
           }
-        ]
+        ],
+        "not_listed_in_current_docs": true
       },
       "supports_json_schema": true,
       "video": {
@@ -818,7 +1342,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-14"
+        "checked_at": "2026-10-15"
       }
     }
   ]

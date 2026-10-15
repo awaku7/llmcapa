@@ -2,385 +2,45 @@
   "models": [
     {
       "provider": "perplexity",
-      "model_id": "pplx-embed-v1-0.6b",
-      "display_name": "Perplexity: Embed V1 0.6B",
-      "context_window": 32000,
+      "model_id": "pplx-decider-v1-27b",
+      "display_name": "Perplexity: pplx-decider-v1-27b",
+      "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
       ],
       "output_modalities": [
-        "embeddings"
+        "text"
       ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_json_schema": null,
+      "supports_streaming": null,
       "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "unknown",
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": null,
       "pricing": {
-        "input_per_1m": 0.004,
+        "input_per_1m": 0.02,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
       "extra": {
-        "structured_output_source": "https://docs.perplexity.ai/",
-        "structured_output_checked_at": "2026-09-01",
-        "structured_output_source_status": "reachable",
-        "structured_output_verified_at": "2026-08-21",
-        "structured_output_api_documented": true,
-        "endpoints": [
-          {
-            "base_url": "https://api.perplexity.ai",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.perplexity.ai/"
-          }
-        ]
-      },
-      "supports_json_schema": true,
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
+        "official_source": "https://docs.perplexity.ai/docs/getting-started/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_perplexity_pricing_model_inventory",
+        "model_type": "decision",
+        "base_url": "https://api.perplexity.ai",
+        "not_listed_in_current_docs": false
       }
-    },
-    {
-      "provider": "perplexity",
-      "model_id": "pplx-embed-v1-4b",
-      "display_name": "Perplexity: Embed V1 4B",
-      "context_window": 32000,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "embeddings"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.03,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "structured_output_source": "https://docs.perplexity.ai/",
-        "structured_output_checked_at": "2026-09-01",
-        "structured_output_source_status": "reachable",
-        "structured_output_verified_at": "2026-08-21",
-        "structured_output_api_documented": true,
-        "endpoints": [
-          {
-            "base_url": "https://api.perplexity.ai",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.perplexity.ai/"
-          }
-        ]
-      },
-      "supports_json_schema": true,
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
-      }
-    },
-    {
-      "provider": "perplexity",
-      "model_id": "sonar",
-      "display_name": "Perplexity: Sonar",
-      "context_window": 127072,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 1.0,
-        "output_per_1m": 1.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "structured_output_source": "https://docs.perplexity.ai/",
-        "structured_output_checked_at": "2026-09-01",
-        "structured_output_source_status": "reachable",
-        "structured_output_verified_at": "2026-08-21",
-        "structured_output_api_documented": true,
-        "endpoints": [
-          {
-            "base_url": "https://api.perplexity.ai",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.perplexity.ai/"
-          }
-        ]
-      },
-      "supports_json_schema": true
-    },
-    {
-      "provider": "perplexity",
-      "model_id": "sonar-deep-research",
-      "display_name": "Perplexity: Sonar Deep Research",
-      "context_window": 128000,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 2.0,
-        "output_per_1m": 8.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "structured_output_source": "https://docs.perplexity.ai/",
-        "structured_output_checked_at": "2026-09-01",
-        "structured_output_source_status": "reachable",
-        "structured_output_verified_at": "2026-08-21",
-        "structured_output_api_documented": true,
-        "endpoints": [
-          {
-            "base_url": "https://api.perplexity.ai",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.perplexity.ai/"
-          }
-        ]
-      },
-      "supports_json_schema": true
-    },
-    {
-      "provider": "perplexity",
-      "model_id": "sonar-pro",
-      "display_name": "Perplexity: Sonar Pro",
-      "context_window": 200000,
-      "max_output_tokens": 8000,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 3.0,
-        "output_per_1m": 15.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "structured_output_source": "https://docs.perplexity.ai/",
-        "structured_output_checked_at": "2026-09-01",
-        "structured_output_source_status": "reachable",
-        "structured_output_verified_at": "2026-08-21",
-        "structured_output_api_documented": true,
-        "endpoints": [
-          {
-            "base_url": "https://api.perplexity.ai",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.perplexity.ai/"
-          }
-        ]
-      },
-      "supports_json_schema": true
-    },
-    {
-      "provider": "perplexity",
-      "model_id": "sonar-pro-search",
-      "display_name": "Perplexity: Sonar Pro Search",
-      "context_window": 200000,
-      "max_output_tokens": 8000,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 3.0,
-        "output_per_1m": 15.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "structured_output_source": "https://docs.perplexity.ai/",
-        "structured_output_checked_at": "2026-09-01",
-        "structured_output_source_status": "reachable",
-        "structured_output_verified_at": "2026-08-21",
-        "structured_output_api_documented": true,
-        "endpoints": [
-          {
-            "base_url": "https://api.perplexity.ai",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.perplexity.ai/"
-          }
-        ]
-      },
-      "supports_json_schema": true
-    },
-    {
-      "provider": "perplexity",
-      "model_id": "sonar-reasoning-pro",
-      "display_name": "Perplexity: Sonar Reasoning Pro",
-      "context_window": 128000,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 2.0,
-        "output_per_1m": 8.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "structured_output_source": "https://docs.perplexity.ai/",
-        "structured_output_checked_at": "2026-09-01",
-        "structured_output_source_status": "reachable",
-        "structured_output_verified_at": "2026-08-21",
-        "structured_output_api_documented": true,
-        "endpoints": [
-          {
-            "base_url": "https://api.perplexity.ai",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.perplexity.ai/"
-          }
-        ]
-      },
-      "supports_json_schema": true
     },
     {
       "provider": "perplexity",
       "model_id": "pplx-decider-v1.1-27b",
-      "display_name": "Perplexity: Decider V1.1 27B",
+      "display_name": "Perplexity: pplx-decider-v1.1-27b",
       "context_window": 262144,
       "max_output_tokens": 0,
       "input_modalities": [
@@ -470,16 +130,549 @@
         }
       },
       "extra": {
-        "official_source": "https://docs.perplexity.ai/docs/decisions/quickstart",
-        "official_source_checked_at": "2026-10-08",
+        "official_source": "https://docs.perplexity.ai/docs/getting-started/pricing",
+        "official_source_checked_at": "2026-10-15",
         "model_family": "pplx-decider",
         "api_base_url": "https://api.perplexity.ai",
         "api_endpoint": "https://api.perplexity.ai/v1/decisions",
         "endpoint_protocol": "perplexity-decisions-v1",
         "systemone_schema_compatible": true,
         "typesafe_sdk_compatibility": "not-documented",
-        "notes": "Decision API usage examples report output_tokens, while output tokens are not billed."
+        "notes": "Decision API usage examples report output_tokens, while output tokens are not billed.",
+        "official_spec_refresh": "official_perplexity_pricing_model_inventory",
+        "model_type": "decision",
+        "base_url": "https://api.perplexity.ai",
+        "not_listed_in_current_docs": false
       }
+    },
+    {
+      "provider": "perplexity",
+      "model_id": "pplx-embed-context-v1-0.6b",
+      "display_name": "Perplexity: pplx-embed-context-v1-0.6b",
+      "context_window": 32000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embeddings"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_json_schema": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 0.008,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "embedding": {
+        "embedding": true,
+        "output_formats": [
+          "float"
+        ],
+        "status": "official_docs",
+        "checked_at": "2026-10-15"
+      },
+      "extra": {
+        "official_source": "https://docs.perplexity.ai/docs/getting-started/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_perplexity_pricing_model_inventory",
+        "model_type": "embedding",
+        "base_url": "https://api.perplexity.ai",
+        "not_listed_in_current_docs": false,
+        "embedding_dimensions": 1024
+      }
+    },
+    {
+      "provider": "perplexity",
+      "model_id": "pplx-embed-context-v1-4b",
+      "display_name": "Perplexity: pplx-embed-context-v1-4b",
+      "context_window": 32000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embeddings"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_json_schema": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 0.05,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "embedding": {
+        "embedding": true,
+        "output_formats": [
+          "float"
+        ],
+        "status": "official_docs",
+        "checked_at": "2026-10-15"
+      },
+      "extra": {
+        "official_source": "https://docs.perplexity.ai/docs/getting-started/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_perplexity_pricing_model_inventory",
+        "model_type": "embedding",
+        "base_url": "https://api.perplexity.ai",
+        "not_listed_in_current_docs": false,
+        "embedding_dimensions": 2560
+      }
+    },
+    {
+      "provider": "perplexity",
+      "model_id": "pplx-embed-v1-0.6b",
+      "display_name": "Perplexity: pplx-embed-v1-0.6b",
+      "context_window": 32000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embeddings"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.004,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "structured_output_source": "https://docs.perplexity.ai/",
+        "structured_output_checked_at": "2026-09-01",
+        "structured_output_source_status": "reachable",
+        "structured_output_verified_at": "2026-08-21",
+        "structured_output_api_documented": true,
+        "endpoints": [
+          {
+            "base_url": "https://api.perplexity.ai",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.perplexity.ai/"
+          }
+        ],
+        "official_source": "https://docs.perplexity.ai/docs/getting-started/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_perplexity_pricing_model_inventory",
+        "model_type": "embedding",
+        "base_url": "https://api.perplexity.ai",
+        "not_listed_in_current_docs": false,
+        "embedding_dimensions": 1024
+      },
+      "supports_json_schema": true,
+      "embedding": {
+        "embedding": true,
+        "output_formats": [
+          "float"
+        ],
+        "status": "inferred",
+        "checked_at": "2026-10-14"
+      }
+    },
+    {
+      "provider": "perplexity",
+      "model_id": "pplx-embed-v1-4b",
+      "display_name": "Perplexity: pplx-embed-v1-4b",
+      "context_window": 32000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embeddings"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.03,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "structured_output_source": "https://docs.perplexity.ai/",
+        "structured_output_checked_at": "2026-09-01",
+        "structured_output_source_status": "reachable",
+        "structured_output_verified_at": "2026-08-21",
+        "structured_output_api_documented": true,
+        "endpoints": [
+          {
+            "base_url": "https://api.perplexity.ai",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.perplexity.ai/"
+          }
+        ],
+        "official_source": "https://docs.perplexity.ai/docs/getting-started/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_perplexity_pricing_model_inventory",
+        "model_type": "embedding",
+        "base_url": "https://api.perplexity.ai",
+        "not_listed_in_current_docs": false,
+        "embedding_dimensions": 2560
+      },
+      "supports_json_schema": true,
+      "embedding": {
+        "embedding": true,
+        "output_formats": [
+          "float"
+        ],
+        "status": "inferred",
+        "checked_at": "2026-10-14"
+      }
+    },
+    {
+      "provider": "perplexity",
+      "model_id": "sonar",
+      "display_name": "Sonar",
+      "context_window": 127072,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 1,
+        "output_per_1m": 1,
+        "currency": "USD"
+      },
+      "extra": {
+        "structured_output_source": "https://docs.perplexity.ai/",
+        "structured_output_checked_at": "2026-09-01",
+        "structured_output_source_status": "reachable",
+        "structured_output_verified_at": "2026-08-21",
+        "structured_output_api_documented": true,
+        "endpoints": [
+          {
+            "base_url": "https://api.perplexity.ai",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.perplexity.ai/"
+          }
+        ],
+        "official_source": "https://docs.perplexity.ai/docs/getting-started/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_perplexity_pricing_model_inventory",
+        "model_type": "chat",
+        "base_url": "https://api.perplexity.ai",
+        "not_listed_in_current_docs": false,
+        "request_pricing": {
+          "low": 5,
+          "medium": 8,
+          "high": 12
+        }
+      },
+      "supports_json_schema": true
+    },
+    {
+      "provider": "perplexity",
+      "model_id": "sonar-deep-research",
+      "display_name": "Sonar Deep Research",
+      "context_window": 128000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 2,
+        "output_per_1m": 8,
+        "currency": "USD"
+      },
+      "extra": {
+        "structured_output_source": "https://docs.perplexity.ai/",
+        "structured_output_checked_at": "2026-09-01",
+        "structured_output_source_status": "reachable",
+        "structured_output_verified_at": "2026-08-21",
+        "structured_output_api_documented": true,
+        "endpoints": [
+          {
+            "base_url": "https://api.perplexity.ai",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.perplexity.ai/"
+          }
+        ],
+        "official_source": "https://docs.perplexity.ai/docs/getting-started/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_perplexity_pricing_model_inventory",
+        "model_type": "chat",
+        "base_url": "https://api.perplexity.ai",
+        "not_listed_in_current_docs": false,
+        "request_pricing": {
+          "citation": 2,
+          "reasoning": 3,
+          "searchQueries": 5
+        }
+      },
+      "supports_json_schema": true
+    },
+    {
+      "provider": "perplexity",
+      "model_id": "sonar-pro",
+      "display_name": "Sonar Pro",
+      "context_window": 200000,
+      "max_output_tokens": 8000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 3,
+        "output_per_1m": 15,
+        "currency": "USD"
+      },
+      "extra": {
+        "structured_output_source": "https://docs.perplexity.ai/",
+        "structured_output_checked_at": "2026-09-01",
+        "structured_output_source_status": "reachable",
+        "structured_output_verified_at": "2026-08-21",
+        "structured_output_api_documented": true,
+        "endpoints": [
+          {
+            "base_url": "https://api.perplexity.ai",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.perplexity.ai/"
+          }
+        ],
+        "official_source": "https://docs.perplexity.ai/docs/getting-started/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_perplexity_pricing_model_inventory",
+        "model_type": "chat",
+        "base_url": "https://api.perplexity.ai",
+        "not_listed_in_current_docs": false,
+        "request_pricing": {
+          "low": 6,
+          "medium": 10,
+          "high": 14
+        }
+      },
+      "supports_json_schema": true
+    },
+    {
+      "provider": "perplexity",
+      "model_id": "sonar-reasoning-pro",
+      "display_name": "Sonar Reasoning Pro",
+      "context_window": 128000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 2,
+        "output_per_1m": 8,
+        "currency": "USD"
+      },
+      "extra": {
+        "structured_output_source": "https://docs.perplexity.ai/",
+        "structured_output_checked_at": "2026-09-01",
+        "structured_output_source_status": "reachable",
+        "structured_output_verified_at": "2026-08-21",
+        "structured_output_api_documented": true,
+        "endpoints": [
+          {
+            "base_url": "https://api.perplexity.ai",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.perplexity.ai/"
+          }
+        ],
+        "official_source": "https://docs.perplexity.ai/docs/getting-started/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_perplexity_pricing_model_inventory",
+        "model_type": "chat",
+        "base_url": "https://api.perplexity.ai",
+        "not_listed_in_current_docs": false,
+        "request_pricing": {
+          "low": 6,
+          "medium": 10,
+          "high": 14
+        }
+      },
+      "supports_json_schema": true
+    },
+    {
+      "provider": "perplexity",
+      "model_id": "sonar-pro-search",
+      "display_name": "Perplexity: Sonar Pro Search",
+      "context_window": 200000,
+      "max_output_tokens": 8000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 3.0,
+        "output_per_1m": 15.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "structured_output_source": "https://docs.perplexity.ai/",
+        "structured_output_checked_at": "2026-09-01",
+        "structured_output_source_status": "reachable",
+        "structured_output_verified_at": "2026-08-21",
+        "structured_output_api_documented": true,
+        "endpoints": [
+          {
+            "base_url": "https://api.perplexity.ai",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.perplexity.ai/"
+          }
+        ],
+        "official_source_checked_at": "2026-10-15",
+        "not_listed_in_current_docs": true
+      },
+      "supports_json_schema": true
     }
   ]
 }

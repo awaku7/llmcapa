@@ -171,6 +171,8 @@ def merge_inventory(snapshots: list[dict], previous: list[dict], checked_at: str
                 "deprecated": snapshot["deprecated"],
             }
         )
+        row.setdefault("context_window", 0)
+        row.setdefault("max_output_tokens", 0)
         for field in ("context_window", "max_output_tokens"):
             if snapshot[field]:
                 row[field] = snapshot[field]

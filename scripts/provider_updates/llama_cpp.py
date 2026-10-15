@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "src" / "llmcapa" / "data" / "llama_cpp.json"
 LOG = ROOT / "provider_update_log.md"
 DEFAULT_BASE_URL = "http://127.0.0.1:8080/v1"
-SOURCE = "https://github.com/ggml-org/llama.cpp/blob/master/examples/server/README.md"
+SOURCE = "https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md"
 
 
 def fetch_inventory(base_url: str | None = None, api_key: str | None = None) -> list[dict]:

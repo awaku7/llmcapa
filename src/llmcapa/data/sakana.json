@@ -3,7 +3,7 @@
     {
       "provider": "sakana",
       "model_id": "fugu",
-      "display_name": "Sakana Fugu",
+      "display_name": "Fugu",
       "context_window": 272000,
       "max_output_tokens": 128000,
       "input_modalities": [
@@ -44,9 +44,9 @@
         "max"
       ],
       "extra": {
-        "official_source": "https://www.sakana.ai/",
-        "official_source_checked_at": "2026-08-21",
-        "official_spec_refresh": "official_source_checked",
+        "official_source": "https://console.sakana.ai/models",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_sakana_public_docs",
         "structured_output_source": "https://console.sakana.ai/models",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
@@ -60,14 +60,17 @@
             "auth": "bearer",
             "source": "https://console.sakana.ai/models"
           }
-        ]
+        ],
+        "base_url": "https://api.sakana.ai/v1",
+        "api_model_owner": "sakana",
+        "not_listed_in_current_docs": false
       },
       "supports_json_schema": true
     },
     {
       "provider": "sakana",
       "model_id": "fugu-cyber",
-      "display_name": "Sakana: Fugu Cyber",
+      "display_name": "Fugu Cyber",
       "context_window": 1000000,
       "max_output_tokens": 128000,
       "input_modalities": [
@@ -103,9 +106,9 @@
         "fugu-cyber-v1.0"
       ],
       "extra": {
-        "official_source": "https://www.sakana.ai/",
-        "official_source_checked_at": "2026-08-21",
-        "official_spec_refresh": "official_source_checked",
+        "official_source": "https://console.sakana.ai/models",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_sakana_public_docs",
         "structured_output_source": "https://console.sakana.ai/models",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
@@ -119,14 +122,49 @@
             "auth": "bearer",
             "source": "https://console.sakana.ai/models"
           }
-        ]
+        ],
+        "base_url": "https://api.sakana.ai/v1",
+        "api_model_owner": "sakana",
+        "not_listed_in_current_docs": false
       },
       "supports_json_schema": true
     },
     {
       "provider": "sakana",
+      "model_id": "fugu-max",
+      "display_name": "Fugu Max",
+      "deprecated": false,
+      "extra": {
+        "official_source": "https://console.sakana.ai/models",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_sakana_public_docs",
+        "base_url": "https://api.sakana.ai/v1",
+        "api_model_owner": "sakana",
+        "not_listed_in_current_docs": false
+      },
+      "context_window": 0,
+      "max_output_tokens": 0
+    },
+    {
+      "provider": "sakana",
+      "model_id": "fugu-max-v1.0",
+      "display_name": "Fugu Max V1.0",
+      "deprecated": false,
+      "extra": {
+        "official_source": "https://console.sakana.ai/models",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_sakana_public_docs",
+        "base_url": "https://api.sakana.ai/v1",
+        "api_model_owner": "sakana",
+        "not_listed_in_current_docs": false
+      },
+      "context_window": 0,
+      "max_output_tokens": 0
+    },
+    {
+      "provider": "sakana",
       "model_id": "fugu-ultra",
-      "display_name": "Sakana: Fugu Ultra",
+      "display_name": "Fugu Ultra",
       "context_window": 1000000,
       "max_output_tokens": 128000,
       "input_modalities": [
@@ -159,9 +197,9 @@
         "currency": "USD"
       },
       "extra": {
-        "official_source": "https://www.sakana.ai/",
-        "official_source_checked_at": "2026-08-21",
-        "official_spec_refresh": "official_source_checked",
+        "official_source": "https://console.sakana.ai/models",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_sakana_public_docs",
         "structured_output_source": "https://console.sakana.ai/models",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
@@ -175,9 +213,60 @@
             "auth": "bearer",
             "source": "https://console.sakana.ai/models"
           }
-        ]
+        ],
+        "base_url": "https://api.sakana.ai/v1",
+        "api_model_owner": "sakana",
+        "not_listed_in_current_docs": false
       },
       "supports_json_schema": true
+    },
+    {
+      "provider": "sakana",
+      "model_id": "fugu-ultra-v1.0",
+      "display_name": "Fugu Ultra V1.0",
+      "deprecated": false,
+      "extra": {
+        "official_source": "https://console.sakana.ai/models",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_sakana_public_docs",
+        "base_url": "https://api.sakana.ai/v1",
+        "api_model_owner": "sakana",
+        "not_listed_in_current_docs": false
+      },
+      "context_window": 0,
+      "max_output_tokens": 0
+    },
+    {
+      "provider": "sakana",
+      "model_id": "fugu-ultra-v1.1",
+      "display_name": "Fugu Ultra V1.1",
+      "deprecated": false,
+      "extra": {
+        "official_source": "https://console.sakana.ai/models",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_sakana_public_docs",
+        "base_url": "https://api.sakana.ai/v1",
+        "api_model_owner": "sakana",
+        "not_listed_in_current_docs": false
+      },
+      "context_window": 0,
+      "max_output_tokens": 0
+    },
+    {
+      "provider": "sakana",
+      "model_id": "fugu-ultra-v2.0",
+      "display_name": "Fugu Ultra V2.0",
+      "deprecated": false,
+      "extra": {
+        "official_source": "https://console.sakana.ai/models",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_sakana_public_docs",
+        "base_url": "https://api.sakana.ai/v1",
+        "api_model_owner": "sakana",
+        "not_listed_in_current_docs": false
+      },
+      "context_window": 0,
+      "max_output_tokens": 0
     },
     {
       "provider": "sakana",
@@ -219,9 +308,9 @@
         "namazu"
       ],
       "extra": {
-        "official_source": "https://www.sakana.ai/",
-        "official_source_checked_at": "2026-08-21",
-        "official_spec_refresh": "official_source_checked",
+        "official_source": "https://console.sakana.ai/models",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_sakana_public_docs",
         "structured_output_source": "https://console.sakana.ai/models",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
@@ -235,9 +324,28 @@
             "auth": "bearer",
             "source": "https://console.sakana.ai/models"
           }
-        ]
+        ],
+        "base_url": "https://api.sakana.ai/v1",
+        "api_model_owner": "sakana",
+        "not_listed_in_current_docs": false
       },
       "supports_json_schema": true
+    },
+    {
+      "provider": "sakana",
+      "model_id": "sakana-namazu-v1.0",
+      "display_name": "Sakana Namazu V1.0",
+      "deprecated": false,
+      "extra": {
+        "official_source": "https://console.sakana.ai/models",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_sakana_public_docs",
+        "base_url": "https://api.sakana.ai/v1",
+        "api_model_owner": "sakana",
+        "not_listed_in_current_docs": false
+      },
+      "context_window": 0,
+      "max_output_tokens": 0
     }
   ]
 }

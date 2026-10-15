@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "src" / "llmcapa" / "data" / "lmstudio.json"
 LOG = ROOT / "provider_update_log.md"
 DEFAULT_BASE_URL = "http://127.0.0.1:1234/api/v1"
-SOURCE = "https://lmstudio.ai/docs/app/api/endpoints/models"
+SOURCE = "https://lmstudio.ai/docs/developer/rest/list"
 
 
 def fetch_inventory(base_url: str | None = None, api_key: str | None = None) -> list[dict]:

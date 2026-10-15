@@ -22,17 +22,35 @@ LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://docs.sambanova.ai/docs/en/models/sambacloud-models"
 
 MODELS = {
-    "MiniMax-M2.7": {"stage": "production", "input": ["text"]},
-    "DeepSeek-V3.1": {"stage": "production", "input": ["text"]},
+    "MiniMax-M3": {
+        "stage": "preview",
+        "input": ["text"],
+        "context_window": 1_000_000,
+    },
+    "DeepSeek-V3.1": {
+        "stage": "production",
+        "input": ["text"],
+        "context_window": 128_000,
+    },
     "Meta-Llama-3.3-70B-Instruct": {
         "stage": "production",
         "input": ["text"],
+        "context_window": 128_000,
     },
-    "gpt-oss-120b": {"stage": "production", "input": ["text"]},
-    "DeepSeek-V3.2": {"stage": "preview", "input": ["text"]},
+    "gpt-oss-120b": {
+        "stage": "production",
+        "input": ["text"],
+        "context_window": 128_000,
+    },
+    "DeepSeek-V3.2": {
+        "stage": "preview",
+        "input": ["text"],
+        "context_window": 32_000,
+    },
     "gemma-4-31B-it": {
         "stage": "preview",
         "input": ["text", "image", "video"],
+        "context_window": 128_000,
     },
 }
 
@@ -58,7 +76,7 @@ def main() -> None:
             "provider": "sambanova",
             "model_id": model_id,
             "display_name": model_id,
-            "context_window": 0,
+            "context_window": spec["context_window"],
             "max_output_tokens": 0,
             "input_modalities": input_modalities,
             "output_modalities": ["text"],
@@ -98,7 +116,7 @@ def main() -> None:
         LOG.read_text(encoding="utf-8")
         + f"\n## SambaNova official refresh ({datetime.now(timezone.utc).date().isoformat()})\n\n"
         + f"- Source: {SOURCE}\n"
-        + "- Recorded availability and modalities for 4 production and 2 preview SambaCloud models.\n"
+        + "- Recorded availability, context lengths, and modalities for 3 production and 3 preview SambaCloud models.\n"
         + "- Pricing was not inferred because it is not specified on the model overview page.\n",
         encoding="utf-8",
     )

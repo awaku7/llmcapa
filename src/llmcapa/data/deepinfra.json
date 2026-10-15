@@ -476,14 +476,6 @@
         "quantization": null,
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -521,14 +513,6 @@
         "quantization": null,
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -566,14 +550,6 @@
         "quantization": null,
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -611,14 +587,6 @@
         "quantization": "fp32",
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -656,14 +624,6 @@
         "quantization": null,
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -701,14 +661,6 @@
         "quantization": null,
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -775,7 +727,7 @@
       "supports_chat_completion": true,
       "supports_streaming": true,
       "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_json_mode": null,
       "supports_vision": true,
       "supports_reasoning": true,
       "supports_responses_api": null,
@@ -794,7 +746,6 @@
         "description": "A coding model optimized for real-world development environments, with reliable tool use in common IDEs such as Claude Code. It delivers strong front-end performance and supports Skills.",
         "tags": [
           "cc-native",
-          "json",
           "multimodal",
           "no-free-anon",
           "openai",
@@ -1391,6 +1342,44 @@
     },
     {
       "provider": "deepinfra",
+      "model_id": "google/embeddinggemma-2",
+      "display_name": "google/embeddinggemma-2",
+      "context_window": 8192,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embedding"
+      ],
+      "supports_chat_completion": false,
+      "supports_streaming": null,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://api.deepinfra.com/models/list",
+        "model_type": "embeddings",
+        "reported_type": "embeddings",
+        "description": "EmbeddingGemma 2 is a 740M parameter multimodal embedding model from Google DeepMind that maps text (incl. code), images, video and audio, alone or interleaved, into a single 768-dimensional vector space, with task prompts and Matryoshka truncation to 512, 256 or 128 dimensions for search, retrieval, classification and clustering.",
+        "tags": [
+          "input-audio",
+          "input-video",
+          "multimodal"
+        ],
+        "quantization": null,
+        "replaced_by": null,
+        "is_partner": false
+      }
+    },
+    {
+      "provider": "deepinfra",
       "model_id": "google/embeddinggemma-300m",
       "display_name": "google/embeddinggemma-300m",
       "context_window": 2048,
@@ -1424,14 +1413,6 @@
         "quantization": null,
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -1495,7 +1476,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -1560,7 +1541,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -1625,7 +1606,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -1690,7 +1671,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -1755,7 +1736,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -1820,7 +1801,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -2090,7 +2071,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -2121,7 +2102,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -2204,7 +2185,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -2285,7 +2266,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -2586,8 +2567,53 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "inferred"
+      }
+    },
+    {
+      "provider": "deepinfra",
+      "model_id": "inclusionAI/Ling-3.1-flash",
+      "display_name": "inclusionAI/Ling-3.1-flash",
+      "context_window": 262144,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 0.3,
+        "currency": "USD",
+        "output_per_1m": 0.9
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://api.deepinfra.com/models/list",
+        "model_type": "text-generation",
+        "reported_type": "text-generation",
+        "description": "Ling-3.1-flash, an upgraded native hybrid reasoning model designed for complex, real-world tasks. With 560B total parameters, 25B active parameters per token, and a 1M-token context window, Ling-3.1-flash builds upon Ling-3.0-flash with improvements in architecture, performance on real-world capabilities.",
+        "tags": [
+          "cc-native",
+          "json",
+          "openai",
+          "reasoning",
+          "structured-output",
+          "tools"
+        ],
+        "quantization": "fp4",
+        "replaced_by": null,
+        "is_partner": false
       }
     },
     {
@@ -2625,14 +2651,6 @@
         "quantization": null,
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -2670,14 +2688,6 @@
         "quantization": null,
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -2715,14 +2725,6 @@
         "quantization": "fp32",
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -2760,14 +2762,6 @@
         "quantization": null,
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -3172,7 +3166,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -3542,14 +3536,6 @@
         "quantization": null,
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -3584,14 +3570,6 @@
         "quantization": "fp16",
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -3626,14 +3604,6 @@
         "quantization": "fp4",
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -3668,14 +3638,6 @@
         "quantization": "fp16",
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -4356,14 +4318,6 @@
         "quantization": null,
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -4401,14 +4355,6 @@
         "quantization": null,
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -4446,14 +4392,6 @@
         "quantization": null,
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -4681,7 +4619,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -4763,7 +4701,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -4846,7 +4784,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -4928,7 +4866,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -5010,7 +4948,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -5093,7 +5031,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -5223,7 +5161,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -5442,14 +5380,6 @@
         "quantization": null,
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -5487,14 +5417,6 @@
         "quantization": null,
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -5532,14 +5454,6 @@
         "quantization": null,
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -5577,14 +5491,6 @@
         "quantization": null,
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -5622,14 +5528,6 @@
         "quantization": null,
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -5667,14 +5565,6 @@
         "quantization": null,
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -5712,14 +5602,6 @@
         "quantization": null,
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -5757,14 +5639,88 @@
         "quantization": null,
         "replaced_by": null,
         "is_partner": false
+      }
+    },
+    {
+      "provider": "deepinfra",
+      "model_id": "stepfun-ai/Step-5-Preview",
+      "display_name": "stepfun-ai/Step-5-Preview",
+      "context_window": 1048576,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 1.0,
+        "currency": "USD",
+        "output_per_1m": 2.7
       },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://api.deepinfra.com/models/list",
+        "model_type": "text-generation",
+        "reported_type": "text-generation",
+        "description": "Step 5 Preview is StepFun's flagship model for agentic work. It is a sparse Mixture-of-Experts model with 600B total parameters and 27B active per token, a 1M-token context window, and text and image input. It delivers frontier-level performance in software engineering, long-horizon agentic execution with repeated tool calls, and professional knowledge work, with particular strength in finance.",
+        "tags": [
+          "cc-native",
+          "featured",
+          "input-video",
+          "json",
+          "multimodal",
+          "openai",
+          "openrouter",
+          "reasoning",
+          "structured-output",
+          "tools"
         ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
+        "quantization": "fp8",
+        "replaced_by": null,
+        "is_partner": false
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-15",
+        "status": "inferred"
       }
     },
     {
@@ -5808,7 +5764,7 @@
           "structured-output",
           "tools"
         ],
-        "quantization": "fp8",
+        "quantization": "fp4",
         "replaced_by": null,
         "is_partner": false
       }
@@ -5848,14 +5804,6 @@
         "quantization": null,
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -5893,14 +5841,6 @@
         "quantization": null,
         "replaced_by": null,
         "is_partner": false
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-14"
       }
     },
     {
@@ -5962,7 +5902,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -6025,7 +5965,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -6092,7 +6032,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -6123,7 +6063,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -6190,7 +6130,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -6221,7 +6161,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -6491,53 +6431,8 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-14",
+        "checked_at": "2026-10-15",
         "status": "inferred"
-      }
-    },
-    {
-      "provider": "deepinfra",
-      "model_id": "Qwen/Qwen3.8-2.4T-A95B",
-      "display_name": "Qwen/Qwen3.8-2.4T-A95B",
-      "context_window": 262144,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_responses_api": null,
-      "pricing": {
-        "input_per_1m": 2.0,
-        "currency": "USD",
-        "output_per_1m": 6.0
-      },
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "extra": {
-        "source": "https://api.deepinfra.com/models/list",
-        "model_type": "text-generation",
-        "reported_type": "text-generation",
-        "description": "Qwen3.8 2.4T A95B is an open-weight sparse mixture-of-experts model from Qwen and the open-weight variant of Qwen3.8 Max, with 95 billion active parameters out of 2.4 trillion total. It is suited for coding, research, complex reasoning, and agentic workflows.",
-        "tags": [
-          "cc-native",
-          "json",
-          "openai",
-          "reasoning",
-          "structured-output",
-          "tools"
-        ],
-        "quantization": "fp4",
-        "replaced_by": "zai-org/GLM-5.3",
-        "is_partner": false
       }
     }
   ]

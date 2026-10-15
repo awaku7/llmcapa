@@ -149,3 +149,36 @@ Rate limits 100K tokens per second / 80 requests per second.
     assert snapshot["input_per_1m"] == 0.042
     assert set(snapshot["aliases"]) == {"jev-latest", "jev-preview"}
     assert snapshot["rate_limits"] == {"tokens_per_second": 100_000, "requests_per_minute": 4_800}
+
+
+def test_typesafe_parser_handles_current_wide_version_table_and_alias_moves():
+    updater = _load("update_typesafe")
+    docs = r"""## Current models
+| | Jev 1.14 | Jev 1.13 |
+| :- | :- | :- |
+| Model ID | `jev-1.14.0` | `jev-1.13.0` |
+| Price (per Btok / per Mtok) | \$42 / \$0.042 | \$42 / \$0.042 |
+| Context length | 64k per-request / 32k per-question | 64k per-request / 32k per-question |
+## Aliases
+| Alias | Points to | Meaning |
+| :- | :- | :- |
+| `jev-latest` | `jev-1.13.0` | Stable |
+| `jev-preview` | `jev-1.14.0` | Newest |
+"""
+    snapshots = updater.parse_model_snapshots(docs)
+    assert [item["model_id"] for item in snapshots] == ["jev-1.14.0", "jev-1.13.0"]
+    assert snapshots[0]["context_window"] == snapshots[1]["context_window"] == 64_000
+    assert snapshots[0]["max_state_tokens"] == snapshots[1]["max_state_tokens"] == 32_000
+    assert snapshots[0]["input_per_1m"] == snapshots[1]["input_per_1m"] == 0.042
+    assert snapshots[0]["aliases"] == ["jev-preview"]
+    assert snapshots[1]["aliases"] == ["jev-latest"]
+
+    merged = updater.merge_catalog(
+        snapshots,
+        [{"provider": "typesafe", "model_id": "jev-1.13.0", "aliases": ["jev-latest", "jev-preview"]}],
+        "2026-10-15",
+    )
+    assert merged[0]["model_id"] == "jev-1.14.0"
+    assert merged[0]["aliases"] == ["jev-preview"]
+    assert merged[1]["model_id"] == "jev-1.13.0"
+    assert merged[1]["aliases"] == ["jev-latest", "jev-1.13"]

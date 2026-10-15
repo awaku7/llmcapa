@@ -132,6 +132,8 @@ def merge_inventory(snapshots: list[dict], previous: list[dict], checked_at: str
                 "deprecated": False,
             }
         )
+        row.setdefault("context_window", 0)
+        row.setdefault("max_output_tokens", 0)
         extra = dict(row.get("extra") or {})
         extra.update(
             {

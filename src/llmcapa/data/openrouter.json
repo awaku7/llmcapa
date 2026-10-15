@@ -54,7 +54,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -85,7 +85,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -227,7 +227,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -258,7 +258,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -1208,7 +1208,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.02088,
+        "input_per_1m": 0.01368,
         "output_per_1m": 0.891,
         "currency": "USD"
       },
@@ -1616,7 +1616,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -1647,7 +1647,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -1707,7 +1707,7 @@
       "license_type": "api",
       "pricing": {
         "input_per_1m": 2.0,
-        "output_per_1m": 12.0,
+        "output_per_1m": 10.0,
         "currency": "USD"
       },
       "extra": {
@@ -1740,22 +1740,12 @@
         ],
         "created": "2026-04-27",
         "description": "This model always redirects to the latest model in the Gemini Pro family.",
-        "cache_read_per_1m": 0.2,
-        "cache_write_per_1m": 0.375,
+        "cache_read_per_1m": 0.1,
+        "cache_write_per_1m": 0.1875,
         "web_search_per_request_usd": 0.014,
         "image_input_per_1m": 2.0,
         "audio_input_per_1m": 2.0,
-        "internal_reasoning_per_1m": 12.0,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 200000,
-            "prompt": "0.000004",
-            "completion": "0.000018",
-            "audio": "0.000004",
-            "input_audio_cache": "0.0000004",
-            "input_cache_read": "0.0000004"
-          }
-        ],
+        "internal_reasoning_per_1m": 10.0,
         "reasoning_meta": {
           "mandatory": true,
           "supported_efforts": [
@@ -1797,7 +1787,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -1828,7 +1818,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -1884,8 +1874,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.536,
-        "output_per_1m": 14.0,
+        "input_per_1m": 0.29,
+        "output_per_1m": 24.0,
         "currency": "USD"
       },
       "extra": {
@@ -1926,7 +1916,7 @@
         ],
         "created": "2026-04-27",
         "description": "This model always redirects to the latest model in the Kimi family.",
-        "cache_read_per_1m": 0.3,
+        "cache_read_per_1m": 0.28,
         "default_parameters": {
           "top_p": 0.95
         },
@@ -1987,7 +1977,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -2696,8 +2686,8 @@
     },
     {
       "provider": "openrouter",
-      "model_id": "~perplexity/pplx-decider-27b-latest",
-      "display_name": "Perplexity: Decider 27B Latest",
+      "model_id": "~perplexity/pplx-decider-latest",
+      "display_name": "Perplexity: Decider Latest",
       "context_window": 262144,
       "max_output_tokens": 0,
       "input_modalities": [
@@ -2723,8 +2713,8 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "pplx-decider-27b-latest",
-        "openrouter/~perplexity/pplx-decider-27b-latest"
+        "pplx-decider-latest",
+        "openrouter/~perplexity/pplx-decider-latest"
       ],
       "license_type": "api",
       "pricing": {
@@ -2745,7 +2735,7 @@
           "is_moderated": null
         },
         "supported_parameters": [],
-        "description": "This model always redirects to the latest model in the Decider 27B family.",
+        "description": "This model always redirects to the latest model in the Decider family.",
         "features": [
           "vision"
         ]
@@ -3054,7 +3044,7 @@
       "model_id": "~z-ai/glm-flash-latest",
       "display_name": "Z.ai: GLM Flash Latest",
       "context_window": 1048576,
-      "max_output_tokens": 131072,
+      "max_output_tokens": 943718,
       "input_modalities": [
         "text",
         "image",
@@ -3084,7 +3074,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.0351,
+        "input_per_1m": 0.036,
         "output_per_1m": 0.9,
         "currency": "USD"
       },
@@ -3099,7 +3089,7 @@
         "tokenizer": "Router",
         "top_provider": {
           "context_length": 1048576,
-          "max_completion_tokens": 131072,
+          "max_completion_tokens": 943718,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -3127,7 +3117,7 @@
         ],
         "created": "2026-08-27",
         "description": "This model always redirects to the latest model in the GLM Flash family.",
-        "cache_read_per_1m": 0.0108,
+        "cache_read_per_1m": 0.01125,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -3189,7 +3179,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -3226,8 +3216,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.0576,
-        "output_per_1m": 4.4,
+        "input_per_1m": 0.03,
+        "output_per_1m": 4.8,
         "currency": "USD"
       },
       "extra": {
@@ -3269,7 +3259,7 @@
         ],
         "created": "2026-08-19",
         "description": "This model always redirects to the latest GLM model from Z.ai.",
-        "cache_read_per_1m": 0.0536,
+        "cache_read_per_1m": 0.029,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -3885,7 +3875,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -3974,7 +3964,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -4059,7 +4049,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -4144,7 +4134,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -4233,7 +4223,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -4322,7 +4312,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -4396,7 +4386,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -7668,6 +7658,7 @@
         ],
         "created": "2025-05-22",
         "description": "Claude Sonnet 4 significantly enhances the capabilities of its predecessor, Sonnet 3.7, excelling in both coding and reasoning tasks with improved precision and controllability. Achieving state-of-the-art performance on SWE-bench (72.7%),...",
+        "expiration_date": "2026-10-15",
         "cache_read_per_1m": 0.3,
         "cache_write_per_1m": 3.75,
         "cache_write_1h_per_1m": 6.0,
@@ -8841,7 +8832,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 125.0,
+        "input_per_1m": 83.3333,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
@@ -8874,7 +8865,77 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
+        "status": "inferred"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "assemblyai/universal-3-6-pro",
+      "display_name": "AssemblyAI: Universal-3.6 Pro",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "audio"
+      ],
+      "output_modalities": [
+        "transcription"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "universal-3-6-pro",
+        "openrouter/assemblyai/universal-3-6-pro"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 83.3333,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "assemblyai",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 0,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "Universal-3.6 Pro is AssemblyAI's speech-to-text model and the successor to Universal-3.5 Pro, served here through AssemblyAI's Sync API. Compared with Universal-3.5 Pro, AssemblyAI reports 30% fewer errors on short conversational utterances, 12% fewer errors on average across supported languages, 14 newly supported languages, and better recognition and formatting of entities such as phone numbers",
+        "features": [
+          "audio_input"
+        ]
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -9073,7 +9134,7 @@
     {
       "provider": "openrouter",
       "model_id": "black-forest-labs/flux-3-image",
-      "display_name": "Black Forest Labs: FLUX.3 Image",
+      "display_name": "Black Forest Labs: FLUX 3 Image",
       "context_window": 46864,
       "max_output_tokens": 0,
       "input_modalities": [
@@ -9143,7 +9204,7 @@
     {
       "provider": "openrouter",
       "model_id": "black-forest-labs/flux-3-video",
-      "display_name": "Black Forest Labs: FLUX.3 Video",
+      "display_name": "Black Forest Labs: FLUX 3 Video",
       "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
@@ -9232,7 +9293,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -9329,7 +9390,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -9426,7 +9487,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -9780,7 +9841,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -9904,7 +9965,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -10028,7 +10089,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -10144,7 +10205,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -10284,7 +10345,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -10424,7 +10485,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -10544,7 +10605,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -10927,7 +10988,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -11005,7 +11066,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -11042,7 +11103,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -11121,7 +11182,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -11158,7 +11219,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -11237,7 +11298,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -11274,7 +11335,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -11353,7 +11414,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -11390,7 +11451,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -11561,7 +11622,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -11601,7 +11662,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.24,
+        "input_per_1m": 0.042,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
@@ -11658,7 +11719,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/cloudflare/clef",
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -11674,7 +11735,7 @@
       "provider": "openrouter",
       "model_id": "cloudflare/clef-flash",
       "display_name": "Cloudflare: Clef Flash",
-      "context_window": 24576,
+      "context_window": 65536,
       "max_output_tokens": 0,
       "input_modalities": [
         "text",
@@ -11706,7 +11767,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.038,
+        "input_per_1m": 0.021,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
@@ -11763,7 +11824,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/cloudflare/clef-flash",
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -11833,6 +11894,50 @@
           "vision",
           "audio_input"
         ]
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-15",
+        "status": "inferred"
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": false,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-15",
+        "status": "inferred"
       }
     },
     {
@@ -12720,7 +12825,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -12787,7 +12892,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -12857,7 +12962,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -13972,8 +14077,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.280314,
-        "output_per_1m": 0.560628,
+        "input_per_1m": 0.95526,
+        "output_per_1m": 1.91052,
         "currency": "USD"
       },
       "extra": {
@@ -14016,7 +14121,7 @@
         ],
         "created": "2026-04-24",
         "description": "DeepSeek V4 Pro is a large-scale Mixture-of-Experts model from DeepSeek with 1.6T total parameters and 49B activated parameters, supporting a 1M-token context window. It is designed for advanced reasoning, coding,...",
-        "cache_read_per_1m": 0.02336,
+        "cache_read_per_1m": 0.079605,
         "default_parameters": {
           "temperature": 1,
           "top_p": 1
@@ -14286,7 +14391,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.02088,
+        "input_per_1m": 0.01368,
         "output_per_1m": 0.891,
         "currency": "USD"
       },
@@ -14697,7 +14802,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -14764,7 +14869,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -14831,7 +14936,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -14898,7 +15003,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -14965,7 +15070,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -15032,7 +15137,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -15099,7 +15204,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -15166,7 +15271,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -15233,7 +15338,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -15303,7 +15408,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -15373,7 +15478,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -15536,6 +15641,20 @@
         },
         "supported_parameters": [],
         "description": "Drama 3 is a text-to-speech model from Fish Audio built for directed voice performances. You write the direction in plain language in square brackets before a line, such as `[nervous, barely holding it together]`, and can add sounds and pauses inline or change the delivery of specific words with paired tags like `<whisper>`.\n\nIt supports multi-speaker scenes in one request, switching language mid-"
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-15",
+        "status": "inferred"
       }
     },
     {
@@ -15601,7 +15720,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -15668,7 +15787,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -15735,7 +15854,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -15803,7 +15922,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -15875,7 +15994,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -15947,7 +16066,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -16001,7 +16120,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -16077,7 +16196,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -16108,7 +16227,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -16332,7 +16451,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -16363,7 +16482,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -16494,7 +16613,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -16525,7 +16644,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -16654,7 +16773,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -16685,7 +16804,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -16814,7 +16933,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -16845,7 +16964,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -16985,7 +17104,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -17121,7 +17240,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -17152,7 +17271,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -17292,7 +17411,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -17323,7 +17442,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -17470,7 +17589,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -17501,7 +17620,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -18067,7 +18186,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -18098,7 +18217,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -18349,7 +18468,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -18380,7 +18499,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -18527,7 +18646,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -18558,7 +18677,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -18696,7 +18815,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -18770,7 +18889,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -18801,7 +18920,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -18957,7 +19076,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -18988,7 +19107,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -19139,7 +19258,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -19170,7 +19289,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -19322,7 +19441,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -19353,7 +19472,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -19501,7 +19620,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -19532,7 +19651,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -19680,7 +19799,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -19711,7 +19830,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -19856,7 +19975,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -19887,7 +20006,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -20031,7 +20150,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -20108,7 +20227,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -20139,7 +20258,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -20287,7 +20406,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -20318,7 +20437,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -20464,7 +20583,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -20495,7 +20614,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -20642,7 +20761,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -20673,7 +20792,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -20818,7 +20937,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -20849,7 +20968,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -20991,7 +21110,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -21060,7 +21179,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -21134,7 +21253,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -21165,7 +21284,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -21346,7 +21465,7 @@
           "details": "/api/v1/models/google/gemini-4-argon-20261013/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 0,
+          "design_arena": 5,
           "artificial_analysis": 1
         },
         "features": [
@@ -21366,7 +21485,52 @@
         "medium",
         "high",
         "xhigh"
-      ]
+      ],
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-15",
+        "status": "inferred"
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-15",
+        "status": "inferred"
+      }
     },
     {
       "provider": "openrouter",
@@ -21459,7 +21623,7 @@
           "details": "/api/v1/models/google/gemini-4-argon-20261013/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 0,
+          "design_arena": 5,
           "artificial_analysis": 1
         },
         "features": [
@@ -21479,7 +21643,52 @@
         "medium",
         "high",
         "xhigh"
-      ]
+      ],
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-15",
+        "status": "inferred"
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-15",
+        "status": "inferred"
+      }
     },
     {
       "provider": "openrouter",
@@ -21603,7 +21812,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -21633,7 +21842,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -21739,7 +21948,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -21769,7 +21978,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -22239,6 +22448,7 @@
         "supported_parameters": [
           "frequency_penalty",
           "logit_bias",
+          "logprobs",
           "max_tokens",
           "min_p",
           "presence_penalty",
@@ -22249,6 +22459,7 @@
           "structured_outputs",
           "temperature",
           "top_k",
+          "top_logprobs",
           "top_p"
         ],
         "created": "2025-03-13",
@@ -22336,7 +22547,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -22472,7 +22683,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -22566,8 +22777,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.09,
-        "output_per_1m": 0.34,
+        "input_per_1m": 0.2,
+        "output_per_1m": 0.4,
         "currency": "USD"
       },
       "video": {
@@ -22598,7 +22809,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -22639,7 +22850,6 @@
         ],
         "created": "2026-04-02",
         "description": "Gemma 4 31B Instruct is Google DeepMind's 30.7B dense multimodal model supporting text and image input with text output. Features a 256K token context window, configurable thinking/reasoning mode, native function...",
-        "cache_read_per_1m": 0.05,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95,
@@ -22734,7 +22944,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -22843,7 +23053,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -22933,7 +23143,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -23030,7 +23240,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -23120,7 +23330,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -23210,7 +23420,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -23386,7 +23596,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -23460,7 +23670,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -23484,7 +23694,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -23559,7 +23769,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -23596,7 +23806,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -23651,6 +23861,20 @@
         },
         "supported_parameters": [],
         "description": "HeyGen Voice is a text-to-speech model from HeyGen. It comes with 10 default voices, or bring your own HeyGen key to use voice clones from your own account. It streams 44.1 kHz mono PCM audio, with support for 39 languages and up to 5,000 characters per request."
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-15",
+        "status": "inferred"
       }
     },
     {
@@ -23704,6 +23928,20 @@
         },
         "supported_parameters": [],
         "description": "HeyGen Voice Turbo is a lower-latency version of HeyGen Voice, HeyGen's text-to-speech model. It has the same 10 default voices, or bring your own HeyGen key to use voice clones from your own account. It streams 44.1 kHz mono PCM audio, with support for 39 languages and up to 5,000 characters per request."
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-15",
+        "status": "inferred"
       }
     },
     {
@@ -24210,7 +24448,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/inception/mercury-decide",
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -24388,7 +24626,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -24460,7 +24698,7 @@
         "text"
       ],
       "supports_function_calling": true,
-      "supports_json_mode": false,
+      "supports_json_mode": true,
       "supports_json_schema": null,
       "supports_streaming": true,
       "supports_vision": false,
@@ -24504,13 +24742,17 @@
         "supported_parameters": [
           "frequency_penalty",
           "include_reasoning",
+          "logit_bias",
           "logprobs",
           "max_tokens",
+          "min_p",
           "presence_penalty",
           "reasoning",
           "repetition_penalty",
+          "response_format",
           "seed",
           "stop",
+          "structured_outputs",
           "temperature",
           "tool_choice",
           "tools",
@@ -24534,6 +24776,7 @@
         },
         "features": [
           "tools",
+          "structured_outputs",
           "reasoning"
         ]
       }
@@ -24979,7 +25222,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/jaredpalmer/kev-4b",
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -25252,7 +25495,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -25337,7 +25580,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -25422,7 +25665,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -25516,7 +25759,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/liquid/d1",
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -26460,6 +26703,7 @@
         ],
         "created": "2024-12-06",
         "description": "The Meta Llama 3.3 multilingual large language model (LLM) is a pretrained and instruction tuned generative model in 70B (text in/text out). The Llama 3.3 instruction tuned text only model...",
+        "cache_read_per_1m": 0.295,
         "links": {
           "details": "/api/v1/models/meta-llama/llama-3.3-70b-instruct/endpoints"
         },
@@ -26470,8 +26714,7 @@
         "features": [
           "tools",
           "structured_outputs"
-        ],
-        "cache_read_per_1m": 0.295
+        ]
       }
     },
     {
@@ -27013,7 +27256,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -27186,7 +27429,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -27359,7 +27602,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -27528,7 +27771,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -27702,7 +27945,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -27839,7 +28082,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -27970,7 +28213,52 @@
         "medium",
         "high",
         "xhigh"
-      ]
+      ],
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-15",
+        "status": "inferred"
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-15",
+        "status": "inferred"
+      }
     },
     {
       "provider": "openrouter",
@@ -28316,7 +28604,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -28390,7 +28678,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -28462,7 +28750,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -28531,7 +28819,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -28600,7 +28888,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -28669,7 +28957,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -28961,7 +29249,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -29041,7 +29329,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -29078,7 +29366,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -29166,7 +29454,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -29609,7 +29897,7 @@
       "model_id": "minimax/minimax-m2.5",
       "display_name": "MiniMax: MiniMax M2.5",
       "context_window": 204800,
-      "max_output_tokens": 128000,
+      "max_output_tokens": 32768,
       "input_modalities": [
         "text"
       ],
@@ -29641,7 +29929,7 @@
       "license_type": "api",
       "pricing": {
         "input_per_1m": 0.27,
-        "output_per_1m": 1.08,
+        "output_per_1m": 0.95,
         "currency": "USD"
       },
       "extra": {
@@ -29655,8 +29943,8 @@
         "modality": "text->text",
         "tokenizer": "Other",
         "top_provider": {
-          "context_length": 200000,
-          "max_completion_tokens": 128000,
+          "context_length": 198000,
+          "max_completion_tokens": 32768,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -29682,7 +29970,7 @@
         ],
         "created": "2026-02-12",
         "description": "MiniMax-M2.5 is a SOTA large language model designed for real-world productivity. Trained in a diverse range of complex real-world digital working environments, M2.5 builds upon the coding expertise of M2.1...",
-        "cache_read_per_1m": 0.027,
+        "cache_read_per_1m": 0.03,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -29871,7 +30159,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -29985,7 +30273,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -30054,7 +30342,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -31382,7 +31670,8 @@
           "details": "/api/v1/models/mistralai/mistral-large-4-0-20261006/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 8
+          "design_arena": 8,
+          "artificial_analysis": 1
         },
         "features": [
           "tools",
@@ -32587,8 +32876,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.09375,
-        "output_per_1m": 0.25,
+        "input_per_1m": 0.075,
+        "output_per_1m": 0.2,
         "currency": "USD"
       },
       "extra": {
@@ -32602,7 +32891,7 @@
         "modality": "text+image->text",
         "tokenizer": "Mistral",
         "top_provider": {
-          "context_length": 256000,
+          "context_length": 128000,
           "max_completion_tokens": 16384,
           "is_moderated": false
         },
@@ -32799,7 +33088,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -32873,7 +33162,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -32945,7 +33234,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -33016,7 +33305,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -33135,7 +33424,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -33754,8 +34043,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.7,
-        "output_per_1m": 13.5,
+        "input_per_1m": 0.45,
+        "output_per_1m": 15.0,
         "currency": "USD"
       },
       "video": {
@@ -33786,7 +34075,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -33828,7 +34117,7 @@
         ],
         "created": "2026-07-16",
         "description": "Kimi K3 is a 2.8T parameter open-weight multimodal reasoning model from Moonshot AI. It is suited for complex coding, knowledge work, and long-horizon agentic workflows, and is particularly strong at...",
-        "cache_read_per_1m": 0.32,
+        "cache_read_per_1m": 0.28,
         "default_parameters": {
           "top_p": 0.95
         },
@@ -33936,7 +34225,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -34543,10 +34832,6 @@
         "links": {
           "details": "/api/v1/models/nousresearch/hermes-3-llama-3.1-405b/endpoints"
         },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
         "features": [
           "structured_outputs"
         ]
@@ -35067,7 +35352,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -35098,7 +35383,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -35187,7 +35472,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -35218,7 +35503,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -35769,7 +36054,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -36187,7 +36472,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -38262,7 +38547,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -38447,7 +38732,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -43296,8 +43581,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 2.0,
-        "output_per_1m": 10.0,
+        "input_per_1m": 4.0,
+        "output_per_1m": 20.0,
         "currency": "USD"
       },
       "document": {
@@ -43346,16 +43631,16 @@
         ],
         "created": "2026-07-09",
         "description": "GPT-5.6 Sol is the flagship model in OpenAI's GPT-5.6 series. It is suited for complex reasoning, coding, and agentic workflows, and is particularly strong at command-line and multi-step coding tasks...",
-        "cache_read_per_1m": 0.2,
-        "cache_write_per_1m": 2.5,
+        "cache_read_per_1m": 0.4,
+        "cache_write_per_1m": 5.0,
         "web_search_per_request_usd": 0.01,
         "pricing_overrides": [
           {
             "min_prompt_tokens": 272000,
-            "prompt": "0.000004",
-            "completion": "0.000015",
-            "input_cache_read": "0.0000004",
-            "input_cache_write": "0.000005"
+            "prompt": "0.000008",
+            "completion": "0.00003",
+            "input_cache_read": "0.0000008",
+            "input_cache_write": "0.00001"
           }
         ],
         "reasoning_meta": {
@@ -43434,8 +43719,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 2.0,
-        "output_per_1m": 10.0,
+        "input_per_1m": 4.0,
+        "output_per_1m": 20.0,
         "currency": "USD"
       },
       "document": {
@@ -43484,16 +43769,16 @@
         ],
         "created": "2026-07-09",
         "description": "GPT-5.6 Sol Pro is the same underlying model as [GPT-5.6 Sol](https://openrouter.ai/openai/gpt-5.6-sol), served with `reasoning.mode` set to `pro` for higher-quality responses on complex tasks. **Cost note:** pro mode spends far more...",
-        "cache_read_per_1m": 0.2,
-        "cache_write_per_1m": 2.5,
+        "cache_read_per_1m": 0.4,
+        "cache_write_per_1m": 5.0,
         "web_search_per_request_usd": 0.01,
         "pricing_overrides": [
           {
             "min_prompt_tokens": 272000,
-            "prompt": "0.000004",
-            "completion": "0.000015",
-            "input_cache_read": "0.0000004",
-            "input_cache_write": "0.000005"
+            "prompt": "0.000008",
+            "completion": "0.00003",
+            "input_cache_read": "0.0000008",
+            "input_cache_write": "0.00001"
           }
         ],
         "reasoning_meta": {
@@ -43568,8 +43853,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 1.0,
-        "output_per_1m": 5.0,
+        "input_per_1m": 2.0,
+        "output_per_1m": 10.0,
         "currency": "USD"
       },
       "document": {
@@ -43617,16 +43902,16 @@
         ],
         "created": "2026-07-09",
         "description": "GPT-5.6 Sol Pro is the same underlying model as [GPT-5.6 Sol](https://openrouter.ai/openai/gpt-5.6-sol), served with `reasoning.mode` set to `pro` for higher-quality responses on complex tasks. **Cost note:** pro mode spends far more...",
-        "cache_read_per_1m": 0.1,
-        "cache_write_per_1m": 1.25,
+        "cache_read_per_1m": 0.2,
+        "cache_write_per_1m": 2.5,
         "web_search_per_request_usd": 0.01,
         "pricing_overrides": [
           {
             "min_prompt_tokens": 272000,
-            "prompt": "0.000002",
-            "completion": "0.0000075",
-            "input_cache_read": "0.0000002",
-            "input_cache_write": "0.0000025"
+            "prompt": "0.000004",
+            "completion": "0.000015",
+            "input_cache_read": "0.0000004",
+            "input_cache_write": "0.000005"
           }
         ],
         "reasoning_meta": {
@@ -43701,8 +43986,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 1.0,
-        "output_per_1m": 5.0,
+        "input_per_1m": 2.0,
+        "output_per_1m": 10.0,
         "currency": "USD"
       },
       "document": {
@@ -43750,16 +44035,16 @@
         ],
         "created": "2026-07-09",
         "description": "GPT-5.6 Sol is the flagship model in OpenAI's GPT-5.6 series. It is suited for complex reasoning, coding, and agentic workflows, and is particularly strong at command-line and multi-step coding tasks...",
-        "cache_read_per_1m": 0.1,
-        "cache_write_per_1m": 1.25,
+        "cache_read_per_1m": 0.2,
+        "cache_write_per_1m": 2.5,
         "web_search_per_request_usd": 0.01,
         "pricing_overrides": [
           {
             "min_prompt_tokens": 272000,
-            "prompt": "0.000002",
-            "completion": "0.0000075",
-            "input_cache_read": "0.0000002",
-            "input_cache_write": "0.0000025"
+            "prompt": "0.000004",
+            "completion": "0.000015",
+            "input_cache_read": "0.0000004",
+            "input_cache_write": "0.000005"
           }
         ],
         "reasoning_meta": {
@@ -45231,7 +45516,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/openai/gpt-6-luna-decisions",
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -46742,7 +47027,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -46843,7 +47128,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -47377,7 +47662,7 @@
       "model_id": "openai/gpt-oss-120b",
       "display_name": "OpenAI: gpt-oss-120b",
       "context_window": 131072,
-      "max_output_tokens": 117964,
+      "max_output_tokens": 65536,
       "input_modalities": [
         "text"
       ],
@@ -47407,8 +47692,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.037,
-        "output_per_1m": 0.17,
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.6,
         "currency": "USD"
       },
       "extra": {
@@ -47423,7 +47708,7 @@
         "tokenizer": "GPT",
         "top_provider": {
           "context_length": 131072,
-          "max_completion_tokens": 117964,
+          "max_completion_tokens": 65536,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -47451,6 +47736,7 @@
         ],
         "created": "2025-08-05",
         "description": "gpt-oss-120b is an open-weight, 117B-parameter Mixture-of-Experts (MoE) language model from OpenAI designed for high-reasoning, agentic, and general-purpose production use cases. It activates 5.1B parameters per forward pass and is optimized...",
+        "cache_read_per_1m": 0.075,
         "reasoning_meta": {
           "mandatory": true,
           "supported_efforts": [
@@ -47947,7 +48233,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -49397,7 +49683,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -49471,7 +49757,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -49545,7 +49831,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -49637,7 +49923,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -49734,7 +50020,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -49765,7 +50051,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -49921,7 +50207,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/perplexity/pplx-decider-v1.1-27b",
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -51209,7 +51495,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -51278,7 +51564,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -52232,7 +52518,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -52306,7 +52592,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -52476,7 +52762,6 @@
           "frequency_penalty",
           "max_tokens",
           "response_format",
-          "stop",
           "structured_outputs",
           "temperature",
           "tool_choice",
@@ -53515,7 +53800,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -53649,7 +53934,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -53751,8 +54036,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.08,
-        "output_per_1m": 0.75,
+        "input_per_1m": 0.15,
+        "output_per_1m": 1.0,
         "currency": "USD"
       },
       "video": {
@@ -53783,7 +54068,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -53824,7 +54109,7 @@
         ],
         "created": "2026-02-25",
         "description": "The Qwen3.5 Series 35B-A3B is a native vision-language model designed with a hybrid architecture that integrates linear attention mechanisms and a sparse mixture-of-experts model, achieving higher inference efficiency. Its overall...",
-        "cache_read_per_1m": 0.04,
+        "cache_read_per_1m": 0.05,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95,
@@ -53918,7 +54203,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -54053,7 +54338,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -54183,7 +54468,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -54302,7 +54587,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -54432,7 +54717,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -54562,7 +54847,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -54627,7 +54912,7 @@
       "model_id": "qwen/qwen3.6-35b-a3b",
       "display_name": "Qwen: Qwen3.6 35B A3B",
       "context_window": 262144,
-      "max_output_tokens": 65536,
+      "max_output_tokens": 235929,
       "input_modalities": [
         "text",
         "image",
@@ -54660,8 +54945,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.1,
-        "output_per_1m": 0.95,
+        "input_per_1m": 0.15,
+        "output_per_1m": 1.0,
         "currency": "USD"
       },
       "video": {
@@ -54692,7 +54977,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -54707,7 +54992,7 @@
         "tokenizer": "Qwen",
         "top_provider": {
           "context_length": 262144,
-          "max_completion_tokens": 65536,
+          "max_completion_tokens": 235929,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -54733,7 +55018,7 @@
         ],
         "created": "2026-04-27",
         "description": "Qwen3.6-35B-A3B is an open-weight multimodal model from Alibaba Cloud with 35 billion total parameters and 3 billion active parameters per token. It uses a hybrid sparse mixture-of-experts architecture combining Gated...",
-        "cache_read_per_1m": 0.1,
+        "cache_read_per_1m": 0.05,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95,
@@ -54827,7 +55112,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -54957,7 +55242,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -55091,7 +55376,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -55513,8 +55798,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.04,
-        "output_per_1m": 2.3,
+        "input_per_1m": 0.24,
+        "output_per_1m": 2.2,
         "currency": "USD"
       },
       "video": {
@@ -55545,7 +55830,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -55588,7 +55873,7 @@
         ],
         "created": "2026-08-14",
         "description": "Qwen3.8 27B is an open-weight dense vision-language model from Qwen. It is suited for coding, professional workflows, research, multimodal interaction, and long-running agent tasks, with flexible thinking that can be...",
-        "cache_read_per_1m": 0.0198,
+        "cache_read_per_1m": 0.05,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95,
@@ -55698,7 +55983,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -55823,7 +56108,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -55968,7 +56253,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -56093,7 +56378,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -56124,7 +56409,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -57207,7 +57492,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -57563,7 +57848,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/respan/span-01",
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -57655,7 +57940,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/respan/span-01-lite",
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -57758,7 +58043,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -57839,7 +58124,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -59130,7 +59415,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -59535,7 +59820,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -59613,7 +59898,7 @@
       "provider": "openrouter",
       "model_id": "stepfun/step-5-preview",
       "display_name": "StepFun: Step 5 Preview",
-      "context_window": 1000000,
+      "context_window": 1048576,
       "max_output_tokens": 64000,
       "input_modalities": [
         "text",
@@ -59656,6 +59941,7 @@
         "base_url": "https://openrouter.ai/api/v1",
         "native_provider": "stepfun",
         "canonical_slug": "stepfun/step-5-preview-20261008",
+        "hugging_face_id": "stepfun-ai/Step-5-Preview",
         "modality": "text+image+video->text",
         "tokenizer": "Other",
         "top_provider": {
@@ -59666,15 +59952,22 @@
         "supported_parameters": [
           "frequency_penalty",
           "include_reasoning",
+          "logit_bias",
           "logprobs",
           "max_tokens",
+          "min_p",
+          "presence_penalty",
           "reasoning",
           "reasoning_effort",
+          "repetition_penalty",
           "response_format",
+          "seed",
           "stop",
           "structured_outputs",
           "temperature",
+          "tool_choice",
           "tools",
+          "top_k",
           "top_logprobs",
           "top_p"
         ],
@@ -59693,6 +59986,10 @@
         "links": {
           "details": "/api/v1/models/stepfun/step-5-preview-20261008/endpoints"
         },
+        "benchmarks_present": {
+          "design_arena": 0,
+          "artificial_analysis": 1
+        },
         "features": [
           "tools",
           "structured_outputs",
@@ -59708,7 +60005,38 @@
         "medium",
         "high",
         "xhigh"
-      ]
+      ],
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-15",
+        "status": "inferred"
+      }
     },
     {
       "provider": "openrouter",
@@ -60856,7 +61184,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -60985,7 +61313,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -61114,7 +61442,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -61238,7 +61566,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -61388,7 +61716,7 @@
           "https://openrouter.ai/api/v1/chat/completions"
         ],
         "source_url": "https://openrouter.ai/togethercomputer/tev1-4b-experimental",
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openai-compatible-chat-completions",
@@ -61494,6 +61822,63 @@
     },
     {
       "provider": "openrouter",
+      "model_id": "typesafe/jev-1.14",
+      "display_name": "TypeSafe: Jev 1.14",
+      "context_window": 262144,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "decisions"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "jev-1.14",
+        "openrouter/typesafe/jev-1.14"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.042,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "typesafe",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 262144,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "Jev 1.14 is the latest version of Jev, TypeSafe's structured decision model and the first of its System One models. System One models make fast, structured decisions for software, returning a typed answer rather than free-form text. It is suited for routing, classification, and other decision points inside an application where a fast, predictable answer matters more than generated prose.\n\nLearn mo",
+        "features": [
+          "vision"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
       "model_id": "typesafe/jev-router",
       "display_name": "TypeSafe: Jev Router",
       "context_window": 1000000,
@@ -61546,7 +61931,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -61577,7 +61962,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "document": {
@@ -61986,7 +62371,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/upstage/solar-decide",
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -62086,7 +62471,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/upstage/solar-decide-flash",
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -64323,7 +64708,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -64415,7 +64800,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -64533,7 +64918,7 @@
         "output_mime_types": [
           "video/mp4"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       }
     },
@@ -64589,7 +64974,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -64661,7 +65046,7 @@
           "speech_generation": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -64734,7 +65119,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -64765,7 +65150,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -64980,7 +65365,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -65011,7 +65396,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -65131,7 +65516,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -65162,7 +65547,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -65280,7 +65665,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "video": {
@@ -65311,7 +65696,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -65806,7 +66191,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -66071,7 +66456,7 @@
       "model_id": "z-ai/glm-5",
       "display_name": "Z.ai: GLM 5",
       "context_window": 204800,
-      "max_output_tokens": 128000,
+      "max_output_tokens": 131072,
       "input_modalities": [
         "text"
       ],
@@ -66102,8 +66487,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.6,
-        "output_per_1m": 1.92,
+        "input_per_1m": 1.0,
+        "output_per_1m": 3.2,
         "currency": "USD"
       },
       "extra": {
@@ -66117,8 +66502,8 @@
         "modality": "text->text",
         "tokenizer": "Other",
         "top_provider": {
-          "context_length": 198000,
-          "max_completion_tokens": 128000,
+          "context_length": 202752,
+          "max_completion_tokens": 131072,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -66142,7 +66527,7 @@
         ],
         "created": "2026-02-11",
         "description": "GLM-5 is Z.ai’s flagship open-source foundation model engineered for complex systems design and long-horizon agent workflows. Built for expert developers, it delivers production-grade performance on large-scale programming tasks, rivaling leading...",
-        "cache_read_per_1m": 0.12,
+        "cache_read_per_1m": 0.2,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -66260,7 +66645,7 @@
       "model_id": "z-ai/glm-5.1",
       "display_name": "Z.ai: GLM 5.1",
       "context_window": 204800,
-      "max_output_tokens": 131072,
+      "max_output_tokens": 128000,
       "input_modalities": [
         "text"
       ],
@@ -66291,8 +66676,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 1.33,
-        "output_per_1m": 4.18,
+        "input_per_1m": 0.966,
+        "output_per_1m": 3.036,
         "currency": "USD"
       },
       "extra": {
@@ -66306,8 +66691,8 @@
         "modality": "text->text",
         "tokenizer": "Other",
         "top_provider": {
-          "context_length": 202745,
-          "max_completion_tokens": 131072,
+          "context_length": 200000,
+          "max_completion_tokens": 128000,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -66333,7 +66718,7 @@
         ],
         "created": "2026-04-07",
         "description": "GLM-5.1 delivers a major leap in coding capability, with particularly significant gains in handling long-horizon tasks. Unlike previous models built around minute-level interactions, GLM-5.1 can work independently and continuously on...",
-        "cache_read_per_1m": 0.247,
+        "cache_read_per_1m": 0.1794,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -66392,7 +66777,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.05,
+        "input_per_1m": 0.0288,
         "output_per_1m": 7.0,
         "currency": "USD"
       },
@@ -66436,7 +66821,7 @@
         ],
         "created": "2026-06-16",
         "description": "GLM 5.2 is a large-scale reasoning model from Z.ai. It supports text input and output with a 1M-token context window, and is suited for long-horizon agent workflows, project-level software engineering,...",
-        "cache_read_per_1m": 0.049,
+        "cache_read_per_1m": 0.0278,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -66509,7 +66894,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.079,
+        "input_per_1m": 0.03,
         "output_per_1m": 4.8,
         "currency": "USD"
       },
@@ -66553,7 +66938,7 @@
         ],
         "created": "2026-08-18",
         "description": "GLM-5.3 is a large-scale reasoning model from Z.ai, built for complex software engineering and long-horizon agent tasks. It supports text input and output with a 1M-token context window, and improves...",
-        "cache_read_per_1m": 0.059,
+        "cache_read_per_1m": 0.029,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -66596,7 +66981,7 @@
       "model_id": "z-ai/glm-5.3-flash",
       "display_name": "Z.ai: GLM 5.3 Flash",
       "context_window": 1048576,
-      "max_output_tokens": 943718,
+      "max_output_tokens": 943717,
       "input_modalities": [
         "text",
         "image",
@@ -66629,8 +67014,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.0351,
-        "output_per_1m": 0.9,
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.5,
         "currency": "USD"
       },
       "video": {
@@ -66661,7 +67046,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -66675,8 +67060,8 @@
         "modality": "text+image+video->text",
         "tokenizer": "Other",
         "top_provider": {
-          "context_length": 1048576,
-          "max_completion_tokens": 943718,
+          "context_length": 1048575,
+          "max_completion_tokens": 943717,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -66704,7 +67089,7 @@
         ],
         "created": "2026-08-26",
         "description": "GLM-5.3-Flash is a native multimodal model from Z.ai. It is suited for efficient coding and long-horizon agent tasks. Its hybrid sparse and linear attention architecture maintains accurate long-context behavior while...",
-        "cache_read_per_1m": 0.0108,
+        "cache_read_per_1m": 0.03,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -66813,7 +67198,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -66962,7 +67347,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -67321,7 +67706,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-10",
+        "checked_at": "2026-10-15",
         "status": "inferred"
       },
       "extra": {
@@ -67371,582 +67756,6 @@
           "tools",
           "structured_outputs",
           "reasoning",
-          "vision"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "apodex/apodex-1.1-mini",
-      "display_name": "Apodex: Apodex 1.1 Mini (free)",
-      "context_window": 262144,
-      "max_output_tokens": 262144,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_json_schema": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "apodex-1.1-mini",
-        "openrouter/apodex/apodex-1.1-mini",
-        "apodex/apodex-1.1-mini"
-      ],
-      "license_type": "free",
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "apodex",
-        "tokenizer": "",
-        "top_provider": {
-          "context_length": 262144,
-          "max_completion_tokens": 262144,
-          "is_moderated": null
-        },
-        "supported_parameters": [
-          "reasoning",
-          "include_reasoning",
-          "max_tokens",
-          "temperature",
-          "top_p",
-          "stop",
-          "frequency_penalty",
-          "presence_penalty",
-          "seed",
-          "top_k",
-          "repetition_penalty",
-          "response_format",
-          "structured_outputs",
-          "tools",
-          "tool_choice"
-        ],
-        "description": "Apodex 1.1 Mini is a reasoning-first model from Apodex, built for complex, long-horizon research and forecasting tasks. It works directly with files, data, code, and tools to produce verifiable results, and is designed for agentic research workflows where answers need to be grounded in evidence.",
-        "free_tier": true,
-        "features": [
-          "tools",
-          "structured_outputs",
-          "reasoning"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "apodex/apodex-1.1-mini:free",
-      "display_name": "Apodex: Apodex 1.1 Mini (free)",
-      "context_window": 262144,
-      "max_output_tokens": 235929,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_json_schema": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "apodex-1.1-mini:free",
-        "openrouter/apodex/apodex-1.1-mini:free",
-        "apodex/apodex-1.1-mini-20261001",
-        "apodex/apodex-1.1-mini:free"
-      ],
-      "license_type": "free",
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "apodex",
-        "canonical_slug": "apodex/apodex-1.1-mini-20261001",
-        "modality": "text->text",
-        "tokenizer": "Other",
-        "top_provider": {
-          "context_length": 262144,
-          "max_completion_tokens": 235929,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "frequency_penalty",
-          "include_reasoning",
-          "max_tokens",
-          "presence_penalty",
-          "reasoning",
-          "repetition_penalty",
-          "response_format",
-          "seed",
-          "stop",
-          "structured_outputs",
-          "temperature",
-          "tool_choice",
-          "tools",
-          "top_k",
-          "top_p"
-        ],
-        "created": "2026-10-01",
-        "description": "Apodex 1.1 Mini is a reasoning-first model from Apodex, built for complex, long-horizon research and forecasting tasks. It works directly with files, data, code, and tools to produce verifiable results,...",
-        "free_tier": true,
-        "reasoning_meta": {
-          "mandatory": false
-        },
-        "links": {
-          "details": "/api/v1/models/apodex/apodex-1.1-mini-20261001/endpoints"
-        },
-        "features": [
-          "tools",
-          "structured_outputs",
-          "reasoning"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "inclusionai/ling-3.0-flash-fin",
-      "display_name": "inclusionAI: Ling 3.0 Flash Fin",
-      "context_window": 262144,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_json_schema": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "ling-3.0-flash-fin",
-        "openrouter/inclusionai/ling-3.0-flash-fin",
-        "inclusionai/ling-3.0-flash-fin-20260827",
-        "inclusionai/ling-3.0-flash-fin"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.042,
-        "output_per_1m": 0.1232,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "inclusionai",
-        "canonical_slug": "inclusionai/ling-3.0-flash-fin-20260827",
-        "modality": "text->text",
-        "tokenizer": "Other",
-        "top_provider": {
-          "context_length": 262144,
-          "max_completion_tokens": 32768,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "frequency_penalty",
-          "include_reasoning",
-          "logprobs",
-          "max_tokens",
-          "presence_penalty",
-          "reasoning",
-          "repetition_penalty",
-          "seed",
-          "stop",
-          "temperature",
-          "tool_choice",
-          "tools",
-          "top_k",
-          "top_logprobs",
-          "top_p"
-        ],
-        "created": "2026-08-27",
-        "description": "Ling 3.0 Flash Fin is a finance-focused mixture-of-experts model from InclusionAI, built on Ling 3.0 Flash with 5.1B active parameters out of 124B total. It is designed for real-world investment...",
-        "cache_read_per_1m": 0.0084,
-        "reasoning_meta": {
-          "mandatory": false,
-          "default_enabled": true
-        },
-        "links": {
-          "details": "/api/v1/models/inclusionai/ling-3.0-flash-fin-20260827/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
-        "features": [
-          "tools",
-          "reasoning"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "inclusionai/ling-3.0-flash-sante",
-      "display_name": "inclusionAI: Ling 3.0 Flash Sante",
-      "context_window": 262144,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_json_schema": null,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "ling-3.0-flash-sante",
-        "openrouter/inclusionai/ling-3.0-flash-sante",
-        "inclusionai/ling-3.0-flash-sante-20260904",
-        "inclusionai/ling-3.0-flash-sante"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.042,
-        "output_per_1m": 0.1232,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "inclusionai",
-        "canonical_slug": "inclusionai/ling-3.0-flash-sante-20260904",
-        "modality": "text->text",
-        "tokenizer": "Other",
-        "top_provider": {
-          "context_length": 262144,
-          "max_completion_tokens": 32768,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "frequency_penalty",
-          "include_reasoning",
-          "logprobs",
-          "max_tokens",
-          "presence_penalty",
-          "reasoning",
-          "repetition_penalty",
-          "seed",
-          "stop",
-          "temperature",
-          "tool_choice",
-          "tools",
-          "top_k",
-          "top_logprobs",
-          "top_p"
-        ],
-        "created": "2026-09-04",
-        "description": "Ling 3.0 Flash Sante is a health and medicine-focused mixture-of-experts model from InclusionAI, built on Ling 3.0 Flash with 5.1B active parameters out of 124B total. It is designed for...",
-        "cache_read_per_1m": 0.0084,
-        "reasoning_meta": {
-          "mandatory": false,
-          "default_enabled": true
-        },
-        "links": {
-          "details": "/api/v1/models/inclusionai/ling-3.0-flash-sante-20260904/endpoints"
-        },
-        "features": [
-          "tools",
-          "reasoning"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "inclusionai/ming-image-0.1-design",
-      "display_name": "inclusionAI: Ming Image 0.1 Design",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "image"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_json_schema": null,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "ming-image-0.1-design",
-        "openrouter/inclusionai/ming-image-0.1-design",
-        "inclusionai/ming-image-0.1-design"
-      ],
-      "license_type": "free",
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "image": {
-        "generation": true,
-        "accepts_text_prompt": true,
-        "accepts_image_input": false,
-        "status": "documented",
-        "source_url": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
-        "checked_at": "2026-09-26"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "inclusionai",
-        "tokenizer": "",
-        "top_provider": {
-          "context_length": 0,
-          "max_completion_tokens": 0,
-          "is_moderated": null
-        },
-        "supported_parameters": [
-          "max_tokens",
-          "temperature",
-          "top_p",
-          "stop",
-          "frequency_penalty",
-          "presence_penalty",
-          "seed",
-          "top_k",
-          "repetition_penalty"
-        ],
-        "description": "Ming Image 0.1 Design is a text-to-image model from inclusionAI aimed at graphic-design output, with an emphasis on legible text rendering inside the generated image. It generates from a prompt only and does not accept reference images. Output format can be requested as PNG, JPEG, or WebP. Image dimensions are chosen by the model rather than by the request, so explicit sizes and aspect ratios are ",
-        "free_tier": true,
-        "image_output_per_1m": 0.0,
-        "features": [
-          "image_output"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "inclusionai/ming-image-0.1-design-layer",
-      "display_name": "inclusionAI: Ming Image 0.1 Design Layer",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "image"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_json_schema": null,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "ming-image-0.1-design-layer",
-        "openrouter/inclusionai/ming-image-0.1-design-layer",
-        "inclusionai/ming-image-0.1-design-layer"
-      ],
-      "license_type": "free",
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "image": {
-        "generation": true,
-        "accepts_text_prompt": true,
-        "accepts_image_input": true,
-        "status": "documented",
-        "source_url": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
-        "checked_at": "2026-09-26"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "inclusionai",
-        "tokenizer": "",
-        "top_provider": {
-          "context_length": 0,
-          "max_completion_tokens": 0,
-          "is_moderated": null
-        },
-        "supported_parameters": [
-          "max_tokens",
-          "temperature",
-          "top_p",
-          "stop",
-          "frequency_penalty",
-          "presence_penalty",
-          "seed",
-          "top_k",
-          "repetition_penalty"
-        ],
-        "description": "Ming Image 0.1 Design Layer is an image-to-image model from inclusionAI that decomposes a flattened design image into separate RGBA layers, such as a background layer and foreground elements, and returns one image per layer. It requires exactly one reference image and a prompt describing the layer plan. Output format can be requested as PNG or WebP. Output dimensions follow the input image, so exp",
-        "free_tier": true,
-        "image_output_per_1m": 0.0,
-        "features": [
-          "vision",
-          "image_output"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "unbiased/pareto",
-      "display_name": "Pareto",
-      "context_window": 262144,
-      "max_output_tokens": 131072,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_json_schema": null,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "pareto",
-        "openrouter/unbiased/pareto",
-        "unbiased/pareto-20260917",
-        "unbiased/pareto"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 2.5,
-        "output_per_1m": 7.5,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "unbiased",
-        "canonical_slug": "unbiased/pareto-20260917",
-        "modality": "text+image->text",
-        "tokenizer": "Other",
-        "top_provider": {
-          "context_length": 262144,
-          "max_completion_tokens": 131072,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "max_tokens",
-          "response_format",
-          "temperature",
-          "tool_choice",
-          "tools",
-          "top_p"
-        ],
-        "created": "2026-09-17",
-        "description": "Pareto is a multimodal composite model built for research, coding, and agentic workflows, while delivering frontier-level performance across a broad range of general-purpose tasks.",
-        "cache_read_per_1m": 0.25,
-        "links": {
-          "details": "/api/v1/models/unbiased/pareto-20260917/endpoints"
-        },
-        "features": [
-          "tools",
-          "structured_outputs",
           "vision"
         ]
       }

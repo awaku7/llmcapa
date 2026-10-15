@@ -2,9 +2,42 @@
   "models": [
     {
       "provider": "relace",
+      "model_id": "deepseek-ai/DeepSeek-V4-Flash-0423",
+      "display_name": "DeepSeek V4 Flash 0423",
+      "context_window": 1000000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "deprecated": false,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "pricing": {
+        "input_per_1m": 0.0277,
+        "output_per_1m": 1.28,
+        "currency": "USD"
+      },
+      "extra": {
+        "official_source": "https://docs.relace.ai/docs/open-models/quickstart",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_relace_public_docs_inventory",
+        "base_url": "https://models.relace.ai/v1",
+        "cached_input_per_1m": 0.0277,
+        "not_listed_in_current_docs": false
+      }
+    },
+    {
+      "provider": "relace",
       "model_id": "deepseek-ai/DeepSeek-V4-Flash-0731",
-      "display_name": "Relace: deepseek-ai/DeepSeek-V4-Flash-0731",
-      "context_window": 1048576,
+      "display_name": "DeepSeek V4 Flash 0731",
+      "context_window": 1000000,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -13,8 +46,8 @@
         "text"
       ],
       "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_json_schema": null,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
@@ -33,19 +66,19 @@
       ],
       "license_type": "unknown",
       "pricing": {
-        "input_per_1m": 0.14,
-        "output_per_1m": 0.28,
+        "input_per_1m": 0.07,
+        "output_per_1m": 0.14,
         "currency": "USD"
       },
       "extra": {
-        "official_source": "https://docs.relace.ai/",
+        "official_source": "https://docs.relace.ai/docs/open-models/quickstart",
         "structured_output_source": "https://docs.relace.ai/docs/introduction",
         "structured_output_api_documented": false,
         "catalog_source": "official_relace_open_models",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
-        "official_source_checked_at": "2026-09-01",
-        "official_spec_refresh": "pending_provider_parser",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_relace_public_docs_inventory",
         "endpoints": [
           {
             "base_url": "https://models.relace.ai",
@@ -53,14 +86,116 @@
             "auth": "bearer",
             "source": "https://docs.relace.ai/docs/introduction"
           }
-        ]
+        ],
+        "base_url": "https://models.relace.ai/v1",
+        "cached_input_per_1m": 0.014,
+        "not_listed_in_current_docs": false
+      }
+    },
+    {
+      "provider": "relace",
+      "model_id": "deepseek-ai/DeepSeek-V4-Pro",
+      "display_name": "DeepSeek V4 Pro 0423 (Preview)",
+      "context_window": 1000000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "deprecated": false,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "pricing": {
+        "input_per_1m": 0.45,
+        "output_per_1m": 3.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "official_source": "https://docs.relace.ai/docs/open-models/quickstart",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_relace_public_docs_inventory",
+        "base_url": "https://models.relace.ai/v1",
+        "cached_input_per_1m": 0.09,
+        "not_listed_in_current_docs": false
+      }
+    },
+    {
+      "provider": "relace",
+      "model_id": "deepseek-ai/DeepSeek-V4-Pro-0813",
+      "display_name": "DeepSeek V4 Pro 0813",
+      "context_window": 1000000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "deprecated": false,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "pricing": {
+        "input_per_1m": 0.5,
+        "output_per_1m": 2.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "official_source": "https://docs.relace.ai/docs/open-models/quickstart",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_relace_public_docs_inventory",
+        "base_url": "https://models.relace.ai/v1",
+        "cached_input_per_1m": 0.05,
+        "not_listed_in_current_docs": false
+      }
+    },
+    {
+      "provider": "relace",
+      "model_id": "deepseek-ai/DeepSeek-V4.1-Flash",
+      "display_name": "DeepSeek V4.1 Flash",
+      "context_window": 1000000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "deprecated": false,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "pricing": {
+        "input_per_1m": 0.2,
+        "output_per_1m": 0.6,
+        "currency": "USD"
+      },
+      "extra": {
+        "official_source": "https://docs.relace.ai/docs/open-models/quickstart",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_relace_public_docs_inventory",
+        "base_url": "https://models.relace.ai/v1",
+        "cached_input_per_1m": 0.008,
+        "not_listed_in_current_docs": false
       }
     },
     {
       "provider": "relace",
       "model_id": "moonshotai/kimi-k3",
-      "display_name": "Relace: moonshotai/kimi-k3",
-      "context_window": 1048576,
+      "display_name": "Kimi K3",
+      "context_window": 1000000,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -70,7 +205,7 @@
       ],
       "supports_function_calling": true,
       "supports_json_mode": true,
-      "supports_json_schema": null,
+      "supports_json_schema": true,
       "supports_streaming": true,
       "supports_vision": false,
       "supports_reasoning": true,
@@ -89,19 +224,19 @@
       ],
       "license_type": "unknown",
       "pricing": {
-        "input_per_1m": 3.0,
-        "output_per_1m": 15.0,
+        "input_per_1m": 2.0,
+        "output_per_1m": 14.0,
         "currency": "USD"
       },
       "extra": {
-        "official_source": "https://docs.relace.ai/",
+        "official_source": "https://docs.relace.ai/docs/open-models/quickstart",
         "structured_output_source": "https://docs.relace.ai/docs/introduction",
         "structured_output_api_documented": false,
         "catalog_source": "official_relace_open_models",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
-        "official_source_checked_at": "2026-09-01",
-        "official_spec_refresh": "pending_provider_parser",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_relace_public_docs_inventory",
         "endpoints": [
           {
             "base_url": "https://models.relace.ai",
@@ -109,14 +244,17 @@
             "auth": "bearer",
             "source": "https://docs.relace.ai/docs/introduction"
           }
-        ]
+        ],
+        "base_url": "https://models.relace.ai/v1",
+        "cached_input_per_1m": 0.3,
+        "not_listed_in_current_docs": false
       }
     },
     {
       "provider": "relace",
       "model_id": "relace-apply-3",
-      "display_name": "Relace: Relace Apply 3",
-      "context_window": 256000,
+      "display_name": "Relace Apply",
+      "context_window": 128000,
       "max_output_tokens": 128000,
       "input_modalities": [
         "text"
@@ -147,9 +285,9 @@
         "currency": "USD"
       },
       "extra": {
-        "official_source": "https://docs.relace.ai/",
-        "official_source_checked_at": "2026-09-01",
-        "official_spec_refresh": "pending_provider_parser",
+        "official_source": "https://docs.relace.ai/api-reference/instant-apply/apply",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_relace_public_docs_inventory",
         "structured_output_source": "https://docs.relace.ai/docs/introduction",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
@@ -161,14 +299,17 @@
             "source": "https://docs.relace.ai/docs/introduction"
           }
         ],
-        "structured_output_api_documented": false
+        "structured_output_api_documented": false,
+        "base_url": "https://models.relace.ai/v1",
+        "cached_input_per_1m": null,
+        "not_listed_in_current_docs": false
       },
       "supports_json_schema": null
     },
     {
       "provider": "relace",
       "model_id": "relace-search",
-      "display_name": "Relace: Relace Search",
+      "display_name": "Relace Search",
       "context_window": 256000,
       "max_output_tokens": 128000,
       "input_modalities": [
@@ -200,9 +341,9 @@
         "currency": "USD"
       },
       "extra": {
-        "official_source": "https://docs.relace.ai/",
-        "official_source_checked_at": "2026-09-01",
-        "official_spec_refresh": "pending_provider_parser",
+        "official_source": "https://docs.relace.ai/api-reference/fast-agentic-search/search",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_relace_public_docs_inventory",
         "structured_output_source": "https://docs.relace.ai/docs/introduction",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
@@ -214,9 +355,111 @@
             "source": "https://docs.relace.ai/docs/introduction"
           }
         ],
-        "structured_output_api_documented": false
+        "structured_output_api_documented": false,
+        "base_url": "https://models.relace.ai/v1",
+        "cached_input_per_1m": null,
+        "not_listed_in_current_docs": false
       },
       "supports_json_schema": null
+    },
+    {
+      "provider": "relace",
+      "model_id": "z-ai/glm-5.2",
+      "display_name": "GLM 5.2",
+      "context_window": 1000000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "deprecated": false,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "pricing": {
+        "input_per_1m": 0.4,
+        "output_per_1m": 4.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "official_source": "https://docs.relace.ai/docs/open-models/quickstart",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_relace_public_docs_inventory",
+        "base_url": "https://models.relace.ai/v1",
+        "cached_input_per_1m": 0.08,
+        "not_listed_in_current_docs": false
+      }
+    },
+    {
+      "provider": "relace",
+      "model_id": "z-ai/glm-5.3",
+      "display_name": "GLM 5.3",
+      "context_window": 1000000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "deprecated": false,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "pricing": {
+        "input_per_1m": 0.4,
+        "output_per_1m": 4.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "official_source": "https://docs.relace.ai/docs/open-models/quickstart",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_relace_public_docs_inventory",
+        "base_url": "https://models.relace.ai/v1",
+        "cached_input_per_1m": 0.08,
+        "not_listed_in_current_docs": false
+      }
+    },
+    {
+      "provider": "relace",
+      "model_id": "z-ai/glm-5.3-flash",
+      "display_name": "GLM 5.3 Flash",
+      "context_window": 1000000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "deprecated": false,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "pricing": {
+        "input_per_1m": 0.075,
+        "output_per_1m": 0.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "official_source": "https://docs.relace.ai/docs/open-models/quickstart",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_relace_public_docs_inventory",
+        "base_url": "https://models.relace.ai/v1",
+        "cached_input_per_1m": 0.0075,
+        "not_listed_in_current_docs": false
+      }
     }
   ]
 }

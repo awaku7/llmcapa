@@ -2,9 +2,38 @@
   "models": [
     {
       "provider": "writer",
+      "model_id": "palmyra-x4",
+      "display_name": "Palmyra X4",
+      "context_window": 128000,
+      "max_output_tokens": 4096,
+      "deprecated": false,
+      "pricing": {
+        "input_per_1m": 2.5,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "official_source": "https://dev.writer.com/home/models",
+        "official_pricing_source": "https://dev.writer.com/home/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_writer_model_docs",
+        "api_base_url": "https://api.writer.com/v1",
+        "not_listed_in_current_docs": false,
+        "endpoints": [
+          {
+            "base_url": "https://api.writer.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://dev.writer.com/home/models"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "writer",
       "model_id": "palmyra-x5",
-      "display_name": "Writer: Palmyra X5",
-      "context_window": 1040000,
+      "display_name": "Palmyra X5",
+      "context_window": 1000000,
       "max_output_tokens": 8192,
       "input_modalities": [
         "text"
@@ -44,11 +73,46 @@
             "base_url": "https://api.writer.com/v1",
             "protocol": "openai-compatible",
             "auth": "bearer",
-            "source": "https://dev.writer.com/api-reference/completion-api/chat-completion"
+            "source": "https://dev.writer.com/home/models"
           }
-        ]
+        ],
+        "official_source": "https://dev.writer.com/home/models",
+        "official_pricing_source": "https://dev.writer.com/home/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_writer_model_docs",
+        "api_base_url": "https://api.writer.com/v1",
+        "not_listed_in_current_docs": false
       },
       "supports_json_schema": true
+    },
+    {
+      "provider": "writer",
+      "model_id": "palmyra-x6",
+      "display_name": "Palmyra X6",
+      "context_window": 1000000,
+      "max_output_tokens": 8192,
+      "deprecated": false,
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 8.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "official_source": "https://dev.writer.com/home/models",
+        "official_pricing_source": "https://dev.writer.com/home/pricing",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_writer_model_docs",
+        "api_base_url": "https://api.writer.com/v1",
+        "not_listed_in_current_docs": false,
+        "endpoints": [
+          {
+            "base_url": "https://api.writer.com/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://dev.writer.com/home/models"
+          }
+        ]
+      }
     }
   ]
 }

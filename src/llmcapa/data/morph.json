@@ -2,10 +2,112 @@
   "models": [
     {
       "provider": "morph",
-      "model_id": "morph-dsv4flash",
-      "display_name": "Morph: morph-dsv4flash",
+      "model_id": "morph-v3-fast",
+      "display_name": "Morph: v3 Fast Apply",
+      "context_window": 262144,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.7999999999999999,
+        "output_per_1m": 1.2,
+        "currency": "USD"
+      },
+      "extra": {
+        "official_source": "https://www.morphllm.com/api/models/json",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_morph_model_api",
+        "structured_output_source": "https://docs.morphllm.com/sdk/components/fast-models",
+        "structured_output_checked_at": "2026-09-01",
+        "structured_output_source_status": "reachable",
+        "structured_output_api_documented": true,
+        "base_url": "https://api.morphllm.com/v1",
+        "description": "Morph's fastest apply model for code edits. 10,500+ tokens/sec with 96% accuracy for rapid code transformations.",
+        "hugging_face_id": null,
+        "quantization": "fp8",
+        "created": 1792052336,
+        "is_ready": null
+      },
+      "supports_json_schema": null
+    },
+    {
+      "provider": "morph",
+      "model_id": "morph-v3-large",
+      "display_name": "Morph: v3 Large Apply",
+      "context_window": 262144,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.8999999999999999,
+        "output_per_1m": 1.9,
+        "currency": "USD"
+      },
+      "extra": {
+        "official_source": "https://www.morphllm.com/api/models/json",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_morph_model_api",
+        "structured_output_source": "https://docs.morphllm.com/sdk/components/fast-models",
+        "structured_output_checked_at": "2026-09-01",
+        "structured_output_source_status": "reachable",
+        "structured_output_api_documented": true,
+        "base_url": "https://api.morphllm.com/v1",
+        "description": "Morph's high-accuracy apply model for complex code edits. 2500+ tokens/sec with 98% accuracy for precise code transformations.",
+        "hugging_face_id": null,
+        "quantization": "fp8",
+        "created": 1792052336,
+        "is_ready": null
+      },
+      "supports_json_schema": null
+    },
+    {
+      "provider": "morph",
+      "model_id": "morph-glm53-744b",
+      "display_name": "Morph: GLM-5.3",
       "context_window": 1048576,
-      "max_output_tokens": 0,
+      "max_output_tokens": 1048576,
       "input_modalities": [
         "text"
       ],
@@ -19,7 +121,48 @@
       "supports_vision": false,
       "supports_reasoning": true,
       "supports_chat_completion": true,
-      "supports_responses_api": false,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 0.098,
+        "output_per_1m": 6.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "official_source": "https://www.morphllm.com/api/models/json",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_morph_model_api",
+        "base_url": "https://api.morphllm.com/v1",
+        "description": "GLM-5.3 served by Morph and Morph's custom kernels with TP8, DCP sharding, MTP speculative decoding, and tiered prefix reuse. Sparse-MoE text model for agentic coding, reasoning, and tool use. 1M context window.",
+        "hugging_face_id": "zai-org/GLM-5.3",
+        "quantization": "fp8",
+        "created": 1792052336,
+        "is_ready": true,
+        "cached_input_per_1m": 0.098
+      }
+    },
+    {
+      "provider": "morph",
+      "model_id": "morph-glm52-744b",
+      "display_name": "Morph: GLM-5.2",
+      "context_window": 1048576,
+      "max_output_tokens": 1048576,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
       "supports_reasoning_effort": true,
       "supports_thinking_budget": false,
       "supports_anthropic_api": true,
@@ -29,21 +172,347 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [],
-      "license_type": "unknown",
+      "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.12,
-        "output_per_1m": 0.278,
+        "input_per_1m": 0.079,
+        "output_per_1m": 6.0,
         "currency": "USD"
       },
       "extra": {
-        "official_source": "https://docs.morphllm.com/",
+        "official_source": "https://www.morphllm.com/api/models/json",
         "structured_output_source": "https://docs.morphllm.com/sdk/components/fast-models",
         "structured_output_api_documented": true,
         "catalog_source": "official_morph_fast_models",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
-        "official_source_checked_at": "2026-09-01",
-        "official_spec_refresh": "pending_provider_parser"
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_morph_model_api",
+        "base_url": "https://api.morphllm.com/v1",
+        "description": "GLM-5.2 endpoint served by Morph and Morph's custom kernels with TP8, DCP sharding, MTP speculative decoding, and tiered prefix reuse. Sparse-MoE text model for agentic coding, reasoning, and tool use. 1M context window.",
+        "hugging_face_id": "zai-org/GLM-5.2",
+        "quantization": "fp8",
+        "created": 1792052336,
+        "is_ready": true,
+        "cached_input_per_1m": 0.079
+      }
+    },
+    {
+      "provider": "morph",
+      "model_id": "morph-glm53flash",
+      "display_name": "Morph: GLM-5.3-Flash",
+      "context_window": 1048576,
+      "max_output_tokens": 1048576,
+      "input_modalities": [
+        "image",
+        "text",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 0.062,
+        "output_per_1m": 1.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "official_source": "https://www.morphllm.com/api/models/json",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_morph_model_api",
+        "base_url": "https://api.morphllm.com/v1",
+        "description": "GLM-5.3-Flash (320B total / 18B active params) served by Morph and Morph's custom kernels with prefix reuse. Natively multimodal sparse MoE for agentic coding, reasoning, and tool use. 1M context window.",
+        "hugging_face_id": "zai-org/GLM-5.3-Flash",
+        "quantization": "fp8",
+        "created": 1792052336,
+        "is_ready": true,
+        "cached_input_per_1m": 0.024999999999999998
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "source_url": "https://www.morphllm.com/api/models/json",
+        "status": "documented",
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-15"
+      }
+    },
+    {
+      "provider": "morph",
+      "model_id": "morph-dsv41flash",
+      "display_name": "Morph: DeepSeek V4.1 Flash",
+      "context_window": 1048576,
+      "max_output_tokens": 1048576,
+      "input_modalities": [
+        "image",
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 0.032999999999999995,
+        "output_per_1m": 0.6,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "official_source": "https://www.morphllm.com/api/models/json",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_morph_model_api",
+        "base_url": "https://api.morphllm.com/v1",
+        "description": "DeepSeek V4.1 Flash (769B total / 15.5B active params) served by Morph and Morph's custom kernels with prefix reuse. Vision-language sparse MoE with thinking on by default, for agentic coding, reasoning, and tool use. 1M context window.",
+        "hugging_face_id": "deepseek-ai/DeepSeek-V4.1-Flash",
+        "quantization": "fp8",
+        "created": 1792052336,
+        "is_ready": true,
+        "cached_input_per_1m": 0.009
+      }
+    },
+    {
+      "provider": "morph",
+      "model_id": "morph-dsv4flash",
+      "display_name": "Morph: DeepSeek V4 Flash 0731",
+      "context_window": 1048576,
+      "max_output_tokens": 1048576,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.08600000000000001,
+        "output_per_1m": 0.241,
+        "currency": "USD"
+      },
+      "extra": {
+        "official_source": "https://www.morphllm.com/api/models/json",
+        "structured_output_source": "https://docs.morphllm.com/sdk/components/fast-models",
+        "structured_output_api_documented": true,
+        "catalog_source": "official_morph_fast_models",
+        "structured_output_checked_at": "2026-09-01",
+        "structured_output_source_status": "reachable",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_morph_model_api",
+        "base_url": "https://api.morphllm.com/v1",
+        "description": "DeepSeek V4 Flash 0731 served by Morph. Fast MoE model with compressed attention and a 1M context window for coding, reasoning, and tool use.",
+        "hugging_face_id": "deepseek-ai/DeepSeek-V4-Flash-0731",
+        "quantization": "bf16",
+        "created": 1792052336,
+        "is_ready": true,
+        "cached_input_per_1m": 0.036
+      }
+    },
+    {
+      "provider": "morph",
+      "model_id": "morph-dsv4flash-0731",
+      "display_name": "Morph: DeepSeek V4 Flash 0731",
+      "context_window": 1048576,
+      "max_output_tokens": 1048576,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 0.142,
+        "output_per_1m": 0.39999999999999997,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "official_source": "https://www.morphllm.com/api/models/json",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_morph_model_api",
+        "base_url": "https://api.morphllm.com/v1",
+        "description": "DeepSeek V4 Flash 0731 served by Morph. Fast MoE model with compressed attention and a 1M context window for coding, reasoning, and tool use.",
+        "hugging_face_id": "deepseek-ai/DeepSeek-V4-Flash-0731",
+        "quantization": "bf16",
+        "created": 1792052336,
+        "is_ready": true,
+        "cached_input_per_1m": 0.036
+      }
+    },
+    {
+      "provider": "morph",
+      "model_id": "morph-kimik3",
+      "display_name": "Morph: Kimi K3",
+      "context_window": 1048576,
+      "max_output_tokens": 1048576,
+      "input_modalities": [
+        "image",
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.7999999999999999,
+        "output_per_1m": 14.9,
+        "currency": "USD"
+      },
+      "extra": {
+        "official_source": "https://www.morphllm.com/api/models/json",
+        "structured_output_source": "https://docs.morphllm.com/sdk/components/fast-models",
+        "structured_output_api_documented": true,
+        "catalog_source": "official_morph_fast_models",
+        "structured_output_checked_at": "2026-09-01",
+        "structured_output_source_status": "reachable",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_morph_model_api",
+        "base_url": "https://api.morphllm.com/v1",
+        "description": "Kimi K3 (2.8T total, ~A50B active) served by Morph on GB300 racks with PD-disaggregation and MTP speculative decoding. Multimodal MoE reasoning model (KDA hybrid attention) for agentic coding, reasoning, and vision. Full 1M context window.",
+        "hugging_face_id": "moonshotai/Kimi-K3",
+        "quantization": "fp8",
+        "created": 1792052336,
+        "is_ready": true,
+        "cached_input_per_1m": 0.29
+      }
+    },
+    {
+      "provider": "morph",
+      "model_id": "morph-kimik3-fast",
+      "display_name": "Morph: Kimi K3 Fast",
+      "context_window": 1048576,
+      "max_output_tokens": 1048576,
+      "input_modalities": [
+        "image",
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 6.0,
+        "output_per_1m": 22.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "official_source": "https://www.morphllm.com/api/models/json",
+        "structured_output_source": "https://docs.morphllm.com/sdk/components/fast-models",
+        "structured_output_api_documented": true,
+        "catalog_source": "official_morph_fast_models",
+        "structured_output_checked_at": "2026-09-01",
+        "structured_output_source_status": "reachable",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_morph_model_api",
+        "base_url": "https://api.morphllm.com/v1",
+        "description": "Kimi K3 served by Morph on GB300 racks tuned for latency: the same 2.8T MoE weights and full 1M context as morph-kimik3, with prefill/decode disaggregation shaped for time-to-first-token and per-request speed instead of batch throughput.",
+        "hugging_face_id": "moonshotai/Kimi-K3",
+        "quantization": "fp8",
+        "created": 1792052336,
+        "is_ready": true,
+        "cached_input_per_1m": 0.6
       }
     },
     {
@@ -88,146 +557,9 @@
         "catalog_source": "official_morph_fast_models",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
-        "official_source_checked_at": "2026-09-01",
-        "official_spec_refresh": "pending_provider_parser"
-      }
-    },
-    {
-      "provider": "morph",
-      "model_id": "morph-glm52-744b",
-      "display_name": "Morph: morph-glm52-744b",
-      "context_window": 1048576,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_json_schema": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": true,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 1.1,
-        "output_per_1m": 4.1,
-        "currency": "USD"
-      },
-      "extra": {
-        "official_source": "https://docs.morphllm.com/",
-        "structured_output_source": "https://docs.morphllm.com/sdk/components/fast-models",
-        "structured_output_api_documented": true,
-        "catalog_source": "official_morph_fast_models",
-        "structured_output_checked_at": "2026-09-01",
-        "structured_output_source_status": "reachable",
-        "official_source_checked_at": "2026-09-01",
-        "official_spec_refresh": "pending_provider_parser"
-      }
-    },
-    {
-      "provider": "morph",
-      "model_id": "morph-kimik3",
-      "display_name": "Morph: morph-kimik3",
-      "context_window": 1048576,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_json_schema": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": true,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 2.9,
-        "output_per_1m": 14.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "official_source": "https://docs.morphllm.com/",
-        "structured_output_source": "https://docs.morphllm.com/sdk/components/fast-models",
-        "structured_output_api_documented": true,
-        "catalog_source": "official_morph_fast_models",
-        "structured_output_checked_at": "2026-09-01",
-        "structured_output_source_status": "reachable",
-        "official_source_checked_at": "2026-09-01",
-        "official_spec_refresh": "pending_provider_parser"
-      }
-    },
-    {
-      "provider": "morph",
-      "model_id": "morph-kimik3-fast",
-      "display_name": "Morph: morph-kimik3-fast",
-      "context_window": 1048576,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_json_schema": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": true,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 6.0,
-        "output_per_1m": 22.5,
-        "currency": "USD"
-      },
-      "extra": {
-        "official_source": "https://docs.morphllm.com/",
-        "structured_output_source": "https://docs.morphllm.com/sdk/components/fast-models",
-        "structured_output_api_documented": true,
-        "catalog_source": "official_morph_fast_models",
-        "structured_output_checked_at": "2026-09-01",
-        "structured_output_source_status": "reachable",
-        "official_source_checked_at": "2026-09-01",
-        "official_spec_refresh": "pending_provider_parser"
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "pending_provider_parser",
+        "official_morph_current": false
       }
     },
     {
@@ -272,8 +604,9 @@
         "catalog_source": "official_morph_fast_models",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
-        "official_source_checked_at": "2026-09-01",
-        "official_spec_refresh": "pending_provider_parser"
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "pending_provider_parser",
+        "official_morph_current": false
       }
     },
     {
@@ -318,8 +651,9 @@
         "catalog_source": "official_morph_fast_models",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
-        "official_source_checked_at": "2026-09-01",
-        "official_spec_refresh": "pending_provider_parser"
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "pending_provider_parser",
+        "official_morph_current": false
       }
     },
     {
@@ -364,8 +698,9 @@
         "catalog_source": "official_morph_fast_models",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
-        "official_source_checked_at": "2026-09-01",
-        "official_spec_refresh": "pending_provider_parser"
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "pending_provider_parser",
+        "official_morph_current": false
       }
     },
     {
@@ -410,8 +745,9 @@
         "catalog_source": "official_morph_fast_models",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
-        "official_source_checked_at": "2026-09-01",
-        "official_spec_refresh": "pending_provider_parser"
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "pending_provider_parser",
+        "official_morph_current": false
       }
     },
     {
@@ -456,99 +792,10 @@
         "catalog_source": "official_morph_fast_models",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
-        "official_source_checked_at": "2026-09-01",
-        "official_spec_refresh": "pending_provider_parser"
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "pending_provider_parser",
+        "official_morph_current": false
       }
-    },
-    {
-      "provider": "morph",
-      "model_id": "morph-v3-fast",
-      "display_name": "Morph: Morph V3 Fast",
-      "context_window": 81920,
-      "max_output_tokens": 38000,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.7999999999999999,
-        "output_per_1m": 1.2,
-        "currency": "USD"
-      },
-      "extra": {
-        "official_source": "https://docs.morphllm.com/",
-        "official_source_checked_at": "2026-09-01",
-        "official_spec_refresh": "pending_provider_parser",
-        "structured_output_source": "https://docs.morphllm.com/sdk/components/fast-models",
-        "structured_output_checked_at": "2026-09-01",
-        "structured_output_source_status": "reachable",
-        "structured_output_api_documented": true
-      },
-      "supports_json_schema": true
-    },
-    {
-      "provider": "morph",
-      "model_id": "morph-v3-large",
-      "display_name": "Morph: Morph V3 Large",
-      "context_window": 262144,
-      "max_output_tokens": 131072,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.8999999999999999,
-        "output_per_1m": 1.9,
-        "currency": "USD"
-      },
-      "extra": {
-        "official_source": "https://docs.morphllm.com/",
-        "official_source_checked_at": "2026-09-01",
-        "official_spec_refresh": "pending_provider_parser",
-        "structured_output_source": "https://docs.morphllm.com/sdk/components/fast-models",
-        "structured_output_checked_at": "2026-09-01",
-        "structured_output_source_status": "reachable",
-        "structured_output_api_documented": true
-      },
-      "supports_json_schema": true
     }
   ]
 }

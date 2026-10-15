@@ -3,7 +3,7 @@
     {
       "provider": "poolside",
       "model_id": "laguna-m-1",
-      "display_name": "Poolside: laguna-m-1",
+      "display_name": "<img src=\"https://mintcdn.com/poolside/kkMWX_7zqePBFTSJ/images/landing/laguna-m1-banner.svg?fit=max&auto=format&n=kkMWX_7zqePBFTSJ&q=85&s=adc60dffb9cb8d80995501917f0c3954\" alt=\"Laguna M.1\" width=\"699\" height=\"176\" data-path=\"images/landing/laguna-m1-banner.svg\" />",
       "context_window": 131072,
       "max_output_tokens": 0,
       "input_modalities": [
@@ -36,21 +36,33 @@
         "currency": "USD"
       },
       "extra": {
-        "official_source": "https://poolside.ai/",
+        "official_source": "https://docs.poolside.ai/get-started/supported-models",
         "structured_output_source": "https://docs.poolside.ai/",
         "structured_output_api_documented": false,
         "catalog_source": "official_poolside_supported_models",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
-        "official_source_checked_at": "2026-09-01",
-        "official_spec_refresh": "pending_provider_parser"
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_poolside_docs_inventory",
+        "official_api_id_source": "https://docs.poolside.ai/api/openai-api-examples",
+        "api_base_url": "https://inference.poolside.ai/v1",
+        "api_model_id": "poolside/laguna-m-1",
+        "not_listed_in_current_docs": false,
+        "endpoints": [
+          {
+            "base_url": "https://inference.poolside.ai/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.poolside.ai/api/openai-api-examples"
+          }
+        ]
       }
     },
     {
       "provider": "poolside",
       "model_id": "laguna-s-2.1",
-      "display_name": "Poolside: Laguna S 2.1",
-      "context_window": 1048576,
+      "display_name": "<img src=\"https://mintcdn.com/poolside/rJq4dlnoOSHhVAZp/images/landing/laguna-s-2-1-banner.svg?fit=max&auto=format&n=rJq4dlnoOSHhVAZp&q=85&s=268dec910a80faf724c0fb2456c09167\" alt=\"Laguna S 2.1\" width=\"699\" height=\"176\" data-path=\"images/landing/laguna-s-2-1-banner.svg\" />",
+      "context_window": 1000000,
       "max_output_tokens": 131072,
       "input_modalities": [
         "text"
@@ -81,13 +93,82 @@
         "currency": "USD"
       },
       "extra": {
-        "official_source": "https://poolside.ai/",
-        "official_source_checked_at": "2026-09-01",
-        "official_spec_refresh": "pending_provider_parser",
+        "official_source": "https://docs.poolside.ai/get-started/supported-models",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_poolside_docs_inventory",
         "structured_output_source": "https://docs.poolside.ai/",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
-        "structured_output_api_documented": false
+        "structured_output_api_documented": false,
+        "official_api_id_source": "https://docs.poolside.ai/api/openai-api-examples",
+        "api_base_url": "https://inference.poolside.ai/v1",
+        "api_model_id": "laguna-s-2.1",
+        "not_listed_in_current_docs": false,
+        "endpoints": [
+          {
+            "base_url": "https://inference.poolside.ai/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.poolside.ai/api/openai-api-examples"
+          }
+        ]
+      },
+      "supports_json_schema": null
+    },
+    {
+      "provider": "poolside",
+      "model_id": "laguna-xs-2.1",
+      "display_name": "<img src=\"https://mintcdn.com/poolside/kkMWX_7zqePBFTSJ/images/landing/laguna-xs2-1-banner.svg?fit=max&auto=format&n=kkMWX_7zqePBFTSJ&q=85&s=eac5353718aa8fac2228bf8cd8a4e1c0\" alt=\"Laguna XS 2.1\" width=\"699\" height=\"176\" data-path=\"images/landing/laguna-xs2-1-banner.svg\" />",
+      "context_window": 256000,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "unknown",
+      "pricing": {
+        "input_per_1m": 0.06,
+        "output_per_1m": 0.12,
+        "currency": "USD"
+      },
+      "extra": {
+        "official_source": "https://docs.poolside.ai/get-started/supported-models",
+        "official_source_checked_at": "2026-10-15",
+        "official_spec_refresh": "official_poolside_docs_inventory",
+        "structured_output_source": "https://docs.poolside.ai/",
+        "structured_output_checked_at": "2026-09-01",
+        "structured_output_source_status": "reachable",
+        "structured_output_api_documented": false,
+        "official_api_id_source": "https://docs.poolside.ai/api/openai-api-examples",
+        "api_base_url": "https://inference.poolside.ai/v1",
+        "api_model_id": "poolside/laguna-xs-2.1",
+        "not_listed_in_current_docs": false,
+        "endpoints": [
+          {
+            "base_url": "https://inference.poolside.ai/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.poolside.ai/api/openai-api-examples"
+          }
+        ]
       },
       "supports_json_schema": null
     },
@@ -127,57 +208,13 @@
       },
       "extra": {
         "official_source": "https://poolside.ai/",
-        "official_source_checked_at": "2026-09-01",
+        "official_source_checked_at": "2026-10-15",
         "official_spec_refresh": "pending_provider_parser",
         "structured_output_source": "https://docs.poolside.ai/",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
-        "structured_output_api_documented": false
-      },
-      "supports_json_schema": null
-    },
-    {
-      "provider": "poolside",
-      "model_id": "laguna-xs-2.1",
-      "display_name": "Poolside: Laguna XS 2.1",
-      "context_window": 262144,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "unknown",
-      "pricing": {
-        "input_per_1m": 0.06,
-        "output_per_1m": 0.12,
-        "currency": "USD"
-      },
-      "extra": {
-        "official_source": "https://poolside.ai/",
-        "official_source_checked_at": "2026-09-01",
-        "official_spec_refresh": "pending_provider_parser",
-        "structured_output_source": "https://docs.poolside.ai/",
-        "structured_output_checked_at": "2026-09-01",
-        "structured_output_source_status": "reachable",
-        "structured_output_api_documented": false
+        "structured_output_api_documented": false,
+        "not_listed_in_current_docs": true
       },
       "supports_json_schema": null
     },
@@ -217,12 +254,13 @@
       },
       "extra": {
         "official_source": "https://poolside.ai/",
-        "official_source_checked_at": "2026-09-01",
+        "official_source_checked_at": "2026-10-15",
         "official_spec_refresh": "pending_provider_parser",
         "structured_output_source": "https://docs.poolside.ai/",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
-        "structured_output_api_documented": false
+        "structured_output_api_documented": false,
+        "not_listed_in_current_docs": true
       },
       "supports_json_schema": null
     }

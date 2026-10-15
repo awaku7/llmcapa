@@ -843,6 +843,29 @@ def build() -> list[dict]:
             },
         )
     )
+    models.append(
+        base(
+            model_id="MAI-Transcribe-2-Streaming",
+            display="MAI Transcribe 2 Streaming",
+            ctx=0,
+            max_out=0,
+            pricing=None,
+            input_modalities=["audio"],
+            output_modalities=["text"],
+            function_calling=False,
+            streaming=True,
+            chat=False,
+            aliases=[],
+            extra={
+                "source": "https://microsoft.ai/pdf/MAI-Transcribe-2-Streaming-Model-Card-Memo.pdf",
+                "mai_news": SOURCE_MAI_NEWS,
+                "category": "speech_stt",
+                "pricing_note": "not specified in the official model card",
+                "supported_languages": 60,
+                "availability": "product_surface",
+            },
+        )
+    )
     # Announced product surface (catalog / microsoft.ai) — no Foundry PAYG row yet
     models.append(
         base(

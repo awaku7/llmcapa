@@ -2,6 +2,71 @@
   "models": [
     {
       "provider": "typesafe",
+      "model_id": "jev-1.14.0",
+      "display_name": "TypeSafe Jev 1.14",
+      "context_window": 64000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "decision"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": false,
+      "supports_vision": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "deprecated": false,
+      "aliases": [
+        "jev-preview"
+      ],
+      "pricing": {
+        "input_per_1m": 0.042,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "choice",
+          "score",
+          "noul"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "free_form_text": false,
+        "state_shapes": [
+          "string",
+          "json_object",
+          "text_array"
+        ],
+        "max_state_tokens": 32000,
+        "max_total_tokens": 64000,
+        "output_token_billing": false,
+        "endpoints": [
+          "https://api.typesafe.ai/v1/systemone"
+        ],
+        "source_url": "https://docs.typesafe.ai/models",
+        "checked_at": "2026-10-15",
+        "status": "documented"
+      },
+      "extra": {
+        "official_source": "https://typesafe.ai/",
+        "official_source_checked_at": "2026-10-15",
+        "model_docs": "https://docs.typesafe.ai/models",
+        "api_reference": "https://docs.typesafe.ai/api",
+        "aliases_resolved": {
+          "jev-preview": "jev-1.14.0"
+        }
+      },
+      "max_output_tokens": 0
+    },
+    {
+      "provider": "typesafe",
       "model_id": "jev-1.13.0",
       "display_name": "TypeSafe Jev 1.13",
       "context_window": 64000,
@@ -36,7 +101,6 @@
       "deprecated": false,
       "aliases": [
         "jev-latest",
-        "jev-preview",
         "jev-1.13"
       ],
       "decision": {
@@ -68,8 +132,6 @@
         "max_state_tokens": 32000,
         "max_total_tokens": 64000,
         "output_token_billing": false,
-        "rate_limit_tokens_per_second": 100000,
-        "rate_limit_requests_per_minute": 4800,
         "language_values": [
           "en"
         ],
@@ -77,7 +139,7 @@
           "https://api.typesafe.ai/v1/systemone"
         ],
         "source_url": "https://docs.typesafe.ai/models",
-        "checked_at": "2026-10-12",
+        "checked_at": "2026-10-15",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "systemone",
@@ -92,14 +154,13 @@
       },
       "extra": {
         "official_source": "https://typesafe.ai/",
-        "official_source_checked_at": "2026-10-12",
+        "official_source_checked_at": "2026-10-15",
         "model_docs": "https://docs.typesafe.ai/models",
         "api_reference": "https://docs.typesafe.ai/api",
         "announcement": "https://typesafe.ai/blog/introducing-system-one-models-and-jev",
         "early_access": true,
         "aliases_resolved": {
-          "jev-latest": "jev-1.13.0",
-          "jev-preview": "jev-1.13.0"
+          "jev-latest": "jev-1.13.0"
         }
       }
     }
