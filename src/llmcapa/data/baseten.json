@@ -26,7 +26,7 @@
       "extra": {
         "source": "https://docs.baseten.co/inference/model-apis/overview",
         "reasoning_mode": "enabled by default",
-        "official_source_checked_at": "2026-10-15",
+        "official_source_checked_at": "2026-10-17",
         "catalog_source": "official_baseten_public_model_apis_docs",
         "model_family": "deepseek-ai",
         "sampling_parameters": [
@@ -63,7 +63,7 @@
       "extra": {
         "source": "https://docs.baseten.co/inference/model-apis/overview",
         "reasoning_mode": "enabled by default",
-        "official_source_checked_at": "2026-10-15",
+        "official_source_checked_at": "2026-10-17",
         "catalog_source": "official_baseten_public_model_apis_docs",
         "model_family": "deepseek-ai",
         "sampling_parameters": [
@@ -101,7 +101,7 @@
       "extra": {
         "source": "https://docs.baseten.co/inference/model-apis/overview",
         "reasoning_mode": "enabled by default",
-        "official_source_checked_at": "2026-10-15",
+        "official_source_checked_at": "2026-10-17",
         "catalog_source": "official_baseten_public_model_apis_docs",
         "model_family": "deepseek-ai",
         "sampling_parameters": [
@@ -138,13 +138,52 @@
       "license_type": "api",
       "extra": {
         "source": "https://docs.baseten.co/inference/model-apis/overview",
-        "official_source_checked_at": "2026-10-15",
+        "official_source_checked_at": "2026-10-17",
         "catalog_source": "official_baseten_public_model_apis_docs",
         "model_family": "deepseek-ai",
         "sampling_parameters": [
           "temperature",
           "top_p",
           "stop"
+        ],
+        "not_listed_in_current_docs": false
+      }
+    },
+    {
+      "provider": "baseten",
+      "model_id": "meta-models/muse-spark-open",
+      "display_name": "Muse Spark Open",
+      "context_window": 1048000,
+      "max_output_tokens": 1048000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "deprecated": false,
+      "license_type": "api",
+      "extra": {
+        "source": "https://docs.baseten.co/inference/model-apis/overview",
+        "official_source_checked_at": "2026-10-17",
+        "catalog_source": "official_baseten_public_model_apis_docs",
+        "model_family": "meta-models",
+        "sampling_parameters": [
+          "temperature",
+          "top_p",
+          "top_k",
+          "stop",
+          "presence_penalty",
+          "frequency_penalty"
         ],
         "not_listed_in_current_docs": false
       }
@@ -176,7 +215,7 @@
       "extra": {
         "source": "https://docs.baseten.co/inference/model-apis/overview",
         "reasoning_mode": "enabled by default",
-        "official_source_checked_at": "2026-10-15",
+        "official_source_checked_at": "2026-10-17",
         "catalog_source": "official_baseten_public_model_apis_docs",
         "model_family": "moonshotai",
         "sampling_parameters": [
@@ -213,7 +252,7 @@
       "extra": {
         "source": "https://docs.baseten.co/inference/model-apis/overview",
         "reasoning_mode": "opt-in",
-        "official_source_checked_at": "2026-10-15",
+        "official_source_checked_at": "2026-10-17",
         "catalog_source": "official_baseten_public_model_apis_docs",
         "model_family": "nvidia",
         "sampling_parameters": [
@@ -225,6 +264,42 @@
         "not_listed_in_current_docs": false
       },
       "supports_json_schema": true
+    },
+    {
+      "provider": "baseten",
+      "model_id": "nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B",
+      "display_name": "Nemotron 3.5 Super VL",
+      "context_window": 1048000,
+      "max_output_tokens": 1048000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "deprecated": false,
+      "license_type": "api",
+      "extra": {
+        "source": "https://docs.baseten.co/inference/model-apis/overview",
+        "official_source_checked_at": "2026-10-17",
+        "catalog_source": "official_baseten_public_model_apis_docs",
+        "model_family": "nvidia",
+        "sampling_parameters": [
+          "temperature",
+          "top_p",
+          "stop"
+        ],
+        "not_listed_in_current_docs": false
+      }
     },
     {
       "provider": "baseten",
@@ -252,7 +327,7 @@
       "extra": {
         "source": "https://docs.baseten.co/inference/model-apis/overview",
         "reasoning_mode": "enabled by default",
-        "official_source_checked_at": "2026-10-15",
+        "official_source_checked_at": "2026-10-17",
         "catalog_source": "official_baseten_public_model_apis_docs",
         "model_family": "openai",
         "sampling_parameters": [
@@ -262,6 +337,41 @@
         "not_listed_in_current_docs": false
       },
       "supports_json_schema": true
+    },
+    {
+      "provider": "baseten",
+      "model_id": "reflection/Beam-1.0",
+      "display_name": "Beam",
+      "context_window": 1048000,
+      "max_output_tokens": 131000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "deprecated": false,
+      "license_type": "api",
+      "extra": {
+        "source": "https://docs.baseten.co/inference/model-apis/overview",
+        "official_source_checked_at": "2026-10-17",
+        "catalog_source": "official_baseten_public_model_apis_docs",
+        "model_family": "reflection",
+        "sampling_parameters": [
+          "temperature",
+          "top_p",
+          "stop"
+        ],
+        "not_listed_in_current_docs": false
+      }
     },
     {
       "provider": "baseten",
@@ -290,7 +400,7 @@
       "extra": {
         "source": "https://docs.baseten.co/inference/model-apis/overview",
         "reasoning_mode": "opt-in",
-        "official_source_checked_at": "2026-10-15",
+        "official_source_checked_at": "2026-10-17",
         "catalog_source": "official_baseten_public_model_apis_docs",
         "model_family": "zai-org",
         "sampling_parameters": [
@@ -329,7 +439,7 @@
       "extra": {
         "source": "https://docs.baseten.co/inference/model-apis/overview",
         "reasoning_mode": "enabled by default",
-        "official_source_checked_at": "2026-10-15",
+        "official_source_checked_at": "2026-10-17",
         "catalog_source": "official_baseten_public_model_apis_docs",
         "model_family": "zai-org",
         "sampling_parameters": [
@@ -368,7 +478,7 @@
       "extra": {
         "source": "https://docs.baseten.co/inference/model-apis/overview",
         "reasoning_mode": "enabled by default",
-        "official_source_checked_at": "2026-10-15",
+        "official_source_checked_at": "2026-10-17",
         "catalog_source": "official_baseten_public_model_apis_docs",
         "model_family": "zai-org",
         "sampling_parameters": [
@@ -407,7 +517,7 @@
       "extra": {
         "source": "https://docs.baseten.co/inference/model-apis/overview",
         "reasoning_mode": "enabled by default",
-        "official_source_checked_at": "2026-10-15",
+        "official_source_checked_at": "2026-10-17",
         "catalog_source": "official_baseten_public_model_apis_docs",
         "model_family": "zai-org",
         "sampling_parameters": [
@@ -446,7 +556,7 @@
       "extra": {
         "source": "https://docs.baseten.co/inference/model-apis/overview",
         "reasoning_mode": "enabled by default",
-        "official_source_checked_at": "2026-10-15",
+        "official_source_checked_at": "2026-10-17",
         "catalog_source": "official_baseten_public_model_apis_docs",
         "model_family": "zai-org",
         "sampling_parameters": [

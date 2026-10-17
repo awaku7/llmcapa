@@ -401,19 +401,18 @@ def test_features_list():
     assert "reasoning_effort" in o1_feats
 
 
-def test_openrouter_ming_image_is_in_bundled_catalog():
-    cap = llmcapa.get("inclusionai/ming-image-0.1-design", provider="openrouter")
-    assert cap.input_modalities == ["text"]
-    assert cap.output_modalities == ["image"]
-    assert cap.supports("image_output")
-    assert not cap.supports("vision")
+def test_openrouter_current_image_generation_routes_are_in_bundled_catalog():
+    text_only = llmcapa.get("recraft/recraft-v4.1-flash", provider="openrouter")
+    assert text_only.input_modalities == ["text"]
+    assert text_only.output_modalities == ["image"]
+    assert text_only.supports("image_output")
+    assert not text_only.supports("vision")
 
-    layer = llmcapa.get(
-        "inclusionai/ming-image-0.1-design-layer", provider="openrouter"
-    )
-    assert layer.input_modalities == ["text", "image"]
-    assert layer.output_modalities == ["image"]
-    assert layer.supports("image_output")
+    image_edit = llmcapa.get("qwen/qwen-image-3-pro", provider="openrouter")
+    assert image_edit.input_modalities == ["text", "image"]
+    assert image_edit.output_modalities == ["image"]
+    assert image_edit.supports("image_output")
+    assert image_edit.supports("vision")
 
 
 def test_openrouter_cache(tmp_path, monkeypatch):

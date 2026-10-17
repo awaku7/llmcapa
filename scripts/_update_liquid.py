@@ -63,7 +63,10 @@ def parse_decision_models(markdown: str) -> list[dict[str, str]]:
                 "model_id": model_id,
                 "model_docs_url": urljoin("https://docs.liquid.ai", docs_path),
                 "huggingface_model": hf_match.group(0).rstrip(".,") if hf_match else "",
-                "hosted_api": "API" in " ".join(cells[2:]).upper() and hf_match is None,
+                "hosted_api": any(
+                    re.search(r"\bAPI\b", cell, re.IGNORECASE)
+                    for cell in cells[1:3]
+                ) and hf_match is None,
             }
         )
     if not found:
@@ -193,6 +196,7 @@ def merge_models(discovered: list[dict[str, str]], details: dict[str, str], prev
             result["input_modalities"] = base["input_modalities"]
             result["output_modalities"] = base["output_modalities"]
             result["supports_vision"] = base["supports_vision"]
+            result["license_type"] = base["license_type"]
             result_extra = dict(old.get("extra") or {})
             result_extra.update(base["extra"])
             result_extra["catalog_listed"] = True
@@ -200,6 +204,7 @@ def merge_models(discovered: list[dict[str, str]], details: dict[str, str], prev
             decision = dict(old.get("decision") or {})
             decision["source_url"] = source_model["model_docs_url"]
             decision["checked_at"] = checked_at
+            decision["endpoints"] = base["decision"]["endpoints"]
             decision_extra = dict(decision.get("extra") or {})
             decision_extra.update(base["decision"]["extra"])
             decision["extra"] = decision_extra

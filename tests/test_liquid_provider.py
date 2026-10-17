@@ -2,7 +2,7 @@
 
 import llmcapa
 
-EXPECTED_LIQUID_MODELS = {"d1", "d1-3B", "d1-omni-600M"}
+EXPECTED_LIQUID_MODELS = {"d1", "d1-3B", "d1-omni-600M", "d1-ultra"}
 
 
 def test_liquid_provider_is_registered_and_queryable():
@@ -39,6 +39,12 @@ def test_liquid_models_are_typed_decision_models():
         assert cap.decision.type_errors_possible is False
 
     hosted = llmcapa.get("d1", provider="liquid")
+    ultra = llmcapa.get("d1-ultra", provider="liquid")
+    assert ultra.license_type == "api"
+    assert ultra.decision.extra["base_url"] == "https://api.liquid.ai"
+    assert ultra.decision.endpoints == (
+        "https://api.liquid.ai/decisions/v1/systemone",
+    )
     assert hosted.decision.extra["client_sdk"] == "typesafe-sdk"
     assert hosted.decision.extra["base_url"] == "https://api.liquid.ai"
     assert hosted.decision.extra["wire_protocol"] == "typesafe-systemone-compatible"

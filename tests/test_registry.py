@@ -175,13 +175,13 @@ def test_cloudflare_workers_ai_catalog_and_aliases():
 
 def test_mdx_maas_catalog_and_provider_aliases():
     models = llmcapa.list_models(provider="mdx-maas")
-    assert len(models) == 6
+    assert len(models) == 7
     assert all(cap.provider == "mdx-maas" for cap in models)
     assert llmcapa.list_models(provider="mdx.MaaS") == models
     assert llmcapa.list_models(provider="mdx") == models
     assert llmcapa.list_models(provider="mdxmaas") == models
 
-    cap = llmcapa.get("llm-jp/llm-jp-4-32b-a3b-thinking", provider="mdx-maas")
+    cap = llmcapa.get("llm-jp/llm-jp-4.1-32b-a3b-thinking", provider="mdx-maas")
     assert cap.supports_chat_completion
     assert cap.supports_reasoning
     assert not cap.supports_responses_api

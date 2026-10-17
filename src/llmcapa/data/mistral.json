@@ -664,6 +664,154 @@
     },
     {
       "provider": "mistral",
+      "model_id": "timestral-1-0-123m",
+      "display_name": "Timestral 1.0 123M",
+      "context_window": 32000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://docs.mistral.ai/models/timestral-1-0-123m",
+        "card_slug": "timestral-1-0-123m",
+        "status": "Public Preview",
+        "description": "Timestral 1.0 123M is a time series foundation model for zero-shot forecasting. Part of the Timestral family, it offers a balance of forecast accuracy and efficiency, with support for contexts up to 32K timesteps, past-only and known-future covariates, and probabilistic quantile outputs."
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "timestral-1-0-209m",
+      "display_name": "Timestral 1.0 209M",
+      "context_window": 32000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://docs.mistral.ai/models/timestral-1-0-209m",
+        "card_slug": "timestral-1-0-209m",
+        "status": "Public Preview",
+        "description": "Timestral 1.0 209M is a time series foundation model for zero-shot forecasting. It ranks first among pretrained and zero-shot models on GIFT-Eval, TIME, and fev-bench, with support for contexts up to 32K timesteps, past-only and known-future covariates, and probabilistic quantile outputs."
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "timestral-1-0-28m",
+      "display_name": "Timestral 1.0 28M",
+      "context_window": 32000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://docs.mistral.ai/models/timestral-1-0-28m",
+        "card_slug": "timestral-1-0-28m",
+        "status": "Public Preview",
+        "description": "Timestral 1.0 28M is a time series foundation model for zero-shot forecasting. Part of the Timestral family, it is optimised for low-latency forecasting, with support for contexts up to 32K timesteps, past-only and known-future covariates, and probabilistic quantile outputs."
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "timestral-1-0-5m",
+      "display_name": "Timestral 1.0 5M",
+      "context_window": 32000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://docs.mistral.ai/models/timestral-1-0-5m",
+        "card_slug": "timestral-1-0-5m",
+        "status": "Public Preview",
+        "description": "Timestral 1.0 5M is a time series foundation model for zero-shot forecasting. The smallest model in the Timestral family, it delivers fast, lightweight forecasts, with support for contexts up to 32K timesteps, past-only and known-future covariates, and probabilistic quantile outputs."
+      }
+    },
+    {
+      "provider": "mistral",
       "model_id": "voxtral-mini-transcribe-2602",
       "display_name": "Voxtral Mini Transcribe 2",
       "context_window": 0,
@@ -702,42 +850,6 @@
         "description": "An efficient audio input model, pre-trained and optimized for transcription purposes only.",
         "price_per_min": 0.0,
         "supports_transcription": true
-      },
-      "audio": {
-        "accepts_audio_input": true,
-        "speech_generation": false,
-        "speech_understanding": true,
-        "supports_streaming": true,
-        "supports_realtime": null,
-        "transcription": true,
-        "input_formats": [
-          "flac",
-          "mp3",
-          "mp4",
-          "mpeg",
-          "mpga",
-          "m4a",
-          "ogg",
-          "wav",
-          "webm"
-        ],
-        "input_mime_types": [
-          "audio/flac",
-          "audio/mpeg",
-          "audio/mp4",
-          "audio/ogg",
-          "audio/wav",
-          "audio/webm"
-        ],
-        "source_url": "https://docs.mistral.ai/capabilities/audio/",
-        "extra": {},
-        "endpoints": {
-          "transcription": true,
-          "speech_understanding": true,
-          "streaming": true
-        },
-        "checked_at": "2026-10-15",
-        "status": "documented"
       }
     },
     {
@@ -780,30 +892,6 @@
         "description": "An efficient audio input model, pre-trained and optimized for live transcription purposes only.",
         "price_per_min": 0.0,
         "supports_transcription": true
-      },
-      "audio": {
-        "accepts_audio_input": true,
-        "speech_generation": false,
-        "speech_understanding": true,
-        "supports_streaming": true,
-        "supports_realtime": true,
-        "transcription": true,
-        "input_formats": [
-          "pcm"
-        ],
-        "input_mime_types": [
-          "audio/pcm"
-        ],
-        "source_url": "https://docs.mistral.ai/capabilities/audio/",
-        "extra": {},
-        "endpoints": {
-          "transcription": true,
-          "speech_understanding": true,
-          "realtime": true,
-          "streaming": true
-        },
-        "checked_at": "2026-10-15",
-        "status": "documented"
       }
     },
     {
@@ -846,27 +934,6 @@
         "description": "Our state-of-the-art text-to-speech model with zero-shot voice cloning. Supports 9 languages, streaming with ~90ms time-to-first-audio, and no transcript required for voice prompts.",
         "tts_input_price": 0.0,
         "supports_tts": true
-      },
-      "audio": {
-        "accepts_audio_input": false,
-        "speech_generation": true,
-        "speech_understanding": false,
-        "supports_streaming": true,
-        "supports_realtime": null,
-        "output_formats": [
-          "wav"
-        ],
-        "output_mime_types": [
-          "audio/wav"
-        ],
-        "source_url": "https://docs.mistral.ai/capabilities/audio/",
-        "extra": {},
-        "endpoints": {
-          "speech_generation": true,
-          "streaming": true
-        },
-        "checked_at": "2026-10-15",
-        "status": "documented"
       }
     },
     {
@@ -914,20 +981,6 @@
         "supports_batching": true,
         "supports_prefix": true,
         "supports_document_qna": true
-      },
-      "audio": {
-        "accepts_audio_input": true,
-        "speech_generation": false,
-        "speech_understanding": true,
-        "supports_streaming": true,
-        "supports_realtime": null,
-        "extra": {},
-        "endpoints": {
-          "speech_understanding": true,
-          "streaming": true
-        },
-        "checked_at": "2026-10-15",
-        "status": "inferred"
       }
     },
     {
@@ -3065,20 +3118,6 @@
         "supports_batching": true,
         "supports_prefix": true,
         "supports_document_qna": true
-      },
-      "audio": {
-        "accepts_audio_input": true,
-        "speech_generation": false,
-        "speech_understanding": true,
-        "supports_streaming": true,
-        "supports_realtime": null,
-        "extra": {},
-        "endpoints": {
-          "speech_understanding": true,
-          "streaming": true
-        },
-        "checked_at": "2026-10-15",
-        "status": "inferred"
       }
     },
     {
@@ -3121,22 +3160,6 @@
         "replacement": "Voxtral Mini Transcribe 2",
         "description": "An efficient audio input model, pre-trained and optimized for transcription purposes only.",
         "supports_transcription": true
-      },
-      "audio": {
-        "accepts_audio_input": true,
-        "speech_generation": false,
-        "speech_understanding": true,
-        "supports_streaming": true,
-        "supports_realtime": null,
-        "transcription": true,
-        "extra": {},
-        "endpoints": {
-          "transcription": true,
-          "speech_understanding": true,
-          "streaming": true
-        },
-        "checked_at": "2026-10-15",
-        "status": "inferred"
       }
     },
     {
