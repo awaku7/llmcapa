@@ -190,9 +190,7 @@ def test_mdx_maas_catalog_and_provider_aliases():
 
 
 def test_mdx_maas_documented_multimodal_and_tool_capabilities():
-    gemma = llmcapa.get(
-        "google/gemma-4-31B-it-qat-w4a16-ct", provider="mdx-maas"
-    )
+    gemma = llmcapa.get("google/gemma-4-31B-it-qat-w4a16-ct", provider="mdx-maas")
     assert gemma.supports("image_input")
     assert gemma.supports_function_calling
 
@@ -323,9 +321,7 @@ def test_google_gemini_provider_alias_and_strict_scope(monkeypatch) -> None:
     assert llmcapa.get("gemini-2.5-flash", provider="vertex-ai").provider == "vertex-ai"
     assert llmcapa.get("gemini-2.5-flash", provider="vertexai").provider == "vertex-ai"
     assert llmcapa.get("muse-glimmer-30b", provider="meta").provider == "meta"
-    assert (
-        llmcapa.get("muse-glimmer-30b", provider="meta-llama").provider == "meta"
-    )
+    assert llmcapa.get("muse-glimmer-30b", provider="meta-llama").provider == "meta"
 
     for model_id, provider in (
         ("gemini-2.5-flash", "meta"),
@@ -523,10 +519,7 @@ def test_fetch_github_catalog_downloads_selected_provider_and_uses_cache(
     registry = Registry()
     registered = registry.fetch_github_catalog("grok", write_bundled=False)
     assert registered >= 1
-    assert (
-        registry.get("grok-github-cache-test", provider="xai").context_window
-        == 8192
-    )
+    assert registry.get("grok-github-cache-test", provider="xai").context_window == 8192
     request_count = len(requests)
     assert request_count >= 1
     assert any(url.endswith("/src/llmcapa/data/xai.json") for url in requests)
@@ -536,8 +529,7 @@ def test_fetch_github_catalog_downloads_selected_provider_and_uses_cache(
     cached_registry = Registry()
     assert cached_registry.get("grok-github-cache-test", provider="xai")
     assert (
-        cached_registry.fetch_github_catalog("xai", write_bundled=False)
-        == registered
+        cached_registry.fetch_github_catalog("xai", write_bundled=False) == registered
     )
     assert len(requests) == request_count
 
@@ -548,7 +540,6 @@ def test_fetch_github_catalog_rejects_unknown_provider_and_unsafe_ref():
         registry.fetch_github_catalog("not-a-provider")
     with pytest.raises(ValueError, match="valid branch"):
         registry.fetch_github_catalog("openai", ref="../main")
-
 
 
 def test_provider_scoped_get_refreshes_github_catalog_once_on_miss(monkeypatch):
@@ -567,7 +558,9 @@ def test_provider_scoped_get_refreshes_github_catalog_once_on_miss(monkeypatch):
         return 1
 
     monkeypatch.setattr(registry, "fetch_github_catalog", fake_fetch)
-    assert registry.get("newly-published-model", provider="custom-provider") == fresh_cap
+    assert (
+        registry.get("newly-published-model", provider="custom-provider") == fresh_cap
+    )
     assert calls == [("custom-provider", 86400)]
 
     with pytest.raises(ModelNotFoundError):
@@ -589,17 +582,16 @@ def test_provider_scoped_search_refreshes_github_catalog_on_miss(monkeypatch):
         return 1
 
     monkeypatch.setattr(registry, "fetch_github_catalog", fake_fetch)
-    results = registry.search("newly-published-search-model", provider="custom-provider")
+    results = registry.search(
+        "newly-published-search-model", provider="custom-provider"
+    )
     assert results == [fresh_cap]
-
 
 
 def test_bundled_catalog_writer_replaces_json_atomically(tmp_path, monkeypatch):
     destination = tmp_path / "xai.json"
     destination.write_text('{"models": []}', encoding="utf-8")
-    monkeypatch.setattr(
-        "llmcapa.registry.resources.files", lambda package: tmp_path
-    )
+    monkeypatch.setattr("llmcapa.registry.resources.files", lambda package: tmp_path)
     registry = Registry()
     updated_json = '{"models": [{"provider": "xai", "model_id": "new-model"}]}'
 
@@ -609,12 +601,14 @@ def test_bundled_catalog_writer_replaces_json_atomically(tmp_path, monkeypatch):
     )
 
     assert destination.read_text(encoding="utf-8") == updated_json
-    assert json.loads(destination.read_text(encoding="utf-8"))["models"][0]["model_id"] == "new-model"
+    assert (
+        json.loads(destination.read_text(encoding="utf-8"))["models"][0]["model_id"]
+        == "new-model"
+    )
     backups = list(backup_dir.glob("xai.json.*.bak"))
     assert len(backups) == 1
     assert backups[0].read_text(encoding="utf-8") == '{"models": []}'
     assert not list(tmp_path.glob("*.tmp"))
-
 
 
 def test_persistent_user_catalog_is_loaded_by_new_registry(tmp_path, monkeypatch):
@@ -633,9 +627,7 @@ def test_persistent_user_catalog_is_loaded_by_new_registry(tmp_path, monkeypatch
     )
 
     restarted_registry = Registry()
-    loaded = restarted_registry.get(
-        "persistent-user-catalog-model", provider="xai"
-    )
+    loaded = restarted_registry.get("persistent-user-catalog-model", provider="xai")
     assert loaded.model_id == capability.model_id
     assert loaded.context_window == 4096
 
