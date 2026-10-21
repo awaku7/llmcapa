@@ -220,7 +220,7 @@ class Registry:
                     or not all(isinstance(name, str) for name in providers)
                 ):
                     continue
-                provider_set = {self._normalize_provider(name) for name in providers}
+                provider_set = {self._canonical_provider(name) for name in providers}
                 for filename, text in files.items():
                     if not isinstance(filename, str) or Path(filename).name != filename:
                         continue
@@ -248,7 +248,7 @@ class Registry:
                     for record in records:
                         try:
                             cap = Capability.from_dict(record)
-                            provider = self._normalize_provider(cap.provider)
+                            provider = self._canonical_provider(cap.provider)
                             if (
                                 provider not in provider_set
                                 or provider not in self._catalog_files_by_provider
@@ -293,11 +293,11 @@ class Registry:
                     or not all(isinstance(name, str) for name in providers)
                 ):
                     continue
-                provider_set = {self._normalize_provider(name) for name in providers}
+                provider_set = {self._canonical_provider(name) for name in providers}
                 for record in records:
                     try:
                         cap = Capability.from_dict(record)
-                        provider = self._normalize_provider(cap.provider)
+                        provider = self._canonical_provider(cap.provider)
                         if (
                             provider not in provider_set
                             or provider not in self._catalog_files_by_provider
