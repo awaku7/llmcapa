@@ -15,7 +15,9 @@ import refresh_catalogs as refresh  # noqa: E402
 
 
 def _catalog(*ids: str) -> dict:
-    return {"models": [{"model_id": model_id, "context_window": 100} for model_id in ids]}
+    return {
+        "models": [{"model_id": model_id, "context_window": 100} for model_id in ids]
+    }
 
 
 def test_model_index_rejects_empty_and_duplicate_catalogs():
