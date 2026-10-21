@@ -1149,10 +1149,10 @@ class Registry:
 
         Args:
             model_id: Model id, alias, or deployment name.
-            provider: If given, normalize and resolve this provider alias,
-                      then search only that single provider catalog. No other
-                      provider is used as a fallback. Otherwise, returns the
-                      first-registered (native) version.
+            provider: If given, resolve the provider name or alias to one
+                      canonical catalog. azure-openai and azure are aliases
+                      for azure-foundry; all three see the same models.
+                      Without a provider, prefer the first registered model.
 
         Raises:
             ModelNotFoundError: If the model cannot be resolved.
@@ -1213,9 +1213,9 @@ class Registry:
     ) -> list[Capability]:
         """Return capabilities, optionally filtered to one provider catalog.
 
-        A provider argument is normalized and resolved through the same alias
-        map as :meth:`get`; it never combines catalogs or falls back to
-        another provider.
+        A provider argument resolves to one canonical catalog. For Azure,
+        azure-openai and azure are aliases of azure-foundry and therefore
+        list the same Foundry models, including third-party models.
         """
         self._ensure_loaded()
         if provider is not None:
@@ -1246,9 +1246,10 @@ class Registry:
     ) -> list[Capability]:
         """Search models by conditions, optionally limited to one provider catalog.
 
-        When *provider* is supplied, it follows the normalized provider alias
-        contract used by :meth:`get` and :meth:`list_models`; no other catalog
-        is consulted. ``feature_flags`` accepts keys like
+        When *provider* is supplied, it resolves to one canonical catalog,
+        just like :meth:`get` and :meth:`list_models`. In particular,
+        azure-openai and azure both resolve to azure-foundry.
+        ``feature_flags`` accepts keys like
         ``supports_vision=True`` or short forms like ``vision=True``.
         """
         self._ensure_loaded()
@@ -1321,9 +1322,10 @@ class Registry:
         Case-insensitive prefix search. Results are sorted by
         ``(deprecated, provider, model_id)``, so non-deprecated models always
         precede deprecated ones and ``limit`` keeps the active entries.
-        When *provider* is given, uses only that provider catalog and the
-        same alias resolution as ``list_models`` / ``get``. With no provider,
-        all provider catalogs are searched.
+        When *provider* is given, resolve aliases to one canonical catalog
+        as in ``list_models`` / ``get``. The azure-openai and azure aliases
+        search azure-foundry, which includes non-OpenAI models. Without a
+        provider, all provider catalogs are searched.
         """
         self._ensure_loaded()
         prefix_lower = prefix.strip().lower()
