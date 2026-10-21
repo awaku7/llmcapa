@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+import os
+import subprocess
 import sys
 from pathlib import Path
 
@@ -114,3 +116,60 @@ def test_loader_rejects_invalid_json_and_root(tmp_path):
     path.write_text("[]", encoding="utf-8")
     with pytest.raises(TypeError, match="root"):
         refresh.load_catalog(path)
+
+
+def test_timeout_terminates_provider_process_group_before_restore(
+    tmp_path, monkeypatch
+):
+    if os.name == "nt":
+        pytest.skip("POSIX process-group test")
+
+    monkeypatch.setattr(refresh, "ROOT", tmp_path)
+    data_dir = tmp_path / "src" / "llmcapa" / "data"
+    data_dir.mkdir(parents=True)
+    (data_dir / "google.json").write_text(
+        json.dumps(_catalog("model-1")), encoding="utf-8"
+    )
+    monkeypatch.setattr(refresh, "DATA_DIR", data_dir)
+    calls = []
+
+    class FakeProcess:
+        pid = 54321
+
+        def __init__(self):
+            self.wait_count = 0
+
+        def wait(self, timeout=None):
+            self.wait_count += 1
+            if self.wait_count == 1:
+                raise subprocess.TimeoutExpired("update", timeout)
+            calls.append("reaped")
+            return 0
+
+    fake_proc = FakeProcess()
+
+    def fake_popen(command, **kwargs):
+        assert "--provider" in command
+        assert kwargs["start_new_session"] is True
+        assert kwargs["stdin"] == subprocess.DEVNULL
+        calls.append("spawned")
+        return fake_proc
+
+    monkeypatch.setattr(refresh.subprocess, "Popen", fake_popen)
+    monkeypatch.setattr(
+        refresh.os,
+        "killpg",
+        lambda pid, sig: calls.append(("kill-group", pid, sig)),
+    )
+    monkeypatch.setattr(
+        refresh, "restore_unstaged", lambda: calls.append("restored")
+    )
+    result = refresh.run_provider(
+        "google", timeout_seconds=1, log_directory=tmp_path / "logs"
+    )
+    assert result["status"] == "failed"
+    assert "timed out" in result["reason"]
+    assert calls[0] == "spawned"
+    assert calls[1][0] == "kill-group"
+    assert calls[1][1] == fake_proc.pid
+    assert calls[2:] == ["reaped", "restored"]
