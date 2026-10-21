@@ -157,7 +157,13 @@ def run_provider(
                     except ProcessLookupError:
                         pass
                 else:
-                    proc.kill()
+                    # Windows has no os.killpg; taskkill /T includes descendants.
+                    subprocess.run(
+                        ["taskkill", "/T", "/F", "/PID", str(proc.pid)],
+                        stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL,
+                        check=False,
+                    )
                 proc.wait()
                 raise
         if returncode:
