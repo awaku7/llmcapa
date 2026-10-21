@@ -39,7 +39,7 @@ def model_index(catalog: dict[str, Any]) -> dict[str, dict[str, Any]]:
     result: dict[str, dict[str, Any]] = {}
     for model in models:
         if not isinstance(model, dict):
-            raise ValueError("model record is not an object")
+            raise TypeError("model record is not an object")
         model_id = model.get("model_id")
         if not isinstance(model_id, str) or not model_id.strip():
             raise ValueError("model_id is missing or empty")
@@ -53,7 +53,7 @@ def load_catalog(path: Path) -> dict[str, Any]:
     with path.open(encoding="utf-8") as handle:
         data = json.load(handle)
     if not isinstance(data, dict):
-        raise ValueError("catalog root is not an object")
+        raise TypeError("catalog root is not an object")
     model_index(data)
     return data
 
@@ -156,7 +156,7 @@ def run_provider(
         status["changes"] = diff
     except subprocess.TimeoutExpired:
         status["reason"] = f"updater timed out after {timeout_seconds}s"
-    except (OSError, RuntimeError, ValueError, json.JSONDecodeError) as exc:
+    except (OSError, RuntimeError, ValueError, TypeError, json.JSONDecodeError) as exc:
         status["reason"] = str(exc)[:300]
     finally:
         restore_unstaged()
