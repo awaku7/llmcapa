@@ -91,7 +91,35 @@ class Registry:
             if p == canonical or p in aliases:
                 matching.add(canonical)
                 matching.update(aliases)
+        # Microsoft Foundry includes Azure OpenAI; this is intentionally a
+        # one-way alias, not an equivalence between their model catalogs.
+        if p == "azure-foundry":
+            matching.add("azure-openai")
         return matching
+
+    def _scoped_provider_order(self, provider: str) -> list[str]:
+        """Resolve provider aliases without broadening Azure OpenAI to other models.
+
+        Azure Foundry is an umbrella: search its own records first, then
+        Azure OpenAI records. Azure OpenAI itself stays strictly scoped.
+        """
+        normalized = self._normalize_provider(provider)
+        if normalized == "azure-foundry":
+            return ["azure-foundry", "azure-openai"]
+        matching_providers = self._matching_providers(provider)
+        canonical = next(
+            (
+                name
+                for name, aliases in self._provider_aliases.items()
+                if normalized == name or normalized in aliases
+            ),
+            normalized,
+        )
+        if normalized in self._by_provider:
+            return [normalized]
+        if canonical in self._by_provider:
+            return [canonical]
+        return sorted(matching_providers)
 
     # ------------------------------------------------------------------
     # loading
@@ -1128,30 +1156,7 @@ class Registry:
         self._ensure_loaded()
         if provider is not None:
             # Scoped lookup: search only within the given provider
-            normalized_provider = self._normalize_provider(provider)
-            matching_providers = self._matching_providers(provider)
-            # If the requested name is an actual provider, use that catalog
-            # only. Otherwise resolve the name through its aliases. This
-            # prevents alias queries such as provider="qwen" from combining
-            # qwen and alibaba catalogs and returning duplicate model IDs.
-            canonical_provider = next(
-                (
-                    canonical
-                    for canonical, aliases in self._provider_aliases.items()
-                    if normalized_provider == canonical
-                    or normalized_provider in aliases
-                ),
-                normalized_provider,
-            )
-            ordered_providers = (
-                [normalized_provider]
-                if normalized_provider in self._by_provider
-                else (
-                    [canonical_provider]
-                    if canonical_provider in self._by_provider
-                    else sorted(matching_providers)
-                )
-            )
+            ordered_providers = self._scoped_provider_order(provider)
             for prov in ordered_providers:
                 prov_index = self._by_provider.get(prov)
                 if prov_index is not None:
@@ -1210,28 +1215,7 @@ class Registry:
         """
         self._ensure_loaded()
         if provider is not None:
-            normalized_provider = self._normalize_provider(provider)
-            matching_providers = self._matching_providers(provider)
-            # Prefer an exact provider catalog when it exists. Alias names
-            # such as "bedrock" still fall back to their canonical provider.
-            canonical_provider = next(
-                (
-                    canonical
-                    for canonical, aliases in self._provider_aliases.items()
-                    if normalized_provider == canonical
-                    or normalized_provider in aliases
-                ),
-                normalized_provider,
-            )
-            providers_to_list = (
-                [normalized_provider]
-                if normalized_provider in self._by_provider
-                else (
-                    [canonical_provider]
-                    if canonical_provider in self._by_provider
-                    else sorted(matching_providers)
-                )
-            )
+            providers_to_list = self._scoped_provider_order(provider)
             result: list[Capability] = []
             for prov in providers_to_list:
                 idx = self._by_provider.get(prov)
