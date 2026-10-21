@@ -161,9 +161,7 @@ def test_timeout_terminates_provider_process_group_before_restore(
         "killpg",
         lambda pid, sig: calls.append(("kill-group", pid, sig)),
     )
-    monkeypatch.setattr(
-        refresh, "restore_unstaged", lambda: calls.append("restored")
-    )
+    monkeypatch.setattr(refresh, "restore_unstaged", lambda: calls.append("restored"))
     result = refresh.run_provider(
         "google", timeout_seconds=1, log_directory=tmp_path / "logs"
     )
