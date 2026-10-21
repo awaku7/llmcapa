@@ -7,7 +7,7 @@ from pathlib import Path
 SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
-import _update_google as updater  # noqa: E402
+import _update_google as updater
 
 
 def test_official_thinking_levels_survive_google_update():
