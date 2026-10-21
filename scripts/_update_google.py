@@ -278,9 +278,9 @@ def reconcile_computer_use(models: list[dict]) -> None:
         elif model_id in GOOGLE_COMPUTER_USE_SHUTDOWNS:
             model["deprecated"] = True
             extra = model.get("extra") or {}
-            extra["computer_use_shutdown_date"] = (
-                GOOGLE_COMPUTER_USE_SHUTDOWNS[model_id]
-            )
+            extra["computer_use_shutdown_date"] = GOOGLE_COMPUTER_USE_SHUTDOWNS[
+                model_id
+            ]
             extra["computer_use_source_url"] = (
                 "https://ai.google.dev/gemini-api/docs/deprecations"
             )
