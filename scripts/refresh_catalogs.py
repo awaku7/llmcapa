@@ -129,21 +129,39 @@ def run_provider(
     try:
         previous = load_catalog(path)
         with log_path.open("w", encoding="utf-8") as log:
-            proc = subprocess.run(
-                [
-                    sys.executable,
-                    str(ROOT / "scripts" / "_update_all_providers.py"),
-                    "--provider",
-                    provider,
-                ],
+            command = [
+                sys.executable,
+                str(ROOT / "scripts" / "_update_all_providers.py"),
+                "--provider",
+                provider,
+            ]
+            proc = subprocess.Popen(
+                command,
                 cwd=ROOT,
-                timeout=timeout_seconds,
+                stdin=subprocess.DEVNULL,
                 stdout=log,
                 stderr=subprocess.STDOUT,
-                check=False,
+                start_new_session=os.name != "nt",
+                creationflags=(
+                    subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0
+                ),
             )
-        if proc.returncode:
-            raise RuntimeError(f"updater exited with code {proc.returncode}")
+            try:
+                returncode = proc.wait(timeout=timeout_seconds)
+            except subprocess.TimeoutExpired:
+                # Stop the whole group, including provider-update descendants,
+                # before the finally block restores tracked files.
+                if os.name != "nt":
+                    try:
+                        os.killpg(proc.pid, signal.SIGKILL)
+                    except ProcessLookupError:
+                        pass
+                else:
+                    proc.kill()
+                proc.wait()
+                raise
+        if returncode:
+            raise RuntimeError(f"updater exited with code {returncode}")
 
         touched = unstaged_files()
         unexpected = touched - {relative_path} - IGNORED_TRACKED_SIDE_EFFECTS
