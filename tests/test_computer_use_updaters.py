@@ -29,9 +29,12 @@ def test_google_computer_use_metadata_uses_current_official_list():
     assert supported["source_url"].endswith("/generate-content/computer-use")
 
     assert metadata.google_computer_use_capability("gemini-3.6-flash") is None
-    assert metadata.google_computer_use_capability(
-        "gemini-2.5-computer-use-preview-10-2025"
-    ) is None
+    assert (
+        metadata.google_computer_use_capability(
+            "gemini-2.5-computer-use-preview-10-2025"
+        )
+        is None
+    )
 
 
 def test_google_shutdown_and_stale_computer_use_reconcile():
@@ -155,17 +158,13 @@ Multimodal models
 
 def test_anthropic_tool_versions_are_platform_specific():
     metadata = _script_module("_computer_use_metadata")
-    current = metadata.anthropic_computer_use_capability(
-        "claude-opus-5-5", "anthropic"
-    )
+    current = metadata.anthropic_computer_use_capability("claude-opus-5-5", "anthropic")
     assert current is not None
     assert current["tool_type"] == "computer_toolset_20260801"
     assert current["status"] == "ga"
     assert current["requires_beta"] is False
 
-    older = metadata.anthropic_computer_use_capability(
-        "claude-opus-4-7", "anthropic"
-    )
+    older = metadata.anthropic_computer_use_capability("claude-opus-4-7", "anthropic")
     assert older is not None
     assert older["tool_type"] == "computer_20251124"
     assert older["beta_header"] == "computer-use-2025-11-24"
@@ -186,14 +185,13 @@ def test_anthropic_tool_versions_are_platform_specific():
     assert bedrock["beta_header"] == "computer-use-2025-11-24"
 
     assert (
-        metadata.anthropic_computer_use_capability(
-            "claude-opus-5-5", "azure-foundry"
-        )
+        metadata.anthropic_computer_use_capability("claude-opus-5-5", "azure-foundry")
         is None
     )
-    assert metadata.anthropic_computer_use_capability(
-        "claude-opus-4-2", "anthropic"
-    ) is None
+    assert (
+        metadata.anthropic_computer_use_capability("claude-opus-4-2", "anthropic")
+        is None
+    )
 
 
 def test_openrouter_refresh_preserves_curated_computer_use_and_decision():
@@ -205,9 +203,7 @@ def test_openrouter_refresh_preserves_curated_computer_use_and_decision():
         "tool_type": "custom_computer_harness",
     }
     entry = {"model_id": "anthropic/claude-opus-4.5"}
-    updater.preserve_curated_computer_use(
-        entry, {"computer_use": capability}
-    )
+    updater.preserve_curated_computer_use(entry, {"computer_use": capability})
     assert entry["computer_use"] == capability
 
     decision = {
@@ -321,9 +317,7 @@ def test_amazon_updater_can_reconcile_bedrock_models_without_optional_scraper(
     )
     monkeypatch.setattr(updater, "OUT", catalog)
     monkeypatch.setattr(updater, "_fetch_nova_prices", None)
-    assert updater.fetch_nova_prices() == {
-        "nova-pro-v1": {"input": 0.8, "output": 3.2}
-    }
+    assert updater.fetch_nova_prices() == {"nova-pro-v1": {"input": 0.8, "output": 3.2}}
     assert updater.NOVA_PRICING_MODE == "bundled-cache"
 
 
@@ -365,7 +359,9 @@ def test_reconciled_catalog_reports_provider_specific_computer_use(monkeypatch):
     # User-owned GitHub cache snapshots override bundled data; isolate this
     # test from cache state on the developer's machine.
     monkeypatch.setattr(llmcapa.Registry, "_load_github_catalog_caches", lambda _: None)
-    monkeypatch.setattr(llmcapa.Registry, "_load_persistent_github_catalogs", lambda _: None)
+    monkeypatch.setattr(
+        llmcapa.Registry, "_load_persistent_github_catalogs", lambda _: None
+    )
     registry = llmcapa.Registry()
     for model_id, provider in (
         ("gpt-5.4", "openai"),
