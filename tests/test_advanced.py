@@ -110,18 +110,33 @@ def test_gpt6_luna_supports_reasoning_effort():
     cap = llmcapa.get("gpt-6-luna")
     assert cap.supports_reasoning_effort is True
     assert cap.supports("reasoning_effort") is True
-    assert cap.reasoning_effort_values == ["none", "low", "medium", "high", "xhigh", "max"]
+    assert cap.reasoning_effort_values == [
+        "none",
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max",
+    ]
 
 
 def test_tool_search_support_is_model_and_provider_specific():
     assert llmcapa.get("gpt-5.4", provider="openai").supports("tool_search") is True
-    assert llmcapa.get("gpt-5.4-mini", provider="openai").supports("tool_search") is True
-    assert llmcapa.get("gpt-5.4-nano", provider="openai").supports("tool_search") is False
+    assert (
+        llmcapa.get("gpt-5.4-mini", provider="openai").supports("tool_search") is True
+    )
+    assert (
+        llmcapa.get("gpt-5.4-nano", provider="openai").supports("tool_search") is False
+    )
     assert llmcapa.get("gpt-6-luna", provider="openai").supports("tool_search") is True
 
-    assert llmcapa.get("gpt-5.5", provider="azure-openai").supports("tool_search") is True
-    # Azure Foundry's record does not confirm a Responses API endpoint here.
-    assert llmcapa.get("gpt-5.4", provider="azure-foundry").supports("tool_search") is None
+    assert (
+        llmcapa.get("gpt-5.5", provider="azure-openai").supports("tool_search") is True
+    )
+    # Azure Foundry publishes this OpenAI model under the azure-openai provider.
+    assert (
+        llmcapa.get("gpt-5.4", provider="azure-openai").supports("tool_search") is True
+    )
 
 
 def test_reasoning_mode_is_separate_from_reasoning_effort():
@@ -157,10 +172,20 @@ def test_openai_effort_parser_accepts_current_markdown_syntax(monkeypatch):
 
     values = "`none`, `low`, `medium` (default), `high`, `xhigh`, and `max`."
     assert parse_reasoning_effort_values(f"reasoning.effort supports {values}") == [
-        "none", "low", "medium", "high", "xhigh", "max"
+        "none",
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max",
     ]
     assert parse_reasoning_effort_values(f"Reasoning.effort supports: {values}") == [
-        "none", "low", "medium", "high", "xhigh", "max"
+        "none",
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max",
     ]
     tools_page = (
         "## Supported tools\n- function_calling\n- tool_search\n"
@@ -182,9 +207,7 @@ def test_openai_effort_parser_accepts_current_markdown_syntax(monkeypatch):
         "https://developers.openai.com/api/docs/models/gpt-5.4"
     )
     assert computer_use["checked_at"]
-    assert parse_computer_use_capability(
-        "gpt-5.4-nano", "/unused.md", set()
-    ) is None
+    assert parse_computer_use_capability("gpt-5.4-nano", "/unused.md", set()) is None
     assert parse_computer_use_capability("unknown", "/unused.md", None) is None
 
     model_page = """# GPT-5.4
@@ -242,7 +265,6 @@ def test_azure_tool_search_support_requires_responses_api_and_excludes_nano():
     assert azure_tool_search_support("gpt-6-luna", False) is None
 
 
-
 def test_azure_foundry_selects_supported_tasks_and_modalities():
     scripts_path = str(Path(__file__).resolve().parents[1] / "scripts")
     sys.path.insert(0, scripts_path)
@@ -285,9 +307,7 @@ def test_azure_foundry_selects_supported_tasks_and_modalities():
             }
         }
     )
-    assert not is_supported_catalog_item(
-        {"systemCatalogData": {"inferenceTasks": []}}
-    )
+    assert not is_supported_catalog_item({"systemCatalogData": {"inferenceTasks": []}})
     assert is_supported_catalog_item(
         {"name": "gpt-5.4", "source": "ssr_card"}, {"gpt-5.4"}
     )
