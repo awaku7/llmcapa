@@ -108,9 +108,7 @@ def unstaged_files() -> set[str]:
 def restore_unstaged() -> None:
     # The index contains all earlier successful providers. Restore from the
     # index, not HEAD, so a later failed updater cannot erase their changes.
-    subprocess.run(
-        ["git", "restore", "--worktree", "--", "."], cwd=ROOT, check=True
-    )
+    subprocess.run(["git", "restore", "--worktree", "--", "."], cwd=ROOT, check=True)
 
 
 def run_provider(
@@ -153,9 +151,7 @@ def run_provider(
         updated = load_catalog(path)
         diff = compare_catalogs(previous, updated)
         if relative_path in touched and any(diff.values()):
-            subprocess.run(
-                ["git", "add", "--", relative_path], cwd=ROOT, check=True
-            )
+            subprocess.run(["git", "add", "--", relative_path], cwd=ROOT, check=True)
         status["status"] = "updated" if any(diff.values()) else "unchanged"
         status["changes"] = diff
     except subprocess.TimeoutExpired:
@@ -244,9 +240,7 @@ def refresh(
         raise ValueError(f"unknown provider: {selected_provider}")
 
     providers = (
-        sorted(PROVIDER_SCRIPTS)
-        if selected_provider == "all"
-        else [selected_provider]
+        sorted(PROVIDER_SCRIPTS) if selected_provider == "all" else [selected_provider]
     )
     statuses = []
     for index, provider in enumerate(providers, 1):
