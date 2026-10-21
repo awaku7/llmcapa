@@ -1,5 +1,7 @@
 """Azure Foundry is canonical; Azure OpenAI and Azure are exact aliases."""
 
+import json
+
 import pytest
 
 from llmcapa import Registry
@@ -60,3 +62,50 @@ def test_azure_alias_keeps_other_provider_aliases_unchanged(registry):
         "azure-openai",
         "azure",
     }
+
+@pytest.mark.parametrize("stored_provider", ("azure-foundry", "azure-openai"))
+@pytest.mark.parametrize("storage", ("cache", "persistent"))
+def test_azure_cached_catalog_reloads_legacy_provider(
+    tmp_path, monkeypatch, stored_provider, storage
+):
+    monkeypatch.setenv("HOME", str(tmp_path))
+    monkeypatch.setenv("USERPROFILE", str(tmp_path))
+
+    model_id = "azure-legacy-catalog-reload-test"
+    record = {
+        "provider": "azure-openai",
+        "model_id": model_id,
+        "context_window": 4096,
+        "max_output_tokens": 512,
+    }
+    if storage == "cache":
+        catalog_dir = tmp_path / ".llmcapa" / "github_catalog_cache"
+        payload = {
+            "ref": "main",
+            "providers": [stored_provider],
+            "files": {"azure_foundry.json": json.dumps({"models": [record]})},
+        }
+    else:
+        catalog_dir = tmp_path / ".llmcapa" / "catalogs" / "github"
+        payload = {
+            "source": "https://github.com/awaku7/llmcapa",
+            "ref": "main",
+            "providers": [stored_provider],
+            "models": [record],
+        }
+    catalog_dir.mkdir(parents=True)
+    (catalog_dir / "azure-legacy-test.json").write_text(
+        json.dumps(payload), encoding="utf-8"
+    )
+
+    restarted = Registry()
+    loaded = [
+        cap
+        for cap in restarted.list_models(provider="azure-foundry")
+        if cap.model_id == model_id
+    ]
+    assert len(loaded) == 1
+    assert loaded[0].provider == "azure-foundry"
+    assert loaded[0].context_window == 4096
+    for provider in ("azure-foundry", "azure-openai", "azure"):
+        assert restarted.get(model_id, provider=provider) is loaded[0]
