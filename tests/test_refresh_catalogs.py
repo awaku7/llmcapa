@@ -110,5 +110,5 @@ def test_loader_rejects_invalid_json_and_root(tmp_path):
     with pytest.raises(json.JSONDecodeError):
         refresh.load_catalog(path)
     path.write_text("[]", encoding="utf-8")
-    with pytest.raises(ValueError, match="root"):
+    with pytest.raises(TypeError, match="root"):
         refresh.load_catalog(path)
