@@ -305,9 +305,9 @@ def test_get_with_provider_alias() -> None:
 
 
 def test_get_with_provider_normalization() -> None:
-    """get with azure_openai (underscore) should normalize to azure-openai."""
+    """azure_openai is accepted but reports canonical azure-foundry."""
     cap = llmcapa.get("gpt-4o", provider="azure_openai")
-    assert cap.provider == "azure-openai"
+    assert cap.provider == "azure-foundry"
     assert cap.context_window > 0  # 131072 as of latest data
 
 
