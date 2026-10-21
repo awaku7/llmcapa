@@ -18,6 +18,10 @@ Lookup capabilities (context window, modalities, supported features) of various 
 - **FIM (Fill-in-the-Middle) Support**: Check if a model supports code infilling via `cap.supports('fim')`. Supported for codegemma, codellama, starcoder2, deepseek-coder, qwen2.5-coder, and more.
 - **CLI Included**: Query and list model capabilities directly from your terminal.
 
+## Refresh all model catalogs
+
+Run the **Refresh all model catalogs** GitHub Actions workflow manually to update each supported provider from its official sources, generate a full model diff, and open a reviewable PR. See the [catalog refresh guide (Japanese)](docs/CATALOG_REFRESH_AUTOMATION.ja.md).
+
 ## Install
 
 ```bash
