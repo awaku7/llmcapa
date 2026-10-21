@@ -1,0 +1,146 @@
+name: Refresh all model catalogs
+
+on:
+  workflow_dispatch:
+    inputs:
+      provider:
+        description: "Provider key or all (runs every supported official updater)"
+        required: true
+        type: string
+        default: all
+
+permissions:
+  contents: read
+
+concurrency:
+  group: llmcapa-catalog-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    env:
+      SELECTED_PROVIDER: ${{ inputs.provider }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install updater and quality dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e . pytest black ruff requests playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Check refresh code quality
+        run: |
+          python -m black --check scripts/refresh_catalogs.py tests/test_refresh_catalogs.py
+          python -m ruff check scripts/refresh_catalogs.py tests/test_refresh_catalogs.py
+          python -m pytest -q tests/test_refresh_catalogs.py
+
+      - name: Refresh provider catalogs independently
+        id: refresh
+        run: |
+          python scripts/refresh_catalogs.py \
+            --provider "$SELECTED_PROVIDER" \
+            --timeout-seconds 180 \
+            --output outputs/catalog_refresh
+
+      - name: Run full regression suite (record pre-existing failures)
+        id: regression
+        if: steps.refresh.outcome == 'success'
+        continue-on-error: true
+        run: python -m pytest -q
+
+      - name: Publish report to job summary
+        if: always()
+        run: |
+          if [ -f outputs/catalog_refresh/report.md ]; then
+            head -c 900000 outputs/catalog_refresh/report.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload complete report and updater logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: catalog-refresh-${{ github.run_id }}
+          path: outputs/catalog_refresh/
+          if-no-files-found: warn
+
+      - name: Open PR for changed catalogs
+        if: steps.refresh.outcome == 'success'
+        env:
+          REGRESSION_OUTCOME: ${{ steps.regression.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --cached --quiet -- src/llmcapa/data/; then
+            echo "No catalog changes to submit. Full report is in the Actions artifacts."
+            exit 0
+          fi
+
+          branch="automation/catalog-refresh-$GITHUB_RUN_ID"
+          git switch -c "$branch"
+          mkdir -p docs/catalog_refresh
+          cp outputs/catalog_refresh/report.md docs/catalog_refresh/latest.md
+          cp outputs/catalog_refresh/report.json docs/catalog_refresh/latest.json
+          git add -- docs/catalog_refresh/latest.md docs/catalog_refresh/latest.json
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "data: refresh official provider catalogs"
+          git push origin "HEAD:refs/heads/$branch"
+
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          data = json.loads(Path("outputs/catalog_refresh/report.json").read_text())
+          totals = data["totals"]
+          text = [
+              "## Automatic provider catalog refresh",
+              "",
+              "Model-level changes are recorded in",
+              "[the complete Markdown report](docs/catalog_refresh/latest.md) and",
+              "[the machine-readable JSON report](docs/catalog_refresh/latest.json).",
+              "",
+              "| Result | Count |",
+              "| --- | ---: |",
+          ]
+          for key in ("updated", "unchanged", "failed", "unsupported",
+                      "added", "modified", "removed"):
+              text.append(f"| {key} | {totals[key]} |")
+          text.extend([
+              "",
+              "Each updater uses its own official provider source. Failed or",
+              "suspicious updates are rolled back individually.",
+              "",
+              f"**Full regression suite**: {os.environ['REGRESSION_OUTCOME']}. "
+              "Any failures require inspection before merge.",
+              "",
+              "Update sources, capability changes, and deletions must be reviewed.",
+          ])
+          Path("catalog-refresh-pr.md").write_text("\n".join(text) + "\n")
+          PY
+
+          gh pr create \
+            --base main \
+            --head "$branch" \
+            --title "data: refresh provider catalogs (run $GITHUB_RUN_ID)" \
+            --body-file catalog-refresh-pr.md
+
+          # GITHUB_TOKEN-created PRs do not trigger pull_request CI.
+          # Explicit workflow_dispatch guarantees equivalent checks run.
+          gh workflow run ci.yml --ref "$branch"
