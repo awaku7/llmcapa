@@ -18,6 +18,10 @@
 - **FIM（Fill-in-the-Middle）サポート**: `cap.supports('fim')` でコード補完（FIM）対応を確認可能。codegemma、codellama、starcoder2、deepseek-coder、qwen2.5-coder などに対応。
 - **CLI同梱**: ターミナルから直接モデルの機能を照会・一覧表示できます。
 
+## カタログを一括更新する
+
+モデルデータを更新する場合は、GitHub Actions の **Refresh all model catalogs** を手動実行できます。公式ソースからプロバイダー別に更新し、変更モデル一覧とPRを自動作成します。手順と安全策は[一括更新ガイド](docs/CATALOG_REFRESH_AUTOMATION.ja.md)を参照してください。
+
 ## インストール
 
 ```bash
