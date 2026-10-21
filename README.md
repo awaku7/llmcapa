@@ -18,6 +18,20 @@ Lookup capabilities (context window, modalities, supported features) of various 
 - **FIM (Fill-in-the-Middle) Support**: Check if a model supports code infilling via `cap.supports('fim')`. Supported for codegemma, codellama, starcoder2, deepseek-coder, qwen2.5-coder, and more.
 - **CLI Included**: Query and list model capabilities directly from your terminal.
 
+## Azure provider names
+
+Use `azure-openai` (or its existing shorthand `azure`) for **Azure-hosted OpenAI models only**.
+
+`azure-foundry` is a **broader, one-way umbrella lookup**: it searches Foundry-only records and also Azure OpenAI records. These are not interchangeable aliases because Microsoft Foundry also serves non-OpenAI models.
+
+```python
+llmcapa.get("gpt-5.4", provider="azure-openai")   # OpenAI models only
+llmcapa.get("gpt-5.4", provider="azure-foundry")  # Same Azure OpenAI record
+llmcapa.get("claude-opus-4-8", provider="azure-foundry")  # Foundry-only record
+```
+
+The returned `Capability.provider` retains the actual stored provider. Looking up `gpt-5.4` through `azure-foundry` still returns `provider="azure-openai"`. This keeps upstream provider metadata and the source catalog distinct without rewriting data files.
+
 ## Install
 
 ```bash
