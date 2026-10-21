@@ -1,13 +1,13 @@
-"""Azure Foundry catalog aliases must not hide or misclassify OpenAI models."""
+"""Azure Foundry is canonical; Azure OpenAI and Azure are exact aliases."""
 
 import pytest
 
-from llmcapa import ModelNotFoundError, Registry
+from llmcapa import Registry
 
 
 @pytest.fixture
 def registry(monkeypatch):
-    # A local miss must not initiate a network refresh during alias tests.
+    # Alias tests must not depend on local GitHub cache snapshots or networking.
     monkeypatch.setattr(Registry, "_load_github_catalog_caches", lambda _: None)
     monkeypatch.setattr(Registry, "_load_persistent_github_catalogs", lambda _: None)
     result = Registry()
@@ -15,38 +15,36 @@ def registry(monkeypatch):
     return result
 
 
-def test_azure_foundry_alias_finds_azure_openai_models(registry):
+def test_azure_foundry_is_canonical_for_old_azure_openai_rows(registry):
     model = registry.get("gpt-5.4", provider="azure-foundry")
-    assert model.provider == "azure-openai"
+    assert model.provider == "azure-foundry"
     assert model.supports("tool_search") is True
     assert registry.get("gpt-5.4", provider="azure-openai") is model
+    assert registry.get("gpt-5.4", provider="azure") is model
+    assert "azure-openai" not in registry.providers()
+    assert "azure-foundry" in registry.providers()
 
 
-def test_azure_foundry_preserves_its_own_model_records(registry):
-    model = registry.get("gpt-5.4-mini", provider="azure-foundry")
-    assert model.provider == "azure-foundry"
-    partner = registry.get("claude-opus-4-8", provider="azure-foundry")
-    assert partner.provider == "azure-foundry"
+def test_azure_openai_alias_includes_all_foundry_models(registry):
+    for provider in ("azure-openai", "azure-foundry", "azure"):
+        assert registry.get("gpt-5.4-mini", provider).provider == "azure-foundry"
+        assert registry.get("claude-opus-4-8", provider).provider == "azure-foundry"
+    assert registry.get("gpt-5.4", provider="openai").provider == "openai"
 
 
-def test_azure_openai_remains_strictly_scoped(registry):
-    assert registry.get("gpt-5.4", provider="azure").provider == "azure-openai"
-    with pytest.raises(ModelNotFoundError):
-        registry.get("claude-opus-4-8", provider="azure-openai")
-
-
-def test_azure_foundry_list_and_search_include_both_provider_records(registry):
+def test_azure_aliases_have_identical_model_lists_and_search_results(registry):
     foundry = registry.list_models(provider="azure-foundry")
-    openai = registry.list_models(provider="azure-openai")
-    keys = {(cap.provider, cap.model_id) for cap in foundry}
-    assert ("azure-openai", "gpt-5.4") in keys
-    assert ("azure-foundry", "gpt-5.4-mini") in keys
-    assert ("azure-foundry", "claude-opus-4-8") in keys
-    assert all(cap.provider == "azure-openai" for cap in openai)
-    assert len(keys) == len(foundry)
-    found = registry.search("gpt-5.4", provider="azure-foundry")
-    assert any(x.model_id == "gpt-5.4" for x in found)
-    assert any(x.model_id == "gpt-5.4-mini" for x in found)
+    assert foundry == registry.list_models(provider="azure-openai")
+    assert foundry == registry.list_models(provider="azure")
+    ids = {cap.model_id for cap in foundry}
+    assert {"gpt-5.4", "gpt-5.4-mini", "claude-opus-4-8"} <= ids
+    assert all(cap.provider == "azure-foundry" for cap in foundry)
+    assert len(ids) == len(foundry)
+
+    for provider in ("azure-openai", "azure-foundry", "azure"):
+        results = registry.search("gpt-5.4", provider=provider)
+        assert any(cap.model_id == "gpt-5.4" for cap in results)
+        assert any(cap.model_id == "gpt-5.4-mini" for cap in results)
 
 
 def test_azure_alias_keeps_other_provider_aliases_unchanged(registry):
@@ -55,4 +53,10 @@ def test_azure_alias_keeps_other_provider_aliases_unchanged(registry):
     assert registry._matching_providers("azure-foundry") >= {
         "azure-foundry",
         "azure-openai",
+        "azure",
+    }
+    assert registry._matching_providers("azure-openai") >= {
+        "azure-foundry",
+        "azure-openai",
+        "azure",
     }
