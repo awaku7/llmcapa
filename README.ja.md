@@ -18,6 +18,20 @@
 - **FIM（Fill-in-the-Middle）サポート**: `cap.supports('fim')` でコード補完（FIM）対応を確認可能。codegemma、codellama、starcoder2、deepseek-coder、qwen2.5-coder などに対応。
 - **CLI同梱**: ターミナルから直接モデルの機能を照会・一覧表示できます。
 
+## Azureプロバイダー名の整理
+
+`azure-openai` は **Azureで提供されるOpenAIモデルだけ**を検索する名前です。従来の別名 `azure` も利用できます。
+
+`azure-foundry` は **より広い検索用の名前**として扱い、Foundry固有のレコードに加え、`azure-openai` のレコードも参照します。FoundryにはOpenAI以外のモデルもあるため、2つの名前を完全に同一の別名にはしません。
+
+```python
+llmcapa.get("gpt-5.4", provider="azure-openai")   # OpenAIに限定
+llmcapa.get("gpt-5.4", provider="azure-foundry")  # Azure OpenAI側の同じレコード
+llmcapa.get("claude-opus-4-8", provider="azure-foundry")  # Foundry固有のレコード
+```
+
+実データの `Capability.provider` は保持されます。例えば `azure-foundry` で検索しても `gpt-5.4` の戻り値は `provider="azure-openai"` です。外部提供元・サービスとカタログの収集先は別の情報として扱い、公式カタログJSONを一括書換えしません。
+
 ## インストール
 
 ```bash
