@@ -63,6 +63,7 @@ def test_azure_alias_keeps_other_provider_aliases_unchanged(registry):
         "azure",
     }
 
+
 @pytest.mark.parametrize("stored_provider", ("azure-foundry", "azure-openai"))
 @pytest.mark.parametrize("storage", ("cache", "persistent"))
 def test_azure_cached_catalog_reloads_legacy_provider(
