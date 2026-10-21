@@ -11,7 +11,7 @@ import pytest
 SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
-import refresh_catalogs as refresh  # noqa: E402
+import refresh_catalogs as refresh
 
 
 def _catalog(*ids: str) -> dict:
