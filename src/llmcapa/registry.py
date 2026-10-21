@@ -12,6 +12,7 @@ import tempfile
 import time
 import urllib.request
 import warnings
+from dataclasses import replace
 from importlib import resources
 from pathlib import Path
 from typing import ClassVar
@@ -52,7 +53,7 @@ class Registry:
         "anthropic": ["claude"],
         "google": ["google-ai", "gemini"],
         "vertex-ai": ["vertexai"],
-        "azure-openai": ["azure"],
+        "azure-foundry": ["azure-openai", "azure"],
         "zhipu": ["zai", "z-ai"],
         "moonshotai": ["moonshot", "kimi"],
         "amazon": ["bedrock", "aws-bedrock", "aws"],
@@ -79,33 +80,33 @@ class Registry:
         normalized = re.sub(r"[_. \t]+", "-", normalized)
         return normalized
 
-    def _matching_providers(self, provider: str) -> set:
-        """Return the set of provider names equivalent to *provider*.
+    @classmethod
+    def _canonical_provider(cls, provider: str) -> str:
+        """Canonicalize provider labels, including historical Azure OpenAI rows."""
+        normalized = cls._normalize_provider(provider)
+        if normalized == "azure-openai":
+            return "azure-foundry"
+        return normalized
 
-        Includes the normalized input, the canonical registry name, and all
-        configured aliases (e.g. ``grok`` / ``x-ai`` → ``xai``).
-        """
+    @classmethod
+    def _canonical_capability(cls, cap: Capability) -> Capability:
+        """Keep stored legacy Azure data while presenting the canonical provider."""
+        provider = cls._canonical_provider(cap.provider)
+        return replace(cap, provider=provider) if provider != cap.provider else cap
+
+    def _matching_providers(self, provider: str) -> set:
+        """Return provider aliases, with Azure Foundry as the canonical name."""
         p = self._normalize_provider(provider)
         matching = {p}
         for canonical, aliases in self._provider_aliases.items():
             if p == canonical or p in aliases:
                 matching.add(canonical)
                 matching.update(aliases)
-        # Microsoft Foundry includes Azure OpenAI; this is intentionally a
-        # one-way alias, not an equivalence between their model catalogs.
-        if p == "azure-foundry":
-            matching.add("azure-openai")
         return matching
 
     def _scoped_provider_order(self, provider: str) -> list[str]:
-        """Resolve provider aliases without broadening Azure OpenAI to other models.
-
-        Azure Foundry is an umbrella: search its own records first, then
-        Azure OpenAI records. Azure OpenAI itself stays strictly scoped.
-        """
+        """Resolve a provider name to exactly one canonical provider catalog."""
         normalized = self._normalize_provider(provider)
-        if normalized == "azure-foundry":
-            return ["azure-foundry", "azure-openai"]
         matching_providers = self._matching_providers(provider)
         canonical = next(
             (
@@ -115,6 +116,8 @@ class Registry:
             ),
             normalized,
         )
+        if canonical == "azure-foundry":
+            return ["azure-foundry"]
         if normalized in self._by_provider:
             return [normalized]
         if canonical in self._by_provider:
@@ -318,7 +321,7 @@ class Registry:
         for record in records:
             cap = Capability.from_dict(record)
             if catalog_name:
-                provider = self._normalize_provider(cap.provider)
+                provider = self._canonical_provider(cap.provider)
                 self._catalog_files_by_provider.setdefault(provider, set()).add(
                     catalog_name
                 )
@@ -347,6 +350,7 @@ class Registry:
         Provider-scoped lookups via ``get(..., provider=...)`` always
         find the correct provider's data regardless of registration order.
         """
+        cap = self._canonical_capability(cap)
         key = cap.model_id.lower()
         prov = self._normalize_provider(cap.provider)
 
@@ -691,6 +695,7 @@ class Registry:
     # ------------------------------------------------------------------
     def _register_refreshed_catalog_record(self, cap: Capability) -> None:
         """Upsert a fetched record without changing cross-provider precedence."""
+        cap = self._canonical_capability(cap)
         key = cap.model_id.lower()
         provider = self._normalize_provider(cap.provider)
         provider_models = self._by_provider.get(provider, {})
