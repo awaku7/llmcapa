@@ -152,7 +152,7 @@ def run_provider(
 
         updated = load_catalog(path)
         diff = compare_catalogs(previous, updated)
-        if relative_path in touched:
+        if relative_path in touched and any(diff.values()):
             subprocess.run(
                 ["git", "add", "--", relative_path], cwd=ROOT, check=True
             )
@@ -168,7 +168,7 @@ def run_provider(
 
 
 def _safe_markdown(value: str) -> str:
-    return value.replace("\r", " ").replace("\n", " ").replace("\`", "'")
+    return value.replace("\r", " ").replace("\n", " ").replace("`", "'")
 
 
 def write_reports(
@@ -215,12 +215,12 @@ def write_reports(
             lines.extend([f"Reason: {_safe_markdown(result['reason'])}", ""])
         changes = result.get("changes", {})
         for model_id in changes.get("added", []):
-            lines.append(f"- Added: \`{_safe_markdown(model_id)}\`")
+            lines.append(f"- Added: `{_safe_markdown(model_id)}`")
         for model_id, fields in changes.get("modified", {}).items():
-            formatted = ", ".join(f"\`{_safe_markdown(field)}\`" for field in fields)
-            lines.append(f"- Modified: \`{_safe_markdown(model_id)}\` ({formatted})")
+            formatted = ", ".join(f"`{_safe_markdown(field)}`" for field in fields)
+            lines.append(f"- Modified: `{_safe_markdown(model_id)}` ({formatted})")
         for model_id in changes.get("removed", []):
-            lines.append(f"- Removed: \`{_safe_markdown(model_id)}\`")
+            lines.append(f"- Removed: `{_safe_markdown(model_id)}`")
         lines.append("")
     (output_directory / "report.md").write_text(
         "\n".join(lines) + "\n", encoding="utf-8"
