@@ -82,17 +82,19 @@ class Registry:
 
     @classmethod
     def _canonical_provider(cls, provider: str) -> str:
-        """Canonicalize provider labels, including historical Azure OpenAI rows."""
+        """Canonicalize Azure aliases without changing unrelated provider names."""
         normalized = cls._normalize_provider(provider)
-        if normalized == "azure-openai":
+        if normalized in {"azure-openai", "azure"}:
             return "azure-foundry"
         return normalized
 
     @classmethod
     def _canonical_capability(cls, cap: Capability) -> Capability:
-        """Keep stored legacy Azure data while presenting the canonical provider."""
-        provider = cls._canonical_provider(cap.provider)
-        return replace(cap, provider=provider) if provider != cap.provider else cap
+        """Normalize Azure aliases but leave other provider labels untouched."""
+        provider = cls._normalize_provider(cap.provider)
+        if provider in {"azure-openai", "azure"}:
+            return replace(cap, provider="azure-foundry")
+        return cap
 
     def _matching_providers(self, provider: str) -> set:
         """Return provider aliases, with Azure Foundry as the canonical name."""
