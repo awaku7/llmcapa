@@ -120,8 +120,8 @@ def test_tool_search_support_is_model_and_provider_specific():
     assert llmcapa.get("gpt-6-luna", provider="openai").supports("tool_search") is True
 
     assert llmcapa.get("gpt-5.5", provider="azure-openai").supports("tool_search") is True
-    # Azure Foundry's record does not confirm a Responses API endpoint here.
-    assert llmcapa.get("gpt-5.4", provider="azure-foundry").supports("tool_search") is None
+    # Azure Foundry publishes this OpenAI model under the azure-openai provider.
+    assert llmcapa.get("gpt-5.4", provider="azure-openai").supports("tool_search") is True
 
 
 def test_reasoning_mode_is_separate_from_reasoning_effort():
