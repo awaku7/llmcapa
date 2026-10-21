@@ -18,19 +18,19 @@ Lookup capabilities (context window, modalities, supported features) of various 
 - **FIM (Fill-in-the-Middle) Support**: Check if a model supports code infilling via `cap.supports('fim')`. Supported for codegemma, codellama, starcoder2, deepseek-coder, qwen2.5-coder, and more.
 - **CLI Included**: Query and list model capabilities directly from your terminal.
 
-## Azure provider names
+## Unified Azure provider names
 
-Use `azure-openai` (or its existing shorthand `azure`) for **Azure-hosted OpenAI models only**.
-
-`azure-foundry` is a **broader, one-way umbrella lookup**: it searches Foundry-only records and also Azure OpenAI records. These are not interchangeable aliases because Microsoft Foundry also serves non-OpenAI models.
+The canonical provider is **`azure-foundry`**. Both **`azure-openai`** and **`azure`** are exact aliases of `azure-foundry`, with identical `get`, `search`, and `list_models` results.
 
 ```python
-llmcapa.get("gpt-5.4", provider="azure-openai")   # OpenAI models only
-llmcapa.get("gpt-5.4", provider="azure-foundry")  # Same Azure OpenAI record
-llmcapa.get("claude-opus-4-8", provider="azure-foundry")  # Foundry-only record
+llmcapa.get("gpt-5.4", provider="azure-foundry")
+llmcapa.get("gpt-5.4", provider="azure-openai")  # Same result
+llmcapa.get("gpt-5.4", provider="azure")         # Same result
 ```
 
-The returned `Capability.provider` retains the actual stored provider. Looking up `gpt-5.4` through `azure-foundry` still returns `provider="azure-openai"`. This keeps upstream provider metadata and the source catalog distinct without rewriting data files.
+The returned `Capability.provider` is normalized to `azure-foundry`, and `providers()` lists it once. Existing official JSON rows are left unchanged and are normalized on registration.
+
+**Behavior change:** The `azure-openai` alias now also resolves Foundry-hosted non-OpenAI models. The direct `openai` provider is still independent. Original source and service-specific metadata are preserved.
 
 ## Install
 
