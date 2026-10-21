@@ -217,10 +217,7 @@ class Registry:
                     continue
                 provider_set = {self._normalize_provider(name) for name in providers}
                 for filename, text in files.items():
-                    if (
-                        not isinstance(filename, str)
-                        or Path(filename).name != filename
-                    ):
+                    if not isinstance(filename, str) or Path(filename).name != filename:
                         continue
                     if not isinstance(text, str):
                         continue
