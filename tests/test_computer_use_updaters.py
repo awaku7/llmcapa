@@ -374,7 +374,7 @@ def test_reconciled_catalog_reports_provider_specific_computer_use(monkeypatch):
         ("gemini-3.8-flash", "google"),
         ("gemini-3.8-flash", "vertex-ai"),
         ("computer-use-preview", "azure-openai"),
-        ("gpt-5.4", "azure-foundry"),
+        ("gpt-5.4", "azure-openai"),
         ("qwen3-vl:8b", "ollama"),
         ("muse-spark-1.1", "meta"),
         ("muse-spark-1.3", "meta"),
