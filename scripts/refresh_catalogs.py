@@ -231,6 +231,15 @@ def write_reports(
 def refresh(
     selected_provider: str, timeout_seconds: int, output_directory: Path
 ) -> dict[str, int]:
+    # A rollback restores the working tree from the Git index. Never do that
+    # when a developer already has uncommitted or staged changes.
+    for args in (
+        ["git", "diff", "--quiet", "--"],
+        ["git", "diff", "--cached", "--quiet", "--"],
+    ):
+        if subprocess.run(args, cwd=ROOT, check=False).returncode:
+            raise ValueError("catalog refresh requires a clean Git working tree")
+
     if selected_provider != "all" and selected_provider not in PROVIDER_SCRIPTS:
         raise ValueError(f"unknown provider: {selected_provider}")
 
