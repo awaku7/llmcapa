@@ -167,8 +167,19 @@ def template_for(model_id: str) -> dict:
     is_gemini_25_thinking = (
         re.match(r"^gemini-2\.5(?:-|$)", model_id) is not None and not is_specialized
     )
+    # The official thinking-level matrix differs by Gemini generation.
+    # The 3.8 live model does not expose thinking levels; its extended-
+    # thinking counterpart and Gemini 4 Argon accept low/medium/high only.
+    modern_level_models = {
+        "gemini-3.8-flash",
+        "gemini-3.8-live-extended-thinking",
+        "gemini-4-argon",
+    }
+    is_modern_level = model_id in modern_level_models
     is_gemini_3_thinking = (
-        re.match(r"^gemini-3(?:\.|-|$)", model_id) is not None and not is_specialized
+        re.match(r"^gemini-3(?:\.|-|$)", model_id) is not None
+        and not is_specialized
+        and not model_id.startswith("gemini-3.8-")
     )
     budget_values = (
         {"type": "token_range", "min": 0, "max": 24576}
@@ -176,7 +187,9 @@ def template_for(model_id: str) -> dict:
         else None
     )
     level_values = (
-        ["minimal", "low", "medium", "high"] if is_gemini_3_thinking else None
+        ["low", "medium", "high"]
+        if is_modern_level
+        else (["minimal", "low", "medium", "high"] if is_gemini_3_thinking else None)
     )
     control = (
         {
@@ -208,7 +221,7 @@ def template_for(model_id: str) -> dict:
         "reasoning_effort_values": None,
         "supports_thinking_budget": is_gemini_25_thinking,
         "thinking_budget_values": budget_values,
-        "supports_thinking_level": is_gemini_3_thinking,
+        "supports_thinking_level": level_values is not None,
         "thinking_level_values": level_values,
         "thinking_control": control,
         "max_output_tokens": 65_536,
@@ -265,9 +278,9 @@ def reconcile_computer_use(models: list[dict]) -> None:
         elif model_id in GOOGLE_COMPUTER_USE_SHUTDOWNS:
             model["deprecated"] = True
             extra = model.get("extra") or {}
-            extra["computer_use_shutdown_date"] = (
-                GOOGLE_COMPUTER_USE_SHUTDOWNS[model_id]
-            )
+            extra["computer_use_shutdown_date"] = GOOGLE_COMPUTER_USE_SHUTDOWNS[
+                model_id
+            ]
             extra["computer_use_source_url"] = (
                 "https://ai.google.dev/gemini-api/docs/deprecations"
             )
