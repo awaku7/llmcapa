@@ -117,12 +117,9 @@ def validate_refreshed_catalog(
         # today's Mistral keys: images, speech, video, and new APIs may
         # introduce other published units. Preserve 0.0 as a known rate.
         for key, known_value in previous_extra.items():
-            is_billing_field = (
-                key == "cached_input_per_1m"
-                or any(
-                    word in key.casefold()
-                    for word in ("price", "pricing", "cost", "rate", "billing")
-                )
+            is_billing_field = key == "cached_input_per_1m" or any(
+                word in key.casefold()
+                for word in ("price", "pricing", "cost", "rate", "billing")
             )
             if (
                 is_billing_field
