@@ -5954,6 +5954,7 @@
           ],
           "mercury-2.5": [
             "extra.official_source_checked_at",
+            "extra.pricing_status",
             "extra.structured_output_checked_at",
             "pricing.cached_input_per_1m",
             "pricing.input_per_1m",
@@ -10448,7 +10449,10 @@
         "nvidia/Nemotron-3.5-Embed-1B-BF16",
         "nvidia/Nemotron-3.5-Embed-8B-BF16"
       ],
-      "note": "Corrected fields belong to newly added models; model-level added/modified counts remain unchanged."
+      "note": "Reconciled with current branch vs main: Mercury 2.5 pricing_status changed from promotional to standard; its model was already modified, so model-level totals are unchanged. Corrections to other newly added models also leave model-level counts unchanged.",
+      "corrected_existing_models": [
+        "mercury-2.5"
+      ]
     }
   }
 }
