@@ -471,7 +471,9 @@ def main() -> None:
     import sys
 
     scrape_script = WORKDIR / "scripts" / "_scrape_mistral.py"
-    result = subprocess.run([sys.executable, str(scrape_script)], cwd=WORKDIR, check=False)
+    result = subprocess.run(
+        [sys.executable, str(scrape_script)], cwd=WORKDIR, check=False
+    )
     if result.returncode != 0:
         raise SystemExit(f"Mistral official scrape failed: {scrape_script}")
 
