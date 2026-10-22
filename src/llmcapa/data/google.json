@@ -4851,7 +4851,11 @@
       "context_window": 1048576,
       "max_output_tokens": 65536,
       "input_modalities": [
-        "text"
+        "text",
+        "image",
+        "video",
+        "audio",
+        "file"
       ],
       "output_modalities": [
         "text"
@@ -4859,7 +4863,7 @@
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
-      "supports_vision": false,
+      "supports_vision": true,
       "supports_reasoning": true,
       "supports_chat_completion": true,
       "supports_responses_api": false,
@@ -4880,13 +4884,13 @@
       "aliases": [],
       "reasoning_effort_values": null,
       "extra": {
-        "source": "https://ai.google.dev/gemini-api/docs/pricing",
-        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing"
+        "source": "https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash",
+        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing",
+        "checked_at": "2026-10-21"
       },
       "thinking_budget_values": null,
       "supports_thinking_level": true,
       "thinking_level_values": [
-        "minimal",
         "low",
         "medium",
         "high"
@@ -4895,7 +4899,6 @@
         "kind": "level",
         "parameter": "thinking_level",
         "values": [
-          "minimal",
           "low",
           "medium",
           "high"
@@ -4925,19 +4928,19 @@
       "provider": "google",
       "model_id": "gemini-3.8-flash-lite-tts",
       "display_name": "Gemini 3.8 Flash Lite Tts",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
+      "context_window": 8192,
+      "max_output_tokens": 16384,
       "input_modalities": [
         "text"
       ],
       "output_modalities": [
-        "text"
+        "audio"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": false,
-      "supports_reasoning": true,
+      "supports_reasoning": false,
       "supports_chat_completion": true,
       "supports_responses_api": false,
       "supports_reasoning_effort": false,
@@ -4950,7 +4953,7 @@
       "knowledge_cutoff": null,
       "pricing": {
         "input_per_1m": 0.5,
-        "output_per_1m": 6.0,
+        "output_per_1m": 6,
         "currency": "USD"
       },
       "deprecated": false,
@@ -4961,27 +4964,47 @@
       "thinking_level_values": null,
       "thinking_control": null,
       "extra": {
-        "source": "https://ai.google.dev/gemini-api/docs/pricing",
-        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing"
+        "source": "https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash-lite-tts",
+        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing",
+        "checked_at": "2026-10-21",
+        "default_output_mime_type": "audio/wav",
+        "supported_languages_count": 101
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": false,
+        "checked_at": "2026-10-21",
+        "status": "documented",
+        "endpoints": {
+          "speech_generation": true,
+          "speech_understanding": false,
+          "streaming": true
+        },
+        "extra": {
+          "source": "https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash-lite-tts"
+        }
       }
     },
     {
       "provider": "google",
       "model_id": "gemini-3.8-flash-tts",
       "display_name": "Gemini 3.8 Flash Tts",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
+      "context_window": 8192,
+      "max_output_tokens": 16384,
       "input_modalities": [
         "text"
       ],
       "output_modalities": [
-        "text"
+        "audio"
       ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": false,
-      "supports_reasoning": true,
+      "supports_reasoning": false,
       "supports_chat_completion": true,
       "supports_responses_api": false,
       "supports_reasoning_effort": false,
@@ -4994,7 +5017,7 @@
       "knowledge_cutoff": null,
       "pricing": {
         "input_per_1m": 0.5,
-        "output_per_1m": 9.0,
+        "output_per_1m": 9,
         "currency": "USD"
       },
       "deprecated": false,
@@ -5005,27 +5028,50 @@
       "thinking_level_values": null,
       "thinking_control": null,
       "extra": {
-        "source": "https://ai.google.dev/gemini-api/docs/pricing",
-        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing"
+        "source": "https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash-tts",
+        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing",
+        "checked_at": "2026-10-21",
+        "default_output_mime_type": "audio/wav",
+        "supported_languages_count": 130
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": false,
+        "checked_at": "2026-10-21",
+        "status": "documented",
+        "endpoints": {
+          "speech_generation": true,
+          "speech_understanding": false,
+          "streaming": true
+        },
+        "extra": {
+          "source": "https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash-tts"
+        }
       }
     },
     {
       "provider": "google",
       "model_id": "gemini-3.8-live",
       "display_name": "Gemini 3.8 Live",
-      "context_window": 1048576,
+      "context_window": 131072,
       "max_output_tokens": 65536,
       "input_modalities": [
-        "text"
+        "text",
+        "image",
+        "audio"
       ],
       "output_modalities": [
-        "text"
+        "text",
+        "audio"
       ],
       "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_json_mode": false,
       "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
+      "supports_vision": true,
+      "supports_reasoning": true,
       "supports_chat_completion": true,
       "supports_responses_api": false,
       "supports_reasoning_effort": false,
@@ -5045,9 +5091,71 @@
       "aliases": [],
       "reasoning_effort_values": null,
       "thinking_budget_values": null,
+      "supports_thinking_level": false,
+      "thinking_level_values": null,
+      "thinking_control": null,
+      "extra": {
+        "source": "https://ai.google.dev/gemini-api/docs/models/gemini-3.8-live",
+        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing",
+        "realtime_api": true,
+        "checked_at": "2026-10-21"
+      },
+      "supports_realtime": true,
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": true,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": true,
+        "checked_at": "2026-10-21",
+        "status": "documented",
+        "endpoints": {
+          "speech_generation": true,
+          "speech_understanding": true,
+          "streaming": true,
+          "realtime": true
+        },
+        "extra": {
+          "source": "https://ai.google.dev/gemini-api/docs/models/gemini-3.8-live"
+        }
+      }
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-3.8-live-extended-thinking",
+      "display_name": "Gemini 3.8 Live Extended Thinking",
+      "context_window": 131072,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "audio"
+      ],
+      "output_modalities": [
+        "text",
+        "audio"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "thinking_budget_values": null,
       "supports_thinking_level": true,
       "thinking_level_values": [
-        "minimal",
         "low",
         "medium",
         "high"
@@ -5056,15 +5164,36 @@
         "kind": "level",
         "parameter": "thinking_level",
         "values": [
-          "minimal",
           "low",
           "medium",
           "high"
         ]
       },
       "extra": {
-        "source": "https://ai.google.dev/gemini-api/docs/pricing",
-        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing"
+        "source": "https://ai.google.dev/gemini-api/docs/models/gemini-3.8-live-extended-thinking",
+        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing",
+        "realtime_api": true,
+        "checked_at": "2026-10-21",
+        "async_function_calling_only": true
+      },
+      "supports_realtime": true,
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": true,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": true,
+        "checked_at": "2026-10-21",
+        "status": "documented",
+        "endpoints": {
+          "speech_generation": true,
+          "speech_understanding": true,
+          "streaming": true,
+          "realtime": true
+        },
+        "extra": {
+          "source": "https://ai.google.dev/gemini-api/docs/models/gemini-3.8-live-extended-thinking"
+        }
       }
     },
     {
@@ -5074,7 +5203,11 @@
       "context_window": 1048576,
       "max_output_tokens": 65536,
       "input_modalities": [
-        "text"
+        "text",
+        "image",
+        "video",
+        "audio",
+        "file"
       ],
       "output_modalities": [
         "text"
@@ -5082,8 +5215,8 @@
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
+      "supports_vision": true,
+      "supports_reasoning": true,
       "supports_chat_completion": true,
       "supports_responses_api": false,
       "supports_reasoning_effort": false,
@@ -5095,20 +5228,54 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "pricing": {
-        "input_per_1m": 2.0,
-        "output_per_1m": 10.0,
+        "input_per_1m": 2,
+        "output_per_1m": 10,
         "currency": "USD"
       },
       "deprecated": false,
       "aliases": [],
       "reasoning_effort_values": null,
       "thinking_budget_values": null,
-      "supports_thinking_level": false,
-      "thinking_level_values": null,
-      "thinking_control": null,
+      "supports_thinking_level": true,
+      "thinking_level_values": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "thinking_control": {
+        "kind": "level",
+        "parameter": "thinking_level",
+        "values": [
+          "low",
+          "medium",
+          "high"
+        ]
+      },
       "extra": {
-        "source": "https://ai.google.dev/gemini-api/docs/pricing",
-        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing"
+        "source": "https://ai.google.dev/gemini-api/docs/models/gemini-4-argon",
+        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing",
+        "checked_at": "2026-10-21",
+        "long_decode_max_output_tokens": 1048576,
+        "long_decode_requires_opt_in": true
+      },
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "google",
+        "model": "gemini-4-argon",
+        "api_type": "generate_content",
+        "tool_type": "computer_use",
+        "tool_version": null,
+        "status": "preview",
+        "environments": [
+          "browser",
+          "desktop",
+          "mobile"
+        ],
+        "requires_beta": false,
+        "enable_zoom": false,
+        "source_url": "https://ai.google.dev/gemini-api/docs/models/gemini-4-argon",
+        "checked_at": "2026-10-21"
       }
     },
     {

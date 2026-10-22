@@ -18,6 +18,20 @@
 - **FIM（Fill-in-the-Middle）サポート**: `cap.supports('fim')` でコード補完（FIM）対応を確認可能。codegemma、codellama、starcoder2、deepseek-coder、qwen2.5-coder などに対応。
 - **CLI同梱**: ターミナルから直接モデルの機能を照会・一覧表示できます。
 
+## Azureプロバイダー名の統一
+
+正式なプロバイダー名は **`azure-foundry`** です。`azure-openai` と `azure` は **`azure-foundry` の完全な別名**として扱います。
+
+```python
+llmcapa.get("gpt-5.4", provider="azure-foundry")
+llmcapa.get("gpt-5.4", provider="azure-openai")  # 同じ結果
+llmcapa.get("gpt-5.4", provider="azure")         # 同じ結果
+```
+
+`list_models` や `search` でも3つの指定は同じ結果になります。戻り値の `Capability.provider` も `azure-foundry` に統一し、`providers()` には `azure-openai` を重複表示しません。従来 `azure-openai` と記録されていたモデルの公式JSONは変更せず、読み込み時に正規名へ変換します。
+
+**注意:** `azure-openai` は従来、Azure上のOpenAIモデルだけを指していましたが、今後はFoundry側の他社モデルも含む別名になります。`openai` は別プロバイダーのままで、区別は維持します。モデルごとの詳しい提供元情報やComputer Useのサービス情報は元データを保持します。
+
 ## カタログを一括更新する
 
 モデルデータを更新する場合は、GitHub Actions の **Refresh all model catalogs** を手動実行できます。公式ソースからプロバイダー別に更新し、変更モデル一覧とPRを自動作成します。手順と安全策は[一括更新ガイド](docs/CATALOG_REFRESH_AUTOMATION.ja.md)を参照してください。

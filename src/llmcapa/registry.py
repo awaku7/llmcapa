@@ -12,6 +12,7 @@ import tempfile
 import time
 import urllib.request
 import warnings
+from dataclasses import replace
 from importlib import resources
 from pathlib import Path
 from typing import ClassVar
@@ -52,7 +53,7 @@ class Registry:
         "anthropic": ["claude"],
         "google": ["google-ai", "gemini"],
         "vertex-ai": ["vertexai"],
-        "azure-openai": ["azure"],
+        "azure-foundry": ["azure-openai", "azure"],
         "zhipu": ["zai", "z-ai"],
         "moonshotai": ["moonshot", "kimi"],
         "amazon": ["bedrock", "aws-bedrock", "aws"],
@@ -79,12 +80,24 @@ class Registry:
         normalized = re.sub(r"[_. \t]+", "-", normalized)
         return normalized
 
-    def _matching_providers(self, provider: str) -> set:
-        """Return the set of provider names equivalent to *provider*.
+    @classmethod
+    def _canonical_provider(cls, provider: str) -> str:
+        """Canonicalize Azure aliases without changing unrelated provider names."""
+        normalized = cls._normalize_provider(provider)
+        if normalized in {"azure-openai", "azure"}:
+            return "azure-foundry"
+        return normalized
 
-        Includes the normalized input, the canonical registry name, and all
-        configured aliases (e.g. ``grok`` / ``x-ai`` → ``xai``).
-        """
+    @classmethod
+    def _canonical_capability(cls, cap: Capability) -> Capability:
+        """Normalize Azure aliases but leave other provider labels untouched."""
+        provider = cls._canonical_provider(cap.provider)
+        if provider == "azure-foundry" and cap.provider != provider:
+            return replace(cap, provider=provider)
+        return cap
+
+    def _matching_providers(self, provider: str) -> set:
+        """Return provider aliases, with Azure Foundry as the canonical name."""
         p = self._normalize_provider(provider)
         matching = {p}
         for canonical, aliases in self._provider_aliases.items():
@@ -92,6 +105,26 @@ class Registry:
                 matching.add(canonical)
                 matching.update(aliases)
         return matching
+
+    def _scoped_provider_order(self, provider: str) -> list[str]:
+        """Resolve a provider name to exactly one canonical provider catalog."""
+        normalized = self._normalize_provider(provider)
+        matching_providers = self._matching_providers(provider)
+        canonical = next(
+            (
+                name
+                for name, aliases in self._provider_aliases.items()
+                if normalized == name or normalized in aliases
+            ),
+            normalized,
+        )
+        if canonical == "azure-foundry":
+            return ["azure-foundry"]
+        if normalized in self._by_provider:
+            return [normalized]
+        if canonical in self._by_provider:
+            return [canonical]
+        return sorted(matching_providers)
 
     # ------------------------------------------------------------------
     # loading
@@ -187,12 +220,9 @@ class Registry:
                     or not all(isinstance(name, str) for name in providers)
                 ):
                     continue
-                provider_set = {self._normalize_provider(name) for name in providers}
+                provider_set = {self._canonical_provider(name) for name in providers}
                 for filename, text in files.items():
-                    if (
-                        not isinstance(filename, str)
-                        or Path(filename).name != filename
-                    ):
+                    if not isinstance(filename, str) or Path(filename).name != filename:
                         continue
                     if not isinstance(text, str):
                         continue
@@ -218,7 +248,7 @@ class Registry:
                     for record in records:
                         try:
                             cap = Capability.from_dict(record)
-                            provider = self._normalize_provider(cap.provider)
+                            provider = self._canonical_provider(cap.provider)
                             if (
                                 provider not in provider_set
                                 or provider not in self._catalog_files_by_provider
@@ -263,11 +293,11 @@ class Registry:
                     or not all(isinstance(name, str) for name in providers)
                 ):
                     continue
-                provider_set = {self._normalize_provider(name) for name in providers}
+                provider_set = {self._canonical_provider(name) for name in providers}
                 for record in records:
                     try:
                         cap = Capability.from_dict(record)
-                        provider = self._normalize_provider(cap.provider)
+                        provider = self._canonical_provider(cap.provider)
                         if (
                             provider not in provider_set
                             or provider not in self._catalog_files_by_provider
@@ -293,7 +323,7 @@ class Registry:
         for record in records:
             cap = Capability.from_dict(record)
             if catalog_name:
-                provider = self._normalize_provider(cap.provider)
+                provider = self._canonical_provider(cap.provider)
                 self._catalog_files_by_provider.setdefault(provider, set()).add(
                     catalog_name
                 )
@@ -322,6 +352,7 @@ class Registry:
         Provider-scoped lookups via ``get(..., provider=...)`` always
         find the correct provider's data regardless of registration order.
         """
+        cap = self._canonical_capability(cap)
         key = cap.model_id.lower()
         prov = self._normalize_provider(cap.provider)
 
@@ -666,6 +697,7 @@ class Registry:
     # ------------------------------------------------------------------
     def _register_refreshed_catalog_record(self, cap: Capability) -> None:
         """Upsert a fetched record without changing cross-provider precedence."""
+        cap = self._canonical_capability(cap)
         key = cap.model_id.lower()
         provider = self._normalize_provider(cap.provider)
         provider_models = self._by_provider.get(provider, {})
@@ -1117,10 +1149,10 @@ class Registry:
 
         Args:
             model_id: Model id, alias, or deployment name.
-            provider: If given, normalize and resolve this provider alias,
-                      then search only that single provider catalog. No other
-                      provider is used as a fallback. Otherwise, returns the
-                      first-registered (native) version.
+            provider: If given, resolve the provider name or alias to one
+                      canonical catalog. azure-openai and azure are aliases
+                      for azure-foundry; all three see the same models.
+                      Without a provider, prefer the first registered model.
 
         Raises:
             ModelNotFoundError: If the model cannot be resolved.
@@ -1128,30 +1160,7 @@ class Registry:
         self._ensure_loaded()
         if provider is not None:
             # Scoped lookup: search only within the given provider
-            normalized_provider = self._normalize_provider(provider)
-            matching_providers = self._matching_providers(provider)
-            # If the requested name is an actual provider, use that catalog
-            # only. Otherwise resolve the name through its aliases. This
-            # prevents alias queries such as provider="qwen" from combining
-            # qwen and alibaba catalogs and returning duplicate model IDs.
-            canonical_provider = next(
-                (
-                    canonical
-                    for canonical, aliases in self._provider_aliases.items()
-                    if normalized_provider == canonical
-                    or normalized_provider in aliases
-                ),
-                normalized_provider,
-            )
-            ordered_providers = (
-                [normalized_provider]
-                if normalized_provider in self._by_provider
-                else (
-                    [canonical_provider]
-                    if canonical_provider in self._by_provider
-                    else sorted(matching_providers)
-                )
-            )
+            ordered_providers = self._scoped_provider_order(provider)
             for prov in ordered_providers:
                 prov_index = self._by_provider.get(prov)
                 if prov_index is not None:
@@ -1204,34 +1213,13 @@ class Registry:
     ) -> list[Capability]:
         """Return capabilities, optionally filtered to one provider catalog.
 
-        A provider argument is normalized and resolved through the same alias
-        map as :meth:`get`; it never combines catalogs or falls back to
-        another provider.
+        A provider argument resolves to one canonical catalog. For Azure,
+        azure-openai and azure are aliases of azure-foundry and therefore
+        list the same Foundry models, including third-party models.
         """
         self._ensure_loaded()
         if provider is not None:
-            normalized_provider = self._normalize_provider(provider)
-            matching_providers = self._matching_providers(provider)
-            # Prefer an exact provider catalog when it exists. Alias names
-            # such as "bedrock" still fall back to their canonical provider.
-            canonical_provider = next(
-                (
-                    canonical
-                    for canonical, aliases in self._provider_aliases.items()
-                    if normalized_provider == canonical
-                    or normalized_provider in aliases
-                ),
-                normalized_provider,
-            )
-            providers_to_list = (
-                [normalized_provider]
-                if normalized_provider in self._by_provider
-                else (
-                    [canonical_provider]
-                    if canonical_provider in self._by_provider
-                    else sorted(matching_providers)
-                )
-            )
+            providers_to_list = self._scoped_provider_order(provider)
             result: list[Capability] = []
             for prov in providers_to_list:
                 idx = self._by_provider.get(prov)
@@ -1258,9 +1246,10 @@ class Registry:
     ) -> list[Capability]:
         """Search models by conditions, optionally limited to one provider catalog.
 
-        When *provider* is supplied, it follows the normalized provider alias
-        contract used by :meth:`get` and :meth:`list_models`; no other catalog
-        is consulted. ``feature_flags`` accepts keys like
+        When *provider* is supplied, it resolves to one canonical catalog,
+        just like :meth:`get` and :meth:`list_models`. In particular,
+        azure-openai and azure both resolve to azure-foundry.
+        ``feature_flags`` accepts keys like
         ``supports_vision=True`` or short forms like ``vision=True``.
         """
         self._ensure_loaded()
@@ -1333,9 +1322,10 @@ class Registry:
         Case-insensitive prefix search. Results are sorted by
         ``(deprecated, provider, model_id)``, so non-deprecated models always
         precede deprecated ones and ``limit`` keeps the active entries.
-        When *provider* is given, uses only that provider catalog and the
-        same alias resolution as ``list_models`` / ``get``. With no provider,
-        all provider catalogs are searched.
+        When *provider* is given, resolve aliases to one canonical catalog
+        as in ``list_models`` / ``get``. The azure-openai and azure aliases
+        search azure-foundry, which includes non-OpenAI models. Without a
+        provider, all provider catalogs are searched.
         """
         self._ensure_loaded()
         prefix_lower = prefix.strip().lower()
