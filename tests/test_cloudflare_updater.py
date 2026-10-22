@@ -308,6 +308,8 @@ def test_clairic_published_input_price_is_in_bundled_catalog():
         "output_per_1m": 0.0,
         "currency": "USD",
     }
+
+
 def test_clairic_normalized_as_rest_only_typed_extraction():
     from llmcapa.models import Capability
 
@@ -332,9 +334,7 @@ def test_clairic_normalized_as_rest_only_typed_extraction():
     assert "openai_compatible_base_url_template" not in output["extra"]
     assert output["extra"]["specialized_task"] == "typed_extraction"
     assert output["extra"]["typed_extraction"]["returns_confidence"] is True
-    assert output["extra"]["endpoints"][0]["path"] == (
-        "/ai/run/@cf/cloudflare/clairic"
-    )
+    assert output["extra"]["endpoints"][0]["path"] == ("/ai/run/@cf/cloudflare/clairic")
     assert Capability.from_dict(output).supports("text_output") is False
 
 
