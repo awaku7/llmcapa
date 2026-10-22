@@ -145,7 +145,7 @@ def _parse_pricing(value: str, task_type: str) -> dict[str, object] | None:
         "currency": "USD",
     }
     cached_input = re.search(
-        r"\\$([\\d,]+(?:\\.\\d+)?)\\s+per\\s+(?:1\\s*)?M\\s+cached\\s+input\\s+tokens?",
+        r"\$([\d,]+(?:\.\d+)?)\s+per\s+(?:1\s*)?M\s+cached\s+input\s+tokens?",
         value,
         re.IGNORECASE,
     )
