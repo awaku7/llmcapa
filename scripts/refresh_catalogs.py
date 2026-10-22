@@ -102,7 +102,9 @@ def _protect_known_pricing(
                     for position, candidate in enumerate(current)
                     if position not in used_indices
                     and isinstance(candidate, dict)
-                    and all(candidate.get(key) == expected for key, expected in identity)
+                    and all(
+                        candidate.get(key) == expected for key, expected in identity
+                    )
                 ]
                 if not matches:
                     raise ValueError(f"{model_id}: known {path}[{index}] tier was lost")
