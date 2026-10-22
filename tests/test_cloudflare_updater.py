@@ -244,6 +244,7 @@ def test_clef_refresh_does_not_guess_missing_price():
     }
     assert _UPDATER.enrich_clef_decision(record)["pricing"] is None
 
+
 def test_parse_published_cached_input_pricing():
     published = (
         "$0.30 per M input tokens, $1.20 per M output tokens, "
