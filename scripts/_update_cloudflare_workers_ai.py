@@ -150,9 +150,7 @@ def _parse_pricing(value: str, task_type: str) -> dict[str, object] | None:
         re.IGNORECASE,
     )
     if cached_input:
-        pricing["cached_input_per_1m"] = float(
-            cached_input.group(1).replace(",", "")
-        )
+        pricing["cached_input_per_1m"] = float(cached_input.group(1).replace(",", ""))
     return pricing
 
 
