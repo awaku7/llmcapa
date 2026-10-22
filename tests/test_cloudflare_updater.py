@@ -284,9 +284,7 @@ def test_deepseek_cloudflare_cached_rate_is_in_bundled_catalog():
 
 
 def test_parse_clairic_input_only_rate():
-    assert _UPDATER._parse_pricing(
-        "$0.10 per M input tokens", "Text Generation"
-    ) == {
+    assert _UPDATER._parse_pricing("$0.10 per M input tokens", "Text Generation") == {
         "input_per_1m": 0.1,
         "output_per_1m": 0.0,
         "currency": "USD",
