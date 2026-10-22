@@ -47,6 +47,51 @@ def test_mercury_3_does_not_treat_free_trial_as_zero_token_price() -> None:
     assert updated["pricing"]["cached_input_per_1m"] == 0.05
 
 
+def test_mercury_25_pricing_status_matches_current_rates() -> None:
+    record = {
+        "id": "mercury-2.5",
+        "pricing": {
+            "prompt": 0.20 / 1_000_000,
+            "completion": 0.75 / 1_000_000,
+            "input_cache_reads": 0.02 / 1_000_000,
+        },
+    }
+    standard = _update_inception._chat_entry(record, "2026-10-22")
+    assert standard["extra"]["pricing_status"] == "standard"
+    assert all(
+        standard["pricing"][key] == standard["extra"]["list_pricing"][key]
+        for key in ("input_per_1m", "cached_input_per_1m", "output_per_1m")
+    )
+
+    for field, discounted_value in (
+        ("prompt", 0.10 / 1_000_000),
+        ("completion", 0.50 / 1_000_000),
+        ("input_cache_reads", 0.01 / 1_000_000),
+    ):
+        discounted = {
+            **record,
+            "pricing": {**record["pricing"], field: discounted_value},
+        }
+        promotional = _update_inception._chat_entry(discounted, "2026-10-22")
+        assert promotional["extra"]["pricing_status"] == "promotional"
+
+
+def test_bundled_mercury_25_status_matches_catalog_prices() -> None:
+    inception = json.loads(
+        (ROOT / "src/llmcapa/data/inception.json").read_text(encoding="utf-8")
+    )
+    mercury = next(m for m in inception["models"] if m["model_id"] == "mercury-2.5")
+    expected = (
+        "standard"
+        if all(
+            mercury["pricing"][key] == mercury["extra"]["list_pricing"][key]
+            for key in ("input_per_1m", "cached_input_per_1m", "output_per_1m")
+        )
+        else "promotional"
+    )
+    assert mercury["extra"]["pricing_status"] == expected
+
+
 def test_ming_audio_modes_survive_hf_inventory_refresh() -> None:
     for suffix in ("flash", "tiny"):
         model_id = f"inclusionAI/Ming-3.0-audio-{suffix}"
