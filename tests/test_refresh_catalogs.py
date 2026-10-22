@@ -272,6 +272,10 @@ def test_refresh_guard_rejects_missing_cached_input_rate(container):
         "price_per_second",
         "image_cost_per_frame",
         "audio_billing_rate",
+        "cache_read_per_1m",
+        "cache_write_per_1m",
+        "audio_input_per_1m",
+        "image_output_per_1m",
     ],
 )
 def test_refresh_guard_rejects_missing_specialty_price_including_zero(key):
