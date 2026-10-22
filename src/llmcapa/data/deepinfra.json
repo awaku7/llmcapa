@@ -997,7 +997,7 @@
       "provider": "deepinfra",
       "model_id": "deepseek-ai/DeepSeek-V3.2",
       "display_name": "deepseek-ai/DeepSeek-V3.2",
-      "context_window": 163840,
+      "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -1321,6 +1321,58 @@
         "model_type": "text-generation",
         "reported_type": "text-generation",
         "description": "Introduce DeepSeek-V4.1-Flash, a multimodal Mixture-of-Experts (MoE) model with 552B backbone parameters and support for contexts of up to one million tokens.",
+        "tags": [
+          "can-disable-reasoning",
+          "cc-native",
+          "disable-penalty",
+          "featured",
+          "flex",
+          "json",
+          "multimodal",
+          "openai",
+          "priority",
+          "reasoning",
+          "structured-output",
+          "tools"
+        ],
+        "quantization": "fp8",
+        "replaced_by": null,
+        "is_partner": false
+      }
+    },
+    {
+      "provider": "deepinfra",
+      "model_id": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+      "display_name": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+      "context_window": 1048576,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 0.2,
+        "currency": "USD",
+        "output_per_1m": 0.6
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://api.deepinfra.com/models/list",
+        "model_type": "text-generation",
+        "reported_type": "text-generation",
+        "description": "DeepSeek-V4.1-Flash-1017 is a minor update to DeepSeek-V4.1-Flash, delivering substantial improvements across reasoning, coding, agentic tasks, and visual benchmarks. Alongside these gains, the model reduces task execution time and output length, enabling users to complete tasks faster and at lower cost and advancing the performance–cost Pareto frontier across multiple agent harnesses.",
         "tags": [
           "can-disable-reasoning",
           "cc-native",
@@ -2120,94 +2172,6 @@
         ],
         "quantization": "fp16",
         "replaced_by": null,
-        "is_partner": false
-      }
-    },
-    {
-      "provider": "deepinfra",
-      "model_id": "ibm-granite/granite-4.2-30b",
-      "display_name": "ibm-granite/granite-4.2-30b",
-      "context_window": 131072,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_responses_api": null,
-      "pricing": {
-        "input_per_1m": 0.16,
-        "currency": "USD",
-        "output_per_1m": 0.65
-      },
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "extra": {
-        "source": "https://api.deepinfra.com/models/list",
-        "model_type": "text-generation",
-        "reported_type": "text-generation",
-        "description": "Granite-4.2-30B is the flagship reasoning model in the Granite 4.2 family. It delivers the strongest performance across reasoning-intensive tasks by leveraging built-in <think>...</think> chain-of-thought. It supports flexible thinking modes — full thinking (default), non-thinking, and low-effort — allowing users to balance depth vs. latency on a per-query basis.",
-        "tags": [
-          "cc-native",
-          "json",
-          "openai",
-          "reasoning",
-          "tools"
-        ],
-        "quantization": null,
-        "replaced_by": "ibm-granite/granite-4.2-8b",
-        "is_partner": false
-      }
-    },
-    {
-      "provider": "deepinfra",
-      "model_id": "ibm-granite/granite-4.2-3b",
-      "display_name": "ibm-granite/granite-4.2-3b",
-      "context_window": 131072,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_responses_api": null,
-      "pricing": {
-        "input_per_1m": 0.03,
-        "currency": "USD",
-        "output_per_1m": 0.12
-      },
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "extra": {
-        "source": "https://api.deepinfra.com/models/list",
-        "model_type": "text-generation",
-        "reported_type": "text-generation",
-        "description": "Granite-4.2-3B is the compact reasoning model in the Granite 4.2 family. Despite its small parameter count, it delivers strong performance on reasoning-intensive tasks by leveraging built-in <think>...</think> chain-of-thought. It supports flexible thinking modes — full thinking (default), non-thinking, and low-effort — allowing users to balance depth vs. latency on a per-query basis.",
-        "tags": [
-          "cc-native",
-          "json",
-          "openai",
-          "reasoning",
-          "tools"
-        ],
-        "quantization": null,
-        "replaced_by": "ibm-granite/granite-4.2-8b",
         "is_partner": false
       }
     },
@@ -3198,7 +3162,7 @@
           "structured-output"
         ],
         "quantization": "fp8",
-        "replaced_by": null,
+        "replaced_by": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
         "is_partner": false
       }
     },
@@ -3244,7 +3208,7 @@
           "structured-output"
         ],
         "quantization": "fp8",
-        "replaced_by": null,
+        "replaced_by": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
         "is_partner": false
       }
     },
@@ -3382,6 +3346,78 @@
         "reported_type": "embeddings",
         "description": "Nemotron-3-Embed-8B is a multilingual text embedding model from NVIDIA, based on Ministral-3-8B, that maps text into 4096-dimensional dense vectors for retrieval and semantic similarity. Spanning 34 languages, it targets multilingual RAG and question-answering over large corpora and achieves state-of-the-art results on the RTEB leaderboard.",
         "tags": [],
+        "quantization": "fp16",
+        "replaced_by": null,
+        "is_partner": false
+      }
+    },
+    {
+      "provider": "deepinfra",
+      "model_id": "nvidia/Nemotron-3.5-Embed-1B-BF16",
+      "display_name": "nvidia/Nemotron-3.5-Embed-1B-BF16",
+      "context_window": 32768,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embedding"
+      ],
+      "supports_chat_completion": false,
+      "supports_streaming": null,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://api.deepinfra.com/models/list",
+        "model_type": "embeddings",
+        "reported_type": "embeddings",
+        "description": "Nemotron-3.5-Embed-1B-BF16 is a compact multimodal embedding model from NVIDIA that maps text, images, and page screenshots into a shared 2048-dimensional vector space for visual document retrieval and semantic search. It pairs the Nemotron-3-Embed-1B text encoder with a vision encoder, supports up to 32k tokens and Matryoshka dimensions, and suits multilingual RAG over PDFs, slides, and scanned documents.",
+        "tags": [
+          "multimodal"
+        ],
+        "quantization": "fp16",
+        "replaced_by": null,
+        "is_partner": false
+      }
+    },
+    {
+      "provider": "deepinfra",
+      "model_id": "nvidia/Nemotron-3.5-Embed-8B-BF16",
+      "display_name": "nvidia/Nemotron-3.5-Embed-8B-BF16",
+      "context_window": 32768,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embedding"
+      ],
+      "supports_chat_completion": false,
+      "supports_streaming": null,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_responses_api": null,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://api.deepinfra.com/models/list",
+        "model_type": "embeddings",
+        "reported_type": "embeddings",
+        "description": "Nemotron-3.5-Embed-8B-BF16 is a multimodal embedding model from NVIDIA that maps text, images, and page screenshots into a shared 4096-dimensional vector space for visual document retrieval and semantic search. Built on the Nemotron-3-Embed-8B text encoder with a vision encoder, it supports up to 32k tokens and Matryoshka dimensions, and delivers the highest retrieval quality in the Nemotron 3.5 family.",
+        "tags": [
+          "multimodal"
+        ],
         "quantization": "fp16",
         "replaced_by": null,
         "is_partner": false
@@ -3596,9 +3632,9 @@
       "supports_reasoning": true,
       "supports_responses_api": null,
       "pricing": {
-        "input_per_1m": 0.1,
+        "input_per_1m": 0.15,
         "currency": "USD",
-        "output_per_1m": 0.4
+        "output_per_1m": 0.5
       },
       "deprecated": false,
       "aliases": [],
@@ -3657,51 +3693,6 @@
         "reported_type": "text-generation",
         "description": "gpt-oss-120b is an open-weight, 117B-parameter Mixture-of-Experts (MoE) language model from OpenAI designed for high-reasoning, agentic, and general-purpose production use cases. The model supports configurable reasoning depth, full chain-of-thought access, and native tool use, including function calling, browsing, and structured output generation.",
         "tags": [
-          "json",
-          "openai",
-          "reasoning",
-          "structured-output",
-          "tools"
-        ],
-        "quantization": "bfloat16",
-        "replaced_by": null,
-        "is_partner": false
-      }
-    },
-    {
-      "provider": "deepinfra",
-      "model_id": "openai/gpt-oss-120b-Turbo",
-      "display_name": "openai/gpt-oss-120b-Turbo",
-      "context_window": 131072,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_responses_api": null,
-      "pricing": {
-        "input_per_1m": 0.15,
-        "currency": "USD",
-        "output_per_1m": 0.6
-      },
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "extra": {
-        "source": "https://api.deepinfra.com/models/list",
-        "model_type": "text-generation",
-        "reported_type": "text-generation",
-        "description": "",
-        "tags": [
-          "flex",
           "json",
           "openai",
           "reasoning",
@@ -3793,6 +3784,7 @@
         "tags": [
           "flex",
           "json",
+          "no-web-search",
           "openai",
           "priority",
           "reasoning",
@@ -5676,6 +5668,7 @@
         "description": "GLM-4.7 is a state-of-the-art, multilingual Mixture-of-Experts (MoE) language model designed for complex reasoning, agentic coding, and tool use. Building on its predecessor GLM-4.6, it delivers significant improvements across key benchmarks, including multilingual SWE-bench, Terminal Bench, and reasoning-heavy evaluations like HLE. The model features advanced \"Interleaved Thinking\" and new \"Preserved Thinking\" modes, allowing it to reason before actions and maintain consistency across long, multi-turn tasks. With 358 billion parameters, GLM-4.7 excels in generating clean code, modern UI elements, and sophisticated reasoning outputs.",
         "tags": [
           "can-disable-reasoning",
+          "disable-penalty",
           "flex",
           "json",
           "openai",
