@@ -129,6 +129,14 @@ def _update_row(provider: str, org: str, item: dict, checked_at: str, old: dict 
     row["provider"] = provider
     row["model_id"] = model_id
     row.setdefault("display_name", model_id)
+    if provider == "inclusionai" and model_id.casefold() in {
+        "inclusionai/ming-3.0-audio-flash",
+        "inclusionai/ming-3.0-audio-tiny",
+    }:
+        # Official model cards describe audio/text inputs and outputs; the
+        # Hugging Face text-to-speech pipeline tag is only a subset.
+        row["input_modalities"] = ["text", "audio"]
+        row["output_modalities"] = ["text", "audio"]
     extra = dict(row.get("extra") or {})
     card = item.get("cardData") if isinstance(item.get("cardData"), dict) else {}
     tags = sorted(str(tag) for tag in item.get("tags", []) if isinstance(tag, str))
