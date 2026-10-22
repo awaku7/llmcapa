@@ -468,23 +468,17 @@ def dedupe_model_ids(rows: list[dict]) -> list[dict]:
     return out
 
 
-SPECIALTY_PRICING_KEYS = (
-    "tts_input_price",
-    "tts_price",
-    "price_per_min",
-    "audio_price_per_min",
-    "price_per_m_pages",
-    "price_per_m_pages_annotation",
-)
-
-
 def preserve_specialty_pricing(row: dict, previous: dict) -> dict:
-    """Retain published non-token rates when a new model scrape omits them."""
+    """Retain any previously published rate omitted by a fresh model scrape."""
     old_extra = previous.get("extra") or {}
     new_extra = row.setdefault("extra", {})
-    for key in SPECIALTY_PRICING_KEYS:
-        if old_extra.get(key) is not None and new_extra.get(key) is None:
-            new_extra[key] = old_extra[key]
+    for key, value in old_extra.items():
+        billing_key = "_per_" in key.casefold() or any(
+            part in key.casefold()
+            for part in ("price", "pricing", "cost", "rate", "billing")
+        )
+        if billing_key and value is not None and new_extra.get(key) is None:
+            new_extra[key] = value
     return row
 
 
