@@ -238,6 +238,73 @@ def test_refresh_guard_rejects_lost_documented_capabilities(key):
         refresh.validate_refreshed_catalog(previous, updated)
 
 
+@pytest.mark.parametrize(
+    ("field", "removed"),
+    [
+        ("input_modalities", "image"),
+        ("output_modalities", "audio"),
+    ],
+)
+def test_refresh_guard_rejects_lost_documented_modalities(field, removed):
+    previous = _complete_catalog()
+    previous["models"][0][field] = ["text", removed]
+    updated = json.loads(json.dumps(previous))
+    updated["models"][0][field] = ["text"]
+    with pytest.raises(ValueError, match=f"documented {field} was lost"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+    updated["models"][0].pop(field)
+    with pytest.raises(ValueError, match=f"documented {field} was lost"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+def test_refresh_guard_allows_documented_modality_expansion():
+    previous = _complete_catalog()
+    previous["models"][0]["input_modalities"] = ["text"]
+    updated = json.loads(json.dumps(previous))
+    updated["models"][0]["input_modalities"] = ["text", "image"]
+    refresh.validate_refreshed_catalog(previous, updated)
+
+
+@pytest.mark.parametrize(
+    ("container", "value", "path"),
+    [
+        (
+            "pricing_regional",
+            {"us": {"output_per_1m": 0.0}},
+            ("us", "output_per_1m"),
+        ),
+        (
+            "input_context_pricing_tiers",
+            [{"input_context": "short", "cache_read_per_1m": 0.0}],
+            (0, "cache_read_per_1m"),
+        ),
+    ],
+)
+def test_refresh_guard_rejects_lost_nested_prices(container, value, path):
+    previous = _complete_catalog()
+    previous["models"][0]["extra"][container] = value
+    updated = json.loads(json.dumps(previous))
+    nested = updated["models"][0]["extra"][container]
+    for key in path[:-1]:
+        nested = nested[key]
+    del nested[path[-1]]
+    with pytest.raises(ValueError, match="known .* was lost"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+def test_refresh_guard_rejects_missing_pricing_tier():
+    previous = _complete_catalog()
+    previous["models"][0]["extra"]["input_context_pricing_tiers"] = [
+        {"input_context": "short", "input_per_1m": 0.2},
+        {"input_context": "long", "input_per_1m": 0.4},
+    ]
+    updated = json.loads(json.dumps(previous))
+    updated["models"][0]["extra"]["input_context_pricing_tiers"].pop()
+    with pytest.raises(ValueError, match="known input_context_pricing_tiers was lost"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
 def test_refresh_guard_rejects_erased_known_rates():
     previous = _complete_catalog()
     updated = json.loads(json.dumps(previous))
