@@ -93,6 +93,7 @@ def validate_refreshed_catalog(
             "embedding",
             "rerank",
             "computer_use",
+            "spatial",
         ):
             if previous_row.get(key) and not refreshed.get(key):
                 raise ValueError(f"{model_id}: documented {key} was lost")
