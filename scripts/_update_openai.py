@@ -29,9 +29,7 @@ MODELS_URL = "https://developers.openai.com/api/docs/models/all.md"
 PRICING_URL = "https://developers.openai.com/api/docs/pricing.md"
 BASE = "https://developers.openai.com"
 LIFE_SCIENCES_SOURCE = PRICING_URL.removesuffix(".md")
-LIFE_SCIENCES_ACCESS_URL = (
-    "https://help.openai.com/en/articles/20001193-gpt-rosalind-for-life-sciences-research"
-)
+LIFE_SCIENCES_ACCESS_URL = "https://help.openai.com/en/articles/20001193-gpt-rosalind-for-life-sciences-research"
 ENDPOINT = {
     "base_url": "https://api.openai.com/v1",
     "protocol": "openai-compatible",
@@ -110,7 +108,9 @@ def parse_computer_use_capability(
     }
 
 
-def parse_reasoning_mode_values(model_id: str, supports_responses_api: bool) -> list[str]:
+def parse_reasoning_mode_values(
+    model_id: str, supports_responses_api: bool
+) -> list[str]:
     """Return modes documented by OpenAI's GPT-5.6/GPT-6 reasoning guide."""
     if supports_responses_api and re.match(r"^gpt-(?:5\.6|6)(?:-|$)", model_id.lower()):
         return ["standard", "pro"]
@@ -474,9 +474,10 @@ def main() -> None:
             ):
                 merged["reasoning_effort_values"] = old["reasoning_effort_values"]
                 merged["supports_reasoning_effort"] = True
-            if entry.get("supports_tool_search") is None and old.get(
-                "supports_tool_search"
-            ) is not None:
+            if (
+                entry.get("supports_tool_search") is None
+                and old.get("supports_tool_search") is not None
+            ):
                 merged["supports_tool_search"] = old["supports_tool_search"]
             if not entry.get("reasoning_mode_values") and old.get(
                 "reasoning_mode_values"
