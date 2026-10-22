@@ -122,6 +122,7 @@ def test_bundled_review_fixes_are_available_through_registry() -> None:
         assert model is not None
         assert model.supports("image_input") is True
 
+
 def test_hf_image_feature_extraction_maps_modalities() -> None:
     model = _update_hf_official_orgs._new_model(
         "allenai",
@@ -135,7 +136,8 @@ def test_hf_image_feature_extraction_maps_modalities() -> None:
     assert model["supports_vision"] is True
 
     other = _update_hf_official_orgs._new_model(
-        "allenai", {"modelId": "allenai/text-model", "pipeline_tag": "feature-extraction"}
+        "allenai",
+        {"modelId": "allenai/text-model", "pipeline_tag": "feature-extraction"},
     )
     assert other["input_modalities"] == ["text"]
     assert other["output_modalities"] == ["embedding"]
