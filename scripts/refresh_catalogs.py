@@ -105,35 +105,31 @@ def validate_refreshed_catalog(
         refreshed_pricing = refreshed.get("pricing") or {}
         if not isinstance(refreshed_pricing, dict):
             raise TypeError(f"{model_id}: invalid pricing")
-        for key in ("input_per_1m", "output_per_1m", "cached_input_per_1m"):
-            if (
-                previous_pricing.get(key) is not None
-                and refreshed_pricing.get(key) is None
-            ):
+        # The model-price schema varies by provider. Protect every known
+        # pricing field, including currency and zero-valued rates.
+        for key, known_value in previous_pricing.items():
+            if known_value is not None and refreshed_pricing.get(key) is None:
                 raise ValueError(f"{model_id}: known {key} was lost")
 
         previous_extra = previous_row.get("extra") or {}
         refreshed_extra = refreshed.get("extra") or {}
-        # Specialized APIs bill in minutes, characters, or pages rather than
-        # tokens. Their published price may legitimately be zero.
-        for key in (
-            "tts_input_price",
-            "tts_price",
-            "price_per_min",
-            "audio_price_per_min",
-            "price_per_m_pages",
-            "price_per_m_pages_annotation",
-        ):
+        # Non-token prices are usually kept in extra. Do not enumerate only
+        # today's Mistral keys: images, speech, video, and new APIs may
+        # introduce other published units. Preserve 0.0 as a known rate.
+        for key, known_value in previous_extra.items():
+            is_billing_field = (
+                key == "cached_input_per_1m"
+                or any(
+                    word in key.casefold()
+                    for word in ("price", "pricing", "cost", "rate", "billing")
+                )
+            )
             if (
-                previous_extra.get(key) is not None
+                is_billing_field
+                and known_value is not None
                 and refreshed_extra.get(key) is None
             ):
                 raise ValueError(f"{model_id}: known {key} was lost")
-        if (
-            previous_extra.get("cached_input_per_1m") is not None
-            and refreshed_extra.get("cached_input_per_1m") is None
-        ):
-            raise ValueError(f"{model_id}: known cached_input_per_1m was lost")
 
         previous_cached = previous_extra.get("cached_input_per_1m")
         previous_output = previous_pricing.get("output_per_1m")
