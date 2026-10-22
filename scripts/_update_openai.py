@@ -273,20 +273,20 @@ def parse_pricing_table(markdown: str) -> dict[str, dict[str, float]]:
         if len(columns) != header["columns"]:
             continue
 
-        def rate_at(index: int) -> float | None:
-            value = columns[index].strip().replace(",", "")
+        def rate_at(row: list[str], index: int) -> float | None:
+            value = row[index].strip().replace(",", "")
             match = re.match(r"^\$?\s*(\d+(?:\.\d+)?)", value)
             return float(match.group(1)) if match else None
 
-        input_rate = rate_at(header["input_per_1m"])
-        output_rate = rate_at(header["output_per_1m"])
+        input_rate = rate_at(columns, header["input_per_1m"])
+        output_rate = rate_at(columns, header["output_per_1m"])
         if input_rate is None or output_rate is None:
             continue
 
         name = columns[0].strip("` ")
         rates = {"input_per_1m": input_rate, "output_per_1m": output_rate}
         if "cached_input_per_1m" in header:
-            cached_rate = rate_at(header["cached_input_per_1m"])
+            cached_rate = rate_at(columns, header["cached_input_per_1m"])
             if cached_rate is not None:
                 rates["cached_input_per_1m"] = cached_rate
         result[name] = rates
