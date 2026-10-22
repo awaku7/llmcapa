@@ -68,8 +68,8 @@ def model_to_entry(model: dict[str, Any]) -> dict[str, Any] | None:
         "nvidia/Nemotron-3.5-Embed-8B-BF16": (0.035, 0.070),
     }.get(model_id)
     input_modalities = ["text"]
-    if (not is_embedding or published_embedding_rates) and (
-        {"vision", "multimodal", "image-input"} & tags
+    if published_embedding_rates or (
+        not is_embedding and {"vision", "multimodal", "image-input"} & tags
     ):
         input_modalities.append("image")
     if not is_embedding and "input-audio" in tags:
