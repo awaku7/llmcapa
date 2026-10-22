@@ -39,7 +39,7 @@ def fetch_catalog() -> Any:
     with urllib.request.urlopen(request, timeout=45) as response:
         payload = json.loads(response.read().decode("utf-8"))
     if not isinstance(payload, list):
-        raise ValueError("DeepInfra model catalog must be a JSON list")
+        raise TypeError("DeepInfra model catalog must be a JSON list")
     return payload
 
 
