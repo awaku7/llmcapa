@@ -345,6 +345,79 @@ def test_refresh_guard_identifies_tiers_by_prompt_token_thresholds():
         refresh.validate_refreshed_catalog(previous, updated)
 
 
+@pytest.mark.parametrize(
+    ("field", "replacement"),
+    [
+        ("utc_start", "14:00"),
+        ("utc_end", "21:00"),
+        ("utc_days", [2, 3]),
+    ],
+)
+def test_refresh_guard_rejects_replaced_utc_pricing_override(field, replacement):
+    previous = _complete_catalog()
+    previous["models"][0]["extra"]["pricing_overrides"] = [
+        {
+            "utc_start": "00:00",
+            "utc_end": "06:00",
+            "utc_days": [0, 1],
+            "input_per_1m": 0.1,
+        },
+        {
+            "utc_start": "12:00",
+            "utc_end": "18:00",
+            "utc_days": [4, 5],
+            "input_per_1m": 0.2,
+        },
+    ]
+    updated = json.loads(json.dumps(previous))
+    overrides = updated["models"][0]["extra"]["pricing_overrides"]
+    overrides[1][field] = replacement
+    with pytest.raises(ValueError, match="tier was lost"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+def test_refresh_guard_matches_utc_pricing_overrides_when_reordered():
+    previous = _complete_catalog()
+    previous["models"][0]["extra"]["pricing_overrides"] = [
+        {"utc_start": "00:00", "utc_end": "06:00", "utc_days": [0], "input_per_1m": 0.1},
+        {"utc_start": "12:00", "utc_end": "18:00", "utc_days": [4], "input_per_1m": 0.2},
+    ]
+    updated = json.loads(json.dumps(previous))
+    updated["models"][0]["extra"]["pricing_overrides"].reverse()
+    updated["models"][0]["extra"]["pricing_overrides"][0]["input_per_1m"] = 0.3
+    refresh.validate_refreshed_catalog(previous, updated)
+
+
+@pytest.mark.parametrize("extra", [["bad"], "bad", [], ""])
+def test_refresh_guard_rejects_invalid_extra_on_new_models(extra):
+    previous = _complete_catalog()
+    updated = json.loads(json.dumps(previous))
+    updated["models"].append(
+        {
+            "model_id": "new-model",
+            "context_window": 2048,
+            "max_output_tokens": 256,
+            "extra": extra,
+        }
+    )
+    with pytest.raises(TypeError, match="new-model: invalid extra"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+def test_refresh_guard_accepts_valid_extra_on_new_models():
+    previous = _complete_catalog()
+    updated = json.loads(json.dumps(previous))
+    updated["models"].append(
+        {
+            "model_id": "new-model",
+            "context_window": 2048,
+            "max_output_tokens": 256,
+            "extra": {},
+        }
+    )
+    refresh.validate_refreshed_catalog(previous, updated)
+
+
 @pytest.mark.parametrize("extra", [["bad"], "bad", [], ""])
 def test_refresh_guard_rejects_invalid_extra_types(extra):
     previous = _complete_catalog()
