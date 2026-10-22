@@ -256,6 +256,26 @@ def test_refresh_guard_rejects_missing_cached_input_rate(container):
         refresh.validate_refreshed_catalog(previous, updated)
 
 
+@pytest.mark.parametrize(
+    "key",
+    [
+        "tts_input_price",
+        "tts_price",
+        "price_per_min",
+        "audio_price_per_min",
+        "price_per_m_pages",
+        "price_per_m_pages_annotation",
+    ],
+)
+def test_refresh_guard_rejects_missing_specialty_price_including_zero(key):
+    previous = _complete_catalog()
+    previous["models"][0]["extra"][key] = 0.0
+    updated = json.loads(json.dumps(previous))
+    del updated["models"][0]["extra"][key]
+    with pytest.raises(ValueError, match=f"known {key} was lost"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
 def test_refresh_guard_rejects_cached_output_rate_inversion():
     previous = _complete_catalog()
     updated = json.loads(json.dumps(previous))
