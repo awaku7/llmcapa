@@ -379,7 +379,7 @@ def parse_model_page(
     }
     if reasoning_values:
         record["reasoning_effort_values"] = reasoning_values
-    return enrich_clef_decision(record)
+    return enrich_clairic_extraction(enrich_clef_decision(record))
 
 
 CLEF_MODEL_IDS = {"@cf/cloudflare/clef", "@cf/cloudflare/clef-flash"}
@@ -485,6 +485,63 @@ def enrich_clef_decision(record: dict[str, object]) -> dict[str, object]:
                 "not_openai_chat_completions": True,
             },
         },
+        extra=extra,
+    )
+    return record
+
+
+def enrich_clairic_extraction(record: dict[str, object]) -> dict[str, object]:
+    """Model Clairic as typed extraction, never free-form text generation."""
+    model_id = str(record.get("model_id") or "")
+    if model_id != "@cf/cloudflare/clairic":
+        return record
+
+    selector = model_id.rsplit("/", 1)[-1]
+    source = "https://developers.cloudflare.com/workers-ai/models/clairic/"
+    extra = dict(record.get("extra") or {})
+    extra.pop("openai_compatible_base_url_template", None)
+    extra.update(
+        specialized_task="typed_extraction",
+        official_api_source=source,
+        typed_extraction={
+            "request_fields": ["model", "state", "fields", "images", "options"],
+            "response_field": "answers",
+            "field_types": [
+                "text",
+                "number",
+                "date",
+                "time",
+                "datetime",
+                "duration",
+                "list",
+                "estimate",
+                "forecast",
+            ],
+            "returns_confidence": True,
+            "returns_p_null": True,
+            "max_images": 4,
+            "generates_text_tokens": False,
+        },
+        endpoints=[
+            {
+                "path": f"/ai/run/{model_id}",
+                "protocol": "workers-ai-rest",
+                "url_template": REST_RUN_URL.replace("{model_id}", model_id),
+                "auth": "bearer",
+                "source": source,
+            }
+        ],
+    )
+    record.update(
+        context_window=65_536,
+        max_output_tokens=0,
+        input_modalities=["text", "image"],
+        output_modalities=["extraction"],
+        supports_chat_completion=False,
+        supports_responses_api=False,
+        supports_json_mode=False,
+        supports_json_schema=False,
+        supports_streaming=False,
         extra=extra,
     )
     return record
