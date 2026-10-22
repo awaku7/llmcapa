@@ -431,7 +431,9 @@ def preserve_curated_decision(old: dict, refreshed: dict) -> dict:
 def main() -> None:
     index = fetch(MODELS_URL)
     pricing_markdown = fetch(PRICING_URL)
-    pricing = parse_pricing_table(pricing_markdown.split("### Batch pricing data", 1)[0])
+    pricing = parse_pricing_table(
+        pricing_markdown.split("### Batch pricing data", 1)[0]
+    )
     life_sciences_models = parse_life_sciences_models(pricing_markdown)
     links, deprecated_paths = parse_model_index(index)
     current = json.loads(DATA.read_text(encoding="utf-8"))
