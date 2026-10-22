@@ -446,6 +446,26 @@ def dedupe_model_ids(rows: list[dict]) -> list[dict]:
     return out
 
 
+SPECIALTY_PRICING_KEYS = (
+    "tts_input_price",
+    "tts_price",
+    "price_per_min",
+    "audio_price_per_min",
+    "price_per_m_pages",
+    "price_per_m_pages_annotation",
+)
+
+
+def preserve_specialty_pricing(row: dict, previous: dict) -> dict:
+    """Retain published non-token rates when a new model scrape omits them."""
+    old_extra = previous.get("extra") or {}
+    new_extra = row.setdefault("extra", {})
+    for key in SPECIALTY_PRICING_KEYS:
+        if old_extra.get(key) is not None and new_extra.get(key) is None:
+            new_extra[key] = old_extra[key]
+    return row
+
+
 def main() -> None:
     import subprocess
     import sys
@@ -521,6 +541,7 @@ def main() -> None:
                 row["context_window"] = old_ctx
             if row.get("pricing") is None and old.get("pricing"):
                 row["pricing"] = old["pricing"]
+            preserve_specialty_pricing(row, old)
         rows.append(row)
 
     rows = dedupe_model_ids(rows)
