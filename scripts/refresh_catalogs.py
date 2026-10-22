@@ -79,15 +79,12 @@ def validate_refreshed_catalog(
 
     for model_id, previous_row in old.items():
         refreshed = new.get(model_id)
-        previous_extra = previous_row.get("extra") or {}
         if refreshed is None:
-            if any(
-                previous_row.get(key) for key in ("image", "audio", "decision")
-            ) or previous_extra.get("context_window_source"):
-                raise ValueError(f"{model_id}: documented model disappeared")
-            continue
+            # An omitted row is not evidence of retirement. Preserve the
+            # existing catalog until an explicit, reviewed removal is made.
+            raise ValueError(f"{model_id}: model disappeared from provider catalog")
 
-        for key in ("image", "audio", "decision"):
+        for key in ("image", "audio", "video", "decision"):
             if previous_row.get(key) and not refreshed.get(key):
                 raise ValueError(f"{model_id}: documented {key} was lost")
         for key in ("context_window", "max_output_tokens"):
