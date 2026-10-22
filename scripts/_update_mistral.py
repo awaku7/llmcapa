@@ -400,8 +400,9 @@ def build_row(slug: str, m: dict) -> dict:
     else:
         license_type = "api"
 
-    # streaming default true for chat/audio APIs
-    streaming = bool(chat or is_transcribe or is_tts)
+    # Transcription is file/batch-only unless the model explicitly supports realtime.
+    # Chat and text-to-speech streaming are independent of transcription.
+    streaming = bool(chat or is_tts or (is_transcribe and "realtime" in mid_l))
 
     # aliases: common bare names for current flagship
     alias_map = {
