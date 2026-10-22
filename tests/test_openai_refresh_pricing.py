@@ -91,6 +91,8 @@ def test_missing_price_table_does_not_erase_known_rate(tmp_path, monkeypatch):
     updated = json.loads(path.read_text(encoding="utf-8"))
     assert updated["models"][0]["pricing"]["input_per_1m"] == 2.5
     assert updated["models"][0]["pricing"]["output_per_1m"] == 10.0
+
+
 def test_openai_refresh_writes_cached_input_rates_to_existing_and_new_models(
     tmp_path, monkeypatch
 ):
