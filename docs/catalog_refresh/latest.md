@@ -1,15 +1,23 @@
-# llmcapa catalog refresh report
+# llmcapa catalog refresh report (reconciled)
 
-- Updated providers: 54
-- Unchanged providers: 11
+- Updated providers: 48
+- Unchanged providers: 17
 - Failed providers: 16
 - Without updater: 0
-- Added models: 44
-- Modified models: 2710
-- Removed models: 11
+- Added models: 26
+- Modified models: 2538
+- Removed models: 0
 
-The report covers official, provider-specific updaters only. Failed
-updaters retain their existing catalog data. Full model changes appear below.
+**This report is regenerated from the actual model catalogs on this PR branch compared with main,**
+following review corrections to the initial workflow run 39713728185.
+
+OpenAI, OpenRouter, Perplexity Router, and Sakura were restored to the
+previously validated catalogs. Previously documented image/audio metadata
+and omitted DeepInfra models were restored. Failed provider updates retain
+their existing catalog files. The original raw execution report remains
+available in the workflow artifacts.
+
+Changes below reflect the current PR contents, not the initial automation output.
 
 ## ai21 — updated
 
@@ -1351,11 +1359,11 @@ Reason: updater exited with code 1
 - Modified: `@cf/baai/bge-m3` (`extra.official_catalog_checked_at`)
 - Modified: `@cf/baai/bge-reranker-base` (`extra.official_catalog_checked_at`)
 - Modified: `@cf/baai/bge-small-en-v1.5` (`extra.official_catalog_checked_at`)
-- Modified: `@cf/black-forest-labs/flux-1-schnell` (`extra.official_catalog_checked_at`, `image`)
-- Modified: `@cf/black-forest-labs/flux-2-dev` (`extra.official_catalog_checked_at`, `image`)
-- Modified: `@cf/black-forest-labs/flux-2-klein-4b` (`extra.official_catalog_checked_at`, `image`)
-- Modified: `@cf/black-forest-labs/flux-2-klein-9b` (`extra.official_catalog_checked_at`, `image`)
-- Modified: `@cf/bytedance/stable-diffusion-xl-lightning` (`extra.official_catalog_checked_at`, `image`)
+- Modified: `@cf/black-forest-labs/flux-1-schnell` (`extra.official_catalog_checked_at`)
+- Modified: `@cf/black-forest-labs/flux-2-dev` (`extra.official_catalog_checked_at`)
+- Modified: `@cf/black-forest-labs/flux-2-klein-4b` (`extra.official_catalog_checked_at`)
+- Modified: `@cf/black-forest-labs/flux-2-klein-9b` (`extra.official_catalog_checked_at`)
+- Modified: `@cf/bytedance/stable-diffusion-xl-lightning` (`extra.official_catalog_checked_at`)
 - Modified: `@cf/cloudflare/clef` (`decision.checked_at`, `extra.official_catalog_checked_at`)
 - Modified: `@cf/cloudflare/clef-flash` (`decision.checked_at`, `extra.official_catalog_checked_at`)
 - Modified: `@cf/cloudflare/clef-omni` (`extra.official_catalog_checked_at`)
@@ -1407,8 +1415,8 @@ Reason: updater exited with code 1
 - Modified: `@cf/qwen/qwen3-embedding-0.6b` (`extra.official_catalog_checked_at`)
 - Modified: `@cf/qwen/qwen3.8-27b` (`extra.official_catalog_checked_at`)
 - Modified: `@cf/qwen/qwq-32b` (`extra.official_catalog_checked_at`)
-- Modified: `@cf/runwayml/stable-diffusion-v1-5-inpainting` (`extra.official_catalog_checked_at`, `image`)
-- Modified: `@cf/stabilityai/stable-diffusion-xl-base-1.0` (`extra.official_catalog_checked_at`, `image`)
+- Modified: `@cf/runwayml/stable-diffusion-v1-5-inpainting` (`extra.official_catalog_checked_at`)
+- Modified: `@cf/stabilityai/stable-diffusion-xl-base-1.0` (`extra.official_catalog_checked_at`)
 - Modified: `@cf/swiss-ai/apertus-v1.5-8b` (`extra.official_catalog_checked_at`)
 - Modified: `@cf/utter-project/eurollm-9b-it` (`extra.official_catalog_checked_at`)
 - Modified: `@cf/zai-org/glm-4.7-flash` (`extra.official_catalog_checked_at`)
@@ -1447,13 +1455,9 @@ Reason: updater exited with code 1
 - Added: `nvidia/Nemotron-3.5-Embed-8B-BF16`
 - Modified: `NousResearch/Hermes-3-Llama-3.1-405B` (`extra.replaced_by`)
 - Modified: `NousResearch/Hermes-3-Llama-3.1-70B` (`extra.replaced_by`)
-- Modified: `deepseek-ai/DeepSeek-V3.2` (`context_window`)
 - Modified: `nvidia/NVIDIA-Nemotron-3.5-Super-VL` (`pricing.input_per_1m`, `pricing.output_per_1m`)
 - Modified: `openai/gpt-oss-20b` (`extra.tags`)
 - Modified: `zai-org/GLM-4.7` (`extra.tags`)
-- Removed: `ibm-granite/granite-4.2-30b`
-- Removed: `ibm-granite/granite-4.2-3b`
-- Removed: `openai/gpt-oss-120b-Turbo`
 
 ## deepseek — updated
 
@@ -1925,17 +1929,11 @@ Reason: updater exited with code 1
 Reason: unexpected files modified: ['src/llmcapa/data/cloudflare-workers-ai.json']
 
 
-## microsoft — updated
+## microsoft — unchanged
 
-- Modified: `MAI-Image-2` (`image`)
-- Modified: `MAI-Image-2.5` (`image`)
-- Modified: `MAI-Image-2.5-Flash` (`image`)
-- Modified: `MAI-Image-2e` (`image`)
-- Modified: `MAI-Transcribe-2-Streaming` (`audio`)
 
-## minimax — updated
+## minimax — unchanged
 
-- Modified: `image-01` (`image`)
 
 ## mistral — updated
 
@@ -2335,174 +2333,11 @@ Reason: updater exited with code 1
 - Added: `deepseek-v4.1-flash:1017`
 - Added: `minimax-m3.1-flash`
 
-## openai — updated
+## openai — unchanged
 
-- Modified: `babbage-002` (`pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `davinci-002` (`pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `gpt-3.5-turbo` (`pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `gpt-4` (`pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `gpt-4-turbo` (`pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `gpt-4.1` (`pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `gpt-4.1-mini` (`pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `gpt-4.1-nano` (`pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `gpt-4o` (`pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `gpt-4o-mini` (`pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `gpt-5` (`pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `gpt-5-mini` (`pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `gpt-5-nano` (`pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `gpt-5-pro` (`pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `gpt-5.1` (`pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `gpt-5.2` (`pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `gpt-5.2-pro` (`pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `gpt-5.4` (`computer_use.checked_at`)
-- Modified: `gpt-5.4-mini` (`computer_use.checked_at`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `gpt-5.4-nano` (`pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `gpt-5.4-pro` (`computer_use.checked_at`)
-- Modified: `gpt-5.5` (`computer_use.checked_at`)
-- Modified: `gpt-5.6-cyber` (`computer_use.checked_at`)
-- Modified: `gpt-5.6-luna` (`computer_use.checked_at`, `pricing.output_per_1m`)
-- Modified: `gpt-5.6-sol` (`computer_use.checked_at`, `pricing.output_per_1m`)
-- Modified: `gpt-5.6-terra` (`computer_use.checked_at`, `pricing.output_per_1m`)
-- Modified: `gpt-6-astra` (`computer_use.checked_at`, `pricing.output_per_1m`)
-- Modified: `gpt-6-luna` (`computer_use.checked_at`, `pricing.output_per_1m`)
-- Modified: `gpt-6-sol` (`computer_use.checked_at`, `pricing.output_per_1m`)
-- Modified: `gpt-6.1-sol` (`computer_use.checked_at`, `pricing.output_per_1m`)
-- Modified: `gpt-daybreak-blue-latest` (`computer_use.checked_at`, `pricing.output_per_1m`)
-- Modified: `gpt-daybreak-red-latest` (`computer_use.checked_at`)
-- Modified: `gpt-rosalind-discovery` (`extra.cached_input_per_1m`, `pricing.output_per_1m`)
-- Modified: `gpt-rosalind-research` (`extra.cached_input_per_1m`, `pricing.output_per_1m`)
-- Modified: `o1` (`pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `o1-pro` (`pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `o3` (`pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `o3-mini` (`pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `o3-pro` (`pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `o4-mini` (`pricing.input_per_1m`, `pricing.output_per_1m`)
 
-## openrouter — updated
+## openrouter — unchanged
 
-- Added: `baseten/elephant-1`
-- Added: `baseten/mammoth-1`
-- Added: `deepseek/deepseek-v4.1-flash-1017`
-- Added: `elorian/glimpse`
-- Added: `inception/mercury-3`
-- Added: `minimax/minimax-m3.1-flash`
-- Added: `minimax/minimax-m3.1-flash:free`
-- Added: `mistralai/voxtral-mini-transcribe-3-0`
-- Added: `mistralai/voxtral-mini-tts-3-0`
-- Added: `mistralai/voxtral-small-transcribe-3-0`
-- Added: `nace-ai/drex-max`
-- Added: `nvidia/nemotron-3.5-embed-1b`
-- Added: `nvidia/nemotron-3.5-embed-8b`
-- Added: `nvidia/nemotron-3.5-rerank-8b`
-- Added: `recursive/flint-v1.0`
-- Added: `recursive/flint-v1.0:free`
-- Added: `unbiased/pareto-26.10`
-- Modified: `anthropic/claude-fable-5.1` (`extra.benchmarks_present.design_arena`)
-- Modified: `anthropic/claude-fable-5.1:batch` (`extra.benchmarks_present.design_arena`)
-- Modified: `anthropic/claude-opus-4.8` (`extra.benchmarks_present.design_arena`)
-- Modified: `anthropic/claude-opus-4.8:batch` (`extra.benchmarks_present.design_arena`)
-- Modified: `anthropic/claude-opus-5.5` (`extra.benchmarks_present.design_arena`)
-- Modified: `anthropic/claude-opus-5.5:batch` (`extra.benchmarks_present.design_arena`)
-- Modified: `anthropic/claude-sonnet-5` (`extra.benchmarks_present.design_arena`)
-- Modified: `anthropic/claude-sonnet-5.5` (`extra.benchmarks_present.design_arena`)
-- Modified: `anthropic/claude-sonnet-5.5:batch` (`extra.benchmarks_present.design_arena`)
-- Modified: `anthropic/claude-sonnet-5:batch` (`extra.benchmarks_present.design_arena`)
-- Modified: `assemblyai/universal-3-5-pro` (`extra.description`)
-- Modified: `cloudflare/clef` (`context_window`, `decision.checked_at`, `decision.max_total_tokens`)
-- Modified: `cloudflare/clef-flash` (`decision.checked_at`, `extra.top_provider.context_length`, `pricing.input_per_1m`)
-- Modified: `deepseek/deepseek-chat` (`extra.top_provider.context_length`, `extra.top_provider.max_completion_tokens`, `max_output_tokens`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `deepseek/deepseek-v3.2` (`extra.cache_read_per_1m`, `extra.top_provider.context_length`, `extra.top_provider.max_completion_tokens`, `max_output_tokens`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `deepseek/deepseek-v4-flash-0731` (`extra.top_provider.max_completion_tokens`, `max_output_tokens`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `deepseek/deepseek-v4-pro` (`extra.cache_read_per_1m`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `deepseek/deepseek-v4-pro-0813` (`extra.cache_read_per_1m`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `deepseek/deepseek-v4.1-flash` (`extra.cache_read_per_1m`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `elevenlabs/eleven-flash-v2` (`pricing.input_per_1m`)
-- Modified: `elevenlabs/eleven-flash-v2.5` (`pricing.input_per_1m`)
-- Modified: `elevenlabs/eleven-multilingual-v2` (`pricing.input_per_1m`)
-- Modified: `elevenlabs/eleven-turbo-v2` (`pricing.input_per_1m`)
-- Modified: `elevenlabs/eleven-turbo-v2.5` (`pricing.input_per_1m`)
-- Modified: `elevenlabs/eleven-v3` (`pricing.input_per_1m`)
-- Modified: `elevenlabs/eleven-v3-conversational` (`pricing.input_per_1m`)
-- Modified: `elevenlabs/eleven-v4` (`pricing.input_per_1m`)
-- Modified: `elevenlabs/eleven-v4-turbo` (`pricing.input_per_1m`)
-- Modified: `elevenlabs/scribe-v2` (`pricing.input_per_1m`)
-- Modified: `elevenlabs/scribe-v2-medical` (`pricing.input_per_1m`)
-- Modified: `google/gemini-2.5-flash` (`extra.expiration_date`)
-- Modified: `google/gemini-2.5-flash-lite` (`extra.expiration_date`)
-- Modified: `google/gemini-2.5-pro` (`extra.expiration_date`, `extra.supported_parameters`)
-- Modified: `google/gemini-3.6-flash` (`extra.benchmarks_present.design_arena`)
-- Modified: `google/gemini-3.6-flash:batch` (`extra.benchmarks_present.design_arena`)
-- Modified: `google/gemini-3.7-flash` (`extra.benchmarks_present.design_arena`)
-- Modified: `google/gemini-3.7-flash:batch` (`extra.benchmarks_present.design_arena`)
-- Modified: `google/gemini-3.8-flash` (`extra.benchmarks_present.design_arena`)
-- Modified: `google/gemini-3.8-flash:batch` (`extra.benchmarks_present.design_arena`)
-- Modified: `google/gemini-4-argon` (`extra.benchmarks_present.design_arena`, `extra.top_provider.max_completion_tokens`, `max_output_tokens`)
-- Modified: `google/gemini-4-argon:batch` (`extra.benchmarks_present.design_arena`)
-- Modified: `google/gemma-3-27b-it` (`pricing.output_per_1m`)
-- Modified: `google/gemma-3-4b-it` (`extra.cache_read_per_1m`, `extra.top_provider.max_completion_tokens`, `max_output_tokens`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `google/gemma-4-26b-a4b-it` (`extra.cache_read_per_1m`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `inception/mercury-decide` (`decision.checked_at`)
-- Modified: `jaredpalmer/kev-4b` (`decision.checked_at`)
-- Modified: `liquid/d1` (`decision.checked_at`)
-- Modified: `meta-llama/llama-3.2-3b-instruct` (`extra.top_provider.context_length`, `extra.top_provider.max_completion_tokens`, `max_output_tokens`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `meta-llama/llama-4-maverick` (`context_window`)
-- Modified: `meta/muse-glimmer-30b` (`extra.benchmarks_present.design_arena`)
-- Modified: `meta/muse-spark-1.1` (`extra.benchmarks_present.design_arena`)
-- Modified: `meta/muse-spark-1.3` (`extra.benchmarks_present.design_arena`)
-- Modified: `meta/muse-spark-open` (`extra.benchmarks_present`)
-- Modified: `meta/muse-wonder` (`extra.benchmarks_present.design_arena`)
-- Modified: `minimax/minimax-m3` (`extra.benchmarks_present.design_arena`)
-- Modified: `mistralai/mistral-large-4-0` (`extra.cache_read_per_1m`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `moonshotai/kimi-k2.6` (`extra.benchmarks_present.design_arena`)
-- Modified: `moonshotai/kimi-k3` (`extra.benchmarks_present.design_arena`, `pricing.input_per_1m`)
-- Modified: `moonshotai/kimi-k3:batch` (`extra.benchmarks_present.design_arena`)
-- Modified: `morph/morph-v3-fast` (`context_window`, `extra.features`, `extra.supported_parameters`, `extra.top_provider.context_length`, `extra.top_provider.max_completion_tokens`, `max_output_tokens`, `supports_json_mode`)
-- Modified: `nousresearch/hermes-3-llama-3.1-405b` (`extra.expiration_date`)
-- Modified: `nousresearch/hermes-3-llama-3.1-70b` (`extra.expiration_date`)
-- Modified: `nvidia/nemotron-3-super-120b-a12b` (`extra.cache_read_per_1m`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `nvidia/nemotron-3.5-super-vl` (`extra.benchmarks_present.design_arena`, `extra.cache_read_per_1m`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `nvidia/nemotron-3.5-super-vl:free` (`extra.benchmarks_present.design_arena`)
-- Modified: `openai/gpt-6-luna-decisions` (`decision.checked_at`)
-- Modified: `openai/gpt-6.1-sol` (`extra.benchmarks_present.design_arena`)
-- Modified: `openai/gpt-6.1-sol:batch` (`extra.benchmarks_present.design_arena`)
-- Modified: `qwen/qwen3-30b-a3b-instruct-2507` (`pricing.input_per_1m`)
-- Modified: `qwen/qwen3.5-122b-a10b` (`pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `qwen/qwen3.5-27b` (`extra.cache_read_per_1m`, `extra.top_provider.max_completion_tokens`, `max_output_tokens`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `qwen/qwen3.5-35b-a3b` (`extra.top_provider.context_length`, `extra.top_provider.max_completion_tokens`, `max_output_tokens`, `pricing.input_per_1m`)
-- Modified: `qwen/qwen3.5-9b` (`extra.cache_read_per_1m`, `extra.expiration_date`, `extra.top_provider.context_length`, `extra.top_provider.max_completion_tokens`, `max_output_tokens`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `qwen/qwen3.6-35b-a3b` (`pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `qwen/qwen3.8-2.4t-a95b` (`extra.top_provider.context_length`, `extra.top_provider.max_completion_tokens`, `max_output_tokens`)
-- Modified: `qwen/qwen3.8-27b` (`extra.cache_read_per_1m`, `extra.top_provider.max_completion_tokens`, `max_output_tokens`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `reflection/beam-1.0-501b-a23b` (`extra.benchmarks_present`, `extra.cache_read_per_1m`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `respan/span-01` (`decision.checked_at`)
-- Modified: `respan/span-01-lite` (`decision.checked_at`)
-- Modified: `togethercomputer/tev1-4b-experimental` (`decision.checked_at`)
-- Modified: `upstage/solar-decide` (`decision.checked_at`)
-- Modified: `upstage/solar-decide-flash` (`decision.checked_at`)
-- Modified: `upstage/solar-pro4` (`extra.cache_read_per_1m`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `xiaomi/mimo-v2.5` (`extra.cache_read_per_1m`, `extra.expiration_date`, `extra.top_provider.context_length`, `extra.top_provider.max_completion_tokens`, `max_output_tokens`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `xiaomi/mimo-v2.5-pro` (`extra.cache_read_per_1m`, `extra.expiration_date`, `extra.top_provider.context_length`, `extra.top_provider.max_completion_tokens`, `max_output_tokens`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `z-ai/glm-4.6` (`extra.cache_read_per_1m`, `extra.top_provider.context_length`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `z-ai/glm-4.7` (`extra.cache_read_per_1m`, `extra.expiration_date`, `extra.top_provider.context_length`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `z-ai/glm-5.1` (`extra.benchmarks_present.design_arena`, `extra.cache_read_per_1m`, `extra.top_provider.context_length`, `extra.top_provider.max_completion_tokens`, `max_output_tokens`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `z-ai/glm-5.2` (`extra.cache_read_per_1m`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `z-ai/glm-5.3` (`pricing.output_per_1m`)
-- Modified: `z-ai/glm-5.3-flash` (`extra.cache_read_per_1m`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `~deepseek/deepseek-flash-latest` (`extra.cache_read_per_1m`, `extra.supported_parameters`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `~deepseek/deepseek-pro-latest` (`extra.cache_read_per_1m`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `~deepseek/deepseek-v4-flash-latest` (`extra.cache_read_per_1m`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `~google/gemini-pro-latest` (`extra.top_provider.max_completion_tokens`, `max_output_tokens`)
-- Modified: `~moonshotai/kimi-latest` (`extra.cache_read_per_1m`, `pricing.input_per_1m`)
-- Modified: `~unbiased/pareto-latest` (`context_window`, `extra.cache_read_per_1m`, `extra.features`, `extra.supported_parameters`, `extra.top_provider.context_length`, `pricing.input_per_1m`, `pricing.output_per_1m`, `supports_json_mode`)
-- Modified: `~z-ai/glm-flash-latest` (`extra.cache_read_per_1m`, `pricing.input_per_1m`, `pricing.output_per_1m`)
-- Modified: `~z-ai/glm-latest` (`pricing.output_per_1m`)
-- Removed: `deepseek/deepseek-r1`
-- Removed: `google/gemini-2.5-flash-lite:batch`
-- Removed: `google/gemini-2.5-flash:batch`
-- Removed: `google/gemini-2.5-pro:batch`
-- Removed: `microsoft/wizardlm-2-8x22b`
-- Removed: `perplexity/pplx-decider-v1.1-27b`
-- Removed: `sao10k/l3.3-euryale-70b`
 
 ## perceptron — failed
 
@@ -2514,12 +2349,8 @@ Reason: updater exited with code 1
 Reason: updater exited with code 1
 
 
-## perplexity-router — updated
+## perplexity-router — unchanged
 
-- Added: `perplexity/deepseek-v4-pro-0813`
-- Modified: `perplexity/glm-5.3` (`extra.official_source_checked_at`)
-- Modified: `perplexity/glm-5.3-flash` (`extra.official_source_checked_at`)
-- Modified: `perplexity/kimi-k3` (`extra.official_source_checked_at`)
 
 ## poolside — updated
 
@@ -2564,32 +2395,8 @@ Reason: updater exited with code 1
 - Modified: `sakana-namazu` (`extra.official_source_checked_at`)
 - Modified: `sakana-namazu-v1.0` (`extra.official_source_checked_at`)
 
-## sakura — updated
+## sakura — unchanged
 
-- Modified: `Audio transcription （音声の文字起こし）` (`extra.official_catalog_checked_at`)
-- Modified: `Chat completions （テキスト生成）` (`extra.official_catalog_checked_at`)
-- Modified: `Embeddings （テキストのベクトル化）` (`extra.official_catalog_checked_at`)
-- Modified: `Kimi-K2.6` (`extra.official_catalog_checked_at`)
-- Modified: `Kimi-K2.7-Code` (`extra.official_catalog_checked_at`)
-- Modified: `Phi-4-mini-instruct-cpu` (`extra.official_catalog_checked_at`)
-- Modified: `Qwen3-0.6B-cpu` (`extra.official_catalog_checked_at`)
-- Modified: `Qwen3-Embedding-4B(FP16)` (`extra.official_catalog_checked_at`)
-- Modified: `Qwen3-VL-30B-A3B-Instruct` (`extra.official_catalog_checked_at`)
-- Modified: `Qwen3.6-35B-A3B` (`extra.official_catalog_checked_at`)
-- Modified: `RAG（ドキュメント管理・検索）` (`extra.official_catalog_checked_at`)
-- Modified: `Text-to-Speech （テキスト読み上げ）` (`extra.official_catalog_checked_at`)
-- Modified: `VOICEVOX:あんこもん` (`extra.official_catalog_checked_at`)
-- Modified: `VOICEVOX:冥鳴ひまり` (`extra.official_catalog_checked_at`)
-- Modified: `VOICEVOX:四国めたん` (`extra.official_catalog_checked_at`)
-- Modified: `VOICEVOX:春日部つむぎ` (`extra.official_catalog_checked_at`)
-- Modified: `VOICEVOX:東北きりたん` (`extra.official_catalog_checked_at`)
-- Modified: `VOICEVOX:東北ずん子` (`extra.official_catalog_checked_at`)
-- Modified: `VOICEVOX:東北イタコ` (`extra.official_catalog_checked_at`)
-- Modified: `Weblab-MedLLM-gpt-oss-120b` (`extra.official_catalog_checked_at`)
-- Modified: `cotomi v3` (`extra.official_catalog_checked_at`)
-- Modified: `gemma-4-31B-it` (`extra.official_catalog_checked_at`)
-- Modified: `llm-jp-3.1-8x13b-instruct4` (`extra.official_catalog_checked_at`)
-- Removed: `PLaMo 3.0 Prime`
 
 ## sambanova — updated
 
