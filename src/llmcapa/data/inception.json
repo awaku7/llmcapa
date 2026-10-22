@@ -156,10 +156,10 @@
       "aliases": [],
       "license_type": "unknown",
       "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.35,
         "currency": "USD",
-        "cached_input_per_1m": 0.0
+        "cached_input_per_1m": 0.01
       },
       "reasoning_effort_values": null,
       "extra": {
@@ -177,7 +177,20 @@
         ],
         "supported_endpoints": [
           "v1/chat/completions"
-        ]
+        ],
+        "list_pricing": {
+          "input_per_1m": 0.2,
+          "cached_input_per_1m": 0.02,
+          "output_per_1m": 0.7,
+          "currency": "USD"
+        },
+        "pricing_status": "promotional",
+        "free_trial": {
+          "free_tokens": 100000000,
+          "source": "https://www.inceptionlabs.ai/blog/introducing-mercury-3",
+          "note": "Free-trial token allotment is account-dependent, not a zero model price."
+        },
+        "pricing_source": "https://docs.inceptionlabs.ai/get-started/models"
       }
     },
     {
@@ -212,9 +225,9 @@
       "license_type": "unknown",
       "pricing": {
         "input_per_1m": 0.02,
-        "output_per_1m": 0.0,
+        "output_per_1m": 0,
         "currency": "USD",
-        "cached_input_per_1m": 0.0
+        "cached_input_per_1m": 0
       },
       "reasoning_effort_values": null,
       "extra": {
