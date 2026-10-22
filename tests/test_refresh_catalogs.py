@@ -379,8 +379,18 @@ def test_refresh_guard_rejects_replaced_utc_pricing_override(field, replacement)
 def test_refresh_guard_matches_utc_pricing_overrides_when_reordered():
     previous = _complete_catalog()
     previous["models"][0]["extra"]["pricing_overrides"] = [
-        {"utc_start": "00:00", "utc_end": "06:00", "utc_days": [0], "input_per_1m": 0.1},
-        {"utc_start": "12:00", "utc_end": "18:00", "utc_days": [4], "input_per_1m": 0.2},
+        {
+            "utc_start": "00:00",
+            "utc_end": "06:00",
+            "utc_days": [0],
+            "input_per_1m": 0.1,
+        },
+        {
+            "utc_start": "12:00",
+            "utc_end": "18:00",
+            "utc_days": [4],
+            "input_per_1m": 0.2,
+        },
     ]
     updated = json.loads(json.dumps(previous))
     updated["models"][0]["extra"]["pricing_overrides"].reverse()
