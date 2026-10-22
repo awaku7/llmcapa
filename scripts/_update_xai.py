@@ -264,7 +264,7 @@ def load_listmodels() -> list[dict]:
                 json.dumps(refreshed, ensure_ascii=False, indent=2) + "\n",
                 encoding="utf-8",
             )
-    except Exception:  # noqa: BLE001
+    except Exception:  # noqa: BLE001, S110
         pass  # Continue with the cached snapshot if the official docs are unavailable.
     if isinstance(raw, dict):
         raw = raw.get("models") or raw.get("data") or []
