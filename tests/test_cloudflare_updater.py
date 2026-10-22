@@ -334,6 +334,7 @@ def test_clairic_normalized_as_rest_only_typed_extraction():
     assert "openai_compatible_base_url_template" not in output["extra"]
     assert output["extra"]["specialized_task"] == "typed_extraction"
     assert output["extra"]["typed_extraction"]["returns_confidence"] is True
+    assert "reference_date" in output["extra"]["typed_extraction"]["request_fields"]
     assert output["extra"]["endpoints"][0]["path"] == ("/ai/run/@cf/cloudflare/clairic")
     assert Capability.from_dict(output).supports("text_output") is False
 
@@ -354,4 +355,5 @@ def test_clairic_bundle_has_typed_extraction_and_documented_price():
     assert clairic["pricing"]["input_per_1m"] == 0.1
     assert clairic["pricing"]["output_per_1m"] == 0.0
     assert clairic["extra"]["endpoints"][0]["protocol"] == "workers-ai-rest"
+    assert "reference_date" in clairic["extra"]["typed_extraction"]["request_fields"]
     assert "openai_compatible_base_url_template" not in clairic["extra"]
