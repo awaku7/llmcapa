@@ -19,6 +19,15 @@ available in the workflow artifacts.
 
 Changes below reflect the current PR contents, not the initial automation output.
 
+Review follow-up: the published Mercury 3 promotional rates and separate free
+trial, Ming 3 Audio bidirectional modalities, and Nemotron 3.5 Embed image
+inputs and text/image-token pricing have been corrected. The DeepInfra,
+Inception and inclusionAI sections were checked against the actual branch vs
+main catalog diff. Since these are newly added models, the model-level totals
+remain unchanged. Updater safeguards and regression tests are included in
+the PR; their CI verification is tracked separately.
+
+
 ## ai21 — updated
 
 - Modified: `jamba-large` (`extra.official_source_checked_at`)
