@@ -190,6 +190,10 @@ def _complete_catalog() -> dict:
                 "audio": {"transcription": True},
                 "video": {"generation": True, "status": "documented"},
                 "decision": {"decision": True},
+                "document": {"accepts_documents": True},
+                "embedding": {"supported": True},
+                "rerank": {"supported": True},
+                "computer_use": {"supported": True},
             }
         ]
     }
@@ -211,7 +215,19 @@ def test_refresh_guard_rejects_incomplete_model_records(key):
         refresh.validate_refreshed_catalog(previous, updated)
 
 
-@pytest.mark.parametrize("key", ["image", "audio", "video", "decision"])
+@pytest.mark.parametrize(
+    "key",
+    [
+        "image",
+        "audio",
+        "video",
+        "decision",
+        "document",
+        "embedding",
+        "rerank",
+        "computer_use",
+    ],
+)
 def test_refresh_guard_rejects_lost_documented_capabilities(key):
     previous = _complete_catalog()
     updated = json.loads(json.dumps(previous))
@@ -225,6 +241,16 @@ def test_refresh_guard_rejects_erased_known_rates():
     updated = json.loads(json.dumps(previous))
     updated["models"][0]["pricing"]["output_per_1m"] = None
     with pytest.raises(ValueError, match="known output_per_1m was lost"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+@pytest.mark.parametrize("container", ["pricing", "extra"])
+def test_refresh_guard_rejects_missing_cached_input_rate(container):
+    previous = _complete_catalog()
+    previous["models"][0]["pricing"]["cached_input_per_1m"] = 0.5
+    updated = json.loads(json.dumps(previous))
+    del updated["models"][0][container]["cached_input_per_1m"]
+    with pytest.raises(ValueError, match="known cached_input_per_1m was lost"):
         refresh.validate_refreshed_catalog(previous, updated)
 
 
