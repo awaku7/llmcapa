@@ -503,7 +503,14 @@ def enrich_clairic_extraction(record: dict[str, object]) -> dict[str, object]:
         specialized_task="typed_extraction",
         official_api_source=source,
         typed_extraction={
-            "request_fields": ["model", "state", "fields", "images", "options"],
+            "request_fields": [
+                "model",
+                "state",
+                "fields",
+                "images",
+                "options",
+                "reference_date",
+            ],
             "response_field": "answers",
             "field_types": [
                 "text",
