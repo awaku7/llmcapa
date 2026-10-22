@@ -70,7 +70,7 @@ def _protect_known_pricing(
         raise ValueError(f"{model_id}: known {path} was lost")
     if isinstance(previous, dict):
         if not isinstance(current, dict):
-            raise ValueError(f"{model_id}: known {path} was lost")
+            raise TypeError(f"{model_id}: invalid {path} pricing container")
         for key, value in previous.items():
             _protect_known_pricing(value, current.get(key), model_id, f"{path}.{key}")
     elif isinstance(previous, list):
