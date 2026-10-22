@@ -84,7 +84,16 @@ def validate_refreshed_catalog(
             # existing catalog until an explicit, reviewed removal is made.
             raise ValueError(f"{model_id}: model disappeared from provider catalog")
 
-        for key in ("image", "audio", "video", "decision"):
+        for key in (
+            "image",
+            "audio",
+            "video",
+            "decision",
+            "document",
+            "embedding",
+            "rerank",
+            "computer_use",
+        ):
             if previous_row.get(key) and not refreshed.get(key):
                 raise ValueError(f"{model_id}: documented {key} was lost")
         for key in ("context_window", "max_output_tokens"):
@@ -95,7 +104,7 @@ def validate_refreshed_catalog(
         refreshed_pricing = refreshed.get("pricing") or {}
         if not isinstance(refreshed_pricing, dict):
             raise TypeError(f"{model_id}: invalid pricing")
-        for key in ("input_per_1m", "output_per_1m"):
+        for key in ("input_per_1m", "output_per_1m", "cached_input_per_1m"):
             if (
                 previous_pricing.get(key) is not None
                 and refreshed_pricing.get(key) is None
@@ -103,9 +112,16 @@ def validate_refreshed_catalog(
                 raise ValueError(f"{model_id}: known {key} was lost")
 
         previous_extra = previous_row.get("extra") or {}
+        refreshed_extra = refreshed.get("extra") or {}
+        if (
+            previous_extra.get("cached_input_per_1m") is not None
+            and refreshed_extra.get("cached_input_per_1m") is None
+        ):
+            raise ValueError(f"{model_id}: known cached_input_per_1m was lost")
+
         previous_cached = previous_extra.get("cached_input_per_1m")
         previous_output = previous_pricing.get("output_per_1m")
-        refreshed_cached = (refreshed.get("extra") or {}).get("cached_input_per_1m")
+        refreshed_cached = refreshed_extra.get("cached_input_per_1m")
         if (
             previous_cached is not None
             and previous_output is not None
