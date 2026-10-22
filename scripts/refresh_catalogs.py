@@ -60,6 +60,23 @@ def load_catalog(path: Path) -> dict[str, Any]:
     return data
 
 
+def _pricing_tier_identity(item: Any) -> tuple[tuple[str, Any], ...]:
+    """Identify a published rate tier by its documented applicability."""
+    if not isinstance(item, dict):
+        return ()
+    identifiers = (
+        "input_context",
+        "min_prompt_tokens",
+        "max_prompt_tokens",
+        "min_input_tokens",
+        "max_input_tokens",
+        "region",
+        "region_id",
+        "tier",
+    )
+    return tuple((key, item[key]) for key in identifiers if item.get(key) is not None)
+
+
 def _protect_known_pricing(
     previous: Any, current: Any, model_id: str, path: str
 ) -> None:
@@ -76,8 +93,28 @@ def _protect_known_pricing(
     elif isinstance(previous, list):
         if not isinstance(current, list) or len(current) < len(previous):
             raise ValueError(f"{model_id}: known {path} was lost")
+        used_indices: set[int] = set()
         for index, value in enumerate(previous):
-            _protect_known_pricing(value, current[index], model_id, f"{path}[{index}]")
+            identity = _pricing_tier_identity(value)
+            if identity:
+                matches = [
+                    position
+                    for position, candidate in enumerate(current)
+                    if position not in used_indices
+                    and isinstance(candidate, dict)
+                    and all(candidate.get(key) == expected for key, expected in identity)
+                ]
+                if not matches:
+                    raise ValueError(f"{model_id}: known {path}[{index}] tier was lost")
+                matched_index = matches[0]
+            else:
+                matched_index = index
+                if matched_index in used_indices:
+                    raise ValueError(f"{model_id}: known {path}[{index}] was lost")
+            used_indices.add(matched_index)
+            _protect_known_pricing(
+                value, current[matched_index], model_id, f"{path}[{index}]"
+            )
 
 
 def validate_refreshed_catalog(
@@ -141,8 +178,14 @@ def validate_refreshed_catalog(
                 known_value, refreshed_pricing.get(key), model_id, key
             )
 
-        previous_extra = previous_row.get("extra") or {}
-        refreshed_extra = refreshed.get("extra") or {}
+        previous_extra = previous_row.get("extra")
+        refreshed_extra = refreshed.get("extra")
+        if previous_extra is not None and not isinstance(previous_extra, dict):
+            raise TypeError(f"{model_id}: invalid previous extra")
+        if refreshed_extra is not None and not isinstance(refreshed_extra, dict):
+            raise TypeError(f"{model_id}: invalid extra")
+        previous_extra = previous_extra or {}
+        refreshed_extra = refreshed_extra or {}
         # Non-token prices are usually kept in extra. Do not enumerate only
         # today's Mistral keys: images, speech, video, and new APIs may
         # introduce other published units. Preserve 0.0 as a known rate.
