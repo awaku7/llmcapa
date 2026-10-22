@@ -37,9 +37,7 @@ IMAGINE_MODELS = json.loads(
 
 # Voice API (optional specialty entries — not chat LLMs)
 VOICE_MODELS = json.loads(
-    (WORKDIR / "scripts" / "metadata" / "voice_models.json").read_text(
-        encoding="utf-8"
-    )
+    (WORKDIR / "scripts" / "metadata" / "voice_models.json").read_text(encoding="utf-8")
 )
 
 # Legacy models retained as deprecated (no longer on primary docs table)
