@@ -496,7 +496,6 @@ def enrich_clairic_extraction(record: dict[str, object]) -> dict[str, object]:
     if model_id != "@cf/cloudflare/clairic":
         return record
 
-    selector = model_id.rsplit("/", 1)[-1]
     source = "https://developers.cloudflare.com/workers-ai/models/clairic/"
     extra = dict(record.get("extra") or {})
     extra.pop("openai_compatible_base_url_template", None)
