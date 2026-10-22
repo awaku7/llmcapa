@@ -61,8 +61,14 @@ def model_to_entry(model: dict[str, Any]) -> dict[str, Any] | None:
 
     tags = {str(tag).strip().lower().replace("_", "-") for tag in (model.get("tags") or [])}
     is_embedding = model_type in {"text-embedding", "embedding", "embeddings"}
+    published_embedding_rates = {
+        "nvidia/Nemotron-3.5-Embed-1B-BF16": (0.015, 0.035),
+        "nvidia/Nemotron-3.5-Embed-8B-BF16": (0.035, 0.070),
+    }.get(model_id)
     input_modalities = ["text"]
-    if not is_embedding and ({"vision", "multimodal", "image-input"} & tags):
+    if (not is_embedding or published_embedding_rates) and (
+        {"vision", "multimodal", "image-input"} & tags
+    ):
         input_modalities.append("image")
     if not is_embedding and "input-audio" in tags:
         input_modalities.append("audio")
@@ -83,11 +89,34 @@ def model_to_entry(model: dict[str, Any]) -> dict[str, Any] | None:
             if output_cents is not None:
                 pricing["output_per_1m"] = round(output_cents * 10_000, 8)
 
+    if published_embedding_rates:
+        # Published text and image-token rates are independent. The listing
+        # endpoint can omit both; prefer a valid newer API text price.
+        text_rate, image_rate = published_embedding_rates
+        if pricing is None:
+            pricing = {"input_per_1m": text_rate, "currency": "USD"}
+        elif not pricing.get("input_per_1m"):
+            pricing["input_per_1m"] = text_rate
+
     max_tokens = model.get("max_tokens")
     context_window = max_tokens if isinstance(max_tokens, int) and max_tokens > 0 else 0
     reasoning = True if "reasoning" in tags else False if "non-reasoning" in tags else None
     function_calling = True if "tools" in tags or "tool-calling" in tags else None
     json_mode = True if {"json", "structured-output"} & tags else None
+
+    extra = {
+        "source": SOURCE,
+        "model_type": model_type,
+        "reported_type": model.get("reported_type"),
+        "description": model.get("description", ""),
+        "tags": sorted(tags),
+        "quantization": model.get("quantization"),
+        "replaced_by": model.get("replaced_by"),
+        "is_partner": bool(model.get("is_partner", False)),
+    }
+    if published_embedding_rates:
+        extra["image_input_per_1m"] = image_rate
+        extra["pricing_source"] = f"https://deepinfra.com/{model_id}"
 
     return {
         "provider": "deepinfra",
@@ -110,16 +139,7 @@ def model_to_entry(model: dict[str, Any]) -> dict[str, Any] | None:
         "deprecated": False,
         "aliases": [],
         "license_type": "api",
-        "extra": {
-            "source": SOURCE,
-            "model_type": model_type,
-            "reported_type": model.get("reported_type"),
-            "description": model.get("description", ""),
-            "tags": sorted(tags),
-            "quantization": model.get("quantization"),
-            "replaced_by": model.get("replaced_by"),
-            "is_partner": bool(model.get("is_partner", False)),
-        },
+        "extra": extra,
     }
 
 
