@@ -73,3 +73,36 @@ def test_mistral_voxtral_three_rates_are_in_bundled_catalog():
     )
     assert models["voxtral-small-transcribe-3-0"]["extra"]["price_per_min"] == 0.004
     assert models["voxtral-mini-tts-3-0"]["extra"]["price_per_1m_chars"] == 13.0
+
+
+def test_only_realtime_transcription_supports_streaming():
+    for mid, expected in {
+        "voxtral-mini-transcribe-2602": False,
+        "voxtral-mini-transcribe-3-0": False,
+        "voxtral-small-transcribe-3-0": False,
+        "voxtral-mini-transcribe-realtime-2602": True,
+        "voxtral-mini-transcribe-realtime-3-0": True,
+    }.items():
+        record = UPDATER.build_row(
+            mid,
+            {"primaryCode": mid, "h1": mid, "features": {"Transcriptions": True}},
+        )
+        assert record["supports_streaming"] is expected
+
+    catalog = ROOT / "src" / "llmcapa" / "data" / "mistral.json"
+    models = {
+        m["model_id"]: m
+        for m in json.loads(catalog.read_text(encoding="utf-8"))["models"]
+    }
+    for mid in (
+        "voxtral-mini-transcribe-2602",
+        "voxtral-mini-transcribe-3-0",
+        "voxtral-small-transcribe-3-0",
+        "voxtral-mini-transcribe-2507",
+    ):
+        assert models[mid]["supports_streaming"] is False
+    for mid in (
+        "voxtral-mini-transcribe-realtime-2602",
+        "voxtral-mini-transcribe-realtime-3-0",
+    ):
+        assert models[mid]["supports_streaming"] is True
