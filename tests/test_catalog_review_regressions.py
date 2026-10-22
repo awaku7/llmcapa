@@ -88,6 +88,11 @@ def test_nemotron_35_embedding_keeps_image_input_and_published_rates() -> None:
         assert model["supports_vision"] is True
         assert model["pricing"]["input_per_1m"] == text_rate
         assert model["extra"]["image_input_per_1m"] == image_rate
+        missing_tags = _update_deepinfra.model_to_entry(
+            {"model_name": name, "type": "embeddings", "tags": []}
+        )
+        assert missing_tags is not None
+        assert missing_tags["input_modalities"] == ["text", "image"]
 
     other = _update_deepinfra.model_to_entry(
         {"model_name": "other/embed", "type": "embeddings", "tags": ["multimodal"]}
