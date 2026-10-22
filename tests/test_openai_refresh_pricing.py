@@ -91,3 +91,60 @@ def test_missing_price_table_does_not_erase_known_rate(tmp_path, monkeypatch):
     updated = json.loads(path.read_text(encoding="utf-8"))
     assert updated["models"][0]["pricing"]["input_per_1m"] == 2.5
     assert updated["models"][0]["pricing"]["output_per_1m"] == 10.0
+def test_openai_refresh_writes_cached_input_rates_to_existing_and_new_models(
+    tmp_path, monkeypatch
+):
+    catalog = tmp_path / "openai.json"
+    catalog.write_text(
+        json.dumps(
+            {
+                "models": [
+                    {
+                        "provider": "openai",
+                        "model_id": "gpt-4o",
+                        "extra": {"cached_input_per_1m": 1.4},
+                        "pricing": {
+                            "input_per_1m": 2.5,
+                            "output_per_1m": 10.0,
+                            "currency": "USD",
+                        },
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    index = (
+        "- [GPT-4o](/api/docs/models/gpt-4o.md)\n"
+        "- [GPT-mini](/api/docs/models/gpt-mini.md)\n"
+    )
+    pricing = (
+        "| Model | Input | Output | Cached input |\n"
+        "| --- | --- | --- | --- |\n"
+        "| gpt-4o | $2.50 | $10.00 | $1.25 |\n"
+        "| gpt-mini | $0.25 | $2.00 | $0.10 |\n"
+    )
+    monkeypatch.setattr(updater, "ROOT", tmp_path)
+    monkeypatch.setattr(updater, "DATA", catalog)
+    monkeypatch.setattr(
+        updater,
+        "fetch",
+        lambda url: index if url == updater.MODELS_URL else pricing,
+    )
+    monkeypatch.setattr(
+        updater,
+        "detail",
+        lambda path: {
+            "provider": "openai",
+            "model_id": path.rsplit("/", 1)[-1].removesuffix(".md"),
+            "extra": {},
+        },
+    )
+    updater.main()
+    models = {
+        model["model_id"]: model
+        for model in json.loads(catalog.read_text(encoding="utf-8"))["models"]
+    }
+    assert models["gpt-4o"]["extra"]["cached_input_per_1m"] == 1.25
+    assert models["gpt-mini"]["extra"]["cached_input_per_1m"] == 0.10
+    assert models["gpt-mini"]["pricing"]["output_per_1m"] == 2.0
