@@ -20,6 +20,28 @@ def test_mistral_preserves_known_zero_tts_input_price():
     assert row["extra"]["tts_price"] == 17.0
 
 
+def test_direct_mistral_refresh_preserves_omitted_known_unit_rates():
+    previous = {
+        "extra": {
+            "price_per_1m_chars": 13.0,
+            "price_per_min": 0.0035,
+            "cache_read_per_1m": 0.0,
+            "unrelated_description": "old description",
+        }
+    }
+    refreshed = {"extra": {"supports_tts": True}}
+    row = UPDATER.preserve_specialty_pricing(refreshed, previous)
+    assert row["extra"]["price_per_1m_chars"] == 13.0
+    assert row["extra"]["price_per_min"] == 0.0035
+    assert row["extra"]["cache_read_per_1m"] == 0.0
+    assert "unrelated_description" not in row["extra"]
+
+    # A newly scraped published rate must take precedence over an old price.
+    new_prices = {"extra": {"price_per_1m_chars": 14.0}}
+    UPDATER.preserve_specialty_pricing(new_prices, previous)
+    assert new_prices["extra"]["price_per_1m_chars"] == 14.0
+
+
 def test_mistral_keeps_documented_tts_input_rate_in_bundle():
     catalog = ROOT / "src" / "llmcapa" / "data" / "mistral.json"
     models = json.loads(catalog.read_text(encoding="utf-8"))["models"]
