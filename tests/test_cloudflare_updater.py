@@ -280,4 +280,3 @@ def test_deepseek_cloudflare_cached_rate_is_in_bundled_catalog():
     assert model["pricing"]["input_per_1m"] == 0.3
     assert model["pricing"]["output_per_1m"] == 1.2
     assert model["pricing"]["cached_input_per_1m"] == 0.006
-
