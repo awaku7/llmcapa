@@ -173,7 +173,6 @@ def test_timeout_terminates_provider_process_group_before_restore(
     assert calls[2:] == ["reaped", "restored"]
 
 
-
 def _complete_catalog() -> dict:
     return {
         "models": [
