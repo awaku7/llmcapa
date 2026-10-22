@@ -32,6 +32,10 @@ llmcapa.get("gpt-5.4", provider="azure")         # 同じ結果
 
 **注意:** `azure-openai` は従来、Azure上のOpenAIモデルだけを指していましたが、今後はFoundry側の他社モデルも含む別名になります。`openai` は別プロバイダーのままで、区別は維持します。モデルごとの詳しい提供元情報やComputer Useのサービス情報は元データを保持します。
 
+## カタログを一括更新する
+
+モデルデータを更新する場合は、GitHub Actions の **Refresh all model catalogs** を手動実行できます。公式ソースからプロバイダー別に更新し、変更モデル一覧とPRを自動作成します。手順と安全策は[一括更新ガイド](docs/CATALOG_REFRESH_AUTOMATION.ja.md)を参照してください。
+
 ## インストール
 
 ```bash

@@ -32,6 +32,10 @@ The returned `Capability.provider` is normalized to `azure-foundry`, and `provid
 
 **Behavior change:** The `azure-openai` alias now also resolves Foundry-hosted non-OpenAI models. The direct `openai` provider is still independent. Original source and service-specific metadata are preserved.
 
+## Refresh all model catalogs
+
+Run the **Refresh all model catalogs** GitHub Actions workflow manually to update each supported provider from its official sources, generate a full model diff, and open a reviewable PR. See the [catalog refresh guide (Japanese)](docs/CATALOG_REFRESH_AUTOMATION.ja.md).
+
 ## Install
 
 ```bash

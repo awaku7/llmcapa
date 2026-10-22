@@ -37,9 +37,7 @@ IMAGINE_MODELS = json.loads(
 
 # Voice API (optional specialty entries — not chat LLMs)
 VOICE_MODELS = json.loads(
-    (WORKDIR / "scripts" / "metadata" / "voice_models.json").read_text(
-        encoding="utf-8"
-    )
+    (WORKDIR / "scripts" / "metadata" / "voice_models.json").read_text(encoding="utf-8")
 )
 
 # Legacy models retained as deprecated (no longer on primary docs table)
@@ -248,7 +246,12 @@ LISTMODELS_FALLBACK = False
 def load_listmodels() -> list[dict]:
     global LISTMODELS_FALLBACK
     LISTMODELS_FALLBACK = False
-    raw = json.loads(LISTMODELS.read_text(encoding="utf-8"))
+    try:
+        raw = json.loads(LISTMODELS.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        # Fresh checkouts lack the ignored scratch snapshot. Fetch directly
+        # from the official source instead of failing before that attempt.
+        raw = []
     # Refresh from the official Markdown endpoint on every run; structured
     # snapshots can still be stale and omit newly released models.
     try:
@@ -261,7 +264,7 @@ def load_listmodels() -> list[dict]:
                 json.dumps(refreshed, ensure_ascii=False, indent=2) + "\n",
                 encoding="utf-8",
             )
-    except Exception:  # noqa: BLE001
+    except Exception:  # noqa: BLE001, S110
         pass  # Continue with the cached snapshot if the official docs are unavailable.
     if isinstance(raw, dict):
         raw = raw.get("models") or raw.get("data") or []
