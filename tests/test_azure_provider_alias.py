@@ -4,7 +4,7 @@ import json
 
 import pytest
 
-from llmcapa import Registry
+from llmcapa import Capability, Registry
 
 
 @pytest.fixture
@@ -110,3 +110,28 @@ def test_azure_cached_catalog_reloads_legacy_provider(
     assert loaded[0].context_window == 4096
     for provider in ("azure-foundry", "azure-openai", "azure"):
         assert restarted.get(model_id, provider=provider) is loaded[0]
+
+
+@pytest.mark.parametrize(
+    "provider",
+    (
+        "azure-foundry",
+        "azure_foundry",
+        "Azure-Foundry",
+        " AZURE_FOUNDRY ",
+        "azure-openai",
+        "azure",
+    ),
+)
+def test_azure_registration_normalizes_canonical_name_variants(registry, provider):
+    registry._ensure_loaded()
+    model_id = "azure-provider-normalization-test"
+    registry.register(Capability(provider=provider, model_id=model_id))
+
+    for alias in ("azure-foundry", "azure-openai", "azure"):
+        model = registry.get(model_id, provider=alias)
+        assert model.provider == "azure-foundry"
+    assert any(
+        model.model_id == model_id
+        for model in registry.list_models(provider="azure-foundry")
+    )
