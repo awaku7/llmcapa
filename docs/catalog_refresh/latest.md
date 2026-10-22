@@ -5,7 +5,7 @@
 - Failed providers: 16
 - Without updater: 0
 - Added models: 26
-- Modified models: 2537
+- Modified models: 2539
 - Removed models: 0
 
 **This report is regenerated from the actual model catalogs on this PR branch compared with main,**
@@ -1941,6 +1941,8 @@ Reason: unexpected files modified: ['src/llmcapa/data/cloudflare-workers-ai.json
 - Added: `voxtral-mini-transcribe-realtime-3-0`
 - Added: `voxtral-mini-tts-3-0`
 - Added: `voxtral-small-transcribe-3-0`
+- Modified: `voxtral-mini-transcribe-2507` (`supports_streaming`)
+- Modified: `voxtral-mini-transcribe-2602` (`supports_streaming`)
 
 ## modellix — updated
 
