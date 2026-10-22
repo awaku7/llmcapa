@@ -25,6 +25,8 @@ def test_mistral_keeps_documented_tts_input_rate_in_bundle():
     models = json.loads(catalog.read_text(encoding="utf-8"))["models"]
     row = next(m for m in models if m["model_id"] == "voxtral-mini-tts-2603")
     assert row["extra"]["tts_input_price"] == 0.0
+
+
 def test_mistral_voxtral_three_published_specialty_rates():
     minute_rates = {
         "voxtral-mini-transcribe-3-0": 0.0035,
