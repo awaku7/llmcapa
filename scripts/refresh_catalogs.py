@@ -73,6 +73,9 @@ def _pricing_tier_identity(item: Any) -> tuple[tuple[str, Any], ...]:
         "region",
         "region_id",
         "tier",
+        "utc_start",
+        "utc_end",
+        "utc_days",
     )
     return tuple((key, item[key]) for key in identifiers if item.get(key) is not None)
 
@@ -131,6 +134,8 @@ def validate_refreshed_catalog(
     old = model_index(previous)
     new = model_index(updated)
     for model_id, row in new.items():
+        if row.get("extra") is not None and not isinstance(row["extra"], dict):
+            raise TypeError(f"{model_id}: invalid extra")
         for key in ("context_window", "max_output_tokens"):
             value = row.get(key)
             if type(value) is not int or value < 0:
