@@ -91,9 +91,9 @@ class Registry:
     @classmethod
     def _canonical_capability(cls, cap: Capability) -> Capability:
         """Normalize Azure aliases but leave other provider labels untouched."""
-        provider = cls._normalize_provider(cap.provider)
-        if provider in {"azure-openai", "azure"}:
-            return replace(cap, provider="azure-foundry")
+        provider = cls._canonical_provider(cap.provider)
+        if provider == "azure-foundry" and cap.provider != provider:
+            return replace(cap, provider=provider)
         return cap
 
     def _matching_providers(self, provider: str) -> set:
