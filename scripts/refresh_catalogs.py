@@ -134,8 +134,9 @@ def validate_refreshed_catalog(
     old = model_index(previous)
     new = model_index(updated)
     for model_id, row in new.items():
-        if row.get("extra") is not None and not isinstance(row["extra"], dict):
-            raise TypeError(f"{model_id}: invalid extra")
+        for field in ("pricing", "extra"):
+            if row.get(field) is not None and not isinstance(row[field], dict):
+                raise TypeError(f"{model_id}: invalid {field}")
         for key in ("context_window", "max_output_tokens"):
             value = row.get(key)
             if type(value) is not int or value < 0:
