@@ -194,6 +194,7 @@ def _complete_catalog() -> dict:
                 "embedding": {"supported": True},
                 "rerank": {"supported": True},
                 "computer_use": {"supported": True},
+                "spatial": {"supported": True},
             }
         ]
     }
@@ -226,6 +227,7 @@ def test_refresh_guard_rejects_incomplete_model_records(key):
         "embedding",
         "rerank",
         "computer_use",
+        "spatial",
     ],
 )
 def test_refresh_guard_rejects_lost_documented_capabilities(key):
