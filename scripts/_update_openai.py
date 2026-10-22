@@ -235,26 +235,79 @@ def detail(path: str) -> dict:
     return entry
 
 
-def prices(markdown: str) -> dict[str, tuple[float, float]]:
-    result = {}
-    for row in re.findall(
-        r"^\|\s*([^|]+?)\s*\|\s*\$?([\d.]+)[^|]*\|[^|]*\|\s*[^|]*\|\s*\$?([\d.]+)",
-        markdown,
-        re.MULTILINE,
-    ):
-        result[row[0].strip()] = (float(row[1]), float(row[2]))
+def parse_pricing_table(markdown: str) -> dict[str, dict[str, float]]:
+    """Read named price columns rather than guessing their position.
+
+    The official table can list Input, Cached input, and Output in different
+    orders. Missing/unparseable rates must never be guessed.
+    """
+    result: dict[str, dict[str, float]] = {}
+    header: dict[str, int] = {}
+
+    for line in markdown.splitlines():
+        stripped = line.strip()
+        if not (stripped.startswith("|") and stripped.endswith("|")):
+            if stripped:
+                header = {}
+            continue
+        columns = [cell.strip() for cell in stripped.strip("|").split("|")]
+        if len(columns) < 3:
+            continue
+
+        if columns[0].strip("` ").casefold() in ("model", "model id"):
+            normalized = [
+                re.sub(r"[^a-z ]", " ", value.lower()).strip() for value in columns
+            ]
+            header = {}
+            for index, value in enumerate(normalized):
+                if "cached" in value and "input" in value:
+                    header["cached_input_per_1m"] = index
+                elif "input" in value:
+                    header["input_per_1m"] = index
+                elif "output" in value:
+                    header["output_per_1m"] = index
+            header["columns"] = len(columns)
+            continue
+        if not all(key in header for key in ("input_per_1m", "output_per_1m")):
+            continue
+        if len(columns) != header["columns"]:
+            continue
+
+        def rate_at(index: int) -> float | None:
+            value = columns[index].strip().replace(",", "")
+            match = re.match(r"^\\$?\\s*(\\d+(?:\\.\\d+)?)", value)
+            return float(match.group(1)) if match else None
+
+        input_rate = rate_at(header["input_per_1m"])
+        output_rate = rate_at(header["output_per_1m"])
+        if input_rate is None or output_rate is None:
+            continue
+
+        name = columns[0].strip("` ")
+        rates = {"input_per_1m": input_rate, "output_per_1m": output_rate}
+        if "cached_input_per_1m" in header:
+            cached_rate = rate_at(header["cached_input_per_1m"])
+            if cached_rate is not None:
+                rates["cached_input_per_1m"] = cached_rate
+        result[name] = rates
     return result
+
+
+def prices(markdown: str) -> dict[str, tuple[float, float]]:
+    return {
+        name: (rates["input_per_1m"], rates["output_per_1m"])
+        for name, rates in parse_pricing_table(markdown).items()
+    }
 
 
 def parse_life_sciences_models(markdown: str) -> list[dict]:
     """Parse Rosalind models from the dedicated official pricing section.
 
-    Rosalind entries are not linked to individual model pages in the all-models
-    index. Their current IDs, per-token prices, and trusted-access notice are
-    published in a separate life-sciences table on the pricing page.
+    Rosalind model pages do not exist in the all-models index; use the
+    separately labeled columns in the current life-sciences pricing table.
     """
     section_match = re.search(
-        r"(?ims)^Life sciences models[ \t]*\r?\n(.*?)(?=^Multimodal models[ \t]*$|\Z)",
+        r"(?ims)^Life sciences models[ \\t]*\\r?\\n(.*?)(?=^Multimodal models[ \\t]*$|\\Z)",
         markdown,
     )
     if not section_match:
@@ -265,25 +318,26 @@ def parse_life_sciences_models(markdown: str) -> list[dict]:
         re.search(r"Access is limited to approved", section, re.IGNORECASE)
     )
     access_link = re.search(
-        r"\[trusted-access program\]\((https?://[^)]+)\)",
+        r"\\[trusted-access program\\]\\((https?://[^)]+)\\)",
         section,
         re.IGNORECASE,
     )
     models = []
-    for model_id, input_price, cached_price, output_price in re.findall(
-        r"^\|\s*(gpt-rosalind-[a-z0-9-]+)\s*\|\s*\$?([\d,.]+)\s*"
-        r"\|\s*\$?([\d,.]+)\s*\|\s*\$?([\d,.]+)\s*\|\s*$",
-        section,
-        re.IGNORECASE | re.MULTILINE,
-    ):
+    for model_id, rates in parse_pricing_table(section).items():
+        if not re.fullmatch(r"gpt-rosalind-[a-z0-9-]+", model_id, re.IGNORECASE):
+            continue
+        if "cached_input_per_1m" not in rates:
+            continue
         models.append(
             {
                 "model_id": model_id,
-                "input_per_1m": float(input_price.replace(",", "")),
-                "cached_input_per_1m": float(cached_price.replace(",", "")),
-                "output_per_1m": float(output_price.replace(",", "")),
+                **rates,
                 "required_approval": approval_required,
-                "access_program_url": access_link.group(1) if access_link else (LIFE_SCIENCES_ACCESS_URL if approval_required else None),
+                "access_program_url": (
+                    access_link.group(1)
+                    if access_link
+                    else LIFE_SCIENCES_ACCESS_URL if approval_required else None
+                ),
             }
         )
     return models
@@ -443,11 +497,12 @@ def main() -> None:
                 "currency": "USD",
             }
         else:
-            entry["pricing"] = {
-                "input_per_1m": None,
-                "output_per_1m": None,
-                "currency": "USD",
-            }
+            # The pricing page may omit older models. Keep documented
+            # historical rates instead of turning valid prices into null.
+            entry.setdefault(
+                "pricing",
+                {"input_per_1m": None, "output_per_1m": None, "currency": "USD"},
+            )
         updated.append(entry)
         seen.add(mid)
     pages_discovered = len(seen)
