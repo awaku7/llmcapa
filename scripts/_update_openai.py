@@ -275,7 +275,7 @@ def parse_pricing_table(markdown: str) -> dict[str, dict[str, float]]:
 
         def rate_at(index: int) -> float | None:
             value = columns[index].strip().replace(",", "")
-            match = re.match(r"^\\$?\\s*(\\d+(?:\\.\\d+)?)", value)
+            match = re.match(r"^\$?\s*(\d+(?:\.\d+)?)", value)
             return float(match.group(1)) if match else None
 
         input_rate = rate_at(header["input_per_1m"])
@@ -307,7 +307,7 @@ def parse_life_sciences_models(markdown: str) -> list[dict]:
     separately labeled columns in the current life-sciences pricing table.
     """
     section_match = re.search(
-        r"(?ims)^Life sciences models[ \\t]*\\r?\\n(.*?)(?=^Multimodal models[ \\t]*$|\\Z)",
+        r"(?ims)^Life sciences models[ \t]*\r?\n(.*?)(?=^Multimodal models[ \t]*$|\Z)",
         markdown,
     )
     if not section_match:
@@ -318,7 +318,7 @@ def parse_life_sciences_models(markdown: str) -> list[dict]:
         re.search(r"Access is limited to approved", section, re.IGNORECASE)
     )
     access_link = re.search(
-        r"\\[trusted-access program\\]\\((https?://[^)]+)\\)",
+        r"\[trusted-access program\]\((https?://[^)]+)\)",
         section,
         re.IGNORECASE,
     )
