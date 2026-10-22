@@ -171,3 +171,23 @@ def test_timeout_terminates_provider_process_group_before_restore(
     assert calls[1][0] == "kill-group"
     assert calls[1][1] == fake_proc.pid
     assert calls[2:] == ["reaped", "restored"]
+
+
+def test_xai_refresh_without_scratch_snapshot(tmp_path, monkeypatch):
+    """A clean checkout must fetch xAI models before any scratch file exists."""
+    import _scrape_xai
+    import _update_xai
+
+    snapshot = tmp_path / "_scratch_xai_listmodels_parsed.json"
+    monkeypatch.setattr(_update_xai, "LISTMODELS", snapshot)
+    monkeypatch.setattr(_scrape_xai, "fetch", lambda: "official model table")
+
+    def fake_parse(markdown):
+        assert markdown == "official model table"
+        return [{"name": "grok-test", "promptTextTokenPrice": 1.0}]
+
+    monkeypatch.setattr(_scrape_xai, "parse", fake_parse)
+    models = _update_xai.load_listmodels()
+    assert models == [{"name": "grok-test", "promptTextTokenPrice": 1.0}]
+    assert json.loads(snapshot.read_text(encoding="utf-8")) == models
+    assert _update_xai.LISTMODELS_FALLBACK is False
