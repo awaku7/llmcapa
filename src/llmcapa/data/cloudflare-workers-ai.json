@@ -725,10 +725,10 @@
         "image"
       ],
       "output_modalities": [
-        "text"
+        "extraction"
       ],
       "supports_function_calling": false,
-      "supports_json_mode": null,
+      "supports_json_mode": false,
       "supports_streaming": false,
       "supports_vision": true,
       "supports_reasoning": false,
@@ -746,13 +746,13 @@
       "license_type": "api",
       "pricing": {
         "input_per_1m": 0.1,
-        "output_per_1m": 0.0,
+        "output_per_1m": 0,
         "currency": "USD"
       },
       "extra": {
         "official_source": "https://developers.cloudflare.com/workers-ai/models/",
         "official_model_source": "https://developers.cloudflare.com/workers-ai/models/clairic/index.md",
-        "official_api_source": "https://developers.cloudflare.com/workers-ai/configuration/open-ai-compatibility/index.md",
+        "official_api_source": "https://developers.cloudflare.com/workers-ai/models/clairic/",
         "official_catalog_checked_at": "2026-10-22",
         "description": "Clairic is a System One-style model that can extract, compute, estimate, and forecast values from inputs. It is strongly typed and outputs confidence scores and probabilities against its outputs. This model is in preview from the Cloudflare Workers AI team.",
         "cloudflare_task_type": "Text Generation",
@@ -764,12 +764,46 @@
         "cloudflare_model_id": "@cf/cloudflare/clairic",
         "cloudflare_rest_api_source": "https://developers.cloudflare.com/workers-ai/get-started/rest-api/index.md",
         "cloudflare_rest_run_url_template": "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{model_id}",
-        "openai_compatible_base_url_template": "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/v1",
         "batch_available": false,
-        "endpoints": [],
+        "endpoints": [
+          {
+            "path": "/ai/run/@cf/cloudflare/clairic",
+            "protocol": "workers-ai-rest",
+            "url_template": "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/cloudflare/clairic",
+            "auth": "bearer",
+            "source": "https://developers.cloudflare.com/workers-ai/models/clairic/"
+          }
+        ],
         "official_unit_pricing": "$0.10 per M input tokens",
-        "terms_and_license": "link"
-      }
+        "terms_and_license": "link",
+        "specialized_task": "typed_extraction",
+        "typed_extraction": {
+          "request_fields": [
+            "model",
+            "state",
+            "fields",
+            "images",
+            "options"
+          ],
+          "response_field": "answers",
+          "field_types": [
+            "text",
+            "number",
+            "date",
+            "time",
+            "datetime",
+            "duration",
+            "list",
+            "estimate",
+            "forecast"
+          ],
+          "returns_confidence": true,
+          "returns_p_null": true,
+          "max_images": 4,
+          "generates_text_tokens": false
+        }
+      },
+      "supports_json_schema": false
     },
     {
       "provider": "cloudflare-workers-ai",
