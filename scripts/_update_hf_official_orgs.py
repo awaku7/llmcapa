@@ -55,6 +55,7 @@ TASK_MODALITIES: dict[str, tuple[list[str], list[str]]] = {
     "text-to-speech": (["text"], ["audio"]),
     "text-to-audio": (["text"], ["audio"]),
     "feature-extraction": (["text"], ["embedding"]),
+    "image-feature-extraction": (["image"], ["embedding"]),
     "sentence-similarity": (["text"], ["embedding"]),
     "text-ranking": (["text"], ["rerank"]),
 }
