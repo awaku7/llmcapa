@@ -281,3 +281,32 @@ def test_deepseek_cloudflare_cached_rate_is_in_bundled_catalog():
     assert model["pricing"]["input_per_1m"] == 0.3
     assert model["pricing"]["output_per_1m"] == 1.2
     assert model["pricing"]["cached_input_per_1m"] == 0.006
+
+
+def test_parse_clairic_input_only_rate():
+    assert _UPDATER._parse_pricing(
+        "$0.10 per M input tokens", "Text Generation"
+    ) == {
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.0,
+        "currency": "USD",
+    }
+
+
+def test_clairic_published_input_price_is_in_bundled_catalog():
+    import json
+
+    catalog = (
+        Path(__file__).resolve().parents[1]
+        / "src"
+        / "llmcapa"
+        / "data"
+        / "cloudflare-workers-ai.json"
+    )
+    models = json.loads(catalog.read_text(encoding="utf-8"))["models"]
+    model = next(m for m in models if m["model_id"] == "@cf/cloudflare/clairic")
+    assert model["pricing"] == {
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.0,
+        "currency": "USD",
+    }
