@@ -305,6 +305,55 @@ def test_refresh_guard_rejects_missing_pricing_tier():
         refresh.validate_refreshed_catalog(previous, updated)
 
 
+def test_refresh_guard_rejects_replaced_context_pricing_tier():
+    previous = _complete_catalog()
+    previous["models"][0]["extra"]["input_context_pricing_tiers"] = [
+        {"input_context": "≤ 100K", "input_per_1m": 0.1},
+        {"input_context": "> 100K", "input_per_1m": 0.3},
+    ]
+    updated = json.loads(json.dumps(previous))
+    tiers = updated["models"][0]["extra"]["input_context_pricing_tiers"]
+    tiers[1] = {"input_context": "> 200K", "input_per_1m": 0.3}
+    with pytest.raises(ValueError, match="tier was lost"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+def test_refresh_guard_matches_identified_tiers_when_reordered():
+    previous = _complete_catalog()
+    previous["models"][0]["extra"]["input_context_pricing_tiers"] = [
+        {"input_context": "≤ 100K", "input_per_1m": 0.1},
+        {"input_context": "> 100K", "input_per_1m": 0.3},
+    ]
+    updated = json.loads(json.dumps(previous))
+    tiers = updated["models"][0]["extra"]["input_context_pricing_tiers"]
+    tiers.reverse()
+    tiers[0]["input_per_1m"] = 0.4
+    refresh.validate_refreshed_catalog(previous, updated)
+
+
+def test_refresh_guard_identifies_tiers_by_prompt_token_thresholds():
+    previous = _complete_catalog()
+    previous["models"][0]["extra"]["input_context_pricing_tiers"] = [
+        {"min_prompt_tokens": 0, "max_prompt_tokens": 100_000, "input_per_1m": 0.1},
+        {"min_prompt_tokens": 100_001, "input_per_1m": 0.2},
+    ]
+    updated = json.loads(json.dumps(previous))
+    updated["models"][0]["extra"]["input_context_pricing_tiers"][1][
+        "min_prompt_tokens"
+    ] = 200_001
+    with pytest.raises(ValueError, match="tier was lost"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+@pytest.mark.parametrize("extra", [["bad"], "bad", [], ""])
+def test_refresh_guard_rejects_invalid_extra_types(extra):
+    previous = _complete_catalog()
+    updated = json.loads(json.dumps(previous))
+    updated["models"][0]["extra"] = extra
+    with pytest.raises(TypeError, match="invalid extra"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
 def test_refresh_guard_rejects_erased_known_rates():
     previous = _complete_catalog()
     updated = json.loads(json.dumps(previous))
