@@ -82,17 +82,56 @@ def _chat_entry(record: dict[str, object], today: str) -> dict[str, object]:
         "supported_features": sorted(features),
         "supported_endpoints": ["v1/chat/completions"],
     }
-    if model_id == "mercury-2.5":
-        # The models page currently shows a temporary 80% discount.  The API
-        # values above are the currently effective prices; retain the list
-        # prices so consumers can distinguish the promotion from the baseline.
+    if model_id == "mercury-3":
+        # The free-trial token allowance is not the model's token price.
         extra["list_pricing"] = {
+            "input_per_1m": 0.20,
+            "cached_input_per_1m": 0.02,
+            "output_per_1m": 0.70,
+            "currency": "USD",
+        }
+        extra["pricing_status"] = "promotional"
+        extra["pricing_source"] = MODELS_SOURCE
+        extra["free_trial"] = {
+            "free_tokens": 100_000_000,
+            "source": "https://www.inceptionlabs.ai/blog/introducing-mercury-3",
+            "note": "Free-trial token allotment is account-dependent, not a zero model price.",
+        }
+    api_pricing = record.get("pricing") or {}
+    if model_id == "mercury-3":
+        # The official API has returned temporary zero prices despite the
+        # published paid rates. Never convert that to a free model.
+        effective_pricing = {
+            "prompt": 0.10 / 1_000_000,
+            "completion": 0.35 / 1_000_000,
+            "input_cache_reads": 0.01 / 1_000_000,
+        }
+        for key in effective_pricing:
+            if api_pricing.get(key) is not None and float(api_pricing[key]) > 0:
+                effective_pricing[key] = float(api_pricing[key])
+        pricing = _pricing(effective_pricing)
+    else:
+        pricing = _pricing(api_pricing)
+    if model_id == "mercury-2.5":
+        # The API provides the effective rates. A promotion exists only if
+        # those rates differ from the published list prices.
+        list_pricing = {
             "input_per_1m": 0.20,
             "cached_input_per_1m": 0.02,
             "output_per_1m": 0.75,
             "currency": "USD",
         }
-        extra["pricing_status"] = "promotional"
+        extra["list_pricing"] = list_pricing
+        rate_fields = (
+            "input_per_1m",
+            "cached_input_per_1m",
+            "output_per_1m",
+        )
+        extra["pricing_status"] = (
+            "promotional"
+            if any(pricing.get(key) != list_pricing[key] for key in rate_fields)
+            else "standard"
+        )
     return {
         "provider": "inception",
         "model_id": model_id,
@@ -120,7 +159,7 @@ def _chat_entry(record: dict[str, object], today: str) -> dict[str, object]:
         "deprecated": False,
         "aliases": [],
         "license_type": "unknown",
-        "pricing": _pricing(record.get("pricing") or {}),
+        "pricing": pricing,
         "reasoning_effort_values": ["low", "medium", "high"] if reasoning else None,
         "extra": extra,
     }
@@ -231,8 +270,8 @@ def update_catalog(*, dry_run: bool = False) -> dict[str, int]:
         f"- Sources: {API_SOURCE}; {MODELS_SOURCE}\n"
         f"- Updated {summary['updated']} existing records and added "
         f"{summary['added']} records ({summary['total']} total).\n"
-        "- Mercury 2.5 pricing uses the current API promotional rates; list "
-        "prices are retained in `extra.list_pricing`.\n"
+        "- Mercury 2.5 pricing uses current API rates; promotional status "
+        "is set only if rates differ from `extra.list_pricing`.\n"
         "- OpenRouter was not used.\n"
     )
     LOG.write_text(LOG.read_text(encoding="utf-8") + log_entry, encoding="utf-8")

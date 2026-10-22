@@ -55,6 +55,7 @@ TASK_MODALITIES: dict[str, tuple[list[str], list[str]]] = {
     "text-to-speech": (["text"], ["audio"]),
     "text-to-audio": (["text"], ["audio"]),
     "feature-extraction": (["text"], ["embedding"]),
+    "image-feature-extraction": (["image"], ["embedding"]),
     "sentence-similarity": (["text"], ["embedding"]),
     "text-ranking": (["text"], ["rerank"]),
 }
@@ -63,7 +64,10 @@ TASK_MODALITIES: dict[str, tuple[list[str], list[str]]] = {
 def _fetch_json(url: str) -> tuple[object, str | None]:
     request = Request(
         url,
-        headers={"Accept": "application/json", "User-Agent": "llmcapa-official-updater/1.0"},
+        headers={
+            "Accept": "application/json",
+            "User-Agent": "llmcapa-official-updater/1.0",
+        },
     )
     with urlopen(request, timeout=45) as response:
         payload = json.loads(response.read(8_000_000).decode("utf-8", "replace"))
@@ -77,7 +81,7 @@ def fetch_models(org: str) -> list[dict]:
     for page in range(PAGE_CAP):
         payload, link = _fetch_json(url)
         if not isinstance(payload, list):
-            raise ValueError(f"Hugging Face returned a non-list response for {org}")
+            raise TypeError(f"Hugging Face returned a non-list response for {org}")
         for item in payload:
             if isinstance(item, dict) and item.get("modelId"):
                 records[str(item["modelId"])] = item
@@ -87,9 +91,13 @@ def fetch_models(org: str) -> list[dict]:
         url = next_link.group(1)
         time.sleep(0.15)
     else:
-        raise RuntimeError(f"Hugging Face pagination exceeded {PAGE_CAP} pages for {org}")
+        raise RuntimeError(
+            f"Hugging Face pagination exceeded {PAGE_CAP} pages for {org}"
+        )
     if not records:
-        raise RuntimeError(f"Hugging Face returned no models for {org}; refusing to empty the catalog")
+        raise RuntimeError(
+            f"Hugging Face returned no models for {org}; refusing to empty the catalog"
+        )
     return [records[key] for key in sorted(records, key=str.casefold)]
 
 
@@ -121,7 +129,9 @@ def _new_model(provider: str, item: dict) -> dict:
     }
 
 
-def _update_row(provider: str, org: str, item: dict, checked_at: str, old: dict | None) -> dict:
+def _update_row(
+    provider: str, org: str, item: dict, checked_at: str, old: dict | None
+) -> dict:
     model_id = str(item["modelId"]).strip()
     row = dict(old) if old else _new_model(provider, item)
     # Preserve hand-verified model specs for existing IDs; the API's task tag
@@ -129,6 +139,14 @@ def _update_row(provider: str, org: str, item: dict, checked_at: str, old: dict 
     row["provider"] = provider
     row["model_id"] = model_id
     row.setdefault("display_name", model_id)
+    if provider == "inclusionai" and model_id.casefold() in {
+        "inclusionai/ming-3.0-audio-flash",
+        "inclusionai/ming-3.0-audio-tiny",
+    }:
+        # Official model cards describe audio/text inputs and outputs; the
+        # Hugging Face text-to-speech pipeline tag is only a subset.
+        row["input_modalities"] = ["text", "audio"]
+        row["output_modalities"] = ["text", "audio"]
     extra = dict(row.get("extra") or {})
     card = item.get("cardData") if isinstance(item.get("cardData"), dict) else {}
     tags = sorted(str(tag) for tag in item.get("tags", []) if isinstance(tag, str))
@@ -150,7 +168,9 @@ def _update_row(provider: str, org: str, item: dict, checked_at: str, old: dict 
     return row
 
 
-def merge_inventory(provider: str, org: str, records: list[dict], previous: list[dict], checked_at: str) -> tuple[list[dict], int]:
+def merge_inventory(
+    provider: str, org: str, records: list[dict], previous: list[dict], checked_at: str
+) -> tuple[list[dict], int]:
     """Merge live repository IDs while retaining curated specs and history."""
     old_by_id = {
         str(model.get("model_id", "")).casefold(): model
@@ -171,14 +191,21 @@ def merge_inventory(provider: str, org: str, records: list[dict], previous: list
         if key and key not in seen:
             row = dict(old)
             extra = dict(row.get("extra") or {})
-            extra.update({"official_hf_current": False, "not_listed_in_current_hf_inventory_at": checked_at})
+            extra.update(
+                {
+                    "official_hf_current": False,
+                    "not_listed_in_current_hf_inventory_at": checked_at,
+                }
+            )
             row["extra"] = extra
             models.append(row)
             retained += 1
     return models, retained
 
 
-def update_provider(provider: str, org: str, *, checked_at: str | None = None) -> tuple[int, int]:
+def update_provider(
+    provider: str, org: str, *, checked_at: str | None = None
+) -> tuple[int, int]:
     path = DATA / f"{provider}.json"
     data = json.loads(path.read_text(encoding="utf-8"))
     previous = data.get("models") or []
@@ -217,7 +244,12 @@ def main() -> None:
         for provider, count, retained in results
     )
     LOG.write_text(LOG.read_text(encoding="utf-8") + "".join(lines), encoding="utf-8")
-    print("; ".join(f"{provider}={count} live/{retained} retained" for provider, count, retained in results))
+    print(
+        "; ".join(
+            f"{provider}={count} live/{retained} retained"
+            for provider, count, retained in results
+        )
+    )
 
 
 if __name__ == "__main__":

@@ -60,6 +60,166 @@ def load_catalog(path: Path) -> dict[str, Any]:
     return data
 
 
+def _pricing_tier_identity(item: Any) -> tuple[tuple[str, Any], ...]:
+    """Identify a published rate tier by its documented applicability."""
+    if not isinstance(item, dict):
+        return ()
+    identifiers = (
+        "input_context",
+        "min_prompt_tokens",
+        "max_prompt_tokens",
+        "min_input_tokens",
+        "max_input_tokens",
+        "region",
+        "region_id",
+        "tier",
+        "utc_start",
+        "utc_end",
+        "utc_days",
+    )
+    return tuple((key, item[key]) for key in identifiers if item.get(key) is not None)
+
+
+def _protect_known_pricing(
+    previous: Any, current: Any, model_id: str, path: str
+) -> None:
+    """Reject lost known prices inside nested dictionaries and tier lists."""
+    if previous is None:
+        return
+    if current is None:
+        raise ValueError(f"{model_id}: known {path} was lost")
+    if isinstance(previous, dict):
+        if not isinstance(current, dict):
+            raise TypeError(f"{model_id}: invalid {path} pricing container")
+        for key, value in previous.items():
+            _protect_known_pricing(value, current.get(key), model_id, f"{path}.{key}")
+    elif isinstance(previous, list):
+        if not isinstance(current, list) or len(current) < len(previous):
+            raise ValueError(f"{model_id}: known {path} was lost")
+        used_indices: set[int] = set()
+        for index, value in enumerate(previous):
+            identity = _pricing_tier_identity(value)
+            if identity:
+                matches = [
+                    position
+                    for position, candidate in enumerate(current)
+                    if position not in used_indices
+                    and isinstance(candidate, dict)
+                    and all(
+                        candidate.get(key) == expected for key, expected in identity
+                    )
+                ]
+                if not matches:
+                    raise ValueError(f"{model_id}: known {path}[{index}] tier was lost")
+                matched_index = matches[0]
+            else:
+                matched_index = index
+                if matched_index in used_indices:
+                    raise ValueError(f"{model_id}: known {path}[{index}] was lost")
+            used_indices.add(matched_index)
+            _protect_known_pricing(
+                value, current[matched_index], model_id, f"{path}[{index}]"
+            )
+
+
+def validate_refreshed_catalog(
+    previous: dict[str, Any], updated: dict[str, Any]
+) -> None:
+    """Reject incomplete records or loss of previously documented capabilities.
+
+    Official pages often omit previously published fields; omission is not
+    evidence that a capability or a known price has been withdrawn. In those
+    cases, preserve the entire previous catalog until the updater is fixed.
+    """
+    old = model_index(previous)
+    new = model_index(updated)
+    for model_id, row in new.items():
+        for field in ("pricing", "extra"):
+            if row.get(field) is not None and not isinstance(row[field], dict):
+                raise TypeError(f"{model_id}: invalid {field}")
+        for key in ("context_window", "max_output_tokens"):
+            value = row.get(key)
+            if type(value) is not int or value < 0:
+                raise ValueError(f"{model_id}: missing or invalid {key}")
+
+    for model_id, previous_row in old.items():
+        refreshed = new.get(model_id)
+        if refreshed is None:
+            # An omitted row is not evidence of retirement. Preserve the
+            # existing catalog until an explicit, reviewed removal is made.
+            raise ValueError(f"{model_id}: model disappeared from provider catalog")
+
+        for key in (
+            "image",
+            "audio",
+            "video",
+            "decision",
+            "document",
+            "embedding",
+            "rerank",
+            "computer_use",
+            "spatial",
+        ):
+            if previous_row.get(key) and not refreshed.get(key):
+                raise ValueError(f"{model_id}: documented {key} was lost")
+        for key in ("context_window", "max_output_tokens"):
+            if previous_row.get(key, 0) > 0 and refreshed[key] == 0:
+                raise ValueError(f"{model_id}: known {key} became zero")
+
+        for key in ("input_modalities", "output_modalities"):
+            documented = previous_row.get(key)
+            if not isinstance(documented, list) or not documented:
+                continue
+            current = refreshed.get(key)
+            if not isinstance(current, list) or any(
+                modality not in current for modality in documented
+            ):
+                raise ValueError(f"{model_id}: documented {key} was lost")
+
+        previous_pricing = previous_row.get("pricing") or {}
+        refreshed_pricing = refreshed.get("pricing") or {}
+        if not isinstance(refreshed_pricing, dict):
+            raise TypeError(f"{model_id}: invalid pricing")
+        # Protect all nested token-pricing details, including known zeroes.
+        for key, known_value in previous_pricing.items():
+            _protect_known_pricing(
+                known_value, refreshed_pricing.get(key), model_id, key
+            )
+
+        previous_extra = previous_row.get("extra")
+        refreshed_extra = refreshed.get("extra")
+        if previous_extra is not None and not isinstance(previous_extra, dict):
+            raise TypeError(f"{model_id}: invalid previous extra")
+        if refreshed_extra is not None and not isinstance(refreshed_extra, dict):
+            raise TypeError(f"{model_id}: invalid extra")
+        previous_extra = previous_extra or {}
+        refreshed_extra = refreshed_extra or {}
+        # Non-token prices are usually kept in extra. Do not enumerate only
+        # today's Mistral keys: images, speech, video, and new APIs may
+        # introduce other published units. Preserve 0.0 as a known rate.
+        for key, known_value in previous_extra.items():
+            is_billing_field = "_per_" in key.casefold() or any(
+                word in key.casefold()
+                for word in ("price", "pricing", "cost", "rate", "billing")
+            )
+            if is_billing_field:
+                _protect_known_pricing(
+                    known_value, refreshed_extra.get(key), model_id, key
+                )
+
+        previous_cached = previous_extra.get("cached_input_per_1m")
+        previous_output = previous_pricing.get("output_per_1m")
+        refreshed_cached = refreshed_extra.get("cached_input_per_1m")
+        if (
+            previous_cached is not None
+            and previous_output is not None
+            and previous_cached != previous_output
+            and refreshed_pricing.get("output_per_1m") == previous_cached
+            and refreshed_cached == previous_output
+        ):
+            raise ValueError(f"{model_id}: cached and output prices swapped")
+
+
 def changed_fields(before: Any, after: Any, prefix: str = "") -> list[str]:
     """Report nested object changes without expanding individual list elements."""
     if before == after:
@@ -175,6 +335,7 @@ def run_provider(
             raise ValueError(f"unexpected files modified: {sorted(unexpected)}")
 
         updated = load_catalog(path)
+        validate_refreshed_catalog(previous, updated)
         diff = compare_catalogs(previous, updated)
         if relative_path in touched and any(diff.values()):
             subprocess.run(["git", "add", "--", relative_path], cwd=ROOT, check=True)

@@ -824,7 +824,7 @@
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
-      "supports_streaming": true,
+      "supports_streaming": false,
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": false,
@@ -849,6 +849,48 @@
         "alias_count": "1",
         "description": "An efficient audio input model, pre-trained and optimized for transcription purposes only.",
         "price_per_min": 0.0,
+        "supports_transcription": true
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "voxtral-mini-transcribe-3-0",
+      "display_name": "Voxtral Mini Transcribe 3",
+      "context_window": 32000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://docs.mistral.ai/models/voxtral-mini-transcribe-3-0",
+        "card_slug": "voxtral-mini-transcribe-3-0",
+        "status": "Public Preview",
+        "version": "1",
+        "release_date": "October 20, 2026",
+        "alias_count": "2",
+        "description": "Voxtral Mini Transcribe 3 achieves strong transcription and diarization performance at a competitive price point. It ranks 3rd on the FLEURS multilingual transcription and English diarization benchmarks, surpassing state-of-the-art models such as Gemini 3.5 Transcribe, while being small enough to be",
+        "price_per_min": 0.0035,
         "supports_transcription": true
       }
     },
@@ -896,6 +938,48 @@
     },
     {
       "provider": "mistral",
+      "model_id": "voxtral-mini-transcribe-realtime-3-0",
+      "display_name": "Voxtral Mini Transcribe Realtime 3",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://docs.mistral.ai/models/voxtral-mini-transcribe-realtime-3-0",
+        "card_slug": "voxtral-mini-transcribe-realtime-3-0",
+        "status": "Public Preview",
+        "version": "1",
+        "release_date": "October 20, 2026",
+        "alias_count": "2",
+        "description": "Voxtral Realtime Transcribe 3 is a realtime transcription model built for agentic use-cases. It achieves state-of-the-art streaming transcription with configurable latency (80 ms to 2,400 ms), built-in end-of-turn detection, context biasing, and speaker diarization, all in a single streaming session",
+        "price_per_min": 0.008,
+        "supports_transcription": true
+      }
+    },
+    {
+      "provider": "mistral",
       "model_id": "voxtral-mini-tts-2603",
       "display_name": "Voxtral TTS",
       "context_window": 0,
@@ -933,6 +1017,49 @@
         "alias_count": "1",
         "description": "Our state-of-the-art text-to-speech model with zero-shot voice cloning. Supports 9 languages, streaming with ~90ms time-to-first-audio, and no transcript required for voice prompts.",
         "tts_input_price": 0.0,
+        "supports_tts": true
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "voxtral-mini-tts-3-0",
+      "display_name": "Voxtral TTS 3",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "audio"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://docs.mistral.ai/models/voxtral-mini-tts-3-0",
+        "card_slug": "voxtral-mini-tts-3-0",
+        "status": "Public Preview",
+        "version": "1",
+        "release_date": "October 20, 2026",
+        "alias_count": "5",
+        "description": "Our state-of-the-art text-to-speech model with zero-shot voice cloning and professional voice cloning. Supports 9 languages, streaming with ~90 ms time-to-first-audio, 5 output formats, 34 emotion tags, and 2 pace tags.",
+        "price_per_1m_chars": 13.0,
+        "tts_price": 13.0,
         "supports_tts": true
       }
     },
@@ -981,6 +1108,48 @@
         "supports_batching": true,
         "supports_prefix": true,
         "supports_document_qna": true
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "voxtral-small-transcribe-3-0",
+      "display_name": "Voxtral Small Transcribe 3",
+      "context_window": 32000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://docs.mistral.ai/models/voxtral-small-transcribe-3-0",
+        "card_slug": "voxtral-small-transcribe-3-0",
+        "status": "Public Preview",
+        "version": "3",
+        "release_date": "October 20, 2026",
+        "alias_count": "2",
+        "description": "Voxtral Small Transcribe 3 is our flagship transcription and diarization model. It achieves SOTA transcription scores, outperforming Microsoft AI Transcribe 2, Whisper large-v3, GPT-Transcribe, Scribe v2, and Gemini 3.5 Transcribe. It also supports translation, speech Q&A, summarization, and functio",
+        "price_per_min": 0.004,
+        "supports_transcription": true
       }
     },
     {
@@ -3134,7 +3303,7 @@
       ],
       "supports_function_calling": false,
       "supports_json_mode": false,
-      "supports_streaming": true,
+      "supports_streaming": false,
       "supports_vision": false,
       "supports_reasoning": false,
       "supports_chat_completion": false,

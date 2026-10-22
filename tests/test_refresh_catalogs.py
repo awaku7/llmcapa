@@ -173,6 +173,403 @@ def test_timeout_terminates_provider_process_group_before_restore(
     assert calls[2:] == ["reaped", "restored"]
 
 
+def _complete_catalog() -> dict:
+    return {
+        "models": [
+            {
+                "model_id": "model-1",
+                "context_window": 1024,
+                "max_output_tokens": 256,
+                "pricing": {
+                    "input_per_1m": 5.0,
+                    "output_per_1m": 25.0,
+                    "currency": "USD",
+                },
+                "extra": {"cached_input_per_1m": 0.5},
+                "image": {"generation": True, "status": "documented"},
+                "audio": {"transcription": True},
+                "video": {"generation": True, "status": "documented"},
+                "decision": {"decision": True},
+                "document": {"accepts_documents": True},
+                "embedding": {"supported": True},
+                "rerank": {"supported": True},
+                "computer_use": {"supported": True},
+                "spatial": {"supported": True},
+            }
+        ]
+    }
+
+
+def test_refresh_guard_accepts_complete_updated_metadata():
+    old = _complete_catalog()
+    updated = json.loads(json.dumps(old))
+    updated["models"][0]["pricing"]["input_per_1m"] = 6.0
+    refresh.validate_refreshed_catalog(old, updated)
+
+
+@pytest.mark.parametrize("key", ["context_window", "max_output_tokens"])
+def test_refresh_guard_rejects_incomplete_model_records(key):
+    previous = _complete_catalog()
+    updated = json.loads(json.dumps(previous))
+    del updated["models"][0][key]
+    with pytest.raises(ValueError, match="missing or invalid"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+@pytest.mark.parametrize(
+    "key",
+    [
+        "image",
+        "audio",
+        "video",
+        "decision",
+        "document",
+        "embedding",
+        "rerank",
+        "computer_use",
+        "spatial",
+    ],
+)
+def test_refresh_guard_rejects_lost_documented_capabilities(key):
+    previous = _complete_catalog()
+    updated = json.loads(json.dumps(previous))
+    del updated["models"][0][key]
+    with pytest.raises(ValueError, match=f"documented {key} was lost"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+@pytest.mark.parametrize(
+    ("field", "removed"),
+    [
+        ("input_modalities", "image"),
+        ("output_modalities", "audio"),
+    ],
+)
+def test_refresh_guard_rejects_lost_documented_modalities(field, removed):
+    previous = _complete_catalog()
+    previous["models"][0][field] = ["text", removed]
+    updated = json.loads(json.dumps(previous))
+    updated["models"][0][field] = ["text"]
+    with pytest.raises(ValueError, match=f"documented {field} was lost"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+    updated["models"][0].pop(field)
+    with pytest.raises(ValueError, match=f"documented {field} was lost"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+def test_refresh_guard_allows_documented_modality_expansion():
+    previous = _complete_catalog()
+    previous["models"][0]["input_modalities"] = ["text"]
+    updated = json.loads(json.dumps(previous))
+    updated["models"][0]["input_modalities"] = ["text", "image"]
+    refresh.validate_refreshed_catalog(previous, updated)
+
+
+@pytest.mark.parametrize(
+    ("container", "value", "path"),
+    [
+        (
+            "pricing_regional",
+            {"us": {"output_per_1m": 0.0}},
+            ("us", "output_per_1m"),
+        ),
+        (
+            "input_context_pricing_tiers",
+            [{"input_context": "short", "cache_read_per_1m": 0.0}],
+            (0, "cache_read_per_1m"),
+        ),
+    ],
+)
+def test_refresh_guard_rejects_lost_nested_prices(container, value, path):
+    previous = _complete_catalog()
+    previous["models"][0]["extra"][container] = value
+    updated = json.loads(json.dumps(previous))
+    nested = updated["models"][0]["extra"][container]
+    for key in path[:-1]:
+        nested = nested[key]
+    del nested[path[-1]]
+    with pytest.raises(ValueError, match="known .* was lost"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+def test_refresh_guard_rejects_missing_pricing_tier():
+    previous = _complete_catalog()
+    previous["models"][0]["extra"]["input_context_pricing_tiers"] = [
+        {"input_context": "short", "input_per_1m": 0.2},
+        {"input_context": "long", "input_per_1m": 0.4},
+    ]
+    updated = json.loads(json.dumps(previous))
+    updated["models"][0]["extra"]["input_context_pricing_tiers"].pop()
+    with pytest.raises(ValueError, match="known input_context_pricing_tiers was lost"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+def test_refresh_guard_rejects_replaced_context_pricing_tier():
+    previous = _complete_catalog()
+    previous["models"][0]["extra"]["input_context_pricing_tiers"] = [
+        {"input_context": "≤ 100K", "input_per_1m": 0.1},
+        {"input_context": "> 100K", "input_per_1m": 0.3},
+    ]
+    updated = json.loads(json.dumps(previous))
+    tiers = updated["models"][0]["extra"]["input_context_pricing_tiers"]
+    tiers[1] = {"input_context": "> 200K", "input_per_1m": 0.3}
+    with pytest.raises(ValueError, match="tier was lost"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+def test_refresh_guard_matches_identified_tiers_when_reordered():
+    previous = _complete_catalog()
+    previous["models"][0]["extra"]["input_context_pricing_tiers"] = [
+        {"input_context": "≤ 100K", "input_per_1m": 0.1},
+        {"input_context": "> 100K", "input_per_1m": 0.3},
+    ]
+    updated = json.loads(json.dumps(previous))
+    tiers = updated["models"][0]["extra"]["input_context_pricing_tiers"]
+    tiers.reverse()
+    tiers[0]["input_per_1m"] = 0.4
+    refresh.validate_refreshed_catalog(previous, updated)
+
+
+def test_refresh_guard_identifies_tiers_by_prompt_token_thresholds():
+    previous = _complete_catalog()
+    previous["models"][0]["extra"]["input_context_pricing_tiers"] = [
+        {"min_prompt_tokens": 0, "max_prompt_tokens": 100_000, "input_per_1m": 0.1},
+        {"min_prompt_tokens": 100_001, "input_per_1m": 0.2},
+    ]
+    updated = json.loads(json.dumps(previous))
+    updated["models"][0]["extra"]["input_context_pricing_tiers"][1][
+        "min_prompt_tokens"
+    ] = 200_001
+    with pytest.raises(ValueError, match="tier was lost"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+@pytest.mark.parametrize(
+    ("field", "replacement"),
+    [
+        ("utc_start", "14:00"),
+        ("utc_end", "21:00"),
+        ("utc_days", [2, 3]),
+    ],
+)
+def test_refresh_guard_rejects_replaced_utc_pricing_override(field, replacement):
+    previous = _complete_catalog()
+    previous["models"][0]["extra"]["pricing_overrides"] = [
+        {
+            "utc_start": "00:00",
+            "utc_end": "06:00",
+            "utc_days": [0, 1],
+            "input_per_1m": 0.1,
+        },
+        {
+            "utc_start": "12:00",
+            "utc_end": "18:00",
+            "utc_days": [4, 5],
+            "input_per_1m": 0.2,
+        },
+    ]
+    updated = json.loads(json.dumps(previous))
+    overrides = updated["models"][0]["extra"]["pricing_overrides"]
+    overrides[1][field] = replacement
+    with pytest.raises(ValueError, match="tier was lost"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+def test_refresh_guard_matches_utc_pricing_overrides_when_reordered():
+    previous = _complete_catalog()
+    previous["models"][0]["extra"]["pricing_overrides"] = [
+        {
+            "utc_start": "00:00",
+            "utc_end": "06:00",
+            "utc_days": [0],
+            "input_per_1m": 0.1,
+        },
+        {
+            "utc_start": "12:00",
+            "utc_end": "18:00",
+            "utc_days": [4],
+            "input_per_1m": 0.2,
+        },
+    ]
+    updated = json.loads(json.dumps(previous))
+    updated["models"][0]["extra"]["pricing_overrides"].reverse()
+    updated["models"][0]["extra"]["pricing_overrides"][0]["input_per_1m"] = 0.3
+    refresh.validate_refreshed_catalog(previous, updated)
+
+
+@pytest.mark.parametrize("extra", [["bad"], "bad", [], ""])
+def test_refresh_guard_rejects_invalid_extra_on_new_models(extra):
+    previous = _complete_catalog()
+    updated = json.loads(json.dumps(previous))
+    updated["models"].append(
+        {
+            "model_id": "new-model",
+            "context_window": 2048,
+            "max_output_tokens": 256,
+            "extra": extra,
+        }
+    )
+    with pytest.raises(TypeError, match="new-model: invalid extra"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+def test_refresh_guard_accepts_valid_extra_on_new_models():
+    previous = _complete_catalog()
+    updated = json.loads(json.dumps(previous))
+    updated["models"].append(
+        {
+            "model_id": "new-model",
+            "context_window": 2048,
+            "max_output_tokens": 256,
+            "extra": {},
+        }
+    )
+    refresh.validate_refreshed_catalog(previous, updated)
+
+
+@pytest.mark.parametrize("pricing", [["bad"], "bad", [], "", 1.5])
+def test_refresh_guard_rejects_invalid_pricing_on_new_models(pricing):
+    previous = _complete_catalog()
+    updated = json.loads(json.dumps(previous))
+    updated["models"].append(
+        {
+            "model_id": "new-model",
+            "context_window": 2048,
+            "max_output_tokens": 256,
+            "pricing": pricing,
+        }
+    )
+    with pytest.raises(TypeError, match="new-model: invalid pricing"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+@pytest.mark.parametrize("pricing", [{}, None])
+def test_refresh_guard_accepts_valid_pricing_on_new_models(pricing):
+    previous = _complete_catalog()
+    updated = json.loads(json.dumps(previous))
+    updated["models"].append(
+        {
+            "model_id": "new-model",
+            "context_window": 2048,
+            "max_output_tokens": 256,
+            "pricing": pricing,
+        }
+    )
+    refresh.validate_refreshed_catalog(previous, updated)
+
+
+@pytest.mark.parametrize("pricing", [["bad"], "bad", []])
+def test_refresh_guard_rejects_invalid_pricing_on_existing_models(pricing):
+    previous = _complete_catalog()
+    updated = json.loads(json.dumps(previous))
+    updated["models"][0]["pricing"] = pricing
+    with pytest.raises(TypeError, match="model-1: invalid pricing"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+@pytest.mark.parametrize("extra", [["bad"], "bad", [], ""])
+def test_refresh_guard_rejects_invalid_extra_types(extra):
+    previous = _complete_catalog()
+    updated = json.loads(json.dumps(previous))
+    updated["models"][0]["extra"] = extra
+    with pytest.raises(TypeError, match="invalid extra"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+def test_refresh_guard_rejects_erased_known_rates():
+    previous = _complete_catalog()
+    updated = json.loads(json.dumps(previous))
+    updated["models"][0]["pricing"]["output_per_1m"] = None
+    with pytest.raises(ValueError, match="known output_per_1m was lost"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+@pytest.mark.parametrize("container", ["pricing", "extra"])
+def test_refresh_guard_rejects_missing_cached_input_rate(container):
+    previous = _complete_catalog()
+    previous["models"][0]["pricing"]["cached_input_per_1m"] = 0.5
+    updated = json.loads(json.dumps(previous))
+    del updated["models"][0][container]["cached_input_per_1m"]
+    with pytest.raises(ValueError, match="known cached_input_per_1m was lost"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+@pytest.mark.parametrize(
+    "key",
+    [
+        "tts_input_price",
+        "tts_price",
+        "price_per_min",
+        "audio_price_per_min",
+        "price_per_m_pages",
+        "price_per_m_pages_annotation",
+        "price_per_1m_chars",
+        "price_per_hour",
+        "price_per_minute",
+        "price_per_image",
+        "price_per_second",
+        "image_cost_per_frame",
+        "audio_billing_rate",
+        "cache_read_per_1m",
+        "cache_write_per_1m",
+        "audio_input_per_1m",
+        "image_output_per_1m",
+    ],
+)
+def test_refresh_guard_rejects_missing_specialty_price_including_zero(key):
+    previous = _complete_catalog()
+    previous["models"][0]["extra"][key] = 0.0
+    updated = json.loads(json.dumps(previous))
+    del updated["models"][0]["extra"][key]
+    with pytest.raises(ValueError, match=f"known {key} was lost"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+def test_refresh_guard_rejects_missing_new_pricing_units():
+    previous = _complete_catalog()
+    previous["models"][0]["pricing"]["price_per_second"] = 0.0
+    updated = json.loads(json.dumps(previous))
+    del updated["models"][0]["pricing"]["price_per_second"]
+    with pytest.raises(ValueError, match="known price_per_second was lost"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+def test_refresh_guard_rejects_cached_output_rate_inversion():
+    previous = _complete_catalog()
+    updated = json.loads(json.dumps(previous))
+    updated["models"][0]["pricing"]["output_per_1m"] = 0.5
+    updated["models"][0]["extra"]["cached_input_per_1m"] = 25.0
+    with pytest.raises(ValueError, match="cached and output prices swapped"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+def test_refresh_guard_rejects_deleting_cited_models():
+    previous = _complete_catalog()
+    previous["models"][0]["extra"]["context_window_source"] = "https://example.org"
+    updated = _complete_catalog()
+    updated["models"][0]["model_id"] = "replacement-model"
+    with pytest.raises(ValueError, match="model disappeared from provider catalog"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+def test_refresh_guard_rejects_omitted_plain_text_model():
+    previous = {
+        "models": [
+            {
+                "model_id": "plain-text",
+                "context_window": 163840,
+                "max_output_tokens": 4096,
+                "pricing": {"input_per_1m": 0.2, "output_per_1m": 0.4},
+            },
+            {"model_id": "other", "context_window": 512, "max_output_tokens": 128},
+        ]
+    }
+    updated = {"models": [previous["models"][1]]}
+    with pytest.raises(ValueError, match="plain-text: model disappeared"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
 def test_xai_refresh_without_scratch_snapshot(tmp_path, monkeypatch):
     """A clean checkout must fetch xAI models before any scratch file exists."""
     import _scrape_xai

@@ -243,3 +243,117 @@ def test_clef_refresh_does_not_guess_missing_price():
         "extra": {},
     }
     assert _UPDATER.enrich_clef_decision(record)["pricing"] is None
+
+
+def test_parse_published_cached_input_pricing():
+    published = (
+        "$0.30 per M input tokens, $1.20 per M output tokens, "
+        "$0.006 per M cached input tokens"
+    )
+    assert _UPDATER._parse_pricing(published, "Text Generation") == {
+        "input_per_1m": 0.30,
+        "output_per_1m": 1.20,
+        "cached_input_per_1m": 0.006,
+        "currency": "USD",
+    }
+    without_cache = "$0.20 per M input tokens, $0.30 per M output tokens"
+    assert "cached_input_per_1m" not in _UPDATER._parse_pricing(
+        without_cache, "Text Generation"
+    )
+
+
+def test_deepseek_cloudflare_cached_rate_is_in_bundled_catalog():
+    import json
+
+    catalog = (
+        Path(__file__).resolve().parents[1]
+        / "src"
+        / "llmcapa"
+        / "data"
+        / "cloudflare-workers-ai.json"
+    )
+    data = json.loads(catalog.read_text(encoding="utf-8"))
+    model = next(
+        row
+        for row in data["models"]
+        if row["model_id"] == "@cf/deepseek-ai/deepseek-v4.1-flash-1017"
+    )
+    assert model["pricing"]["input_per_1m"] == 0.3
+    assert model["pricing"]["output_per_1m"] == 1.2
+    assert model["pricing"]["cached_input_per_1m"] == 0.006
+
+
+def test_parse_clairic_input_only_rate():
+    assert _UPDATER._parse_pricing("$0.10 per M input tokens", "Text Generation") == {
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.0,
+        "currency": "USD",
+    }
+
+
+def test_clairic_published_input_price_is_in_bundled_catalog():
+    import json
+
+    catalog = (
+        Path(__file__).resolve().parents[1]
+        / "src"
+        / "llmcapa"
+        / "data"
+        / "cloudflare-workers-ai.json"
+    )
+    models = json.loads(catalog.read_text(encoding="utf-8"))["models"]
+    model = next(m for m in models if m["model_id"] == "@cf/cloudflare/clairic")
+    assert model["pricing"] == {
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.0,
+        "currency": "USD",
+    }
+
+
+def test_clairic_normalized_as_rest_only_typed_extraction():
+    from llmcapa.models import Capability
+
+    record = {
+        "provider": "cloudflare-workers-ai",
+        "model_id": "@cf/cloudflare/clairic",
+        "context_window": 65536,
+        "max_output_tokens": 0,
+        "output_modalities": ["text"],
+        "pricing": {
+            "input_per_1m": 0.1,
+            "output_per_1m": 0.0,
+            "currency": "USD",
+        },
+        "extra": {
+            "official_unit_pricing": "$0.10 per M input tokens",
+            "openai_compatible_base_url_template": "https://invalid.example",
+        },
+    }
+    output = _UPDATER.enrich_clairic_extraction(record)
+    assert output["output_modalities"] == ["extraction"]
+    assert "openai_compatible_base_url_template" not in output["extra"]
+    assert output["extra"]["specialized_task"] == "typed_extraction"
+    assert output["extra"]["typed_extraction"]["returns_confidence"] is True
+    assert "reference_date" in output["extra"]["typed_extraction"]["request_fields"]
+    assert output["extra"]["endpoints"][0]["path"] == ("/ai/run/@cf/cloudflare/clairic")
+    assert Capability.from_dict(output).supports("text_output") is False
+
+
+def test_clairic_bundle_has_typed_extraction_and_documented_price():
+    import json
+
+    catalog = (
+        Path(__file__).resolve().parents[1]
+        / "src"
+        / "llmcapa"
+        / "data"
+        / "cloudflare-workers-ai.json"
+    )
+    models = json.loads(catalog.read_text(encoding="utf-8"))["models"]
+    clairic = next(m for m in models if m["model_id"] == "@cf/cloudflare/clairic")
+    assert clairic["output_modalities"] == ["extraction"]
+    assert clairic["pricing"]["input_per_1m"] == 0.1
+    assert clairic["pricing"]["output_per_1m"] == 0.0
+    assert clairic["extra"]["endpoints"][0]["protocol"] == "workers-ai-rest"
+    assert "reference_date" in clairic["extra"]["typed_extraction"]["request_fields"]
+    assert "openai_compatible_base_url_template" not in clairic["extra"]

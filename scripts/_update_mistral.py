@@ -167,6 +167,19 @@ def _is_specialty(mid: str) -> bool:
     return any(t in low for t in ("ocr", "transcribe", "tts", "moderation"))
 
 
+def _card_unit_price(model: dict, unit: str) -> float | None:
+    """Read a specialty rate only when its unit appears on the model card."""
+    text = str(model.get("head_text") or "")
+    if unit == "minute":
+        pattern = r"\$\s*(\d+(?:\.\d+)?)\s*/\s*Min\b"
+    elif unit == "million_characters":
+        pattern = r"\$\s*(\d+(?:\.\d+)?)\s*/\s*(?:1\s*)?M\s*Chars\b"
+    else:
+        raise ValueError(f"unsupported unit: {unit}")
+    match = re.search(pattern, text, re.IGNORECASE)
+    return float(match.group(1)) if match else None
+
+
 def build_row(slug: str, m: dict) -> dict:
     mid = pick_model_id(m, slug)
     display = m.get("h1") or mid
@@ -330,15 +343,23 @@ def build_row(slug: str, m: dict) -> dict:
         extra["description"] = m["description"]
 
     # specialty pricing
-    if is_transcribe and ip is not None:
-        extra["price_per_min"] = float(ip)
+    if is_transcribe:
+        per_min = _card_unit_price(m, "minute")
+        if per_min is None and m.get("min_price") is not None:
+            per_min = float(m["min_price"])
+        if per_min is not None:
+            extra["price_per_min"] = per_min
     if audio_per_min is not None:
         extra["audio_price_per_min"] = audio_per_min
     if is_tts:
-        # scraped as [0, 16] — treat 16 as output specialty rate
-        if op is not None:
+        # The model card may publish one character-rate (not two token rates).
+        per_m_chars = _card_unit_price(m, "million_characters")
+        if per_m_chars is not None:
+            extra["price_per_1m_chars"] = per_m_chars
+            extra["tts_price"] = per_m_chars
+        elif op is not None:
             extra["tts_price"] = float(op)
-        if ip is not None:
+        if ip is not None and per_m_chars is None:
             extra["tts_input_price"] = float(ip)
     if is_ocr:
         if ip is not None:
@@ -379,8 +400,9 @@ def build_row(slug: str, m: dict) -> dict:
     else:
         license_type = "api"
 
-    # streaming default true for chat/audio APIs
-    streaming = bool(chat or is_transcribe or is_tts)
+    # Transcription is file/batch-only unless the model explicitly supports realtime.
+    # Chat and text-to-speech streaming are independent of transcription.
+    streaming = bool(chat or is_tts or (is_transcribe and "realtime" in mid_l))
 
     # aliases: common bare names for current flagship
     alias_map = {
@@ -446,12 +468,28 @@ def dedupe_model_ids(rows: list[dict]) -> list[dict]:
     return out
 
 
+def preserve_specialty_pricing(row: dict, previous: dict) -> dict:
+    """Retain any previously published rate omitted by a fresh model scrape."""
+    old_extra = previous.get("extra") or {}
+    new_extra = row.setdefault("extra", {})
+    for key, value in old_extra.items():
+        billing_key = "_per_" in key.casefold() or any(
+            part in key.casefold()
+            for part in ("price", "pricing", "cost", "rate", "billing")
+        )
+        if billing_key and value is not None and new_extra.get(key) is None:
+            new_extra[key] = value
+    return row
+
+
 def main() -> None:
     import subprocess
     import sys
 
     scrape_script = WORKDIR / "scripts" / "_scrape_mistral.py"
-    result = subprocess.run([sys.executable, str(scrape_script)], cwd=WORKDIR, check=False)
+    result = subprocess.run(
+        [sys.executable, str(scrape_script)], cwd=WORKDIR, check=False
+    )
     if result.returncode != 0:
         raise SystemExit(f"Mistral official scrape failed: {scrape_script}")
 
@@ -480,6 +518,7 @@ def main() -> None:
 
         _head = _sp.run(
             ["git", "show", "HEAD:src/llmcapa/data/mistral.json"],
+            check=False,
             capture_output=True,
             text=True,
             encoding="utf-8",
@@ -521,6 +560,7 @@ def main() -> None:
                 row["context_window"] = old_ctx
             if row.get("pricing") is None and old.get("pricing"):
                 row["pricing"] = old["pricing"]
+            preserve_specialty_pricing(row, old)
         rows.append(row)
 
     rows = dedupe_model_ids(rows)
