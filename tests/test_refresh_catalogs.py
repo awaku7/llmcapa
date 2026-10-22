@@ -173,6 +173,79 @@ def test_timeout_terminates_provider_process_group_before_restore(
     assert calls[2:] == ["reaped", "restored"]
 
 
+
+def _complete_catalog() -> dict:
+    return {
+        "models": [
+            {
+                "model_id": "model-1",
+                "context_window": 1024,
+                "max_output_tokens": 256,
+                "pricing": {
+                    "input_per_1m": 5.0,
+                    "output_per_1m": 25.0,
+                    "currency": "USD",
+                },
+                "extra": {"cached_input_per_1m": 0.5},
+                "image": {"generation": True, "status": "documented"},
+                "audio": {"transcription": True},
+                "decision": {"decision": True},
+            }
+        ]
+    }
+
+
+def test_refresh_guard_accepts_complete_updated_metadata():
+    old = _complete_catalog()
+    updated = json.loads(json.dumps(old))
+    updated["models"][0]["pricing"]["input_per_1m"] = 6.0
+    refresh.validate_refreshed_catalog(old, updated)
+
+
+@pytest.mark.parametrize("key", ["context_window", "max_output_tokens"])
+def test_refresh_guard_rejects_incomplete_model_records(key):
+    previous = _complete_catalog()
+    updated = json.loads(json.dumps(previous))
+    del updated["models"][0][key]
+    with pytest.raises(ValueError, match="missing or invalid"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+@pytest.mark.parametrize("key", ["image", "audio", "decision"])
+def test_refresh_guard_rejects_lost_documented_capabilities(key):
+    previous = _complete_catalog()
+    updated = json.loads(json.dumps(previous))
+    del updated["models"][0][key]
+    with pytest.raises(ValueError, match=f"documented {key} was lost"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+def test_refresh_guard_rejects_erased_known_rates():
+    previous = _complete_catalog()
+    updated = json.loads(json.dumps(previous))
+    updated["models"][0]["pricing"]["output_per_1m"] = None
+    with pytest.raises(ValueError, match="known output_per_1m was lost"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+def test_refresh_guard_rejects_cached_output_rate_inversion():
+    previous = _complete_catalog()
+    updated = json.loads(json.dumps(previous))
+    updated["models"][0]["pricing"]["output_per_1m"] = 0.5
+    updated["models"][0]["extra"]["cached_input_per_1m"] = 25.0
+    with pytest.raises(ValueError, match="cached and output prices swapped"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+def test_refresh_guard_rejects_deleting_cited_models():
+    previous = _complete_catalog()
+    previous["models"][0]["extra"]["context_window_source"] = "https://example.org"
+    updated = _complete_catalog()
+    updated["models"][0]["model_id"] = "replacement-model"
+    with pytest.raises(ValueError, match="documented model disappeared"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
 def test_xai_refresh_without_scratch_snapshot(tmp_path, monkeypatch):
     """A clean checkout must fetch xAI models before any scratch file exists."""
     import _scrape_xai
