@@ -502,6 +502,7 @@ def main() -> None:
 
         _head = _sp.run(
             ["git", "show", "HEAD:src/llmcapa/data/mistral.json"],
+            check=False,
             capture_output=True,
             text=True,
             encoding="utf-8",
