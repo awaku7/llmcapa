@@ -80,7 +80,7 @@ def fetch_models(org: str) -> list[dict]:
     for page in range(PAGE_CAP):
         payload, link = _fetch_json(url)
         if not isinstance(payload, list):
-            raise ValueError(f"Hugging Face returned a non-list response for {org}")
+            raise TypeError(f"Hugging Face returned a non-list response for {org}")
         for item in payload:
             if isinstance(item, dict) and item.get("modelId"):
                 records[str(item["modelId"])] = item
