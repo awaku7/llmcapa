@@ -265,6 +265,13 @@ def test_refresh_guard_rejects_missing_cached_input_rate(container):
         "audio_price_per_min",
         "price_per_m_pages",
         "price_per_m_pages_annotation",
+        "price_per_1m_chars",
+        "price_per_hour",
+        "price_per_minute",
+        "price_per_image",
+        "price_per_second",
+        "image_cost_per_frame",
+        "audio_billing_rate",
     ],
 )
 def test_refresh_guard_rejects_missing_specialty_price_including_zero(key):
@@ -273,6 +280,15 @@ def test_refresh_guard_rejects_missing_specialty_price_including_zero(key):
     updated = json.loads(json.dumps(previous))
     del updated["models"][0]["extra"][key]
     with pytest.raises(ValueError, match=f"known {key} was lost"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+def test_refresh_guard_rejects_missing_new_pricing_units():
+    previous = _complete_catalog()
+    previous["models"][0]["pricing"]["price_per_second"] = 0.0
+    updated = json.loads(json.dumps(previous))
+    del updated["models"][0]["pricing"]["price_per_second"]
+    with pytest.raises(ValueError, match="known price_per_second was lost"):
         refresh.validate_refreshed_catalog(previous, updated)
 
 
