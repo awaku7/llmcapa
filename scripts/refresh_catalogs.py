@@ -60,6 +60,67 @@ def load_catalog(path: Path) -> dict[str, Any]:
     return data
 
 
+def validate_refreshed_catalog(
+    previous: dict[str, Any], updated: dict[str, Any]
+) -> None:
+    """Reject incomplete records or loss of previously documented capabilities.
+
+    Official pages often omit previously published fields; omission is not
+    evidence that a capability or a known price has been withdrawn. In those
+    cases, preserve the entire previous catalog until the updater is fixed.
+    """
+    old = model_index(previous)
+    new = model_index(updated)
+    for model_id, row in new.items():
+        for key in ("context_window", "max_output_tokens"):
+            value = row.get(key)
+            if type(value) is not int or value < 0:
+                raise ValueError(f"{model_id}: missing or invalid {key}")
+
+    for model_id, previous_row in old.items():
+        refreshed = new.get(model_id)
+        previous_extra = previous_row.get("extra") or {}
+        if refreshed is None:
+            if (
+                any(previous_row.get(key) for key in ("image", "audio", "decision"))
+                or previous_extra.get("context_window_source")
+            ):
+                raise ValueError(f"{model_id}: documented model disappeared")
+            continue
+
+        for key in ("image", "audio", "decision"):
+            if previous_row.get(key) and not refreshed.get(key):
+                raise ValueError(f"{model_id}: documented {key} was lost")
+        for key in ("context_window", "max_output_tokens"):
+            if previous_row.get(key, 0) > 0 and refreshed[key] == 0:
+                raise ValueError(f"{model_id}: known {key} became zero")
+
+        previous_pricing = previous_row.get("pricing") or {}
+        refreshed_pricing = refreshed.get("pricing") or {}
+        if not isinstance(refreshed_pricing, dict):
+            raise ValueError(f"{model_id}: invalid pricing")
+        for key in ("input_per_1m", "output_per_1m"):
+            if (
+                previous_pricing.get(key) is not None
+                and refreshed_pricing.get(key) is None
+            ):
+                raise ValueError(f"{model_id}: known {key} was lost")
+
+        previous_cached = previous_extra.get("cached_input_per_1m")
+        previous_output = previous_pricing.get("output_per_1m")
+        refreshed_cached = (refreshed.get("extra") or {}).get(
+            "cached_input_per_1m"
+        )
+        if (
+            previous_cached is not None
+            and previous_output is not None
+            and previous_cached != previous_output
+            and refreshed_pricing.get("output_per_1m") == previous_cached
+            and refreshed_cached == previous_output
+        ):
+            raise ValueError(f"{model_id}: cached and output prices swapped")
+
+
 def changed_fields(before: Any, after: Any, prefix: str = "") -> list[str]:
     """Report nested object changes without expanding individual list elements."""
     if before == after:
@@ -175,6 +236,7 @@ def run_provider(
             raise ValueError(f"unexpected files modified: {sorted(unexpected)}")
 
         updated = load_catalog(path)
+        validate_refreshed_catalog(previous, updated)
         diff = compare_catalogs(previous, updated)
         if relative_path in touched and any(diff.values()):
             subprocess.run(["git", "add", "--", relative_path], cwd=ROOT, check=True)
