@@ -81,10 +81,9 @@ def validate_refreshed_catalog(
         refreshed = new.get(model_id)
         previous_extra = previous_row.get("extra") or {}
         if refreshed is None:
-            if (
-                any(previous_row.get(key) for key in ("image", "audio", "decision"))
-                or previous_extra.get("context_window_source")
-            ):
+            if any(
+                previous_row.get(key) for key in ("image", "audio", "decision")
+            ) or previous_extra.get("context_window_source"):
                 raise ValueError(f"{model_id}: documented model disappeared")
             continue
 
@@ -108,9 +107,7 @@ def validate_refreshed_catalog(
 
         previous_cached = previous_extra.get("cached_input_per_1m")
         previous_output = previous_pricing.get("output_per_1m")
-        refreshed_cached = (refreshed.get("extra") or {}).get(
-            "cached_input_per_1m"
-        )
+        refreshed_cached = (refreshed.get("extra") or {}).get("cached_input_per_1m")
         if (
             previous_cached is not None
             and previous_output is not None
