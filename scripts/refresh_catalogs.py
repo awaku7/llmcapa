@@ -114,6 +114,21 @@ def validate_refreshed_catalog(
 
         previous_extra = previous_row.get("extra") or {}
         refreshed_extra = refreshed.get("extra") or {}
+        # Specialized APIs bill in minutes, characters, or pages rather than
+        # tokens. Their published price may legitimately be zero.
+        for key in (
+            "tts_input_price",
+            "tts_price",
+            "price_per_min",
+            "audio_price_per_min",
+            "price_per_m_pages",
+            "price_per_m_pages_annotation",
+        ):
+            if (
+                previous_extra.get(key) is not None
+                and refreshed_extra.get(key) is None
+            ):
+                raise ValueError(f"{model_id}: known {key} was lost")
         if (
             previous_extra.get("cached_input_per_1m") is not None
             and refreshed_extra.get("cached_input_per_1m") is None
