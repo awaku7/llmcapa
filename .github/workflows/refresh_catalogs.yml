@@ -19,7 +19,7 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 240
+    timeout-minutes: 360
     permissions:
       contents: write
       pull-requests: write
@@ -40,7 +40,7 @@ jobs:
       - name: Install updater and quality dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -e . pytest black ruff requests playwright
+          python -m pip install -e . pytest black ruff requests playwright beautifulsoup4
           python -m playwright install --with-deps chromium
 
       - name: Check refresh code quality
