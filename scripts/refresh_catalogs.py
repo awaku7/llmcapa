@@ -97,7 +97,7 @@ def validate_refreshed_catalog(
         previous_pricing = previous_row.get("pricing") or {}
         refreshed_pricing = refreshed.get("pricing") or {}
         if not isinstance(refreshed_pricing, dict):
-            raise ValueError(f"{model_id}: invalid pricing")
+            raise TypeError(f"{model_id}: invalid pricing")
         for key in ("input_per_1m", "output_per_1m"):
             if (
                 previous_pricing.get(key) is not None
