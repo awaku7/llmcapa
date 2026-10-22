@@ -308,3 +308,50 @@ def test_clairic_published_input_price_is_in_bundled_catalog():
         "output_per_1m": 0.0,
         "currency": "USD",
     }
+def test_clairic_normalized_as_rest_only_typed_extraction():
+    from llmcapa.models import Capability
+
+    record = {
+        "provider": "cloudflare-workers-ai",
+        "model_id": "@cf/cloudflare/clairic",
+        "context_window": 65536,
+        "max_output_tokens": 0,
+        "output_modalities": ["text"],
+        "pricing": {
+            "input_per_1m": 0.1,
+            "output_per_1m": 0.0,
+            "currency": "USD",
+        },
+        "extra": {
+            "official_unit_pricing": "$0.10 per M input tokens",
+            "openai_compatible_base_url_template": "https://invalid.example",
+        },
+    }
+    output = _UPDATER.enrich_clairic_extraction(record)
+    assert output["output_modalities"] == ["extraction"]
+    assert "openai_compatible_base_url_template" not in output["extra"]
+    assert output["extra"]["specialized_task"] == "typed_extraction"
+    assert output["extra"]["typed_extraction"]["returns_confidence"] is True
+    assert output["extra"]["endpoints"][0]["path"] == (
+        "/ai/run/@cf/cloudflare/clairic"
+    )
+    assert Capability.from_dict(output).supports("text_output") is False
+
+
+def test_clairic_bundle_has_typed_extraction_and_documented_price():
+    import json
+
+    catalog = (
+        Path(__file__).resolve().parents[1]
+        / "src"
+        / "llmcapa"
+        / "data"
+        / "cloudflare-workers-ai.json"
+    )
+    models = json.loads(catalog.read_text(encoding="utf-8"))["models"]
+    clairic = next(m for m in models if m["model_id"] == "@cf/cloudflare/clairic")
+    assert clairic["output_modalities"] == ["extraction"]
+    assert clairic["pricing"]["input_per_1m"] == 0.1
+    assert clairic["pricing"]["output_per_1m"] == 0.0
+    assert clairic["extra"]["endpoints"][0]["protocol"] == "workers-ai-rest"
+    assert "openai_compatible_base_url_template" not in clairic["extra"]
