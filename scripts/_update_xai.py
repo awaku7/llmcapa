@@ -248,7 +248,12 @@ LISTMODELS_FALLBACK = False
 def load_listmodels() -> list[dict]:
     global LISTMODELS_FALLBACK
     LISTMODELS_FALLBACK = False
-    raw = json.loads(LISTMODELS.read_text(encoding="utf-8"))
+    try:
+        raw = json.loads(LISTMODELS.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        # Fresh checkouts lack the ignored scratch snapshot. Fetch directly
+        # from the official source instead of failing before that attempt.
+        raw = []
     # Refresh from the official Markdown endpoint on every run; structured
     # snapshots can still be stale and omit newly released models.
     try:
