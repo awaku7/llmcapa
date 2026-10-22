@@ -243,3 +243,41 @@ def test_clef_refresh_does_not_guess_missing_price():
         "extra": {},
     }
     assert _UPDATER.enrich_clef_decision(record)["pricing"] is None
+
+def test_parse_published_cached_input_pricing():
+    published = (
+        "$0.30 per M input tokens, $1.20 per M output tokens, "
+        "$0.006 per M cached input tokens"
+    )
+    assert _UPDATER._parse_pricing(published, "Text Generation") == {
+        "input_per_1m": 0.30,
+        "output_per_1m": 1.20,
+        "cached_input_per_1m": 0.006,
+        "currency": "USD",
+    }
+    without_cache = "$0.20 per M input tokens, $0.30 per M output tokens"
+    assert "cached_input_per_1m" not in _UPDATER._parse_pricing(
+        without_cache, "Text Generation"
+    )
+
+
+def test_deepseek_cloudflare_cached_rate_is_in_bundled_catalog():
+    import json
+
+    catalog = (
+        Path(__file__).resolve().parents[1]
+        / "src"
+        / "llmcapa"
+        / "data"
+        / "cloudflare-workers-ai.json"
+    )
+    data = json.loads(catalog.read_text(encoding="utf-8"))
+    model = next(
+        row
+        for row in data["models"]
+        if row["model_id"] == "@cf/deepseek-ai/deepseek-v4.1-flash-1017"
+    )
+    assert model["pricing"]["input_per_1m"] == 0.3
+    assert model["pricing"]["output_per_1m"] == 1.2
+    assert model["pricing"]["cached_input_per_1m"] == 0.006
+
