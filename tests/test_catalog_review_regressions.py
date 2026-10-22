@@ -10,10 +10,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 sys.path.insert(0, str(ROOT / "src"))
 
-import _update_deepinfra  # noqa: E402
-import _update_hf_official_orgs  # noqa: E402
-import _update_inception  # noqa: E402
-import llmcapa  # noqa: E402
+import _update_deepinfra
+import _update_hf_official_orgs
+import _update_inception
+
+import llmcapa
 
 
 def test_mercury_3_does_not_treat_free_trial_as_zero_token_price() -> None:
