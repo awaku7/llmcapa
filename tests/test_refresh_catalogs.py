@@ -188,6 +188,7 @@ def _complete_catalog() -> dict:
                 "extra": {"cached_input_per_1m": 0.5},
                 "image": {"generation": True, "status": "documented"},
                 "audio": {"transcription": True},
+                "video": {"generation": True, "status": "documented"},
                 "decision": {"decision": True},
             }
         ]
@@ -210,7 +211,7 @@ def test_refresh_guard_rejects_incomplete_model_records(key):
         refresh.validate_refreshed_catalog(previous, updated)
 
 
-@pytest.mark.parametrize("key", ["image", "audio", "decision"])
+@pytest.mark.parametrize("key", ["image", "audio", "video", "decision"])
 def test_refresh_guard_rejects_lost_documented_capabilities(key):
     previous = _complete_catalog()
     updated = json.loads(json.dumps(previous))
@@ -241,7 +242,24 @@ def test_refresh_guard_rejects_deleting_cited_models():
     previous["models"][0]["extra"]["context_window_source"] = "https://example.org"
     updated = _complete_catalog()
     updated["models"][0]["model_id"] = "replacement-model"
-    with pytest.raises(ValueError, match="documented model disappeared"):
+    with pytest.raises(ValueError, match="model disappeared from provider catalog"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+def test_refresh_guard_rejects_omitted_plain_text_model():
+    previous = {
+        "models": [
+            {
+                "model_id": "plain-text",
+                "context_window": 163840,
+                "max_output_tokens": 4096,
+                "pricing": {"input_per_1m": 0.2, "output_per_1m": 0.4},
+            },
+            {"model_id": "other", "context_window": 512, "max_output_tokens": 128},
+        ]
+    }
+    updated = {"models": [previous["models"][1]]}
+    with pytest.raises(ValueError, match="plain-text: model disappeared"):
         refresh.validate_refreshed_catalog(previous, updated)
 
 
