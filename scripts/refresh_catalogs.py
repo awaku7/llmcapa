@@ -102,6 +102,7 @@ def validate_refreshed_catalog(
             ):
                 raise ValueError(f"{model_id}: known {key} was lost")
 
+        previous_extra = previous_row.get("extra") or {}
         previous_cached = previous_extra.get("cached_input_per_1m")
         previous_output = previous_pricing.get("output_per_1m")
         refreshed_cached = (refreshed.get("extra") or {}).get("cached_input_per_1m")
