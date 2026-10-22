@@ -60,6 +60,26 @@ def load_catalog(path: Path) -> dict[str, Any]:
     return data
 
 
+def _protect_known_pricing(
+    previous: Any, current: Any, model_id: str, path: str
+) -> None:
+    """Reject lost known prices inside nested dictionaries and tier lists."""
+    if previous is None:
+        return
+    if current is None:
+        raise ValueError(f"{model_id}: known {path} was lost")
+    if isinstance(previous, dict):
+        if not isinstance(current, dict):
+            raise ValueError(f"{model_id}: known {path} was lost")
+        for key, value in previous.items():
+            _protect_known_pricing(value, current.get(key), model_id, f"{path}.{key}")
+    elif isinstance(previous, list):
+        if not isinstance(current, list) or len(current) < len(previous):
+            raise ValueError(f"{model_id}: known {path} was lost")
+        for index, value in enumerate(previous):
+            _protect_known_pricing(value, current[index], model_id, f"{path}[{index}]")
+
+
 def validate_refreshed_catalog(
     previous: dict[str, Any], updated: dict[str, Any]
 ) -> None:
@@ -101,15 +121,25 @@ def validate_refreshed_catalog(
             if previous_row.get(key, 0) > 0 and refreshed[key] == 0:
                 raise ValueError(f"{model_id}: known {key} became zero")
 
+        for key in ("input_modalities", "output_modalities"):
+            documented = previous_row.get(key)
+            if not isinstance(documented, list) or not documented:
+                continue
+            current = refreshed.get(key)
+            if not isinstance(current, list) or any(
+                modality not in current for modality in documented
+            ):
+                raise ValueError(f"{model_id}: documented {key} was lost")
+
         previous_pricing = previous_row.get("pricing") or {}
         refreshed_pricing = refreshed.get("pricing") or {}
         if not isinstance(refreshed_pricing, dict):
             raise TypeError(f"{model_id}: invalid pricing")
-        # The model-price schema varies by provider. Protect every known
-        # pricing field, including currency and zero-valued rates.
+        # Protect all nested token-pricing details, including known zeroes.
         for key, known_value in previous_pricing.items():
-            if known_value is not None and refreshed_pricing.get(key) is None:
-                raise ValueError(f"{model_id}: known {key} was lost")
+            _protect_known_pricing(
+                known_value, refreshed_pricing.get(key), model_id, key
+            )
 
         previous_extra = previous_row.get("extra") or {}
         refreshed_extra = refreshed.get("extra") or {}
@@ -121,12 +151,10 @@ def validate_refreshed_catalog(
                 word in key.casefold()
                 for word in ("price", "pricing", "cost", "rate", "billing")
             )
-            if (
-                is_billing_field
-                and known_value is not None
-                and refreshed_extra.get(key) is None
-            ):
-                raise ValueError(f"{model_id}: known {key} was lost")
+            if is_billing_field:
+                _protect_known_pricing(
+                    known_value, refreshed_extra.get(key), model_id, key
+                )
 
         previous_cached = previous_extra.get("cached_input_per_1m")
         previous_output = previous_pricing.get("output_per_1m")
