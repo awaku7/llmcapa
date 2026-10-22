@@ -137,8 +137,8 @@ def _parse_pricing(value: str, task_type: str) -> dict[str, object] | None:
     }
     if "input" not in prices:
         return None
-    if "output" not in prices and task_type.casefold() != "text embeddings":
-        return None
+    # Cloudflare also bills input-only models such as Clairic/Clef.
+    # For those models, no separate output-token rate is published.
     pricing = {
         "input_per_1m": prices["input"],
         "output_per_1m": prices.get("output", 0.0),
