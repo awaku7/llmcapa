@@ -92,6 +92,28 @@ def test_bundled_mercury_25_status_matches_catalog_prices() -> None:
     assert mercury["extra"]["pricing_status"] == expected
 
 
+def test_catalog_refresh_audit_reports_capture_mercury_25_status() -> None:
+    reports = ROOT / "docs/catalog_refresh"
+    report = json.loads((reports / "latest.json").read_text(encoding="utf-8"))
+    inception = next(
+        result for result in report["providers"] if result["provider"] == "inception"
+    )
+    changed = inception["changes"]["modified"]["mercury-2.5"]
+    assert "extra.pricing_status" in changed
+    assert inception["status"] == "updated"
+    markdown = (reports / "latest.md").read_text(encoding="utf-8")
+    inception_section = markdown.split("## inception — updated", 1)[1].split(
+        "\n## ", 1
+    )[0]
+    mercury_line = next(
+        line
+        for line in inception_section.splitlines()
+        if line.startswith("- Modified: `mercury-2.5`")
+    )
+    for field in changed:
+        assert f"`{field}`" in mercury_line
+
+
 def test_ming_audio_modes_survive_hf_inventory_refresh() -> None:
     for suffix in ("flash", "tiny"):
         model_id = f"inclusionAI/Ming-3.0-audio-{suffix}"
