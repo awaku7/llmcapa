@@ -59,7 +59,9 @@ def model_to_entry(model: dict[str, Any]) -> dict[str, Any] | None:
     if _is_deprecated(model.get("deprecated")):
         return None
 
-    tags = {str(tag).strip().lower().replace("_", "-") for tag in (model.get("tags") or [])}
+    tags = {
+        str(tag).strip().lower().replace("_", "-") for tag in (model.get("tags") or [])
+    }
     is_embedding = model_type in {"text-embedding", "embedding", "embeddings"}
     published_embedding_rates = {
         "nvidia/Nemotron-3.5-Embed-1B-BF16": (0.015, 0.035),
@@ -100,7 +102,9 @@ def model_to_entry(model: dict[str, Any]) -> dict[str, Any] | None:
 
     max_tokens = model.get("max_tokens")
     context_window = max_tokens if isinstance(max_tokens, int) and max_tokens > 0 else 0
-    reasoning = True if "reasoning" in tags else False if "non-reasoning" in tags else None
+    reasoning = (
+        True if "reasoning" in tags else False if "non-reasoning" in tags else None
+    )
     function_calling = True if "tools" in tags or "tool-calling" in tags else None
     json_mode = True if {"json", "structured-output"} & tags else None
 
@@ -134,7 +138,9 @@ def model_to_entry(model: dict[str, Any]) -> dict[str, Any] | None:
         "supports_json_mode": json_mode,
         "supports_vision": "image" in input_modalities,
         "supports_reasoning": reasoning,
-        "supports_responses_api": True if {"responses", "responses-api", "responses_api"} & tags else None,
+        "supports_responses_api": (
+            True if {"responses", "responses-api", "responses_api"} & tags else None
+        ),
         "pricing": pricing,
         "deprecated": False,
         "aliases": [],
