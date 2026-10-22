@@ -139,11 +139,21 @@ def _parse_pricing(value: str, task_type: str) -> dict[str, object] | None:
         return None
     if "output" not in prices and task_type.casefold() != "text embeddings":
         return None
-    return {
+    pricing = {
         "input_per_1m": prices["input"],
         "output_per_1m": prices.get("output", 0.0),
         "currency": "USD",
     }
+    cached_input = re.search(
+        r"\\$([\\d,]+(?:\\.\\d+)?)\\s+per\\s+(?:1\\s*)?M\\s+cached\\s+input\\s+tokens?",
+        value,
+        re.IGNORECASE,
+    )
+    if cached_input:
+        pricing["cached_input_per_1m"] = float(
+            cached_input.group(1).replace(",", "")
+        )
+    return pricing
 
 
 def _feature_tags(text: str, model_id: str) -> list[str]:
