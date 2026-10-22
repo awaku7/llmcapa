@@ -45,7 +45,7 @@ JSONの差分は、モデルIDを基準に比較します。JSONファイル内�
 - PRを自動マージせず、Black・Ruff・更新処理の単体テスト・回帰テスト・既存CIで検証します。
 - 回帰テストの失敗はPRに明示されます。失敗が残る場合はそのPRをマージしないでください。
 
-一括更新のジョブは最大240分、各プロバイダーは最大180秒で打ち切ります。更新対象が多い場合や公式サイトが低速な場合、すべて取得できる保証はありません。
+一括更新のジョブは最大360分、各プロバイダーは最大180秒で打ち切ります。更新対象が多い場合や公式サイトが低速な場合、すべて取得できる保証はありません。
 
 ## 初回設定・制約
 
@@ -58,7 +58,7 @@ GitHub Actions の有効化と、リポジトリの **Settings > Actions > Gener
 ## ローカル実行・検証
 
 ```bash
-python -m pip install -e . pytest black ruff requests playwright
+python -m pip install -e . pytest black ruff requests playwright beautifulsoup4
 python -m playwright install chromium
 python scripts/refresh_catalogs.py --provider all
 python -m black --check scripts/refresh_catalogs.py tests/test_refresh_catalogs.py
