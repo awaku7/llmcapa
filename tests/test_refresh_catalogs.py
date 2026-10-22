@@ -428,6 +428,46 @@ def test_refresh_guard_accepts_valid_extra_on_new_models():
     refresh.validate_refreshed_catalog(previous, updated)
 
 
+@pytest.mark.parametrize("pricing", [["bad"], "bad", [], "", 1.5])
+def test_refresh_guard_rejects_invalid_pricing_on_new_models(pricing):
+    previous = _complete_catalog()
+    updated = json.loads(json.dumps(previous))
+    updated["models"].append(
+        {
+            "model_id": "new-model",
+            "context_window": 2048,
+            "max_output_tokens": 256,
+            "pricing": pricing,
+        }
+    )
+    with pytest.raises(TypeError, match="new-model: invalid pricing"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
+@pytest.mark.parametrize("pricing", [{}, None])
+def test_refresh_guard_accepts_valid_pricing_on_new_models(pricing):
+    previous = _complete_catalog()
+    updated = json.loads(json.dumps(previous))
+    updated["models"].append(
+        {
+            "model_id": "new-model",
+            "context_window": 2048,
+            "max_output_tokens": 256,
+            "pricing": pricing,
+        }
+    )
+    refresh.validate_refreshed_catalog(previous, updated)
+
+
+@pytest.mark.parametrize("pricing", [["bad"], "bad", []])
+def test_refresh_guard_rejects_invalid_pricing_on_existing_models(pricing):
+    previous = _complete_catalog()
+    updated = json.loads(json.dumps(previous))
+    updated["models"][0]["pricing"] = pricing
+    with pytest.raises(TypeError, match="model-1: invalid pricing"):
+        refresh.validate_refreshed_catalog(previous, updated)
+
+
 @pytest.mark.parametrize("extra", [["bad"], "bad", [], ""])
 def test_refresh_guard_rejects_invalid_extra_types(extra):
     previous = _complete_catalog()
