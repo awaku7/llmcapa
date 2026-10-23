@@ -144,7 +144,9 @@ ALIASES = {
 # These catalogs currently have no provider-specific refresh implementation.
 # Keep them visible rather than substituting OpenRouter or another provider's
 # catalog data.
-UNSUPPORTED_CATALOGS: dict[str, str] = {}
+UNSUPPORTED_CATALOGS: dict[str, str] = {
+    "vllm": "the available model list is instance-specific; no canonical catalog to refresh",
+}
 
 CATALOG_NAME_ALIASES = {
     "azure_foundry": "azure-foundry",

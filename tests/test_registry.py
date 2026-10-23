@@ -111,6 +111,7 @@ def test_providers():
     assert "openai" in p
     assert "mdx-maas" in p
     assert "cloudflare-workers-ai" in p
+    assert "vllm" in p
     assert "novita" in p
 
 
@@ -140,6 +141,22 @@ def test_list_modellix():
     assert llmcapa.get("~openai/gpt-latest", provider="modellix").model_id == (
         "openai/gpt-6-astra"
     )
+
+
+def test_vllm_catalog_and_provider_aliases():
+    models = llmcapa.list_models(provider="vllm")
+    assert len(models) == 1
+    assert all(cap.provider == "vllm" for cap in models)
+    assert llmcapa.list_models(provider="v-llm") == models
+    assert llmcapa.list_models(provider="VLLM") == models
+
+    cap = llmcapa.get("Qwen/Qwen2.5-1.5B-Instruct", provider="vllm")
+    assert cap.context_window == 0  # not asserted by the framework catalog
+    assert cap.max_output_tokens == 0
+    assert cap.supports_chat_completion
+    assert cap.supports_streaming
+    assert cap.extra["endpoints"][0]["base_url"] == "http://localhost:8000/v1"
+    assert "not a fixed vLLM inventory" in cap.extra["official_catalog_status"]
 
 
 def test_modellix_media_catalog():

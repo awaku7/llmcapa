@@ -61,6 +61,7 @@ class Registry:
         "huggingface": ["hf"],
         "qwen": ["alibaba", "dashscope"],
         "lmstudio": ["lm-studio", "lm_studio"],
+        "vllm": ["v-llm"],
         "together": ["together-ai", "togethercomputer"],
         "vercel": ["vercel-ai-gateway", "vercel-gateway", "ai-gateway"],
         # Modellix is a gateway with its own provider/name model IDs.
@@ -144,6 +145,7 @@ class Registry:
             "azure_foundry.json",
             "foundry_local.json",
             "lmstudio.json",
+            "vllm.json",
             "ollama.json",
             "modellix.json",
             "modellix_media.json",
@@ -364,6 +366,7 @@ class Registry:
             "azure-foundry",
             "foundry-local",
             "lmstudio",
+            "vllm",
             "ollama",
             "modellix",
         }

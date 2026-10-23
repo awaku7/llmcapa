@@ -1,0 +1,42 @@
+{
+  "models": [
+    {
+      "provider": "vllm",
+      "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+      "display_name": "Qwen2.5 1.5B Instruct (vLLM example)",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_json_mode": null,
+      "supports_json_schema": null,
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "aliases": [],
+      "deprecated": false,
+      "license_type": "unknown",
+      "extra": {
+        "official_source": "https://docs.vllm.ai/en/stable/getting_started/quickstart/",
+        "official_catalog_status": "Example model used in vLLM documentation, not a fixed vLLM inventory. Availability and model capabilities depend on the model and server configuration.",
+        "endpoints": [
+          {
+            "base_url": "http://localhost:8000/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.vllm.ai/en/stable/serving/openai_compatible_server.html"
+          }
+        ]
+      }
+    }
+  ]
+}

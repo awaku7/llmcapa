@@ -85,6 +85,7 @@ llmcapa/
 | `huggingface` | `hf` |
 | `qwen` | `alibaba`, `dashscope` |
 | `lmstudio` | `lm-studio`, `lm_studio` |
+| `vllm` | `v-llm` |
 | `together` | `together-ai`, `togethercomputer` |
 | `vercel` | `vercel-ai-gateway`, `vercel-gateway`, `ai-gateway` |
 | `modellix` | `modellix-ai` |
@@ -107,6 +108,8 @@ llmcapa.search("gpt-4o", provider="azure")          # → azure-openai
 ```
 
 新しいエイリアスを追加する場合は `src/llmcapa/registry.py` の `_provider_aliases` を更新し、`tests/test_registry.py` にテストを追加してください。
+
+`vllm` はローカル推論サーバーとして扱います。`src/llmcapa/data/vllm.json` のモデルは公式ドキュメントにある起動例であり、vLLM が固定のモデル一覧を提供するという意味ではありません。実際に利用できるモデルと機能は、サーバーにロードされたモデルおよび起動時設定に依存します。vLLM の OpenAI 互換 API は既定の例として `http://localhost:8000/v1` を記載しています。
 
 ### `search(provider=None)`
 
@@ -468,6 +471,8 @@ Modellix は LLM ゲートウェイと画像・動画・音声のメディア AP
 - `src/llmcapa/data/modellix.json`: 公式 LLM カタログのスナップショット（29件）
 - `src/llmcapa/data/modellix_media.json`: 公式ドキュメントインデックス由来のメディアモデル（178件）
 
-両ファイルの `provider` は `modellix` とし、上流プロバイダーはモデルIDのプレフィックス（例: `kling/kling-v3-t2v`）に保持します。Modellix は集約カタログなので、ネイティブプロバイダーのデータを上書きしないよう、`Registry._load_bundled()` では集約ファイル群（`openrouter.json`、`novita.json`、`azure_foundry.json`、`lmstudio.json`、`ollama.json`、`modellix.json`、`modellix_media.json`）として最後にロードします。flat な `_models` 側は first-registered-wins のため、ネイティブ側が優先されます。
+両ファイルの `provider` は `modellix` とし、上流プロバイダーはモデルIDのプレフィックス（例: `kling/kling-v3-t2v`）に保持します。Modellix は集約カタログなので、ネイティブプロバイダーのデータを上書きしないよう、`Registry._load_bundled()` では集約ファイル群（`openrouter.json`、`novita.json`、`azure_foundry.json`、`lmstudio.json`、`vllm.json`、`ollama.json`、`modellix.json`、`modellix_media.json`）として最後にロードします。ローカル実行環境のモデルIDが重複する場合も、flat な `_models` 側では native catalog を優先します。
+
+同じくローカル推論サーバーの `vllm.json` は、vLLM 公式 Quickstart の起動例モデルを掲載した参照用カタログです。実際のモデル一覧は各 vLLM サーバーの設定に依存し、このデータが全環境のモデル可用性や個別モデル能力を保証するものではありません。
 
 更新時の参照先は `https://docs.modellix.ai/llms.txt`、`https://www.modellix.ai/llm`、および Modellix の公式モデルドキュメントです。OpenRouter のデータを Modellix カタログへ流用してはなりません。メディアモデルはトークン系の `context_window` / `pricing` が提供されない場合があるため、未確認値は推測で補完せず `0` または `null` とし、モダリティと公式ドキュメントURLを `extra` に記録します。

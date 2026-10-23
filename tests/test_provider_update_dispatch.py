@@ -64,7 +64,9 @@ def test_catalog_filename_aliases_resolve_to_dispatch_keys():
 
 def test_catalogs_without_verified_updaters_are_not_silently_substituted():
     dispatcher = _dispatcher()
-    assert dispatcher.UNSUPPORTED_CATALOGS == {}
+    assert dispatcher.UNSUPPORTED_CATALOGS == {
+        "vllm": "the available model list is instance-specific; no canonical catalog to refresh",
+    }
     assert all("openrouter_providers" not in path for path in dispatcher.PROVIDER_SCRIPTS.values())
     assert dispatcher.PROVIDER_SCRIPTS["openrouter"] == "_update_openrouter.py"
 
