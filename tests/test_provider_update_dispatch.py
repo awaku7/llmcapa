@@ -20,7 +20,8 @@ def _dispatcher():
 def test_each_bundled_catalog_is_dispatchable_or_explicitly_unavailable():
     dispatcher = _dispatcher()
     catalog_names = {
-        path.stem for path in (ROOT / "src" / "llmcapa" / "data").glob("*.json")
+        path.stem
+        for path in (ROOT / "src" / "llmcapa" / "data").glob("*.json")
         if path.name != "__init__.py"
     }
     normalized_names = {
@@ -46,7 +47,9 @@ def test_all_dispatch_targets_exist_and_are_provider_specific():
             assert dispatcher.PROVIDER_SCRIPTS[provider] == "_scrape_huggingface.py"
             assert args == ["--save"]
         else:
-            assert dispatcher.PROVIDER_SCRIPTS[provider] == "_update_hf_official_orgs.py"
+            assert (
+                dispatcher.PROVIDER_SCRIPTS[provider] == "_update_hf_official_orgs.py"
+            )
             assert args == ["--provider", provider]
 
 
@@ -67,7 +70,10 @@ def test_catalogs_without_verified_updaters_are_not_silently_substituted():
     assert dispatcher.UNSUPPORTED_CATALOGS == {
         "vllm": "the available model list is instance-specific; no canonical catalog to refresh",
     }
-    assert all("openrouter_providers" not in path for path in dispatcher.PROVIDER_SCRIPTS.values())
+    assert all(
+        "openrouter_providers" not in path
+        for path in dispatcher.PROVIDER_SCRIPTS.values()
+    )
     assert dispatcher.PROVIDER_SCRIPTS["openrouter"] == "_update_openrouter.py"
 
 
@@ -90,13 +96,12 @@ def test_hf_org_updater_can_be_invoked_for_a_single_provider():
 
     source = (SCRIPTS / "_update_hf_official_orgs.py").read_text(encoding="utf-8")
     tree = ast.parse(source)
-    arguments = {
-        node.arg
-        for node in ast.walk(tree)
-        if isinstance(node, ast.arg)
-    }
+    arguments = {node.arg for node in ast.walk(tree) if isinstance(node, ast.arg)}
     assert "provider" in arguments or '"--provider"' in source
-    assert 'selected = {args.provider: ORGS[args.provider]} if args.provider else ORGS' in source
+    assert (
+        "selected = {args.provider: ORGS[args.provider]} if args.provider else ORGS"
+        in source
+    )
 
 
 def test_dispatcher_does_not_schedule_global_postprocessors():
@@ -150,5 +155,11 @@ def test_all_29_previously_metadata_only_catalogs_have_inventory_updaters():
     assert len(hf_publishers) == 16
     assert len(provider_level) == 13
     assert len(hf_publishers) + len(provider_level) == 29
-    assert all(dispatcher.PROVIDER_SCRIPTS[name] == "_update_hf_official_orgs.py" for name in hf_publishers)
-    assert all(dispatcher.PROVIDER_SCRIPTS[name] == script for name, script in provider_level.items())
+    assert all(
+        dispatcher.PROVIDER_SCRIPTS[name] == "_update_hf_official_orgs.py"
+        for name in hf_publishers
+    )
+    assert all(
+        dispatcher.PROVIDER_SCRIPTS[name] == script
+        for name, script in provider_level.items()
+    )

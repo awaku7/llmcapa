@@ -154,6 +154,7 @@ CATALOG_NAME_ALIASES = {
     "llama_cpp": "llama-cpp",
 }
 
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--provider", help="one provider key; required unless --list")
@@ -162,7 +163,9 @@ def main() -> int:
 
     if args.list:
         for name in sorted(PROVIDER_SCRIPTS):
-            suffix = " " + " ".join(PROVIDER_ARGS[name]) if name in PROVIDER_ARGS else ""
+            suffix = (
+                " " + " ".join(PROVIDER_ARGS[name]) if name in PROVIDER_ARGS else ""
+            )
             print(f"{name}: {PROVIDER_SCRIPTS[name]}{suffix}")
         for name, reason in sorted(UNSUPPORTED_CATALOGS.items()):
             print(f"{name}: no updater ({reason})")
@@ -172,7 +175,9 @@ def main() -> int:
         parser.error("--provider is required; use --list to see available providers")
 
     requested_provider = args.provider.strip().lower()
-    requested_provider = CATALOG_NAME_ALIASES.get(requested_provider, requested_provider)
+    requested_provider = CATALOG_NAME_ALIASES.get(
+        requested_provider, requested_provider
+    )
     provider = ALIASES.get(requested_provider, requested_provider)
     script_name = PROVIDER_SCRIPTS.get(provider)
     if script_name is None:
