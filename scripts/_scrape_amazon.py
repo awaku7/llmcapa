@@ -5,7 +5,11 @@ import gzip
 import html
 import json
 import re
-from urllib.request import Request, urlopen
+
+try:
+    from scripts.provider_updates._http import fetch_bytes
+except ModuleNotFoundError:  # Running this scraper directly from the scripts directory.
+    from provider_updates._http import fetch_bytes
 
 PRICING_URL = "https://aws.amazon.com/nova/pricing/"
 METERED_URL = (
@@ -16,9 +20,11 @@ REGION = "US East (N. Virginia)"
 
 
 def _fetch(url: str) -> bytes:
-    request = Request(url, headers={"User-Agent": "llmcapa catalog updater"})
-    with urlopen(request, timeout=30) as response:
-        return response.read()
+    return fetch_bytes(
+        url,
+        headers={"User-Agent": "llmcapa catalog updater"},
+        timeout=30,
+    )
 
 
 def _model_id(title: str) -> str:

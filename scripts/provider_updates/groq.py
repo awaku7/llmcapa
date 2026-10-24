@@ -2,22 +2,26 @@
 
 import json
 import re
-from datetime import datetime, timezone
 from pathlib import Path
-from urllib.request import Request, urlopen
+try:
+    from scripts.provider_updates._http import fetch_text
+except ModuleNotFoundError:  # Running this updater directly from its own directory.
+    from _http import fetch_text
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "src/llmcapa/data/groq.json"
-LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://console.groq.com/docs/models"
 PATTERN = "(?<![\\w/])(?:llama|meta-llama|openai|qwen|deepseek|gemma|whisper|canopyml|playai|compound)[\\w./:-]+"
 
 
 def fetch():
-    req = Request(SOURCE, headers={"User-Agent": "llmcapa-official-scraper/1.0"})
     try:
-        with urlopen(req, timeout=60) as r:
-            return r.read().decode("utf-8", "ignore")
+        return fetch_text(
+            SOURCE,
+            headers={"User-Agent": "llmcapa-official-scraper/1.0"},
+            timeout=60,
+            errors="ignore",
+        )
     except Exception:  # noqa: BLE001
         from playwright.sync_api import sync_playwright
 
@@ -73,11 +77,6 @@ def update_catalog():
         json.dumps({"models": rows}, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-    LOG.write_text(
-        LOG.read_text(encoding="utf-8")
-        + f"\n## groq official refresh ({datetime.now(timezone.utc).date()})\n\n- Source: {SOURCE}\n- Updated: {len(rows)} model IDs.\n",
-        encoding="utf-8",
-    )
     print("groq: updated", len(rows))
 
 
@@ -86,7 +85,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "src/llmcapa/data/groq.json"
-LOG = ROOT / "provider_update_log.md"
 BASE_URL = "https://api.groq.com/openai/v1"
 SOURCE = "https://console.groq.com/docs/"
 
@@ -106,11 +104,6 @@ def update_endpoints():
         n += 1
     DATA.write_text(
         json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
-    LOG.write_text(
-        LOG.read_text(encoding="utf-8")
-        + f"\n## groq endpoint metadata refresh ({datetime.now(timezone.utc).date()})\n\n- Source: {SOURCE}\n- Updated: {n} models.\n",
-        encoding="utf-8",
     )
     print("groq: endpoint metadata updated", n)
 

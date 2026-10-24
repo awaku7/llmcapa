@@ -12,23 +12,25 @@ import re
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urljoin
-from urllib.request import Request, urlopen
+try:
+    from scripts.provider_updates._http import fetch_text as _shared_fetch_text
+except ModuleNotFoundError:  # Running this updater directly from the scripts directory.
+    from provider_updates._http import fetch_text as _shared_fetch_text
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "liquid.json"
-LOG = ROOT / "provider_update_log.md"
 LIBRARY_URL = "https://docs.liquid.ai/lfm/models/complete-library.md"
 DECISION_URL = "https://docs.liquid.ai/lfm/models/decision-models.md"
 SOURCE = "https://docs.liquid.ai/lfm/models/decision-models"
 
 
 def fetch_text(url: str, limit: int = 2_000_000) -> str:
-    request = Request(
+    return _shared_fetch_text(
         url,
         headers={"Accept": "text/markdown,text/plain,*/*", "User-Agent": "llmcapa-provider-updater/1.0"},
+        timeout=30,
+        max_bytes=limit,
     )
-    with urlopen(request, timeout=30) as response:
-        return response.read(limit).decode("utf-8", "replace")
 
 
 def _clean_markdown(text: str) -> str:
@@ -234,20 +236,6 @@ def update_catalog(discovered: list[dict[str, str]], details: dict[str, str], *,
     if not models:
         raise ValueError("refusing to write an empty Liquid catalog")
     DATA.write_text(json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    entry = (
-        f"\n## Liquid decision-model documentation refresh ({checked_at})\n\n"
-        f"- Sources: {LIBRARY_URL}; {DECISION_URL}\n"
-        f"- Decision models listed by Liquid: {len(discovered)}\n"
-        "- Context lengths/parameter counts were refreshed only from explicitly labeled model-page specifications.\n"
-        "- Historical records absent from the current index were retained.\n"
-    )
-    old_log = LOG.read_text(encoding="utf-8")
-    heading = f"## Liquid decision-model documentation refresh ({checked_at})"
-    if heading in old_log:
-        start = old_log.index(heading)
-        end = old_log.find("\n## ", start + len(heading))
-        old_log = old_log[:start].rstrip() + "\n" if end < 0 else old_log[:start].rstrip() + "\n" + old_log[end + 1 :]
-    LOG.write_text(old_log + entry, encoding="utf-8")
     print(f"liquid.json: {len(discovered)} current decision-model rows; total={len(models)}")
     return len(discovered)
 

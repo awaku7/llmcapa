@@ -6,22 +6,24 @@ import json
 import re
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.request import Request, urlopen
+try:
+    from scripts.provider_updates._http import fetch_text
+except ModuleNotFoundError:  # Running this updater directly from its own directory.
+    from _http import fetch_text
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "src" / "llmcapa" / "data" / "z-ai.json"
-LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://docs.z.ai/guides/overview/pricing"
 BASE_URL = "https://api.z.ai/api"
 
 
 def fetch_docs() -> str:
-    request = Request(
+    text = fetch_text(
         SOURCE + ".md",
         headers={"Accept": "text/markdown,text/plain,*/*", "User-Agent": "llmcapa-provider-updater/1.0"},
+        timeout=30,
+        max_bytes=2_000_000,
     )
-    with urlopen(request, timeout=30) as response:
-        text = response.read(2_000_000).decode("utf-8", "replace")
     if "## Models" not in text or "### Text Models" not in text:
         raise RuntimeError("Z.AI pricing documentation did not contain the expected model tables")
     return text
@@ -189,18 +191,6 @@ def update_catalog(snapshots: list[dict], *, checked_at: str | None = None) -> i
     checked_at = checked_at or datetime.now(timezone.utc).date().isoformat()
     models = merge_inventory(snapshots, data.get("models") or [], checked_at)
     DATA.write_text(json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    heading = f"## Z.AI official model inventory refresh ({checked_at})"
-    old_log = LOG.read_text(encoding="utf-8")
-    if heading in old_log:
-        start = old_log.index(heading)
-        end = old_log.find("\n## ", start + len(heading))
-        old_log = old_log[:start].rstrip() + "\n" + (old_log[end + 1 :] if end >= 0 else "")
-    entry = (
-        f"\n{heading}\n\n- Source: {SOURCE}\n"
-        f"- Official chat, vision, and audio model IDs parsed: {len(snapshots)}.\n"
-        "- Current per-token prices and API base URL were refreshed; context and capability values remain curated or unknown.\n"
-    )
-    LOG.write_text(old_log.rstrip() + "\n" + entry, encoding="utf-8")
     print(f"z-ai.json: refreshed {len(snapshots)} official model IDs; total={len(models)}")
     return len(snapshots)
 

@@ -6,21 +6,23 @@ import json
 import re
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.request import Request, urlopen
+try:
+    from scripts.provider_updates._http import fetch_text
+except ModuleNotFoundError:  # Running this updater directly from its own directory.
+    from _http import fetch_text
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "src" / "llmcapa" / "data" / "thinkingmachines.json"
-LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing"
 
 
 def fetch_docs() -> str:
-    request = Request(
+    text = fetch_text(
         SOURCE + "/index.md",
         headers={"Accept": "text/markdown,text/plain,*/*", "User-Agent": "llmcapa-provider-updater/1.0"},
+        timeout=30,
+        max_bytes=5_000_000,
     )
-    with urlopen(request, timeout=30) as response:
-        text = response.read(5_000_000).decode("utf-8", "replace")
     if "Tinker ID" not in text or "## Training" not in text:
         raise RuntimeError("Tinker model/pricing documentation was not recognizable")
     return text
@@ -201,18 +203,6 @@ def update_catalog(snapshots: list[dict], *, checked_at: str | None = None) -> i
     checked_at = checked_at or datetime.now(timezone.utc).date().isoformat()
     models = merge_inventory(snapshots, data.get("models") or [], checked_at)
     DATA.write_text(json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    heading = f"## Tinker official model inventory refresh ({checked_at})"
-    old_log = LOG.read_text(encoding="utf-8")
-    if heading in old_log:
-        start = old_log.index(heading)
-        end = old_log.find("\n## ", start + len(heading))
-        old_log = old_log[:start].rstrip() + "\n" + (old_log[end + 1 :] if end >= 0 else "")
-    entry = (
-        f"\n{heading}\n\n- Source: {SOURCE}\n"
-        f"- Official Training and Serverless Inference model IDs parsed: {len(snapshots)}.\n"
-        "- Context lengths and per-million input/output prices were updated from Tinker IDs and tables.\n"
-    )
-    LOG.write_text(old_log.rstrip() + "\n" + entry, encoding="utf-8")
     print(f"thinkingmachines.json: refreshed {len(snapshots)} official Tinker model IDs; total={len(models)}")
     return len(snapshots)
 

@@ -2,26 +2,30 @@
 
 from __future__ import annotations
 
-import json
 import re
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.request import Request, urlopen
+
+try:
+    from scripts.provider_updates._catalog_io import load_json, save_json
+    from scripts.provider_updates._http import fetch_text
+except ModuleNotFoundError:  # Running this updater directly from its own directory.
+    from _catalog_io import load_json, save_json
+    from _http import fetch_text
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "src" / "llmcapa" / "data" / "ai21.json"
-LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://docs.ai21.com/docs/jamba-foundation-models"
 BASE_URL = "https://api.ai21.com/studio/v1"
 
 
 def fetch_docs() -> str:
-    request = Request(
+    text = fetch_text(
         SOURCE + ".md",
         headers={"Accept": "text/markdown,text/plain,*/*", "User-Agent": "llmcapa-provider-updater/1.0"},
+        timeout=30,
+        max_bytes=1_000_000,
     )
-    with urlopen(request, timeout=30) as response:
-        text = response.read(1_000_000).decode("utf-8", "replace")
     if "Model Details" not in text or "API Endpoint" not in text:
         raise RuntimeError("AI21 Jamba model documentation was not recognizable")
     return text
@@ -128,25 +132,10 @@ def merge_catalog(model_ids: list[str], previous: list[dict], checked_at: str) -
 
 
 def update_catalog(model_ids: list[str], *, checked_at: str | None = None) -> int:
-    data = json.loads(DATA.read_text(encoding="utf-8"))
+    data = load_json(DATA)
     checked_at = checked_at or datetime.now(timezone.utc).date().isoformat()
     models = merge_catalog(model_ids, data.get("models") or [], checked_at)
-    DATA.write_text(
-        json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
-    heading = f"## AI21 official model inventory refresh ({checked_at})"
-    old_log = LOG.read_text(encoding="utf-8")
-    if heading in old_log:
-        start = old_log.index(heading)
-        end = old_log.find("\n## ", start + len(heading))
-        old_log = old_log[:start].rstrip() + "\n" + (old_log[end + 1 :] if end >= 0 else "")
-    entry = (
-        f"\n{heading}\n\n- Source: {SOURCE}\n"
-        f"- Current model IDs and version aliases parsed: {len(model_ids)}.\n"
-        "- Model-specific capabilities and prices are preserved; undocumented values remain unchanged or unknown.\n"
-    )
-    LOG.write_text(old_log.rstrip() + "\n" + entry, encoding="utf-8")
+    save_json(DATA, {**data, "models": models})
     print(f"ai21.json: refreshed {len(model_ids)} documented API model IDs; total={len(models)}")
     return len(model_ids)
 

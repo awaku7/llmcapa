@@ -8,11 +8,13 @@ from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.error import HTTPError, URLError
-from urllib.request import Request, urlopen
+try:
+    from scripts.provider_updates._http import fetch_text
+except ModuleNotFoundError:  # Running this updater directly from its own directory.
+    from _http import fetch_text
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "src" / "llmcapa" / "data" / "bytedance-seed.json"
-LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://docs.volcengine.com/docs/ark/model-list?lang=zh"
 MODEL_ID_PATTERN = re.compile(r"\b(doubao-(?:seed(?:ream)?|seedance)-[a-z0-9]+(?:[.-][a-z0-9]+)*)\b", re.I)
 
@@ -45,13 +47,13 @@ class _TableRows(HTMLParser):
 
 
 def fetch_inventory() -> str:
-    request = Request(
-        SOURCE,
-        headers={"Accept": "text/html", "User-Agent": "Mozilla/5.0 (compatible; llmcapa-provider-updater/1.0)"},
-    )
     try:
-        with urlopen(request, timeout=45) as response:
-            page = response.read(12_000_000).decode("utf-8", "replace")
+        page = fetch_text(
+            SOURCE,
+            headers={"Accept": "text/html", "User-Agent": "Mozilla/5.0 (compatible; llmcapa-provider-updater/1.0)"},
+            timeout=45,
+            max_bytes=12_000_000,
+        )
     except (HTTPError, URLError) as exc:
         raise RuntimeError(f"Volcengine official model-list page could not be fetched: {exc}") from exc
     if "模型列表" not in page or "Model ID" not in page:
@@ -210,18 +212,6 @@ def update_catalog(snapshots: list[dict], *, checked_at: str | None = None) -> i
     checked_at = checked_at or datetime.now(timezone.utc).date().isoformat()
     models = merge_inventory(snapshots, data.get("models") or [], checked_at)
     DATA.write_text(json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    heading = f"## ByteDance Seed official model inventory refresh ({checked_at})"
-    old_log = LOG.read_text(encoding="utf-8")
-    if heading in old_log:
-        start = old_log.index(heading)
-        end = old_log.find("\n## ", start + len(heading))
-        old_log = old_log[:start].rstrip() + "\n" + (old_log[end + 1 :] if end >= 0 else "")
-    entry = (
-        f"\n{heading}\n\n- Source: {SOURCE} (public Volcengine model-list page)\n"
-        f"- Seed text and Seedream model IDs parsed: {len(snapshots)}\n"
-        "- Other Ark model families are intentionally excluded; older catalog rows are retained as historical.\n"
-    )
-    LOG.write_text(old_log.rstrip() + "\n" + entry, encoding="utf-8")
     print(f"bytedance-seed.json: refreshed {len(snapshots)} documented model IDs; total={len(models)}")
     return len(snapshots)
 

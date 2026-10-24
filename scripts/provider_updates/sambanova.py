@@ -5,7 +5,10 @@ from __future__ import annotations
 import json
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.request import Request, urlopen
+try:
+    from scripts.provider_updates._http import fetch_text
+except ModuleNotFoundError:  # Running this updater directly from its own directory.
+    from _http import fetch_text
 
 ROOT = Path(__file__).resolve().parents[2]
 try:
@@ -18,7 +21,6 @@ except ModuleNotFoundError:  # Direct execution from scripts/provider_updates
 
 
 DATA = ROOT / "src" / "llmcapa" / "data" / "sambanova.json"
-LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://docs.sambanova.ai/docs/en/models/sambacloud-models"
 
 MODELS = {
@@ -56,9 +58,13 @@ MODELS = {
 
 
 def fetch_page() -> str:
-    request = Request(SOURCE, headers={"User-Agent": "llmcapa-official-updater/1.0"})
-    with urlopen(request, timeout=30) as response:
-        return response.read(500_000).decode("utf-8", "ignore").lower()
+    return fetch_text(
+        SOURCE,
+        headers={"User-Agent": "llmcapa-official-updater/1.0"},
+        timeout=30,
+        max_bytes=500_000,
+        errors="ignore",
+    ).lower()
 
 
 def main() -> None:
@@ -110,14 +116,6 @@ def main() -> None:
     apply_context_window_overrides(rows)
     DATA.write_text(
         json.dumps({"models": rows}, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
-    LOG.write_text(
-        LOG.read_text(encoding="utf-8")
-        + f"\n## SambaNova official refresh ({datetime.now(timezone.utc).date().isoformat()})\n\n"
-        + f"- Source: {SOURCE}\n"
-        + "- Recorded availability, context lengths, and modalities for 3 production and 3 preview SambaCloud models.\n"
-        + "- Pricing was not inferred because it is not specified on the model overview page.\n",
         encoding="utf-8",
     )
     print(f"sambanova.json: official_models_updated={len(rows)}")
