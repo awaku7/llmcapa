@@ -16,7 +16,6 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "perplexity-router.json"
-LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://docs.perplexity.ai/docs/router/models"
 API_BASE = "https://api.perplexity.ai/router/v1"
 
@@ -171,22 +170,6 @@ def update_catalog(snapshots: list[dict], *, checked_at: str | None = None) -> i
     if not models:
         raise ValueError("refusing to write an empty Perplexity Router catalog")
     DATA.write_text(json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    entry = (
-        f"\n## Perplexity Router official model refresh ({checked_at})\n\n"
-        f"- Source: {SOURCE}\n- Official hosted routes parsed: {len(snapshots)}\n"
-        "- Token/cache-read pricing and native model links were taken from the Router docs.\n"
-        "- Existing model-specific capabilities were preserved; undocumented fields for new routes remain unknown.\n"
-    )
-    old_log = LOG.read_text(encoding="utf-8")
-    heading = f"## Perplexity Router official model refresh ({checked_at})"
-    if heading in old_log:
-        start = old_log.index(heading)
-        end = old_log.find("\n## ", start + len(heading))
-        if end < 0:
-            old_log = old_log[:start].rstrip() + "\n"
-        else:
-            old_log = old_log[:start].rstrip() + "\n" + old_log[end + 1 :]
-    LOG.write_text(old_log + entry, encoding="utf-8")
     print(f"perplexity-router.json: refreshed {len(snapshots)} documented routes; total={len(models)}")
     return len(snapshots)
 

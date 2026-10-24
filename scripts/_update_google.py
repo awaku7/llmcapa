@@ -26,7 +26,6 @@ OUT = WORKDIR / "src" / "llmcapa" / "data" / "google.json"
 INSTALLED = (
     Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "google.json"
 )
-LOG = WORKDIR / "provider_update_log.md"
 SOURCE = "https://ai.google.dev/gemini-api/docs/pricing"
 
 
@@ -417,24 +416,6 @@ def main() -> None:
     )
 
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    entry = f"""
-## Google refresh ({ts})
-
-### Source
-- Pricing: {SOURCE}
-- Apply: `scripts/_update_google.py`
-
-### Result
-- google.json: **{len(models)}** models (active={active}, token-priced={priced})
-- Inserted (discovered): {", ".join(inserted_ids) if inserted_ids else "none"}
-- Lyria-3 clip/pro: $0.04 / $0.08 per song (extra)
-- Deprecations: discovered from official model pricing sections
-- Install copy synced
-"""
-    if LOG.exists():
-        LOG.write_text(LOG.read_text(encoding="utf-8") + entry, encoding="utf-8")
-    else:
-        LOG.write_text(entry.lstrip(), encoding="utf-8")
 
 
 if __name__ == "__main__":

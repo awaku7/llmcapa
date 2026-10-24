@@ -9,7 +9,6 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "src" / "llmcapa" / "data" / "morph.json"
-LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://www.morphllm.com/api/models/json"
 BASE_URL = "https://api.morphllm.com/v1"
 
@@ -182,19 +181,6 @@ def update_catalog(current: list[dict], *, checked_at: str | None = None) -> int
     merged = merge_catalog(current, previous)
     DATA.write_text(json.dumps({**data, "models": merged}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     checked_at = checked_at or current[0]["extra"]["official_source_checked_at"]
-    entry = (
-        f"\n## Morph official model inventory refresh ({checked_at})\n\n"
-        f"- Source: {SOURCE}\n- Current official model IDs: {len(current)}\n"
-        "- Context, modality, endpoint feature, and token-price fields were read from Morph's public model catalog.\n"
-        "- Previous records omitted from the current response are retained and marked as historical.\n"
-    )
-    old_log = LOG.read_text(encoding="utf-8")
-    heading = f"## Morph official model inventory refresh ({checked_at})"
-    if heading in old_log:
-        start = old_log.index(heading)
-        end = old_log.find("\n## ", start + len(heading))
-        old_log = old_log[:start].rstrip() + "\n" + (old_log[end + 1 :] if end >= 0 else "")
-    LOG.write_text(old_log.rstrip() + "\n" + entry, encoding="utf-8")
     print(f"morph.json: refreshed {len(current)} official model IDs; total={len(merged)}")
     return len(current)
 

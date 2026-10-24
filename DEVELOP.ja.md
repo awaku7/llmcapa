@@ -123,6 +123,7 @@ llmcapa.search("gpt-4o", provider="azure")          # → azure-openai
 
 プロバイダーのカタログ更新は、プロバイダーごとの公式ソースを使う個別スクリプトで行います。全プロバイダーをOpenRouterのデータで一括置換するスクリプトは使用しません。個別の更新スクリプトがあるプロバイダーは、次のディスパッチャーで一覧・実行できます。`--provider` は1プロバイダーだけを実行し、全カタログに触る後処理は自動実行しません。
 
+HTTPリクエストの作成、タイムアウト、上限付きレスポンス読み取り、テキストデコードは `scripts/provider_updates/_http.py` に、UTF-8 JSONの読み書きと整形は `scripts/provider_updates/_catalog_io.py` にまとめます。HTTP応答の検証やプロバイダー固有の解析・マージ処理は、各更新スクリプトに残します。
 ```bash
 python scripts/_update_all_providers.py --list
 python scripts/_update_all_providers.py --provider openai
@@ -172,7 +173,7 @@ python scripts/update_catalog_from_openrouter.py
 
 ### 全ファイル対象の補正処理
 
-`scripts/_postprocess_catalogs.py` はモデル発見やプロバイダーカタログの一括取得を行いません。既存JSONに対する補正が本体です。具体的には、公式料金メタデータ（`scripts/metadata/anthro_prices.json`、`ds_prices.json`）による Anthropic / DeepSeek の上書き、コード系モデル名パターンによる `supports_fim` の一括修正、`meta-llama` → `meta`・`x-ai` → `xai` のプロバイダー名統合、audio / video / structured / image の正規化（`_audio_capability_postprocess` 等の `apply()` を呼び出し）、および `provider_update_log.md` への追記です。
+`scripts/_postprocess_catalogs.py` はモデル発見やプロバイダーカタログの一括取得を行いません。既存JSONに対する補正が本体です。具体的には、公式料金メタデータ（`scripts/metadata/anthro_prices.json`、`ds_prices.json`）による Anthropic / DeepSeek の上書き、コード系モデル名パターンによる `supports_fim` の一括修正、`meta-llama` → `meta`・`x-ai` → `xai` のプロバイダー名統合、audio / video / structured / image の正規化（`_audio_capability_postprocess` 等の `apply()` を呼び出し）を行います。更新履歴とカタログ差分は `scripts/refresh_catalogs.py` が `outputs/catalog_refresh/report.md` と `report.json` に出力します。個別更新スクリプトはリポジトリ直下の履歴ファイルを作成・変更しません。
 
 ### 画像 Capability の後処理
 

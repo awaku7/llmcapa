@@ -11,7 +11,6 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "src" / "llmcapa" / "data" / "poolside.json"
-LOG = ROOT / "provider_update_log.md"
 SOURCE_MODELS = "https://docs.poolside.ai/get-started/supported-models"
 SOURCE_API = "https://docs.poolside.ai/api/openai-api-examples"
 BASE_URL = "https://inference.poolside.ai/v1"
@@ -152,18 +151,6 @@ def update_catalog(snapshots: list[dict], *, checked_at: str | None = None) -> i
     checked_at = checked_at or datetime.now(timezone.utc).date().isoformat()
     models = merge_inventory(snapshots, data.get("models") or [], checked_at)
     DATA.write_text(json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    heading = f"## Poolside public-doc model inventory refresh ({checked_at})"
-    old_log = LOG.read_text(encoding="utf-8")
-    if heading in old_log:
-        start = old_log.index(heading)
-        end = old_log.find("\n## ", start + len(heading))
-        old_log = old_log[:start].rstrip() + "\n" + (old_log[end + 1 :] if end >= 0 else "")
-    entry = (
-        f"\n{heading}\n\n- Sources: {SOURCE_MODELS} and {SOURCE_API}\n"
-        f"- Publicly documented supported model IDs: {len(snapshots)}\n"
-        "- Inventory is based on Poolside docs, not an account-specific authenticated listing.\n"
-    )
-    LOG.write_text(old_log.rstrip() + "\n" + entry, encoding="utf-8")
     print(f"poolside.json: refreshed {len(snapshots)} public-doc model IDs; total={len(models)}")
     return len(snapshots)
 

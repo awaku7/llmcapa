@@ -34,7 +34,6 @@ OUT = WORKDIR / "src" / "llmcapa" / "data" / "amazon.json"
 INSTALLED = (
     Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "amazon.json"
 )
-LOG = WORKDIR / "provider_update_log.md"
 SOURCE_BEDROCK = "https://aws.amazon.com/bedrock/pricing/"
 SOURCE_NOVA = "https://aws.amazon.com/nova/pricing/"
 ANTHROPIC_DATA = WORKDIR / "src" / "llmcapa" / "data" / "anthropic.json"
@@ -402,27 +401,6 @@ def main() -> None:
             )
 
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    entry = (
-        f"\n## Amazon Nova / Bedrock refresh ({stamp})\n\n"
-        f"### Source\n"
-        f"- Bedrock pricing: {SOURCE_BEDROCK}\n"
-        f"- Nova pricing: {SOURCE_NOVA}\n"
-        f"- Metered unit map: {SOURCE_API}\n"
-        f"- Scratch: `_scratch_amazon_nova_pricing_live.html`\n"
-        f"- Apply: `scripts/_update_amazon.py`\n\n"
-        f"### Result\n"
-        f"- amazon.json: **{len(models)}** models "
-        f"(active={active}, deprecated={deprecated}, priced={priced})\n"
-        f"- Nova pricing mode: {NOVA_PRICING_MODE}\n"
-        f"- Current Nova token prices are refreshed only when the optional scraper is available\n"
-        f"- Historical Titan and specialty metadata remains static\n"
-        f"- Claude Bedrock Computer Use capabilities are reconciled from official model cards\n"
-        f"- Bedrock aliases are generated as amazon.*:0\n"
-    )
-    if LOG.exists():
-        LOG.write_text(LOG.read_text(encoding="utf-8") + entry, encoding="utf-8")
-    else:
-        LOG.write_text(entry, encoding="utf-8")
 
 
 if __name__ == "__main__":

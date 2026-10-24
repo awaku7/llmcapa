@@ -15,7 +15,6 @@ from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "src" / "llmcapa" / "data" / "cerebras.json"
-LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://inference-docs.cerebras.ai/models/overview"
 
 
@@ -79,11 +78,6 @@ def main() -> None:
         raise RuntimeError("no models found in rendered Cerebras catalog table")
     OUT.write_text(
         json.dumps({"models": models}, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
-    LOG.write_text(
-        LOG.read_text(encoding="utf-8")
-        + f"\n## Cerebras refresh ({datetime.now(timezone.utc).date()})\n\n- Source: {SOURCE}\n- Discovery: Playwright-rendered official catalog table\n- Result: {len(models)} public models\n- OpenRouter was not used.\n",
         encoding="utf-8",
     )
     print(f"cerebras.json: {len(models)} models scraped via Playwright")

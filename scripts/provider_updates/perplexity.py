@@ -10,7 +10,6 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "src" / "llmcapa" / "data" / "perplexity.json"
-LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://docs.perplexity.ai/docs/getting-started/pricing"
 BASE_URL = "https://api.perplexity.ai"
 
@@ -204,18 +203,6 @@ def update_catalog(snapshots: list[dict], *, checked_at: str | None = None) -> i
     checked_at = checked_at or datetime.now(timezone.utc).date().isoformat()
     models = merge_inventory(snapshots, data.get("models") or [], checked_at)
     DATA.write_text(json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    heading = f"## Perplexity official model inventory refresh ({checked_at})"
-    old_log = LOG.read_text(encoding="utf-8")
-    if heading in old_log:
-        start = old_log.index(heading)
-        end = old_log.find("\n## ", start + len(heading))
-        old_log = old_log[:start].rstrip() + "\n" + (old_log[end + 1 :] if end >= 0 else "")
-    entry = (
-        f"\n{heading}\n\n- Source: {SOURCE}\n"
-        f"- Official Sonar, embedding, and decision model IDs parsed: {len(snapshots)}.\n"
-        "- Official per-token prices and embedding dimensions are updated; prior undocumented rows are retained as historical.\n"
-    )
-    LOG.write_text(old_log.rstrip() + "\n" + entry, encoding="utf-8")
     print(f"perplexity.json: refreshed {len(snapshots)} official models; total={len(models)}")
     return len(snapshots)
 

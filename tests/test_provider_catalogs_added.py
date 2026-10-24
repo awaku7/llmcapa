@@ -123,13 +123,12 @@ def test_baseten_parser_scrapes_public_model_and_feature_tables() -> None:
     assert model["supports_reasoning"] is True
 
 
-def test_baseten_refresh_scrapes_public_docs_without_api_key(tmp_path, monkeypatch) -> None:
+def test_baseten_refresh_scrapes_public_docs_without_api_key(
+    tmp_path, monkeypatch, capsys
+) -> None:
     destination = tmp_path / "baseten.json"
-    log = tmp_path / "provider_update_log.md"
     destination.write_text('{"models": []}' + chr(10), encoding="utf-8")
-    log.write_text("", encoding="utf-8")
     monkeypatch.setattr(_update_baseten, "DATA", destination)
-    monkeypatch.setattr(_update_baseten, "LOG", log)
     monkeypatch.setattr(_update_baseten, "fetch_docs", _baseten_public_docs_fixture)
     monkeypatch.delenv("BASETEN_API_KEY", raising=False)
 
@@ -137,4 +136,5 @@ def test_baseten_refresh_scrapes_public_docs_without_api_key(tmp_path, monkeypat
 
     saved = json.loads(destination.read_text(encoding="utf-8"))
     assert [model["model_id"] for model in saved["models"]] == ["example/vision-model"]
-    assert "public supported models scraped: 1" in log.read_text(encoding="utf-8").lower()
+    assert "1 public models scraped" in capsys.readouterr().out.lower()
+    assert not (tmp_path / "provider_update_log.md").exists()

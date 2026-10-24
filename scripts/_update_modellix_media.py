@@ -16,7 +16,6 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "modellix_media.json"
-LOG = ROOT / "provider_update_log.md"
 INDEX_URL = "https://docs.modellix.ai/llms.txt"
 MEDIA_API = "https://api.modellix.ai"
 
@@ -194,14 +193,6 @@ def update_catalog(fresh: list[dict], skipped: list[str] | None = None, *, check
         raise ValueError("refusing to write an empty Modellix media catalog")
     DATA.write_text(json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     skipped_text = ", ".join(skipped or []) or "none"
-    entry = (
-        f"\n## Modellix official media-model catalog refresh ({checked_at})\n\n"
-        f"- Source: {INDEX_URL}\n- Classified official media model pages: {len(fresh)}\n"
-        f"- Unclassified official model pages held for manual review: {skipped_text}\n"
-        "- Pricing and numeric limits were not inferred from model descriptions.\n"
-        "- Historical records absent from the current index were retained.\n"
-    )
-    LOG.write_text(LOG.read_text(encoding="utf-8") + entry, encoding="utf-8")
     print(f"modellix_media.json: refreshed {len(fresh)} classifiable records; total={len(models)}")
     return len(fresh)
 

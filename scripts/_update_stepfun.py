@@ -14,7 +14,6 @@ DATA = ROOT / "src/llmcapa/data/stepfun.json"
 INSTALLED = (
     Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "stepfun.json"
 )
-LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://platform.stepfun.ai/docs/en/guides/pricing/details.md"
 RULES = {
     "step-3.5-flash": {
@@ -69,11 +68,6 @@ def main():
     )
     INSTALLED.parent.mkdir(parents=True, exist_ok=True)
     INSTALLED.write_text(DATA.read_text(encoding="utf-8"), encoding="utf-8")
-    LOG.write_text(
-        LOG.read_text(encoding="utf-8")
-        + f"\n## StepFun official refresh ({today})\n\n- Source: {SOURCE}\n- Updated: {updated} models (Step 3.5 Flash and Step 3.7 Flash).\n- OpenRouter was not used.\n",
-        encoding="utf-8",
-    )
     print(f"stepfun.json: official_models_updated={updated}")
 
 

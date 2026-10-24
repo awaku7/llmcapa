@@ -34,7 +34,6 @@ OUT = WORKDIR / "src" / "llmcapa" / "data" / "minimax.json"
 INSTALLED = (
     Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "minimax.json"
 )
-LOG = WORKDIR / "provider_update_log.md"
 SOURCE_PRICING = "https://platform.minimax.io/docs/guides/pricing-paygo"
 SOURCE_MODELS = "https://platform.minimax.io/docs/guides/models-intro"
 SOURCE_CHAT = "https://platform.minimax.io/docs/api-reference/text-chat"
@@ -453,25 +452,6 @@ def main() -> None:
     )
 
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    entry = f"""
-## MiniMax refresh ({ts})
-
-### Source
-- Models: {SOURCE_MODELS}
-- PayGO: {SOURCE_PRICING}
-- Chat enum: {SOURCE_CHAT}
-- Apply: `scripts/_update_minimax.py`
-
-### Result
-- minimax.json: **{len(models)}** models (active={active}, token-priced={priced})
-- Official MiniMax pricing rows applied to {live_updates} text models
-- New official token-priced model IDs are added with generic metadata
-- Specialty model metadata remains static until corresponding tables are parsed
-"""
-    if LOG.exists():
-        LOG.write_text(LOG.read_text(encoding="utf-8") + entry, encoding="utf-8")
-    else:
-        LOG.write_text(entry.lstrip(), encoding="utf-8")
 
 
 if __name__ == "__main__":

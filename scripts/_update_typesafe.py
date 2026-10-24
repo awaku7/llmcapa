@@ -16,7 +16,6 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "typesafe.json"
-LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://docs.typesafe.ai/models"
 LEGACY_COMPAT_ALIASES = {"jev-1.13.0": ["jev-1.13"]}
 
@@ -304,27 +303,9 @@ def update_catalog(snapshot: dict | list[dict], *, checked_at: str | None = None
         json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-    old_log = LOG.read_text(encoding="utf-8")
-    heading = f"## TypeSafe official model refresh ({checked_at})"
-    if heading in old_log:
-        start = old_log.index(heading)
-        end = old_log.find("\n## ", start + len(heading))
-        old_log = (
-            old_log[:start].rstrip() + "\n"
-            if end < 0
-            else old_log[:start].rstrip() + "\n" + old_log[end + 1 :]
-        )
     version_ids = ", ".join(item["model_id"] for item in snapshots)
     documented_aliases = ", ".join(
         alias for item in snapshots for alias in item["aliases"]
-    )
-    LOG.write_text(
-        old_log
-        + f"\n## TypeSafe official model refresh ({checked_at})\n\n"
-        + f"- Source: {SOURCE}\n- Documented versions: {version_ids}\n"
-        + f"- Documented aliases: {documented_aliases}\n"
-        + "- Context and per-input pricing were read from the official docs; no output price was inferred. Rate limits are organization-specific and dynamic.\n",
-        encoding="utf-8",
     )
     print(f"typesafe.json: refreshed {len(models)} records; documented={len(snapshots)}")
     return len(models)

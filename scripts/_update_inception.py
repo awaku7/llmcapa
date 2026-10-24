@@ -24,7 +24,6 @@ from _metadata_loader import apply_context_window_overrides
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "inception.json"
-LOG = ROOT / "provider_update_log.md"
 API_SOURCE = "https://api.inceptionlabs.ai/v1/models"
 MODELS_SOURCE = "https://docs.inceptionlabs.ai/get-started/models"
 STRUCTURED_OUTPUT_SOURCE = (
@@ -265,16 +264,6 @@ def update_catalog(*, dry_run: bool = False) -> dict[str, int]:
         json.dumps({"models": rows}, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-    log_entry = (
-        f"\n## Inception official refresh ({today})\n\n"
-        f"- Sources: {API_SOURCE}; {MODELS_SOURCE}\n"
-        f"- Updated {summary['updated']} existing records and added "
-        f"{summary['added']} records ({summary['total']} total).\n"
-        "- Mercury 2.5 pricing uses current API rates; promotional status "
-        "is set only if rates differ from `extra.list_pricing`.\n"
-        "- OpenRouter was not used.\n"
-    )
-    LOG.write_text(LOG.read_text(encoding="utf-8") + log_entry, encoding="utf-8")
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return summary
 

@@ -28,7 +28,6 @@ OUT = WORKDIR / "src" / "llmcapa" / "data" / "qwen.json"
 INSTALLED = (
     Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "qwen.json"
 )
-LOG = WORKDIR / "provider_update_log.md"
 SOURCE = "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
 
 # Official International list prices (USD / 1M tokens), standard tier ≤ threshold
@@ -512,25 +511,6 @@ def main() -> None:
     )
 
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    entry = f"""
-## Qwen / Alibaba Model Studio refresh ({ts})
-
-### Source
-- Pricing: {SOURCE}
-- Apply: `scripts/_update_qwen.py`
-
-### Result
-- qwen.json: **{len(models)}** models (active={active}, token-priced={priced})
-- Official Alibaba pricing rows applied to {live_updates} maintained text models
-- Current Qwen model IDs and first International pricing tiers are fetched automatically
-- Media metadata remains static until official media pricing tables are parsed
-- OpenRouter `qwen/...` entries kept; alibaba_list_pricing annotated in extra
-- Install copy synced
-"""
-    if LOG.exists():
-        LOG.write_text(LOG.read_text(encoding="utf-8") + entry, encoding="utf-8")
-    else:
-        LOG.write_text(entry.lstrip(), encoding="utf-8")
 
 
 if __name__ == "__main__":

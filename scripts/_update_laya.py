@@ -16,7 +16,6 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "laya.json"
-LOG = ROOT / "provider_update_log.md"
 PACKAGE_URL = "https://pypi.org/pypi/laya/json"
 HF_ORG = "convaiinnovations"
 HF_API_URL = f"https://huggingface.co/api/models?author={quote(HF_ORG)}&limit=100&full=false"
@@ -98,15 +97,6 @@ def update_catalog(
         json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
     unregistered = sorted(hf_model_ids - known_hf_ids)
-    log_entry = (
-        f"\n## Laya official package/checkpoint refresh ({checked_at})\n\n"
-        f"- Sources: {PACKAGE_URL}; {HF_API_URL}\n"
-        f"- PyPI package version: {package_version}\n"
-        f"- Official Hugging Face checkpoints observed: {len(hf_model_ids)}\n"
-        "- Existing capability records were preserved; new capabilities were not inferred.\n"
-        f"- Unregistered official checkpoint IDs for manual review: {', '.join(unregistered) if unregistered else 'none'}\n"
-    )
-    LOG.write_text(LOG.read_text(encoding="utf-8") + log_entry, encoding="utf-8")
     print(f"laya.json: refreshed metadata for {changed} records; version={package_version}")
     return changed, unregistered
 

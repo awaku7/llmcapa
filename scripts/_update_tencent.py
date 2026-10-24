@@ -12,7 +12,6 @@ DATA = ROOT / "src" / "llmcapa" / "data" / "tencent.json"
 INSTALLED = (
     Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "tencent.json"
 )
-LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://cloud.tencent.com/document/product/1729/97731"
 HY3_REASONING_SOURCE = "https://intl.cloud.tencent.com/document/product/1300/80695"
 HY3_REASONING_EFFORTS = ["low", "medium", "high"]
@@ -67,11 +66,6 @@ def main() -> None:
     )
     INSTALLED.parent.mkdir(parents=True, exist_ok=True)
     INSTALLED.write_text(DATA.read_text(encoding="utf-8"), encoding="utf-8")
-    LOG.write_text(
-        LOG.read_text(encoding="utf-8")
-        + f"\n## Tencent Hunyuan official refresh ({today})\n\n- Source: {SOURCE}\n- Parsed official Hunyuan-a13b pricing: CNY 0.5/2.0 per 1M input/output tokens.\n- Existing context/capability fields were preserved; other Tencent model prices were not inferred.\n- OpenRouter was not used.\n",
-        encoding="utf-8",
-    )
     print(f"tencent.json: official_models_updated={updated}")
 
 

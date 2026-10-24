@@ -26,7 +26,6 @@ CATALOG_FILENAME_OVERRIDES = {
     "foundry-local": "foundry_local.json",
     "llama-cpp": "llama_cpp.json",
 }
-IGNORED_TRACKED_SIDE_EFFECTS = {"provider_update_log.md"}
 
 
 def catalog_filename(provider: str) -> str:

@@ -42,7 +42,6 @@ OUT = WORKDIR / "src" / "llmcapa" / "data" / "microsoft.json"
 INSTALLED = (
     Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "microsoft.json"
 )
-LOG = WORKDIR / "provider_update_log.md"
 
 SOURCE_PRICING = (
     "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/"
@@ -1205,33 +1204,6 @@ def main() -> None:
             )
 
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    entry = (
-        f"\n## Microsoft refresh ({stamp})\n\n"
-        f"### Source\n"
-        f"- Pricing: {SOURCE_PRICING}\n"
-        f"- Retired: {SOURCE_RETIRED}\n"
-        f"- MAI docs: {SOURCE_MAI_DOCS}\n"
-        f"- Catalog: {SOURCE_CATALOG}\n"
-        f"- MAI news: {SOURCE_MAI_NEWS}\n"
-        f"- Scratch: `_scratch_ms_pricing_live2.html`, `_scratch_ms_retired_text.txt`, "
-        f"`_scratch_ms_mai_docs.html`, `_scratch_ms_catalog_publisher.html`\n"
-        f"- Apply: `scripts/_update_microsoft.py`\n\n"
-        f"### Result\n"
-        f"- microsoft.json: **{len(models)}** models "
-        f"(active={active}, deprecated={deprecated}, priced={priced}, extra={with_extra})\n"
-        f"- Official Microsoft pricing rows parsed and applied: {official_pricing_updated}\n"
-        f"- Phi-3/3.5 family marked deprecated (retired 2025-08-30) with Foundry rates kept\n"
-        f"- MAI-DS-R1 Global $1.35/$5.40 deprecated (retired 2026-02-27); "
-        f"MAI-Image-2 $5/$33, Efficient/2e $5/$19.50; Voice/Transcribe unpriced meters\n"
-        f"- Added MAI-Thinking-1 (256K) + MAI-Code-1-Flash product surface (unpriced)\n"
-        f"- Deduped phi-4 / microsoft/phi-4; modalities fixed on multimodal/vision\n"
-        f"- Azure AI services retained as license/unpriced; community forks free\n"
-        f"- Install copy synced\n"
-    )
-    if LOG.exists():
-        LOG.write_text(LOG.read_text(encoding="utf-8") + entry, encoding="utf-8")
-    else:
-        LOG.write_text(entry, encoding="utf-8")
 
 
 if __name__ == "__main__":

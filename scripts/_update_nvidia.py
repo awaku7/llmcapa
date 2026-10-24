@@ -24,7 +24,6 @@ from _metadata_loader import context_window_override
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "nvidia.json"
 INSTALLED_DIR = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data"
-LOG = WORKDIR / "provider_update_log.md"
 SOURCE = "https://build.nvidia.com/models"
 
 
@@ -377,27 +376,6 @@ def main() -> None:
         print(f"  {c}", flush=True)
 
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    entry = (
-        f"\n## NVIDIA NIM refresh ({stamp})\n\n"
-        f"### Source\n"
-        f"- Catalog: {SOURCE}\n"
-        f"- Model pages: nemotron-3-ultra / super / nano (Playwright live)\n"
-        f"- Docs: https://docs.api.nvidia.com/nim/reference/llm-apis\n"
-        f"- Apply: `scripts/_update_nvidia.py`\n\n"
-        f"### Result\n"
-        f"- nvidia.json: **{len(models)}** models (active={active}, priced={priced})\n"
-        f"- **nemotron-3-ultra-550b-a55b**: $0.50/$2.20 (Deep Infra); partners $0.41–$0.90 in\n"
-        f"- **nemotron-3-super-120b-a12b**: $0.20/$0.80 (Bitdeer/CoreWeave)\n"
-        f"- **nemotron-3-nano-30b-a3b**: $0.05/$0.20\n"
-        f"- Free endpoint twins synced; omni / embed / cosmos3-nano* added\n"
-        f"- Free NVIDIA trial endpoints remain available for evaluation\n"
-        f"- Install copy synced\n"
-        f"- Changes: {', '.join(changed)}\n"
-    )
-    if LOG.exists():
-        LOG.write_text(LOG.read_text(encoding="utf-8") + entry, encoding="utf-8")
-    else:
-        LOG.write_text(entry, encoding="utf-8")
 
 
 if __name__ == "__main__":

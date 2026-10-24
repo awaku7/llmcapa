@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import json
 import re
-from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import unquote, urlparse
 
@@ -17,7 +16,6 @@ from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "src/llmcapa/data/fireworks.json"
-LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://fireworks.ai/models"
 BASE_URL = "https://api.fireworks.ai/inference/v1"
 ENDPOINT_SOURCE = "https://docs.fireworks.ai/"
@@ -182,12 +180,6 @@ def update_catalog() -> list[dict]:
     previous = json.loads(DATA.read_text(encoding="utf-8")).get("models", [])
     models = _merge_existing(fetch_catalog(), previous)
     DATA.write_text(json.dumps({"models": models}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    LOG.write_text(
-        LOG.read_text(encoding="utf-8")
-        + f"\n## Fireworks official catalog refresh ({datetime.now(timezone.utc).date()})\n\n"
-        + f"- Source: {SOURCE}\n- Structured model cards: {len(models)}\n- Model specs/pricing only from card fields; unknown values left unset.\n",
-        encoding="utf-8",
-    )
     print(f"fireworks.json: {len(models)} official model cards")
     return models
 

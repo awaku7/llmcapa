@@ -11,14 +11,12 @@ from __future__ import annotations
 
 import json
 import re
-from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "src/llmcapa/data/siliconflow.json"
-LOG = ROOT / "provider_update_log.md"
 BASE_URL = "https://api.siliconflow.com/v1"
 QUICKSTART = "https://docs.siliconflow.com/en/userguide/quickstart.md"
 
@@ -313,20 +311,6 @@ def update_catalog() -> int:
         encoding="utf-8",
     )
 
-    checked_at = datetime.now(timezone.utc).date().isoformat()
-    source_lines = "\n".join(
-        f"- {name}: {url.removesuffix('.md')}"
-        for name, (url, _category) in DOC_PAGES.items()
-    )
-    LOG.write_text(
-        LOG.read_text(encoding="utf-8")
-        + f"\n## SiliconFlow public documentation scrape ({checked_at})\n\n"
-        + f"- Extracted {len(live)} documented model IDs; no API key or model-list API was used.\n"
-        + "- Evidence pages:\n"
-        + source_lines
-        + "\n- Malformed model-like fragments from prior broad HTML scraping were discarded.\n",
-        encoding="utf-8",
-    )
     print(f"siliconflow.json: scraped IDs={len(live)} total records={len(models)}")
     return len(live)
 

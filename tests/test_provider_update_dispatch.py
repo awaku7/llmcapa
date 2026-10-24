@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import importlib
-import re
 import sys
 from pathlib import Path
 
@@ -115,17 +114,13 @@ def test_dispatcher_does_not_schedule_global_postprocessors():
     assert ".write_bytes(" not in source
 
 
-def test_provider_update_logs_interpolate_dynamic_fields():
-    placeholder_pattern = re.compile(
-        r'^\s*\+\s*"[^"\n]*\\n## .*audit[^"\n]*\{(?:datetime|SOURCE|n|DOCUMENTED)',
-        re.MULTILINE,
-    )
-    broken = []
-    for script in (SCRIPTS / "provider_updates").glob("*.py"):
+def test_provider_updaters_do_not_reference_removed_history_file():
+    references = []
+    for script in SCRIPTS.rglob("*.py"):
         source = script.read_text(encoding="utf-8")
-        if placeholder_pattern.search(source):
-            broken.append(script.name)
-    assert not broken, f"non-interpolated log templates: {broken}"
+        if "provider_update_log.md" in source:
+            references.append(script.relative_to(SCRIPTS).as_posix())
+    assert not references, f"removed update log is still referenced: {references}"
 
 
 def test_all_29_previously_metadata_only_catalogs_have_inventory_updaters():

@@ -25,7 +25,6 @@ OUT = WORKDIR / "src" / "llmcapa" / "data" / "sakura.json"
 INSTALLED = (
     Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "sakura.json"
 )
-LOG = WORKDIR / "provider_update_log.md"
 
 SRC = "https://ai.sakura.ad.jp/sakura-ai/ai-engine/"
 SRC_MANUAL_CLOSED = "https://manual.sakura.ad.jp/cloud/ai-engine/06-closed-model.html"
@@ -470,26 +469,6 @@ def main() -> None:
             )
 
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    entry = (
-        f"\n## Sakura (さくらのAI Engine) refresh ({stamp})\n\n"
-        f"### Source\n"
-        f"- Product: {SRC}\n"
-        f"- Playground: {SRC_PLAYGROUND}\n"
-        f"- Apply: `scripts/_update_sakura.py`\n\n"
-        f"### Result\n"
-        f"- sakura.json: **{len(models)}** models "
-        f"(active={active}, deprecated={deprecated}, "
-        f"priced={priced}, extra={extra_n})\n"
-        f"- Tiers: {by_tier}\n"
-        f"- Model IDs, categories, and prices come from the live product tables. Selected context_window values use official upstream base-model specifications and are marked in extra; Sakura deployment-specific limits remain unpublished. Other missing values remain unknown.\n"
-        f"- Token/audio/TTS prices are parsed from the current table; quote-only closed models remain unpriced.\n"
-        f"- No local sakura_legacy_models.json manifest or hard-coded model catalog is used.\n"
-        f"- Install copy synced\n"
-    )
-    if LOG.exists():
-        LOG.write_text(LOG.read_text(encoding="utf-8") + entry, encoding="utf-8")
-    else:
-        LOG.write_text(entry, encoding="utf-8")
 
 
 if __name__ == "__main__":

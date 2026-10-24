@@ -18,7 +18,6 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "baseten.json"
-LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://docs.baseten.co/inference/model-apis/overview"
 
 _SUPPORTED_ROW = re.compile(
@@ -168,9 +167,6 @@ def main() -> None:
     if not models:
         raise RuntimeError("Baseten public docs returned no usable models")
     DATA.write_text(json.dumps({"models": models}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    heading = f"## Baseten public model docs refresh ({datetime.now(timezone.utc).date().isoformat()})"
-    old_log = LOG.read_text(encoding="utf-8")
-    LOG.write_text(old_log.rstrip() + f"\n\n{heading}\n\n- Source: {SOURCE}\n- Public supported models scraped: {len(rows)}\n", encoding="utf-8")
     print(f"baseten.json: {len(rows)} public models scraped; total={len(models)}")
 
 

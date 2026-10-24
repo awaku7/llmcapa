@@ -15,7 +15,6 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "src" / "llmcapa" / "data" / "lmstudio.json"
-LOG = ROOT / "provider_update_log.md"
 DEFAULT_BASE_URL = "http://127.0.0.1:1234/api/v1"
 SOURCE = "https://lmstudio.ai/docs/developer/rest/list"
 
@@ -114,18 +113,6 @@ def update_catalog(snapshots: list[dict], *, base_url: str | None = None, checke
     base_url = (base_url or os.environ.get("LMSTUDIO_API_BASE") or DEFAULT_BASE_URL).rstrip("/")
     models = merge_inventory(snapshots, data.get("models") or [], checked_at, base_url)
     DATA.write_text(json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    heading = f"## LM Studio local inventory refresh ({checked_at})"
-    old_log = LOG.read_text(encoding="utf-8")
-    if heading in old_log:
-        start = old_log.index(heading)
-        end = old_log.find("\n## ", start + len(heading))
-        old_log = old_log[:start].rstrip() + "\n" + (old_log[end + 1 :] if end >= 0 else "")
-    entry = (
-        f"\n{heading}\n\n- Source: {base_url}/models\n"
-        f"- Locally installed model IDs: {len(snapshots)}\n"
-        "- LM Studio has no single global inventory; only this installation's local model list is synchronized.\n"
-    )
-    LOG.write_text(old_log.rstrip() + "\n" + entry, encoding="utf-8")
     print(f"lmstudio.json: refreshed {len(snapshots)} local model IDs; total={len(models)}")
     return len(snapshots)
 

@@ -34,7 +34,6 @@ OUT = WORKDIR / "src" / "llmcapa" / "data" / "japanese.json"
 INSTALLED = (
     Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "japanese.json"
 )
-LOG = WORKDIR / "provider_update_log.md"
 
 # ---- canonical sources -------------------------------------------------
 SRC_PLAMO_API = "https://plamo.preferredai.jp/api"
@@ -381,34 +380,6 @@ def main() -> None:
             )
 
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    entry = (
-        f"\n## Japanese (multi-vendor) refresh ({stamp})\n\n"
-        f"### Source\n"
-        f"- PLaMo API: {SRC_PLAMO_API}\n"
-        f"- PLaMo PR GA: {SRC_PLAMO_PR}\n"
-        f"- PLaMo blog: {SRC_PLAMO_BLOG}\n"
-        f"- Cloud PF Type A: {SRC_CLOUD_PF}\n"
-        f"- Sarashina3 blog: {SRC_SARASHINA3_BLOG}\n"
-        f"- tsuzumi 2: {SRC_TSUZUMI}\n"
-        f"- Azure tsuzumi: {SRC_TSUZUMI_AZURE}\n"
-        f"- GENNAI / 7-model synthesis: {SRC_LLM7}\n"
-        f"- Scratch: `_scratch_jp_*.html`, `_scratch_jp_plamo_api3.html`\n"
-        f"- Apply: `scripts/_update_japanese.py`\n\n"
-        f"### Result\n"
-        f"- japanese.json: **{len(models)}** models "
-        f"(active={active}, deprecated={deprecated}, "
-        f"priced={priced}, extra={extra_n})\n"
-        f"- Providers: {by_prov}\n"
-        f"- Current model names and modalities are discovered from the official pages above.\n"
-        f"- Prices and limits are updated only where the official source publishes them; unknowns remain unset.\n"
-        f"- Carried-forward rows are marked as not reconfirmed by the current page set.\n"
-        f"- sakura kept separate (sakura.json) — next refresh\n"
-        f"- Install copy synced\n"
-    )
-    if LOG.exists():
-        LOG.write_text(LOG.read_text(encoding="utf-8") + entry, encoding="utf-8")
-    else:
-        LOG.write_text(entry, encoding="utf-8")
 
 
 if __name__ == "__main__":

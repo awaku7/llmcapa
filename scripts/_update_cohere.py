@@ -22,7 +22,6 @@ DATA = ROOT / "src" / "llmcapa" / "data" / "cohere.json"
 INSTALLED = (
     Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "cohere.json"
 )
-LOG = ROOT / "provider_update_log.md"
 PRICE_RULES = {
     "cohere/command-r-08-2024": (0.15, 0.60),
     "cohere/command-r-plus-08-2024": (2.50, 10.00),
@@ -165,8 +164,6 @@ def main() -> None:
     )
     INSTALLED.parent.mkdir(parents=True, exist_ok=True)
     INSTALLED.write_text(DATA.read_text(encoding="utf-8"), encoding="utf-8")
-    entry = f"\n## Cohere official model-page refresh ({today})\n\n- Source: https://docs.cohere.com/docs/models\n- Official model pages checked: {checked}\n- Provenance entries changed: {changed}\n- Numeric capability fields preserved unless an explicit parser rule exists.\n- OpenRouter was not used.\n"
-    LOG.write_text(LOG.read_text(encoding="utf-8") + entry, encoding="utf-8")
     print(
         f"cohere.json: official_pages_checked={checked} provenance_entries_changed={changed}"
     )

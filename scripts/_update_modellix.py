@@ -15,7 +15,6 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "modellix.json"
-LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://www.modellix.ai/llm"
 GATEWAY = "https://llm.modellix.ai/v1"
 PAGE_SIZE_LIMIT = 100
@@ -251,19 +250,6 @@ def update_catalog(fresh: list[dict[str, Any]], *, checked_at: str | None = None
     if not models:
         raise ValueError("refusing to write an empty Modellix LLM catalog")
     DATA.write_text(json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    entry = (
-        f"\n## Modellix official LLM catalog refresh ({checked_at})\n\n"
-        f"- Source: {SOURCE}\n- Models parsed: {len(fresh)}\n"
-        "- Context, modalities, pricing, and pricing tiers were read from the official table.\n"
-        "- Unlisted historical records were retained without inferred deprecation.\n"
-    )
-    old_log = LOG.read_text(encoding="utf-8")
-    heading = f"## Modellix official LLM catalog refresh ({checked_at})"
-    if heading in old_log:
-        start = old_log.index(heading)
-        end = old_log.find("\n## ", start + len(heading))
-        old_log = old_log[:start].rstrip() + "\n" if end < 0 else old_log[:start].rstrip() + "\n" + old_log[end + 1 :]
-    LOG.write_text(old_log + entry, encoding="utf-8")
     print(f"modellix.json: refreshed {len(fresh)} official rows; total={len(models)}")
     return len(fresh)
 

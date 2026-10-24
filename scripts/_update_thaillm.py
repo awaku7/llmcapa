@@ -15,7 +15,6 @@ from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "src" / "llmcapa" / "data" / "thaillm.json"
-LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://thaillm.or.th/"
 
 
@@ -70,11 +69,6 @@ def main() -> None:
         )
     OUT.write_text(
         json.dumps({"models": rows}, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
-    LOG.write_text(
-        LOG.read_text(encoding="utf-8")
-        + f"\n## ThaiLLM refresh ({datetime.now(timezone.utc).date()})\n\n- Source: {SOURCE}\n- Discovery: Playwright-rendered official landing page\n- Result: {len(rows)} published ThaiLLM foundation models\n- OpenRouter was not used.\n",
         encoding="utf-8",
     )
     print(f"thaillm.json: {len(rows)} models scraped via Playwright")

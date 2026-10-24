@@ -44,7 +44,6 @@ INSTALLED = (
     / "data"
     / "azure_foundry.json"
 )
-LOG = WORKDIR / "provider_update_log.md"
 CATALOG = WORKDIR / "_scratch_azure_catalog_raw.json"
 PRICING = WORKDIR / "_scratch_azure_pricing_tables.json"
 AOAI_PRICING = WORKDIR / "_scratch_azure_aoai_pricing_tables.json"
@@ -1591,26 +1590,6 @@ def main() -> None:
     print(f"OUT -> {OUT}")
     print(f"INSTALLED -> {INSTALLED}")
 
-    # log
-    ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-    log_entry = f"""
-## azure_foundry — {ts}
-
-- Catalog: official API scrape + supported-task/modality selection (`_scratch_azure_catalog_raw.json`, raw={len(raw_items)}, selected={len(items)}, unique={len(by_name)})
-- Pricing: AOAI + Foundry partner pages (`_scratch_azure_pricing_tables.json`), price_keys={len(price_map)}
-- Output: n={len(models)} priced={priced} maas_or_paygo={maas} extra={extra_n}
-- Providers (top): {", ".join(f"{k}={v}" for k, v in pubs.most_common(12))}
-- Sources: {SOURCE_CATALOG} ; {SOURCE_AOAI} ; {SOURCE_FOUNDRY_MODELS}*
-- Script: `scripts/_update_azure_foundry.py` (+ `scripts/_scrape_azure_foundry_full.py`)
-- Installed copy: `{INSTALLED}`
-"""
-    prev = (
-        LOG.read_text(encoding="utf-8") if LOG.exists() else "# Provider update log\n"
-    )
-    if not prev.endswith("\n"):
-        prev += "\n"
-    LOG.write_text(prev + log_entry, encoding="utf-8")
-    print("logged ->", LOG)
 
 
 if __name__ == "__main__":

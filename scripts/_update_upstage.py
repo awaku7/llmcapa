@@ -18,7 +18,6 @@ DATA = ROOT / "src" / "llmcapa" / "data" / "upstage.json"
 INSTALLED = (
     Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "upstage.json"
 )
-LOG = ROOT / "provider_update_log.md"
 
 
 def parse_official_model_page(text: str) -> dict:
@@ -121,11 +120,6 @@ def main() -> None:
     )
     INSTALLED.parent.mkdir(parents=True, exist_ok=True)
     INSTALLED.write_text(DATA.read_text(encoding="utf-8"), encoding="utf-8")
-    LOG.write_text(
-        LOG.read_text(encoding="utf-8")
-        + f"\n## Upstage official model refresh ({today})\n\n- Source: https://console.upstage.ai/docs/models/solar-pro-4\n- Checked: {checked}; updated: {updated}\n- Context, output limit, prices, cached price, endpoint version, and cutoff were parsed from the official page.\n- OpenRouter was not used.\n",
-        encoding="utf-8",
-    )
     print(f"upstage.json: official_pages_checked={checked} models_updated={updated}")
 
 

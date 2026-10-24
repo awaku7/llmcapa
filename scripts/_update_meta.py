@@ -29,7 +29,6 @@ except ModuleNotFoundError:  # Direct execution: python scripts/_update_meta.py
     from _metadata_loader import apply_context_window_overrides
 
 ROOT = Path(__file__).resolve().parents[1]
-LOG = ROOT / "provider_update_log.md"
 DATA = ROOT / "src" / "llmcapa" / "data" / "meta.json"
 OFFICIAL_HOME = "https://dev.meta.ai/"
 OFFICIAL_MODELS = "https://dev.meta.ai/docs/models"
@@ -559,24 +558,6 @@ def main() -> int:
         1 for m in models if (m.get("pricing") or {}).get("input_per_1m") is not None
     )
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    entry = (
-        f"\n## Meta Model API refresh ({stamp})\n\n"
-        "### Source\n"
-        f"- Models: {OFFICIAL_MODELS} (status={meta['models_status']}, table={meta['table_entries']})\n"
-        f"- Pricing: {OFFICIAL_PRICING} (status={meta['pricing_status']})\n"
-        f"- Image generation: {OFFICIAL_IMAGE_GENERATION} (status={meta['image_status']})\n"
-        f"- Top: {OFFICIAL_HOME} (status={meta['home_status']}, spark-1.3={meta['home_has_spark_13']})\n"
-        f"- Glimmer: {OFFICIAL_GLIMMER} (text_len={meta['glimmer_text_len']})\n"
-        "- Apply: `scripts/_update_meta.py`\n"
-        "- OpenRouter was not used.\n\n"
-        "### Result\n"
-        f"- meta.json: **{len(models)}** models (active={active}, token-priced={priced})\n"
-        "- Spark Standard $1.25/$4.25 + cached $0.15; Contributor $0.10/$0.20 + cached $0.002\n"
-        "- Glimmer 30B recorded as Apache 2.0 open weights (no API pricing)\n"
-        "- Voice Transcribe ($/hour) and Image 1.0 ($/image) recorded as specialty units\n"
-    )
-    with LOG.open("a", encoding="utf-8") as fh:
-        fh.write(entry)
     print(
         f"meta.json: {len(models)} models (active={active}, token-priced={priced})",
         flush=True,

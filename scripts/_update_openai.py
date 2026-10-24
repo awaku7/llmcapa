@@ -534,10 +534,6 @@ def main() -> None:
     updated.sort(key=lambda x: x.get("model_id", ""))
     payload = json.dumps({"models": updated}, ensure_ascii=False, indent=2) + "\n"
     DATA.write_bytes(payload.replace("\n", "\r\n").encode("utf-8"))
-    with (ROOT / "provider_update_log.md").open("a", encoding="utf-8", newline="") as f:
-        f.write(
-            f"\r\n## OpenAI ({datetime.now(timezone.utc).date():%Y-%m-%d})\r\n\r\n- Source: {MODELS_URL}\r\n- Source: {PRICING_URL}\r\n- Dynamically discovered {pages_discovered} official model pages; life-sciences models added from pricing: {len(life_sciences_models)}; legacy records preserved: {len(updated)-len(seen)}\r\n"
-        )
     print(
         f"openai.json: {len(updated)} models; discovered {pages_discovered} official "
         f"model pages and {len(life_sciences_models)} life-sciences pricing entries"

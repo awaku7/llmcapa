@@ -100,7 +100,6 @@ def main() -> None:
     if INSTALLED.parent.exists() and DATA.resolve() != INSTALLED.resolve():
         shutil.copy2(DATA, INSTALLED)
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    log = ROOT / "provider_update_log.md"
     log.write_text(
         log.read_text(encoding="utf-8") + f"\n## Ollama refresh ({stamp})\n\n"
         f"- Source: {URL}\n- Live tags merged: {len(live)}\n"

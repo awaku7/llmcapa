@@ -1,12 +1,10 @@
 """Update endpoint metadata for the baidu provider only."""
 
 import json
-from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "src/llmcapa/data/baidu.json"
-LOG = ROOT / "provider_update_log.md"
 BASE_URL = "https://qianfan.baidubce.com/v2"
 SOURCE = "https://cloud.baidu.com/doc/QIANFAN/"
 
@@ -26,11 +24,6 @@ def main():
         n += 1
     DATA.write_text(
         json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
-    LOG.write_text(
-        LOG.read_text(encoding="utf-8")
-        + f"\n## baidu endpoint metadata refresh ({datetime.now(timezone.utc).date()})\n\n- Source: {SOURCE}\n- Updated: {n} models.\n",
-        encoding="utf-8",
     )
     print("baidu: endpoint metadata updated", n)
 

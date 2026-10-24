@@ -28,7 +28,6 @@ OUT = WORKDIR / "src" / "llmcapa" / "data" / "deepseek.json"
 INSTALLED = (
     Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "deepseek.json"
 )
-LOG = WORKDIR / "provider_update_log.md"
 SOURCE_PRICING = "https://api-docs.deepseek.com/quick_start/pricing/"
 SOURCE_UPDATES = "https://api-docs.deepseek.com/updates/"
 SOURCE_THINKING = "https://api-docs.deepseek.com/guides/thinking_mode/"
@@ -268,26 +267,6 @@ def main() -> None:
             )
 
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    entry = (
-        f"\n## DeepSeek refresh ({stamp})\n\n"
-        f"### Source\n"
-        f"- Pricing: {SOURCE_PRICING}\n"
-        f"- Change log: {SOURCE_UPDATES}\n"
-        f"- Thinking mode: {SOURCE_THINKING}\n"
-        f"- Scratch: `_scratch_deepseek_pricing_live.html`\n"
-        f"- Apply: `scripts/_update_deepseek.py`\n\n"
-        f"### Result\n"
-        f"- deepseek.json: **{len(models)}** models "
-        f"(active={active}, deprecated={deprecated}, priced={priced})\n"
-        f"- Official models fetched: {', '.join(pricing_catalog)}\n"
-        f"- Pricing, capabilities, context length, max output, versions, and concurrency were fetched from the official page\n"
-        f"- Historical model records are retained as static deprecated metadata\n"
-        f"- OpenRouter was not used\n"
-    )
-    if LOG.exists():
-        LOG.write_text(LOG.read_text(encoding="utf-8") + entry, encoding="utf-8")
-    else:
-        LOG.write_text(entry, encoding="utf-8")
 
 
 if __name__ == "__main__":

@@ -18,7 +18,6 @@ OUT = WORKDIR / "src" / "llmcapa" / "data" / "xai.json"
 INSTALLED = (
     Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "xai.json"
 )
-LOG = WORKDIR / "provider_update_log.md"
 SOURCE = "https://docs.x.ai/developers/models"
 IMAGE_GENERATION_SOURCE = (
     "https://docs.x.ai/developers/model-capabilities/images/generation.md"
@@ -348,10 +347,6 @@ def main() -> None:
         f"- Imagine + Voice specialty entries included\n"
         f"- Install copy synced\n"
     )
-    if LOG.exists():
-        LOG.write_text(LOG.read_text(encoding="utf-8") + entry, encoding="utf-8")
-    else:
-        LOG.write_text(entry, encoding="utf-8")
 
 
 if __name__ == "__main__":

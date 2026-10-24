@@ -19,7 +19,6 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data"
-LOG = ROOT / "provider_update_log.md"
 API = "https://huggingface.co/api/models"
 PAGE_LIMIT = 100
 PAGE_CAP = 100
@@ -243,7 +242,6 @@ def main() -> None:
         f"- {provider}: {count} live model repositories; {retained} historical records retained.\n"
         for provider, count, retained in results
     )
-    LOG.write_text(LOG.read_text(encoding="utf-8") + "".join(lines), encoding="utf-8")
     print(
         "; ".join(
             f"{provider}={count} live/{retained} retained"

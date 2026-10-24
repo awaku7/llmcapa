@@ -18,7 +18,6 @@ from pathlib import Path
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "xiaomi.json"
 INSTALLED_DIR = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data"
-LOG = WORKDIR / "provider_update_log.md"
 SOURCE_PRICE = "https://mimo.mi.com/docs/en-US/price/pay-as-you-go"
 SOURCE_MODELS = "https://mimo.mi.com/docs/en-US/quick-start/summary/model"
 
@@ -335,10 +334,6 @@ def main() -> None:
         f"- No local xiaomi_legacy_models.json manifest or hard-coded model list is used.\n"
         f"- Install copy synced\n"
     )
-    if LOG.exists():
-        LOG.write_text(LOG.read_text(encoding="utf-8") + entry, encoding="utf-8")
-    else:
-        LOG.write_text(entry, encoding="utf-8")
 
 
 if __name__ == "__main__":

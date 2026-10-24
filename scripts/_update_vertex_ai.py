@@ -19,7 +19,6 @@ from _computer_use_metadata import (
 ROOT = Path(__file__).resolve().parents[1]
 GOOGLE = ROOT / "src" / "llmcapa" / "data" / "google.json"
 OUT = ROOT / "src" / "llmcapa" / "data" / "vertex-ai.json"
-LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models"
 THINKING_SOURCE = (
     "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/thinking"
@@ -265,15 +264,6 @@ def main() -> None:
         json.dumps({"models": rows}, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-    entry = f"""
-## Vertex AI / Model Garden SDK refresh ({datetime.now(timezone.utc).strftime('%Y-%m-%d')})
-
-- Source: {SOURCE}
-- Discovery: `vertexai.model_garden.list_deployable_models(list_hf_models=True)`
-- OpenRouter was not used; `google.json` was not modified.
-- Result: {len(rows)} SDK-listed deployable Model Garden models. Detailed limits/pricing remain unknown where the SDK does not expose them.
-"""
-    LOG.write_text(LOG.read_text(encoding="utf-8") + entry, encoding="utf-8")
     print(f"vertex-ai.json: {len(rows)} models discovered via Vertex AI SDK")
 
 

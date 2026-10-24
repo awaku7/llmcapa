@@ -17,7 +17,6 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "src" / "llmcapa" / "data" / "cloudflare-workers-ai.json"
-LOG = ROOT / "provider_update_log.md"
 MODEL_INDEX_URL = "https://developers.cloudflare.com/workers-ai/llms.txt"
 MODEL_CATALOG_URL = "https://developers.cloudflare.com/workers-ai/models/"
 OPENAI_COMPAT_URL = (
@@ -593,16 +592,6 @@ def update_catalog() -> list[dict[str, object]]:
             str((model.get("extra") or {}).get("cloudflare_task_type") or "(missing)")
             for model in models
         }
-    )
-    LOG.write_text(
-        LOG.read_text(encoding="utf-8")
-        + f"\n## Cloudflare Workers AI official catalog refresh ({datetime.now(timezone.utc).date()})\n\n"
-        + f"- Model source: {MODEL_INDEX_URL}\n"
-        + f"- OpenAI compatibility: {OPENAI_COMPAT_URL}\n"
-        + f"- Models parsed: {len(models)}\n"
-        + f"- Task types: {', '.join(task_types)}\n"
-        + "- Model IDs and per-model fields were read from the official index and detail pages; unlisted values remain unknown.\n",
-        encoding="utf-8",
     )
     print(f"cloudflare-workers-ai.json: {len(models)} official model pages")
     return models

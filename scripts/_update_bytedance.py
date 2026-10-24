@@ -17,7 +17,6 @@ DATA = ROOT / "src" / "llmcapa" / "data" / "bytedance.json"
 INSTALLED = (
     Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "bytedance.json"
 )
-LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://docs.volcengine.com/docs/82379/1544106?lang=zh"
 
 VIDEO_PRICES = json.loads(
@@ -61,11 +60,6 @@ def main() -> None:
     )
     INSTALLED.parent.mkdir(parents=True, exist_ok=True)
     INSTALLED.write_text(DATA.read_text(encoding="utf-8"), encoding="utf-8")
-    LOG.write_text(
-        LOG.read_text(encoding="utf-8")
-        + f"\n## ByteDance/Seed official refresh ({today})\n\n- Source: {SOURCE}\n- Parsed official CNY video-token pricing for {updated} existing Seedance records.\n- Resolution/input-video dependent prices remain in `extra`; no FX conversion or invented context window was applied.\n- OpenRouter was not used.\n",
-        encoding="utf-8",
-    )
     print(f"bytedance.json: official_models_updated={updated}")
 
 

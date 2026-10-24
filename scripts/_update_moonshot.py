@@ -20,7 +20,6 @@ from _metadata_loader import context_window_override
 WORKDIR = Path(__file__).resolve().parents[1]
 DATA = WORKDIR / "src" / "llmcapa" / "data"
 INSTALLED_DIR = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data"
-LOG = WORKDIR / "provider_update_log.md"
 SOURCE = "https://platform.kimi.ai/docs/pricing/chat"
 
 
@@ -303,26 +302,6 @@ def main() -> None:
             )
 
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    entry = (
-        f"\n## Moonshot / Kimi refresh ({stamp})\n\n"
-        f"### Source\n"
-        f"- Official: {SOURCE} + chat-k27-code / chat-k26 / chat-k25 (Playwright live)\n"
-        f"- Apply: `scripts/_update_moonshot.py`\n\n"
-        f"### Result\n"
-        f"- {out.name}: **{len(models)}** models "
-        f"(active={active}, deprecated={deprecated}, priced={priced})\n"
-        f"- **Kimi K3**: $3/$15 @1M; cache hit $0.30 (fixed cache_miss mapping)\n"
-        f"- **K2.7 Code**: $0.95/$4.00; cache hit $0.19 (was $1.0/$4.4)\n"
-        f"- **K2.7 Code HighSpeed** added: $1.90/$8.00; cache hit $0.38\n"
-        f"- **K2.6**: $0.95/$4.00; cache hit $0.16\n"
-        f"- **K2.5**: $0.60/$3.00; cache hit $0.10 (was $0.57/$2.85)\n"
-        f"- Multimodal (image+video) for K3 / K2.7 Code / K2.6 / K2.5\n"
-        f"- Install copy synced\n"
-    )
-    if LOG.exists():
-        LOG.write_text(LOG.read_text(encoding="utf-8") + entry, encoding="utf-8")
-    else:
-        LOG.write_text(entry, encoding="utf-8")
 
 
 if __name__ == "__main__":

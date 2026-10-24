@@ -19,7 +19,6 @@ OUT = WORKDIR / "src" / "llmcapa" / "data" / "mistral.json"
 INSTALLED = (
     Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "mistral.json"
 )
-LOG = WORKDIR / "provider_update_log.md"
 
 # Known multimodal (vision) families on Mistral API (chat + image)
 VISION_NAME_RE = re.compile(
@@ -602,25 +601,6 @@ def main() -> None:
 
     # append log only if last entry is not already today's mistral refresh with same count
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    entry = f"""
-## Mistral refresh ({today}) — quality pass
-
-### Fixes
-- Voxtral Mini chat vs pure-transcribe classification (no longer force all non-small Voxtral to transcribe)
-- Voxtral Small token pricing: use 3-amount cards as audio/min + input/output token
-- Research cards with null feature flags default to chat=True (mathstral/next/mamba/7b)
-- pick_model_id accepts open-* ids (e.g. open-codestral-mamba)
-
-### Result
-- mistral.json: **{n}** models (active={n_active}, deprecated={n_dep}, token-priced={n_price})
-- Install copy synced
-- Skipped 404 slugs: {skipped or "none"}
-"""
-    if LOG.exists():
-        LOG.write_text(LOG.read_text(encoding="utf-8") + entry, encoding="utf-8")
-    else:
-        LOG.write_text("# Provider update log\n" + entry, encoding="utf-8")
-    print(f"log updated: {LOG}", flush=True)
 
 
 if __name__ == "__main__":

@@ -147,32 +147,5 @@ for fname in os.listdir(DATA):
         shutil.copy2(os.path.join(DATA, fname), os.path.join(INSTALLED, fname))
 print("All JSON files copied to installed package", flush=True)
 
-# ── 7. Update provider_update_log.md ──
-log_path = r"F:\KAIHATSU\llmcapa\provider_update_log.md"
-log_entry = f"""
-## Fixes Applied ({today})
-
-### Source
-- Anthropic: https://platform.claude.com/docs/en/about-claude/pricing (Playwright)
-- DeepSeek: https://api-docs.deepseek.com/quick_start/pricing (Playwright)
-- FIM flags: pattern-based for code completion models
-- Responses API: preserved from provider-specific official sources
-- Audio metadata: provider documentation plus conservative modality-derived fields
-- Video metadata: provider documentation plus conservative modality-derived fields
-- Structured capabilities: document, embedding, rerank, and spatial metadata
-
-### Changes
-- **Anthropic**: {anthro_count} models updated with official pricing (Fable 5 $10/$50, Opus 4.8 $5/$25, Sonnet 5 $3/$15, Haiku 4.5 $1/$5)
-- **DeepSeek**: {ds_count} models updated with official pricing (v4-flash $0.14/$0.28, v4-pro $0.435/$0.87)
-- **FIM flags**: {fim_count} models corrected (codegemma, codellama, starcoder2, deepseek-coder, qwen-coder, etc.)
-- **Responses API**: provider-specific flags preserved
-- **AudioCapability**: {audio_changes.get('records_changed', 0)} audio records enriched
-- **VideoCapability**: {video_changes.get('records_changed', 0)} video records enriched
-- **Structured capabilities**: {structured_changes.get('records_changed', 0)} records enriched
-- **Provider names**: meta-llama->meta, x-ai->xai (consolidated)
-"""
-with open(log_path, "a", encoding="utf-8") as f:
-    f.write(log_entry)
-print("provider_update_log.md updated", flush=True)
 
 print("Done", flush=True)

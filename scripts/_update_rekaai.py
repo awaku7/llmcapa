@@ -12,7 +12,6 @@ DATA = ROOT / "src" / "llmcapa" / "data" / "rekaai.json"
 INSTALLED = (
     Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "rekaai.json"
 )
-LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://docs.reka.ai/chat/models"
 PUBLIC = ["reka-flash", "reka-edge-2603"]
 
@@ -47,11 +46,6 @@ def main() -> None:
     )
     INSTALLED.parent.mkdir(parents=True, exist_ok=True)
     INSTALLED.write_text(DATA.read_text(encoding="utf-8"), encoding="utf-8")
-    LOG.write_text(
-        LOG.read_text(encoding="utf-8")
-        + f"\n## Reka AI official refresh ({today})\n\n- Source: {SOURCE}\n- Parsed official public baseline models: reka-flash and reka-edge-2603.\n- Updated provenance/availability metadata for {updated} existing Reka records; numeric pricing/context values were not inferred.\n- OpenRouter was not used.\n",
-        encoding="utf-8",
-    )
     print(f"rekaai.json: official_models_updated={updated}")
 
 

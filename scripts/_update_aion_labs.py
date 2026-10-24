@@ -14,7 +14,6 @@ DATA = ROOT / "src" / "llmcapa" / "data" / "aion-labs.json"
 INSTALLED = (
     Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "aion-labs.json"
 )
-LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://www.aionlabs.ai/docs/models/"
 RULES = {
     "aion-labs/aion-2.0": (32768, 0.80, 1.60, True),
@@ -109,11 +108,6 @@ def main() -> None:
     )
     INSTALLED.parent.mkdir(parents=True, exist_ok=True)
     INSTALLED.write_text(DATA.read_text(encoding="utf-8"), encoding="utf-8")
-    LOG.write_text(
-        LOG.read_text(encoding="utf-8")
-        + f"\n## Aion Labs official refresh ({today})\n\n- Source: {SOURCE}\n- Updated official model availability, max output, reasoning flag, and USD pricing for {updated} Aion records, including expired Aion 2.5.\n- Context windows come from source-attributed metadata fallbacks because the updater does not parse them from the page.\n- OpenRouter was not used.\n",
-        encoding="utf-8",
-    )
     print(f"aion-labs.json: official_models_updated={updated}")
 
 

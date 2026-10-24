@@ -1,12 +1,10 @@
 """Update endpoint metadata for the mistral provider only."""
 
 import json
-from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "src/llmcapa/data/mistral.json"
-LOG = ROOT / "provider_update_log.md"
 BASE_URL = "https://api.mistral.ai/v1"
 SOURCE = "https://docs.mistral.ai/api/"
 
@@ -26,11 +24,6 @@ def main():
         n += 1
     DATA.write_text(
         json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
-    LOG.write_text(
-        LOG.read_text(encoding="utf-8")
-        + f"\n## mistral endpoint metadata refresh ({datetime.now(timezone.utc).date()})\n\n- Source: {SOURCE}\n- Updated: {n} models.\n",
-        encoding="utf-8",
     )
     print("mistral: endpoint metadata updated", n)
 

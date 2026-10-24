@@ -7,7 +7,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "src/llmcapa/data/vercel.json"
-LOG = ROOT / "provider_update_log.md"
 BASE_URL = "https://ai-gateway.vercel.sh/v1"
 SOURCE = "https://vercel.com/docs/ai-gateway/sdks-and-apis/rest-api"
 
@@ -28,11 +27,6 @@ def update_endpoints():
     DATA.write_text(
         json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
-    LOG.write_text(
-        LOG.read_text(encoding="utf-8")
-        + f"\n## vercel endpoint metadata refresh ({datetime.now(timezone.utc).date()})\n\n- Source: {SOURCE}\n- Updated: {n} models.\n",
-        encoding="utf-8",
-    )
     print("vercel: endpoint metadata updated", n)
 
 
@@ -42,7 +36,6 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "src/llmcapa/data/vercel.json"
-LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
 DOCUMENTED = True
 
@@ -70,11 +63,6 @@ def update_structured():
         n += 1
     DATA.write_text(
         json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
-    LOG.write_text(
-        LOG.read_text(encoding="utf-8")
-        + f"\n## vercel Structured Outputs audit ({datetime.now(timezone.utc).date()})\n\n- Source: {SOURCE}\n- Updated: {n} models; documented={DOCUMENTED}.\n",
-        encoding="utf-8",
     )
     print("vercel: structured outputs audited", n)
 

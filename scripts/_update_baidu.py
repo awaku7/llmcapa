@@ -14,7 +14,6 @@ DATA = ROOT / "src" / "llmcapa" / "data" / "baidu.json"
 INSTALLED = (
     Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "baidu.json"
 )
-LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://cloud.baidu.com/doc/qianfan/index.html"
 FEATURED = [
     "ERNIE 5.1",
@@ -71,11 +70,6 @@ def main() -> None:
     )
     INSTALLED.parent.mkdir(parents=True, exist_ok=True)
     INSTALLED.write_text(DATA.read_text(encoding="utf-8"), encoding="utf-8")
-    LOG.write_text(
-        LOG.read_text(encoding="utf-8")
-        + f"\n## Baidu Qianfan official refresh ({today})\n\n- Source: {SOURCE}\n- Parsed official featured model catalog metadata for {updated} existing Baidu record(s).\n- No pricing/context values were inferred because the official pricing page is separate and was not reliably exposed in this pass.\n- OpenRouter was not used.\n",
-        encoding="utf-8",
-    )
     print(f"baidu.json: official_models_updated={updated}")
 
 

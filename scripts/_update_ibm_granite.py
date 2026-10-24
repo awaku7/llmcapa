@@ -16,7 +16,6 @@ from _metadata_loader import apply_context_window_overrides
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "ibm-granite.json"
-LOG = ROOT / "provider_update_log.md"
 SOURCE = "https://www.ibm.com/granite/docs/models/granite4-2"
 
 
@@ -134,16 +133,6 @@ def main() -> None:
     models.sort(key=lambda m: m.get("model_id", ""))
     DATA.write_text(
         json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
-    LOG.write_text(
-        LOG.read_text(encoding="utf-8")
-        + f"\n## IBM Granite official refresh ({today})\n\n"
-        + f"- Source: {SOURCE}\n"
-        + f"- Added/updated Granite 4.2 models: {len(granite_42)} (new: {added}).\n"
-        + "- Recorded official 128K context, 30B long-context extension to 512K, Apache 2.0, reasoning, and tool-calling metadata.\n"
-        + "- Granite 4.0 records were marked deprecated; pricing was not inferred.\n"
-        + "- OpenRouter was not used.\n",
-        encoding="utf-8",
     )
     print(f"ibm-granite.json: granite_4_2_updated={len(granite_42)} new={added}")
 

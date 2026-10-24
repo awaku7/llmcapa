@@ -21,7 +21,6 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "src" / "llmcapa" / "data" / "foundry_local.json"
-LOG = ROOT / "provider_update_log.md"
 
 REGION_PROBE_URL = "https://api.catalog.azureml.ms/asset-gallery/v1.0/models"
 DEFAULT_REGION = "centralus"
@@ -400,14 +399,6 @@ def main() -> None:
         encoding="utf-8",
     )
     _postprocess_output(OUT)
-    LOG.write_text(
-        LOG.read_text(encoding="utf-8")
-        + f"\n## Foundry Local refresh ({datetime.now(timezone.utc).date()})\n\n"
-        + f"- Source: {CATALOG_URL_TEMPLATE.format(region=region)}\n"
-        + f"- Official implementation: {SOURCE_IMPL}\n"
-        + f"- Result: {len(models)} logical models from {len(raw_rows)} variants.\n",
-        encoding="utf-8",
-    )
     print(
         f"foundry_local.json: {len(models)} logical models "
         f"from {len(raw_rows)} variants ({region})"

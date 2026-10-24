@@ -12,7 +12,6 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "src" / "llmcapa" / "data" / "sarashina.json"
-LOG = ROOT / "provider_update_log.md"
 BASE_URL = "https://api.sarashina.ai/v1"
 DOCS = {
     "models": "https://docs.sarashina.ai/models",
@@ -353,20 +352,6 @@ def main() -> None:
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     today = datetime.now(timezone.utc).date().isoformat()
-    entry = f"""
-## Sarashina API official docs refresh ({today})
-
-- Sources: {DOCS['models']}; {DOCS['chat']}; {DOCS['embedding']}; {DOCS['rerank']}; {DOCS['translate']}; {DOCS['rate_limits']}
-- Catalog: {len(payload['models'])} documented models (chat=3, embedding=1, rerank=1, translation=1)
-- Pricing: JPY 0 per user confirmation; the official documentation does not publish a numeric price table. Zero input/output rates are recorded in the catalog.
-- Endpoints and per-model RPM limits are recorded from the API reference and rate-limit pages.
-"""
-    prior_log = LOG.read_text(encoding="utf-8") if LOG.exists() else "# Provider update log\n"
-    if not prior_log.endswith("\n"):
-        prior_log += "\n"
-    heading = f"## Sarashina API official docs refresh ({today})"
-    if heading not in prior_log:
-        LOG.write_text(prior_log + entry, encoding="utf-8")
     print(f"sarashina.json: {len(payload['models'])} models updated; pricing=JPY 0")
 
 

@@ -1,12 +1,10 @@
 """Update endpoint metadata for the cohere provider only."""
 
 import json
-from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "src/llmcapa/data/cohere.json"
-LOG = ROOT / "provider_update_log.md"
 BASE_URL = "https://api.cohere.com/v2"
 SOURCE = "https://docs.cohere.com/reference"
 
@@ -26,11 +24,6 @@ def main():
         n += 1
     DATA.write_text(
         json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
-    LOG.write_text(
-        LOG.read_text(encoding="utf-8")
-        + f"\n## cohere endpoint metadata refresh ({datetime.now(timezone.utc).date()})\n\n- Source: {SOURCE}\n- Updated: {n} models.\n",
-        encoding="utf-8",
     )
     print("cohere: endpoint metadata updated", n)
 

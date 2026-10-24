@@ -24,7 +24,6 @@ OUT = WORKDIR / "src" / "llmcapa" / "data" / "anthropic.json"
 INSTALLED = (
     Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "anthropic.json"
 )
-LOG = WORKDIR / "provider_update_log.md"
 SOURCE_OVERVIEW = "https://platform.claude.com/docs/en/about-claude/models/overview"
 SOURCE_PRICING = "https://platform.claude.com/docs/en/about-claude/pricing"
 
@@ -550,24 +549,6 @@ def main() -> None:
             )
 
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    entry = (
-        f"\n## Anthropic refresh ({stamp})\n\n"
-        f"### Source\n"
-        f"- Live HTML fetch: official overview and pricing pages\n"
-        f"- Docs: {SOURCE_OVERVIEW} / {SOURCE_PRICING}\n"
-        f"- Apply: `scripts/_update_anthropic.py`\n\n"
-        f"### Result\n"
-        f"- anthropic.json: **{len(models)}** models "
-        f"(active={active}, deprecated={deprecated}, priced={priced})\n"
-        f"- Parsed {priced} model price rows from the official pricing table; "
-        f"cache and batch prices are derived from the same rows\n"
-        f"- Existing metadata retained where model IDs matched; historical rows kept\n"
-        f"- Install copy synced\n"
-    )
-    if LOG.exists():
-        LOG.write_text(LOG.read_text(encoding="utf-8") + entry, encoding="utf-8")
-    else:
-        LOG.write_text(entry, encoding="utf-8")
 
 
 if __name__ == "__main__":

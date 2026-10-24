@@ -27,7 +27,6 @@ OUT = WORKDIR / "src" / "llmcapa" / "data" / "openrouter.json"
 INSTALLED = (
     Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "openrouter.json"
 )
-LOG = WORKDIR / "provider_update_log.md"
 SCRATCH = WORKDIR / "_scratch_openrouter_models.json"
 API_URL = "https://openrouter.ai/api/v1/models"
 SOURCE_DOCS = "https://openrouter.ai/docs"
@@ -1021,33 +1020,6 @@ def main() -> None:
         )
 
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    entry = (
-        f"\n## OpenRouter refresh ({stamp})\n\n"
-        f"### Source\n"
-        f"- API: `{API_URL}` (live → `_scratch_openrouter_models.json`)\n"
-        f"- /models fallback: `{FRONTEND_API_URL}` (adds frontend-only active model cards)\n"
-        f"- Docs: {SOURCE_DOCS}\n"
-        f"- Apply: `scripts/_update_openrouter.py`\n\n"
-        f"### Result\n"
-        f"- openrouter.json: **{len(models)}** models "
-        f"(active={active}, deprecated={deprecated}, priced={priced}, "
-        f"free={free_n}, dynamic={dynamic_n}, extra={extra_n})\n"
-        f"- vision={vision_n}, reasoning={reasoning_n}, tools={tools_n}, "
-        f"cache_pricing={with_cache}\n"
-        f"- native providers: {len(providers)} "
-        f"(top: {providers.most_common(10)})\n"
-        f"- Frontend-only records added: {frontend_only_count}\n"
-        f"- Pricing: API per-token ×1e6 → USD/1M; "
-        f"router prompt=-1 → catalog {DYNAMIC_PRICE}\n"
-        f"- Cache: input_cache_read/write(/1h) in extra when present\n"
-        f"- Synthetic `~*/…-latest` aliases retained ({len(LATEST_ALIASES)})\n"
-        f"- Replaced thin 14-model placeholder catalog\n"
-        f"- Install copy synced\n"
-    )
-    if LOG.exists():
-        LOG.write_text(LOG.read_text(encoding="utf-8") + entry, encoding="utf-8")
-    else:
-        LOG.write_text(entry, encoding="utf-8")
 
 
 if __name__ == "__main__":
