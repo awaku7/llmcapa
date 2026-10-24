@@ -109,7 +109,9 @@ def _fetch_tables(page, url: str) -> tuple[list[dict], str]:
 
 
 def _number_with_unit(text: str, label: str) -> int:
-    match = re.search(rf"{re.escape(label)}\s*:\s*([\d,.]+)\s*([kKmM]?)", text, re.I)
+    match = re.search(
+        rf"{re.escape(label)}\s*:\s*([\d,.]+)\s*([kKmM]?)", text, re.IGNORECASE
+    )
     if not match:
         return 0
     value = float(match.group(1).replace(",", ""))
@@ -146,9 +148,9 @@ def build() -> list[dict]:
             elif any("-tts" in name.lower() for name in ids):
                 group = "tts"
             facts = " ".join(cells[1:])
-            if re.search(r"Context Window\s*:", facts, re.I):
+            if re.search(r"Context Window\s*:", facts, re.IGNORECASE):
                 inherited_context = _number_with_unit(facts, "Context Window")
-            if re.search(r"Maximum Output\s*:", facts, re.I):
+            if re.search(r"Maximum Output\s*:", facts, re.IGNORECASE):
                 inherited_output = _number_with_unit(facts, "Maximum Output")
             if any(
                 phrase in facts.lower()
@@ -212,7 +214,7 @@ def build() -> list[dict]:
     deprecated_match = re.search(
         r"(?:deprecated|deprecation)[^\n]{0,120}?(October\s+\d{1,2},?\s*\d{4})",
         price_text,
-        re.I,
+        re.IGNORECASE,
     )
     deprecation_date = None
     if deprecated_match:
@@ -294,7 +296,7 @@ def build() -> list[dict]:
             json_mode="structured output" in caps,
             chat=chat,
             streaming=("streaming output" in caps) if chat else None,
-            responses_api=True if chat else False,
+            responses_api=bool(chat),
             extra=extra,
         )
         model["supports_audio_input"] = audio_input

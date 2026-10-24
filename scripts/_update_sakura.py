@@ -214,7 +214,7 @@ def _price_per_10k(text: str, label: str) -> float | None:
     match = re.search(
         rf"{re.escape(label)}\s*([0-9]+(?:\.[0-9]+)?)\s*円\s*/\s*10,000\s*トークン",
         text,
-        re.I,
+        re.IGNORECASE,
     )
     return float(match.group(1)) if match else None
 

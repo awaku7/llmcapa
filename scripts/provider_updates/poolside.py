@@ -42,7 +42,7 @@ def fetch_inventory() -> dict[str, str]:
 
 
 def _context(value: str) -> int:
-    match = re.search(r"([\d,.]+)\s*([KM]?)", value, re.I)
+    match = re.search(r"([\d,.]+)\s*([KM]?)", value, re.IGNORECASE)
     if not match:
         return 0
     size = float(match.group(1).replace(",", ""))
@@ -56,12 +56,14 @@ def parse_model_inventory(docs: dict[str, str]) -> list[dict]:
         or not isinstance(docs.get("models"), str)
         or not isinstance(docs.get("api"), str)
     ):
-        raise ValueError(
+        raise TypeError(
             "Poolside scraper expects supported-model and API documentation"
         )
     model_doc, api_doc = docs["models"], docs["api"]
     headings = re.findall(
-        r"\[([^]]*Laguna[^]]*)\]\(/release-notes/models#([a-z0-9-]+)\)", model_doc, re.I
+        r"\[([^]]*Laguna[^]]*)\]\(/release-notes/models#([a-z0-9-]+)\)",
+        model_doc,
+        re.IGNORECASE,
     )
     if not headings:
         raise ValueError(
@@ -70,12 +72,14 @@ def parse_model_inventory(docs: dict[str, str]) -> list[dict]:
     contexts: list[int] = []
     for line in model_doc.splitlines():
         if line.lstrip().startswith("|") and re.search(
-            r"\|\s*Context window\s*\|", line, re.I
+            r"\|\s*Context window\s*\|", line, re.IGNORECASE
         ):
             cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
             contexts = [_context(cell) for cell in cells[1:]]
             break
-    api_ids = set(re.findall(r"poolside/([a-z0-9][a-z0-9._-]*)", api_doc, re.I))
+    api_ids = set(
+        re.findall(r"poolside/([a-z0-9][a-z0-9._-]*)", api_doc, re.IGNORECASE)
+    )
     rows: dict[str, dict] = {}
     for index, (name, anchor) in enumerate(headings):
         # Poolside's release-note anchors spell version separators as hyphens;

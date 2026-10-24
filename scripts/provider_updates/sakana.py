@@ -18,10 +18,10 @@ SOURCE_MODELS = "https://console.sakana.ai/models"
 SOURCE_PRICING = "https://console.sakana.ai/pricing"
 MODEL_REFERENCE = re.compile(
     r"(?:\bmodel\s*[:=]\s*[\"'`]?|[\"']slug[\"']\s*:\s*[\"'`]?)([a-z][a-z0-9.-]*)",
-    re.I,
+    re.IGNORECASE,
 )
 VALID_MODEL_ID = re.compile(
-    r"^(?:fugu(?:-[a-z0-9.]+)*|sakana-namazu(?:-[a-z0-9.]+)*)$", re.I
+    r"^(?:fugu(?:-[a-z0-9.]+)*|sakana-namazu(?:-[a-z0-9.]+)*)$", re.IGNORECASE
 )
 
 
@@ -106,12 +106,14 @@ def parse_model_inventory(docs: dict[str, str]) -> list[dict]:
         if VALID_MODEL_ID.fullmatch(model_id):
             ids[model_id.casefold()] = model_id
     for match in re.finditer(
-        r"`((?:fugu|sakana-namazu)(?:-[a-z0-9.]+)*)`", combined, re.I
+        r"`((?:fugu|sakana-namazu)(?:-[a-z0-9.]+)*)`", combined, re.IGNORECASE
     ):
         model_id = match.group(1)
         if VALID_MODEL_ID.fullmatch(model_id):
             ids[model_id.casefold()] = model_id
-    for match in re.finditer(r"Fixed pricing for\s+(fugu-[a-z0-9.-]+)", combined, re.I):
+    for match in re.finditer(
+        r"Fixed pricing for\s+(fugu-[a-z0-9.-]+)", combined, re.IGNORECASE
+    ):
         model_id = match.group(1).rstrip(".,;:")
         if VALID_MODEL_ID.fullmatch(model_id):
             ids[model_id.casefold()] = model_id
@@ -125,7 +127,7 @@ def parse_model_inventory(docs: dict[str, str]) -> list[dict]:
         "sakana-namazu",
         "sakana-namazu-v1.0",
     ):
-        if re.search(r"\b" + re.escape(model_id) + r"\b", combined, re.I):
+        if re.search(r"\b" + re.escape(model_id) + r"\b", combined, re.IGNORECASE):
             ids.setdefault(model_id.casefold(), model_id)
     if not ids:
         raise ValueError("Sakana public docs contained no API model IDs")

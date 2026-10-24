@@ -16,11 +16,11 @@ import shutil
 from pathlib import Path
 
 try:
-    from scripts._scrape_qwen import fetch_qwen_catalog
     from scripts._metadata_loader import apply_context_window_overrides
+    from scripts._scrape_qwen import fetch_qwen_catalog
 except ModuleNotFoundError:  # Direct execution: python scripts/_update_qwen.py
-    from _scrape_qwen import fetch_qwen_catalog
     from _metadata_loader import apply_context_window_overrides
+    from _scrape_qwen import fetch_qwen_catalog
 
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "qwen.json"

@@ -53,7 +53,9 @@ DOC_PAGES = {
 MODEL_ASSIGNMENT_RE = re.compile(r"(?i)\bmodel\s*(?:=|:)\s*[\"'`]([^\"'`]+)[\"'`]")
 HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*#*\s*$")
 LIST_ITEM_RE = re.compile(r"^\s*[-*+]\s+(.+?)\s*$")
-SUPPORTED_HEADING_RE = re.compile(r"\bsupported\s+models?\b|\bmodel\s+list\b", re.I)
+SUPPORTED_HEADING_RE = re.compile(
+    r"\bsupported\s+models?\b|\bmodel\s+list\b", re.IGNORECASE
+)
 MODEL_ID_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9._/-]*\Z")
 
 
@@ -174,7 +176,7 @@ def build_live_rows(evidence: dict[str, dict[str, set[str]]]) -> list[dict]:
     checked_at = datetime.now(timezone.utc).date().isoformat()
     for key in sorted(evidence):
         item = evidence[key]
-        model_id = sorted(item["model_id"], key=str.casefold)[0]
+        model_id = min(item["model_id"], key=str.casefold)
         categories = item["categories"]
         input_modalities: set[str] = set()
         output_modalities: set[str] = set()

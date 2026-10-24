@@ -64,7 +64,9 @@ def parse_model_cards(cards: list[dict]) -> list[dict]:
                 if line.lower() != "new"
                 and line.lower() not in CATEGORIES
                 and not re.search(
-                    r"\$|\bContext\b|\b/M\s+(?:Input|Output|Tokens)", line, re.I
+                    r"\$|\bContext\b|\b/M\s+(?:Input|Output|Tokens)",
+                    line,
+                    re.IGNORECASE,
                 )
             ),
             model_id,
@@ -96,12 +98,18 @@ def parse_model_cards(cards: list[dict]) -> list[dict]:
             output_modalities = ["text"] if category == "transcription" else ["audio"]
             chat = False
 
-        input_price = re.search(r"\$([0-9]+(?:\.[0-9]+)?)\s*/M\s*Input\b", text, re.I)
-        cached_price = re.search(
-            r"\$([0-9]+(?:\.[0-9]+)?)\s*/M\s*Cached\s*Input\b", text, re.I
+        input_price = re.search(
+            r"\$([0-9]+(?:\.[0-9]+)?)\s*/M\s*Input\b", text, re.IGNORECASE
         )
-        output_price = re.search(r"\$([0-9]+(?:\.[0-9]+)?)\s*/M\s*Output\b", text, re.I)
-        token_price = re.search(r"\$([0-9]+(?:\.[0-9]+)?)\s*/M\s*Tokens\b", text, re.I)
+        cached_price = re.search(
+            r"\$([0-9]+(?:\.[0-9]+)?)\s*/M\s*Cached\s*Input\b", text, re.IGNORECASE
+        )
+        output_price = re.search(
+            r"\$([0-9]+(?:\.[0-9]+)?)\s*/M\s*Output\b", text, re.IGNORECASE
+        )
+        token_price = re.search(
+            r"\$([0-9]+(?:\.[0-9]+)?)\s*/M\s*Tokens\b", text, re.IGNORECASE
+        )
         pricing = None
         if input_price and output_price:
             pricing = {
@@ -177,11 +185,14 @@ def _merge_existing(fresh: list[dict], previous: list[dict]) -> list[dict]:
             for key, value in row.items():
                 if key == "extra":
                     result["extra"] = {**(result.get("extra") or {}), **value}
-                elif key == "pricing" and value is None:
-                    continue
-                elif key in {"context_window", "max_output_tokens"} and not value:
-                    continue
-                elif key.startswith("supports_") and value is None:
+                elif (
+                    key == "pricing"
+                    and value is None
+                    or key in {"context_window", "max_output_tokens"}
+                    and not value
+                    or key.startswith("supports_")
+                    and value is None
+                ):
                     continue
                 else:
                     result[key] = value

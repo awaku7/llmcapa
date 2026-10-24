@@ -558,7 +558,7 @@ def build() -> tuple[list[dict], dict]:
 
 
 def main() -> int:
-    models, meta = build()
+    models, _meta = build()
     models.sort(key=lambda m: m.get("model_id", ""))
     DATA.write_text(
         json.dumps({"models": models}, ensure_ascii=False, indent=2) + "\n",

@@ -73,7 +73,7 @@ def _extract_pricing_object(markdown: str) -> dict:
             "Perplexity pricing object was not valid JSON-compatible data"
         ) from exc
     if not isinstance(payload, dict):
-        raise ValueError("Perplexity pricing object is not a mapping")
+        raise TypeError("Perplexity pricing object is not a mapping")
     return payload
 
 

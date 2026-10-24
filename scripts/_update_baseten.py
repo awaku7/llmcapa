@@ -12,9 +12,9 @@ import json
 import re
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
-from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "baseten.json"
@@ -23,12 +23,12 @@ SOURCE = "https://docs.baseten.co/inference/model-apis/overview"
 _SUPPORTED_ROW = re.compile(
     r'model:\s*"([^"]+)"\s*,\s*slug:\s*"([^"]+)"\s*,\s*'
     r"context:\s*(\d+)\s*,\s*maxOutput:\s*(\d+)",
-    re.S,
+    re.DOTALL,
 )
 _FEATURE_ROW = re.compile(
     r'model:\s*"([^"]+)"\s*,\s*reasoning:\s*"([^"]+)"\s*,\s*'
     r'vision:\s*"([^"]+)"\s*,\s*sampling:\s*"([^"]+)"',
-    re.S,
+    re.DOTALL,
 )
 
 

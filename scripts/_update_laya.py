@@ -32,7 +32,7 @@ def _fetch_json(url: str) -> object:
 
 def parse_package_version(payload: object) -> str:
     if not isinstance(payload, dict):
-        raise ValueError("PyPI returned a non-object package response")
+        raise TypeError("PyPI returned a non-object package response")
     info = payload.get("info")
     version = info.get("version") if isinstance(info, dict) else None
     if not isinstance(version, str) or not version.strip():
@@ -42,7 +42,7 @@ def parse_package_version(payload: object) -> str:
 
 def parse_hf_model_ids(payload: object) -> set[str]:
     if not isinstance(payload, list):
-        raise ValueError("Hugging Face returned a non-list organization response")
+        raise TypeError("Hugging Face returned a non-list organization response")
     # The publisher owns many other Hugging Face projects. Only repositories
     # named as Laya checkpoints belong in this provider catalog.
     model_ids = {

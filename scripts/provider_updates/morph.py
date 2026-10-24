@@ -24,7 +24,7 @@ def fetch_inventory() -> dict:
     with urlopen(request, timeout=30) as response:
         payload = json.loads(response.read(8_000_000).decode("utf-8", "replace"))
     if not isinstance(payload, dict) or not isinstance(payload.get("data"), list):
-        raise ValueError("Morph model API returned an unexpected catalog structure")
+        raise TypeError("Morph model API returned an unexpected catalog structure")
     return payload
 
 
@@ -164,7 +164,7 @@ def parse_inventory(payload: dict, *, checked_at: str = "2026-01-01") -> list[di
     """Normalize only the official Morph endpoint fields; ignore third-party metadata."""
     rows = payload.get("data")
     if not isinstance(rows, list):
-        raise ValueError("Morph model API has no data array")
+        raise TypeError("Morph model API has no data array")
     result = []
     seen: set[str] = set()
     for item in rows:

@@ -25,9 +25,9 @@ import html
 import json
 import re
 import shutil
-from urllib.request import Request, urlopen
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.request import Request, urlopen
 
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "japanese.json"
@@ -174,7 +174,7 @@ def _discover_official_models(source_texts: dict[str, str]) -> list[dict]:
 
     pfn_text = source_texts.get("pfn", "")
     for version in dict.fromkeys(
-        re.findall(r"PLaMo\s*([0-9]+(?:\.[0-9]+)?)\s*Prime", pfn_text, re.I)
+        re.findall(r"PLaMo\s*([0-9]+(?:\.[0-9]+)?)\s*Prime", pfn_text, re.IGNORECASE)
     ):
         model_id = f"plamo-{version}-prime"
         price = None
@@ -183,7 +183,7 @@ def _discover_official_models(source_texts: dict[str, str]) -> list[dict]:
             + re.escape(version)
             + r"\s*Prime.*?INPUT\s*([0-9,]+)円.*?OUTPUT\s*([0-9,]+)円",
             pfn_text,
-            re.I | re.S,
+            re.IGNORECASE | re.DOTALL,
         )
         if standard:
             yen_in, yen_out = (
@@ -199,7 +199,7 @@ def _discover_official_models(source_texts: dict[str, str]) -> list[dict]:
             + re.escape(version)
             + r"\s*Prime.{0,300}?([0-9]+)k\s*(?:tokens|トークン)",
             pfn_text,
-            re.I | re.S,
+            re.IGNORECASE | re.DOTALL,
         )
         discovered[model_id.casefold()] = {
             "provider": "pfn",
@@ -218,7 +218,11 @@ def _discover_official_models(source_texts: dict[str, str]) -> list[dict]:
 
     sb_text = source_texts.get("softbank", "")
     for variant in dict.fromkeys(
-        re.findall(r"Sarashina\s*3\s*(mini|nano|guard|embedding|rerank)", sb_text, re.I)
+        re.findall(
+            r"Sarashina\s*3\s*(mini|nano|guard|embedding|rerank)",
+            sb_text,
+            re.IGNORECASE,
+        )
     ):
         variant = variant.lower()
         model_id = f"sarashina3-{variant}"
@@ -245,7 +249,7 @@ def _discover_official_models(source_texts: dict[str, str]) -> list[dict]:
         }
 
     ntt_text = " ".join((source_texts.get("ntt", ""), source_texts.get("ntt_rd", "")))
-    if re.search(r"tsuzumi\s*2", ntt_text, re.I):
+    if re.search(r"tsuzumi\s*2", ntt_text, re.IGNORECASE):
         discovered["tsuzumi-2"] = {
             "provider": "ntt",
             "model_id": "tsuzumi-2",

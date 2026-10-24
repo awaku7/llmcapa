@@ -67,7 +67,7 @@ def _number(value: str) -> float | None:
 
 
 def _context(value: str) -> int:
-    match = re.search(r"([\d,.]+)\s*([KM]?)", value, re.I)
+    match = re.search(r"([\d,.]+)\s*([KM]?)", value, re.IGNORECASE)
     if not match:
         return 0
     number = float(match.group(1).replace(",", ""))
@@ -77,7 +77,7 @@ def _context(value: str) -> int:
 def parse_model_inventory(docs: dict[str, str]) -> list[dict]:
     """Read documented open models plus Relace's Apply and Search products."""
     if not isinstance(docs, dict):
-        raise ValueError("Relace scraper expects public docs pages")
+        raise TypeError("Relace scraper expects public docs pages")
     table = docs.get("open_models", "")
     header: list[str] | None = None
     result: dict[str, dict] = {}

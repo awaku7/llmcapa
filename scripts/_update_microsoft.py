@@ -32,9 +32,8 @@ import json
 import shutil
 from pathlib import Path
 
-from playwright.sync_api import sync_playwright
-
 from _metadata_loader import context_window_override
+from playwright.sync_api import sync_playwright
 
 WORKDIR = Path(__file__).resolve().parents[1]
 OUT = WORKDIR / "src" / "llmcapa" / "data" / "microsoft.json"
