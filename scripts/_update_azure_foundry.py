@@ -1149,9 +1149,9 @@ def apply_verified_catalog_metadata(row: dict[str, Any]) -> None:
             "aliases": ["fw-glm-5", "fireworks/FW-GLM-5"],
         }
     )
-    row.setdefault("extra", {})["capabilities_source"] = (
-        "https://ai.azure.com/catalog/models/FW-GLM-5"
-    )
+    row.setdefault("extra", {})[
+        "capabilities_source"
+    ] = "https://ai.azure.com/catalog/models/FW-GLM-5"
 
 
 def build_entry(item: dict, price_map: dict[str, dict]) -> dict:
@@ -1589,7 +1589,6 @@ def main() -> None:
     print("providers", pubs.most_common(20))
     print(f"OUT -> {OUT}")
     print(f"INSTALLED -> {INSTALLED}")
-
 
 
 if __name__ == "__main__":

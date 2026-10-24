@@ -49,7 +49,9 @@ def _fetch(url: str) -> str:
         with urlopen(request, timeout=45) as response:
             return response.read(5_000_000).decode("utf-8", "replace")
     except URLError as exc:
-        raise RuntimeError(f"could not fetch official Sarashina documentation: {url}") from exc
+        raise RuntimeError(
+            f"could not fetch official Sarashina documentation: {url}"
+        ) from exc
 
 
 def _require_documentation(pages: dict[str, str]) -> None:
@@ -350,8 +352,10 @@ def main() -> None:
         model["extra"] = {**old_extra, **model["extra"]}
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    today = datetime.now(timezone.utc).date().isoformat()
+    OUT.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+
     print(f"sarashina.json: {len(payload['models'])} models updated; pricing=JPY 0")
 
 

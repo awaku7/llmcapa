@@ -12,7 +12,6 @@ from __future__ import annotations
 
 import json
 import shutil
-from datetime import datetime, timezone
 from pathlib import Path
 
 from _metadata_loader import context_window_override
@@ -300,8 +299,6 @@ def main() -> None:
                 f" cache_hit={ch} ctx={m['context_window']}",
                 flush=True,
             )
-
-    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
 
 if __name__ == "__main__":

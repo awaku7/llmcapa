@@ -28,16 +28,23 @@ MODEL_LINK_RE = re.compile(
 def fetch_index() -> str:
     request = Request(
         INDEX_URL,
-        headers={"Accept": "text/plain,text/markdown,*/*", "User-Agent": "llmcapa-provider-updater/1.0"},
+        headers={
+            "Accept": "text/plain,text/markdown,*/*",
+            "User-Agent": "llmcapa-provider-updater/1.0",
+        },
     )
     with urlopen(request, timeout=45) as response:
         text = response.read(4_000_000).decode("utf-8", "replace")
     if not text.strip() or "modellix.ai" not in text:
-        raise RuntimeError("Modellix official documentation index was empty or malformed")
+        raise RuntimeError(
+            "Modellix official documentation index was empty or malformed"
+        )
     return text
 
 
-def classify_task(model_id: str, title: str, description: str) -> dict[str, object] | None:
+def classify_task(
+    model_id: str, title: str, description: str
+) -> dict[str, object] | None:
     """Classify only explicit media task labels and documented core functions."""
     identity = f"{model_id} {title}".casefold().replace("_", "-")
     core = description.casefold()
@@ -47,45 +54,194 @@ def classify_task(model_id: str, title: str, description: str) -> dict[str, obje
     has_core_description = "[core function]" in description.casefold()
 
     if any(marker in identity for marker in ("first-last-frame", "first-last", "fl2v")):
-        return {"input_modalities": ["text", "image"], "output_modalities": ["video"], "media_model_type": "image-to-video"}
+        return {
+            "input_modalities": ["text", "image"],
+            "output_modalities": ["video"],
+            "media_model_type": "image-to-video",
+        }
     if "motion-control" in identity:
-        return {"input_modalities": ["text", "image", "video"], "output_modalities": ["video"], "media_model_type": "video-to-video"}
-    if any(marker in identity for marker in ("video-effects", "digital-human", "multi-frame", "template-story", "one-click", "q3-drama")):
+        return {
+            "input_modalities": ["text", "image", "video"],
+            "output_modalities": ["video"],
+            "media_model_type": "video-to-video",
+        }
+    if any(
+        marker in identity
+        for marker in (
+            "video-effects",
+            "digital-human",
+            "multi-frame",
+            "template-story",
+            "one-click",
+            "q3-drama",
+        )
+    ):
         inputs = ["text", "image"]
         if "digital-human" in identity or "avatar" in identity:
             inputs.append("audio")
         if "trending-replicate" in identity:
             inputs.append("video")
-        return {"input_modalities": inputs, "output_modalities": ["video"], "media_model_type": "image-to-video"}
+        return {
+            "input_modalities": inputs,
+            "output_modalities": ["video"],
+            "media_model_type": "image-to-video",
+        }
     if "kling-avatar" in identity:
-        return {"input_modalities": ["text", "image", "audio"], "output_modalities": ["video"], "media_model_type": "image-to-video"}
-    if any(marker in identity for marker in ("video-upscale", "upscale-video", "video-restyle", "video-edit", "video-o1", "video-extend", "video-effects")):
-        return {"input_modalities": ["text", "video"], "output_modalities": ["video"], "media_model_type": "video-to-video"}
-    if any(marker in identity for marker in ("image-o1", "image-expansion", "kling-image")):
-        return {"input_modalities": ["text", "image"], "output_modalities": ["image"], "media_model_type": "image-editing"}
+        return {
+            "input_modalities": ["text", "image", "audio"],
+            "output_modalities": ["video"],
+            "media_model_type": "image-to-video",
+        }
+    if any(
+        marker in identity
+        for marker in (
+            "video-upscale",
+            "upscale-video",
+            "video-restyle",
+            "video-edit",
+            "video-o1",
+            "video-extend",
+            "video-effects",
+        )
+    ):
+        return {
+            "input_modalities": ["text", "video"],
+            "output_modalities": ["video"],
+            "media_model_type": "video-to-video",
+        }
+    if any(
+        marker in identity for marker in ("image-o1", "image-expansion", "kling-image")
+    ):
+        return {
+            "input_modalities": ["text", "image"],
+            "output_modalities": ["image"],
+            "media_model_type": "image-editing",
+        }
     if "nano-banana" in identity:
-        return {"input_modalities": ["text"], "output_modalities": ["image"], "media_model_type": "text-to-image"}
+        return {
+            "input_modalities": ["text"],
+            "output_modalities": ["image"],
+            "media_model_type": "text-to-image",
+        }
     if "imagine-image" in identity:
-        return {"input_modalities": ["text"], "output_modalities": ["image"], "media_model_type": "text-to-image"}
+        return {
+            "input_modalities": ["text"],
+            "output_modalities": ["image"],
+            "media_model_type": "text-to-image",
+        }
     if any(marker in identity for marker in ("voice-clone", "cosyvoice-clone")):
-        return {"input_modalities": ["text", "audio"], "output_modalities": ["audio"], "media_model_type": "text-to-speech"}
+        return {
+            "input_modalities": ["text", "audio"],
+            "output_modalities": ["audio"],
+            "media_model_type": "text-to-speech",
+        }
     if "cosyvoice-design" in identity:
-        return {"input_modalities": ["text"], "output_modalities": ["audio"], "media_model_type": "text-to-speech"}
+        return {
+            "input_modalities": ["text"],
+            "output_modalities": ["audio"],
+            "media_model_type": "text-to-speech",
+        }
 
-    if any(marker in haystack for marker in ("video-to-video", "video to video", "video editing", "extend an existing video", "video extend", "v2v")):
-        return {"input_modalities": ["text", "video"], "output_modalities": ["video"], "media_model_type": "video-to-video"}
-    if any(marker in haystack for marker in ("image-to-video", "image to video", "reference-to-video", "i2v", "r2v")):
-        return {"input_modalities": ["text", "image"], "output_modalities": ["video"], "media_model_type": "image-to-video"}
+    if any(
+        marker in haystack
+        for marker in (
+            "video-to-video",
+            "video to video",
+            "video editing",
+            "extend an existing video",
+            "video extend",
+            "v2v",
+        )
+    ):
+        return {
+            "input_modalities": ["text", "video"],
+            "output_modalities": ["video"],
+            "media_model_type": "video-to-video",
+        }
+    if any(
+        marker in haystack
+        for marker in (
+            "image-to-video",
+            "image to video",
+            "reference-to-video",
+            "i2v",
+            "r2v",
+        )
+    ):
+        return {
+            "input_modalities": ["text", "image"],
+            "output_modalities": ["video"],
+            "media_model_type": "image-to-video",
+        }
     if any(marker in haystack for marker in ("text-to-video", "text to video", "t2v")):
-        return {"input_modalities": ["text"], "output_modalities": ["video"], "media_model_type": "text-to-video"}
-    if any(marker in haystack for marker in ("speech-to-text", "speech to text", "transcription", "transcribe", "automatic speech recognition", "asr")):
-        return {"input_modalities": ["audio"], "output_modalities": ["text"], "media_model_type": "speech-to-text"}
-    if any(marker in haystack for marker in ("text-to-speech", "text to speech", "speech generation", "voice generation", "tts")):
-        return {"input_modalities": ["text"], "output_modalities": ["audio"], "media_model_type": "text-to-speech"}
-    if any(marker in identity for marker in ("image-edit", "image-editing", "-edit")) or any(marker in core for marker in ("image editing", "image edit", "edit an image", "edit existing image", "i2i")):
-        return {"input_modalities": ["text", "image"], "output_modalities": ["image"], "media_model_type": "image-editing"}
-    if any(marker in haystack for marker in ("text-to-image", "text to image", "image generation", "generate images", "t2i")):
-        return {"input_modalities": ["text"], "output_modalities": ["image"], "media_model_type": "text-to-image"}
+        return {
+            "input_modalities": ["text"],
+            "output_modalities": ["video"],
+            "media_model_type": "text-to-video",
+        }
+    if any(
+        marker in haystack
+        for marker in (
+            "speech-to-text",
+            "speech to text",
+            "transcription",
+            "transcribe",
+            "automatic speech recognition",
+            "asr",
+        )
+    ):
+        return {
+            "input_modalities": ["audio"],
+            "output_modalities": ["text"],
+            "media_model_type": "speech-to-text",
+        }
+    if any(
+        marker in haystack
+        for marker in (
+            "text-to-speech",
+            "text to speech",
+            "speech generation",
+            "voice generation",
+            "tts",
+        )
+    ):
+        return {
+            "input_modalities": ["text"],
+            "output_modalities": ["audio"],
+            "media_model_type": "text-to-speech",
+        }
+    if any(
+        marker in identity for marker in ("image-edit", "image-editing", "-edit")
+    ) or any(
+        marker in core
+        for marker in (
+            "image editing",
+            "image edit",
+            "edit an image",
+            "edit existing image",
+            "i2i",
+        )
+    ):
+        return {
+            "input_modalities": ["text", "image"],
+            "output_modalities": ["image"],
+            "media_model_type": "image-editing",
+        }
+    if any(
+        marker in haystack
+        for marker in (
+            "text-to-image",
+            "text to image",
+            "image generation",
+            "generate images",
+            "t2i",
+        )
+    ):
+        return {
+            "input_modalities": ["text"],
+            "output_modalities": ["image"],
+            "media_model_type": "text-to-image",
+        }
     if has_core_description:
         # A model page exists but does not state a recognized task category.
         return None
@@ -133,11 +289,15 @@ def parse_catalog_index(text: str) -> tuple[list[dict], list[str]]:
             },
         }
     if not rows:
-        raise ValueError("No classifiable media model pages were found in Modellix llms.txt")
+        raise ValueError(
+            "No classifiable media model pages were found in Modellix llms.txt"
+        )
     return list(rows.values()), skipped
 
 
-def merge_catalog(fresh: list[dict], previous: list[dict], checked_at: str) -> list[dict]:
+def merge_catalog(
+    fresh: list[dict], previous: list[dict], checked_at: str
+) -> list[dict]:
     old_by_id = {
         str(model.get("model_id", "")).casefold(): model
         for model in previous
@@ -184,16 +344,26 @@ def merge_catalog(fresh: list[dict], previous: list[dict], checked_at: str) -> l
     return merged
 
 
-def update_catalog(fresh: list[dict], skipped: list[str] | None = None, *, checked_at: str | None = None) -> int:
+def update_catalog(
+    fresh: list[dict],
+    skipped: list[str] | None = None,
+    *,
+    checked_at: str | None = None,
+) -> int:
     data = json.loads(DATA.read_text(encoding="utf-8"))
     previous = data.get("models") or []
     checked_at = checked_at or datetime.now(timezone.utc).date().isoformat()
     models = merge_catalog(fresh, previous, checked_at)
     if not models:
         raise ValueError("refusing to write an empty Modellix media catalog")
-    DATA.write_text(json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    skipped_text = ", ".join(skipped or []) or "none"
-    print(f"modellix_media.json: refreshed {len(fresh)} classifiable records; total={len(models)}")
+    DATA.write_text(
+        json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    print(
+        f"modellix_media.json: refreshed {len(fresh)} classifiable records; "
+        f"total={len(models)}; skipped={len(skipped or [])}"
+    )
     return len(fresh)
 
 

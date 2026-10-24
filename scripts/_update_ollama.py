@@ -11,7 +11,6 @@ import json
 import shutil
 import ssl
 import urllib.request
-from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -59,9 +58,8 @@ def entry(raw: dict, old: dict | None) -> dict:
         old_extra = old.get("extra") or {}
         # Older runs applied 4096 as a generic tags-API default. The tags
         # endpoint has no context field, so clear only that unproven sentinel.
-        if (
-            old.get("context_window") == 4096
-            and not old_extra.get("context_window_source")
+        if old.get("context_window") == 4096 and not old_extra.get(
+            "context_window_source"
         ):
             d["context_window"] = 0
     d["provider"] = "ollama"
@@ -99,13 +97,6 @@ def main() -> None:
     )
     if INSTALLED.parent.exists() and DATA.resolve() != INSTALLED.resolve():
         shutil.copy2(DATA, INSTALLED)
-    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    log.write_text(
-        log.read_text(encoding="utf-8") + f"\n## Ollama refresh ({stamp})\n\n"
-        f"- Source: {URL}\n- Live tags merged: {len(live)}\n"
-        f"- Historical bundled entries preserved: {len(result['models'])}\n",
-        encoding="utf-8",
-    )
     print(f"ollama.json: {len(result['models'])} models; merged live tags={len(live)}")
 
 

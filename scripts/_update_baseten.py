@@ -35,15 +35,22 @@ _FEATURE_ROW = re.compile(
 def fetch_docs() -> str:
     request = Request(
         SOURCE + ".md",
-        headers={"Accept": "text/markdown,text/plain,*/*", "User-Agent": "llmcapa-provider-updater/1.0"},
+        headers={
+            "Accept": "text/markdown,text/plain,*/*",
+            "User-Agent": "llmcapa-provider-updater/1.0",
+        },
     )
     try:
         with urlopen(request, timeout=30) as response:
             page = response.read(4_000_000).decode("utf-8", "replace")
     except (HTTPError, URLError) as exc:
-        raise RuntimeError(f"Baseten public Model APIs docs could not be fetched: {exc}") from exc
+        raise RuntimeError(
+            f"Baseten public Model APIs docs could not be fetched: {exc}"
+        ) from exc
     if "SupportedModelsTable" not in page or "FeatureSupportTable" not in page:
-        raise RuntimeError("Baseten public Model APIs docs did not contain the expected catalog tables")
+        raise RuntimeError(
+            "Baseten public Model APIs docs did not contain the expected catalog tables"
+        )
     return page
 
 
@@ -54,8 +61,14 @@ def parse_model_inventory(markdown: str) -> list[dict[str, Any]]:
     if len(supported_section) != 2 or len(feature_section) != 2:
         raise ValueError("Baseten docs are missing public model/feature table data")
     supported_matches = list(_SUPPORTED_ROW.finditer(supported_section[1]))
-    feature_matches = list(_FEATURE_ROW.finditer(feature_section[1].split("export const SupportedModelsTable", 1)[0]))
-    features = {match.group(1).casefold(): match.groups()[1:] for match in feature_matches}
+    feature_matches = list(
+        _FEATURE_ROW.finditer(
+            feature_section[1].split("export const SupportedModelsTable", 1)[0]
+        )
+    )
+    features = {
+        match.group(1).casefold(): match.groups()[1:] for match in feature_matches
+    }
     rows = []
     seen: set[str] = set()
     for match in supported_matches:
@@ -85,7 +98,9 @@ def parse_model_inventory(markdown: str) -> list[dict[str, Any]]:
                 "supports_streaming": True,
                 "supports_chat_completion": True,
                 "supports_responses_api": False,
-                "sampling_parameters": [item.strip() for item in sampling.split(",") if item.strip()],
+                "sampling_parameters": [
+                    item.strip() for item in sampling.split(",") if item.strip()
+                ],
             }
         )
         seen.add(key)
@@ -133,7 +148,9 @@ def catalog_to_models(
         extra.update(
             {
                 "source": SOURCE,
-                "official_source_checked_at": datetime.now(timezone.utc).date().isoformat(),
+                "official_source_checked_at": datetime.now(timezone.utc)
+                .date()
+                .isoformat(),
                 "catalog_source": "official_baseten_public_model_apis_docs",
                 "model_family": model_id.split("/", 1)[0],
                 "sampling_parameters": snapshot["sampling_parameters"],
@@ -151,7 +168,9 @@ def catalog_to_models(
             extra = dict(row.get("extra") or {})
             extra.update(
                 {
-                    "official_source_checked_at": datetime.now(timezone.utc).date().isoformat(),
+                    "official_source_checked_at": datetime.now(timezone.utc)
+                    .date()
+                    .isoformat(),
                     "not_listed_in_current_docs": True,
                 }
             )
@@ -166,7 +185,10 @@ def main() -> None:
     models = catalog_to_models(rows, existing_payload.get("models", []))
     if not models:
         raise RuntimeError("Baseten public docs returned no usable models")
-    DATA.write_text(json.dumps({"models": models}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    DATA.write_text(
+        json.dumps({"models": models}, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
     print(f"baseten.json: {len(rows)} public models scraped; total={len(models)}")
 
 

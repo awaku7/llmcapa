@@ -332,10 +332,14 @@ def build() -> tuple[list[dict], dict]:
         or "muse-spark-1.3" not in models_lower
         or "muse-wonder-1.0" not in models_lower
     ):
-        raise RuntimeError("official Meta models page did not render the current model list")
+        raise RuntimeError(
+            "official Meta models page did not render the current model list"
+        )
     pricing_lower = pricing_text.casefold()
     if pricing_status != 200 or "per 1m tokens" not in pricing_lower:
-        raise RuntimeError("official Meta pricing page did not render current token rates")
+        raise RuntimeError(
+            "official Meta pricing page did not render current token rates"
+        )
 
     table = parse_models_page(models_text)
     prices = parse_pricing(pricing_text)
@@ -391,7 +395,14 @@ def build() -> tuple[list[dict], dict]:
     }
     wonder["extra"]["cached_input_per_1m"] = wonder_prices["cached_input"]
     wonder["extra"]["preview"] = True
-    wonder["reasoning_effort_values"] = ["minimal", "low", "medium", "high", "xhigh", "max"]
+    wonder["reasoning_effort_values"] = [
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max",
+    ]
     models.append(wonder)
 
     # Muse Glimmer 30B: Apache 2.0 open weights for local agents (no API pricing).
@@ -557,7 +568,7 @@ def main() -> int:
     priced = sum(
         1 for m in models if (m.get("pricing") or {}).get("input_per_1m") is not None
     )
-    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+
     print(
         f"meta.json: {len(models)} models (active={active}, token-priced={priced})",
         flush=True,

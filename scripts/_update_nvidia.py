@@ -16,7 +16,6 @@ from __future__ import annotations
 
 import json
 import shutil
-from datetime import datetime, timezone
 from pathlib import Path
 
 from _metadata_loader import context_window_override
@@ -374,8 +373,6 @@ def main() -> None:
     )
     for c in changed:
         print(f"  {c}", flush=True)
-
-    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
 
 if __name__ == "__main__":

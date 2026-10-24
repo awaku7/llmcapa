@@ -15,7 +15,6 @@ from __future__ import annotations
 
 import json
 import shutil
-from datetime import datetime, timezone
 from pathlib import Path
 
 try:
@@ -195,9 +194,9 @@ def build(pricing_catalog: dict[str, dict]) -> list[dict]:
         if not model_id or model_id.casefold() in active_ids:
             continue
         carried = dict(old)
-        carried.setdefault("extra", {})["catalog_status"] = (
-            "retained_from_previous_catalog_not_in_current_pricing_table"
-        )
+        carried.setdefault("extra", {})[
+            "catalog_status"
+        ] = "retained_from_previous_catalog_not_in_current_pricing_table"
         models.append(carried)
     return dedupe(models)
 
@@ -265,8 +264,6 @@ def main() -> None:
                 f"ctx={m['context_window']}{flag}",
                 flush=True,
             )
-
-    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
 
 if __name__ == "__main__":

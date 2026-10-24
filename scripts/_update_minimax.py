@@ -11,7 +11,6 @@ from __future__ import annotations
 
 import json
 import shutil
-from datetime import datetime, timezone
 from pathlib import Path
 
 try:
@@ -450,8 +449,6 @@ def main() -> None:
         f"(active={active}, deprecated={len(models)-active}, token-priced={priced})",
         flush=True,
     )
-
-    ts = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
 
 if __name__ == "__main__":

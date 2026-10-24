@@ -599,9 +599,6 @@ def main() -> None:
             flush=True,
         )
 
-    # append log only if last entry is not already today's mistral refresh with same count
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-
 
 if __name__ == "__main__":
     main()

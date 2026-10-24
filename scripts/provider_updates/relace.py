@@ -20,13 +20,18 @@ SEARCH_SOURCE = "https://docs.relace.ai/api-reference/fast-agentic-search/search
 def _fetch_markdown(url: str) -> str:
     request = Request(
         url + ".md",
-        headers={"Accept": "text/markdown,text/plain,*/*", "User-Agent": "llmcapa-provider-updater/1.0"},
+        headers={
+            "Accept": "text/markdown,text/plain,*/*",
+            "User-Agent": "llmcapa-provider-updater/1.0",
+        },
     )
     try:
         with urlopen(request, timeout=30) as response:
             return response.read(2_000_000).decode("utf-8", "replace")
     except (HTTPError, URLError) as exc:
-        raise RuntimeError(f"Relace official model documentation fetch failed ({url}): {exc}") from exc
+        raise RuntimeError(
+            f"Relace official model documentation fetch failed ({url}): {exc}"
+        ) from exc
 
 
 def fetch_inventory() -> dict[str, str]:
@@ -35,8 +40,14 @@ def fetch_inventory() -> dict[str, str]:
         "apply": _fetch_markdown(APPLY_SOURCE),
         "search": _fetch_markdown(SEARCH_SOURCE),
     }
-    if "Slug" not in pages["open_models"] or "relace-apply-3" not in pages["apply"] or "relace-search" not in pages["search"]:
-        raise RuntimeError("Relace public docs did not include all expected model references")
+    if (
+        "Slug" not in pages["open_models"]
+        or "relace-apply-3" not in pages["apply"]
+        or "relace-search" not in pages["search"]
+    ):
+        raise RuntimeError(
+            "Relace public docs did not include all expected model references"
+        )
     return pages
 
 
@@ -74,7 +85,11 @@ def parse_model_inventory(docs: dict[str, str]) -> list[dict]:
         if not line.lstrip().startswith("|"):
             continue
         cells = _cells(line)
-        if cells and cells[0].casefold() == "model" and any("slug" in cell.casefold() for cell in cells):
+        if (
+            cells
+            and cells[0].casefold() == "model"
+            and any("slug" in cell.casefold() for cell in cells)
+        ):
             header = [cell.casefold() for cell in cells]
             continue
         if header is None or len(cells) != len(header):
@@ -85,17 +100,27 @@ def parse_model_inventory(docs: dict[str, str]) -> list[dict]:
         if not ids:
             continue
         model_id = ids[0].strip()
-        model_name = re.sub(r"\[([^]]+)\]\([^)]+\)", r"\1", cells[index["model"]]).strip()
+        model_name = re.sub(
+            r"\[([^]]+)\]\([^)]+\)", r"\1", cells[index["model"]]
+        ).strip()
         input_price = _number(cells[index["input"]]) if "input" in index else None
         output_price = _number(cells[index["output"]]) if "output" in index else None
-        cached_price = _number(cells[index["cached input"]]) if "cached input" in index else None
+        cached_price = (
+            _number(cells[index["cached input"]]) if "cached input" in index else None
+        )
         pricing = None
         if input_price is not None and output_price is not None:
-            pricing = {"input_per_1m": input_price, "output_per_1m": output_price, "currency": "USD"}
+            pricing = {
+                "input_per_1m": input_price,
+                "output_per_1m": output_price,
+                "currency": "USD",
+            }
         result[model_id.casefold()] = {
             "model_id": model_id,
             "display_name": model_name or model_id,
-            "context_window": _context(cells[index["context"]]) if "context" in index else 0,
+            "context_window": (
+                _context(cells[index["context"]]) if "context" in index else 0
+            ),
             "max_output_tokens": 0,
             "input_modalities": ["text"],
             "output_modalities": ["text"],
@@ -149,7 +174,9 @@ def parse_model_inventory(docs: dict[str, str]) -> list[dict]:
     return sorted(result.values(), key=lambda row: row["model_id"].casefold())
 
 
-def merge_inventory(snapshots: list[dict], previous: list[dict], checked_at: str) -> list[dict]:
+def merge_inventory(
+    snapshots: list[dict], previous: list[dict], checked_at: str
+) -> list[dict]:
     old_by_id = {
         str(row.get("model_id", "")).casefold(): row
         for row in previous
@@ -166,8 +193,10 @@ def merge_inventory(snapshots: list[dict], previous: list[dict], checked_at: str
                 "provider": "relace",
                 "model_id": snapshot["model_id"],
                 "display_name": snapshot["display_name"],
-                "context_window": snapshot["context_window"] or row.get("context_window", 0),
-                "max_output_tokens": snapshot["max_output_tokens"] or row.get("max_output_tokens", 0),
+                "context_window": snapshot["context_window"]
+                or row.get("context_window", 0),
+                "max_output_tokens": snapshot["max_output_tokens"]
+                or row.get("max_output_tokens", 0),
                 "input_modalities": snapshot["input_modalities"],
                 "output_modalities": snapshot["output_modalities"],
                 "supports_chat_completion": True,
@@ -211,7 +240,12 @@ def merge_inventory(snapshots: list[dict], previous: list[dict], checked_at: str
         if key and key not in seen:
             row = dict(old)
             extra = dict(row.get("extra") or {})
-            extra.update({"official_source_checked_at": checked_at, "not_listed_in_current_docs": True})
+            extra.update(
+                {
+                    "official_source_checked_at": checked_at,
+                    "not_listed_in_current_docs": True,
+                }
+            )
             row["extra"] = extra
             merged.append(row)
     return merged
@@ -221,8 +255,13 @@ def update_catalog(snapshots: list[dict], *, checked_at: str | None = None) -> i
     data = json.loads(DATA.read_text(encoding="utf-8"))
     checked_at = checked_at or datetime.now(timezone.utc).date().isoformat()
     models = merge_inventory(snapshots, data.get("models") or [], checked_at)
-    DATA.write_text(json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"relace.json: refreshed {len(snapshots)} public-doc model IDs; total={len(models)}")
+    DATA.write_text(
+        json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    print(
+        f"relace.json: refreshed {len(snapshots)} public-doc model IDs; total={len(models)}"
+    )
     return len(snapshots)
 
 

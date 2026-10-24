@@ -329,7 +329,7 @@ def run_provider(
             raise RuntimeError(f"updater exited with code {returncode}")
 
         touched = unstaged_files()
-        unexpected = touched - {relative_path} - IGNORED_TRACKED_SIDE_EFFECTS
+        unexpected = touched - {relative_path}
         if unexpected:
             raise ValueError(f"unexpected files modified: {sorted(unexpected)}")
 

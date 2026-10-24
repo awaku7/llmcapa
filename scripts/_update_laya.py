@@ -18,7 +18,9 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "laya.json"
 PACKAGE_URL = "https://pypi.org/pypi/laya/json"
 HF_ORG = "convaiinnovations"
-HF_API_URL = f"https://huggingface.co/api/models?author={quote(HF_ORG)}&limit=100&full=false"
+HF_API_URL = (
+    f"https://huggingface.co/api/models?author={quote(HF_ORG)}&limit=100&full=false"
+)
 SOURCE = "https://github.com/NandhaKishorM/laya"
 
 
@@ -97,7 +99,9 @@ def update_catalog(
         json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
     unregistered = sorted(hf_model_ids - known_hf_ids)
-    print(f"laya.json: refreshed metadata for {changed} records; version={package_version}")
+    print(
+        f"laya.json: refreshed metadata for {changed} records; version={package_version}"
+    )
     return changed, unregistered
 
 

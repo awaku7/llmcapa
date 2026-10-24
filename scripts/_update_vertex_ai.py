@@ -8,7 +8,6 @@ from __future__ import annotations
 
 import json
 from copy import deepcopy
-from datetime import datetime, timezone
 from pathlib import Path
 
 from _computer_use_metadata import (
@@ -26,9 +25,7 @@ THINKING_SOURCE = (
 COMPUTER_USE_SOURCE = (
     "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/computer-use"
 )
-VERTEX_COMPUTER_USE_MODELS = GOOGLE_COMPUTER_USE_MODELS - {
-    "gemini-3.5-flash-lite"
-}
+VERTEX_COMPUTER_USE_MODELS = GOOGLE_COMPUTER_USE_MODELS - {"gemini-3.5-flash-lite"}
 
 # First-party Vertex Gemini controls. These are model-specific and deliberately
 # kept separate from OpenAI-compatible reasoning_effort.

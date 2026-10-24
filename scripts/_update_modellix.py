@@ -42,8 +42,13 @@ def parse_context_window(value: object) -> int:
 def normalize_modality(value: str) -> str | None:
     key = value.strip().casefold()
     return {
-        "text": "text", "image": "image", "audio": "audio", "video": "video",
-        "embedding": "embedding", "embeddings": "embedding", "rerank": "rerank",
+        "text": "text",
+        "image": "image",
+        "audio": "audio",
+        "video": "video",
+        "embedding": "embedding",
+        "embeddings": "embedding",
+        "rerank": "rerank",
     }.get(key)
 
 
@@ -80,8 +85,21 @@ def parse_table_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 tiers.append(item)
         if not tiers and isinstance(row.get("pricing"), dict):
             price = row["pricing"]
-            if isinstance(price.get("input_per_1m"), (int, float)) and isinstance(price.get("output_per_1m"), (int, float)):
-                tiers.append({key: price[key] for key in ("input_per_1m", "output_per_1m", "cache_read_per_1m", "cache_write_per_1m") if key in price})
+            if isinstance(price.get("input_per_1m"), (int, float)) and isinstance(
+                price.get("output_per_1m"), (int, float)
+            ):
+                tiers.append(
+                    {
+                        key: price[key]
+                        for key in (
+                            "input_per_1m",
+                            "output_per_1m",
+                            "cache_read_per_1m",
+                            "cache_write_per_1m",
+                        )
+                        if key in price
+                    }
+                )
         parsed[model_id.casefold()] = {
             "provider": "modellix",
             "model_id": model_id,
@@ -92,13 +110,14 @@ def parse_table_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
             "price_tiers": tiers,
         }
     if not parsed:
-        raise ValueError("official Modellix LLM price table contained no valid model rows")
+        raise ValueError(
+            "official Modellix LLM price table contained no valid model rows"
+        )
     return list(parsed.values())
 
 
 def extract_page_rows(page) -> list[dict[str, Any]]:
-    return page.evaluate(
-        """() => {
+    return page.evaluate("""() => {
           const table = document.querySelector('table[aria-label="Price table"]');
           if (!table) return [];
           const price = (cell) => {
@@ -136,15 +155,16 @@ def extract_page_rows(page) -> list[dict[str, Any]]:
               price_tiers: priceTiers
             };
           }).filter(Boolean);
-        }"""
-    )
+        }""")
 
 
 def fetch_catalog() -> list[dict[str, Any]]:
     try:
         from playwright.sync_api import sync_playwright
     except ImportError as exc:  # pragma: no cover - environment-specific
-        raise RuntimeError("Install Playwright to run the Modellix LLM updater") from exc
+        raise RuntimeError(
+            "Install Playwright to run the Modellix LLM updater"
+        ) from exc
 
     collected: dict[str, dict[str, Any]] = {}
     with sync_playwright() as playwright:
@@ -152,7 +172,9 @@ def fetch_catalog() -> list[dict[str, Any]]:
         page = browser.new_page()
         try:
             page.goto(SOURCE, wait_until="networkidle", timeout=90_000)
-            page.locator('table[aria-label="Price table"] tbody.llm-table__group').first.wait_for(timeout=45_000)
+            page.locator(
+                'table[aria-label="Price table"] tbody.llm-table__group'
+            ).first.wait_for(timeout=45_000)
             for page_number in range(PAGE_SIZE_LIMIT):
                 for row in extract_page_rows(page):
                     key = str(row.get("model_id", "")).casefold()
@@ -161,7 +183,9 @@ def fetch_catalog() -> list[dict[str, Any]]:
                 next_page = page.locator('button[aria-label="Next page"]')
                 if next_page.count() == 0 or next_page.is_disabled():
                     break
-                previous_ids = page.locator('table[aria-label="Price table"] tbody.llm-table__group code').all_inner_texts()
+                previous_ids = page.locator(
+                    'table[aria-label="Price table"] tbody.llm-table__group code'
+                ).all_inner_texts()
                 next_page.click()
                 page.wait_for_function(
                     "previous => { const code = document.querySelector('table[aria-label=\"Price table\"] tbody.llm-table__group code'); return code && code.textContent.trim() !== previous[0]; }",
@@ -169,13 +193,17 @@ def fetch_catalog() -> list[dict[str, Any]]:
                     timeout=30_000,
                 )
             else:
-                raise RuntimeError(f"Modellix pagination exceeded {PAGE_SIZE_LIMIT} pages")
+                raise RuntimeError(
+                    f"Modellix pagination exceeded {PAGE_SIZE_LIMIT} pages"
+                )
         finally:
             browser.close()
     return parse_table_rows(list(collected.values()))
 
 
-def merge_catalog(fresh: list[dict[str, Any]], previous: list[dict], checked_at: str) -> list[dict]:
+def merge_catalog(
+    fresh: list[dict[str, Any]], previous: list[dict], checked_at: str
+) -> list[dict]:
     old_by_id = {
         str(row.get("model_id", "")).casefold(): row
         for row in previous
@@ -192,7 +220,8 @@ def merge_catalog(fresh: list[dict[str, Any]], previous: list[dict], checked_at:
                 "provider": "modellix",
                 "model_id": snapshot["model_id"],
                 "display_name": snapshot["display_name"],
-                "context_window": snapshot["context_window"] or old.get("context_window", 0),
+                "context_window": snapshot["context_window"]
+                or old.get("context_window", 0),
                 "max_output_tokens": old.get("max_output_tokens", 0),
                 "input_modalities": snapshot["input_modalities"],
                 "output_modalities": snapshot["output_modalities"],
@@ -238,18 +267,27 @@ def merge_catalog(fresh: list[dict[str, Any]], previous: list[dict], checked_at:
 
     # Preserve older curated IDs absent from the current page; the updater does
     # not infer deprecation from a paginated pricing snapshot.
-    result.extend(row for row in previous if isinstance(row, dict) and str(row.get("model_id", "")).casefold() not in seen)
+    result.extend(
+        row
+        for row in previous
+        if isinstance(row, dict) and str(row.get("model_id", "")).casefold() not in seen
+    )
     return result
 
 
-def update_catalog(fresh: list[dict[str, Any]], *, checked_at: str | None = None) -> int:
+def update_catalog(
+    fresh: list[dict[str, Any]], *, checked_at: str | None = None
+) -> int:
     data = json.loads(DATA.read_text(encoding="utf-8"))
     previous = data.get("models") or []
     checked_at = checked_at or datetime.now(timezone.utc).date().isoformat()
     models = merge_catalog(fresh, previous, checked_at)
     if not models:
         raise ValueError("refusing to write an empty Modellix LLM catalog")
-    DATA.write_text(json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    DATA.write_text(
+        json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
     print(f"modellix.json: refreshed {len(fresh)} official rows; total={len(models)}")
     return len(fresh)
 

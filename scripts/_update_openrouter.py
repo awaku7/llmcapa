@@ -282,18 +282,93 @@ DECISION_ROUTES: list[dict[str, Any]] = [
 
 
 OPENROUTER_DECISION_MODEL_META: dict[str, dict[str, Any]] = {
-    "cloudflare/clef": {"question_kinds": ["noul", "choice", "score"], "upstream_protocol": "systemone-compatible", "upstream_endpoint": "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/cloudflare/clef", "calibrated_confidence": True},
-    "cloudflare/clef-flash": {"question_kinds": ["noul", "choice", "score"], "upstream_protocol": "systemone-compatible", "upstream_endpoint": "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/cloudflare/clef-flash", "calibrated_confidence": True},
-    "inception/mercury-decide": {"question_kinds": ["noul", "choice", "score"], "upstream_protocol": "systemone-compatible", "upstream_endpoint_path": "/v1/systemone", "calibrated_confidence": True},
-    "jaredpalmer/kev-4b": {"question_kinds": ["noul", "choice", "score"], "upstream_protocol": "typesafe-systemone-compatible", "upstream_endpoint_path": "/v1/systemone", "calibrated_confidence": True},
-    "liquid/d1": {"question_kinds": ["noul", "choice", "score"], "upstream_protocol": "typesafe-systemone-compatible", "upstream_endpoint": "https://api.liquid.ai/decisions/v1/systemone", "calibrated_confidence": True},
-    "openai/gpt-6-luna-decisions": {"question_kinds": ["predicate", "choice", "score"], "answer_fields": ["type", "probability", "choice", "score", "probabilities", "confidence"], "upstream_protocol": "openai-decisions-v1", "upstream_endpoint": "https://api.openai.com/v1/decisions"},
-    "perplexity/pplx-decider-v1.1-27b": {"question_kinds": ["noul", "choice", "score"], "upstream_protocol": "perplexity-decisions-v1", "upstream_endpoint": "https://api.perplexity.ai/v1/decisions", "systemone_schema_compatible": True, "typesafe_sdk_compatibility": "not-documented"},
-    "respan/span-01": {"question_kinds": ["noul"], "answer_fields": ["noul", "probabilities"], "returns_confidence": False, "upstream_protocol": "not-documented"},
-    "respan/span-01-lite": {"question_kinds": ["noul"], "answer_fields": ["noul", "probabilities"], "returns_confidence": False, "upstream_protocol": "not-documented"},
-    "togethercomputer/tev1-4b-experimental": {"question_kinds": ["choice"], "answer_fields": ["choice"], "returns_probabilities": False, "returns_confidence": None, "parallel_questions": False, "free_form_text": True, "type_errors_possible": True, "upstream_protocol": "openai-compatible-chat-completions", "upstream_endpoint_path": "/v1/chat/completions", "systemone_schema_compatible": False, "chat_completion": True},
-    "upstage/solar-decide": {"question_kinds": ["noul", "choice", "score"], "upstream_protocol": "systemone-compatible", "upstream_endpoint_path": "/v1/systemone", "calibrated_confidence": True},
-    "upstage/solar-decide-flash": {"question_kinds": ["noul", "choice", "score"], "upstream_protocol": "systemone-compatible", "upstream_endpoint_path": "/v1/systemone", "calibrated_confidence": True},
+    "cloudflare/clef": {
+        "question_kinds": ["noul", "choice", "score"],
+        "upstream_protocol": "systemone-compatible",
+        "upstream_endpoint": "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/cloudflare/clef",
+        "calibrated_confidence": True,
+    },
+    "cloudflare/clef-flash": {
+        "question_kinds": ["noul", "choice", "score"],
+        "upstream_protocol": "systemone-compatible",
+        "upstream_endpoint": "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/cloudflare/clef-flash",
+        "calibrated_confidence": True,
+    },
+    "inception/mercury-decide": {
+        "question_kinds": ["noul", "choice", "score"],
+        "upstream_protocol": "systemone-compatible",
+        "upstream_endpoint_path": "/v1/systemone",
+        "calibrated_confidence": True,
+    },
+    "jaredpalmer/kev-4b": {
+        "question_kinds": ["noul", "choice", "score"],
+        "upstream_protocol": "typesafe-systemone-compatible",
+        "upstream_endpoint_path": "/v1/systemone",
+        "calibrated_confidence": True,
+    },
+    "liquid/d1": {
+        "question_kinds": ["noul", "choice", "score"],
+        "upstream_protocol": "typesafe-systemone-compatible",
+        "upstream_endpoint": "https://api.liquid.ai/decisions/v1/systemone",
+        "calibrated_confidence": True,
+    },
+    "openai/gpt-6-luna-decisions": {
+        "question_kinds": ["predicate", "choice", "score"],
+        "answer_fields": [
+            "type",
+            "probability",
+            "choice",
+            "score",
+            "probabilities",
+            "confidence",
+        ],
+        "upstream_protocol": "openai-decisions-v1",
+        "upstream_endpoint": "https://api.openai.com/v1/decisions",
+    },
+    "perplexity/pplx-decider-v1.1-27b": {
+        "question_kinds": ["noul", "choice", "score"],
+        "upstream_protocol": "perplexity-decisions-v1",
+        "upstream_endpoint": "https://api.perplexity.ai/v1/decisions",
+        "systemone_schema_compatible": True,
+        "typesafe_sdk_compatibility": "not-documented",
+    },
+    "respan/span-01": {
+        "question_kinds": ["noul"],
+        "answer_fields": ["noul", "probabilities"],
+        "returns_confidence": False,
+        "upstream_protocol": "not-documented",
+    },
+    "respan/span-01-lite": {
+        "question_kinds": ["noul"],
+        "answer_fields": ["noul", "probabilities"],
+        "returns_confidence": False,
+        "upstream_protocol": "not-documented",
+    },
+    "togethercomputer/tev1-4b-experimental": {
+        "question_kinds": ["choice"],
+        "answer_fields": ["choice"],
+        "returns_probabilities": False,
+        "returns_confidence": None,
+        "parallel_questions": False,
+        "free_form_text": True,
+        "type_errors_possible": True,
+        "upstream_protocol": "openai-compatible-chat-completions",
+        "upstream_endpoint_path": "/v1/chat/completions",
+        "systemone_schema_compatible": False,
+        "chat_completion": True,
+    },
+    "upstage/solar-decide": {
+        "question_kinds": ["noul", "choice", "score"],
+        "upstream_protocol": "systemone-compatible",
+        "upstream_endpoint_path": "/v1/systemone",
+        "calibrated_confidence": True,
+    },
+    "upstage/solar-decide-flash": {
+        "question_kinds": ["noul", "choice", "score"],
+        "upstream_protocol": "systemone-compatible",
+        "upstream_endpoint_path": "/v1/systemone",
+        "calibrated_confidence": True,
+    },
 }
 
 
@@ -596,8 +671,7 @@ def map_model(raw: dict) -> dict:
     if decision_spec is not None:
         chat_decision = bool(decision_spec.get("chat_completion"))
         row["output_modalities"] = [
-            "decision" if modality == "decisions" else modality
-            for modality in out_mod
+            "decision" if modality == "decisions" else modality for modality in out_mod
         ]
         endpoint = f"{BASE_URL}/chat/completions" if chat_decision else DECISIONS_URL
         decision_extra = {
@@ -625,7 +699,15 @@ def map_model(raw: dict) -> dict:
             "question_kinds": decision_spec["question_kinds"],
             "answer_fields": decision_spec.get(
                 "answer_fields",
-                ["type", "noul", "choice", "score", "probabilities", "confidence", "legend"],
+                [
+                    "type",
+                    "noul",
+                    "choice",
+                    "score",
+                    "probabilities",
+                    "confidence",
+                    "legend",
+                ],
             ),
             "returns_probabilities": decision_spec.get("returns_probabilities", True),
             "returns_confidence": decision_spec.get("returns_confidence", True),
@@ -904,7 +986,6 @@ def main() -> None:
     raw_models = fetch_models()
     api_model_count = len(raw_models)
     raw_models = add_frontend_models(raw_models)
-    frontend_only_count = len(raw_models) - api_model_count
     previous_by_id = {}
     if OUT.exists():
         previous_by_id = {
@@ -980,7 +1061,8 @@ def main() -> None:
 
     print(
         f"openrouter.json: {len(models)} models "
-        f"(active={active} / deprecated={deprecated} / "
+        f"(API={api_model_count} / frontend-only={len(raw_models) - api_model_count} / "
+        f"active={active} / deprecated={deprecated} / "
         f"priced={priced} / free={free_n} / dynamic={dynamic_n} / extra={extra_n})",
         flush=True,
     )
@@ -1018,8 +1100,6 @@ def main() -> None:
             f"ctx={m['context_window']} max_out={m['max_output_tokens']}",
             flush=True,
         )
-
-    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
 
 if __name__ == "__main__":

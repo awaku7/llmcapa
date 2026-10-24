@@ -30,7 +30,6 @@ from __future__ import annotations
 
 import json
 import shutil
-from datetime import datetime, timezone
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
@@ -1164,9 +1163,7 @@ def apply_official_pricing(models: list[dict], rows: list[list[str]]) -> int:
 
 def main() -> None:
     models = build()
-    official_pricing_updated = apply_official_pricing(
-        models, fetch_official_pricing_rows()
-    )
+    apply_official_pricing(models, fetch_official_pricing_rows())
     OUT.parent.mkdir(parents=True, exist_ok=True)
     payload = {"models": models}
     OUT.write_text(
@@ -1202,8 +1199,6 @@ def main() -> None:
                 f"ctx={m['context_window']}{flag}",
                 flush=True,
             )
-
-    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
 
 if __name__ == "__main__":

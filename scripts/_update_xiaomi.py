@@ -94,8 +94,7 @@ def _fetch_tables(page, url: str) -> tuple[list[dict], str]:
     page.goto(url, wait_until="domcontentloaded", timeout=60_000)
     page.locator("table").first.wait_for(timeout=30_000)
     page.wait_for_timeout(500)
-    result = page.evaluate(
-        r"""() => ({
+    result = page.evaluate(r"""() => ({
             text: document.body?.innerText || '',
             tables: Array.from(document.querySelectorAll('table')).map((table, index) => ({
                 index,
@@ -105,8 +104,7 @@ def _fetch_tables(page, url: str) -> tuple[list[dict], str]:
                     )
                 ).filter(row => row.some(cell => cell)),
             })),
-        })"""
-    )
+        })""")
     return result["tables"], result["text"]
 
 
@@ -140,7 +138,6 @@ def build() -> list[dict]:
         inherited_context = 0
         inherited_output = 0
         for cells in rows[1:]:
-            joined = " ".join(cells)
             ids = list(dict.fromkeys(MODEL_ID_RE.findall(cells[0] if cells else "")))
             if not ids:
                 continue
@@ -155,7 +152,12 @@ def build() -> list[dict]:
                 inherited_output = _number_with_unit(facts, "Maximum Output")
             if any(
                 phrase in facts.lower()
-                for phrase in ("text generation", "full-modal understanding", "speech recognition", "speech synthesis")
+                for phrase in (
+                    "text generation",
+                    "full-modal understanding",
+                    "speech recognition",
+                    "speech synthesis",
+                )
             ):
                 inherited_capabilities = facts
             capabilities = facts or inherited_capabilities
@@ -185,7 +187,10 @@ def build() -> list[dict]:
             model_ids = list(dict.fromkeys(MODEL_ID_RE.findall(" ".join(cells))))
             if not model_ids:
                 continue
-            money = [float(value) for value in re.findall(r"\$([0-9]+(?:\.[0-9]+)?)", " ".join(cells))]
+            money = [
+                float(value)
+                for value in re.findall(r"\$([0-9]+(?:\.[0-9]+)?)", " ".join(cells))
+            ]
             if len(money) >= 3:
                 for model_id in model_ids:
                     slot = prices.setdefault(model_id.lower(), {})
@@ -200,7 +205,9 @@ def build() -> list[dict]:
                     else:
                         slot["realtime"] = entry
             elif model_ids[0].lower().endswith("-asr") and money:
-                prices.setdefault(model_ids[0].lower(), {})["price_per_hour_usd"] = money[-1]
+                prices.setdefault(model_ids[0].lower(), {})["price_per_hour_usd"] = (
+                    money[-1]
+                )
 
     deprecated_match = re.search(
         r"(?:deprecated|deprecation)[^\n]{0,120}?(October\s+\d{1,2},?\s*\d{4})",
@@ -211,7 +218,9 @@ def build() -> list[dict]:
     if deprecated_match:
         date_text = re.sub(r",\s*", ", ", deprecated_match.group(1))
         try:
-            deprecation_date = datetime.strptime(date_text, "%B %d, %Y").date().isoformat()
+            deprecation_date = (
+                datetime.strptime(date_text, "%B %d, %Y").date().isoformat()
+            )
         except ValueError:
             pass
 
@@ -230,7 +239,9 @@ def build() -> list[dict]:
             chat, vision, audio_input, audio_output = False, False, is_clone, True
         else:
             full_modality = "full-modal understanding" in caps
-            input_modalities = ["text", "image", "audio", "video"] if full_modality else ["text"]
+            input_modalities = (
+                ["text", "image", "audio", "video"] if full_modality else ["text"]
+            )
             output_modalities = ["text"]
             chat = "text generation" in caps or "deep thinking" in caps
             vision = "image" in input_modalities
@@ -257,13 +268,16 @@ def build() -> list[dict]:
         if pricing_info.get("price_per_hour_usd") is not None:
             extra["price_per_hour_usd"] = pricing_info["price_per_hour_usd"]
         if group == "tts" and "free for a limited time" in price_text.lower():
-            extra["pricing_status"] = "free for a limited time; official price not posted"
+            extra["pricing_status"] = (
+                "free for a limited time; official price not posted"
+            )
         if deprecation_date and model_id.lower() in {"mimo-v2.5", "mimo-v2.5-pro"}:
             extra["deprecation_date"] = deprecation_date
         deprecated = bool(
             deprecation_date
             and model_id.lower() in {"mimo-v2.5", "mimo-v2.5-pro"}
-            and datetime.fromisoformat(deprecation_date).date() <= datetime.now(timezone.utc).date()
+            and datetime.fromisoformat(deprecation_date).date()
+            <= datetime.now(timezone.utc).date()
         )
         model = base(
             model_id=model_id,
@@ -318,22 +332,6 @@ def main() -> None:
             f"ctx={m['context_window']}",
             flush=True,
         )
-
-    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    entry = (
-        f"\n## Xiaomi MiMo refresh ({stamp})\n\n"
-        f"### Source\n"
-        f"- Models: {SOURCE_MODELS}\n"
-        f"- Pricing: {SOURCE_PRICE} (Playwright live)\n"
-        f"- Apply: `scripts/_update_xiaomi.py`\n\n"
-        f"### Result\n"
-        f"- xiaomi.json: **{len(models)}** models "
-        f"(active={active}, deprecated={deprecated}, priced={priced})\n"
-        f"- Catalog rows, limits, capabilities, and published prices are parsed from live official tables.\n"
-        f"- ASR hourly rates, TTS promotional pricing, batch pricing, and deprecation dates are parsed when published.\n"
-        f"- No local xiaomi_legacy_models.json manifest or hard-coded model list is used.\n"
-        f"- Install copy synced\n"
-    )
 
 
 if __name__ == "__main__":

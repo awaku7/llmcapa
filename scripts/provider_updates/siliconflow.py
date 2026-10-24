@@ -50,9 +50,7 @@ DOC_PAGES = {
     ),
 }
 
-MODEL_ASSIGNMENT_RE = re.compile(
-    r"(?i)\bmodel\s*(?:=|:)\s*[\"'`]([^\"'`]+)[\"'`]"
-)
+MODEL_ASSIGNMENT_RE = re.compile(r"(?i)\bmodel\s*(?:=|:)\s*[\"'`]([^\"'`]+)[\"'`]")
 HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*#*\s*$")
 LIST_ITEM_RE = re.compile(r"^\s*[-*+]\s+(.+?)\s*$")
 SUPPORTED_HEADING_RE = re.compile(r"\bsupported\s+models?\b|\bmodel\s+list\b", re.I)
@@ -64,7 +62,9 @@ def clean_model_id(value: str) -> str | None:
     candidate = value.strip().strip("`*_\"'.,;:()[]{}<>")
     if not 3 <= len(candidate) <= 128:
         return None
-    if not MODEL_ID_RE.fullmatch(candidate) or not any(ch.isdigit() for ch in candidate):
+    if not MODEL_ID_RE.fullmatch(candidate) or not any(
+        ch.isdigit() for ch in candidate
+    ):
         return None
     if candidate.startswith(("/", ".")) or candidate.endswith(("/", ".")):
         return None
@@ -200,7 +200,9 @@ def build_live_rows(evidence: dict[str, dict[str, set[str]]]) -> list[dict]:
         generation_evidence = categories.intersection(
             {"image_generation", "video_generation", "audio_generation"}
         )
-        supports_chat = True if chat_evidence else (False if generation_evidence else None)
+        supports_chat = (
+            True if chat_evidence else (False if generation_evidence else None)
+        )
         source_pages = sorted(item["pages"])
         rows.append(
             {
@@ -296,7 +298,9 @@ def merge_previous(live: list[dict], previous: list[dict]) -> list[dict]:
         preserved += 1
 
     result.sort(key=lambda row: str(row.get("model_id", "")).casefold())
-    print(f"SiliconFlow documented IDs: {len(live)}; plausible prior-only records retained: {preserved}")
+    print(
+        f"SiliconFlow documented IDs: {len(live)}; plausible prior-only records retained: {preserved}"
+    )
     return result
 
 

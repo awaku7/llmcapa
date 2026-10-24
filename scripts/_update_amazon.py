@@ -16,7 +16,6 @@ from __future__ import annotations
 
 import json
 import shutil
-from datetime import datetime, timezone
 from pathlib import Path
 
 from _computer_use_metadata import anthropic_computer_use_capability
@@ -46,9 +45,18 @@ BEDROCK_CLAUDE_MODELS = {
     "anthropic.claude-opus-4-7": ("claude-opus-4-7", "anthropic-claude-opus-4-7"),
     "anthropic.claude-opus-4-6-v1": ("claude-opus-4-6", "anthropic-claude-opus-4-6"),
     "anthropic.claude-sonnet-4-6": ("claude-sonnet-4-6", "anthropic-claude-sonnet-4-6"),
-    "anthropic.claude-opus-4-5-20251101-v1:0": ("claude-opus-4-5", "anthropic-claude-opus-4-5"),
-    "anthropic.claude-sonnet-4-5-20250929-v1:0": ("claude-sonnet-4-5", "anthropic-claude-sonnet-4-5"),
-    "anthropic.claude-haiku-4-5-20251001-v1:0": ("claude-haiku-4-5", "anthropic-claude-haiku-4-5"),
+    "anthropic.claude-opus-4-5-20251101-v1:0": (
+        "claude-opus-4-5",
+        "anthropic-claude-opus-4-5",
+    ),
+    "anthropic.claude-sonnet-4-5-20250929-v1:0": (
+        "claude-sonnet-4-5",
+        "anthropic-claude-sonnet-4-5",
+    ),
+    "anthropic.claude-haiku-4-5-20251001-v1:0": (
+        "claude-haiku-4-5",
+        "anthropic-claude-haiku-4-5",
+    ),
 }
 SOURCE_API = (
     "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/"
@@ -83,7 +91,9 @@ def fetch_nova_prices() -> dict[str, dict[str, float]]:
             "output": pricing["output_per_1m"],
         }
     if not cached:
-        raise RuntimeError("Nova price scraper unavailable and no bundled prices to reuse")
+        raise RuntimeError(
+            "Nova price scraper unavailable and no bundled prices to reuse"
+        )
     NOVA_PRICING_MODE = "bundled-cache"
     return cached
 
@@ -302,7 +312,9 @@ def build(nova_prices: dict[str, dict[str, float]]) -> list[dict]:
                 ctx=0,
                 max_out=0,
                 pricing=rate,
-                extra={"catalog_metadata_status": "official price only; limits unknown"},
+                extra={
+                    "catalog_metadata_status": "official price only; limits unknown"
+                },
             )
             models.append(model)
             by_id[model_id] = model
@@ -399,8 +411,6 @@ def main() -> None:
                 f"  {m['model_id']:36} specialty({unit}) ctx={m['context_window']}",
                 flush=True,
             )
-
-    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
 
 if __name__ == "__main__":

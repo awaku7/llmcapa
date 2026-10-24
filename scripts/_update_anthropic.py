@@ -13,7 +13,6 @@ from __future__ import annotations
 
 import json
 import shutil
-from datetime import datetime, timezone
 from pathlib import Path
 
 from _computer_use_metadata import anthropic_computer_use_capability
@@ -547,8 +546,6 @@ def main() -> None:
                 f"ctx={m['context_window']}",
                 flush=True,
             )
-
-    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
 
 if __name__ == "__main__":

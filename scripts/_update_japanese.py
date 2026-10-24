@@ -173,53 +173,92 @@ def _discover_official_models(source_texts: dict[str, str]) -> list[dict]:
     stamp = datetime.now(timezone.utc).date().isoformat()
 
     pfn_text = source_texts.get("pfn", "")
-    for version in dict.fromkeys(re.findall(r"PLaMo\s*([0-9]+(?:\.[0-9]+)?)\s*Prime", pfn_text, re.I)):
+    for version in dict.fromkeys(
+        re.findall(r"PLaMo\s*([0-9]+(?:\.[0-9]+)?)\s*Prime", pfn_text, re.I)
+    ):
         model_id = f"plamo-{version}-prime"
         price = None
         standard = re.search(
-            r"STANDARD.*?PLaMo\s*" + re.escape(version) + r"\s*Prime.*?INPUT\s*([0-9,]+)円.*?OUTPUT\s*([0-9,]+)円",
+            r"STANDARD.*?PLaMo\s*"
+            + re.escape(version)
+            + r"\s*Prime.*?INPUT\s*([0-9,]+)円.*?OUTPUT\s*([0-9,]+)円",
             pfn_text,
             re.I | re.S,
         )
         if standard:
-            yen_in, yen_out = (float(value.replace(",", "")) for value in standard.groups())
-            price = {"input": yen_in / 150.0, "output": yen_out / 150.0, "currency": "USD"}
-        ctx_match = re.search(r"PLaMo\s*" + re.escape(version) + r"\s*Prime.{0,300}?([0-9]+)k\s*(?:tokens|トークン)", pfn_text, re.I | re.S)
+            yen_in, yen_out = (
+                float(value.replace(",", "")) for value in standard.groups()
+            )
+            price = {
+                "input": yen_in / 150.0,
+                "output": yen_out / 150.0,
+                "currency": "USD",
+            }
+        ctx_match = re.search(
+            r"PLaMo\s*"
+            + re.escape(version)
+            + r"\s*Prime.{0,300}?([0-9]+)k\s*(?:tokens|トークン)",
+            pfn_text,
+            re.I | re.S,
+        )
         discovered[model_id.casefold()] = {
-            "provider": "pfn", "model_id": model_id,
+            "provider": "pfn",
+            "model_id": model_id,
             "display_name": f"PFN PLaMo {version} Prime",
             "context_window": int(ctx_match.group(1)) * 1000 if ctx_match else 0,
-            "max_output_tokens": 0, "pricing": price,
-            "input_modalities": ["text"], "output_modalities": ["text"],
-            "supports_chat_completion": True, "supports_reasoning": True,
-            "source_url": SRC_PLAMO_API, "checked_at": stamp,
+            "max_output_tokens": 0,
+            "pricing": price,
+            "input_modalities": ["text"],
+            "output_modalities": ["text"],
+            "supports_chat_completion": True,
+            "supports_reasoning": True,
+            "source_url": SRC_PLAMO_API,
+            "checked_at": stamp,
         }
 
     sb_text = source_texts.get("softbank", "")
-    for variant in dict.fromkeys(re.findall(r"Sarashina\s*3\s*(mini|nano|guard|embedding|rerank)", sb_text, re.I)):
+    for variant in dict.fromkeys(
+        re.findall(r"Sarashina\s*3\s*(mini|nano|guard|embedding|rerank)", sb_text, re.I)
+    ):
         variant = variant.lower()
         model_id = f"sarashina3-{variant}"
         is_vector = variant in {"embedding", "rerank"}
         discovered[model_id.casefold()] = {
-            "provider": "softbank", "model_id": model_id,
-            "display_name": f"Sarashina3 {variant}", "context_window": 0,
-            "max_output_tokens": 0, "pricing": None,
+            "provider": "softbank",
+            "model_id": model_id,
+            "display_name": f"Sarashina3 {variant}",
+            "context_window": 0,
+            "max_output_tokens": 0,
+            "pricing": None,
             "input_modalities": ["text"],
-            "output_modalities": ["embedding" if variant == "embedding" else "rerank" if variant == "rerank" else "text"],
+            "output_modalities": [
+                (
+                    "embedding"
+                    if variant == "embedding"
+                    else "rerank" if variant == "rerank" else "text"
+                )
+            ],
             "supports_chat_completion": not is_vector,
             "supports_reasoning": None,
-            "source_url": SRC_SARASHINA3_PRESS, "checked_at": stamp,
+            "source_url": SRC_SARASHINA3_PRESS,
+            "checked_at": stamp,
         }
 
     ntt_text = " ".join((source_texts.get("ntt", ""), source_texts.get("ntt_rd", "")))
     if re.search(r"tsuzumi\s*2", ntt_text, re.I):
         discovered["tsuzumi-2"] = {
-            "provider": "ntt", "model_id": "tsuzumi-2",
-            "display_name": "NTT tsuzumi 2", "context_window": 0,
-            "max_output_tokens": 0, "pricing": None,
-            "input_modalities": ["text"], "output_modalities": ["text"],
-            "supports_chat_completion": True, "supports_reasoning": None,
-            "source_url": SRC_TSUZUMI, "checked_at": stamp,
+            "provider": "ntt",
+            "model_id": "tsuzumi-2",
+            "display_name": "NTT tsuzumi 2",
+            "context_window": 0,
+            "max_output_tokens": 0,
+            "pricing": None,
+            "input_modalities": ["text"],
+            "output_modalities": ["text"],
+            "supports_chat_completion": True,
+            "supports_reasoning": None,
+            "source_url": SRC_TSUZUMI,
+            "checked_at": stamp,
         }
     return list(discovered.values())
 
@@ -249,7 +288,9 @@ def build() -> list[dict]:
             + "; ".join(errors)
         )
 
-    previous_by_id = {str(model.get("model_id", "")).casefold(): model for model in previous}
+    previous_by_id = {
+        str(model.get("model_id", "")).casefold(): model for model in previous
+    }
     result: list[dict] = []
     seen: set[str] = set()
     for fresh in discovered:
@@ -260,11 +301,13 @@ def build() -> list[dict]:
             # Apply source-confirmed values; do not overwrite richer metadata
             # with empty/unknown values from a limited product listing.
             model["display_name"] = fresh["display_name"]
-            model.setdefault("extra", {}).update({
-                "official_source_checked_at": fresh["checked_at"],
-                "official_source_status": "listed_on_current_source",
-                "current_source": fresh["source_url"],
-            })
+            model.setdefault("extra", {}).update(
+                {
+                    "official_source_checked_at": fresh["checked_at"],
+                    "official_source_status": "listed_on_current_source",
+                    "current_source": fresh["source_url"],
+                }
+            )
             if fresh["pricing"] is not None:
                 model["pricing"] = fresh["pricing"]
             if fresh["output_modalities"] != ["text"] or fresh["provider"] == "pfn":
@@ -274,17 +317,24 @@ def build() -> list[dict]:
                 model["supports_chat_completion"] = fresh["supports_chat_completion"]
         else:
             model = base(
-                provider=fresh["provider"], model_id=fresh["model_id"],
-                display=fresh["display_name"], ctx=fresh["context_window"],
-                max_out=fresh["max_output_tokens"], pricing=fresh["pricing"],
+                provider=fresh["provider"],
+                model_id=fresh["model_id"],
+                display=fresh["display_name"],
+                ctx=fresh["context_window"],
+                max_out=fresh["max_output_tokens"],
+                pricing=fresh["pricing"],
                 input_modalities=fresh["input_modalities"],
                 output_modalities=fresh["output_modalities"],
                 chat=fresh["supports_chat_completion"],
                 reasoning=fresh["supports_reasoning"],
-                function_calling=None, streaming=None, json_mode=None,
-                extra={"source": fresh["source_url"],
-                       "official_source_checked_at": fresh["checked_at"],
-                       "official_source_status": "listed_on_current_source"},
+                function_calling=None,
+                streaming=None,
+                json_mode=None,
+                extra={
+                    "source": fresh["source_url"],
+                    "official_source_checked_at": fresh["checked_at"],
+                    "official_source_status": "listed_on_current_source",
+                },
             )
         result.append(model)
         seen.add(key)
@@ -297,10 +347,14 @@ def build() -> list[dict]:
         if not key or key in seen:
             continue
         model = dict(old)
-        model.setdefault("extra", {}).update({
-            "official_source_checked_at": datetime.now(timezone.utc).date().isoformat(),
-            "official_source_status": "not_reconfirmed_by_current_page_set",
-        })
+        model.setdefault("extra", {}).update(
+            {
+                "official_source_checked_at": datetime.now(timezone.utc)
+                .date()
+                .isoformat(),
+                "official_source_status": "not_reconfirmed_by_current_page_set",
+            }
+        )
         result.append(model)
     if errors:
         print("Japanese source fetch warnings: " + "; ".join(errors), flush=True)
@@ -378,8 +432,6 @@ def main() -> None:
                 f"(quote/free) ctx={m['context_window']}{flag}",
                 flush=True,
             )
-
-    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
 
 if __name__ == "__main__":

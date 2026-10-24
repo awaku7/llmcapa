@@ -594,6 +594,7 @@ def update_catalog() -> list[dict[str, object]]:
         }
     )
     print(f"cloudflare-workers-ai.json: {len(models)} official model pages")
+    print(f"  task types: {', '.join(task_types)}")
     return models
 
 

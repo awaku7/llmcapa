@@ -17,12 +17,17 @@ BASE_URL = "https://api.perplexity.ai"
 def fetch_docs() -> str:
     request = Request(
         SOURCE + ".md",
-        headers={"Accept": "text/markdown,text/plain,*/*", "User-Agent": "llmcapa-provider-updater/1.0"},
+        headers={
+            "Accept": "text/markdown,text/plain,*/*",
+            "User-Agent": "llmcapa-provider-updater/1.0",
+        },
     )
     with urlopen(request, timeout=30) as response:
         text = response.read(5_000_000).decode("utf-8", "replace")
     if "export const PRICING" not in text or '"sonar"' not in text:
-        raise RuntimeError("Perplexity pricing documentation did not contain the official model data")
+        raise RuntimeError(
+            "Perplexity pricing documentation did not contain the official model data"
+        )
     return text
 
 
@@ -64,7 +69,9 @@ def _extract_pricing_object(markdown: str) -> dict:
     try:
         payload = json.loads(source)
     except json.JSONDecodeError as exc:
-        raise ValueError("Perplexity pricing object was not valid JSON-compatible data") from exc
+        raise ValueError(
+            "Perplexity pricing object was not valid JSON-compatible data"
+        ) from exc
     if not isinstance(payload, dict):
         raise ValueError("Perplexity pricing object is not a mapping")
     return payload
@@ -88,7 +95,9 @@ def parse_model_inventory(markdown: str) -> list[dict]:
         }
         for key in ("citation", "reasoning", "searchQueries"):
             if key in item:
-                row["request_pricing"] = dict(row.get("request_pricing") or {}, **{key: item[key]})
+                row["request_pricing"] = dict(
+                    row.get("request_pricing") or {}, **{key: item[key]}
+                )
         rows[model_id.casefold()] = row
     for item in pricing.get("embeddings", []):
         if not isinstance(item, dict) or not item.get("id"):
@@ -145,7 +154,9 @@ def _new_record(snapshot: dict) -> dict:
     }
 
 
-def merge_inventory(snapshots: list[dict], previous: list[dict], checked_at: str) -> list[dict]:
+def merge_inventory(
+    snapshots: list[dict], previous: list[dict], checked_at: str
+) -> list[dict]:
     old_by_id = {
         str(row.get("model_id", "")).casefold(): row
         for row in previous
@@ -156,7 +167,13 @@ def merge_inventory(snapshots: list[dict], previous: list[dict], checked_at: str
     for snapshot in snapshots:
         key = snapshot["model_id"].casefold()
         row = dict(old_by_id.get(key) or _new_record(snapshot))
-        row.update({"provider": "perplexity", "model_id": snapshot["model_id"], "display_name": snapshot["display_name"]})
+        row.update(
+            {
+                "provider": "perplexity",
+                "model_id": snapshot["model_id"],
+                "display_name": snapshot["display_name"],
+            }
+        )
         row["supports_chat_completion"] = snapshot["kind"] == "chat"
         row["pricing"] = {
             "input_per_1m": snapshot.get("input_per_1m"),
@@ -180,7 +197,12 @@ def merge_inventory(snapshots: list[dict], previous: list[dict], checked_at: str
             extra["embedding_dimensions"] = snapshot["dimensions"]
             row.setdefault(
                 "embedding",
-                {"embedding": True, "output_formats": ["float"], "status": "official_docs", "checked_at": checked_at},
+                {
+                    "embedding": True,
+                    "output_formats": ["float"],
+                    "status": "official_docs",
+                    "checked_at": checked_at,
+                },
             )
         row["extra"] = extra
         merged.append(row)
@@ -192,7 +214,12 @@ def merge_inventory(snapshots: list[dict], previous: list[dict], checked_at: str
         if key and key not in seen:
             row = dict(old)
             extra = dict(row.get("extra") or {})
-            extra.update({"official_source_checked_at": checked_at, "not_listed_in_current_docs": True})
+            extra.update(
+                {
+                    "official_source_checked_at": checked_at,
+                    "not_listed_in_current_docs": True,
+                }
+            )
             row["extra"] = extra
             merged.append(row)
     return merged
@@ -202,8 +229,13 @@ def update_catalog(snapshots: list[dict], *, checked_at: str | None = None) -> i
     data = json.loads(DATA.read_text(encoding="utf-8"))
     checked_at = checked_at or datetime.now(timezone.utc).date().isoformat()
     models = merge_inventory(snapshots, data.get("models") or [], checked_at)
-    DATA.write_text(json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"perplexity.json: refreshed {len(snapshots)} official models; total={len(models)}")
+    DATA.write_text(
+        json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    print(
+        f"perplexity.json: refreshed {len(snapshots)} official models; total={len(models)}"
+    )
     return len(snapshots)
 
 

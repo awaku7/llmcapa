@@ -21,8 +21,15 @@ BASE_URL = "https://api.fireworks.ai/inference/v1"
 ENDPOINT_SOURCE = "https://docs.fireworks.ai/"
 
 CATEGORIES = {
-    "llm", "vision", "embeddings", "reranks", "image generation",
-    "video generation", "speech", "audio", "transcription",
+    "llm",
+    "vision",
+    "embeddings",
+    "reranks",
+    "image generation",
+    "video generation",
+    "speech",
+    "audio",
+    "transcription",
 }
 
 
@@ -47,13 +54,18 @@ def parse_model_cards(cards: list[dict]) -> list[dict]:
 
         text = str(card.get("text") or "")
         lines = [line.strip() for line in text.splitlines() if line.strip()]
-        category = next((line.lower() for line in reversed(lines) if line.lower() in CATEGORIES), "")
+        category = next(
+            (line.lower() for line in reversed(lines) if line.lower() in CATEGORIES), ""
+        )
         display = next(
             (
-                line for line in lines
+                line
+                for line in lines
                 if line.lower() != "new"
                 and line.lower() not in CATEGORIES
-                and not re.search(r"\$|\bContext\b|\b/M\s+(?:Input|Output|Tokens)", line, re.I)
+                and not re.search(
+                    r"\$|\bContext\b|\b/M\s+(?:Input|Output|Tokens)", line, re.I
+                )
             ),
             model_id,
         )
@@ -85,7 +97,9 @@ def parse_model_cards(cards: list[dict]) -> list[dict]:
             chat = False
 
         input_price = re.search(r"\$([0-9]+(?:\.[0-9]+)?)\s*/M\s*Input\b", text, re.I)
-        cached_price = re.search(r"\$([0-9]+(?:\.[0-9]+)?)\s*/M\s*Cached\s*Input\b", text, re.I)
+        cached_price = re.search(
+            r"\$([0-9]+(?:\.[0-9]+)?)\s*/M\s*Cached\s*Input\b", text, re.I
+        )
         output_price = re.search(r"\$([0-9]+(?:\.[0-9]+)?)\s*/M\s*Output\b", text, re.I)
         token_price = re.search(r"\$([0-9]+(?:\.[0-9]+)?)\s*/M\s*Tokens\b", text, re.I)
         pricing = None
@@ -179,7 +193,10 @@ def _merge_existing(fresh: list[dict], previous: list[dict]) -> list[dict]:
 def update_catalog() -> list[dict]:
     previous = json.loads(DATA.read_text(encoding="utf-8")).get("models", [])
     models = _merge_existing(fetch_catalog(), previous)
-    DATA.write_text(json.dumps({"models": models}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    DATA.write_text(
+        json.dumps({"models": models}, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
     print(f"fireworks.json: {len(models)} official model cards")
     return models
 
@@ -196,7 +213,9 @@ def update_endpoints() -> None:
                 "source": ENDPOINT_SOURCE,
             }
         ]
-    DATA.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    DATA.write_text(
+        json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
 
 
 def main() -> None:

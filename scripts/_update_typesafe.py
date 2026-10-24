@@ -31,7 +31,9 @@ def fetch_models_page() -> str:
     with urlopen(request, timeout=30) as response:
         text = response.read(1_000_000).decode("utf-8", "replace")
     if "Current models" not in text or "Context length" not in text:
-        raise RuntimeError("TypeSafe official model documentation response was incomplete")
+        raise RuntimeError(
+            "TypeSafe official model documentation response was incomplete"
+        )
     return text
 
 
@@ -58,7 +60,10 @@ def _read_aliases(markdown: str) -> dict[str, str]:
 def _parse_context(value: str) -> tuple[int, int]:
     found = re.findall(r"([\d,.]+)\s*([kKmM])(?:\s|\b)", value)
     numbers = [
-        int(float(amount.replace(",", "")) * (1_000 if suffix.lower() == "k" else 1_000_000))
+        int(
+            float(amount.replace(",", ""))
+            * (1_000 if suffix.lower() == "k" else 1_000_000)
+        )
         for amount, suffix in found
     ]
     return (numbers[0], numbers[1] if len(numbers) > 1 else 0) if numbers else (0, 0)
@@ -84,9 +89,7 @@ def parse_model_snapshots(markdown: str) -> list[dict]:
     )
     section = section_match.group(1) if section_match else markdown
     rows = [
-        _cells(line)
-        for line in section.splitlines()
-        if line.strip().startswith("|")
+        _cells(line) for line in section.splitlines() if line.strip().startswith("|")
     ]
 
     # Current docs use a wide table: the header names versions and the Model ID
@@ -208,7 +211,8 @@ def build_model(snapshot: dict, old: dict | None, checked_at: str) -> dict:
             "model_id": snapshot["model_id"],
             "display_name": snapshot["display_name"],
             "max_output_tokens": result.get("max_output_tokens", 0),
-            "context_window": snapshot["context_window"] or result.get("context_window", 0),
+            "context_window": snapshot["context_window"]
+            or result.get("context_window", 0),
             "input_modalities": ["text"],
             "output_modalities": ["decision"],
             "supports_function_calling": False,
@@ -239,8 +243,10 @@ def build_model(snapshot: dict, old: dict | None, checked_at: str) -> dict:
             "returns_confidence": True,
             "free_form_text": False,
             "state_shapes": ["string", "json_object", "text_array"],
-            "max_state_tokens": snapshot["max_state_tokens"] or decision.get("max_state_tokens"),
-            "max_total_tokens": snapshot["context_window"] or decision.get("max_total_tokens"),
+            "max_state_tokens": snapshot["max_state_tokens"]
+            or decision.get("max_state_tokens"),
+            "max_total_tokens": snapshot["context_window"]
+            or decision.get("max_total_tokens"),
             "output_token_billing": False,
             "endpoints": ["https://api.typesafe.ai/v1/systemone"],
             "source_url": SOURCE,
@@ -250,8 +256,12 @@ def build_model(snapshot: dict, old: dict | None, checked_at: str) -> dict:
     )
     if snapshot["rate_limits"]:
         decision.pop("rate_limit_requests_per_second", None)
-        decision["rate_limit_tokens_per_second"] = snapshot["rate_limits"]["tokens_per_second"]
-        decision["rate_limit_requests_per_minute"] = snapshot["rate_limits"]["requests_per_minute"]
+        decision["rate_limit_tokens_per_second"] = snapshot["rate_limits"][
+            "tokens_per_second"
+        ]
+        decision["rate_limit_requests_per_minute"] = snapshot["rate_limits"][
+            "requests_per_minute"
+        ]
     else:
         # The current docs say limits are organization-specific and dynamic.
         decision.pop("rate_limit_tokens_per_second", None)
@@ -271,7 +281,9 @@ def build_model(snapshot: dict, old: dict | None, checked_at: str) -> dict:
     return result
 
 
-def merge_catalog(snapshot: dict | list[dict], previous: list[dict], checked_at: str) -> list[dict]:
+def merge_catalog(
+    snapshot: dict | list[dict], previous: list[dict], checked_at: str
+) -> list[dict]:
     snapshots = snapshot if isinstance(snapshot, list) else [snapshot]
     old_by_id = {
         str(row.get("model_id", "")).casefold(): row
@@ -294,7 +306,9 @@ def merge_catalog(snapshot: dict | list[dict], previous: list[dict], checked_at:
     return result
 
 
-def update_catalog(snapshot: dict | list[dict], *, checked_at: str | None = None) -> int:
+def update_catalog(
+    snapshot: dict | list[dict], *, checked_at: str | None = None
+) -> int:
     data = json.loads(DATA.read_text(encoding="utf-8"))
     checked_at = checked_at or datetime.now(timezone.utc).date().isoformat()
     snapshots = snapshot if isinstance(snapshot, list) else [snapshot]
@@ -303,11 +317,9 @@ def update_catalog(snapshot: dict | list[dict], *, checked_at: str | None = None
         json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-    version_ids = ", ".join(item["model_id"] for item in snapshots)
-    documented_aliases = ", ".join(
-        alias for item in snapshots for alias in item["aliases"]
+    print(
+        f"typesafe.json: refreshed {len(models)} records; documented={len(snapshots)}"
     )
-    print(f"typesafe.json: refreshed {len(models)} records; documented={len(snapshots)}")
     return len(models)
 
 

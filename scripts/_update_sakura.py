@@ -193,10 +193,17 @@ def _model_cell_name(value: str) -> str | None:
     text = re.sub(r"[※*]+$", "", text)
     text = text.strip()
     if not text or text.lower() in {
-        "提供モデル", "無償枠", "対象外", "service item", "model name",
+        "提供モデル",
+        "無償枠",
+        "対象外",
+        "service item",
+        "model name",
     }:
         return None
-    if any(token in text.lower() for token in ("input", "output", "リクエストまで", "チャンク")):
+    if any(
+        token in text.lower()
+        for token in ("input", "output", "リクエストまで", "チャンク")
+    ):
         return None
     if text.startswith("提供元") or "提供元：" in text:
         return None
@@ -226,19 +233,29 @@ def _build_from_tables(tables: list[dict], body: str) -> list[dict]:
             continue
         closed = "提供モデル・提供元" in " ".join(rows[0])
         preview = table.get("index") not in (0, 1) and not closed
-        current_category = "Chat Completions" if closed else ("Public Preview" if preview else "")
+        current_category = (
+            "Chat Completions" if closed else ("Public Preview" if preview else "")
+        )
         for cells in rows[1:]:
             if not cells:
                 continue
             first = cells[0].strip()
             known_categories = {
-                "Chat completions", "Audio transcription", "Embeddings",
-                "Text-to-Speech", "ドキュメント（RAG）", "Chat Completions",
+                "Chat completions",
+                "Audio transcription",
+                "Embeddings",
+                "Text-to-Speech",
+                "ドキュメント（RAG）",
+                "Chat Completions",
             }
             if first in known_categories:
                 current_category = first
                 model_cell = cells[1] if len(cells) > 1 else ""
-            elif closed and len(cells) > 1 and ("提供モデル" in first or "提供元" in first):
+            elif (
+                closed
+                and len(cells) > 1
+                and ("提供モデル" in first or "提供元" in first)
+            ):
                 model_cell = first
             else:
                 model_cell = first
@@ -253,14 +270,18 @@ def _build_from_tables(tables: list[dict], body: str) -> list[dict]:
             token_pricing = None
             extra: dict = {
                 "source": SRC,
-                "official_catalog_checked_at": datetime.now(timezone.utc).date().isoformat(),
+                "official_catalog_checked_at": datetime.now(timezone.utc)
+                .date()
+                .isoformat(),
             }
             if input_price is not None:
                 output_price = output_price if output_price is not None else 0.0
                 token_pricing, pricing_jpy = chat_price(input_price, output_price)
                 extra["pricing_jpy"] = pricing_jpy
             audio_meter = re.search(r"([0-9]+(?:\.[0-9]+)?)\s*円\s*/\s*60秒", text)
-            tts_meter = re.search(r"([0-9]+(?:\.[0-9]+)?)\s*円\s*/\s*10,000\s*モーラ", text)
+            tts_meter = re.search(
+                r"([0-9]+(?:\.[0-9]+)?)\s*円\s*/\s*10,000\s*モーラ", text
+            )
             tts_rate = float(tts_meter.group(1)) if tts_meter else None
             if tts_rate is not None:
                 inherited_tts_rate = tts_rate
@@ -299,7 +320,9 @@ def _build_from_tables(tables: list[dict], body: str) -> list[dict]:
                 extra["tier"] = "preview"
             elif closed:
                 extra["tier"] = "closed"
-                extra["pricing_status"] = "quote/application; price not published on product page"
+                extra["pricing_status"] = (
+                    "quote/application; price not published on product page"
+                )
             else:
                 extra["tier"] = "standard"
             if tts_meter:
@@ -307,7 +330,10 @@ def _build_from_tables(tables: list[dict], body: str) -> list[dict]:
             if audio_meter:
                 extra["unit"] = "60_seconds"
             if not token_pricing and not audio_meter and tts_rate is None:
-                extra.setdefault("pricing_status", "not listed for this model on current product page")
+                extra.setdefault(
+                    "pricing_status",
+                    "not listed for this model on current product page",
+                )
 
             model_id = name
             row = base(
@@ -467,8 +493,6 @@ def main() -> None:
                 f"ctx={m['context_window']} [{tier}]{flag}",
                 flush=True,
             )
-
-    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
 
 if __name__ == "__main__":

@@ -299,7 +299,6 @@ def main() -> None:
     by_id = {m["model_id"]: m for m in models}
     google_prices = discover_prices()
     discovered_extras, discovered_deprecations = discover_metadata(fetch(SOURCE))
-    existing_ids = set(by_id)
 
     updated = 0
     inserted = 0
@@ -407,15 +406,13 @@ def main() -> None:
         for m in models
         if m.get("pricing") and (m["pricing"].get("input_per_1m") or 0) > 0
     )
-    inserted_ids = sorted(set(by_id) - existing_ids)
+
     print(
         f"google.json: updated={updated} inserted={inserted} specialty={specialty} "
         f"deprecated_flagged={deprecated_n} total={len(models)} "
         f"(active={active}, token-priced={priced})",
         flush=True,
     )
-
-    ts = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
 
 if __name__ == "__main__":

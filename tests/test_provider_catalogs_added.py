@@ -41,7 +41,13 @@ def test_nebius_parser_maps_official_context_pricing_and_features() -> None:
             "name": "Example Vision Model",
             "vendor": "Example",
             "status": "active",
-            "use_cases": ["text", "image", "reasoning", "function_calling", "responses_api"],
+            "use_cases": [
+                "text",
+                "image",
+                "reasoning",
+                "function_calling",
+                "responses_api",
+            ],
             "tags": ["JSON mode"],
             "flavors": [
                 {
@@ -93,23 +99,19 @@ def test_deepinfra_parser_converts_prices_and_skips_non_llm_models() -> None:
     assert parsed["supports_reasoning"] is True
     assert parsed["supports_json_mode"] is True
 
-    assert _update_deepinfra.model_to_entry(
-        {**record, "type": "text-to-video"}
-    ) is None
-    assert _update_deepinfra.model_to_entry(
-        {**record, "private": 1}
-    ) is None
+    assert _update_deepinfra.model_to_entry({**record, "type": "text-to-video"}) is None
+    assert _update_deepinfra.model_to_entry({**record, "private": 1}) is None
 
 
 def _baseten_public_docs_fixture() -> str:
-    return '''
+    return """
 export const FeatureSupportTable = () => {
   const rows = [{model: "Example Vision", reasoning: "Enabled by default", vision: "✓", sampling: "temperature, stop"}];
 };
 export const SupportedModelsTable = () => {
   const rows = [{model: "Example Vision", slug: "example/vision-model", context: 65, maxOutput: 2}];
 };
-'''
+"""
 
 
 def test_baseten_parser_scrapes_public_model_and_feature_tables() -> None:

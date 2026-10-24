@@ -23,7 +23,10 @@ API_BASE = "https://api.perplexity.ai/router/v1"
 def fetch_docs() -> str:
     request = Request(
         SOURCE + ".md",
-        headers={"Accept": "text/markdown,text/plain,*/*", "User-Agent": "llmcapa-provider-updater/1.0"},
+        headers={
+            "Accept": "text/markdown,text/plain,*/*",
+            "User-Agent": "llmcapa-provider-updater/1.0",
+        },
     )
     with urlopen(request, timeout=30) as response:
         text = response.read(1_000_000).decode("utf-8", "replace")
@@ -68,8 +71,15 @@ def parse_model_table(markdown: str) -> list[dict]:
         if input_price is None or output_price is None:
             continue
         native_source = source_link.group(2) if source_link else None
-        path_parts = [part for part in urlparse(native_source or "").path.split("/") if part]
-        native_provider = path_parts[0] if len(path_parts) > 1 and urlparse(native_source or "").hostname == "huggingface.co" else None
+        path_parts = [
+            part for part in urlparse(native_source or "").path.split("/") if part
+        ]
+        native_provider = (
+            path_parts[0]
+            if len(path_parts) > 1
+            and urlparse(native_source or "").hostname == "huggingface.co"
+            else None
+        )
         rows[model_id.casefold()] = {
             "provider": "perplexity-router",
             "model_id": model_id,
@@ -92,15 +102,23 @@ def _base_record(snapshot: dict, old: dict | None, checked_at: str) -> dict:
             "provider": "perplexity-router",
             "model_id": snapshot["model_id"],
             "display_name": snapshot["display_name"],
-            "input_modalities": old.get("input_modalities", ["text"]) if old else ["text"],
-            "output_modalities": old.get("output_modalities", ["text"]) if old else ["text"],
+            "input_modalities": (
+                old.get("input_modalities", ["text"]) if old else ["text"]
+            ),
+            "output_modalities": (
+                old.get("output_modalities", ["text"]) if old else ["text"]
+            ),
             "supports_streaming": True,
             "supports_chat_completion": True,
             "supports_responses_api": True,
             "supports_anthropic_api": True,
             "license_type": "api",
             "deprecated": old.get("deprecated", False) if old else False,
-            "aliases": old.get("aliases", [snapshot["model_id"].split("/", 1)[-1]]) if old else [snapshot["model_id"].split("/", 1)[-1]],
+            "aliases": (
+                old.get("aliases", [snapshot["model_id"].split("/", 1)[-1]])
+                if old
+                else [snapshot["model_id"].split("/", 1)[-1]]
+            ),
             "pricing": {
                 "input_per_1m": snapshot["input_per_1m"],
                 "output_per_1m": snapshot["output_per_1m"],
@@ -119,7 +137,11 @@ def _base_record(snapshot: dict, old: dict | None, checked_at: str) -> dict:
             "messages_endpoint": f"{API_BASE}/messages",
             "model_catalog_endpoint": f"{API_BASE}/models",
             "router_preview": True,
-            "api_schema_support": ["openai-chat-completions", "openai-responses", "anthropic-messages"],
+            "api_schema_support": [
+                "openai-chat-completions",
+                "openai-responses",
+                "anthropic-messages",
+            ],
         }
     )
     if snapshot["cache_read_per_1m"] is not None:
@@ -135,7 +157,9 @@ def _base_record(snapshot: dict, old: dict | None, checked_at: str) -> dict:
     return result
 
 
-def merge_catalog(snapshots: list[dict], previous: list[dict], checked_at: str) -> list[dict]:
+def merge_catalog(
+    snapshots: list[dict], previous: list[dict], checked_at: str
+) -> list[dict]:
     old_by_id = {
         str(row.get("model_id", "")).casefold(): row
         for row in previous
@@ -169,8 +193,13 @@ def update_catalog(snapshots: list[dict], *, checked_at: str | None = None) -> i
     models = merge_catalog(snapshots, previous, checked_at)
     if not models:
         raise ValueError("refusing to write an empty Perplexity Router catalog")
-    DATA.write_text(json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"perplexity-router.json: refreshed {len(snapshots)} documented routes; total={len(models)}")
+    DATA.write_text(
+        json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    print(
+        f"perplexity-router.json: refreshed {len(snapshots)} documented routes; total={len(models)}"
+    )
     return len(snapshots)
 
 

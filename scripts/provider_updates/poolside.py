@@ -19,13 +19,18 @@ BASE_URL = "https://inference.poolside.ai/v1"
 def _fetch_markdown(url: str) -> str:
     request = Request(
         url + ".md",
-        headers={"Accept": "text/markdown,text/plain,*/*", "User-Agent": "llmcapa-provider-updater/1.0"},
+        headers={
+            "Accept": "text/markdown,text/plain,*/*",
+            "User-Agent": "llmcapa-provider-updater/1.0",
+        },
     )
     try:
         with urlopen(request, timeout=30) as response:
             return response.read(2_000_000).decode("utf-8", "replace")
     except (HTTPError, URLError) as exc:
-        raise RuntimeError(f"Poolside official documentation fetch failed ({url}): {exc}") from exc
+        raise RuntimeError(
+            f"Poolside official documentation fetch failed ({url}): {exc}"
+        ) from exc
 
 
 def fetch_inventory() -> dict[str, str]:
@@ -46,15 +51,27 @@ def _context(value: str) -> int:
 
 def parse_model_inventory(docs: dict[str, str]) -> list[dict]:
     """Parse the public supported-model table and its documented API ID convention."""
-    if not isinstance(docs, dict) or not isinstance(docs.get("models"), str) or not isinstance(docs.get("api"), str):
-        raise ValueError("Poolside scraper expects supported-model and API documentation")
+    if (
+        not isinstance(docs, dict)
+        or not isinstance(docs.get("models"), str)
+        or not isinstance(docs.get("api"), str)
+    ):
+        raise ValueError(
+            "Poolside scraper expects supported-model and API documentation"
+        )
     model_doc, api_doc = docs["models"], docs["api"]
-    headings = re.findall(r"\[([^]]*Laguna[^]]*)\]\(/release-notes/models#([a-z0-9-]+)\)", model_doc, re.I)
+    headings = re.findall(
+        r"\[([^]]*Laguna[^]]*)\]\(/release-notes/models#([a-z0-9-]+)\)", model_doc, re.I
+    )
     if not headings:
-        raise ValueError("Poolside public supported-model page had no Laguna model anchors")
+        raise ValueError(
+            "Poolside public supported-model page had no Laguna model anchors"
+        )
     contexts: list[int] = []
     for line in model_doc.splitlines():
-        if line.lstrip().startswith("|") and re.search(r"\|\s*Context window\s*\|", line, re.I):
+        if line.lstrip().startswith("|") and re.search(
+            r"\|\s*Context window\s*\|", line, re.I
+        ):
             cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
             contexts = [_context(cell) for cell in cells[1:]]
             break
@@ -92,7 +109,9 @@ def parse_model_inventory(docs: dict[str, str]) -> list[dict]:
     return sorted(rows.values(), key=lambda row: row["model_id"].casefold())
 
 
-def merge_inventory(snapshots: list[dict], previous: list[dict], checked_at: str) -> list[dict]:
+def merge_inventory(
+    snapshots: list[dict], previous: list[dict], checked_at: str
+) -> list[dict]:
     old_by_id = {
         str(row.get("model_id", "")).casefold(): row
         for row in previous
@@ -108,7 +127,8 @@ def merge_inventory(snapshots: list[dict], previous: list[dict], checked_at: str
                 "provider": "poolside",
                 "model_id": snapshot["model_id"],
                 "display_name": snapshot["display_name"],
-                "context_window": snapshot["context_window"] or row.get("context_window", 0),
+                "context_window": snapshot["context_window"]
+                or row.get("context_window", 0),
                 "input_modalities": snapshot["input_modalities"],
                 "output_modalities": snapshot["output_modalities"],
                 "supports_vision": snapshot["supports_vision"],
@@ -127,7 +147,14 @@ def merge_inventory(snapshots: list[dict], previous: list[dict], checked_at: str
                 "api_base_url": BASE_URL,
                 "api_model_id": snapshot["api_model_id"],
                 "not_listed_in_current_docs": False,
-                "endpoints": [{"base_url": BASE_URL, "protocol": "openai-compatible", "auth": "bearer", "source": SOURCE_API}],
+                "endpoints": [
+                    {
+                        "base_url": BASE_URL,
+                        "protocol": "openai-compatible",
+                        "auth": "bearer",
+                        "source": SOURCE_API,
+                    }
+                ],
             }
         )
         row["extra"] = extra
@@ -140,7 +167,12 @@ def merge_inventory(snapshots: list[dict], previous: list[dict], checked_at: str
         if key and key not in seen:
             row = dict(old)
             extra = dict(row.get("extra") or {})
-            extra.update({"official_source_checked_at": checked_at, "not_listed_in_current_docs": True})
+            extra.update(
+                {
+                    "official_source_checked_at": checked_at,
+                    "not_listed_in_current_docs": True,
+                }
+            )
             row["extra"] = extra
             merged.append(row)
     return merged
@@ -150,8 +182,13 @@ def update_catalog(snapshots: list[dict], *, checked_at: str | None = None) -> i
     data = json.loads(DATA.read_text(encoding="utf-8"))
     checked_at = checked_at or datetime.now(timezone.utc).date().isoformat()
     models = merge_inventory(snapshots, data.get("models") or [], checked_at)
-    DATA.write_text(json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"poolside.json: refreshed {len(snapshots)} public-doc model IDs; total={len(models)}")
+    DATA.write_text(
+        json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    print(
+        f"poolside.json: refreshed {len(snapshots)} public-doc model IDs; total={len(models)}"
+    )
     return len(snapshots)
 
 

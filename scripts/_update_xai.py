@@ -9,7 +9,6 @@ Shape: Capability JSON with pricing + extra (long-ctx / cache / specialty units)
 from __future__ import annotations
 
 import json
-from datetime import datetime, timezone
 from pathlib import Path
 
 WORKDIR = Path(__file__).resolve().parents[1]
@@ -330,22 +329,6 @@ def main() -> None:
         f"xai.json: {len(models)} models "
         f"(active={active} / deprecated={deprecated} / priced={priced})",
         flush=True,
-    )
-
-    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    entry = (
-        f"\n## xAI refresh ({stamp})\n\n"
-        f"### Source\n"
-        f"- ListModels: `{LISTMODELS.name}`\n"
-        f"- Docs: {SOURCE} (+ pricing / Voice / Imagine)\n"
-        f"- Apply: `scripts/_update_xai.py`\n\n"
-        f"### Result\n"
-        f"- xai.json: **{len(models)}** models "
-        f"(active={active}, deprecated={deprecated}, token-priced={priced})\n"
-        f"- Text: grok-4.5 $2/$6 @500k (cache $0.5, long $4); "
-        f"grok-4.3 / 4.20 family $1.25/$2.5 @1M (cache $0.2, long $2.5)\n"
-        f"- Imagine + Voice specialty entries included\n"
-        f"- Install copy synced\n"
     )
 
 
