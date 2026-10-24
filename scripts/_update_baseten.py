@@ -13,8 +13,7 @@ import re
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
-from urllib.error import HTTPError, URLError
-from urllib.request import Request, urlopen
+from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "baseten.json"
@@ -32,26 +31,113 @@ _FEATURE_ROW = re.compile(
 )
 
 
-def fetch_docs() -> str:
-    request = Request(
-        SOURCE + ".md",
-        headers={
-            "Accept": "text/markdown,text/plain,*/*",
-            "User-Agent": "llmcapa-provider-updater/1.0",
-        },
-    )
-    try:
-        with urlopen(request, timeout=30) as response:
-            page = response.read(4_000_000).decode("utf-8", "replace")
-    except (HTTPError, URLError) as exc:
+def _thousands(value: str) -> int:
+    match = re.search(r"([\d,.]+)\s*([kKmM]?)", value)
+    if not match:
+        return 0
+    amount = float(match.group(1).replace(",", ""))
+    suffix = match.group(2).casefold()
+    if suffix == "m":
+        amount *= 1_000
+    elif not suffix and amount >= 1_000:
+        amount /= 1_000
+    return int(amount)
+
+
+def _rendered_tables_as_source(tables: list[list[list[str]]]) -> str:
+    """Normalize the docs site's rendered tables to the existing parser format."""
+    supported = None
+    features = None
+    for table in tables:
+        if not table:
+            continue
+        headers = [cell.strip().casefold() for cell in table[0]]
+        if {"model", "slug", "context", "max output"}.issubset(headers):
+            supported = (headers, table[1:])
+        if {"model", "reasoning", "vision", "sampling parameters"}.issubset(headers):
+            features = (headers, table[1:])
+    if supported is None or features is None:
         raise RuntimeError(
-            f"Baseten public Model APIs docs could not be fetched: {exc}"
-        ) from exc
-    if "SupportedModelsTable" not in page or "FeatureSupportTable" not in page:
-        raise RuntimeError(
-            "Baseten public Model APIs docs did not contain the expected catalog tables"
+            "Baseten Model APIs page did not render its supported-model and feature tables"
         )
-    return page
+
+    supported_headers, supported_rows = supported
+    feature_headers, feature_rows = features
+    supported_lines = []
+    for row in supported_rows:
+        if len(row) < len(supported_headers):
+            continue
+        values = dict(zip(supported_headers, row))
+        name = values["model"].strip()
+        slug = values["slug"].strip()
+        if not name or not slug:
+            continue
+        supported_lines.append(
+            "model: "
+            + json.dumps(name, ensure_ascii=False)
+            + ", slug: "
+            + json.dumps(slug, ensure_ascii=False)
+            + f", context: {_thousands(values['context'])}, "
+            + f"maxOutput: {_thousands(values['max output'])}"
+        )
+
+    feature_lines = []
+    for row in feature_rows:
+        if len(row) < len(feature_headers):
+            continue
+        values = dict(zip(feature_headers, row))
+        name = values["model"].strip()
+        if not name:
+            continue
+        feature_lines.append(
+            "model: "
+            + json.dumps(name, ensure_ascii=False)
+            + ", reasoning: "
+            + json.dumps(values["reasoning"].strip(), ensure_ascii=False)
+            + ", vision: "
+            + json.dumps(values["vision"].strip(), ensure_ascii=False)
+            + ", sampling: "
+            + json.dumps(values["sampling parameters"].strip(), ensure_ascii=False)
+        )
+    if not supported_lines or not feature_lines:
+        raise RuntimeError("Baseten rendered catalog tables contained no model rows")
+    return (
+        "export const SupportedModelsTable = [\\n"
+        + ",\\n".join("{" + line + "}" for line in supported_lines)
+        + "\\n];\\nexport const FeatureSupportTable = [\\n"
+        + ",\\n".join("{" + line + "}" for line in feature_lines)
+        + "\\n];"
+    )
+
+
+def fetch_docs() -> str:
+    """Read the current dynamic model tables from Baseten's public docs page."""
+    try:
+        with sync_playwright() as playwright:
+            browser = playwright.chromium.launch(headless=True)
+            page = browser.new_page()
+            try:
+                page.goto(SOURCE, wait_until="domcontentloaded", timeout=90_000)
+                page.wait_for_function(
+                    "document.body.innerText.includes('Slug') && "
+                    "document.body.innerText.includes('Sampling parameters')",
+                    timeout=60_000,
+                )
+                tables = page.evaluate(
+                    """() => Array.from(document.querySelectorAll('[role=table], table'))
+                        .map(table => Array.from(table.querySelectorAll('[role=row], tr'))
+                            .map(row => Array.from(row.querySelectorAll(
+                                '[role=columnheader], [role=cell], th, td'
+                            )).map(cell => (cell.innerText || '').trim()))
+                            .filter(row => row.length))"""
+                )
+            finally:
+                browser.close()
+    except Exception as exc:
+        raise RuntimeError(
+            f"Baseten public Model APIs docs could not be rendered: {exc}"
+        ) from exc
+    return _rendered_tables_as_source(tables)
 
 
 def parse_model_inventory(markdown: str) -> list[dict[str, Any]]:

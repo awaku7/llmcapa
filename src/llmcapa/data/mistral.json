@@ -278,7 +278,7 @@
         "version": "1",
         "release_date": "December 11, 2023",
         "alias_count": "1",
-        "description": "Our state-of-the-art semantic for extracting representation of code extracts",
+        "description": "A general-purpose text embedding model that turns sentences and paragraphs into vectors for retrieval, classification, and similarity search.",
         "supports_embeddings": true,
         "supports_batching": true
       }
@@ -848,7 +848,7 @@
         "release_date": "February 4, 2026",
         "alias_count": "1",
         "description": "An efficient audio input model, pre-trained and optimized for transcription purposes only.",
-        "price_per_min": 0.0,
+        "price_per_min": 0.003,
         "supports_transcription": true
       }
     },
@@ -932,7 +932,7 @@
         "release_date": "February 4, 2026",
         "alias_count": "1",
         "description": "An efficient audio input model, pre-trained and optimized for live transcription purposes only.",
-        "price_per_min": 0.0,
+        "price_per_min": 0.006,
         "supports_transcription": true
       }
     },
@@ -1016,8 +1016,10 @@
         "release_date": "March 23, 2026",
         "alias_count": "1",
         "description": "Our state-of-the-art text-to-speech model with zero-shot voice cloning. Supports 9 languages, streaming with ~90ms time-to-first-audio, and no transcript required for voice prompts.",
-        "tts_input_price": 0.0,
-        "supports_tts": true
+        "price_per_1m_chars": 16.0,
+        "tts_price": 16.0,
+        "supports_tts": true,
+        "tts_input_price": 0.0
       }
     },
     {
@@ -1196,6 +1198,53 @@
         "supports_batching": true,
         "supports_prefix": true,
         "supports_predicted_outputs": true
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "zai-glm-5-3-flash",
+      "display_name": "Z.ai GLM 5.3 Flash",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "currency": "USD",
+        "input_per_1m": 0.0
+      },
+      "extra": {
+        "source": "https://docs.mistral.ai/models/zai-glm-5-3-flash",
+        "card_slug": "zai-glm-5-3-flash",
+        "status": "GA",
+        "version": "1",
+        "release_date": "October 22, 2026",
+        "description": "Z.AI's GLM 5.3 Flash is a multimodal 320B-parameter (18B active) Mixture-of-Experts model. Built for developer agent workflows, visual coding, and complex tool-use tasks. The model is served without Mistral modifications.",
+        "supports_batching": true,
+        "supports_prefix": true,
+        "supports_agents": true,
+        "supports_built_in_tools": true,
+        "supports_document_qna": true
       }
     },
     {

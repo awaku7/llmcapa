@@ -87,7 +87,9 @@ def fetch_models(min_downloads: int) -> list:
         models.extend(filtered)
 
         page += 1
-        print(f"  Page {page}: got {len(batch)} models ({len(filtered)} >= {min_downloads} downloads), total={len(models)}")
+        print(
+            f"  Page {page}: got {len(batch)} models ({len(filtered)} >= {min_downloads} downloads), total={len(models)}"
+        )
 
         # Check for next page via Link header
         link_header = resp.headers.get("Link", "")
@@ -168,6 +170,33 @@ def convert_to_catalog_format(raw_models: list) -> list:
     return results
 
 
+def retain_unlisted_models(current: list[dict], previous: list[dict]) -> list[dict]:
+    """Keep prior catalog entries omitted by the download-threshold query."""
+    merged = list(current)
+    seen = {
+        str(row.get("model_id", "")).casefold()
+        for row in current
+        if isinstance(row, dict) and row.get("model_id")
+    }
+    retained = 0
+    for old in previous:
+        if not isinstance(old, dict) or not old.get("model_id"):
+            continue
+        key = str(old["model_id"]).casefold()
+        if key in seen:
+            continue
+        row = dict(old)
+        raw_extra = row.get("extra")
+        extra = dict(raw_extra) if isinstance(raw_extra, dict) else {}
+        extra["not_in_current_update_selection"] = True
+        row["extra"] = extra
+        merged.append(row)
+        seen.add(key)
+        retained += 1
+    print(f"Retained {retained} prior models outside the current download threshold")
+    return merged
+
+
 def main():
     save = "--save" in sys.argv
     min_downloads = DEFAULT_MIN_DOWNLOADS
@@ -179,7 +208,9 @@ def main():
             except ValueError:
                 pass
 
-    print(f"Fetching HuggingFace models (pipeline_tag={PIPELINE_FILTER}, min_downloads={min_downloads})...")
+    print(
+        f"Fetching HuggingFace models (pipeline_tag={PIPELINE_FILTER}, min_downloads={min_downloads})..."
+    )
     raw = fetch_models(min_downloads)
     print(f"\nTotal raw models fetched: {len(raw)}")
 
@@ -205,13 +236,23 @@ def main():
     if save:
         proj_root = Path(__file__).resolve().parent.parent
         out_path = proj_root / "src" / "llmcapa" / "data" / "huggingface.json"
+        previous = []
+        if out_path.exists():
+            previous_data = json.loads(out_path.read_text(encoding="utf-8"))
+            if isinstance(previous_data, dict) and isinstance(
+                previous_data.get("models"), list
+            ):
+                previous = previous_data["models"]
+        output["models"] = retain_unlisted_models(unique, previous)
         with open(out_path, "w", encoding="utf-8") as f:
             json.dump(output, f, ensure_ascii=False, indent=2)
-        print(f"Saved to {out_path}")
+        print(f"Saved {len(output['models'])} models to {out_path}")
     else:
         print("\nSample entries:")
         for m in unique[:3]:
-            print(f"  {m['model_id']} (pipeline={m['pipeline_tag']}, ctx={m['context_window']}, downloads={m['downloads']})")
+            print(
+                f"  {m['model_id']} (pipeline={m['pipeline_tag']}, ctx={m['context_window']}, downloads={m['downloads']})"
+            )
 
 
 if __name__ == "__main__":

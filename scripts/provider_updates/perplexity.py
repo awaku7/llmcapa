@@ -24,9 +24,9 @@ def fetch_docs() -> str:
     )
     with urlopen(request, timeout=30) as response:
         text = response.read(5_000_000).decode("utf-8", "replace")
-    if "export const PRICING" not in text or '"sonar"' not in text:
+    if not ("## Embeddings API Pricing" in text and "## Decisions API Pricing" in text):
         raise RuntimeError(
-            "Perplexity pricing documentation did not contain the official model data"
+            "Perplexity pricing documentation did not contain its model price tables"
         )
     return text
 
@@ -77,53 +77,121 @@ def _extract_pricing_object(markdown: str) -> dict:
     return payload
 
 
+def _markdown_model_rows(section: str) -> list[list[str]]:
+    rows = []
+    for line in section.splitlines():
+        stripped = line.strip()
+        if not stripped.startswith("|"):
+            continue
+        cells = [
+            cell.strip().replace("`", "").replace(r"\$", "$")
+            for cell in stripped.strip("|").split("|")
+        ]
+        if cells and cells[0].startswith("pplx-"):
+            rows.append(cells)
+    return rows
+
+
+def _markdown_number(value: str) -> float | None:
+    match = re.search(r"\$?\s*(\d+(?:\.\d+)?)", value)
+    return float(match.group(1)) if match else None
+
+
 def parse_model_inventory(markdown: str) -> list[dict]:
-    pricing = _extract_pricing_object(markdown)
+    # Older docs published a machine-readable JavaScript object. Keep parsing
+    # it for archived fixtures, while current docs use Markdown price tables.
+    if "export const PRICING" in markdown:
+        pricing = _extract_pricing_object(markdown)
+        rows: dict[str, dict] = {}
+        sonar = pricing.get("sonar", {}).get("models", [])
+        for item in sonar:
+            if not isinstance(item, dict) or not item.get("id"):
+                continue
+            model_id = str(item["id"])
+            row = {
+                "model_id": model_id,
+                "display_name": str(item.get("label") or model_id),
+                "kind": "chat",
+                "input_per_1m": item.get("input"),
+                "output_per_1m": item.get("output"),
+                "request_pricing": item.get("request"),
+            }
+            for key in ("citation", "reasoning", "searchQueries"):
+                if key in item:
+                    row["request_pricing"] = dict(
+                        row.get("request_pricing") or {}, **{key: item[key]}
+                    )
+            rows[model_id.casefold()] = row
+        for item in pricing.get("embeddings", []):
+            if not isinstance(item, dict) or not item.get("id"):
+                continue
+            model_id = str(item["id"])
+            rows[model_id.casefold()] = {
+                "model_id": model_id,
+                "display_name": f"Perplexity: {model_id}",
+                "kind": "embedding",
+                "input_per_1m": item.get("rate"),
+                "output_per_1m": 0.0,
+                "dimensions": item.get("dims"),
+            }
+        decisions = pricing.get("decisions", {})
+        decision_rows = (
+            decisions.get("models", []) if isinstance(decisions, dict) else []
+        )
+        for item in decision_rows:
+            if not isinstance(item, dict) or not item.get("id"):
+                continue
+            model_id = str(item["id"])
+            rows[model_id.casefold()] = {
+                "model_id": model_id,
+                "display_name": f"Perplexity: {model_id}",
+                "kind": "decision",
+                "input_per_1m": decisions.get("input"),
+                "output_per_1m": 0.0,
+            }
+        if not rows:
+            raise ValueError("Perplexity pricing docs contained no model IDs")
+        return sorted(rows.values(), key=lambda row: row["model_id"].casefold())
+
     rows: dict[str, dict] = {}
-    sonar = pricing.get("sonar", {}).get("models", [])
-    for item in sonar:
-        if not isinstance(item, dict) or not item.get("id"):
+    embeddings = markdown.split("## Embeddings API Pricing", 1)[-1].split(
+        "## Decisions API Pricing", 1
+    )[0]
+    for cells in _markdown_model_rows(embeddings):
+        if len(cells) < 3:
             continue
-        model_id = str(item["id"])
-        row = {
-            "model_id": model_id,
-            "display_name": str(item.get("label") or model_id),
-            "kind": "chat",
-            "input_per_1m": item.get("input"),
-            "output_per_1m": item.get("output"),
-            "request_pricing": item.get("request"),
-        }
-        for key in ("citation", "reasoning", "searchQueries"):
-            if key in item:
-                row["request_pricing"] = dict(
-                    row.get("request_pricing") or {}, **{key: item[key]}
-                )
-        rows[model_id.casefold()] = row
-    for item in pricing.get("embeddings", []):
-        if not isinstance(item, dict) or not item.get("id"):
+        model_id = cells[0]
+        dimensions = _markdown_number(cells[1])
+        rate = _markdown_number(cells[2])
+        if dimensions is None or rate is None:
             continue
-        model_id = str(item["id"])
         rows[model_id.casefold()] = {
             "model_id": model_id,
             "display_name": f"Perplexity: {model_id}",
             "kind": "embedding",
-            "input_per_1m": item.get("rate"),
+            "input_per_1m": rate,
             "output_per_1m": 0.0,
-            "dimensions": item.get("dims"),
+            "dimensions": int(dimensions),
         }
-    decisions = pricing.get("decisions", {})
-    decision_rows = decisions.get("models", []) if isinstance(decisions, dict) else []
-    for item in decision_rows:
-        if not isinstance(item, dict) or not item.get("id"):
+
+    decisions = markdown.split("## Decisions API Pricing", 1)[-1].split(
+        "## Cost Examples", 1
+    )[0]
+    for cells in _markdown_model_rows(decisions):
+        if len(cells) < 2:
             continue
-        model_id = str(item["id"])
+        model_id = cells[0]
+        rate = _markdown_number(cells[1])
+        if rate is None:
+            continue
         rows[model_id.casefold()] = {
             "model_id": model_id,
             "display_name": f"Perplexity: {model_id}",
             "kind": "decision",
-            "input_per_1m": decisions.get("input"),
+            "input_per_1m": rate,
             "output_per_1m": 0.0,
         }
+
     if not rows:
         raise ValueError("Perplexity pricing docs contained no model IDs")
     return sorted(rows.values(), key=lambda row: row["model_id"].casefold())

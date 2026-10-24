@@ -10,11 +10,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 sys.path.insert(0, str(ROOT / "src"))
 
-import _update_baseten
-import _update_deepinfra
-import _update_nebius
+import _update_baseten  # noqa: E402
+import _update_deepinfra  # noqa: E402
+import _update_nebius  # noqa: E402
 
-import llmcapa
+import llmcapa  # noqa: E402
 
 
 def test_new_provider_catalogs_are_registered_and_resolvable() -> None:
@@ -122,6 +122,28 @@ def test_baseten_parser_scrapes_public_model_and_feature_tables() -> None:
     assert model["max_output_tokens"] == 2_000
     assert model["supports_vision"] is True
     assert model["supports_function_calling"] is True
+    assert model["supports_reasoning"] is True
+
+
+def test_baseten_rendered_doc_tables_normalize_to_the_catalog_parser():
+    source = _update_baseten._rendered_tables_as_source(
+        [
+            [
+                ["Model", "Slug", "Context", "Max output"],
+                ["Example Vision", "example/vision-model", "1048k", "262k"],
+            ],
+            [
+                ["Model", "Reasoning", "Vision", "Sampling parameters"],
+                ["Example Vision", "Enabled by default", "✓", "temperature, stop"],
+            ],
+        ]
+    )
+    [model] = _update_baseten.parse_model_inventory(source)
+
+    assert model["model_id"] == "example/vision-model"
+    assert model["context_window"] == 1_048_000
+    assert model["max_output_tokens"] == 262_000
+    assert model["supports_vision"] is True
     assert model["supports_reasoning"] is True
 
 

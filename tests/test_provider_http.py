@@ -124,7 +124,9 @@ def test_amazon_scraper_uses_shared_byte_fetcher(monkeypatch):
         return b"compressed or HTML bytes"
 
     monkeypatch.setattr(_scrape_amazon, "fetch_bytes", fake_fetch_bytes)
-    assert _scrape_amazon._fetch(_scrape_amazon.PRICING_URL) == b"compressed or HTML bytes"
+    assert (
+        _scrape_amazon._fetch(_scrape_amazon.PRICING_URL) == b"compressed or HTML bytes"
+    )
     assert observed == {
         "url": _scrape_amazon.PRICING_URL,
         "headers": {"User-Agent": "llmcapa catalog updater"},
@@ -231,7 +233,7 @@ def test_bytedance_seed_fetch_keeps_large_html_limit_and_error_policy(monkeypatc
     spec.loader.exec_module(updater)
 
     observed = {}
-    page = "模型列表 Model ID"
+    page = "模型列表 Model ID doubao-seed-2-1-pro-260915"
 
     def fake_fetch_text(url, **kwargs):
         observed["url"] = url
@@ -260,10 +262,16 @@ def test_liquid_wrapper_delegates_transport_and_preserves_limit(monkeypatch):
         return "liquid docs"
 
     monkeypatch.setattr(_update_liquid, "_shared_fetch_text", fake_fetch_text)
-    assert _update_liquid.fetch_text("https://example.test/page", limit=1234) == "liquid docs"
+    assert (
+        _update_liquid.fetch_text("https://example.test/page", limit=1234)
+        == "liquid docs"
+    )
     assert observed == {
         "url": "https://example.test/page",
-        "headers": {"Accept": "text/markdown,text/plain,*/*", "User-Agent": "llmcapa-provider-updater/1.0"},
+        "headers": {
+            "Accept": "text/markdown,text/plain,*/*",
+            "User-Agent": "llmcapa-provider-updater/1.0",
+        },
         "timeout": 30,
         "max_bytes": 1234,
     }

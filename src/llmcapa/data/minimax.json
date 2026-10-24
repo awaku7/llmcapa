@@ -48,49 +48,6 @@
     },
     {
       "provider": "minimax",
-      "model_id": "MiniMax-H3-Context-IR",
-      "display_name": "MiniMax-H3-Context-IR",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "api",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 0.9,
-        "output_per_1m": 3.6,
-        "currency": "USD"
-      },
-      "deprecated": false,
-      "aliases": [],
-      "reasoning_effort_values": null,
-      "thinking_budget_values": null,
-      "thinking_level_values": null,
-      "thinking_control": null,
-      "extra": {
-        "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
-        "pricing_fetched": true
-      }
-    },
-    {
-      "provider": "minimax",
       "model_id": "minimax-m1",
       "display_name": "MiniMax M1",
       "context_window": 1000000,
@@ -663,7 +620,11 @@
         "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
         "price_per_image": 0.0035,
         "unit": "image",
-        "api": "image"
+        "api": "image",
+        "refresh_metadata_fallbacks": [
+          "image"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-24"
       },
       "image": {
         "generation": true,
@@ -814,6 +775,51 @@
         "unit": "1m_chars",
         "api": "tts",
         "quality": "turbo"
+      }
+    },
+    {
+      "provider": "minimax",
+      "model_id": "MiniMax-H3-Context-IR",
+      "display_name": "MiniMax-H3-Context-IR",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.9,
+        "output_per_1m": 3.6,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "thinking_budget_values": null,
+      "thinking_level_values": null,
+      "thinking_control": null,
+      "extra": {
+        "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
+        "pricing_fetched": true,
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     }
   ]

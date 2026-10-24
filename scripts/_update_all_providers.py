@@ -52,8 +52,8 @@ PROVIDER_SCRIPTS = {
     "japanese": "_update_japanese.py",
     "laya": "_update_laya.py",
     "kwaipilot": "_update_hf_official_orgs.py",
-    "llama-cpp": "provider_updates/llama_cpp.py",
-    "lmstudio": "provider_updates/lmstudio.py",
+    "llama-cpp": "_update_local_inference_catalogs_from_hf.py",
+    "lmstudio": "_update_local_inference_catalogs_from_hf.py",
     "liquid": "_update_liquid.py",
     "mancer": "_update_hf_official_orgs.py",
     "meta": "_update_meta.py",
@@ -95,6 +95,7 @@ PROVIDER_SCRIPTS = {
     "together": "_update_together.py",
     "typesafe": "_update_typesafe.py",
     "upstage": "_update_upstage.py",
+    "vllm": "_update_local_inference_catalogs_from_hf.py",
     "vercel": "_update_vercel.py",
     "vertex-ai": "_update_vertex_ai.py",
     "xai": "_update_xai.py",
@@ -128,6 +129,8 @@ PROVIDER_ARGS = {
     )
 }
 PROVIDER_ARGS["huggingface"] = ["--save"]
+for name in ("llama-cpp", "lmstudio", "vllm"):
+    PROVIDER_ARGS[name] = ["--provider", name]
 ALIASES = {
     "ibm": "ibm-granite",
     "azure": "azure-foundry",
@@ -141,12 +144,8 @@ ALIASES = {
     "workers-ai": "cloudflare-workers-ai",
 }
 
-# These catalogs currently have no provider-specific refresh implementation.
-# Keep them visible rather than substituting OpenRouter or another provider's
-# catalog data.
-UNSUPPORTED_CATALOGS: dict[str, str] = {
-    "vllm": "the available model list is instance-specific; no canonical catalog to refresh",
-}
+# Catalogs with no source-backed refresh implementation stay visible here.
+UNSUPPORTED_CATALOGS: dict[str, str] = {}
 
 CATALOG_NAME_ALIASES = {
     "azure_foundry": "azure-foundry",

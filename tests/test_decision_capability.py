@@ -88,7 +88,7 @@ def test_bundled_typesafe_catalog_is_queryable():
 
 
 def test_typesafe_aliases_and_provider_scoping():
-    assert llmcapa.get("jev-latest", provider="typesafe").model_id == "jev-1.13.0"
+    assert llmcapa.get("jev-latest", provider="typesafe").model_id == "jev-1.14.0"
     assert llmcapa.get("jev-1.13", provider="typesafe").model_id == "jev-1.13.0"
     assert "typesafe" in llmcapa.providers()
 

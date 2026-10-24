@@ -7,6 +7,7 @@ failures are rolled back without losing earlier successful updates.
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 import os
 import signal
@@ -57,6 +58,100 @@ def load_catalog(path: Path) -> dict[str, Any]:
         raise TypeError("catalog root is not an object")
     model_index(data)
     return data
+
+
+def retain_unlisted_models(
+    previous: dict[str, Any], updated: dict[str, Any], *, checked_at: str | None = None
+) -> int:
+    """Keep old rows not returned by a refresh, visibly marking them unlisted.
+
+    Provider endpoints and docs often show only currently marketed models, not
+    historical IDs. An omitted row alone is not proof of retirement, so retain
+    its catalog data until removal is explicitly reviewed.
+    """
+    old = model_index(previous)
+    new = model_index(updated)
+    missing = [model_id for model_id in old if model_id not in new]
+    if not missing:
+        return 0
+
+    checked_at = checked_at or datetime.now(timezone.utc).date().isoformat()
+    rows = updated["models"]
+    for model_id in missing:
+        row = dict(old[model_id])
+        extra = row.get("extra")
+        extra = dict(extra) if isinstance(extra, dict) else {}
+        extra["not_listed_in_current_provider_refresh"] = True
+        extra["provider_refresh_checked_at"] = checked_at
+        row["extra"] = extra
+        rows.append(row)
+    return len(missing)
+
+
+def preserve_known_capabilities(
+    previous: dict[str, Any], updated: dict[str, Any], *, checked_at: str | None = None
+) -> int:
+    """Backfill capability facts omitted by a refreshed source, with provenance.
+
+    Missing fields in provider catalogs are usually scraper/schema omissions, not
+    evidence that a documented capability was removed. Keep known values and
+    mark the affected row so callers can distinguish carried-forward metadata.
+    """
+    old = model_index(previous)
+    new = model_index(updated)
+    checked_at = checked_at or datetime.now(timezone.utc).date().isoformat()
+    specialized = (
+        "image",
+        "audio",
+        "video",
+        "decision",
+        "document",
+        "embedding",
+        "rerank",
+        "computer_use",
+        "spatial",
+    )
+    changed_rows = 0
+    for model_id, previous_row in old.items():
+        refreshed = new.get(model_id)
+        if refreshed is None:
+            continue
+        fallbacks: set[str] = set()
+        for field in specialized:
+            if previous_row.get(field) and not refreshed.get(field):
+                refreshed[field] = copy.deepcopy(previous_row[field])
+                fallbacks.add(field)
+        for field in ("context_window", "max_output_tokens"):
+            old_value = previous_row.get(field, 0)
+            if (
+                isinstance(old_value, int)
+                and old_value > 0
+                and not refreshed.get(field)
+            ):
+                refreshed[field] = old_value
+                fallbacks.add(field)
+        for field in ("input_modalities", "output_modalities"):
+            old_values = previous_row.get(field)
+            new_values = refreshed.get(field)
+            if not isinstance(old_values, list) or not old_values:
+                continue
+            if not isinstance(new_values, list):
+                new_values = []
+            missing = [value for value in old_values if value not in new_values]
+            if missing:
+                refreshed[field] = list(dict.fromkeys([*new_values, *missing]))
+                fallbacks.add(field)
+        if fallbacks:
+            extra = refreshed.get("extra")
+            extra = dict(extra) if isinstance(extra, dict) else {}
+            old_fallbacks = extra.get("refresh_metadata_fallbacks")
+            if not isinstance(old_fallbacks, list):
+                old_fallbacks = []
+            extra["refresh_metadata_fallbacks"] = sorted(set(old_fallbacks) | fallbacks)
+            extra["refresh_metadata_fallback_checked_at"] = checked_at
+            refreshed["extra"] = extra
+            changed_rows += 1
+    return changed_rows
 
 
 def _pricing_tier_identity(item: Any) -> tuple[tuple[str, Any], ...]:
@@ -334,6 +429,16 @@ def run_provider(
             raise ValueError(f"unexpected files modified: {sorted(unexpected)}")
 
         updated = load_catalog(path)
+        retained = retain_unlisted_models(previous, updated)
+        fallbacks = preserve_known_capabilities(previous, updated)
+        if retained or fallbacks:
+            path.write_text(
+                json.dumps(updated, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+            with log_path.open("a", encoding="utf-8") as log:
+                log.write("\nRefresh safety fallbacks applied:")
+                log.write(f" retained_rows={retained}; capability_rows={fallbacks}.\n")
         validate_refreshed_catalog(previous, updated)
         diff = compare_catalogs(previous, updated)
         if relative_path in touched and any(diff.values()):

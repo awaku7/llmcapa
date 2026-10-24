@@ -9,7 +9,47 @@ from pathlib import Path
 SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
-import _update_openai as updater
+import _update_openai as updater  # noqa: E402
+
+
+def test_detail_reads_shutdown_status_and_snapshot_aliases(monkeypatch):
+    pages = {
+        "/api/docs/models/gpt-4o.md": """# GPT-4o
+Status: Deprecated
+Model ID: `gpt-4o`
+Default snapshot: `gpt-4o-2024-08-06`
+Input modalities: text, image
+Output modalities: text
+128,000 context window
+16,384 max output tokens
+## Snapshots
+- `gpt-4o-2024-11-20` — Deprecated
+- `gpt-4o-2024-08-06` — Deprecated
+- `gpt-4o-2024-05-13` — Shut down
+""",
+        "/api/docs/models/computer-use-preview.md": """# Computer Use Preview
+Status: Shut down
+Model ID: `computer-use-preview`
+## Snapshots
+- `computer-use-preview-2025-03-11` — Shut down
+""",
+    }
+    monkeypatch.setattr(
+        updater,
+        "fetch",
+        lambda url: pages[url.removeprefix(updater.BASE)],
+    )
+
+    gpt4o = updater.detail("/api/docs/models/gpt-4o.md")
+    computer_use = updater.detail("/api/docs/models/computer-use-preview.md")
+
+    assert gpt4o["deprecated"] is True
+    assert gpt4o["aliases"] == [
+        "gpt-4o-2024-11-20",
+        "gpt-4o-2024-08-06",
+        "gpt-4o-2024-05-13",
+    ]
+    assert computer_use["deprecated"] is True
 
 
 def test_prices_are_read_by_header_not_by_column_position():

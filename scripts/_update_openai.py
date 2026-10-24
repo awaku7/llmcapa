@@ -150,9 +150,14 @@ def detail(path: str) -> dict:
         )
         return bool(m and m.group(1).lower() == "supported")
 
+    snapshot_section = text.split("## Snapshots", 1)
     aliases = (
-        re.findall(r"^- `([^`]+)`$", text[text.find("## Snapshots") :], re.MULTILINE)
-        if "## Snapshots" in text
+        re.findall(
+            r"^- `([^`]+)`(?:\s+[—–-]\s+.*)?$",
+            snapshot_section[1],
+            re.MULTILINE,
+        )
+        if len(snapshot_section) == 2
         else []
     )
     aliases.extend(
@@ -180,7 +185,13 @@ def detail(path: str) -> dict:
         "max_output_tokens": line(r"([\d,]+) max output tokens"),
         "input_modalities": input_modalities,
         "output_modalities": output_modalities,
-        "deprecated": "deprecated" in text[:1000].lower(),
+        "deprecated": bool(
+            re.search(r"(?im)^Status:\s*(?:Deprecated|Shut down|Retired)\b", text)
+        )
+        or (
+            not re.search(r"(?im)^Status:", text)
+            and "deprecated" in text[:1000].lower()
+        ),
         "aliases": aliases,
         "extra": extra,
     }

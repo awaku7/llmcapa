@@ -29,6 +29,7 @@ from __future__ import annotations
 import json
 import re
 import shutil
+from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -51,6 +52,59 @@ AOAI_PRICING = WORKDIR / "_scratch_azure_aoai_pricing_tables.json"
 # Previous bundled catalog limits (model_id -> row) used to backfill
 # context_window / max_output_tokens when the Azure catalog lacks them.
 _PREV_LIMITS: dict[str, dict] = {}
+_SSR_PRESERVE_FIELDS = (
+    "input_modalities",
+    "output_modalities",
+    "supports_chat_completion",
+    "supports_function_calling",
+    "supports_json_mode",
+    "supports_streaming",
+    "supports_vision",
+    "supports_responses_api",
+    "supports_reasoning",
+    "supports_audio_input",
+    "supports_audio_output",
+    "audio",
+    "supports_embedding_output",
+    "supports_rerank_output",
+    "image",
+    "video",
+    "computer_use",
+    "decision",
+    "document",
+    "embedding",
+    "rerank",
+    "spatial",
+    "azure_type",
+)
+
+
+def _preserve_curated_fields(
+    entry: dict[str, Any], previous: dict[str, Any], *, prefer_previous: bool = False
+) -> None:
+    """Retain curated metadata when Azure inventory rows omit the field."""
+    for field in _SSR_PRESERVE_FIELDS:
+        if field in previous and (prefer_previous or field not in entry):
+            entry[field] = previous[field]
+
+
+def _retain_unlisted_catalog_rows(
+    current_by_id: dict[str, dict], previous_by_id: dict[str, dict]
+) -> int:
+    """Keep existing Azure rows absent from the latest discovery, marked for review."""
+    retained = 0
+    for key, previous in previous_by_id.items():
+        if key in current_by_id:
+            continue
+        row = deepcopy(previous)
+        raw_extra = row.get("extra")
+        extra = dict(raw_extra) if isinstance(raw_extra, dict) else {}
+        extra["not_listed_in_current_docs"] = True
+        row["extra"] = extra
+        current_by_id[key] = row
+        retained += 1
+    return retained
+
 
 SOURCE_CATALOG = "https://ai.azure.com/catalog/models"
 SOURCE_AOAI = "https://azure.microsoft.com/en-us/pricing/details/azure-openai/"
@@ -1506,32 +1560,17 @@ def main() -> None:
     priced = 0
     maas = 0
     previous_by_id = {str(mid).lower(): model for mid, model in _PREV_LIMITS.items()}
-    ssr_preserve_fields = (
-        "input_modalities",
-        "output_modalities",
-        "supports_chat_completion",
-        "supports_function_calling",
-        "supports_json_mode",
-        "supports_streaming",
-        "supports_vision",
-        "supports_responses_api",
-        "supports_reasoning",
-        "supports_audio_input",
-        "supports_audio_output",
-        "supports_embedding_output",
-        "supports_rerank_output",
-        "azure_type",
-    )
     for name in sorted(by_name.keys(), key=str.lower):
         item = by_name[name]
         entry = build_entry(item, price_map)
         if entry.get("provider") == "foundry-local":
             continue
-        if item.get("source") == "ssr_card":
-            previous = previous_by_id.get(str(name).lower(), {})
-            for field in ssr_preserve_fields:
-                if field in previous:
-                    entry[field] = previous[field]
+        previous = previous_by_id.get(str(name).lower(), {})
+        _preserve_curated_fields(
+            entry,
+            previous,
+            prefer_previous=item.get("source") == "ssr_card",
+        )
         if entry.get("pricing"):
             priced += 1
         if (entry.get("extra") or {}).get("maas_or_paygo"):
@@ -1559,14 +1598,21 @@ def main() -> None:
             by_id[key] = m
             continue
 
+        old = previous_by_id.get(key)
+
         def _score(x: dict) -> tuple:
             return (
+                1 if old and x.get("model_id") == old.get("model_id") else 0,
+                1 if old and x.get("provider") == old.get("provider") else 0,
                 1 if (x.get("pricing") or {}).get("input_per_1m") is not None else 0,
                 1 if (x.get("extra") or {}).get("maas_or_paygo") else 0,
             )
 
         if _score(m) > _score(prev):
             by_id[key] = m
+    retained_missing = _retain_unlisted_catalog_rows(by_id, previous_by_id)
+    if retained_missing:
+        print(f"retained {retained_missing} models not listed in the current catalog")
     models = [by_id[k] for k in sorted(by_id)]
     reconcile_computer_use(models)
 

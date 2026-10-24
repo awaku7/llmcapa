@@ -22,7 +22,10 @@ def test_laya_parsers_extract_package_and_hub_inventory():
     updater = _load("update_laya")
     assert updater.parse_package_version({"info": {"version": "0.4.0"}}) == "0.4.0"
     assert updater.parse_hf_model_ids(
-        [{"modelId": "convaiinnovations/laya"}, {"modelId": "convaiinnovations/laya-multilingual"}]
+        [
+            {"modelId": "convaiinnovations/laya"},
+            {"modelId": "convaiinnovations/laya-multilingual"},
+        ]
     ) == {"convaiinnovations/laya", "convaiinnovations/laya-multilingual"}
 
 
@@ -60,8 +63,16 @@ def test_modellix_llm_parser_normalizes_modalities_and_tiered_prices():
                 "output_modalities": ["Text"],
                 "context_window": "1M",
                 "price_tiers": [
-                    {"input_context": "≤ 100K", "input_per_1m": 0.09, "output_per_1m": 0.45},
-                    {"input_context": "> 100K", "input_per_1m": 0.45, "output_per_1m": 2.25},
+                    {
+                        "input_context": "≤ 100K",
+                        "input_per_1m": 0.09,
+                        "output_per_1m": 0.45,
+                    },
+                    {
+                        "input_context": "> 100K",
+                        "input_per_1m": 0.45,
+                        "output_per_1m": 2.25,
+                    },
                 ],
             }
         ]
@@ -90,14 +101,26 @@ def test_modellix_media_classification_requires_a_clear_task():
     assert rows[0]["model_id"] == "alibaba/happyhorse-1-1-t2v"
     assert skipped == ["vendor/unknown"]
 
+    assert (
+        updater.classify_task(
+            "minimax/minimax-h3-max-fl2v",
+            "MiniMax H3 Max FL2V",
+            "[Core Function] Video from first and last frames.",
+        )["media_model_type"]
+        == "image-to-video"
+    )
+    assert (
+        updater.classify_task(
+            "kling/kling-video-o1",
+            "Kling Video O1",
+            "[Core Function] Video editing from a reference video.",
+        )["media_model_type"]
+        == "video-to-video"
+    )
     assert updater.classify_task(
-        "minimax/minimax-h3-max-fl2v", "MiniMax H3 Max FL2V", "[Core Function] Video from first and last frames."
-    )["media_model_type"] == "image-to-video"
-    assert updater.classify_task(
-        "kling/kling-video-o1", "Kling Video O1", "[Core Function] Video editing from a reference video."
-    )["media_model_type"] == "video-to-video"
-    assert updater.classify_task(
-        "alibaba/cosyvoice-clone", "CosyVoice Clone", "[Core Function] Clones a speaker from reference audio and synthesizes speech."
+        "alibaba/cosyvoice-clone",
+        "CosyVoice Clone",
+        "[Core Function] Clones a speaker from reference audio and synthesizes speech.",
     )["output_modalities"] == ["audio"]
 
 
@@ -125,6 +148,9 @@ def test_perplexity_router_parser_reads_only_official_hosted_route_prices():
     assert record["supports_responses_api"] is True
     assert record["supports_streaming"] is True
     assert record["extra"]["responses_endpoint"].endswith("/responses")
+    new_record = updater._base_record(rows[0], None, "2026-10-12")
+    assert new_record["context_window"] == 0
+    assert new_record["max_output_tokens"] == 0
 
 
 def test_typesafe_parser_tracks_current_version_aliases_and_limits():
@@ -148,7 +174,10 @@ Rate limits 100K tokens per second / 80 requests per second.
     assert snapshot["max_state_tokens"] == 32_000
     assert snapshot["input_per_1m"] == 0.042
     assert set(snapshot["aliases"]) == {"jev-latest", "jev-preview"}
-    assert snapshot["rate_limits"] == {"tokens_per_second": 100_000, "requests_per_minute": 4_800}
+    assert snapshot["rate_limits"] == {
+        "tokens_per_second": 100_000,
+        "requests_per_minute": 4_800,
+    }
 
 
 def test_typesafe_parser_handles_current_wide_version_table_and_alias_moves():
@@ -168,14 +197,22 @@ def test_typesafe_parser_handles_current_wide_version_table_and_alias_moves():
     snapshots = updater.parse_model_snapshots(docs)
     assert [item["model_id"] for item in snapshots] == ["jev-1.14.0", "jev-1.13.0"]
     assert snapshots[0]["context_window"] == snapshots[1]["context_window"] == 64_000
-    assert snapshots[0]["max_state_tokens"] == snapshots[1]["max_state_tokens"] == 32_000
+    assert (
+        snapshots[0]["max_state_tokens"] == snapshots[1]["max_state_tokens"] == 32_000
+    )
     assert snapshots[0]["input_per_1m"] == snapshots[1]["input_per_1m"] == 0.042
     assert snapshots[0]["aliases"] == ["jev-preview"]
     assert snapshots[1]["aliases"] == ["jev-latest"]
 
     merged = updater.merge_catalog(
         snapshots,
-        [{"provider": "typesafe", "model_id": "jev-1.13.0", "aliases": ["jev-latest", "jev-preview"]}],
+        [
+            {
+                "provider": "typesafe",
+                "model_id": "jev-1.13.0",
+                "aliases": ["jev-latest", "jev-preview"],
+            }
+        ],
         "2026-10-15",
     )
     assert merged[0]["model_id"] == "jev-1.14.0"

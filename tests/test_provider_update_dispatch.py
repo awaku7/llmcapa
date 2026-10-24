@@ -45,6 +45,12 @@ def test_all_dispatch_targets_exist_and_are_provider_specific():
         if provider == "huggingface":
             assert dispatcher.PROVIDER_SCRIPTS[provider] == "_scrape_huggingface.py"
             assert args == ["--save"]
+        elif provider in {"llama-cpp", "lmstudio", "vllm"}:
+            assert (
+                dispatcher.PROVIDER_SCRIPTS[provider]
+                == "_update_local_inference_catalogs_from_hf.py"
+            )
+            assert args == ["--provider", provider]
         else:
             assert (
                 dispatcher.PROVIDER_SCRIPTS[provider] == "_update_hf_official_orgs.py"
@@ -61,14 +67,21 @@ def test_catalog_filename_aliases_resolve_to_dispatch_keys():
     }
     assert dispatcher.PROVIDER_SCRIPTS["azure-foundry"] == "_update_azure_foundry.py"
     assert dispatcher.PROVIDER_SCRIPTS["foundry-local"] == "_update_foundry_local.py"
-    assert dispatcher.PROVIDER_SCRIPTS["llama-cpp"] == "provider_updates/llama_cpp.py"
+    for name in ("llama-cpp", "lmstudio", "vllm"):
+        assert (
+            dispatcher.PROVIDER_SCRIPTS[name]
+            == "_update_local_inference_catalogs_from_hf.py"
+        )
+        assert dispatcher.PROVIDER_ARGS[name] == ["--provider", name]
 
 
-def test_catalogs_without_verified_updaters_are_not_silently_substituted():
+def test_vllm_refresh_uses_the_bundled_huggingface_snapshot():
     dispatcher = _dispatcher()
-    assert dispatcher.UNSUPPORTED_CATALOGS == {
-        "vllm": "the available model list is instance-specific; no canonical catalog to refresh",
-    }
+    assert "vllm" not in dispatcher.UNSUPPORTED_CATALOGS
+    assert (
+        dispatcher.PROVIDER_SCRIPTS["vllm"]
+        == "_update_local_inference_catalogs_from_hf.py"
+    )
     assert all(
         "openrouter_providers" not in path
         for path in dispatcher.PROVIDER_SCRIPTS.values()
@@ -136,8 +149,6 @@ def test_all_29_previously_metadata_only_catalogs_have_inventory_updaters():
         "ai21": "provider_updates/ai21.py",
         "bytedance-seed": "provider_updates/bytedance-seed.py",
         "huggingface": "_scrape_huggingface.py",
-        "llama-cpp": "provider_updates/llama_cpp.py",
-        "lmstudio": "provider_updates/lmstudio.py",
         "morph": "provider_updates/morph.py",
         "perplexity": "provider_updates/perplexity.py",
         "poolside": "provider_updates/poolside.py",
@@ -147,9 +158,10 @@ def test_all_29_previously_metadata_only_catalogs_have_inventory_updaters():
         "writer": "provider_updates/writer.py",
         "z-ai": "provider_updates/z-ai.py",
     }
+    static_hf_local = {"llama-cpp", "lmstudio"}
     assert len(hf_publishers) == 16
-    assert len(provider_level) == 13
-    assert len(hf_publishers) + len(provider_level) == 29
+    assert len(provider_level) == 11
+    assert len(hf_publishers) + len(provider_level) + len(static_hf_local) == 29
     assert all(
         dispatcher.PROVIDER_SCRIPTS[name] == "_update_hf_official_orgs.py"
         for name in hf_publishers
@@ -157,4 +169,9 @@ def test_all_29_previously_metadata_only_catalogs_have_inventory_updaters():
     assert all(
         dispatcher.PROVIDER_SCRIPTS[name] == script
         for name, script in provider_level.items()
+    )
+    assert all(
+        dispatcher.PROVIDER_SCRIPTS[name]
+        == "_update_local_inference_catalogs_from_hf.py"
+        for name in static_hf_local
     )

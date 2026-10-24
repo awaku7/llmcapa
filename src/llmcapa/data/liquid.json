@@ -83,7 +83,7 @@
         ],
         "endpoints": [],
         "source_url": "https://docs.liquid.ai/lfm/models/d1-3b",
-        "checked_at": "2026-10-22",
+        "checked_at": "2026-10-24",
         "status": "documented",
         "extra": {
           "architecture": "LFM2.5-VL-3B fine-tuned for structured decisions",
@@ -96,7 +96,7 @@
       },
       "extra": {
         "official_source": "https://docs.liquid.ai/lfm/models/d1-3b",
-        "official_source_checked_at": "2026-10-22",
+        "official_source_checked_at": "2026-10-24",
         "docs": "https://docs.liquid.ai/lfm/models/decision-models",
         "model_card": "https://huggingface.co/LiquidAI/d1-3B-GGUF",
         "license_name": "LFM Open License v1.0",
@@ -192,7 +192,7 @@
         ],
         "endpoints": [],
         "source_url": "https://docs.liquid.ai/lfm/models/d1-omni-600m",
-        "checked_at": "2026-10-22",
+        "checked_at": "2026-10-24",
         "status": "documented",
         "extra": {
           "architecture": "LFM2.5-Encoder-350M fine-tuned for structured decisions",
@@ -206,7 +206,7 @@
       },
       "extra": {
         "official_source": "https://docs.liquid.ai/lfm/models/d1-omni-600m",
-        "official_source_checked_at": "2026-10-22",
+        "official_source_checked_at": "2026-10-24",
         "docs": "https://docs.liquid.ai/lfm/models/decision-models",
         "model_card": "https://huggingface.co/LiquidAI/d1-omni-600M-GGUF",
         "license_name": "LFM Open License v1.0",
@@ -291,7 +291,7 @@
           "https://api.liquid.ai/decisions/v1/systemone"
         ],
         "source_url": "https://docs.liquid.ai/lfm/models/d1#models",
-        "checked_at": "2026-10-22",
+        "checked_at": "2026-10-24",
         "status": "documented",
         "extra": {
           "base_url": "https://api.liquid.ai",
@@ -300,7 +300,82 @@
       },
       "extra": {
         "official_source": "https://docs.liquid.ai/lfm/models/d1#models",
-        "official_source_checked_at": "2026-10-22",
+        "official_source_checked_at": "2026-10-24",
+        "docs": "https://docs.liquid.ai/lfm/models/decision-models",
+        "model_family": "d1",
+        "not_a_language_model": true,
+        "catalog_listed": true
+      }
+    },
+    {
+      "provider": "liquid",
+      "model_id": "d1.1",
+      "display_name": "Liquid AI d1.1",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "decision"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_json_schema": false,
+      "supports_streaming": false,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "license_type": "api",
+      "deprecated": false,
+      "aliases": [],
+      "pricing": null,
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "choice",
+          "score",
+          "noul"
+        ],
+        "answer_fields": [
+          "choice",
+          "score",
+          "noul",
+          "confidence",
+          "probabilities",
+          "legend"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "calibrated_confidence": null,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "state_shapes": [
+          "string",
+          "json_object",
+          "image"
+        ],
+        "max_state_tokens": null,
+        "max_total_tokens": null,
+        "output_token_billing": false,
+        "language_values": [],
+        "endpoints": [
+          "https://api.liquid.ai/decisions/v1/systemone"
+        ],
+        "source_url": "https://docs.liquid.ai/lfm/models/d1",
+        "checked_at": "2026-10-24",
+        "status": "documented",
+        "extra": {
+          "base_url": "https://api.liquid.ai",
+          "deployment": "hosted-liquid-api"
+        }
+      },
+      "extra": {
+        "official_source": "https://docs.liquid.ai/lfm/models/d1",
+        "official_source_checked_at": "2026-10-24",
         "docs": "https://docs.liquid.ai/lfm/models/decision-models",
         "model_family": "d1",
         "not_a_language_model": true,

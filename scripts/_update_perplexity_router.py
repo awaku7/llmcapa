@@ -102,6 +102,8 @@ def _base_record(snapshot: dict, old: dict | None, checked_at: str) -> dict:
             "provider": "perplexity-router",
             "model_id": snapshot["model_id"],
             "display_name": snapshot["display_name"],
+            "context_window": old.get("context_window", 0) if old else 0,
+            "max_output_tokens": old.get("max_output_tokens", 0) if old else 0,
             "input_modalities": (
                 old.get("input_modalities", ["text"]) if old else ["text"]
             ),

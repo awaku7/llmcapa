@@ -94,9 +94,11 @@ def fetch_models(org: str) -> list[dict]:
             f"Hugging Face pagination exceeded {PAGE_CAP} pages for {org}"
         )
     if not records:
-        raise RuntimeError(
-            f"Hugging Face returned no models for {org}; refusing to empty the catalog"
-        )
+        # Some legacy publisher accounts have no currently listed repositories.
+        # update_provider/merge_inventory retains their previous records and
+        # marks them as not present in the current HF inventory.
+        print(f"No current Hugging Face model repositories found for {org}")
+        return []
     return [records[key] for key in sorted(records, key=str.casefold)]
 
 

@@ -143,20 +143,20 @@ def test_list_modellix():
     )
 
 
-def test_vllm_catalog_and_provider_aliases():
+def test_vllm_catalog_uses_static_huggingface_metadata():
     models = llmcapa.list_models(provider="vllm")
-    assert len(models) == 1
+    assert len(models) >= 3000
     assert all(cap.provider == "vllm" for cap in models)
     assert llmcapa.list_models(provider="v-llm") == models
     assert llmcapa.list_models(provider="VLLM") == models
 
     cap = llmcapa.get("Qwen/Qwen2.5-1.5B-Instruct", provider="vllm")
-    assert cap.context_window == 0  # not asserted by the framework catalog
+    assert cap.context_window == 0  # not specified in the bundled HF metadata
     assert cap.max_output_tokens == 0
-    assert cap.supports_chat_completion
-    assert cap.supports_streaming
+    assert cap.supports_chat_completion is None
+    assert cap.supports_streaming is None
+    assert cap.extra["metadata_source"] == "huggingface"
     assert cap.extra["endpoints"][0]["base_url"] == "http://localhost:8000/v1"
-    assert "not a fixed vLLM inventory" in cap.extra["official_catalog_status"]
 
 
 def test_modellix_media_catalog():

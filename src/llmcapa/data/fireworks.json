@@ -42,7 +42,11 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "refresh_metadata_fallbacks": [
+          "input_modalities"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-24"
       }
     },
     {
@@ -74,6 +78,49 @@
         "source": "https://fireworks.ai/models",
         "source_type": "official_rendered_model_card",
         "model_path": "accounts/fireworks/models/firerouter-opus",
+        "endpoints": [
+          {
+            "base_url": "https://api.fireworks.ai/inference/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.fireworks.ai/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "fireworks",
+      "model_id": "minimax-m3p1-flash",
+      "display_name": "MiniMax M3.1 Flash",
+      "context_window": 1048576,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": null,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": null,
+      "supports_reasoning": null,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.6,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "accounts/fireworks/models/minimax-m3p1-flash"
+      ],
+      "license_type": "api",
+      "extra": {
+        "source": "https://fireworks.ai/models",
+        "source_type": "official_rendered_model_card",
+        "model_path": "accounts/fireworks/models/minimax-m3p1-flash",
         "endpoints": [
           {
             "base_url": "https://api.fireworks.ai/inference/v1",
@@ -126,7 +173,11 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "refresh_metadata_fallbacks": [
+          "input_modalities"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-24"
       }
     },
     {
@@ -193,7 +244,11 @@
       "supports_vision": true,
       "supports_reasoning": null,
       "supports_responses_api": null,
-      "pricing": null,
+      "pricing": {
+        "input_per_1m": 1.2,
+        "output_per_1m": 1.2,
+        "currency": "USD"
+      },
       "deprecated": false,
       "aliases": [
         "accounts/fireworks/models/mimo-v2p6-pro-rl"
@@ -203,6 +258,51 @@
         "source": "https://fireworks.ai/models",
         "source_type": "official_rendered_model_card",
         "model_path": "accounts/fireworks/models/mimo-v2p6-pro-rl",
+        "catalog_category": "vision",
+        "endpoints": [
+          {
+            "base_url": "https://api.fireworks.ai/inference/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.fireworks.ai/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "fireworks",
+      "model_id": "qwen3p8-flash-next-nvfp4",
+      "display_name": "Qwen3.8 Flash Next FP4",
+      "context_window": 262144,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 1.2,
+        "output_per_1m": 1.2,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "accounts/fireworks/models/qwen3p8-flash-next-nvfp4"
+      ],
+      "license_type": "api",
+      "extra": {
+        "source": "https://fireworks.ai/models",
+        "source_type": "official_rendered_model_card",
+        "model_path": "accounts/fireworks/models/qwen3p8-flash-next-nvfp4",
         "catalog_category": "vision",
         "endpoints": [
           {
@@ -252,48 +352,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
-      }
-    },
-    {
-      "provider": "fireworks",
-      "model_id": "qwen3p8-flash-next-nvfp4",
-      "display_name": "Qwen3.8 Flash Next FP4",
-      "context_window": 262144,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": true,
-      "supports_reasoning": null,
-      "supports_responses_api": null,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [
-        "accounts/fireworks/models/qwen3p8-flash-next-nvfp4"
-      ],
-      "license_type": "api",
-      "extra": {
-        "source": "https://fireworks.ai/models",
-        "source_type": "official_rendered_model_card",
-        "model_path": "accounts/fireworks/models/qwen3p8-flash-next-nvfp4",
-        "catalog_category": "vision",
-        "endpoints": [
-          {
-            "base_url": "https://api.fireworks.ai/inference/v1",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://docs.fireworks.ai/"
-          }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -338,7 +399,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -383,7 +446,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -428,7 +493,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -472,7 +539,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -517,7 +586,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -557,7 +628,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -601,7 +674,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -642,7 +717,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -682,7 +759,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -723,7 +802,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -767,7 +848,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -808,7 +891,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -848,7 +933,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -889,7 +976,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -930,7 +1019,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -970,7 +1061,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -1010,7 +1103,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -1050,7 +1145,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -1090,7 +1187,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -1134,7 +1233,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -1174,7 +1275,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -1214,7 +1317,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -1254,7 +1359,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -1294,7 +1401,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -1334,7 +1443,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -1374,7 +1485,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -1414,7 +1527,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -1454,7 +1569,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -1494,7 +1611,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -1534,7 +1653,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -1574,7 +1695,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -1614,7 +1737,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -1654,7 +1779,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -1698,7 +1825,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -1743,7 +1872,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -1783,7 +1914,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       },
       "rerank": {
         "rerank": true,
@@ -1829,7 +1962,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       },
       "embedding": {
         "embedding": true,
@@ -1877,7 +2012,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -1917,7 +2054,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -1957,7 +2096,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -1997,7 +2138,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -2038,7 +2181,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -2079,7 +2224,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -2120,7 +2267,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -2160,7 +2309,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -2200,7 +2351,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -2240,7 +2393,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -2279,7 +2434,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       },
       "embedding": {
         "embedding": true,
@@ -2328,7 +2485,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -2369,7 +2528,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -2409,7 +2570,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -2449,7 +2612,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -2488,7 +2653,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -2528,7 +2695,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -2569,7 +2738,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -2608,7 +2779,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -2647,7 +2820,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -2686,7 +2861,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       },
       "rerank": {
         "rerank": true,
@@ -2731,7 +2908,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -2770,7 +2949,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -2811,7 +2992,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -2852,7 +3035,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -2892,7 +3077,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -2932,7 +3119,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -2972,7 +3161,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -3012,7 +3203,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -3051,7 +3244,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -3092,7 +3287,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -3133,7 +3330,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -3173,7 +3372,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -3214,7 +3415,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -3259,7 +3462,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -3299,7 +3504,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -3339,7 +3546,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -3380,7 +3589,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -3421,7 +3632,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -3462,7 +3675,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -3502,7 +3717,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -3543,7 +3760,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -3583,7 +3802,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -3624,7 +3845,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -3665,7 +3888,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -3705,7 +3930,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -3746,7 +3973,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -3787,7 +4016,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -3827,7 +4058,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -3868,7 +4101,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -3908,7 +4143,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -3948,7 +4185,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -3988,7 +4227,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -4028,7 +4269,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -4069,7 +4312,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -4110,7 +4355,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -4151,7 +4398,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -4192,7 +4441,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -4233,7 +4484,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -4274,7 +4527,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -4315,7 +4570,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -4355,7 +4612,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -4395,7 +4654,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -4435,7 +4696,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -4475,7 +4738,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -4515,7 +4780,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -4555,7 +4822,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -4595,7 +4864,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -4636,7 +4907,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -4676,7 +4949,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -4716,7 +4991,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -4756,7 +5033,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -4796,7 +5075,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -4837,7 +5118,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -4878,7 +5161,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -4918,7 +5203,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       },
       "embedding": {
         "embedding": true,
@@ -4966,7 +5253,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       },
       "embedding": {
         "embedding": true,
@@ -5014,7 +5303,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       },
       "rerank": {
         "rerank": true,
@@ -5060,7 +5351,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       },
       "rerank": {
         "rerank": true,
@@ -5106,7 +5399,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -5146,7 +5441,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -5186,7 +5483,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -5227,7 +5526,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -5267,7 +5568,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -5307,7 +5610,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -5347,7 +5652,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -5388,7 +5695,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -5429,7 +5738,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -5469,7 +5780,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -5509,7 +5822,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -5549,7 +5864,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -5589,7 +5906,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -5629,7 +5948,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -5670,7 +5991,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -5710,7 +6033,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -5751,7 +6076,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -5791,7 +6118,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -5831,7 +6160,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -5871,7 +6202,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -5911,7 +6244,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -5951,7 +6286,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -5991,7 +6328,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -6031,7 +6370,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -6071,7 +6412,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -6111,7 +6454,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -6151,7 +6496,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -6191,7 +6538,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -6231,7 +6580,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -6271,7 +6622,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -6311,7 +6664,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -6352,7 +6707,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -6392,7 +6749,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -6432,7 +6791,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -6472,7 +6833,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -6512,7 +6875,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -6552,7 +6917,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -6592,7 +6959,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -6632,7 +7001,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -6672,7 +7043,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -6713,7 +7086,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -6754,7 +7129,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -6795,7 +7172,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -6836,7 +7215,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -6876,7 +7257,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -6916,7 +7299,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -6956,7 +7341,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -6996,7 +7383,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -7037,7 +7426,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -7078,7 +7469,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -7119,7 +7512,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -7159,7 +7554,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -7199,7 +7596,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -7239,7 +7638,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -7279,7 +7680,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -7319,7 +7722,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -7359,7 +7764,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -7399,7 +7806,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -7439,7 +7848,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -7479,7 +7890,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -7519,7 +7932,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -7559,7 +7974,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -7599,7 +8016,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -7639,7 +8058,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -7679,7 +8100,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -7719,7 +8142,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -7759,7 +8184,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -7799,7 +8226,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -7839,7 +8268,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -7879,7 +8310,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -7919,7 +8352,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -7959,7 +8394,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -7999,7 +8436,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -8039,7 +8478,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -8079,7 +8520,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -8119,7 +8562,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -8159,7 +8604,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -8199,7 +8646,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -8239,7 +8688,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -8280,7 +8731,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -8320,7 +8773,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -8360,7 +8815,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -8401,7 +8858,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -8441,7 +8900,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -8481,7 +8942,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -8521,7 +8984,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -8561,7 +9026,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -8601,7 +9068,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -8641,7 +9110,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -8681,7 +9152,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -8721,7 +9194,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -8761,7 +9236,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -8801,7 +9278,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -8841,7 +9320,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -8881,7 +9362,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -8921,7 +9404,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -8961,7 +9446,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -9001,7 +9488,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -9041,7 +9530,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -9081,7 +9572,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -9121,7 +9614,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -9161,7 +9656,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -9201,7 +9698,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -9241,7 +9740,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -9282,7 +9783,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -9322,7 +9825,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -9362,7 +9867,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -9402,7 +9909,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -9442,7 +9951,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -9482,7 +9993,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -9522,7 +10035,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -9562,7 +10077,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -9602,7 +10119,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -9642,7 +10161,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -9682,7 +10203,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -9722,7 +10245,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -9762,7 +10287,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -9802,7 +10329,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -9842,7 +10371,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -9882,7 +10413,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -9922,7 +10455,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -9962,7 +10497,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -10002,7 +10539,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -10042,7 +10581,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -10082,7 +10623,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -10122,7 +10665,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -10162,7 +10707,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -10202,7 +10749,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -10242,7 +10791,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -10282,7 +10833,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -10322,7 +10875,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -10362,7 +10917,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -10402,7 +10959,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -10442,7 +11001,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -10482,7 +11043,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -10522,7 +11085,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -10562,7 +11127,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -10602,7 +11169,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -10642,7 +11211,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -10682,7 +11253,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -10722,7 +11295,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -10762,7 +11337,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -10802,7 +11379,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -10842,7 +11421,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -10882,7 +11463,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -10922,7 +11505,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -10962,7 +11547,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -11002,7 +11589,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -11043,7 +11632,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -11083,7 +11674,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -11123,7 +11716,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -11163,7 +11758,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -11203,7 +11800,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -11243,7 +11842,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -11283,7 +11884,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -11323,7 +11926,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -11364,7 +11969,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -11404,7 +12011,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -11444,7 +12053,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -11484,7 +12095,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -11524,7 +12137,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -11564,7 +12179,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -11604,7 +12221,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -11644,7 +12263,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -11684,7 +12305,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -11724,7 +12347,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -11764,7 +12389,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -11804,7 +12431,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -11844,7 +12473,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -11884,7 +12515,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -11924,7 +12557,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -11964,7 +12599,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -12004,7 +12641,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -12044,7 +12683,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -12084,7 +12725,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -12124,7 +12767,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -12164,7 +12809,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -12204,7 +12851,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -12244,7 +12893,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -12284,7 +12935,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -12324,7 +12977,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -12364,7 +13019,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -12404,7 +13061,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -12444,7 +13103,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -12484,7 +13145,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -12524,7 +13187,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -12564,7 +13229,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -12604,7 +13271,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -12644,7 +13313,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -12685,7 +13356,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -12726,7 +13399,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     },
     {
@@ -12766,7 +13441,9 @@
             "auth": "bearer",
             "source": "https://docs.fireworks.ai/"
           }
-        ]
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     }
   ]

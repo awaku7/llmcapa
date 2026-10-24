@@ -61,7 +61,7 @@ def parse_model_inventory(docs: dict[str, str]) -> list[dict]:
         )
     model_doc, api_doc = docs["models"], docs["api"]
     headings = re.findall(
-        r"\[([^]]*Laguna[^]]*)\]\(/release-notes/models#([a-z0-9-]+)\)",
+        r"\[([^]]*Laguna[^]]*)\]\((?:https?://[^/]+)?/release-notes/models(?:\.md)?#([a-z0-9-]+)\)",
         model_doc,
         re.IGNORECASE,
     )

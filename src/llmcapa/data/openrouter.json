@@ -1209,8 +1209,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.032,
-        "output_per_1m": 0.144,
+        "input_per_1m": 0.02,
+        "output_per_1m": 1.0,
         "currency": "USD"
       },
       "extra": {
@@ -1232,8 +1232,10 @@
           "include_reasoning",
           "logit_bias",
           "logprobs",
+          "max_completion_tokens",
           "max_tokens",
           "min_p",
+          "parallel_tool_calls",
           "presence_penalty",
           "reasoning",
           "reasoning_effort",
@@ -1251,7 +1253,7 @@
         ],
         "created": "2026-09-14",
         "description": "This model always redirects to the latest model in the DeepSeek Flash family.",
-        "cache_read_per_1m": 0.0016,
+        "cache_read_per_1m": 0.015,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -1316,8 +1318,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.24948,
-        "output_per_1m": 0.74844,
+        "input_per_1m": 0.1188,
+        "output_per_1m": 8.0,
         "currency": "USD"
       },
       "extra": {
@@ -1358,7 +1360,7 @@
         ],
         "created": "2026-09-14",
         "description": "This model always redirects to the latest model in the DeepSeek Pro family.",
-        "cache_read_per_1m": 0.007938,
+        "cache_read_per_1m": 0.12,
         "default_parameters": {
           "temperature": 1,
           "top_p": 1
@@ -1425,8 +1427,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.00392,
-        "output_per_1m": 0.143616,
+        "input_per_1m": 0.0422,
+        "output_per_1m": 0.1694,
         "currency": "USD"
       },
       "extra": {
@@ -1469,7 +1471,7 @@
         ],
         "created": "2026-08-01",
         "description": "This model always redirects to the latest model in the DeepSeek V4 Flash family.",
-        "cache_read_per_1m": 0.001523,
+        "cache_read_per_1m": 0.028,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -1677,7 +1679,7 @@
       "model_id": "~google/gemini-pro-latest",
       "display_name": "Google: Gemini Pro Latest",
       "context_window": 1048576,
-      "max_output_tokens": 65536,
+      "max_output_tokens": 943718,
       "input_modalities": [
         "audio",
         "file",
@@ -1725,7 +1727,7 @@
         "tokenizer": "Router",
         "top_provider": {
           "context_length": 1048576,
-          "max_completion_tokens": 65536,
+          "max_completion_tokens": 943718,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -1878,8 +1880,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.294,
-        "output_per_1m": 24.0,
+        "input_per_1m": 0.19,
+        "output_per_1m": 8.94,
         "currency": "USD"
       },
       "extra": {
@@ -1901,8 +1903,10 @@
           "include_reasoning",
           "logit_bias",
           "logprobs",
+          "max_completion_tokens",
           "max_tokens",
           "min_p",
+          "parallel_tool_calls",
           "presence_penalty",
           "reasoning",
           "reasoning_effort",
@@ -1920,7 +1924,7 @@
         ],
         "created": "2026-04-27",
         "description": "This model always redirects to the latest model in the Kimi family.",
-        "cache_read_per_1m": 0.284,
+        "cache_read_per_1m": 0.19,
         "default_parameters": {
           "top_p": 0.95
         },
@@ -2898,7 +2902,7 @@
       "provider": "openrouter",
       "model_id": "~unbiased/pareto-latest",
       "display_name": "Pareto Latest",
-      "context_window": 262144,
+      "context_window": 1048576,
       "max_output_tokens": 131072,
       "input_modalities": [
         "text",
@@ -2908,7 +2912,7 @@
         "text"
       ],
       "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_json_mode": false,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": false,
@@ -2928,8 +2932,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 2.5,
-        "output_per_1m": 7.5,
+        "input_per_1m": 0.8,
+        "output_per_1m": 3.2,
         "currency": "USD"
       },
       "extra": {
@@ -2942,13 +2946,12 @@
         "modality": "text+image->text",
         "tokenizer": "Router",
         "top_provider": {
-          "context_length": 262144,
+          "context_length": 1048576,
           "max_completion_tokens": 131072,
           "is_moderated": false
         },
         "supported_parameters": [
           "max_tokens",
-          "response_format",
           "temperature",
           "tool_choice",
           "tools",
@@ -2956,13 +2959,12 @@
         ],
         "created": "2026-10-13",
         "description": "This model always redirects to the latest model in the Pareto family.",
-        "cache_read_per_1m": 0.25,
+        "cache_read_per_1m": 0.03,
         "links": {
           "details": "/api/v1/models/~unbiased/pareto-latest/endpoints"
         },
         "features": [
           "tools",
-          "structured_outputs",
           "vision"
         ]
       }
@@ -3106,7 +3108,7 @@
       "model_id": "~z-ai/glm-flash-latest",
       "display_name": "Z.ai: GLM Flash Latest",
       "context_window": 1048576,
-      "max_output_tokens": 943718,
+      "max_output_tokens": 131072,
       "input_modalities": [
         "text",
         "image",
@@ -3136,8 +3138,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.04,
-        "output_per_1m": 0.2,
+        "input_per_1m": 0.0502,
+        "output_per_1m": 0.0709,
         "currency": "USD"
       },
       "extra": {
@@ -3151,7 +3153,7 @@
         "tokenizer": "Router",
         "top_provider": {
           "context_length": 1048576,
-          "max_completion_tokens": 943718,
+          "max_completion_tokens": 131072,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -3179,7 +3181,7 @@
         ],
         "created": "2026-08-27",
         "description": "This model always redirects to the latest model in the GLM Flash family.",
-        "cache_read_per_1m": 0.006,
+        "cache_read_per_1m": 0.03,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -3250,7 +3252,7 @@
       "model_id": "~z-ai/glm-latest",
       "display_name": "Z.ai: GLM Latest",
       "context_window": 1048576,
-      "max_output_tokens": 943718,
+      "max_output_tokens": 131072,
       "input_modalities": [
         "text"
       ],
@@ -3278,8 +3280,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.079,
-        "output_per_1m": 4.8,
+        "input_per_1m": 0.075,
+        "output_per_1m": 4.295,
         "currency": "USD"
       },
       "extra": {
@@ -3293,7 +3295,7 @@
         "tokenizer": "Router",
         "top_provider": {
           "context_length": 1048576,
-          "max_completion_tokens": 943718,
+          "max_completion_tokens": 131072,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -3321,7 +3323,7 @@
         ],
         "created": "2026-08-19",
         "description": "This model always redirects to the latest GLM model from Z.ai.",
-        "cache_read_per_1m": 0.078,
+        "cache_read_per_1m": 0.075,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -5144,7 +5146,7 @@
           "details": "/api/v1/models/anthropic/claude-fable-5.1-20260831/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 13,
+          "design_arena": 15,
           "artificial_analysis": 1
         },
         "features": [
@@ -5271,7 +5273,7 @@
           "details": "/api/v1/models/anthropic/claude-fable-5.1-20260831/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 13,
+          "design_arena": 15,
           "artificial_analysis": 1
         },
         "features": [
@@ -6466,7 +6468,7 @@
           "details": "/api/v1/models/anthropic/claude-4.6-opus-20260205/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 13,
+          "design_arena": 14,
           "artificial_analysis": 1
         },
         "features": [
@@ -6597,7 +6599,7 @@
           "details": "/api/v1/models/anthropic/claude-4.6-opus-20260205/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 13,
+          "design_arena": 14,
           "artificial_analysis": 1
         },
         "features": [
@@ -6986,7 +6988,7 @@
           "details": "/api/v1/models/anthropic/claude-4.8-opus-20260528/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 21,
+          "design_arena": 23,
           "artificial_analysis": 1
         },
         "features": [
@@ -7115,7 +7117,7 @@
           "details": "/api/v1/models/anthropic/claude-4.8-opus-20260528/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 21,
+          "design_arena": 23,
           "artificial_analysis": 1
         },
         "features": [
@@ -7245,7 +7247,7 @@
           "details": "/api/v1/models/anthropic/claude-opus-5-20260723/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 15,
+          "design_arena": 16,
           "artificial_analysis": 1
         },
         "features": [
@@ -7373,7 +7375,7 @@
           "details": "/api/v1/models/anthropic/claude-opus-5.5-20260921/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 8,
+          "design_arena": 11,
           "artificial_analysis": 1
         },
         "features": [
@@ -7500,7 +7502,7 @@
           "details": "/api/v1/models/anthropic/claude-opus-5.5-20260921/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 8,
+          "design_arena": 11,
           "artificial_analysis": 1
         },
         "features": [
@@ -7629,7 +7631,7 @@
           "details": "/api/v1/models/anthropic/claude-opus-5-20260723/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 15,
+          "design_arena": 16,
           "artificial_analysis": 1
         },
         "features": [
@@ -8270,7 +8272,7 @@
           "details": "/api/v1/models/anthropic/claude-sonnet-5-20260630/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 16,
+          "design_arena": 18,
           "artificial_analysis": 1
         },
         "features": [
@@ -8398,7 +8400,7 @@
           "details": "/api/v1/models/anthropic/claude-sonnet-5.5-20260928/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 6,
+          "design_arena": 10,
           "artificial_analysis": 1
         },
         "features": [
@@ -8525,7 +8527,7 @@
           "details": "/api/v1/models/anthropic/claude-sonnet-5.5-20260928/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 6,
+          "design_arena": 10,
           "artificial_analysis": 1
         },
         "features": [
@@ -8654,7 +8656,7 @@
           "details": "/api/v1/models/anthropic/claude-sonnet-5-20260630/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 16,
+          "design_arena": 18,
           "artificial_analysis": 1
         },
         "features": [
@@ -8741,6 +8743,7 @@
         ],
         "created": "2026-04-01",
         "description": "Trinity Large Thinking is a powerful open source reasoning model from the team at Arcee AI. It shows strong performance in PinchBench, agentic workloads, and reasoning tasks. Launch video: https://youtu.be/Gc82AXLa0Rg?si=4RLn6WBz33qT--B7...",
+        "expiration_date": "2026-10-26",
         "cache_read_per_1m": 0.06,
         "default_parameters": {
           "temperature": 0.3,
@@ -8812,7 +8815,7 @@
           "is_moderated": null
         },
         "supported_parameters": [],
-        "description": "Universal-3.5 Pro is AssemblyAI's speech-to-text model served through its Sync API, returning a complete transcript with word-level timestamps in a single synchronous response for audio clips up to 120 seconds. It accepts 16-bit WAV input and supports free-text prompting, keyterms, and conversation context to steer transcription toward domain vocabulary.",
+        "description": "Universal-3.5 Pro is AssemblyAI's speech-to-text model served through its Sync API, returning a complete transcript with word-level timestamps in a single synchronous response for audio up to 20 minutes. It accepts WAV and compressed input (MP3, M4A, AAC, Ogg/Opus, FLAC, and WebM) and supports free-text prompting, keyterms, and conversation context to steer transcription toward domain vocabulary.",
         "features": [
           "audio_input"
         ]
@@ -9092,6 +9095,114 @@
         ],
         "status": "inferred",
         "checked_at": "2026-10-10"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "baseten/elephant-1",
+      "display_name": "Baseten: Elephant 1 (free)",
+      "context_window": 16384,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "decisions"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "elephant-1",
+        "openrouter/baseten/elephant-1"
+      ],
+      "license_type": "free",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "baseten",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 16384,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "Elephant 1 is a 9B decision model from Base Labs, Baseten's research team, built on Qwen3.5-9B. Given a state (text or JSON) and typed questions (yes/no, multiple choice, or ordinal score), it returns a calibrated probability for every option in a single forward pass, with no text generation. It is TypeSafe System One compatible and suits routing, classification, and scoring where you need a score",
+        "free_tier": true
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "baseten/mammoth-1",
+      "display_name": "Baseten: Mammoth 1 (free)",
+      "context_window": 16384,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "decisions"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mammoth-1",
+        "openrouter/baseten/mammoth-1"
+      ],
+      "license_type": "free",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "baseten",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 16384,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "Mammoth 1 is a 27B decision model from Base Labs, Baseten's research team, built on Qwen3.5-27B. Given a state (text or JSON) and typed questions (yes/no, multiple choice, or ordinal score), it returns a calibrated probability for every option in a single forward pass, with no text generation. It is TypeSafe System One compatible and suits classification, routing, and scoring where you need a scor",
+        "free_tier": true
       }
     },
     {
@@ -11666,7 +11777,7 @@
       "provider": "openrouter",
       "model_id": "cloudflare/clef",
       "display_name": "Cloudflare: Clef",
-      "context_window": 65536,
+      "context_window": 65537,
       "max_output_tokens": 0,
       "input_modalities": [
         "text",
@@ -11749,13 +11860,13 @@
           "array"
         ],
         "max_state_tokens": null,
-        "max_total_tokens": 65536,
+        "max_total_tokens": 65537,
         "output_token_billing": false,
         "endpoints": [
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/cloudflare/clef",
-        "checked_at": "2026-10-17",
+        "checked_at": "2026-10-24",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -11860,7 +11971,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/cloudflare/clef-flash",
-        "checked_at": "2026-10-17",
+        "checked_at": "2026-10-24",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -13007,7 +13118,7 @@
       "model_id": "deepseek/deepseek-chat",
       "display_name": "DeepSeek: DeepSeek V3",
       "context_window": 163840,
-      "max_output_tokens": 16384,
+      "max_output_tokens": 16000,
       "input_modalities": [
         "text"
       ],
@@ -13038,8 +13149,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.32,
-        "output_per_1m": 0.89,
+        "input_per_1m": 0.2574,
+        "output_per_1m": 1.0287,
         "currency": "USD"
       },
       "extra": {
@@ -13053,8 +13164,8 @@
         "modality": "text->text",
         "tokenizer": "DeepSeek",
         "top_provider": {
-          "context_length": 163840,
-          "max_completion_tokens": 16384,
+          "context_length": 128000,
+          "max_completion_tokens": 16000,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -13270,96 +13381,6 @@
     },
     {
       "provider": "openrouter",
-      "model_id": "deepseek/deepseek-r1",
-      "display_name": "DeepSeek: R1",
-      "context_window": 64000,
-      "max_output_tokens": 16000,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_json_schema": null,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "DeepSeek",
-      "knowledge_cutoff": "2024-07",
-      "deprecated": false,
-      "aliases": [
-        "deepseek-r1",
-        "openrouter/deepseek/deepseek-r1",
-        "deepseek/deepseek-r1"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.7,
-        "output_per_1m": 2.5,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "deepseek",
-        "canonical_slug": "deepseek/deepseek-r1",
-        "hugging_face_id": "deepseek-ai/DeepSeek-R1",
-        "modality": "text->text",
-        "tokenizer": "DeepSeek",
-        "instruct_type": "deepseek-r1",
-        "top_provider": {
-          "context_length": 64000,
-          "max_completion_tokens": 16000,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "frequency_penalty",
-          "include_reasoning",
-          "max_tokens",
-          "presence_penalty",
-          "reasoning",
-          "repetition_penalty",
-          "response_format",
-          "seed",
-          "stop",
-          "temperature",
-          "tool_choice",
-          "tools",
-          "top_k",
-          "top_p"
-        ],
-        "created": "2025-01-20",
-        "description": "DeepSeek R1 is here: Performance on par with [OpenAI o1](/openai/o1), but open-sourced and with fully open reasoning tokens. It's 671B parameters in size, with 37B active in an inference pass....",
-        "reasoning_meta": {
-          "mandatory": true
-        },
-        "links": {
-          "details": "/api/v1/models/deepseek/deepseek-r1/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
-        "features": [
-          "tools",
-          "structured_outputs",
-          "reasoning"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
       "model_id": "deepseek/deepseek-r1-0528",
       "display_name": "DeepSeek: R1 0528",
       "context_window": 163840,
@@ -13547,7 +13568,7 @@
       "model_id": "deepseek/deepseek-v3.2",
       "display_name": "DeepSeek: DeepSeek V3.2",
       "context_window": 163840,
-      "max_output_tokens": 147456,
+      "max_output_tokens": 65536,
       "input_modalities": [
         "text"
       ],
@@ -13578,8 +13599,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.259,
-        "output_per_1m": 0.8,
+        "input_per_1m": 0.28,
+        "output_per_1m": 0.42,
         "currency": "USD"
       },
       "extra": {
@@ -13593,8 +13614,8 @@
         "modality": "text->text",
         "tokenizer": "DeepSeek",
         "top_provider": {
-          "context_length": 163840,
-          "max_completion_tokens": 147456,
+          "context_length": 131072,
+          "max_completion_tokens": 65536,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -13620,7 +13641,7 @@
         ],
         "created": "2025-12-01",
         "description": "DeepSeek-V3.2 is a large language model designed to harmonize high computational efficiency with strong reasoning and agentic tool-use performance. It introduces DeepSeek Sparse Attention (DSA), a fine-grained sparse attention mechanism...",
-        "cache_read_per_1m": 0.14,
+        "cache_read_per_1m": 0.028,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -13853,7 +13874,7 @@
       "model_id": "deepseek/deepseek-v4-flash-0731",
       "display_name": "DeepSeek: DeepSeek V4 Flash 0731",
       "context_window": 1048576,
-      "max_output_tokens": 943718,
+      "max_output_tokens": 131072,
       "input_modalities": [
         "text"
       ],
@@ -13884,8 +13905,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.07,
-        "output_per_1m": 0.14,
+        "input_per_1m": 0.04444,
+        "output_per_1m": 0.13332,
         "currency": "USD"
       },
       "extra": {
@@ -13900,7 +13921,7 @@
         "tokenizer": "DeepSeek",
         "top_provider": {
           "context_length": 1048576,
-          "max_completion_tokens": 943718,
+          "max_completion_tokens": 131072,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -13929,7 +13950,7 @@
         ],
         "created": "2026-07-31",
         "description": "DeepSeek V4 Flash 0731 is a sparse mixture-of-experts model from DeepSeek, with 13B active parameters out of 284B total. This re-post-trained revision is suited for coding, reasoning, and agent workflows....",
-        "cache_read_per_1m": 0.014,
+        "cache_read_per_1m": 0.001414,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -14116,8 +14137,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.2088,
-        "output_per_1m": 0.4176,
+        "input_per_1m": 0.2262,
+        "output_per_1m": 0.4524,
         "currency": "USD"
       },
       "extra": {
@@ -14160,7 +14181,7 @@
         ],
         "created": "2026-04-24",
         "description": "DeepSeek V4 Pro is a large-scale Mixture-of-Experts model from DeepSeek with 1.6T total parameters and 49B activated parameters, supporting a 1M-token context window. It is designed for advanced reasoning, coding,...",
-        "cache_read_per_1m": 0.0174,
+        "cache_read_per_1m": 0.01885,
         "default_parameters": {
           "temperature": 1,
           "top_p": 1
@@ -14432,8 +14453,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.032,
-        "output_per_1m": 0.144,
+        "input_per_1m": 0.02,
+        "output_per_1m": 1.0,
         "currency": "USD"
       },
       "extra": {
@@ -14458,6 +14479,7 @@
           "logprobs",
           "max_tokens",
           "min_p",
+          "parallel_tool_calls",
           "presence_penalty",
           "reasoning",
           "reasoning_effort",
@@ -14469,13 +14491,14 @@
           "temperature",
           "tool_choice",
           "tools",
+          "top_a",
           "top_k",
           "top_logprobs",
           "top_p"
         ],
         "created": "2026-09-10",
         "description": "DeepSeek V4.1 Flash is a sparse mixture-of-experts model from DeepSeek, and the first built on the company's Causal Encoder-Decoder (CED) architecture. It activates 8B parameters on input and 16B on...",
-        "cache_read_per_1m": 0.0016,
+        "cache_read_per_1m": 0.015,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -14492,6 +14515,203 @@
         },
         "benchmarks_present": {
           "design_arena": 0,
+          "artificial_analysis": 1
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "reasoning_effort",
+          "vision"
+        ]
+      },
+      "reasoning_effort_values": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "deepseek/deepseek-v4.1-flash-1017",
+      "display_name": "DeepSeek: DeepSeek V4.1 Flash 1017",
+      "context_window": 1048576,
+      "max_output_tokens": 393216,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "DeepSeek",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "deepseek-v4.1-flash-1017",
+        "openrouter/deepseek/deepseek-v4.1-flash-1017",
+        "deepseek/deepseek-v4.1-flash-20261017"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.6,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "deepseek",
+        "canonical_slug": "deepseek/deepseek-v4.1-flash-20261017",
+        "hugging_face_id": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+        "modality": "text+image->text",
+        "tokenizer": "DeepSeek",
+        "top_provider": {
+          "context_length": 1048576,
+          "max_completion_tokens": 393216,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "logit_bias",
+          "logprobs",
+          "max_completion_tokens",
+          "max_tokens",
+          "min_p",
+          "parallel_tool_calls",
+          "presence_penalty",
+          "reasoning",
+          "reasoning_effort",
+          "repetition_penalty",
+          "response_format",
+          "seed",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_k",
+          "top_logprobs",
+          "top_p"
+        ],
+        "created": "2026-10-17",
+        "description": "DeepSeek V4.1 Flash 1017 is the October 17, 2026 snapshot of DeepSeek V4.1 Flash, served by DeepSeek under the `deepseek-flash` API model name. V4.1 Flash is a sparse mixture-of-experts model...",
+        "cache_read_per_1m": 0.003,
+        "pricing_overrides": [
+          {
+            "utc_days": [
+              "saturday",
+              "sunday"
+            ],
+            "prompt": "0.00000015",
+            "completion": "0.0000006",
+            "input_cache_read": "0.000000003"
+          },
+          {
+            "utc_days": [
+              "monday",
+              "tuesday",
+              "wednesday",
+              "thursday",
+              "friday"
+            ],
+            "utc_start": 0,
+            "utc_end": 100,
+            "prompt": "0.00000015",
+            "completion": "0.0000006",
+            "input_cache_read": "0.000000003"
+          },
+          {
+            "utc_days": [
+              "monday",
+              "tuesday",
+              "wednesday",
+              "thursday",
+              "friday"
+            ],
+            "utc_start": 100,
+            "utc_end": 400,
+            "prompt": "0.0000003",
+            "completion": "0.0000012",
+            "input_cache_read": "0.000000006"
+          },
+          {
+            "utc_days": [
+              "monday",
+              "tuesday",
+              "wednesday",
+              "thursday",
+              "friday"
+            ],
+            "utc_start": 400,
+            "utc_end": 600,
+            "prompt": "0.00000015",
+            "completion": "0.0000006",
+            "input_cache_read": "0.000000003"
+          },
+          {
+            "utc_days": [
+              "monday",
+              "tuesday",
+              "wednesday",
+              "thursday",
+              "friday"
+            ],
+            "utc_start": 600,
+            "utc_end": 1000,
+            "prompt": "0.0000003",
+            "completion": "0.0000012",
+            "input_cache_read": "0.000000006"
+          },
+          {
+            "utc_days": [
+              "monday",
+              "tuesday",
+              "wednesday",
+              "thursday",
+              "friday"
+            ],
+            "utc_start": 1000,
+            "utc_end": 0,
+            "prompt": "0.00000015",
+            "completion": "0.0000006",
+            "input_cache_read": "0.000000003"
+          }
+        ],
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "max",
+            "high",
+            "low",
+            "none"
+          ],
+          "default_effort": "high"
+        },
+        "links": {
+          "details": "/api/v1/models/deepseek/deepseek-v4.1-flash-20261017/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 9,
           "artificial_analysis": 1
         },
         "features": [
@@ -14817,7 +15037,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 20.0,
+        "input_per_1m": 40.0,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
@@ -14884,7 +15104,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 20.0,
+        "input_per_1m": 40.0,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
@@ -14951,7 +15171,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 40.0,
+        "input_per_1m": 80.0,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
@@ -15018,7 +15238,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 20.0,
+        "input_per_1m": 40.0,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
@@ -15085,7 +15305,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 20.0,
+        "input_per_1m": 40.0,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
@@ -15152,7 +15372,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 40.0,
+        "input_per_1m": 80.0,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
@@ -15219,7 +15439,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 20.0,
+        "input_per_1m": 40.0,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
@@ -15286,7 +15506,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 40.0,
+        "input_per_1m": 80.0,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
@@ -15353,7 +15573,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 20.0,
+        "input_per_1m": 40.0,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
@@ -15420,7 +15640,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 30.555556,
+        "input_per_1m": 61.111111,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
@@ -15490,7 +15710,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 30.555556,
+        "input_per_1m": 61.111111,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
@@ -15525,6 +15745,97 @@
         },
         "checked_at": "2026-10-15",
         "status": "inferred"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "elorian/glimpse",
+      "display_name": "Elorian: Glimpse",
+      "context_window": 262144,
+      "max_output_tokens": 256000,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "glimpse",
+        "openrouter/elorian/glimpse",
+        "elorian/glimpse-20261016"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.6,
+        "output_per_1m": 3.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "elorian",
+        "canonical_slug": "elorian/glimpse-20261016",
+        "modality": "text+image+video->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 262144,
+          "max_completion_tokens": 256000,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "logit_bias",
+          "logprobs",
+          "max_tokens",
+          "min_p",
+          "presence_penalty",
+          "reasoning",
+          "repetition_penalty",
+          "response_format",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_k",
+          "top_logprobs",
+          "top_p"
+        ],
+        "created": "2026-10-17",
+        "description": "Glimpse is a multimodal visual reasoning model from Elorian, built for visual understanding and complex visual reasoning in the physical world. It reasons directly over images and video rather than...",
+        "cache_read_per_1m": 0.06,
+        "reasoning_meta": {
+          "mandatory": false
+        },
+        "links": {
+          "details": "/api/v1/models/elorian/glimpse-20261016/endpoints"
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "vision"
+        ]
       }
     },
     {
@@ -16322,7 +16633,6 @@
         ],
         "created": "2025-06-17",
         "description": "Gemini 2.5 Flash is Google's state-of-the-art workhorse model, specifically designed for advanced reasoning, coding, mathematics, and scientific tasks. It includes built-in \"thinking\" capabilities, enabling it to provide responses with greater...",
-        "expiration_date": "2026-10-20",
         "cache_read_per_1m": 0.03,
         "cache_write_per_1m": 0.083333,
         "web_search_per_request_usd": 0.014,
@@ -16577,7 +16887,6 @@
         ],
         "created": "2025-07-22",
         "description": "Gemini 2.5 Flash-Lite is a lightweight reasoning model in the Gemini 2.5 family, optimized for ultra-low latency and cost efficiency. It offers improved throughput, faster token generation, and better performance...",
-        "expiration_date": "2026-10-20",
         "cache_read_per_1m": 0.01,
         "cache_write_per_1m": 0.083333,
         "web_search_per_request_usd": 0.014,
@@ -16592,327 +16901,6 @@
         },
         "benchmarks_present": {
           "design_arena": 0,
-          "artificial_analysis": 1
-        },
-        "features": [
-          "tools",
-          "structured_outputs",
-          "reasoning",
-          "vision",
-          "audio_input",
-          "file_input"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "google/gemini-2.5-flash-lite:batch",
-      "display_name": "Google: Gemini 2.5 Flash Lite (batch)",
-      "context_window": 1048576,
-      "max_output_tokens": 65535,
-      "input_modalities": [
-        "text",
-        "image",
-        "file",
-        "audio",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_json_schema": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": "2025-01",
-      "deprecated": false,
-      "aliases": [
-        "gemini-2.5-flash-lite:batch",
-        "openrouter/google/gemini-2.5-flash-lite:batch",
-        "google/gemini-2.5-flash-lite",
-        "google/gemini-2.5-flash-lite:batch"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.05,
-        "output_per_1m": 0.2,
-        "currency": "USD"
-      },
-      "audio": {
-        "accepts_audio_input": true,
-        "speech_generation": false,
-        "speech_understanding": true,
-        "supports_streaming": true,
-        "supports_realtime": null,
-        "extra": {},
-        "endpoints": {
-          "speech_understanding": true,
-          "streaming": true
-        },
-        "checked_at": "2026-10-15",
-        "status": "inferred"
-      },
-      "video": {
-        "accepts_video_input": true,
-        "generation": false,
-        "understanding": true,
-        "text_to_video": false,
-        "image_to_video": false,
-        "video_to_video": false,
-        "supports_streaming": true,
-        "supports_realtime": null,
-        "extra": {},
-        "endpoints": {
-          "understanding": true,
-          "streaming": true
-        },
-        "input_formats": [
-          "mp4",
-          "mov",
-          "webm",
-          "mkv",
-          "avi"
-        ],
-        "input_mime_types": [
-          "video/mp4",
-          "video/quicktime",
-          "video/webm",
-          "video/x-matroska",
-          "video/x-msvideo"
-        ],
-        "checked_at": "2026-10-15",
-        "status": "inferred"
-      },
-      "document": {
-        "accepts_file": true,
-        "input_formats": [
-          "file"
-        ],
-        "input_mime_types": [
-          "application/pdf",
-          "text/plain",
-          "text/markdown",
-          "text/csv",
-          "application/json",
-          "application/xml",
-          "text/html"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-10"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "google",
-        "canonical_slug": "google/gemini-2.5-flash-lite",
-        "modality": "text+image+file+audio+video->text",
-        "tokenizer": "Gemini",
-        "top_provider": {
-          "context_length": 1048576,
-          "max_completion_tokens": 65535,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "include_reasoning",
-          "max_tokens",
-          "reasoning",
-          "response_format",
-          "seed",
-          "stop",
-          "structured_outputs",
-          "temperature",
-          "tool_choice",
-          "tools",
-          "top_p"
-        ],
-        "created": "2025-07-22",
-        "description": "Gemini 2.5 Flash-Lite is a lightweight reasoning model in the Gemini 2.5 family, optimized for ultra-low latency and cost efficiency. It offers improved throughput, faster token generation, and better performance...",
-        "cache_read_per_1m": 0.01,
-        "web_search_per_request_usd": 0.014,
-        "image_input_per_1m": 0.05,
-        "audio_input_per_1m": 0.15,
-        "internal_reasoning_per_1m": 0.2,
-        "reasoning_meta": {
-          "mandatory": false
-        },
-        "links": {
-          "details": "/api/v1/models/google/gemini-2.5-flash-lite/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
-        "features": [
-          "tools",
-          "structured_outputs",
-          "reasoning",
-          "vision",
-          "audio_input",
-          "file_input"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "google/gemini-2.5-flash:batch",
-      "display_name": "Google: Gemini 2.5 Flash (batch)",
-      "context_window": 1048576,
-      "max_output_tokens": 65535,
-      "input_modalities": [
-        "file",
-        "image",
-        "text",
-        "audio",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_json_schema": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": "2025-01",
-      "deprecated": false,
-      "aliases": [
-        "gemini-2.5-flash:batch",
-        "openrouter/google/gemini-2.5-flash:batch",
-        "google/gemini-2.5-flash",
-        "google/gemini-2.5-flash:batch"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.15,
-        "output_per_1m": 1.25,
-        "currency": "USD"
-      },
-      "audio": {
-        "accepts_audio_input": true,
-        "speech_generation": false,
-        "speech_understanding": true,
-        "supports_streaming": true,
-        "supports_realtime": null,
-        "extra": {},
-        "endpoints": {
-          "speech_understanding": true,
-          "streaming": true
-        },
-        "checked_at": "2026-10-15",
-        "status": "inferred"
-      },
-      "video": {
-        "accepts_video_input": true,
-        "generation": false,
-        "understanding": true,
-        "text_to_video": false,
-        "image_to_video": false,
-        "video_to_video": false,
-        "supports_streaming": true,
-        "supports_realtime": null,
-        "extra": {},
-        "endpoints": {
-          "understanding": true,
-          "streaming": true
-        },
-        "input_formats": [
-          "mp4",
-          "mov",
-          "webm",
-          "mkv",
-          "avi"
-        ],
-        "input_mime_types": [
-          "video/mp4",
-          "video/quicktime",
-          "video/webm",
-          "video/x-matroska",
-          "video/x-msvideo"
-        ],
-        "checked_at": "2026-10-15",
-        "status": "inferred"
-      },
-      "document": {
-        "accepts_file": true,
-        "input_formats": [
-          "file"
-        ],
-        "input_mime_types": [
-          "application/pdf",
-          "text/plain",
-          "text/markdown",
-          "text/csv",
-          "application/json",
-          "application/xml",
-          "text/html"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-10"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "google",
-        "canonical_slug": "google/gemini-2.5-flash",
-        "modality": "text+image+file+audio+video->text",
-        "tokenizer": "Gemini",
-        "top_provider": {
-          "context_length": 1048576,
-          "max_completion_tokens": 65535,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "include_reasoning",
-          "max_tokens",
-          "reasoning",
-          "response_format",
-          "seed",
-          "stop",
-          "structured_outputs",
-          "temperature",
-          "tool_choice",
-          "tools",
-          "top_p"
-        ],
-        "created": "2025-06-17",
-        "description": "Gemini 2.5 Flash is Google's state-of-the-art workhorse model, specifically designed for advanced reasoning, coding, mathematics, and scientific tasks. It includes built-in \"thinking\" capabilities, enabling it to provide responses with greater...",
-        "expiration_date": "2026-10-20",
-        "cache_read_per_1m": 0.03,
-        "web_search_per_request_usd": 0.014,
-        "image_input_per_1m": 0.15,
-        "audio_input_per_1m": 0.5,
-        "internal_reasoning_per_1m": 1.25,
-        "reasoning_meta": {
-          "mandatory": false
-        },
-        "links": {
-          "details": "/api/v1/models/google/gemini-2.5-flash/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 7,
           "artificial_analysis": 1
         },
         "features": [
@@ -17050,7 +17038,6 @@
           "reasoning",
           "response_format",
           "seed",
-          "stop",
           "structured_outputs",
           "temperature",
           "tool_choice",
@@ -17059,7 +17046,6 @@
         ],
         "created": "2025-06-17",
         "description": "Gemini 2.5 Pro is Google’s state-of-the-art AI model designed for advanced reasoning, coding, mathematics, and scientific tasks. It employs “thinking” capabilities, enabling it to reason through responses with enhanced accuracy...",
-        "expiration_date": "2026-10-20",
         "cache_read_per_1m": 0.125,
         "cache_write_per_1m": 0.375,
         "web_search_per_request_usd": 0.014,
@@ -17220,177 +17206,6 @@
         },
         "links": {
           "details": "/api/v1/models/google/gemini-2.5-pro-preview-06-05/endpoints"
-        },
-        "features": [
-          "tools",
-          "structured_outputs",
-          "reasoning",
-          "vision",
-          "audio_input",
-          "file_input"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "google/gemini-2.5-pro:batch",
-      "display_name": "Google: Gemini 2.5 Pro (batch)",
-      "context_window": 1048576,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text",
-        "image",
-        "file",
-        "audio",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_json_schema": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Gemini",
-      "knowledge_cutoff": "2025-01",
-      "deprecated": false,
-      "aliases": [
-        "gemini-2.5-pro:batch",
-        "openrouter/google/gemini-2.5-pro:batch",
-        "google/gemini-2.5-pro",
-        "google/gemini-2.5-pro:batch"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.625,
-        "output_per_1m": 5.0,
-        "currency": "USD"
-      },
-      "audio": {
-        "accepts_audio_input": true,
-        "speech_generation": false,
-        "speech_understanding": true,
-        "supports_streaming": true,
-        "supports_realtime": null,
-        "extra": {},
-        "endpoints": {
-          "speech_understanding": true,
-          "streaming": true
-        },
-        "checked_at": "2026-10-15",
-        "status": "inferred"
-      },
-      "video": {
-        "accepts_video_input": true,
-        "generation": false,
-        "understanding": true,
-        "text_to_video": false,
-        "image_to_video": false,
-        "video_to_video": false,
-        "supports_streaming": true,
-        "supports_realtime": null,
-        "extra": {},
-        "endpoints": {
-          "understanding": true,
-          "streaming": true
-        },
-        "input_formats": [
-          "mp4",
-          "mov",
-          "webm",
-          "mkv",
-          "avi"
-        ],
-        "input_mime_types": [
-          "video/mp4",
-          "video/quicktime",
-          "video/webm",
-          "video/x-matroska",
-          "video/x-msvideo"
-        ],
-        "checked_at": "2026-10-15",
-        "status": "inferred"
-      },
-      "document": {
-        "accepts_file": true,
-        "input_formats": [
-          "file"
-        ],
-        "input_mime_types": [
-          "application/pdf",
-          "text/plain",
-          "text/markdown",
-          "text/csv",
-          "application/json",
-          "application/xml",
-          "text/html"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-10"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "google",
-        "canonical_slug": "google/gemini-2.5-pro",
-        "modality": "text+image+file+audio+video->text",
-        "tokenizer": "Gemini",
-        "top_provider": {
-          "context_length": 1048576,
-          "max_completion_tokens": 65536,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "include_reasoning",
-          "max_tokens",
-          "reasoning",
-          "response_format",
-          "seed",
-          "stop",
-          "structured_outputs",
-          "temperature",
-          "tool_choice",
-          "tools",
-          "top_p"
-        ],
-        "created": "2025-06-17",
-        "description": "Gemini 2.5 Pro is Google’s state-of-the-art AI model designed for advanced reasoning, coding, mathematics, and scientific tasks. It employs “thinking” capabilities, enabling it to reason through responses with enhanced accuracy...",
-        "expiration_date": "2026-10-20",
-        "cache_read_per_1m": 0.125,
-        "web_search_per_request_usd": 0.014,
-        "image_input_per_1m": 0.625,
-        "audio_input_per_1m": 0.625,
-        "internal_reasoning_per_1m": 5.0,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 200000,
-            "prompt": "0.00000125",
-            "completion": "0.0000075",
-            "audio": "0.00000125",
-            "input_audio_cache": "0.00000025",
-            "input_cache_read": "0.00000025"
-          }
-        ],
-        "reasoning_meta": {
-          "mandatory": true
-        },
-        "links": {
-          "details": "/api/v1/models/google/gemini-2.5-pro/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 6,
-          "artificial_analysis": 1
         },
         "features": [
           "tools",
@@ -19597,7 +19412,7 @@
           "details": "/api/v1/models/google/gemini-3.5-flash-20260519/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 21,
+          "design_arena": 22,
           "artificial_analysis": 1
         },
         "features": [
@@ -20130,7 +19945,7 @@
           "details": "/api/v1/models/google/gemini-3.5-flash-20260519/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 21,
+          "design_arena": 22,
           "artificial_analysis": 1
         },
         "features": [
@@ -20383,7 +20198,7 @@
           "details": "/api/v1/models/google/gemini-3.6-flash-20260721/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 14,
+          "design_arena": 16,
           "artificial_analysis": 1
         },
         "features": [
@@ -20560,7 +20375,7 @@
           "details": "/api/v1/models/google/gemini-3.6-flash-20260721/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 14,
+          "design_arena": 16,
           "artificial_analysis": 1
         },
         "features": [
@@ -20738,7 +20553,7 @@
           "details": "/api/v1/models/google/gemini-3.7-flash-20260813/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 14,
+          "design_arena": 16,
           "artificial_analysis": 1
         },
         "features": [
@@ -20914,7 +20729,7 @@
           "details": "/api/v1/models/google/gemini-3.7-flash-20260813/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 14,
+          "design_arena": 16,
           "artificial_analysis": 1
         },
         "features": [
@@ -21092,7 +20907,7 @@
           "details": "/api/v1/models/google/gemini-3.8-flash-20260902/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 14,
+          "design_arena": 16,
           "artificial_analysis": 1
         },
         "features": [
@@ -21406,7 +21221,7 @@
           "details": "/api/v1/models/google/gemini-3.8-flash-20260902/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 14,
+          "design_arena": 16,
           "artificial_analysis": 1
         },
         "features": [
@@ -21433,7 +21248,7 @@
       "model_id": "google/gemini-4-argon",
       "display_name": "Google: Gemini 4 Argon",
       "context_window": 1048576,
-      "max_output_tokens": 65536,
+      "max_output_tokens": 943718,
       "input_modalities": [
         "audio",
         "file",
@@ -21481,7 +21296,7 @@
         "tokenizer": "Gemini",
         "top_provider": {
           "context_length": 1048576,
-          "max_completion_tokens": 65536,
+          "max_completion_tokens": 943718,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -21519,7 +21334,7 @@
           "details": "/api/v1/models/google/gemini-4-argon-20261013/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 6,
+          "design_arena": 8,
           "artificial_analysis": 1
         },
         "features": [
@@ -21677,7 +21492,7 @@
           "details": "/api/v1/models/google/gemini-4-argon-20261013/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 6,
+          "design_arena": 8,
           "artificial_analysis": 1
         },
         "features": [
@@ -22389,7 +22204,7 @@
       "license_type": "api",
       "pricing": {
         "input_per_1m": 0.08,
-        "output_per_1m": 0.45,
+        "output_per_1m": 0.35,
         "currency": "USD"
       },
       "extra": {
@@ -22449,7 +22264,7 @@
       "model_id": "google/gemma-3-4b-it",
       "display_name": "Google: Gemma 3 4B",
       "context_window": 131072,
-      "max_output_tokens": 16384,
+      "max_output_tokens": 117964,
       "input_modalities": [
         "text",
         "image"
@@ -22480,8 +22295,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.05,
-        "output_per_1m": 0.1,
+        "input_per_1m": 0.04,
+        "output_per_1m": 0.05,
         "currency": "USD"
       },
       "extra": {
@@ -22497,7 +22312,7 @@
         "instruct_type": "gemma",
         "top_provider": {
           "context_length": 131072,
-          "max_completion_tokens": 16384,
+          "max_completion_tokens": 117964,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -22519,6 +22334,7 @@
         ],
         "created": "2025-03-13",
         "description": "Gemma 3 introduces multimodality, supporting vision-language input and text outputs. It handles context windows up to 128k tokens, understands over 140 languages, and offers improved math, reasoning, and chat capabilities,...",
+        "cache_read_per_1m": 0.02,
         "links": {
           "details": "/api/v1/models/google/gemma-3-4b-it/endpoints"
         },
@@ -24411,6 +24227,106 @@
     },
     {
       "provider": "openrouter",
+      "model_id": "inception/mercury-3",
+      "display_name": "Inception: Mercury 3",
+      "context_window": 1000000,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mercury-3",
+        "openrouter/inception/mercury-3",
+        "inception/mercury-3-20261019"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.35,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "inception",
+        "canonical_slug": "inception/mercury-3-20261019",
+        "modality": "text->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 1000000,
+          "max_completion_tokens": 131072,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "include_reasoning",
+          "max_tokens",
+          "reasoning",
+          "reasoning_effort",
+          "response_format",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools"
+        ],
+        "created": "2026-10-16",
+        "description": "Mercury 3 is a diffusion-based language model from Inception, and the lab's most capable model to date. It is suited for agentic workflows and real-time applications where latency compounds, such...",
+        "cache_read_per_1m": 0.01,
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "high",
+            "medium",
+            "low",
+            "none"
+          ],
+          "default_effort": "medium"
+        },
+        "links": {
+          "details": "/api/v1/models/inception/mercury-3-20261019/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 6
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "reasoning_effort"
+        ]
+      },
+      "reasoning_effort_values": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ]
+    },
+    {
+      "provider": "openrouter",
       "model_id": "inception/mercury-decide",
       "display_name": "Inception: Mercury Decide (free)",
       "context_window": 65536,
@@ -24503,7 +24419,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/inception/mercury-decide",
-        "checked_at": "2026-10-17",
+        "checked_at": "2026-10-24",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -25277,7 +25193,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/jaredpalmer/kev-4b",
-        "checked_at": "2026-10-17",
+        "checked_at": "2026-10-24",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -25343,7 +25259,7 @@
         "description": "Krea K3 Edit is an image-to-image editing model from Krea. It takes one to eight reference images plus a text prompt and returns a single edited image, following instructions that range from small local changes to complex multi-step edits while keeping the subjects and composition of the references intact. The output follows the shape of the input unless an aspect ratio is requested.\n\nThe default ",
         "free_tier": true,
         "image_input_per_1m": 20000.0,
-        "image_output_per_1m": 7.185629,
+        "image_output_per_1m": 14.371257,
         "features": [
           "vision",
           "image_output"
@@ -25879,7 +25795,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/liquid/d1",
-        "checked_at": "2026-10-17",
+        "checked_at": "2026-10-24",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -26725,7 +26641,7 @@
       "model_id": "meta-llama/llama-3.2-3b-instruct",
       "display_name": "Meta: Llama 3.2 3B Instruct",
       "context_window": 131072,
-      "max_output_tokens": 117964,
+      "max_output_tokens": 72000,
       "input_modalities": [
         "text"
       ],
@@ -26755,8 +26671,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.05,
-        "output_per_1m": 0.33,
+        "input_per_1m": 0.0509,
+        "output_per_1m": 0.335,
         "currency": "USD"
       },
       "extra": {
@@ -26771,8 +26687,8 @@
         "tokenizer": "Llama3",
         "instruct_type": "llama3",
         "top_provider": {
-          "context_length": 131072,
-          "max_completion_tokens": 117964,
+          "context_length": 80000,
+          "max_completion_tokens": 72000,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -26898,7 +26814,7 @@
       "provider": "openrouter",
       "model_id": "meta-llama/llama-4-maverick",
       "display_name": "Meta: Llama 4 Maverick",
-      "context_window": 1048576,
+      "context_window": 524288,
       "max_output_tokens": 16384,
       "input_modalities": [
         "text",
@@ -27252,7 +27168,7 @@
           "details": "/api/v1/models/meta/muse-glimmer-30b-20260810/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 0,
+          "design_arena": 2,
           "artificial_analysis": 1
         },
         "features": [
@@ -27500,7 +27416,7 @@
           "details": "/api/v1/models/meta/muse-spark-1.1-20260709/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 16,
+          "design_arena": 18,
           "artificial_analysis": 1
         },
         "features": [
@@ -27673,7 +27589,7 @@
           "details": "/api/v1/models/meta/muse-spark-1.2-20260805/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 15,
+          "design_arena": 16,
           "artificial_analysis": 1
         },
         "features": [
@@ -28016,7 +27932,7 @@
           "details": "/api/v1/models/meta/muse-spark-1.3-20260902/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 13,
+          "design_arena": 15,
           "artificial_analysis": 1
         },
         "features": [
@@ -28302,6 +28218,9 @@
         "links": {
           "details": "/api/v1/models/meta/muse-spark-open-20261015/endpoints"
         },
+        "benchmarks_present": {
+          "design_arena": 2
+        },
         "features": [
           "tools",
           "structured_outputs",
@@ -28485,7 +28404,7 @@
           "details": "/api/v1/models/meta/muse-wonder-20261012/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 6
+          "design_arena": 10
         },
         "features": [
           "tools",
@@ -29405,83 +29324,6 @@
     },
     {
       "provider": "openrouter",
-      "model_id": "microsoft/wizardlm-2-8x22b",
-      "display_name": "WizardLM-2 8x22B",
-      "context_window": 65535,
-      "max_output_tokens": 8000,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_json_schema": null,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Mistral",
-      "knowledge_cutoff": "2024-04",
-      "deprecated": false,
-      "aliases": [
-        "wizardlm-2-8x22b",
-        "openrouter/microsoft/wizardlm-2-8x22b",
-        "microsoft/wizardlm-2-8x22b"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.62,
-        "output_per_1m": 0.62,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "microsoft",
-        "canonical_slug": "microsoft/wizardlm-2-8x22b",
-        "hugging_face_id": "microsoft/WizardLM-2-8x22B",
-        "modality": "text->text",
-        "tokenizer": "Mistral",
-        "instruct_type": "vicuna",
-        "top_provider": {
-          "context_length": 65535,
-          "max_completion_tokens": 8000,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "frequency_penalty",
-          "max_tokens",
-          "presence_penalty",
-          "repetition_penalty",
-          "response_format",
-          "seed",
-          "stop",
-          "temperature",
-          "top_k",
-          "top_p"
-        ],
-        "created": "2024-04-16",
-        "description": "WizardLM-2 8x22B is Microsoft AI's most advanced Wizard model. It demonstrates highly competitive performance compared to leading proprietary models, and it consistently outperforms all existing state-of-the-art opensource models. It is...",
-        "links": {
-          "details": "/api/v1/models/microsoft/wizardlm-2-8x22b/endpoints"
-        },
-        "features": [
-          "structured_outputs"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
       "model_id": "minimax/hailuo-2.3",
       "display_name": "MiniMax: Hailuo 2.3",
       "context_window": 0,
@@ -30188,7 +30030,7 @@
       "model_id": "minimax/minimax-m2.5",
       "display_name": "MiniMax: MiniMax M2.5",
       "context_window": 204800,
-      "max_output_tokens": 32768,
+      "max_output_tokens": 131072,
       "input_modalities": [
         "text"
       ],
@@ -30219,8 +30061,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.27,
-        "output_per_1m": 0.95,
+        "input_per_1m": 0.3,
+        "output_per_1m": 1.2,
         "currency": "USD"
       },
       "extra": {
@@ -30234,8 +30076,8 @@
         "modality": "text->text",
         "tokenizer": "Other",
         "top_provider": {
-          "context_length": 198000,
-          "max_completion_tokens": 32768,
+          "context_length": 204800,
+          "max_completion_tokens": 131072,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -30503,7 +30345,7 @@
           "details": "/api/v1/models/minimax/minimax-m3-20260531/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 15,
+          "design_arena": 17,
           "artificial_analysis": 1
         },
         "features": [
@@ -30513,6 +30355,121 @@
           "vision"
         ]
       }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "minimax/minimax-m3.1-flash",
+      "display_name": "MiniMax: MiniMax M3.1 Flash",
+      "context_window": 1048576,
+      "max_output_tokens": 524288,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "minimax-m3.1-flash",
+        "openrouter/minimax/minimax-m3.1-flash",
+        "minimax/minimax-m3.1-flash-20261019"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.6,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "minimax",
+        "canonical_slug": "minimax/minimax-m3.1-flash-20261019",
+        "hugging_face_id": "MiniMaxAI/MiniMax-M3.1-Flash",
+        "modality": "text+image+video->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 1048576,
+          "max_completion_tokens": 524288,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "logit_bias",
+          "logprobs",
+          "max_tokens",
+          "min_p",
+          "presence_penalty",
+          "reasoning",
+          "reasoning_effort",
+          "repetition_penalty",
+          "response_format",
+          "seed",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_k",
+          "top_logprobs",
+          "top_p"
+        ],
+        "created": "2026-10-19",
+        "description": "MiniMax-M3.1-Flash is a multimodal model from MiniMax. Compared with M3, it delivers significant improvements across multiple benchmarks, particularly in complex agentic tasks, coding, and cybersecurity. It is built for complex,...",
+        "cache_read_per_1m": 0.015,
+        "reasoning_meta": {
+          "mandatory": true,
+          "supported_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low"
+          ],
+          "default_effort": "max"
+        },
+        "links": {
+          "details": "/api/v1/models/minimax/minimax-m3.1-flash-20261019/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 0,
+          "artificial_analysis": 1
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "reasoning_effort",
+          "vision"
+        ]
+      },
+      "reasoning_effort_values": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ]
     },
     {
       "provider": "openrouter",
@@ -31909,8 +31866,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.68,
-        "output_per_1m": 2.09,
+        "input_per_1m": 1.36,
+        "output_per_1m": 4.18,
         "currency": "USD"
       },
       "extra": {
@@ -31947,7 +31904,7 @@
         ],
         "created": "2026-10-06",
         "description": "Mistral Large 4 is a frontier multimodal (text and image input) model from Mistral AI built for reasoning, coding, and agentic workloads. It offers a 1M-token context window with up...",
-        "cache_read_per_1m": 0.07,
+        "cache_read_per_1m": 0.14,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -33167,8 +33124,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.09375,
-        "output_per_1m": 0.25,
+        "input_per_1m": 0.075,
+        "output_per_1m": 0.2,
         "currency": "USD"
       },
       "extra": {
@@ -33182,7 +33139,7 @@
         "modality": "text+image->text",
         "tokenizer": "Mistral",
         "top_provider": {
-          "context_length": 256000,
+          "context_length": 128000,
           "max_completion_tokens": 16384,
           "is_moderated": false
         },
@@ -33477,6 +33434,62 @@
     },
     {
       "provider": "openrouter",
+      "model_id": "mistralai/voxtral-mini-transcribe-3-0",
+      "display_name": "Mistral: Voxtral Mini Transcribe 3",
+      "context_window": 65536,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "audio"
+      ],
+      "output_modalities": [
+        "transcription"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "voxtral-mini-transcribe-3-0",
+        "openrouter/mistralai/voxtral-mini-transcribe-3-0"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 58.3333,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "mistralai",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 65536,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "Voxtral Mini Transcribe 3 is Mistral's compact speech-to-text model. It takes audio input and returns a transcript with timestamps and speaker diarization. It also supports context biasing for domain terms. It is small enough to self-deploy in resource-constrained environments, and fits meeting notes, call analytics, and voice-agent pipelines where cost matters.",
+        "features": [
+          "audio_input"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
       "model_id": "mistralai/voxtral-mini-tts-2603",
       "display_name": "Mistral: Voxtral Mini TTS",
       "context_window": 4096,
@@ -33542,6 +33555,59 @@
         },
         "supported_parameters": [],
         "description": "Voxtral Mini TTS is Mistral's text-to-speech model featuring zero-shot voice cloning and multilingual support. It converts text input into natural-sounding audio output."
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "mistralai/voxtral-mini-tts-3-0",
+      "display_name": "Mistral: Voxtral TTS 3",
+      "context_window": 4096,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "speech"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "voxtral-mini-tts-3-0",
+        "openrouter/mistralai/voxtral-mini-tts-3-0"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 13.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "mistralai",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 4096,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "Voxtral TTS 3 is Mistral's text-to-speech model. It converts text into natural-sounding speech, offers a library of preset voices, supports zero-shot voice cloning, and accepts emotion and pace tags in the input to control delivery. It streams audio with low time-to-first-audio and suits voice agents, narration, and multilingual assistants."
       }
     },
     {
@@ -33732,6 +33798,62 @@
         },
         "supported_parameters": [],
         "description": "Voxtral Small 24B 2507 STT is a speech transcription model from Mistral AI. It is suited for transcription, translation, and audio understanding workloads that benefit from its larger model capacity.",
+        "features": [
+          "audio_input"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "mistralai/voxtral-small-transcribe-3-0",
+      "display_name": "Mistral: Voxtral Small Transcribe 3",
+      "context_window": 65536,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "audio"
+      ],
+      "output_modalities": [
+        "transcription"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "voxtral-small-transcribe-3-0",
+        "openrouter/mistralai/voxtral-small-transcribe-3-0"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 66.6667,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "mistralai",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 65536,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "Voxtral Small Transcribe 3 is Mistral's flagship speech-to-text model. It takes audio input and returns a transcript with timestamps and speaker diarization, and supports context biasing for domain-specific vocabulary. Suited for high-accuracy multilingual transcription of meetings, interviews, media, and support calls.",
         "features": [
           "audio_input"
         ]
@@ -34347,7 +34469,7 @@
           "details": "/api/v1/models/moonshotai/kimi-k2.6-20260420/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 21,
+          "design_arena": 22,
           "artificial_analysis": 1
         },
         "features": [
@@ -34438,7 +34560,7 @@
         ],
         "created": "2026-06-12",
         "description": "MoonshotAI: Kimi K2.7 Code is a coding-focused model in Moonshot AI's Kimi K2 family, built to complete end-to-end programming tasks reliably over long contexts. It uses a native multimodal mixture-of-experts...",
-        "cache_read_per_1m": 0.18,
+        "cache_read_per_1m": 0.15,
         "reasoning_meta": {
           "mandatory": true,
           "default_enabled": true
@@ -34496,8 +34618,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.304,
-        "output_per_1m": 11.936,
+        "input_per_1m": 0.239,
+        "output_per_1m": 10.8,
         "currency": "USD"
       },
       "video": {
@@ -34551,8 +34673,10 @@
           "include_reasoning",
           "logit_bias",
           "logprobs",
+          "max_completion_tokens",
           "max_tokens",
           "min_p",
+          "parallel_tool_calls",
           "presence_penalty",
           "reasoning",
           "reasoning_effort",
@@ -34589,7 +34713,115 @@
           "details": "/api/v1/models/moonshotai/kimi-k3-20260715/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 15,
+          "design_arena": 17,
+          "artificial_analysis": 1
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "reasoning_effort",
+          "vision"
+        ]
+      },
+      "reasoning_effort_values": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "moonshotai/kimi-k3.1-pro",
+      "display_name": "MoonshotAI: Kimi K3.1 Pro",
+      "context_window": 1048576,
+      "max_output_tokens": 943718,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "kimi-k3.1-pro",
+        "openrouter/moonshotai/kimi-k3.1-pro",
+        "moonshotai/kimi-k3.1-pro-20261023"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "moonshotai",
+        "canonical_slug": "moonshotai/kimi-k3.1-pro-20261023",
+        "modality": "text+image+video->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 1048576,
+          "max_completion_tokens": 943718,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "max_tokens",
+          "presence_penalty",
+          "reasoning",
+          "reasoning_effort",
+          "response_format",
+          "stop",
+          "structured_outputs",
+          "tool_choice",
+          "tools"
+        ],
+        "created": "2026-10-23",
+        "description": "Kimi K3.1 Pro is Moonshot AI's flagship open-weight multimodal reasoning model and a post-trained successor to Kimi K3, with a 1M-token context window. It is built for long-horizon coding, 3D...",
+        "cache_read_per_1m": 0.2,
+        "default_parameters": {
+          "top_p": 0.95
+        },
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "max",
+            "high",
+            "low",
+            "none"
+          ],
+          "default_effort": "max"
+        },
+        "links": {
+          "details": "/api/v1/models/moonshotai/kimi-k3.1-pro-20261023/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 2,
           "artificial_analysis": 1
         },
         "features": [
@@ -34738,7 +34970,7 @@
           "details": "/api/v1/models/moonshotai/kimi-k3-20260715/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 15,
+          "design_arena": 17,
           "artificial_analysis": 1
         },
         "features": [
@@ -34762,8 +34994,8 @@
       "provider": "openrouter",
       "model_id": "morph/morph-v3-fast",
       "display_name": "Morph: Morph V3 Fast",
-      "context_window": 81920,
-      "max_output_tokens": 38000,
+      "context_window": 262144,
+      "max_output_tokens": 131072,
       "input_modalities": [
         "text"
       ],
@@ -34771,7 +35003,7 @@
         "text"
       ],
       "supports_function_calling": false,
-      "supports_json_mode": false,
+      "supports_json_mode": true,
       "supports_json_schema": null,
       "supports_streaming": true,
       "supports_vision": false,
@@ -34807,20 +35039,27 @@
         "modality": "text->text",
         "tokenizer": "Other",
         "top_provider": {
-          "context_length": 81920,
-          "max_completion_tokens": 38000,
+          "context_length": 262144,
+          "max_completion_tokens": 131072,
           "is_moderated": false
         },
         "supported_parameters": [
+          "logprobs",
           "max_tokens",
+          "response_format",
           "stop",
-          "temperature"
+          "structured_outputs",
+          "temperature",
+          "top_logprobs"
         ],
         "created": "2025-07-07",
         "description": "Morph's fastest apply model for code edits. ~10,500 tokens/sec with 96% accuracy for rapid code transformations. The model requires the prompt to be in the following format: <instruction>{instruction}</instruction> <code>{initial_code}</code> <update>{edit_snippet}</update>...",
         "links": {
           "details": "/api/v1/models/morph/morph-v3-fast/endpoints"
-        }
+        },
+        "features": [
+          "structured_outputs"
+        ]
       }
     },
     {
@@ -34893,6 +35132,59 @@
         "features": [
           "structured_outputs"
         ]
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "nace-ai/drex-max",
+      "display_name": "Nace.AI: Drex Max",
+      "context_window": 262144,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "decisions"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "drex-max",
+        "openrouter/nace-ai/drex-max"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.06,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "nace-ai",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 262144,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "Drex Max is the largest decision model from Nace.AI, the successor to [Drex v2.0](https://openrouter.ai/nace-ai/drex-v2.0). Given a state (text or JSON) and typed questions (yes/no, multiple choice, or ordinal score), it returns a calibrated probability for every option in a single forward pass, with no text generation. It is TypeSafe System One compatible and suits routing, classification, and po"
       }
     },
     {
@@ -35284,6 +35576,7 @@
         ],
         "created": "2024-08-16",
         "description": "Hermes 3 is a generalist language model with many improvements over Hermes 2, including advanced agentic capabilities, much better roleplaying, reasoning, multi-turn conversation, long context coherence, and improvements across the...",
+        "expiration_date": "2026-11-02",
         "links": {
           "details": "/api/v1/models/nousresearch/hermes-3-llama-3.1-405b/endpoints"
         },
@@ -35363,6 +35656,7 @@
         ],
         "created": "2024-08-18",
         "description": "Hermes 3 is a generalist language model with many improvements over [Hermes 2](/models/nousresearch/nous-hermes-2-mistral-7b-dpo), including advanced agentic capabilities, much better roleplaying, reasoning, multi-turn conversation, long context coherence, and improvements across the...",
+        "expiration_date": "2026-11-02",
         "links": {
           "details": "/api/v1/models/nousresearch/hermes-3-llama-3.1-70b/endpoints"
         },
@@ -36052,8 +36346,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.08,
-        "output_per_1m": 0.45,
+        "input_per_1m": 0.3,
+        "output_per_1m": 2.4,
         "currency": "USD"
       },
       "extra": {
@@ -36095,6 +36389,7 @@
         ],
         "created": "2026-03-11",
         "description": "NVIDIA Nemotron 3 Super is a 120B-parameter open hybrid MoE model, activating just 12B parameters for maximum compute efficiency and accuracy in complex multi-agent applications. Built on a hybrid Mamba-Transformer...",
+        "cache_read_per_1m": 0.15,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -36706,6 +37001,124 @@
     },
     {
       "provider": "openrouter",
+      "model_id": "nvidia/nemotron-3.5-embed-1b",
+      "display_name": "NVIDIA: Nemotron 3.5 Embed 1B (free)",
+      "context_window": 32768,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "embeddings"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "nemotron-3.5-embed-1b",
+        "openrouter/nvidia/nemotron-3.5-embed-1b"
+      ],
+      "license_type": "free",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "nvidia",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 32768,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "Nemotron 3.5 Embed 1B is a multimodal embedding model from NVIDIA for multilingual retrieval over text and document page images (tables, charts, infographics). Queries are text and documents can be text, an image, or both. It returns 2048-dim vectors that can be truncated, and shares the text embedding space of Nemotron 3 Embed 1B.",
+        "free_tier": true,
+        "features": [
+          "vision",
+          "embeddings"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "nvidia/nemotron-3.5-embed-8b",
+      "display_name": "NVIDIA: Nemotron 3.5 Embed 8B (free)",
+      "context_window": 32768,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "embeddings"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "nemotron-3.5-embed-8b",
+        "openrouter/nvidia/nemotron-3.5-embed-8b"
+      ],
+      "license_type": "free",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "nvidia",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 32768,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "Nemotron 3.5 Embed 8B is a multimodal embedding model from NVIDIA for multilingual retrieval over text and document page images (tables, charts, infographics). Queries are text and documents can be text, an image, or both. It returns 4096-dim vectors that can be truncated, and shares the text embedding space of Nemotron 3 Embed 8B.",
+        "free_tier": true,
+        "features": [
+          "vision",
+          "embeddings"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
       "model_id": "nvidia/nemotron-3.5-lightning",
       "display_name": "NVIDIA: Nemotron 3.5 Lightning",
       "context_window": 262144,
@@ -36886,6 +37299,63 @@
     },
     {
       "provider": "openrouter",
+      "model_id": "nvidia/nemotron-3.5-rerank-8b",
+      "display_name": "NVIDIA: Nemotron 3.5 Rerank 8B (free)",
+      "context_window": 32768,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "rerank"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "nemotron-3.5-rerank-8b",
+        "openrouter/nvidia/nemotron-3.5-rerank-8b"
+      ],
+      "license_type": "free",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "nvidia",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 32768,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "free_tier": true,
+        "features": [
+          "vision"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
       "model_id": "nvidia/nemotron-3.5-super-vl",
       "display_name": "NVIDIA: Nemotron 3.5 Super VL",
       "context_window": 1048576,
@@ -36920,8 +37390,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.1,
-        "output_per_1m": 0.4,
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.5,
         "currency": "USD"
       },
       "extra": {
@@ -36962,7 +37432,7 @@
         ],
         "created": "2026-10-15",
         "description": "NVIDIA Nemotron 3.5 Super VL is an open multimodal mixture-of-experts model from NVIDIA, with 12B active parameters out of 120B total. It takes text, images, documents, GUI screenshots, and video...",
-        "cache_read_per_1m": 0.08,
+        "cache_read_per_1m": 0.02,
         "reasoning_meta": {
           "mandatory": false
         },
@@ -36970,7 +37440,7 @@
           "details": "/api/v1/models/nvidia/nemotron-3.5-super-vl-20261015/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 3,
+          "design_arena": 5,
           "artificial_analysis": 1
         },
         "features": [
@@ -37058,7 +37528,7 @@
           "details": "/api/v1/models/nvidia/nemotron-3.5-super-vl-20261015/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 3,
+          "design_arena": 5,
           "artificial_analysis": 1
         },
         "features": [
@@ -46163,7 +46633,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/openai/gpt-6-luna-decisions",
-        "checked_at": "2026-10-17",
+        "checked_at": "2026-10-24",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -47237,7 +47707,7 @@
           "details": "/api/v1/models/openai/gpt-6.1-sol-20260929/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 6,
+          "design_arena": 10,
           "artificial_analysis": 1
         },
         "features": [
@@ -47600,7 +48070,7 @@
           "details": "/api/v1/models/openai/gpt-6.1-sol-20260929/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 6,
+          "design_arena": 10,
           "artificial_analysis": 1
         },
         "features": [
@@ -50822,110 +51292,6 @@
     },
     {
       "provider": "openrouter",
-      "model_id": "perplexity/pplx-decider-v1.1-27b",
-      "display_name": "Perplexity: Decider V1.1 27B",
-      "context_window": 262144,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "decision"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "pplx-decider-v1.1-27b",
-        "openrouter/perplexity/pplx-decider-v1.1-27b"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.02,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "perplexity",
-        "tokenizer": "",
-        "top_provider": {
-          "context_length": 262144,
-          "max_completion_tokens": null,
-          "is_moderated": null
-        },
-        "supported_parameters": [],
-        "description": "Decider V1.1 27B is a new checkpoint of Perplexity's decision model, succeeding [Decider V1 27B](/perplexity/pplx-decider-v1-27b) with the same API contract. Instead of generating text, it reads content passed as `state` (text, JSON, or images) and returns typed, probabilistic answers to one or more named questions in a single request: the probability of yes for a yes/no question (`noul`), a proba",
-        "features": [
-          "vision"
-        ]
-      },
-      "decision": {
-        "decision": true,
-        "question_kinds": [
-          "noul",
-          "choice",
-          "score"
-        ],
-        "answer_fields": [
-          "type",
-          "noul",
-          "choice",
-          "score",
-          "probabilities",
-          "confidence",
-          "legend"
-        ],
-        "returns_probabilities": true,
-        "returns_confidence": true,
-        "calibrated_confidence": null,
-        "parallel_questions": true,
-        "free_form_text": false,
-        "type_errors_possible": false,
-        "deterministic": null,
-        "state_shapes": [
-          "string",
-          "json_object",
-          "array"
-        ],
-        "max_state_tokens": null,
-        "max_total_tokens": 262144,
-        "output_token_billing": false,
-        "endpoints": [
-          "https://openrouter.ai/api/alpha/decisions"
-        ],
-        "source_url": "https://openrouter.ai/perplexity/pplx-decider-v1.1-27b",
-        "checked_at": "2026-10-17",
-        "status": "documented",
-        "extra": {
-          "endpoint_protocol": "openrouter-alpha-decisions",
-          "systemone_schema_compatible": true,
-          "upstream_provider": "perplexity",
-          "upstream_protocol": "perplexity-decisions-v1",
-          "endpoint_docs": "https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-questions-and-answers-request",
-          "upstream_endpoint": "https://api.perplexity.ai/v1/decisions",
-          "typesafe_sdk_compatibility": "not-documented"
-        }
-      }
-    },
-    {
-      "provider": "openrouter",
       "model_id": "perplexity/pplx-decider-v1.2",
       "display_name": "Perplexity: Decider V1.2",
       "context_window": 262144,
@@ -53233,7 +53599,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.1,
+        "input_per_1m": 0.09,
         "output_per_1m": 0.3,
         "currency": "USD"
       },
@@ -54684,8 +55050,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.26,
-        "output_per_1m": 2.08,
+        "input_per_1m": 0.4,
+        "output_per_1m": 3.2,
         "currency": "USD"
       },
       "video": {
@@ -54785,7 +55151,7 @@
       "model_id": "qwen/qwen3.5-27b",
       "display_name": "Qwen: Qwen3.5-27B",
       "context_window": 262144,
-      "max_output_tokens": 81920,
+      "max_output_tokens": 65536,
       "input_modalities": [
         "text",
         "image",
@@ -54818,8 +55184,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.26,
-        "output_per_1m": 2.6,
+        "input_per_1m": 0.27,
+        "output_per_1m": 2.16,
         "currency": "USD"
       },
       "video": {
@@ -54865,7 +55231,7 @@
         "tokenizer": "Qwen3",
         "top_provider": {
           "context_length": 262144,
-          "max_completion_tokens": 81920,
+          "max_completion_tokens": 65536,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -54891,6 +55257,7 @@
         ],
         "created": "2026-02-25",
         "description": "The Qwen3.5 27B native vision-language Dense model incorporates a linear attention mechanism, delivering fast response times while balancing inference speed and performance. Its overall capabilities are comparable to those of...",
+        "cache_read_per_1m": 0.27,
         "default_parameters": {
           "temperature": 0.6,
           "top_p": 0.95,
@@ -54919,7 +55286,7 @@
       "model_id": "qwen/qwen3.5-35b-a3b",
       "display_name": "Qwen: Qwen3.5-35B-A3B",
       "context_window": 262144,
-      "max_output_tokens": 16384,
+      "max_output_tokens": 81920,
       "input_modalities": [
         "text",
         "image",
@@ -54952,7 +55319,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.15,
+        "input_per_1m": 0.14,
         "output_per_1m": 1.0,
         "currency": "USD"
       },
@@ -54998,8 +55365,8 @@
         "modality": "text+image+video->text",
         "tokenizer": "Qwen3",
         "top_provider": {
-          "context_length": 256000,
-          "max_completion_tokens": 16384,
+          "context_length": 262144,
+          "max_completion_tokens": 81920,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -55189,7 +55556,7 @@
       "model_id": "qwen/qwen3.5-9b",
       "display_name": "Qwen: Qwen3.5-9B",
       "context_window": 262144,
-      "max_output_tokens": 32768,
+      "max_output_tokens": 235929,
       "input_modalities": [
         "text",
         "image",
@@ -55222,8 +55589,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.1,
-        "output_per_1m": 0.15,
+        "input_per_1m": 0.17,
+        "output_per_1m": 0.25,
         "currency": "USD"
       },
       "video": {
@@ -55268,8 +55635,8 @@
         "modality": "text+image+video->text",
         "tokenizer": "Qwen3",
         "top_provider": {
-          "context_length": 256000,
-          "max_completion_tokens": 32768,
+          "context_length": 262144,
+          "max_completion_tokens": 235929,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -55295,7 +55662,6 @@
         ],
         "created": "2026-03-10",
         "description": "Qwen3.5-9B is a multimodal foundation model from the Qwen3.5 family, designed to deliver strong reasoning, coding, and visual understanding in an efficient 9B-parameter architecture. It uses a unified vision-language design...",
-        "expiration_date": "2026-10-21",
         "reasoning_meta": {
           "mandatory": false
         },
@@ -55862,8 +56228,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.15,
-        "output_per_1m": 1.0,
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.95,
         "currency": "USD"
       },
       "video": {
@@ -56656,7 +57022,7 @@
       "model_id": "qwen/qwen3.8-2.4t-a95b",
       "display_name": "Qwen: Qwen3.8 2.4T A95B",
       "context_window": 1048576,
-      "max_output_tokens": 131072,
+      "max_output_tokens": 909000,
       "input_modalities": [
         "text"
       ],
@@ -56702,8 +57068,8 @@
         "modality": "text->text",
         "tokenizer": "Qwen",
         "top_provider": {
-          "context_length": 1000000,
-          "max_completion_tokens": 131072,
+          "context_length": 1010000,
+          "max_completion_tokens": 909000,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -56807,8 +57173,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.24,
-        "output_per_1m": 2.2,
+        "input_per_1m": 0.2,
+        "output_per_1m": 2.5,
         "currency": "USD"
       },
       "video": {
@@ -56882,7 +57248,7 @@
         ],
         "created": "2026-08-14",
         "description": "Qwen3.8 27B is an open-weight dense vision-language model from Qwen. It is suited for coding, professional workflows, research, multimodal interaction, and long-running agent tasks, with flexible thinking that can be...",
-        "cache_read_per_1m": 0.05,
+        "cache_read_per_1m": 0.09,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95,
@@ -58434,10 +58800,163 @@
     },
     {
       "provider": "openrouter",
+      "model_id": "recursive/flint-v1.0",
+      "display_name": "Recursive: Flint (free)",
+      "context_window": 262144,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "flint-v1.0",
+        "openrouter/recursive/flint-v1.0"
+      ],
+      "license_type": "free",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "recursive",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 262144,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [
+          "reasoning",
+          "include_reasoning",
+          "max_tokens",
+          "temperature",
+          "top_p",
+          "stop",
+          "seed",
+          "tools",
+          "response_format",
+          "logprobs",
+          "top_logprobs"
+        ],
+        "description": "Flint is an open-weight mixture-of-experts model from Recursive, with about 2.5B active parameters out of 40B total, built by Recursive's autoresearch system Eureka Machine for coding agents. It is suited for investigating codebases, fixing bugs, implementing features, and writing tests.",
+        "free_tier": true,
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "recursive/flint-v1.0:free",
+      "display_name": "Recursive: Flint (free)",
+      "context_window": 262144,
+      "max_output_tokens": 235929,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "flint-v1.0:free",
+        "openrouter/recursive/flint-v1.0:free",
+        "recursive/flint-v1.0-20261021"
+      ],
+      "license_type": "free",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "recursive",
+        "canonical_slug": "recursive/flint-v1.0-20261021",
+        "hugging_face_id": "RecursiveSI/flint",
+        "modality": "text->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 262144,
+          "max_completion_tokens": 235929,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "include_reasoning",
+          "logprobs",
+          "max_tokens",
+          "reasoning",
+          "response_format",
+          "seed",
+          "stop",
+          "temperature",
+          "tools",
+          "top_logprobs",
+          "top_p"
+        ],
+        "created": "2026-10-21",
+        "description": "Flint is an open-weight mixture-of-experts model from Recursive, with about 2.5B active parameters out of 40B total, built by Recursive's autoresearch system Eureka Machine for coding agents. It is suited...",
+        "free_tier": true,
+        "reasoning_meta": {
+          "mandatory": true
+        },
+        "links": {
+          "details": "/api/v1/models/recursive/flint-v1.0-20261021/endpoints"
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
       "model_id": "reflection/beam-1.0-501b-a23b",
       "display_name": "Reflection: Beam 1.0 501B A23B",
       "context_window": 1048576,
-      "max_output_tokens": 943718,
+      "max_output_tokens": 131072,
       "input_modalities": [
         "text"
       ],
@@ -58466,8 +58985,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 1.0,
-        "output_per_1m": 3.0,
+        "input_per_1m": 0.25,
+        "output_per_1m": 1.0,
         "currency": "USD"
       },
       "extra": {
@@ -58482,7 +59001,7 @@
         "tokenizer": "Other",
         "top_provider": {
           "context_length": 1048576,
-          "max_completion_tokens": 943718,
+          "max_completion_tokens": 131072,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -58509,7 +59028,7 @@
         ],
         "created": "2026-10-16",
         "description": "Beam 1.0 is Reflection's open-weight reasoning model for coding and long-horizon agentic workflows. It uses a sparse mixture-of-experts architecture with 501B total and 23B active parameters per token, and a...",
-        "cache_read_per_1m": 0.1,
+        "cache_read_per_1m": 0.05,
         "reasoning_meta": {
           "mandatory": true,
           "supported_efforts": [
@@ -58523,6 +59042,9 @@
         },
         "links": {
           "details": "/api/v1/models/reflection/beam-1.0-501b-a23b-20261016/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 2
         },
         "features": [
           "tools",
@@ -58966,7 +59488,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/respan/span-01",
-        "checked_at": "2026-10-17",
+        "checked_at": "2026-10-24",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -59058,7 +59580,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/respan/span-01-lite",
-        "checked_at": "2026-10-17",
+        "checked_at": "2026-10-24",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -59926,86 +60448,6 @@
         "description": "Euryale L3.1 70B v2.2 is a model focused on creative roleplay from [Sao10k](https://ko-fi.com/sao10k). It is the successor of [Euryale L3 70B v2.1](/models/sao10k/l3-euryale-70b).",
         "links": {
           "details": "/api/v1/models/sao10k/l3.1-euryale-70b/endpoints"
-        },
-        "features": [
-          "structured_outputs"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "sao10k/l3.3-euryale-70b",
-      "display_name": "Sao10K: Llama 3.3 Euryale 70B",
-      "context_window": 131072,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_json_schema": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Llama3",
-      "knowledge_cutoff": "2023-12",
-      "deprecated": false,
-      "aliases": [
-        "l3.3-euryale-70b",
-        "openrouter/sao10k/l3.3-euryale-70b",
-        "sao10k/l3.3-euryale-70b-v2.3",
-        "sao10k/l3.3-euryale-70b"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.65,
-        "output_per_1m": 0.75,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "sao10k",
-        "canonical_slug": "sao10k/l3.3-euryale-70b-v2.3",
-        "hugging_face_id": "Sao10K/L3.3-70B-Euryale-v2.3",
-        "modality": "text->text",
-        "tokenizer": "Llama3",
-        "instruct_type": "llama3",
-        "top_provider": {
-          "context_length": 131072,
-          "max_completion_tokens": 16384,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "frequency_penalty",
-          "logprobs",
-          "max_tokens",
-          "presence_penalty",
-          "repetition_penalty",
-          "response_format",
-          "seed",
-          "stop",
-          "structured_outputs",
-          "temperature",
-          "top_logprobs",
-          "top_p"
-        ],
-        "created": "2024-12-18",
-        "description": "Euryale L3.3 70B is a model focused on creative roleplay from [Sao10k](https://ko-fi.com/sao10k). It is the successor of [Euryale L3 70B v2.2](/models/sao10k/l3-euryale-70b).",
-        "links": {
-          "details": "/api/v1/models/sao10k/l3.3-euryale-70b-v2.3/endpoints"
         },
         "features": [
           "structured_outputs"
@@ -61869,9 +62311,11 @@
           "frequency_penalty",
           "include_reasoning",
           "logit_bias",
+          "logprobs",
           "max_completion_tokens",
           "max_tokens",
           "min_p",
+          "parallel_tool_calls",
           "presence_penalty",
           "reasoning",
           "reasoning_effort",
@@ -61884,6 +62328,7 @@
           "tool_choice",
           "tools",
           "top_k",
+          "top_logprobs",
           "top_p"
         ],
         "created": "2026-08-28",
@@ -62385,7 +62830,6 @@
           "reasoning",
           "reasoning_effort",
           "repetition_penalty",
-          "seed",
           "stop",
           "temperature",
           "tool_choice",
@@ -62889,7 +63333,7 @@
           "https://openrouter.ai/api/v1/chat/completions"
         ],
         "source_url": "https://openrouter.ai/togethercomputer/tev1-4b-experimental",
-        "checked_at": "2026-10-17",
+        "checked_at": "2026-10-24",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openai-compatible-chat-completions",
@@ -63055,7 +63499,7 @@
       "model_id": "typesafe/jev-router",
       "display_name": "TypeSafe: Jev Router",
       "context_window": 1000000,
-      "max_output_tokens": 0,
+      "max_output_tokens": 65536,
       "input_modalities": [
         "audio",
         "file",
@@ -63166,7 +63610,7 @@
         "tokenizer": "Router",
         "top_provider": {
           "context_length": null,
-          "max_completion_tokens": null,
+          "max_completion_tokens": 65536,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -63221,6 +63665,78 @@
         "high",
         "xhigh"
       ]
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "unbiased/pareto-26.10",
+      "display_name": "Pareto 26.10",
+      "context_window": 1048576,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "pareto-26.10",
+        "openrouter/unbiased/pareto-26.10",
+        "unbiased/pareto-26.10-20261015"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.8,
+        "output_per_1m": 3.2,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "unbiased",
+        "canonical_slug": "unbiased/pareto-26.10-20261015",
+        "modality": "text+image->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 1048576,
+          "max_completion_tokens": 131072,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "max_tokens",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_p"
+        ],
+        "created": "2026-10-15",
+        "description": "Pareto is a multimodal composite model built for research, coding, and agentic workflows, while delivering frontier-level performance across a broad range of general-purpose tasks.",
+        "cache_read_per_1m": 0.03,
+        "links": {
+          "details": "/api/v1/models/unbiased/pareto-26.10-20261015/endpoints"
+        },
+        "features": [
+          "tools",
+          "vision"
+        ]
+      }
     },
     {
       "provider": "openrouter",
@@ -63469,7 +63985,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/upstage/solar-decide",
-        "checked_at": "2026-10-17",
+        "checked_at": "2026-10-24",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -63569,7 +64085,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/upstage/solar-decide-flash",
-        "checked_at": "2026-10-17",
+        "checked_at": "2026-10-24",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -63671,7 +64187,7 @@
           "details": "/api/v1/models/upstage/solar-mini4-20260922/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 3,
+          "design_arena": 4,
           "artificial_analysis": 1
         },
         "features": [
@@ -63832,8 +64348,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.09,
-        "output_per_1m": 0.36,
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.6,
         "currency": "USD"
       },
       "extra": {
@@ -63867,7 +64383,7 @@
         ],
         "created": "2026-08-10",
         "description": "Solar Pro 4 is Upstage's cost-efficient large language model, featuring a 524K context window. It is built for long-horizon tasks and agentic workflows, with strong capabilities in office productivity, document-intensive...",
-        "cache_read_per_1m": 0.018,
+        "cache_read_per_1m": 0.03,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": false,
@@ -64195,7 +64711,7 @@
           "is_moderated": null
         },
         "supported_parameters": [],
-        "description": "voyage-4 is a general-purpose (including multilingual) embedding model optimized for retrieval/search and AI applications. voyage-4 supports embeddings in 2048, 1024, 512, and 256 dimensions, with multiple quantization options.  Learn more about voyage-4 here: [blog.voyageai.com/2026/01/15/voyage-4](https://blog.voyageai.com/2026/01/15/voyage-4)",
+        "description": "voyage-4 is a general-purpose (including multilingual) embedding model optimized for retrieval/search and AI applications. voyage-4 supports embedd about voyage-4 here: [mongodb.com/products/platform/ai-search-and-retrieval/models](https://www.mongodb.com/products/platform/ai-search-and-retrieval/models?utm_source=openrouter&utm_medium=referral)",
         "features": [
           "embeddings"
         ]
@@ -64259,7 +64775,7 @@
           "is_moderated": null
         },
         "supported_parameters": [],
-        "description": "voyage-4-large is a state-of-the-art general-purpose and multilingual embedding optimized for retrieval quality. Enabled by Matryoshka learning and quantization-aware training, voyage-4-large supports embeddings in 2048, 1024, 512, and 256 dimensions, with multiple quantization options. Learn more about voyage-4-large here: [blog.voyageai.com/2026/01/15/voyage-4](https://blog.voyageai.com/2026/01/",
+        "description": "voyage-4-large is a state-of-the-art general-purpose and multilingual embedding optimized for retrieval quality. Enabled by Matryoshka learning and quantization-aware training, voyage-4-large supports embeddings  voyage-4-large here: [mongodb.com/products/platform/ai-search-and-retrieval/models](https://www.mongodb.com/products/platform/ai-search-and-retrieval/models?utm_source=openrouter&utm_medi",
         "features": [
           "embeddings"
         ]
@@ -64323,7 +64839,7 @@
           "is_moderated": null
         },
         "supported_parameters": [],
-        "description": "voyage-4-lite is a lightweight, general-purpose embedding model optimized for low latency and cost. Enabled by Matryoshka learning and quantization-aware training, voyage-4-lite supports embeddings in 2048, 1024, 512, and 256 dimensions, with multiple quantization options.  Learn more about voyage-4-lite here: [blog.voyageai.com/2026/01/15/voyage-4](https://blog.voyageai.com/2026/01/15/voyage-4)",
+        "description": "voyage-4-lite is a lightweight, general-purpose embedding model optimized for low latency and cost. Enabled by Matryoshka learning and quantization-aware training, voyage-4-lite supports embeddings t voyage-4-lite here: [mongodb.com/products/platform/ai-search-and-retrieval/models](https://www.mongodb.com/products/platform/ai-search-and-retrieval/models?utm_source=openrouter&utm_medium=referral)",
         "features": [
           "embeddings"
         ]
@@ -64387,7 +64903,7 @@
           "is_moderated": null
         },
         "supported_parameters": [],
-        "description": "voyage-code-4 is a code embedding model from Voyage AI, a MongoDB company. It is designed for coding agents and code retrieval, with Matryoshka embeddings at 2048, 1024, 512, and 256 dimensions and multiple quantization options. Learn more about voyage-code-4 here: [blog.voyageai.com/2026/08/13/voyage-code-4](https://blog.voyageai.com/2026/08/13/voyage-code-4)",
+        "description": "voyage-code-4 is a code embedding model from Voyage AI, a MongoDB company. It is designed for coding agents and code retrieval, with Matryoshka embeddings at 2048t voyage-code-4 here: [mongodb.com/products/platform/ai-search-and-retrieval/models](https://www.mongodb.com/products/platform/ai-search-and-retrieval/models?utm_source=openrouter&utm_medium=referral)",
         "features": [
           "embeddings"
         ]
@@ -64898,7 +65414,7 @@
           "details": "/api/v1/models/x-ai/grok-4.3-20260430/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 21,
+          "design_arena": 23,
           "artificial_analysis": 1
         },
         "features": [
@@ -65034,7 +65550,7 @@
           "details": "/api/v1/models/x-ai/grok-4.3-20260430/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 21,
+          "design_arena": 23,
           "artificial_analysis": 1
         },
         "features": [
@@ -65169,7 +65685,7 @@
           "details": "/api/v1/models/x-ai/grok-4.5-20260708/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 16,
+          "design_arena": 17,
           "artificial_analysis": 1
         },
         "features": [
@@ -65307,7 +65823,7 @@
           "details": "/api/v1/models/x-ai/grok-4.6-20260810/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 16,
+          "design_arena": 17,
           "artificial_analysis": 1
         },
         "features": [
@@ -66168,7 +66684,7 @@
       "model_id": "xiaomi/mimo-v2.5",
       "display_name": "Xiaomi: MiMo-V2.5",
       "context_window": 1050000,
-      "max_output_tokens": 131072,
+      "max_output_tokens": 945000,
       "input_modalities": [
         "text",
         "audio",
@@ -66202,8 +66718,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.14,
-        "output_per_1m": 0.28,
+        "input_per_1m": 0.119,
+        "output_per_1m": 0.238,
         "currency": "USD"
       },
       "audio": {
@@ -66262,8 +66778,8 @@
         "modality": "text+image+audio+video->text",
         "tokenizer": "Other",
         "top_provider": {
-          "context_length": 1048576,
-          "max_completion_tokens": 131072,
+          "context_length": 1050000,
+          "max_completion_tokens": 945000,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -66272,7 +66788,6 @@
           "max_tokens",
           "presence_penalty",
           "reasoning",
-          "repetition_penalty",
           "response_format",
           "seed",
           "stop",
@@ -66285,8 +66800,7 @@
         ],
         "created": "2026-04-22",
         "description": "MiMo-V2.5 is a native omnimodal model by Xiaomi. It delivers Pro-level agentic performance at roughly half the inference cost, while surpassing MiMo-V2-Omni in multimodal perception across image and video understanding...",
-        "expiration_date": "2026-10-21",
-        "cache_read_per_1m": 0.0028,
+        "cache_read_per_1m": 0.00255,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -66315,7 +66829,7 @@
       "model_id": "xiaomi/mimo-v2.5-pro",
       "display_name": "Xiaomi: MiMo-V2.5-Pro",
       "context_window": 1050000,
-      "max_output_tokens": 131072,
+      "max_output_tokens": 945000,
       "input_modalities": [
         "text"
       ],
@@ -66346,8 +66860,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.435,
-        "output_per_1m": 0.87,
+        "input_per_1m": 0.3045,
+        "output_per_1m": 0.609,
         "currency": "USD"
       },
       "extra": {
@@ -66361,33 +66875,27 @@
         "modality": "text->text",
         "tokenizer": "Other",
         "top_provider": {
-          "context_length": 1048576,
-          "max_completion_tokens": 131072,
+          "context_length": 1050000,
+          "max_completion_tokens": 945000,
           "is_moderated": false
         },
         "supported_parameters": [
-          "frequency_penalty",
           "include_reasoning",
           "logprobs",
           "max_tokens",
-          "presence_penalty",
           "reasoning",
-          "repetition_penalty",
           "response_format",
           "seed",
-          "stop",
           "structured_outputs",
           "temperature",
           "tool_choice",
           "tools",
-          "top_k",
           "top_logprobs",
           "top_p"
         ],
         "created": "2026-04-22",
         "description": "MiMo-V2.5-Pro is Xiaomi’s flagship model, delivering strong performance in general agentic capabilities, complex software engineering, and long-horizon tasks, with top rankings on benchmarks such as ClawEval, GDPVal, and SWE-bench Pro....",
-        "expiration_date": "2026-10-21",
-        "cache_read_per_1m": 0.0036,
+        "cache_read_per_1m": 0.0028,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -66519,6 +67027,7 @@
           "logprobs",
           "max_tokens",
           "min_p",
+          "parallel_tool_calls",
           "presence_penalty",
           "reasoning",
           "repetition_penalty",
@@ -67327,8 +67836,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.5,
-        "output_per_1m": 2.0,
+        "input_per_1m": 0.55,
+        "output_per_1m": 2.2,
         "currency": "USD"
       },
       "extra": {
@@ -67342,7 +67851,7 @@
         "modality": "text->text",
         "tokenizer": "Other",
         "top_provider": {
-          "context_length": 202752,
+          "context_length": 204800,
           "max_completion_tokens": 131072,
           "is_moderated": false
         },
@@ -67367,7 +67876,7 @@
         ],
         "created": "2025-09-30",
         "description": "Compared with GLM-4.5, this generation brings several key improvements: Longer context window: The context window has been expanded from 128K to 200K tokens, enabling the model to handle more complex...",
-        "cache_read_per_1m": 0.1,
+        "cache_read_per_1m": 0.11,
         "default_parameters": {
           "temperature": 0.6
         },
@@ -67553,8 +68062,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.6,
-        "output_per_1m": 2.2,
+        "input_per_1m": 0.54,
+        "output_per_1m": 1.98,
         "currency": "USD"
       },
       "extra": {
@@ -67568,7 +68077,7 @@
         "modality": "text->text",
         "tokenizer": "Other",
         "top_provider": {
-          "context_length": 202752,
+          "context_length": 204800,
           "max_completion_tokens": 131072,
           "is_moderated": false
         },
@@ -67594,8 +68103,7 @@
         ],
         "created": "2025-12-22",
         "description": "GLM-4.7 is Z.ai’s latest flagship model, featuring upgrades in two key areas: enhanced programming capabilities and more stable multi-step reasoning/execution. It demonstrates significant improvements in executing complex agent tasks while...",
-        "expiration_date": "2026-12-31",
-        "cache_read_per_1m": 0.11,
+        "cache_read_per_1m": 0.099,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -67912,7 +68420,7 @@
       "model_id": "z-ai/glm-5.1",
       "display_name": "Z.ai: GLM 5.1",
       "context_window": 204800,
-      "max_output_tokens": 128000,
+      "max_output_tokens": 131072,
       "input_modalities": [
         "text"
       ],
@@ -67943,8 +68451,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.966,
-        "output_per_1m": 3.036,
+        "input_per_1m": 1.4,
+        "output_per_1m": 4.4,
         "currency": "USD"
       },
       "extra": {
@@ -67958,8 +68466,8 @@
         "modality": "text->text",
         "tokenizer": "Other",
         "top_provider": {
-          "context_length": 200000,
-          "max_completion_tokens": 128000,
+          "context_length": 202752,
+          "max_completion_tokens": 131072,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -67985,7 +68493,7 @@
         ],
         "created": "2026-04-07",
         "description": "GLM-5.1 delivers a major leap in coding capability, with particularly significant gains in handling long-horizon tasks. Unlike previous models built around minute-level interactions, GLM-5.1 can work independently and continuously on...",
-        "cache_read_per_1m": 0.1794,
+        "cache_read_per_1m": 0.26,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -67998,7 +68506,7 @@
           "details": "/api/v1/models/z-ai/glm-5.1-20260406/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 21,
+          "design_arena": 22,
           "artificial_analysis": 1
         },
         "features": [
@@ -68044,8 +68552,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.62,
-        "output_per_1m": 2.42,
+        "input_per_1m": 0.0341,
+        "output_per_1m": 7.0,
         "currency": "USD"
       },
       "extra": {
@@ -68088,7 +68596,7 @@
         ],
         "created": "2026-06-16",
         "description": "GLM 5.2 is a large-scale reasoning model from Z.ai. It supports text input and output with a 1M-token context window, and is suited for long-horizon agent workflows, project-level software engineering,...",
-        "cache_read_per_1m": 0.14,
+        "cache_read_per_1m": 0.033,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -68163,7 +68671,7 @@
       "license_type": "api",
       "pricing": {
         "input_per_1m": 0.079,
-        "output_per_1m": 4.8,
+        "output_per_1m": 1.4,
         "currency": "USD"
       },
       "extra": {
@@ -68249,7 +68757,7 @@
       "model_id": "z-ai/glm-5.3-flash",
       "display_name": "Z.ai: GLM 5.3 Flash",
       "context_window": 1048576,
-      "max_output_tokens": 943718,
+      "max_output_tokens": 943717,
       "input_modalities": [
         "text",
         "image",
@@ -68282,8 +68790,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.04,
-        "output_per_1m": 0.2,
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.5,
         "currency": "USD"
       },
       "video": {
@@ -68328,8 +68836,8 @@
         "modality": "text+image+video->text",
         "tokenizer": "Other",
         "top_provider": {
-          "context_length": 1048576,
-          "max_completion_tokens": 943718,
+          "context_length": 1048575,
+          "max_completion_tokens": 943717,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -68357,7 +68865,7 @@
         ],
         "created": "2026-08-26",
         "description": "GLM-5.3-Flash is a native multimodal model from Z.ai. It is suited for efficient coding and long-horizon agent tasks. Its hybrid sparse and linear attention architecture maintains accurate long-context behavior while...",
-        "cache_read_per_1m": 0.006,
+        "cache_read_per_1m": 0.03,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -69028,6 +69536,863 @@
           "reasoning",
           "vision"
         ]
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "deepseek/deepseek-r1",
+      "display_name": "DeepSeek: R1",
+      "context_window": 64000,
+      "max_output_tokens": 16000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "DeepSeek",
+      "knowledge_cutoff": "2024-07",
+      "deprecated": false,
+      "aliases": [
+        "deepseek-r1",
+        "openrouter/deepseek/deepseek-r1",
+        "deepseek/deepseek-r1"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.7,
+        "output_per_1m": 2.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "deepseek",
+        "canonical_slug": "deepseek/deepseek-r1",
+        "hugging_face_id": "deepseek-ai/DeepSeek-R1",
+        "modality": "text->text",
+        "tokenizer": "DeepSeek",
+        "instruct_type": "deepseek-r1",
+        "top_provider": {
+          "context_length": 64000,
+          "max_completion_tokens": 16000,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "max_tokens",
+          "presence_penalty",
+          "reasoning",
+          "repetition_penalty",
+          "response_format",
+          "seed",
+          "stop",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_k",
+          "top_p"
+        ],
+        "created": "2025-01-20",
+        "description": "DeepSeek R1 is here: Performance on par with [OpenAI o1](/openai/o1), but open-sourced and with fully open reasoning tokens. It's 671B parameters in size, with 37B active in an inference pass....",
+        "reasoning_meta": {
+          "mandatory": true
+        },
+        "links": {
+          "details": "/api/v1/models/deepseek/deepseek-r1/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 0,
+          "artificial_analysis": 1
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "google/gemini-2.5-flash-lite:batch",
+      "display_name": "Google: Gemini 2.5 Flash Lite (batch)",
+      "context_window": 1048576,
+      "max_output_tokens": 65535,
+      "input_modalities": [
+        "text",
+        "image",
+        "file",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Gemini",
+      "knowledge_cutoff": "2025-01",
+      "deprecated": false,
+      "aliases": [
+        "gemini-2.5-flash-lite:batch",
+        "openrouter/google/gemini-2.5-flash-lite:batch",
+        "google/gemini-2.5-flash-lite",
+        "google/gemini-2.5-flash-lite:batch"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.05,
+        "output_per_1m": 0.2,
+        "currency": "USD"
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-15",
+        "status": "inferred"
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-15",
+        "status": "inferred"
+      },
+      "document": {
+        "accepts_file": true,
+        "input_formats": [
+          "file"
+        ],
+        "input_mime_types": [
+          "application/pdf",
+          "text/plain",
+          "text/markdown",
+          "text/csv",
+          "application/json",
+          "application/xml",
+          "text/html"
+        ],
+        "status": "inferred",
+        "checked_at": "2026-10-10"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "google",
+        "canonical_slug": "google/gemini-2.5-flash-lite",
+        "modality": "text+image+file+audio+video->text",
+        "tokenizer": "Gemini",
+        "top_provider": {
+          "context_length": 1048576,
+          "max_completion_tokens": 65535,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "include_reasoning",
+          "max_tokens",
+          "reasoning",
+          "response_format",
+          "seed",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_p"
+        ],
+        "created": "2025-07-22",
+        "description": "Gemini 2.5 Flash-Lite is a lightweight reasoning model in the Gemini 2.5 family, optimized for ultra-low latency and cost efficiency. It offers improved throughput, faster token generation, and better performance...",
+        "cache_read_per_1m": 0.01,
+        "web_search_per_request_usd": 0.014,
+        "image_input_per_1m": 0.05,
+        "audio_input_per_1m": 0.15,
+        "internal_reasoning_per_1m": 0.2,
+        "reasoning_meta": {
+          "mandatory": false
+        },
+        "links": {
+          "details": "/api/v1/models/google/gemini-2.5-flash-lite/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 0,
+          "artificial_analysis": 1
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "vision",
+          "audio_input",
+          "file_input"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "google/gemini-2.5-flash:batch",
+      "display_name": "Google: Gemini 2.5 Flash (batch)",
+      "context_window": 1048576,
+      "max_output_tokens": 65535,
+      "input_modalities": [
+        "file",
+        "image",
+        "text",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Gemini",
+      "knowledge_cutoff": "2025-01",
+      "deprecated": false,
+      "aliases": [
+        "gemini-2.5-flash:batch",
+        "openrouter/google/gemini-2.5-flash:batch",
+        "google/gemini-2.5-flash",
+        "google/gemini-2.5-flash:batch"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.15,
+        "output_per_1m": 1.25,
+        "currency": "USD"
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-15",
+        "status": "inferred"
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-15",
+        "status": "inferred"
+      },
+      "document": {
+        "accepts_file": true,
+        "input_formats": [
+          "file"
+        ],
+        "input_mime_types": [
+          "application/pdf",
+          "text/plain",
+          "text/markdown",
+          "text/csv",
+          "application/json",
+          "application/xml",
+          "text/html"
+        ],
+        "status": "inferred",
+        "checked_at": "2026-10-10"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "google",
+        "canonical_slug": "google/gemini-2.5-flash",
+        "modality": "text+image+file+audio+video->text",
+        "tokenizer": "Gemini",
+        "top_provider": {
+          "context_length": 1048576,
+          "max_completion_tokens": 65535,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "include_reasoning",
+          "max_tokens",
+          "reasoning",
+          "response_format",
+          "seed",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_p"
+        ],
+        "created": "2025-06-17",
+        "description": "Gemini 2.5 Flash is Google's state-of-the-art workhorse model, specifically designed for advanced reasoning, coding, mathematics, and scientific tasks. It includes built-in \"thinking\" capabilities, enabling it to provide responses with greater...",
+        "expiration_date": "2026-10-20",
+        "cache_read_per_1m": 0.03,
+        "web_search_per_request_usd": 0.014,
+        "image_input_per_1m": 0.15,
+        "audio_input_per_1m": 0.5,
+        "internal_reasoning_per_1m": 1.25,
+        "reasoning_meta": {
+          "mandatory": false
+        },
+        "links": {
+          "details": "/api/v1/models/google/gemini-2.5-flash/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 7,
+          "artificial_analysis": 1
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "vision",
+          "audio_input",
+          "file_input"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "google/gemini-2.5-pro:batch",
+      "display_name": "Google: Gemini 2.5 Pro (batch)",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "file",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Gemini",
+      "knowledge_cutoff": "2025-01",
+      "deprecated": false,
+      "aliases": [
+        "gemini-2.5-pro:batch",
+        "openrouter/google/gemini-2.5-pro:batch",
+        "google/gemini-2.5-pro",
+        "google/gemini-2.5-pro:batch"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.625,
+        "output_per_1m": 5.0,
+        "currency": "USD"
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-15",
+        "status": "inferred"
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-15",
+        "status": "inferred"
+      },
+      "document": {
+        "accepts_file": true,
+        "input_formats": [
+          "file"
+        ],
+        "input_mime_types": [
+          "application/pdf",
+          "text/plain",
+          "text/markdown",
+          "text/csv",
+          "application/json",
+          "application/xml",
+          "text/html"
+        ],
+        "status": "inferred",
+        "checked_at": "2026-10-10"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "google",
+        "canonical_slug": "google/gemini-2.5-pro",
+        "modality": "text+image+file+audio+video->text",
+        "tokenizer": "Gemini",
+        "top_provider": {
+          "context_length": 1048576,
+          "max_completion_tokens": 65536,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "include_reasoning",
+          "max_tokens",
+          "reasoning",
+          "response_format",
+          "seed",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_p"
+        ],
+        "created": "2025-06-17",
+        "description": "Gemini 2.5 Pro is Google’s state-of-the-art AI model designed for advanced reasoning, coding, mathematics, and scientific tasks. It employs “thinking” capabilities, enabling it to reason through responses with enhanced accuracy...",
+        "expiration_date": "2026-10-20",
+        "cache_read_per_1m": 0.125,
+        "web_search_per_request_usd": 0.014,
+        "image_input_per_1m": 0.625,
+        "audio_input_per_1m": 0.625,
+        "internal_reasoning_per_1m": 5.0,
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.00000125",
+            "completion": "0.0000075",
+            "audio": "0.00000125",
+            "input_audio_cache": "0.00000025",
+            "input_cache_read": "0.00000025"
+          }
+        ],
+        "reasoning_meta": {
+          "mandatory": true
+        },
+        "links": {
+          "details": "/api/v1/models/google/gemini-2.5-pro/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 6,
+          "artificial_analysis": 1
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "vision",
+          "audio_input",
+          "file_input"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "microsoft/wizardlm-2-8x22b",
+      "display_name": "WizardLM-2 8x22B",
+      "context_window": 65535,
+      "max_output_tokens": 8000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_json_schema": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Mistral",
+      "knowledge_cutoff": "2024-04",
+      "deprecated": false,
+      "aliases": [
+        "wizardlm-2-8x22b",
+        "openrouter/microsoft/wizardlm-2-8x22b",
+        "microsoft/wizardlm-2-8x22b"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.62,
+        "output_per_1m": 0.62,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "microsoft",
+        "canonical_slug": "microsoft/wizardlm-2-8x22b",
+        "hugging_face_id": "microsoft/WizardLM-2-8x22B",
+        "modality": "text->text",
+        "tokenizer": "Mistral",
+        "instruct_type": "vicuna",
+        "top_provider": {
+          "context_length": 65535,
+          "max_completion_tokens": 8000,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "max_tokens",
+          "presence_penalty",
+          "repetition_penalty",
+          "response_format",
+          "seed",
+          "stop",
+          "temperature",
+          "top_k",
+          "top_p"
+        ],
+        "created": "2024-04-16",
+        "description": "WizardLM-2 8x22B is Microsoft AI's most advanced Wizard model. It demonstrates highly competitive performance compared to leading proprietary models, and it consistently outperforms all existing state-of-the-art opensource models. It is...",
+        "links": {
+          "details": "/api/v1/models/microsoft/wizardlm-2-8x22b/endpoints"
+        },
+        "features": [
+          "structured_outputs"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "perplexity/pplx-decider-v1.1-27b",
+      "display_name": "Perplexity: Decider V1.1 27B",
+      "context_window": 262144,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "decision"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "pplx-decider-v1.1-27b",
+        "openrouter/perplexity/pplx-decider-v1.1-27b"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.02,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "perplexity",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 262144,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "Decider V1.1 27B is a new checkpoint of Perplexity's decision model, succeeding [Decider V1 27B](/perplexity/pplx-decider-v1-27b) with the same API contract. Instead of generating text, it reads content passed as `state` (text, JSON, or images) and returns typed, probabilistic answers to one or more named questions in a single request: the probability of yes for a yes/no question (`noul`), a proba",
+        "features": [
+          "vision"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
+      },
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "noul",
+          "choice",
+          "score"
+        ],
+        "answer_fields": [
+          "type",
+          "noul",
+          "choice",
+          "score",
+          "probabilities",
+          "confidence",
+          "legend"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "calibrated_confidence": null,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "deterministic": null,
+        "state_shapes": [
+          "string",
+          "json_object",
+          "array"
+        ],
+        "max_state_tokens": null,
+        "max_total_tokens": 262144,
+        "output_token_billing": false,
+        "endpoints": [
+          "https://openrouter.ai/api/alpha/decisions"
+        ],
+        "source_url": "https://openrouter.ai/perplexity/pplx-decider-v1.1-27b",
+        "checked_at": "2026-10-17",
+        "status": "documented",
+        "extra": {
+          "endpoint_protocol": "openrouter-alpha-decisions",
+          "systemone_schema_compatible": true,
+          "upstream_provider": "perplexity",
+          "upstream_protocol": "perplexity-decisions-v1",
+          "endpoint_docs": "https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-questions-and-answers-request",
+          "upstream_endpoint": "https://api.perplexity.ai/v1/decisions",
+          "typesafe_sdk_compatibility": "not-documented"
+        }
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "sao10k/l3.3-euryale-70b",
+      "display_name": "Sao10K: Llama 3.3 Euryale 70B",
+      "context_window": 131072,
+      "max_output_tokens": 16384,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Llama3",
+      "knowledge_cutoff": "2023-12",
+      "deprecated": false,
+      "aliases": [
+        "l3.3-euryale-70b",
+        "openrouter/sao10k/l3.3-euryale-70b",
+        "sao10k/l3.3-euryale-70b-v2.3",
+        "sao10k/l3.3-euryale-70b"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.65,
+        "output_per_1m": 0.75,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "sao10k",
+        "canonical_slug": "sao10k/l3.3-euryale-70b-v2.3",
+        "hugging_face_id": "Sao10K/L3.3-70B-Euryale-v2.3",
+        "modality": "text->text",
+        "tokenizer": "Llama3",
+        "instruct_type": "llama3",
+        "top_provider": {
+          "context_length": 131072,
+          "max_completion_tokens": 16384,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "logprobs",
+          "max_tokens",
+          "presence_penalty",
+          "repetition_penalty",
+          "response_format",
+          "seed",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "top_logprobs",
+          "top_p"
+        ],
+        "created": "2024-12-18",
+        "description": "Euryale L3.3 70B is a model focused on creative roleplay from [Sao10k](https://ko-fi.com/sao10k). It is the successor of [Euryale L3 70B v2.2](/models/sao10k/l3-euryale-70b).",
+        "links": {
+          "details": "/api/v1/models/sao10k/l3.3-euryale-70b-v2.3/endpoints"
+        },
+        "features": [
+          "structured_outputs"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-24"
       }
     }
   ]

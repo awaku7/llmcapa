@@ -7,6 +7,7 @@ EXPECTED_MODELS = {
     "perplexity/glm-5.3",
     "perplexity/glm-5.3-flash",
     "perplexity/nemotron-3-ultra-550b-a55b",
+    "perplexity/deepseek-v4-pro-0813",
 }
 ROUTER_CHAT_BASE = "https://api.perplexity.ai/router/v1"
 
@@ -43,6 +44,7 @@ def test_perplexity_router_specs_and_rates_match_published_catalog():
         "perplexity/glm-5.3": (1000000, 1.4, 4.4, ["text"]),
         "perplexity/glm-5.3-flash": (1000000, 0.15, 0.5, ["text", "image"]),
         "perplexity/nemotron-3-ultra-550b-a55b": (1000000, 0.25, 2.5, ["text"]),
+        "perplexity/deepseek-v4-pro-0813": (0, 1.32, 3.96, ["text"]),
     }
 
     for model_id, (context, input_rate, output_rate, modalities) in expected.items():
@@ -52,5 +54,8 @@ def test_perplexity_router_specs_and_rates_match_published_catalog():
         assert cap.pricing["output_per_1m"] == output_rate
         assert cap.input_modalities == modalities
         assert cap.output_modalities == ["text"]
-        assert cap.extra["native_model_source"]
+        if model_id == "perplexity/deepseek-v4-pro-0813":
+            assert cap.extra.get("native_model_source") is None
+        else:
+            assert cap.extra["native_model_source"]
         assert cap.extra["cache_read_per_1m"] > 0

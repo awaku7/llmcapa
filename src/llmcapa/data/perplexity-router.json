@@ -40,7 +40,7 @@
       },
       "extra": {
         "official_source": "https://docs.perplexity.ai/docs/router/models",
-        "official_source_checked_at": "2026-10-17",
+        "official_source_checked_at": "2026-10-24",
         "router_api_base_url": "https://api.perplexity.ai/router/v1",
         "chat_completions_endpoint": "https://api.perplexity.ai/router/v1/chat/completions",
         "responses_endpoint": "https://api.perplexity.ai/router/v1/responses",
@@ -103,7 +103,7 @@
       },
       "extra": {
         "official_source": "https://docs.perplexity.ai/docs/router/models",
-        "official_source_checked_at": "2026-10-17",
+        "official_source_checked_at": "2026-10-24",
         "router_api_base_url": "https://api.perplexity.ai/router/v1",
         "chat_completions_endpoint": "https://api.perplexity.ai/router/v1/chat/completions",
         "responses_endpoint": "https://api.perplexity.ai/router/v1/responses",
@@ -167,7 +167,7 @@
       },
       "extra": {
         "official_source": "https://docs.perplexity.ai/docs/router/models",
-        "official_source_checked_at": "2026-10-17",
+        "official_source_checked_at": "2026-10-24",
         "router_api_base_url": "https://api.perplexity.ai/router/v1",
         "chat_completions_endpoint": "https://api.perplexity.ai/router/v1/chat/completions",
         "responses_endpoint": "https://api.perplexity.ai/router/v1/responses",
@@ -186,6 +186,50 @@
           "openai-responses",
           "anthropic-messages"
         ]
+      }
+    },
+    {
+      "provider": "perplexity-router",
+      "model_id": "perplexity/deepseek-v4-pro-0813",
+      "display_name": "Perplexity Router: deepseek-v4-pro-0813",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_streaming": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_anthropic_api": true,
+      "license_type": "api",
+      "deprecated": false,
+      "aliases": [
+        "deepseek-v4-pro-0813"
+      ],
+      "pricing": {
+        "input_per_1m": 1.32,
+        "output_per_1m": 3.96,
+        "currency": "USD"
+      },
+      "extra": {
+        "official_source": "https://docs.perplexity.ai/docs/router/models",
+        "official_source_checked_at": "2026-10-24",
+        "router_api_base_url": "https://api.perplexity.ai/router/v1",
+        "chat_completions_endpoint": "https://api.perplexity.ai/router/v1/chat/completions",
+        "responses_endpoint": "https://api.perplexity.ai/router/v1/responses",
+        "messages_endpoint": "https://api.perplexity.ai/router/v1/messages",
+        "model_catalog_endpoint": "https://api.perplexity.ai/router/v1/models",
+        "router_preview": true,
+        "api_schema_support": [
+          "openai-chat-completions",
+          "openai-responses",
+          "anthropic-messages"
+        ],
+        "cache_read_per_1m": 0.044,
+        "cache_write_per_1m": 1.32
       }
     },
     {

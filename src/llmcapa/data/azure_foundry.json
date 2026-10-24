@@ -71,7 +71,7 @@
           "wait"
         ],
         "source_url": "https://ai.azure.com/catalog/models",
-        "checked_at": "2026-10-17"
+        "checked_at": "2026-10-24"
       }
     },
     {
@@ -4521,7 +4521,7 @@
         "requires_beta": true,
         "enable_zoom": false,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-17",
+        "checked_at": "2026-10-24",
         "beta_header": "computer-use-2025-01-24"
       }
     },
@@ -4623,7 +4623,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-17",
+        "checked_at": "2026-10-24",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -4684,7 +4684,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-17",
+        "checked_at": "2026-10-24",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -4744,7 +4744,7 @@
         "requires_beta": true,
         "enable_zoom": false,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-17",
+        "checked_at": "2026-10-24",
         "beta_header": "computer-use-2025-01-24"
       }
     },
@@ -4805,7 +4805,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-17",
+        "checked_at": "2026-10-24",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -6170,6 +6170,92 @@
     },
     {
       "provider": "cohere",
+      "model_id": "Cohere-rerank-v5-fast",
+      "display_name": "Cohere Rerank V5 Fast",
+      "context_window": 4096,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Text classification",
+      "azure_lifecycle": "Preview",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "cohere-rerank-v5-fast",
+        "cohere/Cohere-rerank-v5-fast"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maas-inference"
+        ],
+        "azure_offers": [
+          "standard-paygo"
+        ],
+        "deployment_options": "UnifiedEndpointMaaS,ServerlessMaaS,Serverless API",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "Rerank V5 improves search systems by sorting documents based on their semantic similarity to a query"
+      }
+    },
+    {
+      "provider": "cohere",
+      "model_id": "Cohere-rerank-v5-pro",
+      "display_name": "Cohere Rerank V5 Pro",
+      "context_window": 4096,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Text classification",
+      "azure_lifecycle": "Preview",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "cohere-rerank-v5-pro",
+        "cohere/Cohere-rerank-v5-pro"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maas-inference"
+        ],
+        "azure_offers": [
+          "standard-paygo"
+        ],
+        "deployment_options": "UnifiedEndpointMaaS,ServerlessMaaS,Serverless API",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "Rerank V5 improves search systems by sorting documents based on their semantic similarity to a query"
+      }
+    },
+    {
+      "provider": "cohere",
       "model_id": "embed-v-4-0",
       "display_name": "Cohere Embed 4",
       "context_window": 131072,
@@ -6381,6 +6467,48 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Sovereign European MoE LLM with 3B active parameters, delivering 8B-16B dense model performance with native Italian and EU AI Act compliance."
+      }
+    },
+    {
+      "provider": "fireworks",
+      "model_id": "FW-DeepSeek-V4.1-Flash-1017",
+      "display_name": "DeepSeek V4.1 Flash 1017",
+      "context_window": 1048576,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "fw-deepseek-v4.1-flash-1017",
+        "fireworks/FW-DeepSeek-V4.1-Flash-1017"
+      ],
+      "extra": {
+        "azure_offers": [
+          "standard-paygo"
+        ],
+        "deployment_options": "UnifiedEndpointMaaS,Serverless API",
+        "inference_deprecation_date": "2027-10-20T00:00:00Z",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "DeepSeek V4.1 Flash 1017 is a multimodal update to DeepSeek V4.1 Flash with improved reasoning, coding, agentic, and visual performance, reduced task execution time and output length, and a 1,048,576-token context window on Fireworks.",
+        "long_context": true,
+        "context_window": 1048576
       }
     },
     {
@@ -6745,6 +6873,49 @@
     },
     {
       "provider": "fireworks",
+      "model_id": "FW-NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4",
+      "display_name": "NVIDIA Nemotron 3.5 Super VL 120B A12B NVFP4",
+      "context_window": 1048576,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "fw-nvidia-nemotron-3.5-super-vl-120b-a12b-nvfp4",
+        "fireworks/FW-NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4"
+      ],
+      "extra": {
+        "azure_offers": [
+          "PTU"
+        ],
+        "deployment_options": "UnifiedEndpointMaaS,Serverless API",
+        "inference_deprecation_date": "2027-10-20T00:00:00Z",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "NVIDIA Nemotron 3.5 Super VL 120B A12B NVFP4 is an open multimodal model for long-running agents with text, image, document, and video understanding, a hybrid Mamba-Transformer Mixture-of-Experts architecture, 120B total and 12B active parameters, and a 1,",
+        "long_context": true,
+        "context_window": 1048576
+      }
+    },
+    {
+      "provider": "fireworks",
       "model_id": "FW-Nemotron-3-Super-120B-A12B-BF16",
       "display_name": "Nemotron Super 120B",
       "context_window": 262144,
@@ -6820,6 +6991,47 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Nemotron 3 Ultra NVFP4 is a frontier-scale Mixture-of-Experts language model from NVIDIA with approximately 550B total parameters and 55B active parameters, a hybrid Mamba-2 and LatentMoE architecture, configurable reasoning, function calling, and a 262,14",
+        "long_context": true,
+        "context_window": 262144
+      }
+    },
+    {
+      "provider": "fireworks",
+      "model_id": "FW-Nemotron-Lightning-3.5-30B-A3B",
+      "display_name": "Nemotron Lightning 3.5 30B A3B",
+      "context_window": 262144,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "fw-nemotron-lightning-3.5-30b-a3b",
+        "fireworks/FW-Nemotron-Lightning-3.5-30B-A3B"
+      ],
+      "extra": {
+        "azure_offers": [
+          "PTU",
+          "standard-paygo"
+        ],
+        "deployment_options": "UnifiedEndpointMaaS,Serverless API",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "Nemotron Lightning 3.5 30B A3B is a 30B-parameter Mixture-of-Experts language model from NVIDIA with 3B active parameters, a hybrid Mamba-Transformer architecture, configurable reasoning, Multi-Token Prediction, function calling, and a 262,144-token Firewo",
         "long_context": true,
         "context_window": 262144
       }
@@ -9529,6 +9741,50 @@
     },
     {
       "provider": "huggingface",
+      "model_id": "nvidia--nvidia-nemotron-3-super-120b-a12b-bf16",
+      "display_name": "NVIDIA-Nemotron-3-Super-120B-A12B-BF16",
+      "context_window": 262144,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "nvidia-nvidia-nemotron-3-super-120b-a12b-bf16",
+        "huggingface/nvidia--nvidia-nemotron-3-super-120b-a12b-bf16"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "deployment_options": "MaaP,Managed Compute",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "Nemotron 3 Super BF16 text model for agentic workflows, long-context reasoning, and tool use.",
+        "long_context": true,
+        "context_window": 262144
+      }
+    },
+    {
+      "provider": "huggingface",
       "model_id": "nvidia--nvidia-nemotron-3-super-120b-a12b-fp8",
       "display_name": "NVIDIA-Nemotron-3-Super-120B-A12B-FP8",
       "context_window": 262144,
@@ -9745,6 +10001,52 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Nemotron 3.5 Super vision-language reasoning model for document, GUI, and video understanding.",
+        "long_context": true,
+        "context_window": 1048576
+      }
+    },
+    {
+      "provider": "huggingface",
+      "model_id": "nvidia--nvidia-nemotron-3.5-super-vl-120b-a12b-nvfp4",
+      "display_name": "NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4",
+      "context_window": 1048576,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "nvidia-nvidia-nemotron-3.5-super-vl-120b-a12b-nvfp4",
+        "huggingface/nvidia--nvidia-nemotron-3.5-super-vl-120b-a12b-nvfp4"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "deployment_options": "MaaP,Managed Compute",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "NVFP4 vision-language reasoning model for document understanding, coding, and tool use.",
         "long_context": true,
         "context_window": 1048576
       }
@@ -13826,6 +14128,48 @@
     },
     {
       "provider": "microsoft",
+      "model_id": "MedImageInsight-Premium",
+      "display_name": "MedImageInsight Premium",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "image",
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Embeddings",
+      "azure_lifecycle": "Preview",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "medimageinsight-premium",
+        "microsoft/MedImageInsight-Premium"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maas-inference"
+        ],
+        "azure_offers": [
+          "standard-paygo"
+        ],
+        "deployment_options": "UnifiedEndpointMaaS,Serverless API",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "A multimodal foundation model that generalizes across various medical imaging modalities, anatomies, locations, severities, and types of medical data, producing high-quality image embeddings for retrieval, search, comparison, classification, and tagging ta"
+      }
+    },
+    {
+      "provider": "microsoft",
       "model_id": "Phi-3-vision-128k-instruct",
       "display_name": "Phi-3-vision-128k-instruct",
       "context_window": 4096,
@@ -15383,6 +15727,94 @@
         ],
         "version": 1,
         "maas_or_paygo": true
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Nemotron-3-Super-120B-A12B-BF16",
+      "display_name": "Nemotron-3-Super-120B-A12B-BF16",
+      "context_window": 262144,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "nemotron-3-super-120b-a12b-bf16",
+        "nvidia/Nemotron-3-Super-120B-A12B-BF16"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maas-inference",
+          "maas-finetuning"
+        ],
+        "azure_offers": [
+          "standard-paygo"
+        ],
+        "deployment_options": "UnifiedEndpointMaaS",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "NVIDIA's BF16 language model with 120B total parameters and 12B active parameters, designed for reasoning, conversation, and tool use.",
+        "long_context": true,
+        "context_window": 262144
+      }
+    },
+    {
+      "provider": "nvidia",
+      "model_id": "Nemotron-3-Ultra-550B-A55B-BF16",
+      "display_name": "Nemotron-3-Ultra-550B-A55B-BF16",
+      "context_window": 262144,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "nemotron-3-ultra-550b-a55b-bf16",
+        "nvidia/Nemotron-3-Ultra-550B-A55B-BF16"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maas-inference",
+          "maas-finetuning"
+        ],
+        "azure_offers": [
+          "standard-paygo"
+        ],
+        "deployment_options": "UnifiedEndpointMaaS",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "NVIDIA's BF16 language model with 550B total parameters and 55B active parameters, designed for reasoning, conversation, and tool use.",
+        "long_context": true,
+        "context_window": 262144
       }
     },
     {
@@ -17625,6 +18057,80 @@
     },
     {
       "provider": "microsoft",
+      "model_id": "Microsoft-Decision-1",
+      "display_name": "Microsoft-Decision-1",
+      "context_window": 32768,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "decision"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "knowledge_cutoff": null,
+      "azure_type": "Decision",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "api",
+      "aliases": [
+        "microsoft-decision-1",
+        "microsoft/Microsoft-Decision-1"
+      ],
+      "pricing": {
+        "input_per_1m": 0.042,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "pricing_match_key": "microsoft-decision-1",
+        "official_model_catalog_url": "https://ai.azure.com/catalog/models/Microsoft-Decision-1",
+        "official_usage_docs": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-microsoft-decision",
+        "official_catalog_checked_at": "2026-10-24",
+        "deployment_types": [
+          "DataZoneStandard",
+          "GlobalStandard"
+        ],
+        "version": 1,
+        "summary": "Decision-scoring model that returns calibrated probabilities for fixed answer options instead of generated text."
+      },
+      "supports_json_schema": false,
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "noul",
+          "choice",
+          "score"
+        ],
+        "returns_probabilities": true,
+        "calibrated_confidence": true,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "state_shapes": [
+          "text",
+          "json"
+        ],
+        "max_total_tokens": 32768,
+        "endpoints": [
+          "https://{azure_endpoint}/providers/microsoft/v1/systemone"
+        ],
+        "source_url": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-microsoft-decision",
+        "checked_at": "2026-10-17",
+        "status": "documented",
+        "extra": {
+          "endpoint_protocol": "microsoft-foundry-systemone"
+        }
+      }
+    },
+    {
+      "provider": "microsoft",
       "model_id": "Phi-4-mini-reasoning-onnx",
       "display_name": "Phi-4-mini-reasoning-Onnx",
       "context_window": 4096,
@@ -17997,7 +18503,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-17",
+        "checked_at": "2026-10-24",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -18043,7 +18549,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-17",
+        "checked_at": "2026-10-24",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -18089,7 +18595,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-17",
+        "checked_at": "2026-10-24",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -18135,7 +18641,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-17",
+        "checked_at": "2026-10-24",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -18181,7 +18687,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-17",
+        "checked_at": "2026-10-24",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -18227,7 +18733,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-17",
+        "checked_at": "2026-10-24",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -18273,7 +18779,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-17",
+        "checked_at": "2026-10-24",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -18319,7 +18825,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-17",
+        "checked_at": "2026-10-24",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -18412,6 +18918,84 @@
       "aliases": [
         "huggingfacetb-smollm3-3b",
         "azure-foundrylocalonazurelocal/HuggingFaceTB-SmolLM3-3B"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "JetBrains-Mellum2-12B-A2.5B-Thinking",
+      "display_name": "JetBrains-Mellum2-12B-A2.5B-Thinking",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "jetbrains-mellum2-12b-a2.5b-thinking",
+        "azure-foundrylocalonazurelocal/JetBrains-Mellum2-12B-A2.5B-Thinking"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "PaddlePaddle-PaddleOCR-VL-1.6",
+      "display_name": "PaddlePaddle-PaddleOCR-VL-1.6",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "paddlepaddle-paddleocr-vl-1.6",
+        "azure-foundrylocalonazurelocal/PaddlePaddle-PaddleOCR-VL-1.6"
       ],
       "extra": {
         "deployment_types": [
@@ -18777,6 +19361,162 @@
     },
     {
       "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "Qwen-Qwen3-Embedding-4B",
+      "display_name": "Qwen-Qwen3-Embedding-4B",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embedding"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Embeddings",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "qwen-qwen3-embedding-4b",
+        "azure-foundrylocalonazurelocal/Qwen-Qwen3-Embedding-4B"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "Qwen-Qwen3-VL-Embedding-2B",
+      "display_name": "Qwen-Qwen3-VL-Embedding-2B",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embedding"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Embeddings",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "qwen-qwen3-vl-embedding-2b",
+        "azure-foundrylocalonazurelocal/Qwen-Qwen3-VL-Embedding-2B"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "Qwen-Qwen3-VL-Embedding-8B",
+      "display_name": "Qwen-Qwen3-VL-Embedding-8B",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embedding"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Embeddings",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "qwen-qwen3-vl-embedding-8b",
+        "azure-foundrylocalonazurelocal/Qwen-Qwen3-VL-Embedding-8B"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "WeiboAI-VibeThinker-3B",
+      "display_name": "WeiboAI-VibeThinker-3B",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "weiboai-vibethinker-3b",
+        "azure-foundrylocalonazurelocal/WeiboAI-VibeThinker-3B"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
       "model_id": "deepseek-ai-DeepSeek-R1-Distill-Qwen-14B",
       "display_name": "deepseek-ai-DeepSeek-R1-Distill-Qwen-14B",
       "context_window": 4096,
@@ -18802,6 +19542,45 @@
       "aliases": [
         "deepseek-ai-deepseek-r1-distill-qwen-14b",
         "azure-foundrylocalonazurelocal/deepseek-ai-DeepSeek-R1-Distill-Qwen-14B"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "google-gemma-4-12B-it",
+      "display_name": "google-gemma-4-12B-it",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "google-gemma-4-12b-it",
+        "azure-foundrylocalonazurelocal/google-gemma-4-12B-it"
       ],
       "extra": {
         "deployment_types": [
@@ -19006,7 +19785,8 @@
         "azure_offers": [
           "VM"
         ],
-        "version": 1
+        "version": 1,
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -19036,6 +19816,84 @@
       "aliases": [
         "mistralai-ministral-3-14b-reasoning-2512",
         "azure-foundrylocalonazurelocal/mistralai-Ministral-3-14B-Reasoning-2512"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "mistralai-Ministral-3-3B-Reasoning-2512",
+      "display_name": "mistralai-Ministral-3-3B-Reasoning-2512",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "mistralai-ministral-3-3b-reasoning-2512",
+        "azure-foundrylocalonazurelocal/mistralai-Ministral-3-3B-Reasoning-2512"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "mistralai-Ministral-3-8B-Reasoning-2512",
+      "display_name": "mistralai-Ministral-3-8B-Reasoning-2512",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "mistralai-ministral-3-8b-reasoning-2512",
+        "azure-foundrylocalonazurelocal/mistralai-Ministral-3-8B-Reasoning-2512"
       ],
       "extra": {
         "deployment_types": [
@@ -19318,7 +20176,85 @@
         "azure_offers": [
           "VM"
         ],
-        "version": 1
+        "version": 2
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "mistralai-Voxtral-Mini-4B-Realtime-2602",
+      "display_name": "mistralai-Voxtral-Mini-4B-Realtime-2602",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Automatic speech recognition",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "mistralai-voxtral-mini-4b-realtime-2602",
+        "azure-foundrylocalonazurelocal/mistralai-Voxtral-Mini-4B-Realtime-2602"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 2
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "mistralai-Voxtral-Small-24B-2507",
+      "display_name": "mistralai-Voxtral-Small-24B-2507",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Automatic speech recognition",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "mistralai-voxtral-small-24b-2507",
+        "azure-foundrylocalonazurelocal/mistralai-Voxtral-Small-24B-2507"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 2
       }
     },
     {
@@ -19400,6 +20336,435 @@
     },
     {
       "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "nvidia-Cosmos-Embed1-224p",
+      "display_name": "nvidia-Cosmos-Embed1-224p",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "nvidia-cosmos-embed1-224p",
+        "azure-foundrylocalonazurelocal/nvidia-Cosmos-Embed1-224p"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "nvidia-Cosmos-Embed1-336p",
+      "display_name": "nvidia-Cosmos-Embed1-336p",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "nvidia-cosmos-embed1-336p",
+        "azure-foundrylocalonazurelocal/nvidia-Cosmos-Embed1-336p"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "nvidia-Cosmos-Embed1-448p",
+      "display_name": "nvidia-Cosmos-Embed1-448p",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "nvidia-cosmos-embed1-448p",
+        "azure-foundrylocalonazurelocal/nvidia-Cosmos-Embed1-448p"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "nvidia-Cosmos-Embed1-448p-anomaly-detection",
+      "display_name": "nvidia-Cosmos-Embed1-448p-anomaly-detection",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embedding"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Embeddings",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "nvidia-cosmos-embed1-448p-anomaly-detection",
+        "azure-foundrylocalonazurelocal/nvidia-Cosmos-Embed1-448p-anomaly-detection"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "nvidia-Cosmos-Reason2-32B",
+      "display_name": "nvidia-Cosmos-Reason2-32B",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "nvidia-cosmos-reason2-32b",
+        "azure-foundrylocalonazurelocal/nvidia-Cosmos-Reason2-32B"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "nvidia-Cosmos3-Nano",
+      "display_name": "nvidia-Cosmos3-Nano",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "nvidia-cosmos3-nano",
+        "azure-foundrylocalonazurelocal/nvidia-Cosmos3-Nano"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "nvidia-Cosmos3-Super",
+      "display_name": "nvidia-Cosmos3-Super",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "nvidia-cosmos3-super",
+        "azure-foundrylocalonazurelocal/nvidia-Cosmos3-Super"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "nvidia-GLM-5.3-Flash-NVFP4",
+      "display_name": "nvidia-GLM-5.3-Flash-NVFP4",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "nvidia-glm-5.3-flash-nvfp4",
+        "azure-foundrylocalonazurelocal/nvidia-GLM-5.3-Flash-NVFP4"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "nvidia-Ising-Calibration-1.5-31B-BF16",
+      "display_name": "nvidia-Ising-Calibration-1.5-31B-BF16",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "nvidia-ising-calibration-1.5-31b-bf16",
+        "azure-foundrylocalonazurelocal/nvidia-Ising-Calibration-1.5-31B-BF16"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "nvidia-Ising-Calibration-1.5-31B-NVFP4",
+      "display_name": "nvidia-Ising-Calibration-1.5-31B-NVFP4",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "nvidia-ising-calibration-1.5-31b-nvfp4",
+        "azure-foundrylocalonazurelocal/nvidia-Ising-Calibration-1.5-31B-NVFP4"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "nvidia-Muse-Glimmer-30B-NVFP4",
+      "display_name": "nvidia-Muse-Glimmer-30B-NVFP4",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "nvidia-muse-glimmer-30b-nvfp4",
+        "azure-foundrylocalonazurelocal/nvidia-Muse-Glimmer-30B-NVFP4"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
       "model_id": "nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-BF16",
       "display_name": "nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-BF16",
       "context_window": 4096,
@@ -19464,6 +20829,240 @@
       "aliases": [
         "nvidia-nvidia-nemotron-3-super-120b-a12b-fp8",
         "azure-foundrylocalonazurelocal/nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-FP8"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "nvidia-NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB",
+      "display_name": "nvidia-NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "nvidia-nvidia-nemotron-3.5-bolt-74b-a9b-24gb",
+        "azure-foundrylocalonazurelocal/nvidia-NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "nvidia-NVIDIA-Nemotron-3.5-Bolt-74B-A9B-BF16",
+      "display_name": "nvidia-NVIDIA-Nemotron-3.5-Bolt-74B-A9B-BF16",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "nvidia-nvidia-nemotron-3.5-bolt-74b-a9b-bf16",
+        "azure-foundrylocalonazurelocal/nvidia-NVIDIA-Nemotron-3.5-Bolt-74B-A9B-BF16"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "nvidia-NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16",
+      "display_name": "nvidia-NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "nvidia-nvidia-nemotron-3.5-lightning-30b-a3b-bf16",
+        "azure-foundrylocalonazurelocal/nvidia-NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "nvidia-NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4",
+      "display_name": "nvidia-NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "nvidia-nvidia-nemotron-3.5-lightning-30b-a3b-nvfp4",
+        "azure-foundrylocalonazurelocal/nvidia-NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "nvidia-NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16",
+      "display_name": "nvidia-NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "nvidia-nvidia-nemotron-3.5-super-vl-120b-a12b-bf16",
+        "azure-foundrylocalonazurelocal/nvidia-NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "nvidia-NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4",
+      "display_name": "nvidia-NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "nvidia-nvidia-nemotron-3.5-super-vl-120b-a12b-nvfp4",
+        "azure-foundrylocalonazurelocal/nvidia-NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4"
       ],
       "extra": {
         "deployment_types": [
@@ -19673,6 +21272,45 @@
     },
     {
       "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "nvidia-NVIDIA-NemotronLabs-VoiceChat-11B",
+      "display_name": "nvidia-NVIDIA-NemotronLabs-VoiceChat-11B",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "nvidia-nvidia-nemotronlabs-voicechat-11b",
+        "azure-foundrylocalonazurelocal/nvidia-NVIDIA-NemotronLabs-VoiceChat-11B"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
       "model_id": "nvidia-Nemotron-3-Embed-1B-BF16",
       "display_name": "nvidia-Nemotron-3-Embed-1B-BF16",
       "context_window": 0,
@@ -19707,7 +21345,8 @@
         "azure_offers": [
           "VM"
         ],
-        "version": 1
+        "version": 1,
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -19746,7 +21385,46 @@
         "azure_offers": [
           "VM"
         ],
-        "version": 1
+        "version": 2
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "nvidia-Nemotron-3-Embed-8B-BF16",
+      "display_name": "nvidia-Nemotron-3-Embed-8B-BF16",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embedding"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Embeddings",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "nvidia-nemotron-3-embed-8b-bf16",
+        "azure-foundrylocalonazurelocal/nvidia-Nemotron-3-Embed-8B-BF16"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 2
       }
     },
     {
@@ -20166,6 +21844,45 @@
       "aliases": [
         "nvidia-openreasoning-nemotron-7b",
         "azure-foundrylocalonazurelocal/nvidia-OpenReasoning-Nemotron-7B"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "nvidia-Qwen3.8-Flash-Next-NVFP4",
+      "display_name": "nvidia-Qwen3.8-Flash-Next-NVFP4",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "nvidia-qwen3.8-flash-next-nvfp4",
+        "azure-foundrylocalonazurelocal/nvidia-Qwen3.8-Flash-Next-NVFP4"
       ],
       "extra": {
         "deployment_types": [
@@ -286778,6 +288495,45 @@
     },
     {
       "provider": "microsoft",
+      "model_id": "BAAI-bge-m3-onnx",
+      "display_name": "BAAI-bge-m3-onnx",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embedding"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Embeddings",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "baai-bge-m3-onnx",
+        "microsoft/BAAI-bge-m3-onnx"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 2
+      }
+    },
+    {
+      "provider": "microsoft",
       "model_id": "BiomedCLIP-PubMedBERT_256-vit_base_patch16_224",
       "display_name": "BiomedCLIP-PubMedBERT_256-vit_base_patch16_224",
       "context_window": 4096,
@@ -287157,74 +288913,6 @@
     },
     {
       "provider": "microsoft",
-      "model_id": "Microsoft-Decision-1",
-      "display_name": "Microsoft-Decision-1",
-      "context_window": 32768,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "decision"
-      ],
-      "supports_chat_completion": false,
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "knowledge_cutoff": null,
-      "azure_type": "Decision",
-      "azure_lifecycle": "GA",
-      "source": "azure_foundry",
-      "supports_responses_api": false,
-      "license_type": "api",
-      "aliases": [
-        "microsoft-decision-1",
-        "microsoft/Microsoft-Decision-1"
-      ],
-      "supports_json_schema": false,
-      "extra": {
-        "official_model_catalog_url": "https://ai.azure.com/catalog/models/Microsoft-Decision-1",
-        "official_usage_docs": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-microsoft-decision",
-        "official_catalog_checked_at": "2026-10-17",
-        "deployment_types": [
-          "DataZoneStandard",
-          "GlobalStandard"
-        ],
-        "version": 1,
-        "summary": "Decision-scoring model that returns calibrated probabilities for fixed answer options instead of generated text."
-      },
-      "decision": {
-        "decision": true,
-        "question_kinds": [
-          "noul",
-          "choice",
-          "score"
-        ],
-        "returns_probabilities": true,
-        "calibrated_confidence": true,
-        "parallel_questions": true,
-        "free_form_text": false,
-        "type_errors_possible": false,
-        "state_shapes": [
-          "text",
-          "json"
-        ],
-        "max_total_tokens": 32768,
-        "endpoints": [
-          "https://{azure_endpoint}/providers/microsoft/v1/systemone"
-        ],
-        "source_url": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-microsoft-decision",
-        "checked_at": "2026-10-17",
-        "status": "documented",
-        "extra": {
-          "endpoint_protocol": "microsoft-foundry-systemone"
-        }
-      }
-    },
-    {
-      "provider": "microsoft",
       "model_id": "Muse",
       "display_name": "Muse",
       "context_window": 4096,
@@ -287261,6 +288949,78 @@
         "deployment_options": "MaaP",
         "version": 5,
         "summary": "Muse is a World and Human Action Model (WHAM), a generative model of gameplay (visuals and/or controller actions)."
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-3-mini-128k-instruct-cuda-gpu",
+      "display_name": "Phi-3-mini-128k-instruct-cuda-gpu",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "phi-3-mini-128k-instruct-cuda-gpu",
+        "microsoft/Phi-3-mini-128k-instruct-cuda-gpu"
+      ],
+      "extra": {
+        "deployment_types": [
+          "batch-enabled"
+        ],
+        "deployment_options": "Foundry Local on Devices,Foundry Local on Azure Local",
+        "version": 2
+      }
+    },
+    {
+      "provider": "microsoft",
+      "model_id": "Phi-3-mini-128k-instruct-generic-cpu",
+      "display_name": "Phi-3-mini-128k-instruct-generic-cpu",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "phi-3-mini-128k-instruct-generic-cpu",
+        "microsoft/Phi-3-mini-128k-instruct-generic-cpu"
+      ],
+      "extra": {
+        "deployment_types": [
+          "batch-enabled"
+        ],
+        "deployment_options": "Foundry Local on Devices,Foundry Local on Azure Local",
+        "version": 3
       }
     },
     {
@@ -288047,6 +289807,47 @@
     },
     {
       "provider": "nvidia",
+      "model_id": "Nemotron-3-8B-Chat-4k-SteerLM",
+      "display_name": "Nemotron-3-8B-Chat-4k-SteerLM",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Text generation",
+      "azure_lifecycle": "Preview",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "nemotron-3-8b-chat-4k-steerlm",
+        "nvidia/Nemotron-3-8B-Chat-4k-SteerLM"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "inference_retirement_date": "2027-02-28T00:00:00Z",
+        "inference_deprecation_date": "2026-11-02T00:00:00Z",
+        "version": 3
+      }
+    },
+    {
+      "provider": "nvidia",
       "model_id": "Nemotron-3-8B-Chat-RLHF",
       "display_name": "Nemotron-3-8B-Chat-RLHF",
       "context_window": 4096,
@@ -288324,6 +290125,47 @@
           "VM"
         ],
         "version": 3
+      }
+    },
+    {
+      "provider": "recursive",
+      "model_id": "Flint-NVFP4",
+      "display_name": "Flint NVFP4",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "flint-nvfp4",
+        "recursive/Flint-NVFP4"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1,
+        "long_context": true,
+        "context_window": 262144
       }
     },
     {
