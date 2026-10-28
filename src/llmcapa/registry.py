@@ -25,9 +25,7 @@ from .models import Capability
 @lru_cache(maxsize=1)
 def _verified_vllm_reasoning_models() -> dict:
     """Bundled exact-ID reasoning evidence shared across catalog load paths."""
-    resource = resources.files("llmcapa.data").joinpath(
-        "_vllm_verified_reasoning.meta"
-    )
+    resource = resources.files("llmcapa.data").joinpath("_vllm_verified_reasoning.meta")
     return json.loads(resource.read_text(encoding="utf-8"))["models"]
 
 
