@@ -103,7 +103,11 @@ class Registry:
         provider = cls._canonical_provider(cap.provider)
         if provider == "azure-foundry" and cap.provider != provider:
             return replace(cap, provider=provider)
-        if provider == "vllm":
+        if provider == "vllm" and cap.extra.get("metadata_source") in {
+            "huggingface",
+            "previous_catalog_no_exact_hf_match",
+        }:
+            # Do not replace explicit user-owned provider overrides.
             evidence = _verified_vllm_reasoning_models().get(cap.model_id)
             if isinstance(evidence, dict):
                 changes = {
