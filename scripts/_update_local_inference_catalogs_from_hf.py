@@ -17,6 +17,17 @@ from urllib.parse import quote
 ROOT = Path(__file__).resolve().parents[1]
 HUGGINGFACE_DATA = ROOT / "src" / "llmcapa" / "data" / "huggingface.json"
 HUGGINGFACE_MODEL_URL = "https://huggingface.co/{}"
+_VLLM_REASONING_EVIDENCE = (
+    ROOT / "src" / "llmcapa" / "data" / "_vllm_verified_reasoning.meta"
+)
+_VLLM_REASONING_FIELDS = (
+    "supports_reasoning",
+    "supports_reasoning_effort",
+    "reasoning_effort_values",
+    "supports_thinking_budget",
+    "thinking_budget_values",
+    "thinking_control",
+)
 _OPENAI_COMPAT_CHAT_PIPELINES = {
     "text-generation",
     "text2text-generation",
@@ -104,6 +115,11 @@ def build_catalog(
         raise ValueError(f"unsupported static HF provider: {provider}")
     config = PROVIDER_CONFIG[provider]
     previous = previous or []
+    verified_vllm = (
+        json.loads(_VLLM_REASONING_EVIDENCE.read_text(encoding="utf-8"))["models"]
+        if provider == "vllm"
+        else {}
+    )
     old_by_id = {
         str(row.get("model_id", "")): row
         for row in previous
@@ -223,6 +239,20 @@ def build_catalog(
                     "https://lmstudio.ai/docs/developer/openai-compat/structured-output"
                 )
                 extra["structured_output_model_dependent"] = True
+        # Only reviewed, exact model IDs receive reasoning controls. A model
+        # name substring, derivative, or another provider's API flags are not
+        # evidence that the vLLM renderer supports the same effort values.
+        verified = verified_vllm.get(model_id)
+        if isinstance(verified, dict):
+            for field in _VLLM_REASONING_FIELDS:
+                if field in verified:
+                    row[field] = verified[field]
+            extra["vllm_reasoning_evidence"] = {
+                "source": verified["evidence_url"],
+                "checked_at": verified["checked_at"],
+                "note": verified.get("note", ""),
+                "verification": "documentation_only",
+            }
         rows[model_id] = row
 
     # Keep historical/local IDs with no exact HF repository match, but strip
