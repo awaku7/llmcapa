@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 HUGGINGFACE_DATA = ROOT / "src" / "llmcapa" / "data" / "huggingface.json"
 HUGGINGFACE_MODEL_URL = "https://huggingface.co/{}"
 _VLLM_REASONING_EVIDENCE = (
-    ROOT / "scripts" / "metadata" / "vllm_reasoning_verified.json"
+    ROOT / "src" / "llmcapa" / "data" / "_vllm_verified_reasoning.json"
 )
 _VLLM_REASONING_FIELDS = (
     "supports_reasoning",
