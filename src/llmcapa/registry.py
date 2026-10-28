@@ -13,12 +13,22 @@ import time
 import urllib.request
 import warnings
 from dataclasses import replace
+from functools import lru_cache
 from importlib import resources
 from pathlib import Path
 from typing import ClassVar
 from urllib.parse import quote
 
 from .models import Capability
+
+
+@lru_cache(maxsize=1)
+def _verified_vllm_reasoning_models() -> dict:
+    """Bundled exact-ID reasoning evidence shared across catalog load paths."""
+    resource = resources.files("llmcapa.data").joinpath(
+        "_vllm_verified_reasoning.meta"
+    )
+    return json.loads(resource.read_text(encoding="utf-8"))["models"]
 
 
 class ModelNotFoundError(KeyError):
@@ -91,10 +101,33 @@ class Registry:
 
     @classmethod
     def _canonical_capability(cls, cap: Capability) -> Capability:
-        """Normalize Azure aliases but leave other provider labels untouched."""
+        """Normalize provider aliases and apply verified exact-ID vLLM controls."""
         provider = cls._canonical_provider(cap.provider)
         if provider == "azure-foundry" and cap.provider != provider:
             return replace(cap, provider=provider)
+        if provider == "vllm":
+            evidence = _verified_vllm_reasoning_models().get(cap.model_id)
+            if isinstance(evidence, dict):
+                changes = {
+                    key: evidence[key]
+                    for key in (
+                        "supports_reasoning",
+                        "supports_reasoning_effort",
+                        "reasoning_effort_values",
+                        "supports_thinking_budget",
+                        "thinking_budget_values",
+                        "thinking_control",
+                    )
+                    if key in evidence
+                }
+                extra = dict(cap.extra)
+                extra["vllm_reasoning_evidence"] = {
+                    "source": evidence["evidence_url"],
+                    "checked_at": evidence["checked_at"],
+                    "note": evidence.get("note", ""),
+                    "verification": "documentation_only",
+                }
+                return replace(cap, **changes, extra=extra)
         return cap
 
     def _matching_providers(self, provider: str) -> set:
@@ -324,42 +357,8 @@ class Registry:
             records = payload.get("models", [])
         else:
             records = payload
-        verified_models = {}
-        if catalog_name == "vllm.json":
-            evidence_path = resources.files("llmcapa.data").joinpath(
-                "_vllm_verified_reasoning.meta"
-            )
-            verified_models = json.loads(evidence_path.read_text(encoding="utf-8"))[
-                "models"
-            ]
         count = 0
         for record in records:
-            evidence = (
-                verified_models.get(record.get("model_id"))
-                if isinstance(record, dict)
-                else None
-            )
-            if isinstance(evidence, dict):
-                # Do not infer a control from another provider or derivative.
-                record = dict(record)
-                for key in (
-                    "supports_reasoning",
-                    "supports_reasoning_effort",
-                    "reasoning_effort_values",
-                    "supports_thinking_budget",
-                    "thinking_budget_values",
-                    "thinking_control",
-                ):
-                    if key in evidence:
-                        record[key] = evidence[key]
-                extra = dict(record.get("extra") or {})
-                extra["vllm_reasoning_evidence"] = {
-                    "source": evidence["evidence_url"],
-                    "checked_at": evidence["checked_at"],
-                    "note": evidence.get("note", ""),
-                    "verification": "documentation_only",
-                }
-                record["extra"] = extra
             cap = Capability.from_dict(record)
             if catalog_name:
                 provider = self._canonical_provider(cap.provider)
