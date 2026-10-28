@@ -71,7 +71,11 @@ def test_bundled_vllm_qwen_budget_is_not_reasoning_effort() -> None:
 def test_vllm_refresh_preserves_verified_effort_controls() -> None:
     registry = Registry()
     registry._ensure_loaded()
-    stale = Capability(provider="vllm", model_id="openai/gpt-oss-20b")
+    stale = Capability(
+        provider="vllm",
+        model_id="openai/gpt-oss-20b",
+        extra={"metadata_source": "huggingface"},
+    )
     registry._register_refreshed_catalog_record(stale)
     updated = registry.get("openai/gpt-oss-20b", provider="vllm")
     assert updated.supports_reasoning_effort is True
@@ -84,3 +88,18 @@ def test_vllm_refresh_preserves_verified_effort_controls() -> None:
     registry.register(stale, overwrite=True)
     updated = registry.get("openai/gpt-oss-20b", provider="vllm")
     assert updated.get_reasoning_effort_values() == ["low", "medium", "high"]
+
+
+def test_vllm_explicit_user_override_is_not_replaced() -> None:
+    registry = Registry()
+    registry._ensure_loaded()
+    custom = Capability(
+        provider="vllm",
+        model_id="openai/gpt-oss-20b",
+        supports_reasoning_effort=False,
+        extra={"custom_source": "user"},
+    )
+    registry.register(custom, overwrite=True)
+    cap = registry.get("openai/gpt-oss-20b", provider="vllm")
+    assert cap.supports_reasoning_effort is False
+    assert cap.extra == {"custom_source": "user"}
