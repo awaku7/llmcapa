@@ -2,7 +2,15 @@
 
 import llmcapa
 
-EXPECTED_LIQUID_MODELS = {"d1", "d1.1", "d1-3B", "d1-omni-600M", "d1-ultra"}
+EXPECTED_LIQUID_MODELS = {
+    "d1",
+    "d1.1",
+    "d1-2B",
+    "d1-3B",
+    "d1-omni-2B",
+    "d1-omni-600M",
+    "d1-ultra",
+}
 
 
 def test_liquid_provider_is_registered_and_queryable():
@@ -52,8 +60,18 @@ def test_liquid_models_are_typed_decision_models():
 
 
 def test_liquid_open_models_have_documented_context_and_modalities():
+    d1_2b = llmcapa.get("d1-2B", provider="liquid")
+    omni_2b = llmcapa.get("d1-omni-2B", provider="liquid")
     d1 = llmcapa.get("d1-3B", provider="liquid")
     omni = llmcapa.get("d1-omni-600M", provider="liquid")
+
+    assert d1_2b.context_window == 131072
+    assert d1_2b.input_modalities == ["text", "image"]
+    assert d1_2b.extra["parameters"] == 1_920_000_000
+
+    assert omni_2b.context_window == 131072
+    assert omni_2b.input_modalities == ["text", "image", "audio"]
+    assert omni_2b.extra["parameters"] == 2_170_000_000
 
     assert d1.context_window == 32768
     assert d1.input_modalities == ["text", "image"]

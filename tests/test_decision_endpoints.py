@@ -88,6 +88,25 @@ def test_openrouter_decision_routes_have_explicit_gateway_endpoints():
         )
 
 
+def test_openrouter_refresh_retains_curated_decision_route_missing_from_api():
+    model_id = "perplexity/pplx-decider-v1.1-27b"
+    previous = {
+        model_id: {
+            "model_id": model_id,
+            "decision": {"decision": True},
+            "extra": {"source": "https://openrouter.ai/api/v1/models"},
+        }
+    }
+
+    retained = openrouter_updater.retain_missing_curated_decision_routes(
+        [], previous, checked_at="2026-10-28"
+    )
+
+    assert retained[0]["model_id"] == model_id
+    assert retained[0]["extra"]["not_listed_in_current_provider_refresh"] is True
+    assert retained[0]["extra"]["provider_refresh_checked_at"] == "2026-10-28"
+
+
 def test_openai_native_decisions_api_endpoint_is_distinguished():
     payload = json.loads((DATA_DIR / "openai.json").read_text(encoding="utf-8"))
     record = next(

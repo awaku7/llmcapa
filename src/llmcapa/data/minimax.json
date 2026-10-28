@@ -492,6 +492,37 @@
         ],
         "context_window_source": "https://platform.minimax.io/docs/guides/models-intro",
         "context_window_basis": "official_catalog_snapshot"
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -538,6 +569,29 @@
         "unit": "clip",
         "note": "varies by resolution/duration",
         "api": "video"
+      },
+      "video": {
+        "accepts_video_input": false,
+        "generation": true,
+        "understanding": false,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "generation": true,
+          "streaming": true
+        },
+        "output_formats": [
+          "mp4"
+        ],
+        "output_mime_types": [
+          "video/mp4"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -580,6 +634,29 @@
         "unit": "clip",
         "note": "faster/cheaper tier vs Hailuo 2.3",
         "api": "video"
+      },
+      "video": {
+        "accepts_video_input": false,
+        "generation": true,
+        "understanding": false,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "generation": true,
+          "streaming": true
+        },
+        "output_formats": [
+          "mp4"
+        ],
+        "output_mime_types": [
+          "video/mp4"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -620,11 +697,7 @@
         "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
         "price_per_image": 0.0035,
         "unit": "image",
-        "api": "image",
-        "refresh_metadata_fallbacks": [
-          "image"
-        ],
-        "refresh_metadata_fallback_checked_at": "2026-10-24"
+        "api": "image"
       },
       "image": {
         "generation": true,
@@ -648,7 +721,7 @@
         ],
         "max_input_bytes": 31457280,
         "source_url": "https://platform.minimax.io/docs/api-reference/file-management-upload",
-        "checked_at": "2026-10-17"
+        "checked_at": "2026-10-28"
       }
     },
     {
@@ -691,6 +764,21 @@
         "max_duration_min": 5,
         "unit": "track",
         "api": "music"
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "music_generation": true,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -733,6 +821,20 @@
         "unit": "1m_chars",
         "api": "tts",
         "quality": "hd"
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -775,51 +877,20 @@
         "unit": "1m_chars",
         "api": "tts",
         "quality": "turbo"
-      }
-    },
-    {
-      "provider": "minimax",
-      "model_id": "MiniMax-H3-Context-IR",
-      "display_name": "MiniMax-H3-Context-IR",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "license_type": "api",
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "pricing": {
-        "input_per_1m": 0.9,
-        "output_per_1m": 3.6,
-        "currency": "USD"
       },
-      "deprecated": false,
-      "aliases": [],
-      "reasoning_effort_values": null,
-      "thinking_budget_values": null,
-      "thinking_level_values": null,
-      "thinking_control": null,
-      "extra": {
-        "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
-        "pricing_fetched": true,
-        "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-10-24"
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     }
   ]

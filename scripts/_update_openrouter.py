@@ -982,6 +982,37 @@ def preserve_openrouter_metadata(record: dict, previous: dict | None) -> dict:
     return merged
 
 
+def retain_missing_curated_decision_routes(
+    models: list[dict],
+    previous_by_id: dict[str, dict],
+    *,
+    checked_at: str | None = None,
+) -> list[dict]:
+    """Keep curated decision routes when a refresh omits them from the API.
+
+    OpenRouter's model listing can stop returning a route while its separately
+    documented Decisions API metadata remains useful for compatibility. Retain
+    only previously cataloged routes with explicit decision metadata, and mark
+    them as absent from this refresh rather than inventing new model records.
+    """
+    checked_at = checked_at or datetime.now(timezone.utc).date().isoformat()
+    current_ids = {str(model.get("model_id", "")) for model in models}
+    for model_id in OPENROUTER_DECISION_MODEL_META:
+        if model_id in current_ids:
+            continue
+        previous = previous_by_id.get(model_id)
+        if not previous or not isinstance(previous.get("decision"), dict):
+            continue
+        retained = dict(previous)
+        extra = dict(retained.get("extra") or {})
+        extra["not_listed_in_current_provider_refresh"] = True
+        extra["provider_refresh_checked_at"] = checked_at
+        retained["extra"] = extra
+        models.append(retained)
+        current_ids.add(model_id)
+    return models
+
+
 def main() -> None:
     raw_models = fetch_models()
     api_model_count = len(raw_models)
@@ -999,6 +1030,7 @@ def main() -> None:
     # append synthetic decision routes (not in the models API)
     models.extend(build_decision_routes())
     models = dedupe(models)
+    models = retain_missing_curated_decision_routes(models, previous_by_id)
     models = [
         preserve_openrouter_metadata(model, previous_by_id.get(model.get("model_id")))
         for model in models

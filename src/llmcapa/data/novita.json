@@ -416,7 +416,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -2625,7 +2625,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       },
       "extra": {
@@ -3757,7 +3757,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -3802,6 +3802,37 @@
       "extra": {
         "source": "https://api.novita.ai/openai/v1/models",
         "cache_read_per_1m": 0.0015
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -4119,7 +4150,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -4201,7 +4232,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -4283,7 +4314,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -4365,7 +4396,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -4439,7 +4470,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -4484,6 +4515,37 @@
       "extra": {
         "source": "https://api.novita.ai/openai/v1/models",
         "cache_read_per_1m": 0.02
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -4527,6 +4589,37 @@
       "extra": {
         "source": "https://api.novita.ai/openai/v1/models",
         "cache_read_per_1m": 0.02
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -4723,6 +4816,82 @@
           }
         ]
       }
+    },
+    {
+      "provider": "novita",
+      "model_id": "nvrouter/auto",
+      "display_name": "Auto",
+      "context_window": 1000000,
+      "max_output_tokens": 328000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "nvrouter/auto"
+      ],
+      "license_type": "api"
+    },
+    {
+      "provider": "novita",
+      "model_id": "nvrouter/fusion",
+      "display_name": "Fusion",
+      "context_window": 1000000,
+      "max_output_tokens": 328000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "nvrouter/fusion"
+      ],
+      "license_type": "api"
     },
     {
       "provider": "novita",
@@ -5226,7 +5395,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -5903,7 +6072,7 @@
         "speech_understanding": true,
         "supports_streaming": true,
         "supports_realtime": null,
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred",
         "endpoints": {
           "speech_generation": true,
@@ -5940,7 +6109,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -5999,7 +6168,7 @@
         "speech_understanding": true,
         "supports_streaming": true,
         "supports_realtime": null,
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred",
         "endpoints": {
           "speech_understanding": true,
@@ -6035,7 +6204,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -6115,7 +6284,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -6195,7 +6364,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -6275,7 +6444,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -6355,7 +6524,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -6435,7 +6604,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -6515,7 +6684,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -6595,7 +6764,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -6675,7 +6844,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -6755,7 +6924,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -6835,7 +7004,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -6915,7 +7084,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -6995,7 +7164,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -7075,7 +7244,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -7255,7 +7424,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -7337,7 +7506,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -7419,7 +7588,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -7689,7 +7858,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -7763,7 +7932,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -8135,7 +8304,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -8238,7 +8407,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       },
       "video": {
@@ -8269,7 +8438,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       },
       "extra": {
@@ -8327,7 +8496,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       },
       "video": {
@@ -8358,7 +8527,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       },
       "extra": {
@@ -8588,7 +8757,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -8719,7 +8888,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -9193,7 +9362,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     },
@@ -9316,7 +9485,7 @@
           "video/x-matroska",
           "video/x-msvideo"
         ],
-        "checked_at": "2026-10-15",
+        "checked_at": "2026-10-28",
         "status": "inferred"
       }
     }

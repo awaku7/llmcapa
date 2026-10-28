@@ -71,7 +71,7 @@
           "wait"
         ],
         "source_url": "https://ai.azure.com/catalog/models",
-        "checked_at": "2026-10-24"
+        "checked_at": "2026-10-28"
       }
     },
     {
@@ -294,6 +294,20 @@
         "version": "2024-11-20",
         "maas_or_paygo": true,
         "summary": "OpenAI's most advanced multimodal model in the gpt-4o family. Can handle both text and image inputs."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -364,6 +378,20 @@
         "version": "2024-07-18",
         "maas_or_paygo": true,
         "summary": "An affordable, efficient AI solution for diverse text and image tasks."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -413,6 +441,22 @@
         "version": "2025-12-15",
         "maas_or_paygo": true,
         "summary": "A highly efficient and cost effective speech-to-text solution that deliverables reliable and accurate transcripts."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "transcription": true,
+        "extra": {},
+        "endpoints": {
+          "transcription": true,
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -464,6 +508,21 @@
         "version": "2025-12-15",
         "maas_or_paygo": true,
         "summary": "An advanced text-to-speech solution designed to convert written text into natural-sounding speech."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": true,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -513,6 +572,22 @@
         "version": "2025-03-20",
         "maas_or_paygo": true,
         "summary": "A cutting-edge speech-to-text solution that deliverables reliable and accurate transcripts."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "transcription": true,
+        "extra": {},
+        "endpoints": {
+          "transcription": true,
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -558,6 +633,23 @@
         "version": "2025-10-15",
         "maas_or_paygo": true,
         "summary": "A cutting-edge speech-to-text solution that deliverables reliable and accurate transcripts; now equipped with diarization support aka identifying different speakers through the transcription."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "transcription": true,
+        "diarization": true,
+        "extra": {},
+        "endpoints": {
+          "transcription": true,
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -1264,6 +1356,72 @@
     },
     {
       "provider": "azure-openai",
+      "model_id": "gpt-5.4-mini",
+      "display_name": "OpenAI gpt-5.4-mini",
+      "context_window": 400000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion,Responses",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": true,
+      "license_type": "api",
+      "supports_tool_search": true,
+      "aliases": [
+        "azure-openai/gpt-5.4-mini"
+      ],
+      "pricing": {
+        "input_per_1m": 0.75,
+        "output_per_1m": 4.5,
+        "currency": "USD",
+        "cached_input_per_1m": 0.08
+      },
+      "extra": {
+        "pricing_batch": {
+          "cached_input_per_1m": 0.04,
+          "input_per_1m": 0.38,
+          "output_per_1m": 2.25,
+          "currency": "USD"
+        },
+        "pricing_data_zone": {
+          "cached_input_per_1m": 0.09,
+          "input_per_1m": 0.83,
+          "output_per_1m": 4.95,
+          "currency": "USD"
+        },
+        "pricing_priority": {
+          "cached_input_per_1m": 0.15,
+          "input_per_1m": 1.5,
+          "output_per_1m": 9.0,
+          "currency": "USD"
+        },
+        "pricing_match_key": "gpt-5.4-mini",
+        "deployment_types": [
+          "batch-enabled"
+        ],
+        "deployment_options": "UnifiedEndpointMaaS,AOAI,Serverless API,Instant",
+        "version": "2026-03-17",
+        "maas_or_paygo": true,
+        "summary": "GPT‑5.4‑mini is a compact, cost‑efficient model designed for reliable performance across high‑volume, everyday AI workloads.",
+        "long_context": true,
+        "context_window": 400000
+      }
+    },
+    {
+      "provider": "azure-openai",
       "model_id": "gpt-5.4-pro",
       "display_name": "OpenAI gpt-5.4",
       "context_window": 1050000,
@@ -1430,6 +1588,21 @@
         "version": "2025-08-28",
         "maas_or_paygo": true,
         "summary": "Best suited for rich, asynchronous audio input/output interactions, such as creating spoken summaries from text."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": true,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -1478,6 +1651,21 @@
         "version": "2026-02-23",
         "maas_or_paygo": true,
         "summary": "A new S2S (speech to speech) model with improved instruction following."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": true,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -1525,6 +1713,21 @@
         "version": "2025-10-06",
         "maas_or_paygo": true,
         "summary": "Best suited for rich, asynchronous audio input/output interactions, such as creating spoken summaries from text."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": true,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -1794,6 +1997,21 @@
         "version": "2025-08-28",
         "maas_or_paygo": true,
         "summary": "A new S2S (speech to speech) model with improved instruction following."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": true,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -1850,6 +2068,21 @@
         "version": "2026-02-23",
         "maas_or_paygo": true,
         "summary": "A new S2S (speech to speech) model with improved instruction following."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": true,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -1896,6 +2129,21 @@
         "version": "2025-12-15",
         "maas_or_paygo": true,
         "summary": "gpt-realtime-mini is a smaller version of gpt-realtime S2S (speech to speech) model built on chive architecture. This model excels at instruction following and is optimized for cost efficiency."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": true,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -3415,7 +3663,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 3,
+        "version": 4,
         "maas_or_paygo": true,
         "summary": "DeepSeek V4 Flash 0731 MoE checkpoint for long-context reasoning and coding.",
         "long_context": true,
@@ -3465,7 +3713,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 3,
+        "version": 4,
         "maas_or_paygo": true,
         "summary": "14B dense Phi model for English chat, reasoning, math, and code generation."
       }
@@ -3566,7 +3814,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 6,
+        "version": 7,
         "maas_or_paygo": true,
         "summary": "OpenAI GPT-OSS 20B open-weight reasoning model with MXFP4 quantized weights."
       }
@@ -4015,6 +4263,20 @@
         "version": 2,
         "maas_or_paygo": true,
         "summary": "First small multimodal model to have 3 modality inputs (text, audio, image), excelling in quality and efficiency"
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -4521,7 +4783,7 @@
         "requires_beta": true,
         "enable_zoom": false,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-24",
+        "checked_at": "2026-10-28",
         "beta_header": "computer-use-2025-01-24"
       }
     },
@@ -4623,7 +4885,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-24",
+        "checked_at": "2026-10-28",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -4684,7 +4946,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-24",
+        "checked_at": "2026-10-28",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -4744,7 +5006,7 @@
         "requires_beta": true,
         "enable_zoom": false,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-24",
+        "checked_at": "2026-10-28",
         "beta_header": "computer-use-2025-01-24"
       }
     },
@@ -4805,7 +5067,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-24",
+        "checked_at": "2026-10-28",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -4983,7 +5245,8 @@
         "deployment_options": "AOAI,UnifiedEndpointMaaS,Serverless API",
         "version": "2026-09-08",
         "maas_or_paygo": true,
-        "summary": "An advanced image model for high-quality creation, editing, and production-ready visuals."
+        "summary": "An advanced image model for high-quality creation, editing, and production-ready visuals.",
+        "not_listed_in_current_docs": true
       },
       "image": {
         "generation": true,
@@ -5033,6 +5296,21 @@
         "version": "2026-09-10",
         "maas_or_paygo": true,
         "summary": "Gpt-live-1 is a bidirectional voice API that lets applications listen and speak simultaneously instead of forcing rigid turn boundaries. It is being developed as a new specialized API surface rather than a small extension of the current Realtime S2S deploy"
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": true,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -5071,6 +5349,22 @@
         "version": "2026-07-28",
         "maas_or_paygo": true,
         "summary": "A new real-time speech-to-text (STT) model with enhanced transcription accuracy and low-latency streaming capabilities."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "transcription": true,
+        "extra": {},
+        "endpoints": {
+          "transcription": true,
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -5109,6 +5403,22 @@
         "version": "2026-07-28",
         "maas_or_paygo": true,
         "summary": "A new real-time speech-to-text (STT) model with enhanced transcription accuracy and low-latency streaming capabilities."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "transcription": true,
+        "extra": {},
+        "endpoints": {
+          "transcription": true,
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -5194,6 +5504,57 @@
         "version": "2025-10-06",
         "maas_or_paygo": true,
         "summary": "Sora 2 in Azure AI Foundry isn't just another video generation tool; it's a creative powerhouse, seamlessly integrated into a platform built for innovation, trust, and scale. "
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": true,
+        "understanding": false,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "generation": true,
+          "streaming": true
+        },
+        "output_formats": [
+          "mp4"
+        ],
+        "output_mime_types": [
+          "video/mp4"
+        ],
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -5785,6 +6146,21 @@
         "version": 2,
         "maas_or_paygo": true,
         "summary": "1B parameter high-fidelity audio generation model."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": true,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -5825,6 +6201,20 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "14B audio-in instruct LLM with voice-agent reflexes — audio-native tool calling, multi-turn state tracking, and interruption-aware instruction following — with text-model-grade IF."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -5867,6 +6257,22 @@
         "version": 3,
         "maas_or_paygo": true,
         "summary": "High-performance automatic speech recognition model supporting 60+ languages with OpenAI Whisper-compatible API"
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "transcription": true,
+        "extra": {},
+        "endpoints": {
+          "transcription": true,
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -5991,6 +6397,8 @@
           "standard-paygo"
         ],
         "deployment_options": "UnifiedEndpointMaaS,ServerlessMaaS,Serverless API",
+        "inference_retirement_date": "2027-02-15T00:00:00Z",
+        "inference_deprecation_date": "2026-11-15T00:00:00Z",
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Cohere Embed English is the market's leading text representation model used for semantic search, retrieval-augmented generation (RAG), classification, and clustering."
@@ -6032,6 +6440,8 @@
           "standard-paygo"
         ],
         "deployment_options": "UnifiedEndpointMaaS,ServerlessMaaS,Serverless API",
+        "inference_retirement_date": "2027-02-15T00:00:00Z",
+        "inference_deprecation_date": "2026-11-15T00:00:00Z",
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Cohere Embed Multilingual is the market's leading text representation model used for semantic search, retrieval-augmented generation (RAG), classification, and clustering."
@@ -6912,6 +7322,37 @@
         "summary": "NVIDIA Nemotron 3.5 Super VL 120B A12B NVFP4 is an open multimodal model for long-running agents with text, image, document, and video understanding, a hybrid Mamba-Transformer Mixture-of-Experts architecture, 120B total and 12B active parameters, and a 1,",
         "long_context": true,
         "context_window": 1048576
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -7641,7 +8082,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 2,
+        "version": 4,
         "maas_or_paygo": true,
         "summary": "ALIA 40B instruction model for long-context multilingual chat across Iberian languages and English."
       }
@@ -7725,7 +8166,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 2,
+        "version": 3,
         "maas_or_paygo": true,
         "summary": "ALIA 40B instruction model for long-context multilingual chat across Iberian languages and English."
       }
@@ -7857,11 +8298,42 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 3,
+        "version": 4,
         "maas_or_paygo": true,
         "summary": "Agentic coding reasoning model with 256K context, tool calling, and multimodal inputs.",
         "long_context": true,
         "context_window": 262144
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -8034,11 +8506,42 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 3,
+        "version": 4,
         "maas_or_paygo": true,
         "summary": "Instruction-tuned multimodal Gemma 4 MoE model for reasoning, coding, and image understanding.",
         "long_context": true,
         "context_window": 262144
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -8085,6 +8588,37 @@
         "summary": "Instruction-tuned multimodal Gemma 4 model for reasoning, coding, and image understanding.",
         "long_context": true,
         "context_window": 262144
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -8128,9 +8662,54 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 6,
+        "version": 7,
         "maas_or_paygo": true,
         "summary": "Compact multimodal Gemma 4 model for reasoning, coding, and on-device text, image, and audio tasks."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -8174,9 +8753,54 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 7,
+        "version": 8,
         "maas_or_paygo": true,
         "summary": "Compact multimodal Gemma 4 model for reasoning, coding, and efficient text, image, and audio tasks."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -8258,7 +8882,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 2,
+        "version": 3,
         "maas_or_paygo": true,
         "summary": "Granite 4.0 H Tiny 7B long-context instruct model for enterprise text generation."
       }
@@ -8300,7 +8924,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 3,
+        "version": 4,
         "maas_or_paygo": true,
         "summary": "Granite 4.0 Micro 3B long-context instruct model for enterprise text generation."
       }
@@ -8342,7 +8966,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 3,
+        "version": 4,
         "maas_or_paygo": true,
         "summary": "Granite 4.0 Tiny Preview 7B hybrid MoE instruct model for long-context reasoning."
       }
@@ -8689,6 +9313,51 @@
         "summary": "NVFP4 816B-A42B MoE model with 1M context, built for coding and agentic work, natively multimodal across text, image, audio, and video.",
         "long_context": true,
         "context_window": 1048576
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -8729,7 +9398,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 1,
+        "version": 2,
         "maas_or_paygo": true,
         "summary": "27B multimodal browser-use agent that reasons over screenshots and emits grounded browser actions.",
         "long_context": true,
@@ -8774,7 +9443,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 1,
+        "version": 2,
         "maas_or_paygo": true,
         "summary": "4B multimodal browser-use agent that reasons over screenshots and emits grounded browser actions.",
         "long_context": true,
@@ -8863,7 +9532,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 3,
+        "version": 4,
         "maas_or_paygo": true,
         "summary": "Phi-3.5 based clinical language model for biomedical and medical NLP workflows."
       }
@@ -8905,7 +9574,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 4,
+        "version": 5,
         "maas_or_paygo": true,
         "summary": "Instruction-aligned MediPhi model for clinical and biomedical NLP tasks."
       }
@@ -9160,7 +9829,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 2,
+        "version": 3,
         "maas_or_paygo": true,
         "summary": "FP8 Mistral Nemo 12B instruct model for multilingual chat, coding, and tool-use workflows."
       }
@@ -9246,7 +9915,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 3,
+        "version": 4,
         "maas_or_paygo": true,
         "summary": "12B Pixtral multimodal instruct model for text and image understanding with a 128k context window."
       }
@@ -9290,9 +9959,40 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 5,
+        "version": 6,
         "maas_or_paygo": true,
         "summary": "VLM for physical AI reasoning over text, images, and video."
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -9341,6 +10041,58 @@
         "version": 6,
         "maas_or_paygo": true,
         "summary": "Cosmos3 Edge omni model for text, image, video, audio, and action generation."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": true,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "generation": true,
+          "understanding": true,
+          "streaming": true
+        },
+        "output_formats": [
+          "mp4"
+        ],
+        "output_mime_types": [
+          "video/mp4"
+        ],
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -9391,6 +10143,58 @@
         "summary": "Cosmos3 Nano omni model for text, image, video, audio, and action generation.",
         "long_context": true,
         "context_window": 262144
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": true,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "generation": true,
+          "understanding": true,
+          "streaming": true
+        },
+        "output_formats": [
+          "mp4"
+        ],
+        "output_mime_types": [
+          "video/mp4"
+        ],
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -9441,6 +10245,58 @@
         "summary": "Cosmos3 Super omni model for text, image, video, audio, and action generation.",
         "long_context": true,
         "context_window": 262144
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": true,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "generation": true,
+          "understanding": true,
+          "streaming": true
+        },
+        "output_formats": [
+          "mp4"
+        ],
+        "output_mime_types": [
+          "video/mp4"
+        ],
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -9606,7 +10462,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 4,
+        "version": 5,
         "maas_or_paygo": true,
         "summary": "NVIDIA Qwen3-based 14B model specialized for autonomous terminal interaction."
       }
@@ -9648,7 +10504,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 4,
+        "version": 5,
         "maas_or_paygo": true,
         "summary": "NVIDIA Qwen3-based 32B model specialized for autonomous terminal interaction."
       }
@@ -9690,7 +10546,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 3,
+        "version": 4,
         "maas_or_paygo": true,
         "summary": "NVIDIA Qwen3-based 8B model specialized for autonomous terminal interaction."
       }
@@ -9732,7 +10588,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 7,
+        "version": 9,
         "maas_or_paygo": true,
         "summary": "Instruction-tuned reasoning model for chat, tool use, and complex problem solving.",
         "long_context": true,
@@ -9820,7 +10676,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 5,
+        "version": 6,
         "maas_or_paygo": true,
         "summary": "Instruction-tuned reasoning model for chat, tool use, and complex problem solving.",
         "long_context": true,
@@ -10003,6 +10859,37 @@
         "summary": "Nemotron 3.5 Super vision-language reasoning model for document, GUI, and video understanding.",
         "long_context": true,
         "context_window": 1048576
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -10049,6 +10936,37 @@
         "summary": "NVFP4 vision-language reasoning model for document understanding, coding, and tool use.",
         "long_context": true,
         "context_window": 1048576
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -10088,7 +11006,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 4,
+        "version": 5,
         "maas_or_paygo": true,
         "summary": "NVIDIA 14B code-reasoning model derived from Qwen2.5-14B-Instruct."
       }
@@ -10130,7 +11048,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 3,
+        "version": 4,
         "maas_or_paygo": true,
         "summary": "NVIDIA 32B code-reasoning model derived from Qwen2.5-32B-Instruct."
       }
@@ -10176,6 +11094,22 @@
         "version": 3,
         "maas_or_paygo": true,
         "summary": "Whisper large model for multilingual speech recognition and transcription."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "transcription": true,
+        "extra": {},
+        "endpoints": {
+          "transcription": true,
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -10219,6 +11153,22 @@
         "version": 3,
         "maas_or_paygo": true,
         "summary": "Fast Whisper large-v3 Turbo model for multilingual speech recognition."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "transcription": true,
+        "extra": {},
+        "endpoints": {
+          "transcription": true,
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -10356,7 +11306,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 6,
+        "version": 7,
         "maas_or_paygo": true,
         "summary": "Compact Qwen3 0.6B chat model for lightweight text generation."
       }
@@ -10660,7 +11610,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 4,
+        "version": 5,
         "maas_or_paygo": true,
         "summary": "Dense 32.8B Qwen3 reasoning model with switchable thinking modes, multilingual chat, and agentic workflows."
       }
@@ -10702,7 +11652,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 3,
+        "version": 4,
         "maas_or_paygo": true,
         "summary": "Qwen3 4B instruction model for compact long-context chat and text generation.",
         "long_context": true,
@@ -10746,7 +11696,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 2,
+        "version": 3,
         "maas_or_paygo": true,
         "summary": "Qwen3 Coder 30B-A3B instruction model for code generation and agentic workflows.",
         "long_context": true,
@@ -10790,7 +11740,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 4,
+        "version": 5,
         "maas_or_paygo": true,
         "summary": "FP8 Qwen3 Coder 30B-A3B model for code generation and agentic workflows.",
         "long_context": true,
@@ -11013,6 +11963,37 @@
         "summary": "Large MoE Qwen3-VL model for advanced visual reasoning, GUI agents, OCR, and long-context image and video understanding.",
         "long_context": true,
         "context_window": 262144
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -11059,6 +12040,37 @@
         "summary": "Qwen3-VL 30B-A3B multimodal model for image, video, and text generation.",
         "long_context": true,
         "context_window": 262144
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -11105,6 +12117,37 @@
         "summary": "FP8 Qwen3-VL 30B-A3B instruct model for multimodal image, video, and text generation.",
         "long_context": true,
         "context_window": 262144
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -11146,11 +12189,42 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 3,
+        "version": 4,
         "maas_or_paygo": true,
         "summary": "FP8 Qwen3-VL 32B instruct model for multimodal image, video, and text generation.",
         "long_context": true,
         "context_window": 262144
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -11192,11 +12266,42 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 3,
+        "version": 4,
         "maas_or_paygo": true,
         "summary": "Qwen3-VL 4B instruct model for compact multimodal image, video, and text workflows.",
         "long_context": true,
         "context_window": 262144
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -11238,11 +12343,42 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 2,
+        "version": 3,
         "maas_or_paygo": true,
         "summary": "Qwen3-VL 4B thinking model for compact multimodal reasoning workflows.",
         "long_context": true,
         "context_window": 262144
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -11284,11 +12420,42 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 3,
+        "version": 4,
         "maas_or_paygo": true,
         "summary": "Qwen3-VL 8B instruct model for visual reasoning, OCR, video, and text understanding.",
         "long_context": true,
         "context_window": 262144
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -11330,11 +12497,42 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 3,
+        "version": 4,
         "maas_or_paygo": true,
         "summary": "FP8 Qwen3-VL 8B instruct model for visual reasoning, OCR, video, and text understanding.",
         "long_context": true,
         "context_window": 262144
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -11376,11 +12574,42 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 3,
+        "version": 4,
         "maas_or_paygo": true,
         "summary": "Compact multimodal Qwen3.5 model for visual reasoning, OCR, GUI interaction, and long-context video understanding.",
         "long_context": true,
         "context_window": 262144
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -11422,11 +12651,42 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 3,
+        "version": 4,
         "maas_or_paygo": true,
         "summary": "FP8 Qwen3.5 27B multimodal model for visual reasoning and generation.",
         "long_context": true,
         "context_window": 262144
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -11468,11 +12728,42 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 5,
+        "version": 6,
         "maas_or_paygo": true,
         "summary": "Small multimodal Qwen3.5 model for visual reasoning, OCR, GUI interaction, and long-context video understanding.",
         "long_context": true,
         "context_window": 262144
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -11514,11 +12805,42 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 4,
+        "version": 5,
         "maas_or_paygo": true,
         "summary": "Qwen3.5 35B-A3B multimodal model for visual reasoning and long-context generation.",
         "long_context": true,
         "context_window": 262144
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -11560,11 +12882,42 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 3,
+        "version": 4,
         "maas_or_paygo": true,
         "summary": "Qwen3.5 397B-A17B multimodal MoE for reasoning, coding, agents, OCR, GUI, and long-context video.",
         "long_context": true,
         "context_window": 262144
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -11611,6 +12964,37 @@
         "summary": "FP8 Qwen3.5 397B-A17B multimodal MoE for reasoning, coding, agents, OCR, GUI, and video.",
         "long_context": true,
         "context_window": 262144
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -11657,6 +13041,37 @@
         "summary": "Qwen3.5 4B multimodal model for visual reasoning, OCR, and long-context generation.",
         "long_context": true,
         "context_window": 262144
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -11698,11 +13113,42 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 4,
+        "version": 5,
         "maas_or_paygo": true,
         "summary": "Qwen3.5 9B multimodal model for visual reasoning, OCR, and long-context generation.",
         "long_context": true,
         "context_window": 262144
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -11744,11 +13190,42 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 4,
+        "version": 5,
         "maas_or_paygo": true,
         "summary": "Multimodal 27B Qwen3.6 model for coding, reasoning, OCR, GUI interaction, and long-context video understanding.",
         "long_context": true,
         "context_window": 262144
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -11790,11 +13267,42 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 8,
+        "version": 9,
         "maas_or_paygo": true,
         "summary": "FP8-quantized multimodal 27B Qwen3.6 model for coding, reasoning, OCR, GUI interaction, and long-context video understanding.",
         "long_context": true,
         "context_window": 262144
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -11841,6 +13349,37 @@
         "summary": "Hybrid-attention multimodal Qwen3.6 model for visual reasoning, OCR, agentic UI tasks, and long-context video understanding.",
         "long_context": true,
         "context_window": 262144
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -11887,6 +13426,37 @@
         "summary": "Compact Qwen3.8 27B vision-language model for coding, agents, reasoning, images, and video.",
         "long_context": true,
         "context_window": 262144
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -11968,7 +13538,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 5,
+        "version": 6,
         "maas_or_paygo": true,
         "summary": "Preview QwQ 32B reasoning model for experimental math and coding tasks."
       }
@@ -12011,7 +13581,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 4,
+        "version": 5,
         "maas_or_paygo": true,
         "summary": "FP8 dynamic Gemma 4 instruction model for multimodal chat, reasoning, and tool calling.",
         "long_context": true,
@@ -12538,7 +14108,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 2,
+        "version": 3,
         "maas_or_paygo": true,
         "summary": "GLM-4.5 355B-A32B MoE model for agentic reasoning, coding, and tool use."
       }
@@ -12622,7 +14192,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 2,
+        "version": 3,
         "maas_or_paygo": true,
         "summary": "GLM-4.6 355B-A32B MoE model for long-context reasoning, coding, and tool use.",
         "long_context": true,
@@ -12666,7 +14236,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 5,
+        "version": 6,
         "maas_or_paygo": true,
         "summary": "GLM-4.7 355B-A32B MoE model for agentic reasoning, coding, and tool use.",
         "long_context": true,
@@ -12798,7 +14368,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 7,
+        "version": 8,
         "maas_or_paygo": true,
         "summary": "FP8 GLM-5.2 743B-A39B MoE model for long-context reasoning, coding, and tool use.",
         "long_context": true,
@@ -13056,6 +14626,20 @@
         "version": 6,
         "maas_or_paygo": true,
         "summary": "Excels in image reasoning capabilities on high-res images for visual understanding apps."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -13105,6 +14689,20 @@
         "version": 5,
         "maas_or_paygo": true,
         "summary": "Advanced image reasoning capabilities for visual understanding agentic apps."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -13313,6 +14911,23 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Translates streaming or recorded audio into text or audio across 140+ languages and dialects. Accuracy can be further optimized with custom models for your specialized use cases."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": true,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "transcription": true,
+        "extra": {},
+        "endpoints": {
+          "transcription": true,
+          "speech_generation": true,
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -13352,6 +14967,22 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Transcribes streaming or recorded audio into readable text across 140+ languages and dialects. Accuracy can be further optimized with custom models for your specialized use cases."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "transcription": true,
+        "extra": {},
+        "endpoints": {
+          "transcription": true,
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -13391,6 +15022,20 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Text-to-speech enables your applications, tools, or devices to convert text into natural synthesized speech. It leverages advanced out-of-the-box [prebuilt neural voices](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/language-support?t"
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -13429,6 +15074,30 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Text to speech avatar converts text into a digital video of a human (either a standard avatar or a custom text to speech avatar) speaking with a natural-sounding voice. The text to speech avatar video can be synthesized asynchronously or in real time. Deve"
+      },
+      "video": {
+        "accepts_video_input": false,
+        "generation": true,
+        "understanding": false,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "avatar": true,
+        "extra": {},
+        "endpoints": {
+          "generation": true,
+          "streaming": true
+        },
+        "output_formats": [
+          "mp4"
+        ],
+        "output_mime_types": [
+          "video/mp4"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -13471,6 +15140,21 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Voice Live API is a single unified API that enables low-latency, high-quality speech to speech interactions for voice agents."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": true,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -13793,7 +15477,8 @@
         "deployment_options": "UnifiedEndpointMaaS,ServerlessMaaS,Serverless API",
         "version": "2026-07-31",
         "maas_or_paygo": true,
-        "summary": "Built for creatives, delivering enhanced photorealism at scale."
+        "summary": "Built for creatives, delivering enhanced photorealism at scale.",
+        "not_listed_in_current_docs": true
       },
       "image": {
         "generation": true,
@@ -13909,6 +15594,22 @@
         "version": "2026-09-03",
         "maas_or_paygo": true,
         "summary": "The second generation of our speech-to-text model family more accurate, faster, and built to handle a wider range of real-world audio. MAI-Transcribe-2 transcribes reliably across accents, speaking styles, and noisy environments, and now covers 60 language"
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "transcription": true,
+        "extra": {},
+        "endpoints": {
+          "transcription": true,
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -13968,7 +15669,7 @@
           "realtime": true,
           "streaming": true
         },
-        "checked_at": "2026-10-17"
+        "checked_at": "2026-10-28"
       }
     },
     {
@@ -14008,6 +15709,20 @@
         "version": "2026-07-22",
         "maas_or_paygo": true,
         "summary": "MAI-Voice-2-Flash is a text-to-speech (TTS) model built for ultra-fast, low-latency generation. It delivers high-fidelity, natural, and expressive speech across 15 languages, while being optimized for real-time responsiveness for voice agents, assistants, "
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -14047,6 +15762,20 @@
         "version": "2026-09-19",
         "maas_or_paygo": true,
         "summary": "MAI-Voice-2.1 is a prompted text-to-speech (TTS) model that generates high-fidelity, natural, and expressive speech across 10+ languages. It captures human-like intonation, rhythm, and emotional nuance for engaging conversational experiences."
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -14086,6 +15815,20 @@
         "version": "2026-09-19",
         "maas_or_paygo": true,
         "summary": "MAI-Voice-2.1-Flash is a text-to-speech (TTS) model built for ultra-fast, low-latency generation. It delivers high-fidelity, natural, and expressive speech across 15 languages, while being optimized for real-time responsiveness for voice agents, assistants"
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -14495,6 +16238,20 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Fine-tuned Phi-4-multimodal-instruct for automatic speech recognition in six Kenyan languages (Swahili, Kalenjin, Kikuyu, Luo, Maasai, Somali); retains the base model's multimodal capabilities."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -14536,6 +16293,20 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Fine-tuned MMS-1B-all (Wav2Vec2 + language adapters) for automatic speech recognition in six Kenyan languages. Non-commercial (CC-BY-NC-4.0)."
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_understanding": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -15080,6 +16851,37 @@
         "inference_deprecation_date": "2026-11-02T00:00:00Z",
         "version": 1,
         "maas_or_paygo": true
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -15651,6 +17453,37 @@
         ],
         "version": 1,
         "maas_or_paygo": true
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -15721,10 +17554,15 @@
         "nvidia/NVIDIA-Nemotron-Parse-NIM-microservice"
       ],
       "extra": {
+        "deployment_types": [
+          "maap-inference"
+        ],
         "azure_offers": [
           "VM",
           "VM-withSurcharge"
         ],
+        "inference_retirement_date": "2027-02-28T00:00:00Z",
+        "inference_deprecation_date": "2026-11-20T00:00:00Z",
         "version": 1,
         "maas_or_paygo": true
       }
@@ -16287,6 +18125,20 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Flagship text-to-speech model with highest quality and expressiveness for demanding applications."
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -16326,6 +18178,20 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Ultra low-latency, expressive text-to-speech model optimized for realtime applications."
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -16556,6 +18422,36 @@
         "version": 2,
         "maas_or_paygo": true,
         "summary": "Multimodal embedding model that can vectorize interleaved text, images, & video. 32K context length."
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": false,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
       }
     },
     {
@@ -16979,63 +18875,6 @@
       },
       "extra": {
         "pricing_match_key": "mai-thinking-1"
-      }
-    },
-    {
-      "provider": "azure-foundry",
-      "model_id": "gpt-5.4-mini",
-      "display_name": "gpt-5.4-mini",
-      "context_window": 400000,
-      "max_output_tokens": 128000,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_function_calling": false,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "knowledge_cutoff": "",
-      "azure_type": "Chat completion",
-      "azure_lifecycle": "",
-      "source": "azure_foundry",
-      "supports_responses_api": true,
-      "license_type": "open-source",
-      "aliases": [
-        "azure-foundry/gpt-5.4-mini"
-      ],
-      "pricing": {
-        "input_per_1m": 0.75,
-        "output_per_1m": 4.5,
-        "currency": "USD",
-        "cached_input_per_1m": 0.08
-      },
-      "extra": {
-        "pricing_batch": {
-          "cached_input_per_1m": 0.04,
-          "input_per_1m": 0.38,
-          "output_per_1m": 2.25,
-          "currency": "USD"
-        },
-        "pricing_data_zone": {
-          "cached_input_per_1m": 0.09,
-          "input_per_1m": 0.83,
-          "output_per_1m": 4.95,
-          "currency": "USD"
-        },
-        "pricing_priority": {
-          "cached_input_per_1m": 0.15,
-          "input_per_1m": 1.5,
-          "output_per_1m": 9.0,
-          "currency": "USD"
-        },
-        "pricing_match_key": "gpt-5.4-mini",
-        "long_context": true,
-        "context_window": 400000
       }
     },
     {
@@ -18092,7 +19931,7 @@
         "pricing_match_key": "microsoft-decision-1",
         "official_model_catalog_url": "https://ai.azure.com/catalog/models/Microsoft-Decision-1",
         "official_usage_docs": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-microsoft-decision",
-        "official_catalog_checked_at": "2026-10-24",
+        "official_catalog_checked_at": "2026-10-28",
         "deployment_types": [
           "DataZoneStandard",
           "GlobalStandard"
@@ -18503,7 +20342,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-24",
+        "checked_at": "2026-10-28",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -18549,7 +20388,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-24",
+        "checked_at": "2026-10-28",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -18595,7 +20434,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-24",
+        "checked_at": "2026-10-28",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -18641,7 +20480,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-24",
+        "checked_at": "2026-10-28",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -18687,7 +20526,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-24",
+        "checked_at": "2026-10-28",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -18733,7 +20572,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-24",
+        "checked_at": "2026-10-28",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -18779,7 +20618,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-24",
+        "checked_at": "2026-10-28",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -18825,7 +20664,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-24",
+        "checked_at": "2026-10-28",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -20370,7 +22209,8 @@
         "azure_offers": [
           "VM"
         ],
-        "version": 1
+        "version": 1,
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -20409,7 +22249,8 @@
         "azure_offers": [
           "VM"
         ],
-        "version": 1
+        "version": 1,
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -20448,7 +22289,8 @@
         "azure_offers": [
           "VM"
         ],
-        "version": 1
+        "version": 1,
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -20487,7 +22329,8 @@
         "azure_offers": [
           "VM"
         ],
-        "version": 1
+        "version": 1,
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -20604,7 +22447,8 @@
         "azure_offers": [
           "VM"
         ],
-        "version": 1
+        "version": 1,
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -20643,7 +22487,8 @@
         "azure_offers": [
           "VM"
         ],
-        "version": 1
+        "version": 1,
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -21306,7 +23151,8 @@
         "azure_offers": [
           "VM"
         ],
-        "version": 1
+        "version": 1,
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -21892,7 +23738,8 @@
         "azure_offers": [
           "VM"
         ],
-        "version": 1
+        "version": 1,
+        "not_listed_in_current_docs": true
       }
     },
     {
