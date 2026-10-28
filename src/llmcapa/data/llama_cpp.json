@@ -210333,6 +210333,40 @@
       "deprecated": false,
       "aliases": [],
       "license_type": "unknown"
+    },
+    {
+      "provider": "llama-cpp",
+      "model_id": "Qwen/Qwen3.6-35B-A3B",
+      "display_name": "Qwen/Qwen3.6-35B-A3B",
+      "context_window": 262144,
+      "max_output_tokens": 0,
+      "input_modalities": ["text", "image", "video"],
+      "output_modalities": ["text"],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_json_schema": null,
+      "supports_streaming": null,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "supports_chat_completion": null,
+      "supports_responses_api": null,
+      "deprecated": false,
+      "aliases": ["qwen3.6", "qwen3.6-35b-a3b"],
+      "license_type": "Apache-2.0",
+      "extra": {
+        "metadata_source": "huggingface",
+        "huggingface_model_id": "Qwen/Qwen3.6-35B-A3B",
+        "huggingface_model_url": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B",
+        "huggingface_pipeline_tag": "image-text-to-text",
+        "huggingface_tags": ["transformers", "safetensors", "qwen3_5_moe", "image-text-to-text", "conversational", "license:apache-2.0"],
+        "context_window_source": "https://recipes.vllm.ai/Qwen/Qwen3.6-35B-A3B",
+        "endpoints": [{
+          "base_url": "http://localhost:8080/v1",
+          "protocol": "openai-compatible",
+          "auth": "bearer",
+          "source": "https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md"
+        }]
+      }
     }
   ]
 }

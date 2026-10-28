@@ -2,7 +2,7 @@
 
 このドキュメントでは、`llmcapa` ライブラリの開発、拡張、およびメンテナンス方法について説明します。
 
----
+______________________________________________________________________
 
 ## プロジェクト構成
 
@@ -44,26 +44,26 @@ llmcapa/
     └── test_specialized_capability.py
 ```
 
----
+______________________________________________________________________
 
 ## 設計思想
 
 1. **オフラインファースト**: コア機能データはJSONファイルとして同梱します。ローカルで見つかった検索結果と、プロバイダー未指定の検索では通信しません。プロバイダーを指定した `get()` / `search()` が見つからない場合は、レジストリ内でプロバイダーごとに一度、24時間キャッシュを利用してllmcapa公開GitHubカタログの取得を試し、検索を一度だけ再実行します。パッケージのデータディレクトリが書き込み可能なら、既存JSONを `~/.llmcapa/github_catalog_backups` にバックアップして同梱JSONも更新します。書き込み不可の場合は永続ユーザーカタログ `~/.llmcapa/catalogs/github` を利用します。
-2. **実行時依存関係ゼロ**: ライブラリはPython標準ライブラリのみで動作する必要があります。外部パッケージ（`pytest` や `build` など）は、開発およびテスト専用です。
-3. **不変性とパフォーマンス**: `Capability` データクラスは `frozen=True` です。機能チェック時の冗長な計算を避けるため、評価結果はメモ化（内部キャッシュ）されます。
+1. **実行時依存関係ゼロ**: ライブラリはPython標準ライブラリのみで動作する必要があります。外部パッケージ（`pytest` や `build` など）は、開発およびテスト専用です。
+1. **不変性とパフォーマンス**: `Capability` データクラスは `frozen=True` です。機能チェック時の冗長な計算を避けるため、評価結果はメモ化（内部キャッシュ）されます。
 
----
+______________________________________________________________________
 
-
----
+______________________________________________________________________
 
 ## プロバイダーエイリアスと正規化
 
 `get()`、`list_models()`、`search()` は、ルックアップ前にプロバイダー名を正規化し、エイリアスを解決します。
 
 ### 正規化
+
 1. 小文字化
-2. 区切り文字 `_. \t` を `-` に統一（例: `azure_openai` → `azure-openai`、`X AI` → `x-ai`）
+1. 区切り文字 `_. \t` を `-` に統一（例: `azure_openai` → `azure-openai`、`X AI` → `x-ai`）
 
 ### 組み込みエイリアス（`Registry._provider_aliases`）
 
@@ -109,7 +109,11 @@ llmcapa.search("gpt-4o", provider="azure")          # → azure-openai
 
 新しいエイリアスを追加する場合は `src/llmcapa/registry.py` の `_provider_aliases` を更新し、`tests/test_registry.py` にテストを追加してください。
 
-`vllm` はローカル推論サーバーとして扱います。`src/llmcapa/data/vllm.json` のモデルは公式ドキュメントにある起動例であり、vLLM が固定のモデル一覧を提供するという意味ではありません。実際に利用できるモデルと機能は、サーバーにロードされたモデルおよび起動時設定に依存します。vLLM の OpenAI 互換 API は既定の例として `http://localhost:8000/v1` を記載しています。
+`vllm`、`lmstudio`、`llama-cpp` はHugging Faceモデルのローカル推論バックエンドとして扱います。各カタログはHugging Faceのモデルスナップショットから全pipeline taskのモデルを検索対象にし、vLLMとLM StudioについてはResponses API・構造化出力などサーバー固有のAPI機能を、該当する生成タスクのレコードに上書きします。これはモデル個別のツール利用や、任意のモデルが任意のバックエンド・バージョン・GPUで実行できる保証ではありません。既定エンドポイント例はvLLMが `http://localhost:8000/v1`、LM Studioが `http://localhost:1234/v1` です。
+
+LM StudioのResponses APIは `previous_response_id` によるステートフルなフォローアップに対応します（[公式ドキュメント](https://lmstudio.ai/docs/developer/openai-compat/responses)）。
+
+`ollama` はOllamaの公式モデルライブラリを基にした別カタログです。OllamaのOpenAI互換Responses APIはv0.13.3で追加され、非ステートフル（`previous_response_id` / conversation stateなし）です。対応するチャットモデルにはResponses APIのバックエンド機能を記録し、埋め込みモデルなどには適用しません。構造化出力はAPI対応を記録しますが、実際の対応はモデルに依存します。
 
 ### `search(provider=None)`
 
@@ -124,6 +128,7 @@ llmcapa.search("gpt-4o", provider="azure")          # → azure-openai
 プロバイダーのカタログ更新は、プロバイダーごとの公式ソースを使う個別スクリプトで行います。全プロバイダーをOpenRouterのデータで一括置換するスクリプトは使用しません。個別の更新スクリプトがあるプロバイダーは、次のディスパッチャーで一覧・実行できます。`--provider` は1プロバイダーだけを実行し、全カタログに触る後処理は自動実行しません。
 
 HTTPリクエストの作成、タイムアウト、上限付きレスポンス読み取り、テキストデコードは `scripts/provider_updates/_http.py` に、UTF-8 JSONの読み書きと整形は `scripts/provider_updates/_catalog_io.py` にまとめます。HTTP応答の検証やプロバイダー固有の解析・マージ処理は、各更新スクリプトに残します。
+
 ```bash
 python scripts/_update_all_providers.py --list
 python scripts/_update_all_providers.py --provider openai
@@ -192,6 +197,7 @@ python scripts/_image_capability_postprocess.py
 新しいモデルプロバイダー（例: `cohere`）を追加する場合:
 
 ### 1. データファイルの作成
+
 `src/llmcapa/data/<provider_name>.json` に新しいJSONファイルを作成します。
 
 ```json
@@ -225,6 +231,7 @@ python scripts/_image_capability_postprocess.py
 ```
 
 ### 2. 動作確認テストの追加
+
 `tests/test_registry.py` に新しいプロバイダーが `providers()` / `list_models()` / `get()` 経由で取得できることを確認するテストを追加します（例: `test_together_provider`、`test_new_providers_registered` を参照）。現在の `test_providers()` は規模だけを検証します:
 
 ```python
@@ -238,7 +245,7 @@ def test_providers():
 
 新しいプロバイダー（例: `cohere` は `src/llmcapa/data/cohere.json` として同梱済み）のように、最低限 `providers()` に含まれることと、代表モデルが `get()` できることを検証してください。
 
----
+______________________________________________________________________
 
 ## 新しい機能フラグの追加
 
@@ -256,6 +263,7 @@ def test_providers():
 - `LLMC_FEAT_RERANK` / `LLMC_FEAT_RERANK_OUTPUT` / `LLMC_FEAT_DECISION_OUTPUT`
 
 ### 1. データクラスの更新
+
 `src/llmcapa/models.py` を開き、`Capability` データクラスにデフォルト値を持つ新しいフィールドを追加します:
 
 ```python
@@ -267,6 +275,7 @@ class Capability:
 ```
 
 ### 2. 代替モデルチェッカーの更新（任意）
+
 追加する機能が、あるモデルが別のモデルを代替できるか検証する際に必須となる重要な機能である場合、`src/llmcapa/models.py` 内の `can_be_replaced_by()` の `features_to_check` リリストに追加します:
 
 ```python
@@ -285,12 +294,14 @@ class Capability:
 ```
 
 ### 3. JSONデータファイルの更新
+
 `src/llmcapa/data/` 配下の関連するモデルのJSONファイルに、新しいフィールドを追加します。
 
 ### 4. ユニットテストの追加
+
 `tests/test_advanced.py` または `tests/test_registry.py` にテストケースを追加し、新しい機能フラグが正しくパース、評価、およびキャッシュされることを検証します。
 
----
+______________________________________________________________________
 
 ## CLI 出力の設計
 
@@ -325,10 +336,10 @@ class Capability:
 判定ルール（`_cap_flag()`）:
 
 1. ネストしたレコードが存在し、同名の主フィールドを持つ場合はその値（`decision.decision` など）。
-2. レコードが存在し主フィールドを持たない場合は `yes`（`image` / `audio` / `video` は操作単位のレコードのため）。
-3. レコードが無く、`output_modalities` に含まれる場合は `yes`。
-4. レコードが無く、入力モダリティのみの場合は `?`。画像を入力できることは画像生成の可否を意味しないため、`yes` にはしない。
-5. それ以外は `-`。
+1. レコードが存在し主フィールドを持たない場合は `yes`（`image` / `audio` / `video` は操作単位のレコードのため）。
+1. レコードが無く、`output_modalities` に含まれる場合は `yes`。
+1. レコードが無く、入力モダリティのみの場合は `?`。画像を入力できることは画像生成の可否を意味しないため、`yes` にはしない。
+1. それ以外は `-`。
 
 `--wide` は `name,in_mod,out_mod,cutoff` に加えて `decision,image,audio,video` を追加します。
 `--sort` は specialized capability 名も指定できます（`yes`=1 > `-`=0 > `no` / `?`=-1。`_sort_value()` の定義どおり）。
@@ -370,11 +381,12 @@ llmcapa find --provider amazon --min-max-output 32768
 
 JSON 出力は従来どおり `Capability.to_dict()` の全フィールドを返すため、CSV/Markdown と列構成は一致しません。
 
----
+______________________________________________________________________
 
 ## 開発ワークフロー
 
 ### テストの実行
+
 テストには `pytest` を使用します。プロジェクトのルートディレクトリから以下のコマンドを実行します:
 
 ```bash
@@ -384,6 +396,7 @@ python -m pytest -v
 ```
 
 ### コードの検証
+
 ビルドやコミットを行う前に、すべてのPythonファイルが正常にコンパイルできるか確認します:
 
 ```bash
@@ -391,6 +404,7 @@ python -m py_compile src/llmcapa/*.py tests/*.py
 ```
 
 ### パッケージのビルド
+
 ソース配布物（sdist）とwheelバイナリをビルドする場合:
 
 ```bash
@@ -403,7 +417,7 @@ python -m build
 
 ビルドされたファイルは `dist/` ディレクトリ配下に生成されます。
 
----
+______________________________________________________________________
 
 ## Azure Catalog スクレイピング
 
@@ -434,8 +448,7 @@ Azure AI Foundry カタログには SSR と continuation token に関する制�
 | `pricing` | `pricing` | `prompt` と `completion` のレートを100万トークンあたりのレートに変換 |
 | `aliases` | `id` | 小文字に変換された `id` がエイリアスとして追加されます |
 
-
----
+______________________________________________________________________
 
 ## HuggingFace マッピング詳細
 
@@ -452,8 +465,6 @@ Azure AI Foundry カタログには SSR と continuation token に関する制�
 | `supports_vision` | `pipeline_tag` | 上記3種のいずれかなら `True` |
 | `supports_chat_completion` | `pipeline_tag` | `text-generation`・`image-text-to-text`・`conversational` なら `True` |
 | `supports_streaming` | — | 常に `True`（`supports_function_calling` / `supports_json_mode` は `False`） |
-
-
 
 ## データ更新ポリシー
 
@@ -474,6 +485,6 @@ Modellix は LLM ゲートウェイと画像・動画・音声のメディア AP
 
 両ファイルの `provider` は `modellix` とし、上流プロバイダーはモデルIDのプレフィックス（例: `kling/kling-v3-t2v`）に保持します。Modellix は集約カタログなので、ネイティブプロバイダーのデータを上書きしないよう、`Registry._load_bundled()` では集約ファイル群（`openrouter.json`、`novita.json`、`azure_foundry.json`、`lmstudio.json`、`vllm.json`、`ollama.json`、`modellix.json`、`modellix_media.json`）として最後にロードします。ローカル実行環境のモデルIDが重複する場合も、flat な `_models` 側では native catalog を優先します。
 
-同じくローカル推論サーバーの `vllm.json` は、vLLM 公式 Quickstart の起動例モデルを掲載した参照用カタログです。実際のモデル一覧は各 vLLM サーバーの設定に依存し、このデータが全環境のモデル可用性や個別モデル能力を保証するものではありません。
+同じくローカル推論バックエンドの `vllm.json` と `lmstudio.json` はHugging Faceモデル一覧から生成し、Responses APIや構造化出力など各サーバー固有のAPI機能を生成タスクごとに上書きします。ツール呼び出しなどモデルのテンプレートに依存する機能は、バックエンドがAPIを提供するだけでは対応扱いにしません。カタログへの掲載は、モデルが任意のサーバーバージョンやハードウェアで実行できることを保証しません。
 
 更新時の参照先は `https://docs.modellix.ai/llms.txt`、`https://www.modellix.ai/llm`、および Modellix の公式モデルドキュメントです。OpenRouter のデータを Modellix カタログへ流用してはなりません。メディアモデルはトークン系の `context_window` / `pricing` が提供されない場合があるため、未確認値は推測で補完せず `0` または `null` とし、モダリティと公式ドキュメントURLを `extra` に記録します。

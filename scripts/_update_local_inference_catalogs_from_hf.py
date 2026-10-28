@@ -1,8 +1,8 @@
 """Refresh static local-inference model metadata from the bundled HF snapshot.
 
 No local server is contacted. vLLM, llama.cpp, and LM Studio catalogs derive
-model facts from the same offline Hugging Face text-generation snapshot. Older
-provider-specific IDs without an exact HF match are retained as historical rows.
+model facts from the same offline Hugging Face model snapshot. Provider-specific
+API capabilities are overlaid on model metadata; unmatched prior IDs are retained.
 """
 
 from __future__ import annotations
@@ -17,6 +17,32 @@ from urllib.parse import quote
 ROOT = Path(__file__).resolve().parents[1]
 HUGGINGFACE_DATA = ROOT / "src" / "llmcapa" / "data" / "huggingface.json"
 HUGGINGFACE_MODEL_URL = "https://huggingface.co/{}"
+_OPENAI_COMPAT_CHAT_PIPELINES = {
+    "text-generation",
+    "text2text-generation",
+    "image-text-to-text",
+    "visual-question-answering",
+    "image-to-text",
+    "audio-text-to-text",
+    "audio-to-text",
+    "video-text-to-text",
+}
+_BACKEND_CHAT_API_OVERRIDES = {
+    "vllm": {
+        "supports_chat_completion": True,
+        "supports_streaming": True,
+        "supports_responses_api": True,
+        "supports_json_mode": True,
+        "supports_json_schema": True,
+    },
+    "lmstudio": {
+        "supports_chat_completion": True,
+        "supports_streaming": True,
+        "supports_responses_api": True,
+        "supports_json_mode": True,
+        "supports_json_schema": True,
+    },
+}
 PROVIDER_CONFIG = {
     "vllm": {
         "filename": "vllm.json",
@@ -92,8 +118,6 @@ def build_catalog(
     for hf_row in source.get("models", []):
         if not isinstance(hf_row, dict) or not hf_row.get("model_id"):
             continue
-        if str(hf_row.get("pipeline_tag", "")).casefold() != "text-generation":
-            continue
 
         hf_model_id = str(hf_row["model_id"]).strip()
         if not hf_model_id:
@@ -136,10 +160,10 @@ def build_catalog(
             }
         )
         input_modalities = _list_union(
-            hf_row.get("input_modalities"), old.get("input_modalities"), ["text"]
+            hf_row.get("input_modalities"), old.get("input_modalities"), []
         )
         output_modalities = _list_union(
-            hf_row.get("output_modalities"), old.get("output_modalities"), ["text"]
+            hf_row.get("output_modalities"), old.get("output_modalities"), []
         )
         old_vision = old.get("supports_vision")
         supports_vision = (
@@ -154,6 +178,10 @@ def build_catalog(
                 "model_id": model_id,
                 "display_name": str(
                     old.get("display_name") or hf_row.get("display_name") or model_id
+                ),
+                "aliases": _list_union(hf_row.get("aliases"), old.get("aliases"), []),
+                "license_type": str(
+                    hf_row.get("license_type") or old.get("license_type") or "unknown"
                 ),
                 "context_window": _nonnegative_int(hf_row.get("context_window"))
                 or _nonnegative_int(old.get("context_window")),
@@ -180,6 +208,21 @@ def build_catalog(
         row.setdefault("deprecated", False)
         row.setdefault("aliases", [])
         row.setdefault("license_type", "unknown")
+        pipeline_tag = str(hf_row.get("pipeline_tag", "")).casefold()
+        backend_overrides = _BACKEND_CHAT_API_OVERRIDES.get(provider)
+        if backend_overrides and pipeline_tag in _OPENAI_COMPAT_CHAT_PIPELINES:
+            # These flags describe backend endpoints, not model-repository facts.
+            # Function calling remains model/template-specific.
+            row.update(backend_overrides)
+            if provider == "lmstudio":
+                extra["responses_api_source"] = (
+                    "https://lmstudio.ai/docs/developer/openai-compat/responses"
+                )
+                extra["responses_api_stateful"] = True
+                extra["structured_output_source"] = (
+                    "https://lmstudio.ai/docs/developer/openai-compat/structured-output"
+                )
+                extra["structured_output_model_dependent"] = True
         rows[model_id] = row
 
     # Keep historical/local IDs with no exact HF repository match, but strip

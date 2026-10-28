@@ -11,6 +11,7 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 import llmcapa
+import llmcapa.registry as registry_module
 from llmcapa import Capability, ModelNotFoundError
 from llmcapa.registry import Registry
 
@@ -153,10 +154,121 @@ def test_vllm_catalog_uses_static_huggingface_metadata():
     cap = llmcapa.get("Qwen/Qwen2.5-1.5B-Instruct", provider="vllm")
     assert cap.context_window == 0  # not specified in the bundled HF metadata
     assert cap.max_output_tokens == 0
-    assert cap.supports_chat_completion is None
-    assert cap.supports_streaming is None
+    assert cap.supports_chat_completion is True
+    assert cap.supports_streaming is True
+    assert cap.supports_responses_api is True
+    assert cap.supports_json_mode is True
+    assert cap.supports_json_schema is True
     assert cap.extra["metadata_source"] == "huggingface"
     assert cap.extra["endpoints"][0]["base_url"] == "http://localhost:8000/v1"
+
+
+def test_dynamic_huggingface_fetch_queries_all_pipeline_tasks(monkeypatch):
+    registry = Registry()
+    requests_seen = []
+    payload = json.dumps(
+        [
+            {
+                "modelId": "Qwen/Qwen3.6-35B-A3B",
+                "pipeline_tag": "image-text-to-text",
+                "config": {"max_position_embeddings": 262144},
+            },
+            {"modelId": "org/image-generator", "pipeline_tag": "text-to-image"},
+        ]
+    ).encode("utf-8")
+
+    class Response:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            return None
+
+        def read(self):
+            return payload
+
+    def fake_urlopen(request, *, context, timeout):
+        requests_seen.append((request.full_url, context, timeout))
+        return Response()
+
+    monkeypatch.setattr(registry_module.urllib.request, "urlopen", fake_urlopen)
+
+    assert registry.fetch_huggingface(limit=7) == 2
+    assert len(requests_seen) == 1
+    assert "pipeline_tag=" not in requests_seen[0][0]
+    assert "limit=7" in requests_seen[0][0]
+    assert registry.get("Qwen/Qwen3.6-35B-A3B", provider="Qwen").input_modalities == [
+        "text",
+        "image",
+    ]
+    assert registry.get("org/image-generator", provider="org").output_modalities == [
+        "image"
+    ]
+
+
+def test_dynamic_huggingface_mapping_recognizes_multimodal_and_nontext_tasks():
+    registry = Registry()
+    qwen = registry._map_huggingface_record(
+        {
+            "id": "Qwen/Qwen3.6-35B-A3B",
+            "pipeline_tag": "image-text-to-text",
+            "config": {"max_position_embeddings": 262144},
+        }
+    )
+    assert qwen.input_modalities == ["text", "image"]
+    assert qwen.output_modalities == ["text"]
+    assert qwen.supports_vision is True
+    assert qwen.supports_chat_completion is True
+    assert qwen.supports_function_calling is None
+
+    image_gen = registry._map_huggingface_record(
+        {"id": "org/image-gen", "pipeline_tag": "text-to-image"}
+    )
+    assert image_gen.input_modalities == ["text"]
+    assert image_gen.output_modalities == ["image"]
+
+    asr = registry._map_huggingface_record(
+        {"id": "org/asr", "pipeline_tag": "automatic-speech-recognition"}
+    )
+    assert asr.input_modalities == ["audio"]
+    assert asr.output_modalities == ["text"]
+    assert asr.supports_chat_completion is False
+
+
+def test_qwen36_huggingface_record_is_searchable_through_local_backends():
+    hf = llmcapa.get("Qwen/Qwen3.6-35B-A3B", provider="huggingface")
+    assert hf.context_window == 262144
+    assert hf.max_output_tokens == 0
+    assert hf.input_modalities == ["text", "image", "video"]
+    assert hf.supports_vision is True
+
+    vllm = llmcapa.get("qwen3.6", provider="vllm")
+    assert vllm.model_id == "Qwen/Qwen3.6-35B-A3B"
+    assert vllm.supports_responses_api is True
+    assert vllm.supports_chat_completion is True
+    assert vllm.extra["official_vllm_recipe_url"] == (
+        "https://recipes.vllm.ai/Qwen/Qwen3.6-35B-A3B"
+    )
+    assert vllm in llmcapa.search("qwen3.6", provider="vllm")
+
+    ollama = llmcapa.get("qwen3-vl:8b", provider="ollama")
+    assert ollama.supports_responses_api is True
+    assert ollama.supports_json_mode is True
+    assert ollama.supports_json_schema is True
+    assert ollama.extra["responses_api_min_version"] == "0.13.3"
+    assert ollama.extra["responses_api_stateful"] is False
+
+    for provider in ("llama-cpp", "lmstudio"):
+        local = llmcapa.get("Qwen/Qwen3.6-35B-A3B", provider=provider)
+        assert local.input_modalities == ["text", "image", "video"]
+        if provider == "lmstudio":
+            assert local.supports_responses_api is True
+            assert local.supports_json_schema is True
+            assert local.extra["responses_api_stateful"] is True
+            assert local.extra["structured_output_model_dependent"] is True
+            assert local.extra["responses_api_source"] == (
+                "https://lmstudio.ai/docs/developer/openai-compat/responses"
+            )
 
 
 def test_modellix_media_catalog():

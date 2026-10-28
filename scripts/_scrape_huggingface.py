@@ -3,8 +3,8 @@
 Usage:
     python scripts/_scrape_huggingface.py [--save] [--min-downloads N]
 
-The HuggingFace API uses cursor-based pagination. This script collects
-text-generation models from the API and saves them to huggingface.json.
+The HuggingFace API uses cursor-based pagination. This script collects popular
+models across all pipeline tasks and saves them to huggingface.json.
 
 Note on SSR:
     HuggingFace's web UI (huggingface.co/models) is SSR with standard URL
@@ -21,13 +21,11 @@ Output format (huggingface.json):
                 "display_name": "org/model-name",
                 "context_window": 0,       # unknown unless read from model config
                 "max_output_tokens": 2048, # default
-                "input_modalities": ["text"],
+                "input_modalities": ["text", "image"],
                 "output_modalities": ["text"],
-                "supports_function_calling": false,
-                "supports_vision": false,
-                "supports_audio_input": false,
-                "supports_audio_output": false,
-                "pipeline_tag": "text-generation",
+                "supports_function_calling": null,
+                "supports_vision": true,
+                "pipeline_tag": "image-text-to-text",
                 "downloads": 123456,
                 "likes": 789
             }
@@ -44,13 +42,12 @@ from pathlib import Path
 import requests
 
 API_BASE = "https://huggingface.co/api/models"
-PIPELINE_FILTER = "text-generation"
 DEFAULT_MIN_DOWNLOADS = 5000  # skip models with fewer downloads
 BATCH_SIZE = 500  # max per API call
 
 
 def fetch_models(min_downloads: int) -> list:
-    """Fetch all text-generation models with cursor-based pagination.
+    """Fetch popular models across all HF tasks with cursor pagination.
 
     Uses the full URL from the Link header to avoid cursor encoding issues.
     """
@@ -61,7 +58,6 @@ def fetch_models(min_downloads: int) -> list:
 
     # Initial request (no cursor)
     params = {
-        "pipeline_tag": PIPELINE_FILTER,
         "sort": "downloads",
         "direction": -1,
         "limit": BATCH_SIZE,
@@ -114,40 +110,13 @@ def convert_to_catalog_format(raw_models: list) -> list:
         if not model_id:
             continue
 
-        pipeline_tag = m.get("pipeline_tag", PIPELINE_FILTER)
+        pipeline_tag = m.get("pipeline_tag")
 
-        # Determine modalities from HuggingFace's task metadata, not model
-        # names. Model-name heuristics are brittle and misclassify new models.
-        input_mods = ["text"]
-        output_mods = ["text"]
-        supports_vision = False
-        supports_audio_input = False
-        supports_audio_output = False
-
+        # Determine modalities from HuggingFace's task metadata, not model names.
         metadata = {str(pipeline_tag).lower()}
         metadata.update(str(tag).lower() for tag in (m.get("tags") or []))
-        image_tasks = {
-            "image-text-to-text",
-            "visual-question-answering",
-            "image-feature-extraction",
-            "image-to-text",
-        }
-        audio_input_tasks = {
-            "automatic-speech-recognition",
-            "audio-classification",
-            "audio-to-audio",
-        }
-        audio_output_tasks = {"text-to-speech", "text-to-audio"}
-
-        if metadata & image_tasks:
-            input_mods.append("image")
-            supports_vision = True
-        if metadata & audio_input_tasks:
-            input_mods.append("audio")
-            supports_audio_input = True
-        if metadata & audio_output_tasks:
-            output_mods.append("audio")
-            supports_audio_output = True
+        input_mods, output_mods = _modalities_for_metadata(metadata)
+        supports_vision = "image" in input_mods
 
         entry = {
             "provider": "huggingface",
@@ -157,27 +126,180 @@ def convert_to_catalog_format(raw_models: list) -> list:
             "max_output_tokens": 2048,
             "input_modalities": input_mods,
             "output_modalities": output_mods,
-            "supports_function_calling": False,
+            "supports_function_calling": None,
+            "supports_json_mode": None,
+            "supports_streaming": None,
+            "supports_chat_completion": None,
+            "supports_responses_api": None,
             "supports_vision": supports_vision,
-            "supports_audio_input": supports_audio_input,
-            "supports_audio_output": supports_audio_output,
             "pipeline_tag": pipeline_tag,
             "downloads": m.get("downloads", 0),
             "likes": m.get("likes", 0),
+            "aliases": [model_id.rsplit("/", 1)[-1]] if "/" in model_id else [],
+            "license_type": next(
+                (
+                    str(tag).split(":", 1)[1]
+                    for tag in (m.get("tags") or [])
+                    if str(tag).lower().startswith("license:")
+                ),
+                "unknown",
+            ),
+            "extra": {"huggingface_tags": list(m.get("tags") or [])},
         }
         results.append(entry)
 
     return results
 
 
+def _modalities_for_metadata(metadata: set[str]) -> tuple[list[str], list[str]]:
+    """Infer modalities only when supported by HF task/tag metadata."""
+    input_tasks = {
+        "text": {
+            "text-generation",
+            "text2text-generation",
+            "text-to-image",
+            "text-to-video",
+            "text-to-speech",
+            "text-to-audio",
+            "text-classification",
+            "token-classification",
+            "question-answering",
+            "image-text-to-text",
+            "visual-question-answering",
+            "audio-text-to-text",
+            "video-text-to-text",
+            "summarization",
+            "translation",
+            "fill-mask",
+            "feature-extraction",
+            "sentence-similarity",
+            "zero-shot-classification",
+            "table-question-answering",
+        },
+        "image": {
+            "image-text-to-text",
+            "visual-question-answering",
+            "image-to-text",
+            "image-classification",
+            "image-feature-extraction",
+            "image-to-image",
+            "image-to-video",
+            "object-detection",
+            "image-segmentation",
+            "depth-estimation",
+            "zero-shot-image-classification",
+            "image-to-3d",
+        },
+        "audio": {
+            "automatic-speech-recognition",
+            "audio-classification",
+            "audio-to-audio",
+            "audio-to-text",
+            "audio-text-to-text",
+            "voice-activity-detection",
+            "audio-matching",
+        },
+        "video": {
+            "video-classification",
+            "zero-shot-video-classification",
+            "video-text-to-text",
+            "video-to-video",
+        },
+    }
+    inputs = [modality for modality, tasks in input_tasks.items() if metadata & tasks]
+    outputs: list[str] = []
+    if metadata & {
+        "text-generation",
+        "text2text-generation",
+        "image-text-to-text",
+        "visual-question-answering",
+        "image-to-text",
+        "automatic-speech-recognition",
+        "audio-to-text",
+        "audio-text-to-text",
+        "text-classification",
+        "token-classification",
+        "question-answering",
+        "summarization",
+        "translation",
+        "fill-mask",
+        "sentence-similarity",
+        "zero-shot-classification",
+        "table-question-answering",
+        "image-classification",
+        "object-detection",
+        "image-segmentation",
+        "depth-estimation",
+        "video-classification",
+        "zero-shot-video-classification",
+        "video-text-to-text",
+    }:
+        outputs.append("text")
+    if metadata & {
+        "feature-extraction",
+        "image-feature-extraction",
+        "audio-feature-extraction",
+    }:
+        outputs.append("embedding")
+    if metadata & {"text-to-image", "image-to-image"}:
+        outputs.append("image")
+    if metadata & {"text-to-video", "image-to-video", "video-to-video"}:
+        outputs.append("video")
+    if metadata & {
+        "text-to-speech",
+        "text-to-audio",
+        "text-to-speech-generation",
+        "text-to-audio-generation",
+        "unconditional-audio-generation",
+        "audio-to-audio",
+    }:
+        outputs.append("audio")
+    # HF has tasks with modality-specific tags not represented in the mapping.
+    # Do not silently label unknown tasks as text-only.
+    if not inputs and "text" in metadata:
+        inputs.append("text")
+    return list(dict.fromkeys(inputs)), list(dict.fromkeys(outputs))
+
+
 def retain_unlisted_models(current: list[dict], previous: list[dict]) -> list[dict]:
-    """Keep prior catalog entries omitted by the download-threshold query."""
-    merged = list(current)
-    seen = {
-        str(row.get("model_id", "")).casefold()
-        for row in current
+    """Preserve prior curated metadata while refreshing the HF model inventory."""
+    previous_by_id = {
+        str(row.get("model_id", "")).casefold(): row
+        for row in previous
         if isinstance(row, dict) and row.get("model_id")
     }
+    merged: list[dict] = []
+    seen: set[str] = set()
+    for current_row in current:
+        if not isinstance(current_row, dict) or not current_row.get("model_id"):
+            continue
+        row = dict(current_row)
+        key = str(row["model_id"]).casefold()
+        old = previous_by_id.get(key)
+        if old:
+            for field in ("input_modalities", "output_modalities", "aliases"):
+                now = row.get(field) if isinstance(row.get(field), list) else []
+                before = old.get(field) if isinstance(old.get(field), list) else []
+                row[field] = list(dict.fromkeys([*now, *before]))
+            if not row.get("context_window") and old.get("context_window"):
+                row["context_window"] = old["context_window"]
+            if row.get("max_output_tokens") == 2048 and "max_output_tokens" in old:
+                row["max_output_tokens"] = old["max_output_tokens"]
+            if row.get("license_type") in (None, "", "unknown") and old.get(
+                "license_type"
+            ):
+                row["license_type"] = old["license_type"]
+            old_extra = old.get("extra") if isinstance(old.get("extra"), dict) else {}
+            current_extra = (
+                row.get("extra") if isinstance(row.get("extra"), dict) else {}
+            )
+            extra = dict(old_extra)
+            extra.update(current_extra)
+            extra.pop("not_in_current_update_selection", None)
+            row["extra"] = extra
+        merged.append(row)
+        seen.add(key)
+
     retained = 0
     for old in previous:
         if not isinstance(old, dict) or not old.get("model_id"):
@@ -209,7 +331,7 @@ def main():
                 pass
 
     print(
-        f"Fetching HuggingFace models (pipeline_tag={PIPELINE_FILTER}, min_downloads={min_downloads})..."
+        f"Fetching HuggingFace models (all pipeline tasks, min_downloads={min_downloads})..."
     )
     raw = fetch_models(min_downloads)
     print(f"\nTotal raw models fetched: {len(raw)}")

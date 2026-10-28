@@ -19,6 +19,9 @@ INSTALLED = (
     Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "ollama.json"
 )
 URL = "https://ollama.com/api/tags"
+RESPONSES_API_SOURCE = "https://docs.ollama.com/api/openai-compatibility"
+RESPONSES_API_MIN_VERSION = "0.13.3"
+STRUCTURED_OUTPUT_SOURCE = "https://docs.ollama.com/capabilities/structured-outputs"
 
 
 def fetch() -> list[dict]:
@@ -62,6 +65,26 @@ def entry(raw: dict, old: dict | None) -> dict:
             "context_window_source"
         ):
             d["context_window"] = 0
+
+    outputs = d.get("output_modalities") or ["text"]
+    chat_compatible = (
+        d.get("supports_chat_completion") is not False and "embedding" not in outputs
+    )
+    if chat_compatible:
+        # These are Ollama server endpoint capabilities; individual models may
+        # still vary in their support for structured output or tool use.
+        d.update(
+            {
+                "supports_chat_completion": True,
+                "supports_streaming": True,
+                "supports_responses_api": True,
+                "supports_json_mode": True,
+                "supports_json_schema": True,
+            }
+        )
+    else:
+        d["supports_responses_api"] = False
+
     d["provider"] = "ollama"
     d["model_id"] = name
     d["display_name"] = d.get("display_name") or name
@@ -77,6 +100,16 @@ def entry(raw: dict, old: dict | None) -> dict:
             "quantization_level": details.get("quantization_level"),
         }
     )
+    if chat_compatible:
+        extra.update(
+            {
+                "responses_api_source": RESPONSES_API_SOURCE,
+                "responses_api_min_version": RESPONSES_API_MIN_VERSION,
+                "responses_api_stateful": False,
+                "structured_output_source": STRUCTURED_OUTPUT_SOURCE,
+                "structured_output_model_dependent": True,
+            }
+        )
     d["extra"] = extra
     return d
 

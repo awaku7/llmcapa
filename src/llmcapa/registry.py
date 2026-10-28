@@ -551,10 +551,10 @@ class Registry:
     # HuggingFace dynamic fetching
     # ------------------------------------------------------------------
     def _map_huggingface_record(self, r: dict) -> Capability:
-        """Map a HuggingFace API record to a Capability."""
-        model_id = r.get("modelId", r.get("_id", ""))
-        pipeline = r.get("pipeline_tag", "")
-        r.get("tags", [])
+        """Map a HuggingFace API record across text and multimodal tasks."""
+        model_id = r.get("modelId", r.get("_id", r.get("id", "")))
+        pipeline = str(r.get("pipeline_tag") or "").casefold()
+        tags = {str(tag).casefold() for tag in (r.get("tags") or [])}
         card = r.get("cardData", {}) or {}
         config = r.get("config", {}) or {}
 
@@ -563,17 +563,69 @@ class Registry:
         if "/" in model_id:
             provider = model_id.split("/", 1)[0]
 
-        # Determine input modalities from pipeline_tag
-        is_vision = pipeline in (
+        task_modalities = {
+            "text-generation": (["text"], ["text"]),
+            "text2text-generation": (["text"], ["text"]),
+            "text-classification": (["text"], ["text"]),
+            "token-classification": (["text"], ["text"]),
+            "question-answering": (["text"], ["text"]),
+            "table-question-answering": (["table", "text"], ["text"]),
+            "summarization": (["text"], ["text"]),
+            "translation": (["text"], ["text"]),
+            "fill-mask": (["text"], ["text"]),
+            "sentence-similarity": (["text"], ["text"]),
+            "zero-shot-classification": (["text"], ["text"]),
+            "feature-extraction": (["text"], ["embedding"]),
+            "text-to-3d": (["text"], ["spatial"]),
+            "image-text-to-text": (["text", "image"], ["text"]),
+            "visual-question-answering": (["text", "image"], ["text"]),
+            "image-to-text": (["image"], ["text"]),
+            "image-classification": (["image"], ["text"]),
+            "image-segmentation": (["image"], ["text"]),
+            "object-detection": (["image"], ["text"]),
+            "depth-estimation": (["image"], ["text"]),
+            "zero-shot-image-classification": (["image"], ["text"]),
+            "keypoint-detection": (["image"], ["spatial"]),
+            "image-feature-extraction": (["image"], ["embedding"]),
+            "text-to-image": (["text"], ["image"]),
+            "image-to-image": (["image"], ["image"]),
+            "image-to-3d": (["image"], ["spatial"]),
+            "automatic-speech-recognition": (["audio"], ["text"]),
+            "audio-to-text": (["audio"], ["text"]),
+            "audio-text-to-text": (["audio", "text"], ["text"]),
+            "audio-classification": (["audio"], ["text"]),
+            "text-to-speech": (["text"], ["audio"]),
+            "text-to-audio": (["text"], ["audio"]),
+            "audio-to-audio": (["audio"], ["audio"]),
+            "video-text-to-text": (["video", "text"], ["text"]),
+            "video-classification": (["video"], ["text"]),
+            "text-to-video": (["text"], ["video"]),
+            "image-to-video": (["image"], ["video"]),
+            "video-to-video": (["video"], ["video"]),
+        }
+        if pipeline not in task_modalities:
+            pipeline = next(
+                (task for task in task_modalities if task in tags), pipeline
+            )
+        input_mods, output_mods = task_modalities.get(pipeline, ([], []))
+        is_vision = "image" in input_mods
+        chat_pipelines = {
+            "text-generation",
+            "text2text-generation",
             "image-text-to-text",
             "visual-question-answering",
-            "image-feature-extraction",
+            "image-to-text",
+            "audio-text-to-text",
+            "audio-to-text",
+            "video-text-to-text",
+        }
+        supports_chat = (
+            True
+            if pipeline in chat_pipelines
+            else (False if pipeline in task_modalities else None)
         )
-        input_mods = ["text"]
-        if is_vision:
-            input_mods.append("image")
 
-        # Context window: try card -> config -> default
+        # Context window: try card -> config -> conservative default.
         model_data = card.get("model_data", {}) or {}
         ctx_win = (
             model_data.get("context_window")
@@ -584,17 +636,10 @@ class Registry:
             or config.get("n_ctx")
             or 4096
         )
-
         max_out = (
             model_data.get("max_output_tokens") or card.get("max_output_tokens") or 2048
         )
-
-        # Chat completion is supported for text-generation and image-text-to-text
-        supports_chat = pipeline in (
-            "text-generation",
-            "image-text-to-text",
-            "conversational",
-        )
+        aliases = [model_id.rsplit("/", 1)[-1]] if "/" in model_id else []
 
         return Capability(
             provider=provider,
@@ -603,13 +648,13 @@ class Registry:
             context_window=int(ctx_win) if ctx_win else 4096,
             max_output_tokens=int(max_out) if max_out else 2048,
             input_modalities=input_mods,
-            output_modalities=["text"],
+            output_modalities=output_mods,
             supports_chat_completion=supports_chat,
-            supports_streaming=True,
+            supports_streaming=True if supports_chat else None,
             supports_vision=is_vision,
-            supports_function_calling=False,
-            supports_json_mode=False,
-            aliases=[model_id.lower()],
+            supports_function_calling=None,
+            supports_json_mode=None,
+            aliases=aliases,
         )
 
     def fetch_huggingface(
@@ -617,14 +662,13 @@ class Registry:
         limit: int = 100,
         cache_ttl: int | None = None,
     ) -> int:
-        """Fetch top models from HuggingFace API and register them.
+        """Fetch popular HuggingFace models across pipeline tasks and register them.
 
-        Retrieves the most downloaded text-generation and image-text-to-text models
-        from HuggingFace, registers their basic capabilities, and caches the result
-        locally in ~/.llmcapa/huggingface_cache.json.
+        Retrieves the most downloaded models across HF tasks, maps known modalities,
+        and caches the result locally in ~/.llmcapa/huggingface_all_tasks_cache.json.
 
         Args:
-            limit: Maximum number of models to fetch per pipeline tag (default 100).
+            limit: Maximum total number of models to fetch (default 100).
             cache_ttl: Cache lifetime in seconds. If provided, the response is cached
                        to avoid redundant API requests. Pass 0 to force refresh.
         """
@@ -639,7 +683,7 @@ class Registry:
             home = os.path.expanduser("~")
             cache_dir = os.path.join(home, ".llmcapa")
             os.makedirs(cache_dir, exist_ok=True)
-            cache_file = os.path.join(cache_dir, "huggingface_cache.json")
+            cache_file = os.path.join(cache_dir, "huggingface_all_tasks_cache.json")
 
             if os.path.exists(cache_file):
                 mtime = os.path.getmtime(cache_file)
@@ -655,25 +699,19 @@ class Registry:
             headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
             records = []
 
-            # Fetch text-generation models
-            for tag in ("text-generation", "image-text-to-text"):
-                url = (
-                    f"https://huggingface.co/api/models"
-                    f"?pipeline_tag={tag}&sort=downloads&direction=-1&limit={limit}"
-                )
-                try:
-                    req = urllib.request.Request(url, headers=headers)
-                    with urllib.request.urlopen(
-                        req, context=ctx, timeout=30
-                    ) as response:
-                        chunk = json.loads(response.read().decode("utf-8"))
-                        for r in chunk:
-                            if r.get("modelId") or r.get("_id"):
-                                records.append(r)
-                except Exception as e:
-                    raise RuntimeError(
-                        f"Failed to fetch models from HuggingFace ({tag}): {e}"
-                    ) from e
+            # No pipeline_tag filter: include all task types in HF's ranked model list.
+            url = (
+                "https://huggingface.co/api/models"
+                f"?sort=downloads&direction=-1&limit={limit}"
+            )
+            try:
+                req = urllib.request.Request(url, headers=headers)
+                with urllib.request.urlopen(req, context=ctx, timeout=30) as response:
+                    records = json.loads(response.read().decode("utf-8"))
+            except Exception as e:
+                raise RuntimeError(
+                    f"Failed to fetch models from HuggingFace: {e}"
+                ) from e
 
             if cache_file and records:
                 try:
@@ -684,7 +722,7 @@ class Registry:
 
         count = 0
         for r in records:
-            model_id = r.get("modelId") or r.get("_id")
+            model_id = r.get("modelId") or r.get("_id") or r.get("id")
             if not model_id:
                 continue
             try:

@@ -570,7 +570,7 @@ print(cap.pricing)         # {'input_per_1m': 0.1, 'output_per_1m': 0.32, 'curre
 
 ### On-demand HuggingFace Integration (Caching)
 
-You can also fetch and register popular models from the HuggingFace API on-demand using `fetch_huggingface()`. This retrieves the most downloaded text-generation and image-text-to-text models, registers their basic capabilities, and caches the result locally in `~/.llmcapa/huggingface_cache.json`.
+You can also fetch and register popular models from the HuggingFace API on-demand using `fetch_huggingface()`. This retrieves the most downloaded models across Hugging Face pipeline tasks, records modalities where the task metadata is sufficient, and caches the result locally in `~/.llmcapa/huggingface_all_tasks_cache.json`.
 
 ```python
 # Fetch and register top 100 HuggingFace models dynamically
@@ -586,7 +586,7 @@ print(cap.supports_vision)  # False (text-generation pipeline)
 count = llmcapa.fetch_huggingface(limit=200)
 ```
 
-> **Note**: The HuggingFace listing API does not provide context window, pricing, or detailed capability data. The registered models have estimated context windows based on their model family (e.g., Llama 3: 8K, Qwen3: 128K). The bundled `huggingface.json` includes 2,904 popular text-generation models with improved context window estimates. For exact specifications, use `fetch_openrouter()` or official model cards.
+> **Note**: The HuggingFace listing API does not provide context window, pricing, or detailed capability data. Context windows may come from model cards or configs; if unavailable, estimates/defaults can be used, so verify exact limits in official model cards. The bundled `huggingface.json` is a static snapshot and may not yet include every model/task. The refresh script collects Hugging Face models across pipeline tasks, not only text generation; fields the API does not provide remain unknown unless curated from an official source. For exact specifications, consult official model cards.
 
 ### On-demand llmcapa GitHub Catalog
 
@@ -837,7 +837,7 @@ llmcapa fetch-hf --limit 200
 ## Notes
 
 - **Static Snapshot**: Bundled capability data is a static snapshot. See [docs/catalog_data_sources.md](https://github.com/awaku7/llmcapa/blob/main/docs/catalog_data_sources.md) for details on each provider's data source and known SSR limitations (Azure AI Catalog). While we strive to keep it updated with the latest models (including GPT-5.5, Claude Fable, Gemini 3.5, DeepSeek V4, Sakana Fugu, etc.), providers change limits and pricing frequently. Use `fetch_openrouter()` or verify with official documentation when absolute accuracy is critical.
-- **HuggingFace Data Accuracy**: The bundled `huggingface.json` includes 2,904 popular text-generation models with context windows estimated from model families. Models fetched via `fetch_huggingface()` at runtime have estimated defaults. For exact specifications, consult official model cards.
+- **HuggingFace Data Accuracy**: `huggingface.json` is a static snapshot. The catalog refresh script collects models across Hugging Face pipeline tasks; task-derived modalities are recorded where known, while missing model-specific capabilities remain unknown. Check official model cards for exact specifications.
 
 ## License
 

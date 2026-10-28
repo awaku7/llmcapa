@@ -42,7 +42,7 @@ try:
     __version__ = package_version("llmcapa")
 except PackageNotFoundError:
     # Source-tree fallback when the project is not installed yet.
-    __version__ = "0.5.70"
+    __version__ = "0.5.71"
 
 __all__ = [
     "AudioCapability",
@@ -167,14 +167,13 @@ def fetch_huggingface(
     limit: int = 100,
     cache_ttl: int | None = None,
 ) -> int:
-    """Fetch top models from HuggingFace API and register them.
+    """Fetch popular HuggingFace models across pipeline tasks and register them.
 
-    Retrieves the most downloaded text-generation and image-text-to-text models
-    from HuggingFace, registers their basic capabilities, and caches the result
-    locally in ~/.llmcapa/huggingface_cache.json.
+    Retrieves the most downloaded models across HF tasks, maps known modalities,
+    and caches the result locally in ~/.llmcapa/huggingface_all_tasks_cache.json.
 
     Args:
-        limit: Maximum number of models to fetch per pipeline tag (default 100).
+        limit: Maximum total number of models to fetch (default 100).
         cache_ttl: Cache lifetime in seconds. Pass 0 to force refresh.
     """
     return default_registry().fetch_huggingface(limit=limit, cache_ttl=cache_ttl)

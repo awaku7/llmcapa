@@ -151,6 +151,18 @@ def test_vllm_catalog_derives_static_records_from_huggingface_metadata():
                 "provider": "huggingface",
                 "model_id": "Example/Embed-Model",
                 "pipeline_tag": "feature-extraction",
+                "input_modalities": ["text"],
+                "output_modalities": ["embedding"],
+            },
+            {
+                "provider": "huggingface",
+                "model_id": "Qwen/Qwen3.6-35B-A3B",
+                "display_name": "Qwen/Qwen3.6-35B-A3B",
+                "pipeline_tag": "image-text-to-text",
+                "context_window": 262144,
+                "input_modalities": ["text", "image", "video"],
+                "output_modalities": ["text"],
+                "supports_vision": True,
             },
         ]
     }
@@ -172,26 +184,209 @@ def test_vllm_catalog_derives_static_records_from_huggingface_metadata():
             "context_window": 4096,
             "max_output_tokens": 1024,
         },
+        {
+            "provider": "vllm",
+            "model_id": "Qwen/Qwen3.6-35B-A3B",
+            "context_window": 262144,
+            "max_output_tokens": 0,
+            "input_modalities": ["text", "image", "video"],
+            "output_modalities": ["text"],
+            "aliases": ["qwen3.6"],
+            "supports_function_calling": True,
+            "supports_reasoning": True,
+            "extra": {
+                "official_vllm_recipe_url": "https://recipes.vllm.ai/Qwen/Qwen3.6-35B-A3B",
+                "vllm_min_version": "0.17.0",
+                "endpoints": [{"base_url": "http://localhost:8000/v1"}],
+            },
+        },
     ]
 
     catalog = updater.build_catalog(source, previous)
     rows = {row["model_id"]: row for row in catalog["models"]}
 
-    assert set(rows) == {"Example/Chat-Model", "Example/Legacy-Model"}
+    assert set(rows) == {
+        "Example/Chat-Model",
+        "Example/Embed-Model",
+        "Example/Legacy-Model",
+        "Qwen/Qwen3.6-35B-A3B",
+    }
     current = rows["Example/Chat-Model"]
     assert current["provider"] == "vllm"
     assert current["context_window"] == 8192
     assert current["max_output_tokens"] == 0
-    assert current["supports_chat_completion"] is None
+    assert current["supports_chat_completion"] is True
+    assert current["supports_streaming"] is True
+    assert current["supports_responses_api"] is True
+    assert current["supports_json_mode"] is True
+    assert current["supports_json_schema"] is True
     assert current["pricing"] == previous[0]["pricing"]
     assert current["extra"]["metadata_source"] == "huggingface"
     assert current["extra"]["huggingface_downloads"] == 1234
     assert current["extra"]["endpoints"] == previous[0]["extra"]["endpoints"]
     assert "official_catalog_status" not in current["extra"]
+    assert rows["Example/Embed-Model"]["output_modalities"] == ["embedding"]
+    assert rows["Example/Embed-Model"]["supports_responses_api"] is None
+    qwen = rows["Qwen/Qwen3.6-35B-A3B"]
+    assert qwen["context_window"] == 262144
+    assert qwen["max_output_tokens"] == 0
+    assert qwen["input_modalities"] == ["text", "image", "video"]
+    assert qwen["supports_vision"] is True
+    assert qwen["supports_chat_completion"] is True
+    assert qwen["supports_responses_api"] is True
+    assert qwen["extra"]["metadata_source"] == "huggingface"
+    assert qwen["extra"]["official_vllm_recipe_url"] == (
+        "https://recipes.vllm.ai/Qwen/Qwen3.6-35B-A3B"
+    )
+    assert qwen["extra"]["vllm_min_version"] == "0.17.0"
+    assert qwen["supports_function_calling"] is True
+    assert qwen["supports_reasoning"] is True
     assert (
         rows["Example/Legacy-Model"]["extra"]["not_listed_in_huggingface_snapshot"]
         is True
     )
+
+
+def test_huggingface_refresh_preserves_curated_unknown_fields_for_current_models():
+    scraper = _load_script("scrape_huggingface")
+    current = [
+        {
+            "provider": "huggingface",
+            "model_id": "Qwen/Qwen3.6-35B-A3B",
+            "context_window": 0,
+            "max_output_tokens": 2048,
+            "input_modalities": ["text", "image"],
+            "output_modalities": ["text"],
+            "aliases": ["Qwen3.6-35B-A3B"],
+            "supports_function_calling": None,
+            "extra": {"huggingface_tags": ["image-text-to-text"]},
+        }
+    ]
+    previous = [
+        {
+            "provider": "huggingface",
+            "model_id": "qwen/qwen3.6-35b-a3b",
+            "context_window": 262144,
+            "max_output_tokens": 0,
+            "input_modalities": ["text", "image", "video"],
+            "output_modalities": ["text"],
+            "aliases": ["qwen3.6"],
+            "license_type": "Apache-2.0",
+            "supports_function_calling": False,
+            "extra": {"context_window_source": "official-model-doc"},
+        }
+    ]
+
+    merged = scraper.retain_unlisted_models(current, previous)
+    qwen = merged[0]
+    assert qwen["context_window"] == 262144
+    assert qwen["max_output_tokens"] == 0
+    assert qwen["input_modalities"] == ["text", "image", "video"]
+    assert qwen["aliases"] == ["Qwen3.6-35B-A3B", "qwen3.6"]
+    assert qwen["license_type"] == "Apache-2.0"
+    assert qwen["extra"] == {
+        "context_window_source": "official-model-doc",
+        "huggingface_tags": ["image-text-to-text"],
+    }
+    assert qwen["supports_function_calling"] is None
+
+
+def test_ollama_updater_overlays_responses_api_only_for_chat_models():
+    updater = _load_script("update_ollama")
+    chat = updater.entry(
+        {"name": "qwen3-vl:8b", "details": {}},
+        None,
+    )
+    assert chat["supports_chat_completion"] is True
+    assert chat["supports_streaming"] is True
+    assert chat["supports_responses_api"] is True
+    assert chat["supports_json_mode"] is True
+    assert chat["supports_json_schema"] is True
+    assert chat["extra"]["responses_api_min_version"] == "0.13.3"
+    assert chat["extra"]["responses_api_stateful"] is False
+
+    embedding_old = {
+        "provider": "ollama",
+        "model_id": "embed-model",
+        "input_modalities": ["text"],
+        "output_modalities": ["embedding"],
+        "supports_chat_completion": False,
+    }
+    embedding = updater.entry({"name": "embed-model", "details": {}}, embedding_old)
+    assert embedding["supports_responses_api"] is False
+
+
+def test_huggingface_scraper_fetches_without_a_text_only_pipeline_filter(monkeypatch):
+    scraper = _load_script("scrape_huggingface")
+    calls = []
+
+    class Response:
+        def __init__(self):
+            self.status_code = 200
+            self.headers = {}
+            self.text = ""
+
+        def json(self):
+            return [
+                {
+                    "id": "Qwen/Qwen3.6-35B-A3B",
+                    "pipeline_tag": "image-text-to-text",
+                    "downloads": 10,
+                }
+            ]
+
+    class Session:
+        def get(self, url, **kwargs):
+            calls.append((url, kwargs))
+            return Response()
+
+        def close(self):
+            pass
+
+    monkeypatch.setattr(scraper.requests, "Session", Session)
+    monkeypatch.setattr(scraper.time, "sleep", lambda _seconds: None)
+
+    rows = scraper.fetch_models(min_downloads=1)
+
+    assert rows[0]["pipeline_tag"] == "image-text-to-text"
+    assert "pipeline_tag" not in calls[0][1]["params"]
+
+
+def test_huggingface_scraper_collects_multiple_modalities_and_leaves_unknowns_unknown():
+    scraper = _load_script("scrape_huggingface")
+    rows = scraper.convert_to_catalog_format(
+        [
+            {
+                "id": "Qwen/Qwen3.6-35B-A3B",
+                "pipeline_tag": "image-text-to-text",
+                "tags": ["qwen3_5_moe", "license:apache-2.0"],
+                "downloads": 10000,
+            },
+            {"id": "org/image-gen", "pipeline_tag": "text-to-image", "tags": []},
+            {
+                "id": "org/asr",
+                "pipeline_tag": "automatic-speech-recognition",
+                "tags": [],
+            },
+            {"id": "org/unknown-task", "pipeline_tag": None, "tags": []},
+        ]
+    )
+    by_id = {row["model_id"]: row for row in rows}
+
+    qwen = by_id["Qwen/Qwen3.6-35B-A3B"]
+    assert qwen["pipeline_tag"] == "image-text-to-text"
+    assert qwen["input_modalities"] == ["text", "image"]
+    assert qwen["output_modalities"] == ["text"]
+    assert qwen["supports_vision"] is True
+    assert qwen["supports_function_calling"] is None
+    assert qwen["extra"]["huggingface_tags"] == ["qwen3_5_moe", "license:apache-2.0"]
+
+    assert by_id["org/image-gen"]["input_modalities"] == ["text"]
+    assert by_id["org/image-gen"]["output_modalities"] == ["image"]
+    assert by_id["org/asr"]["input_modalities"] == ["audio"]
+    assert by_id["org/asr"]["output_modalities"] == ["text"]
+    assert by_id["org/unknown-task"]["input_modalities"] == []
+    assert by_id["org/unknown-task"]["output_modalities"] == []
 
 
 def test_local_runtime_catalogs_enrich_existing_ids_from_hf_without_connecting():
@@ -212,6 +407,12 @@ def test_local_runtime_catalogs_enrich_existing_ids_from_hf_without_connecting()
                 "model_id": "Org/Model-B",
                 "pipeline_tag": "text-generation",
                 "context_window": 4096,
+            },
+            {
+                "model_id": "Org/Model-Image",
+                "pipeline_tag": "image-text-to-text",
+                "input_modalities": ["text", "image"],
+                "output_modalities": ["text"],
             },
         ]
     }
@@ -235,12 +436,21 @@ def test_local_runtime_catalogs_enrich_existing_ids_from_hf_without_connecting()
     for provider in ("llama-cpp", "lmstudio"):
         catalog = updater.build_catalog(source, previous, provider=provider)
         rows = {row["model_id"]: row for row in catalog["models"]}
-        assert set(rows) == {"Org/Model-A", "Org/Model-B", "legacy/local-alias"}
+        assert set(rows) == {
+            "Org/Model-A",
+            "Org/Model-B",
+            "Org/Model-Image",
+            "legacy/local-alias",
+        }
         assert rows["Org/Model-A"]["provider"] == provider
         assert rows["Org/Model-A"]["context_window"] == 8192
         assert rows["Org/Model-A"]["extra"]["metadata_source"] == "huggingface"
         assert "inventory_scope" not in rows["Org/Model-A"]["extra"]
         assert rows["Org/Model-B"]["extra"]["metadata_source"] == "huggingface"
+        assert rows["Org/Model-Image"]["input_modalities"] == ["text", "image"]
+        expected_responses = True if provider == "lmstudio" else None
+        assert rows["Org/Model-Image"]["supports_responses_api"] is expected_responses
+        assert rows["Org/Model-A"]["supports_responses_api"] is expected_responses
         assert (
             rows["legacy/local-alias"]["extra"]["not_listed_in_huggingface_snapshot"]
             is True

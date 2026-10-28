@@ -559,7 +559,7 @@ print(llmcapa.providers())
 
 ### オンデマンドでの HuggingFace 連携（キャッシュ更新）
 
-`fetch_huggingface()` を使うと、HuggingFace API から人気モデルをオンデマンドで取得・登録できます。ダウンロード数の多い text-generation / image-text-to-text モデルを取得し、基本的な機能を登録して `~/.llmcapa/huggingface_cache.json` にローカルキャッシュします。
+`fetch_huggingface()` を使うと、HuggingFace API からダウンロード数の多いモデルを、タスクを限定せずオンデマンドで取得・登録できます。`pipeline_tag` から判定可能なモダリティを記録し、結果は `~/.llmcapa/huggingface_all_tasks_cache.json` にキャッシュします。
 
 ```python
 # 上位 100 の HuggingFace モデルを動的に取得・登録
@@ -575,7 +575,7 @@ print(cap.supports_vision)  # False（text-generation パイプライン）
 count = llmcapa.fetch_huggingface(limit=200)
 ```
 
-> **Note**: HuggingFace の一覧 API はコンテキストウィンドウ、価格、詳細な機能データを提供しません。登録されるモデルのコンテキストウィンドウはモデルファミリーに基づく推定値です（例: Llama 3: 8K、Qwen3: 128K）。同梱の `huggingface.json` には、改善されたコンテキスト推定付きの人気 text-generation モデル 2,904 件が含まれます。正確な仕様が必要な場合は、各モデルの公式ドキュメントを参照してください。
+> **Note**: HuggingFace の一覧 API はコンテキストウィンドウ、価格、詳細な機能データを提供しません。コンテキストウィンドウはモデルカードまたは設定値から取得できる場合がありますが、欠落時は推定・既定値となるため、正確な仕様は公式モデルカードで確認してください。同梱の `huggingface.json` は静的スナップショットです。更新スクリプト `scripts/_scrape_huggingface.py` は、text-generation に限らず Hugging Face API が返す全 pipeline task のモデルを取得します。コンテキスト長などAPIから得られない値は不明のまま扱い、正確な仕様は各モデルの公式情報を確認してください。
 
 ### llmcapa GitHub カタログのオンデマンド取得
 
