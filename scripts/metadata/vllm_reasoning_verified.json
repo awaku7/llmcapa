@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "description": "Conservative model-specific reasoning overrides for the vLLM inference catalog. Exact model IDs only; do not propagate to quantizations or derivatives.",
+  "models": {
+    "openai/gpt-oss-20b": {
+      "supports_reasoning": true,
+      "supports_reasoning_effort": true,
+      "reasoning_effort_values": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "evidence_url": "https://openai.com/index/introducing-gpt-oss/",
+      "checked_at": "2026-10-28",
+      "note": "The gpt-oss open-weight models have three trained reasoning levels. The none value is not included."
+    },
+    "openai/gpt-oss-120b": {
+      "supports_reasoning": true,
+      "supports_reasoning_effort": true,
+      "reasoning_effort_values": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "evidence_url": "https://openai.com/index/introducing-gpt-oss/",
+      "checked_at": "2026-10-28",
+      "note": "The gpt-oss open-weight models have three trained reasoning levels. The none value is not included."
+    },
+    "deepseek-ai/DeepSeek-V4-Flash": {
+      "supports_reasoning": true,
+      "supports_reasoning_effort": true,
+      "reasoning_effort_values": [
+        "none",
+        "low",
+        "high",
+        "max"
+      ],
+      "evidence_url": "https://docs.vllm.ai/en/latest/api/vllm/tokenizers/deepseek_v4/",
+      "checked_at": "2026-10-28",
+      "note": "vLLM DeepSeek V4 maps none to chat mode, low to low, high to high, and max to max. Minimal/medium alias low and are omitted from the distinct level list."
+    },
+    "deepseek-ai/DeepSeek-V4-Pro": {
+      "supports_reasoning": true,
+      "supports_reasoning_effort": true,
+      "reasoning_effort_values": [
+        "none",
+        "low",
+        "high",
+        "max"
+      ],
+      "evidence_url": "https://docs.vllm.ai/en/latest/api/vllm/tokenizers/deepseek_v4/",
+      "checked_at": "2026-10-28",
+      "note": "vLLM DeepSeek V4 maps none to chat mode, low to low, high to high, and max to max. Minimal/medium alias low and are omitted from the distinct level list."
+    },
+    "Qwen/Qwen3.6-35B-A3B": {
+      "supports_reasoning": true,
+      "supports_thinking_budget": true,
+      "thinking_budget_values": {
+        "type": "token_range",
+        "min": 1
+      },
+      "thinking_control": {
+        "kind": "budget",
+        "parameter": "thinking_token_budget",
+        "type": "token_range",
+        "min": 1
+      },
+      "evidence_url": "https://docs.vllm.ai/en/stable/features/reasoning_outputs/",
+      "checked_at": "2026-10-28",
+      "note": "vLLM thinking_token_budget is a numerical per-request reasoning token ceiling, not reasoning_effort. Requires a supported reasoning parser; effective range also depends on generation limits."
+    }
+  }
+}
