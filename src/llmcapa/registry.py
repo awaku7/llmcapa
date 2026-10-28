@@ -153,7 +153,7 @@ class Registry:
         regular = []
         agg = []
         for entry in sorted(data_pkg.iterdir(), key=lambda e: e.name):
-            if entry.name == "_vllm_verified_reasoning.json":
+            if entry.name == "_vllm_verified_reasoning.meta":
                 # Metadata overlay, not a standalone catalog of models.
                 continue
             if entry.name.endswith(".json"):
@@ -327,7 +327,7 @@ class Registry:
         verified_models = {}
         if catalog_name == "vllm.json":
             evidence_path = resources.files("llmcapa.data").joinpath(
-                "_vllm_verified_reasoning.json"
+                "_vllm_verified_reasoning.meta"
             )
             verified_models = json.loads(
                 evidence_path.read_text(encoding="utf-8")
