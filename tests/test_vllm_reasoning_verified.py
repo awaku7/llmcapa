@@ -1,6 +1,8 @@
 """Regression coverage for verified vLLM reasoning metadata."""
 
 import llmcapa
+from llmcapa.models import Capability
+from llmcapa.registry import Registry
 from scripts import _update_local_inference_catalogs_from_hf as updater
 
 
@@ -64,3 +66,21 @@ def test_bundled_vllm_qwen_budget_is_not_reasoning_effort() -> None:
     assert control["kind"] == "budget"
     assert control["parameter"] == "thinking_token_budget"
     assert control["min"] == 1
+
+
+def test_vllm_refresh_preserves_verified_effort_controls() -> None:
+    registry = Registry()
+    registry._ensure_loaded()
+    stale = Capability(provider="vllm", model_id="openai/gpt-oss-20b")
+    registry._register_refreshed_catalog_record(stale)
+    updated = registry.get("openai/gpt-oss-20b", provider="vllm")
+    assert updated.supports_reasoning_effort is True
+    assert updated.get_reasoning_effort_values() == ["low", "medium", "high"]
+    assert updated.extra["vllm_reasoning_evidence"]["verification"] == (
+        "documentation_only"
+    )
+
+    # The same canonicalization must apply to cached/explicit registrations.
+    registry.register(stale, overwrite=True)
+    updated = registry.get("openai/gpt-oss-20b", provider="vllm")
+    assert updated.get_reasoning_effort_values() == ["low", "medium", "high"]
