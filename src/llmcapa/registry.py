@@ -329,9 +329,9 @@ class Registry:
             evidence_path = resources.files("llmcapa.data").joinpath(
                 "_vllm_verified_reasoning.meta"
             )
-            verified_models = json.loads(
-                evidence_path.read_text(encoding="utf-8")
-            )["models"]
+            verified_models = json.loads(evidence_path.read_text(encoding="utf-8"))[
+                "models"
+            ]
         count = 0
         for record in records:
             evidence = (
