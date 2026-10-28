@@ -153,6 +153,9 @@ class Registry:
         regular = []
         agg = []
         for entry in sorted(data_pkg.iterdir(), key=lambda e: e.name):
+            if entry.name == "_vllm_verified_reasoning.json":
+                # Metadata overlay, not a standalone catalog of models.
+                continue
             if entry.name.endswith(".json"):
                 if entry.name in aggregators:
                     agg.append(entry)
@@ -321,8 +324,42 @@ class Registry:
             records = payload.get("models", [])
         else:
             records = payload
+        verified_models = {}
+        if catalog_name == "vllm.json":
+            evidence_path = resources.files("llmcapa.data").joinpath(
+                "_vllm_verified_reasoning.json"
+            )
+            verified_models = json.loads(
+                evidence_path.read_text(encoding="utf-8")
+            )["models"]
         count = 0
         for record in records:
+            evidence = (
+                verified_models.get(record.get("model_id"))
+                if isinstance(record, dict)
+                else None
+            )
+            if isinstance(evidence, dict):
+                # Do not infer a control from another provider or derivative.
+                record = dict(record)
+                for key in (
+                    "supports_reasoning",
+                    "supports_reasoning_effort",
+                    "reasoning_effort_values",
+                    "supports_thinking_budget",
+                    "thinking_budget_values",
+                    "thinking_control",
+                ):
+                    if key in evidence:
+                        record[key] = evidence[key]
+                extra = dict(record.get("extra") or {})
+                extra["vllm_reasoning_evidence"] = {
+                    "source": evidence["evidence_url"],
+                    "checked_at": evidence["checked_at"],
+                    "note": evidence.get("note", ""),
+                    "verification": "documentation_only",
+                }
+                record["extra"] = extra
             cap = Capability.from_dict(record)
             if catalog_name:
                 provider = self._canonical_provider(cap.provider)
