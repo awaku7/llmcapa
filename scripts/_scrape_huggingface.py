@@ -33,10 +33,14 @@ Output format (huggingface.json):
     }
 """
 
+from __future__ import annotations
+
 import json
 import re
 import sys
 import time
+from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 from pathlib import Path
 
 import requests
@@ -44,6 +48,28 @@ import requests
 API_BASE = "https://huggingface.co/api/models"
 DEFAULT_MIN_DOWNLOADS = 5000  # skip models with fewer downloads
 BATCH_SIZE = 500  # max per API call
+MAX_RETRIES = 5
+MAX_BACKOFF_SECONDS = 60.0
+
+
+def _retry_delay(retry_after: str | None, retry_index: int) -> float:
+    """Exponential retry delay, honoring a longer server Retry-After value."""
+    delay = min(2.0**retry_index, MAX_BACKOFF_SECONDS)
+    if not retry_after:
+        return delay
+    try:
+        server_delay = max(0.0, float(retry_after))
+    except ValueError:
+        try:
+            retry_at = parsedate_to_datetime(retry_after)
+            if retry_at.tzinfo is None:
+                retry_at = retry_at.replace(tzinfo=timezone.utc)
+            server_delay = max(
+                0.0, (retry_at - datetime.now(timezone.utc)).total_seconds()
+            )
+        except (TypeError, ValueError, OverflowError):
+            server_delay = 0.0
+    return max(delay, server_delay)
 
 
 def fetch_models(min_downloads: int) -> list:
@@ -63,42 +89,86 @@ def fetch_models(min_downloads: int) -> list:
         "limit": BATCH_SIZE,
     }
 
-    while True:
-        if next_url:
-            resp = session.get(next_url, timeout=30)
-        else:
-            resp = session.get(API_BASE, params=params, timeout=30)
+    try:
+        while True:
+            retry_index = 0
+            while True:
+                try:
+                    if next_url:
+                        resp = session.get(next_url, timeout=30)
+                    else:
+                        resp = session.get(API_BASE, params=params, timeout=30)
+                except requests.RequestException as exc:
+                    if retry_index >= MAX_RETRIES:
+                        raise RuntimeError(
+                            f"HuggingFace request failed at page {page}: {exc}"
+                        ) from exc
+                    delay = _retry_delay(None, retry_index)
+                    print(
+                        f"  Retry {retry_index + 1}/{MAX_RETRIES} in {delay:g}s "
+                        f"after request error at page {page}",
+                        flush=True,
+                    )
+                    time.sleep(delay)
+                    retry_index += 1
+                    continue
 
-        if resp.status_code != 200:
-            print(f"[ERROR] HTTP {resp.status_code} at page {page}")
-            print(f"  Response: {resp.text[:200]}")
-            break
+                if resp.status_code == 200:
+                    break
+                if resp.status_code in {429, 500, 502, 503, 504} and (
+                    retry_index < MAX_RETRIES
+                ):
+                    delay = _retry_delay(
+                        resp.headers.get("Retry-After"), retry_index
+                    )
+                    print(
+                        f"  Retry {retry_index + 1}/{MAX_RETRIES} in {delay:g}s "
+                        f"after HTTP {resp.status_code} at page {page}",
+                        flush=True,
+                    )
+                    time.sleep(delay)
+                    retry_index += 1
+                    continue
+                raise RuntimeError(
+                    f"HuggingFace API returned HTTP {resp.status_code} at page {page}: "
+                    f"{resp.text[:200]}"
+                )
 
-        batch = resp.json()
-        if not batch:
-            break
+            batch = resp.json()
+            if not batch:
+                break
 
-        # Filter by min downloads
-        filtered = [m for m in batch if m.get("downloads", 0) >= min_downloads]
-        models.extend(filtered)
+            filtered = [m for m in batch if m.get("downloads", 0) >= min_downloads]
+            models.extend(filtered)
+            page += 1
+            print(
+                f"  Page {page}: got {len(batch)} models "
+                f"({len(filtered)} >= {min_downloads} downloads), total={len(models)}",
+                flush=True,
+            )
 
-        page += 1
-        print(
-            f"  Page {page}: got {len(batch)} models ({len(filtered)} >= {min_downloads} downloads), total={len(models)}"
-        )
+            # The API sorts descending by downloads. Once the last row in a page
+            # is below the threshold, no later page can contribute a model.
+            boundary_downloads = int(batch[-1].get("downloads") or 0)
+            if boundary_downloads < min_downloads:
+                print(
+                    f"  Download threshold reached ({boundary_downloads} < "
+                    f"{min_downloads}); stopping pagination.",
+                    flush=True,
+                )
+                break
 
-        # Check for next page via Link header
-        link_header = resp.headers.get("Link", "")
-        match = re.search(r'<([^>]+)>\s*;\s*rel="next"', link_header)
-        if match:
-            next_url = match.group(1)
-        else:
-            print("  No more pages.")
-            break
+            link_header = resp.headers.get("Link", "")
+            match = re.search(r'<([^>]+)>\s*;\s*rel="next"', link_header)
+            if match:
+                next_url = match.group(1)
+            else:
+                print("  No more pages.", flush=True)
+                break
 
-        time.sleep(0.3)
-
-    session.close()
+            time.sleep(0.3)
+    finally:
+        session.close()
     return models
 
 

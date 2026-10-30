@@ -6,14 +6,18 @@ import json
 import os
 import subprocess
 import sys
+from io import BytesIO
 from pathlib import Path
+from urllib.error import HTTPError
 
 import pytest
 
 SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
+import _scrape_huggingface as hf_scraper
 import refresh_catalogs as refresh
+from provider_updates import sambanova
 
 
 def _catalog(*ids: str) -> dict:
@@ -152,6 +156,7 @@ def test_timeout_terminates_provider_process_group_before_restore(
         assert "--provider" in command
         assert kwargs["start_new_session"] is True
         assert kwargs["stdin"] == subprocess.DEVNULL
+        assert kwargs["env"]["PYTHONUNBUFFERED"] == "1"
         calls.append("spawned")
         return fake_proc
 
@@ -171,6 +176,97 @@ def test_timeout_terminates_provider_process_group_before_restore(
     assert calls[1][0] == "kill-group"
     assert calls[1][1] == fake_proc.pid
     assert calls[2:] == ["reaped", "restored"]
+
+
+def test_huggingface_scraper_retries_and_stops_at_download_cutoff(
+    monkeypatch, capsys
+):
+    next_url = "https://huggingface.co/api/models?cursor=next"
+    requests_seen = []
+    sleeps = []
+    responses = [
+        {"status": 429, "headers": {"Retry-After": "0"}, "models": []},
+        {
+            "status": 200,
+            "headers": {"Link": f'<{next_url}>; rel="next"'},
+            "models": [
+                {"id": "popular/model-a", "downloads": 10000},
+                {"id": "popular/model-b", "downloads": 6000},
+            ],
+        },
+        {
+            "status": 200,
+            "headers": {},
+            "models": [
+                {"id": "small/model-c", "downloads": 4500},
+                {"id": "small/model-d", "downloads": 4000},
+            ],
+        },
+    ]
+
+    class FakeResponse:
+        def __init__(self, data):
+            self.status_code = data["status"]
+            self.headers = data["headers"]
+            self.payload = data["models"]
+            self.text = "rate limited" if self.status_code == 429 else ""
+
+        def json(self):
+            return self.payload
+
+    class FakeSession:
+        def get(self, url, **kwargs):
+            requests_seen.append((url, kwargs))
+            return FakeResponse(responses[len(requests_seen) - 1])
+
+        def close(self):
+            pass
+
+    monkeypatch.setattr(hf_scraper.requests, "Session", FakeSession)
+    monkeypatch.setattr(hf_scraper.time, "sleep", sleeps.append)
+
+    models = hf_scraper.fetch_models(min_downloads=5000)
+
+    assert [model["id"] for model in models] == [
+        "popular/model-a",
+        "popular/model-b",
+    ]
+    assert len(requests_seen) == 3  # 429 retry, first page, threshold page
+    assert requests_seen[2][0] == next_url
+    assert sleeps == [1.0, 0.3]
+    assert "Download threshold reached" in capsys.readouterr().out
+
+
+def test_sambanova_fetch_page_retries_transient_forbidden_response(monkeypatch, capsys):
+    attempts = []
+    sleeps = []
+
+    def fake_fetch_text(*_args, **_kwargs):
+        attempts.append(1)
+        if len(attempts) == 1:
+            raise HTTPError(
+                sambanova.SOURCE,
+                403,
+                "Forbidden",
+                {"Retry-After": "0"},
+                BytesIO(),
+            )
+        return "official model page"
+
+    monkeypatch.setattr(sambanova, "fetch_text", fake_fetch_text)
+    monkeypatch.setattr(sambanova.time, "sleep", sleeps.append)
+
+    assert sambanova.fetch_page() == "official model page"
+    assert len(attempts) == 2
+    assert sleeps == [1.0]
+    assert "Temporary SambaNova docs HTTP 403" in capsys.readouterr().out
+
+
+def test_slow_provider_timeout_overrides_are_configured():
+    assert refresh.PROVIDER_TIMEOUT_OVERRIDES == {
+        "azure-foundry": 600,
+        "huggingface": 600,
+    }
 
 
 def _complete_catalog() -> dict:

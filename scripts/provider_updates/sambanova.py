@@ -3,8 +3,11 @@
 from __future__ import annotations
 
 import json
+import time
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.error import HTTPError
+
 try:
     from scripts.provider_updates._http import fetch_text
 except ModuleNotFoundError:  # Running this updater directly from its own directory.
@@ -58,13 +61,31 @@ MODELS = {
 
 
 def fetch_page() -> str:
-    return fetch_text(
-        SOURCE,
-        headers={"User-Agent": "llmcapa-official-updater/1.0"},
-        timeout=30,
-        max_bytes=500_000,
-        errors="ignore",
-    ).lower()
+    for retry_index in range(4):
+        try:
+            return fetch_text(
+                SOURCE,
+                headers={"User-Agent": "llmcapa-official-updater/1.0"},
+                timeout=30,
+                max_bytes=500_000,
+                errors="ignore",
+            ).lower()
+        except HTTPError as exc:
+            if exc.code not in {403, 429, 500, 502, 503, 504} or retry_index == 3:
+                raise
+            retry_after = exc.headers.get("Retry-After") if exc.headers else None
+            try:
+                delay = max(2.0**retry_index, float(retry_after or 0))
+            except ValueError:
+                delay = 2.0**retry_index
+            print(
+                f"Temporary SambaNova docs HTTP {exc.code}; "
+                f"retry {retry_index + 1}/3 in {delay:g}s",
+                flush=True,
+            )
+            exc.close()
+            time.sleep(delay)
+    raise RuntimeError("SambaNova model page retries exhausted")
 
 
 def main() -> None:
