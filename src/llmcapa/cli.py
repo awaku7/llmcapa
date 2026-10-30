@@ -7,10 +7,11 @@ Usage:
     llmcapa find [NAME[=BOOL] ...] [OPTIONS]
     llmcapa providers
     llmcapa tokens <model_id> [TEXT] [--messages]
-    llmcapa update
-    llmcapa fetch-hf [--limit N]
+    llmcapa update openrouter
+    llmcapa update hf
+    llmcapa update gh --provider PROVIDER [OPTIONS]
 
-Rendering options shared by ``list`` and ``search``:
+Rendering options shared by ``list``, ``search``, and ``find``:
 
     --format {table,json,csv,md}  output format (default: table)
     --json                        shortcut for ``--format json``
@@ -33,6 +34,7 @@ import csv
 import json
 import shutil
 import sys
+import threading
 from collections.abc import Sequence
 from typing import Any, Callable
 
@@ -714,10 +716,57 @@ def _cmd_tokens(args: argparse.Namespace) -> int:
     return 0
 
 
+def _run_with_progress(
+    label: str, operation: Callable[[Callable[[str], None]], int]
+) -> int:
+    """Run an update with an animated TTY spinner or a non-TTY status line."""
+    is_tty = sys.stderr.isatty()
+    status = [label]
+    status_lock = threading.Lock()
+
+    def report(message: str) -> None:
+        with status_lock:
+            status[0] = message
+        if not is_tty:
+            print(f"  {message}", file=sys.stderr, flush=True)
+
+    if not is_tty:
+        print(f"{label}...", file=sys.stderr, flush=True)
+        return operation(report)
+
+    frames = "|/-\\"
+    stop = threading.Event()
+
+    def spin() -> None:
+        index = 0
+        while not stop.wait(0.12):
+            with status_lock:
+                current_status = status[0]
+            sys.stderr.write(f"\r{frames[index % len(frames)]} {current_status}")
+            sys.stderr.flush()
+            index += 1
+
+    sys.stderr.write(f"\r| {label}")
+    sys.stderr.flush()
+    worker = threading.Thread(target=spin, daemon=True)
+    worker.start()
+    try:
+        return operation(report)
+    finally:
+        stop.set()
+        worker.join()
+        sys.stderr.write("\r" + " " * (len(status[0]) + 3) + "\r")
+        sys.stderr.flush()
+
+
 def _cmd_update(_args: argparse.Namespace) -> int:
     try:
-        print("Fetching latest models from OpenRouter API...")
-        count = default_registry().fetch_openrouter(cache_ttl=0)
+        count = _run_with_progress(
+            "Updating OpenRouter catalog",
+            lambda progress: default_registry().fetch_openrouter(
+                cache_ttl=0, progress_callback=progress
+            ),
+        )
         print(f"Successfully updated {count} models from OpenRouter.")
         return 0
     except Exception as e:  # noqa: BLE001
@@ -725,12 +774,14 @@ def _cmd_update(_args: argparse.Namespace) -> int:
         return 1
 
 
-def _cmd_fetch_hf(args: argparse.Namespace) -> int:
+def _cmd_fetch_hf(_args: argparse.Namespace) -> int:
     try:
-        print(
-            f"Fetching top {args.limit} text-generation models from HuggingFace API..."
+        count = _run_with_progress(
+            "Fetching HuggingFace models across pipeline tasks",
+            lambda progress: default_registry().fetch_huggingface(
+                cache_ttl=0, progress_callback=progress
+            ),
         )
-        count = default_registry().fetch_huggingface(limit=args.limit, cache_ttl=0)
         print(f"Successfully registered {count} models from HuggingFace.")
         return 0
     except Exception as e:  # noqa: BLE001
@@ -740,11 +791,14 @@ def _cmd_fetch_hf(args: argparse.Namespace) -> int:
 
 def _cmd_fetch_github(args: argparse.Namespace) -> int:
     try:
-        print(f"Fetching {args.provider} catalog from llmcapa GitHub ({args.ref})...")
-        count = default_registry().fetch_github_catalog(
-            provider=args.provider,
-            ref=args.ref,
-            cache_ttl=0 if args.refresh else args.cache_ttl,
+        count = _run_with_progress(
+            f"Fetching {args.provider} catalog from llmcapa GitHub ({args.ref})",
+            lambda progress: default_registry().fetch_github_catalog(
+                provider=args.provider,
+                ref=args.ref,
+                cache_ttl=0 if args.refresh else args.cache_ttl,
+                progress_callback=progress,
+            ),
         )
         print(f"Successfully registered {count} models from llmcapa GitHub.")
         return 0
@@ -809,6 +863,20 @@ def _add_render_options(parser: argparse.ArgumentParser) -> None:
     )
 
 
+def _add_github_update_options(parser: argparse.ArgumentParser) -> None:
+    parser.add_argument("--provider", required=True, help="provider catalog to fetch")
+    parser.add_argument("--ref", default="main", help="Git branch, tag, or commit")
+    parser.add_argument(
+        "--cache-ttl",
+        type=int,
+        default=86400,
+        help="cache lifetime in seconds (default: 86400)",
+    )
+    parser.add_argument(
+        "--refresh", action="store_true", help="ignore cache and fetch from GitHub"
+    )
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="llmcapa", description="Lookup LLM model capabilities (offline)."
@@ -869,37 +937,33 @@ def build_parser() -> argparse.ArgumentParser:
     _add_render_options(p_search)
     p_search.set_defaults(func=_cmd_search)
 
-    p_upd = sub.add_parser("update", help="fetch and update OpenRouter models cache")
+    p_upd = sub.add_parser("update", help="fetch and update a model catalog")
     p_upd.set_defaults(func=_cmd_update)
+    p_update_source = p_upd.add_subparsers(dest="update_source")
 
-    p_hf = sub.add_parser(
-        "fetch-hf", help="fetch and register top models from HuggingFace"
+    p_openrouter = p_update_source.add_parser(
+        "openrouter", help="fetch and update the OpenRouter models cache"
     )
-    p_hf.add_argument(
-        "--limit", type=int, default=100, help="max models to fetch per pipeline tag"
+    p_openrouter.set_defaults(func=_cmd_update)
+
+    p_hf = p_update_source.add_parser(
+        "hf", help="fetch and register popular models from HuggingFace"
     )
     p_hf.set_defaults(func=_cmd_fetch_hf)
 
-    p_github = sub.add_parser(
-        "fetch-github",
-        help="fetch a provider catalog from the llmcapa GitHub repository",
+    p_github = p_update_source.add_parser(
+        "gh", help="fetch a provider catalog from the llmcapa GitHub repository"
     )
-    p_github.add_argument(
-        "--provider", required=True, help="provider catalog to fetch"
-    )
-    p_github.add_argument(
-        "--ref", default="main", help="Git branch, tag, or commit"
-    )
-    p_github.add_argument(
-        "--cache-ttl",
-        type=int,
-        default=86400,
-        help="cache lifetime in seconds (default: 86400)",
-    )
-    p_github.add_argument(
-        "--refresh", action="store_true", help="ignore cache and fetch from GitHub"
-    )
+    _add_github_update_options(p_github)
     p_github.set_defaults(func=_cmd_fetch_github)
+
+    # Keep the former flat commands working, but omit them from the main help.
+    p_legacy_hf = sub.add_parser("fetch-hf", help=argparse.SUPPRESS)
+    p_legacy_hf.set_defaults(func=_cmd_fetch_hf)
+
+    p_legacy_github = sub.add_parser("fetch-github", help=argparse.SUPPRESS)
+    _add_github_update_options(p_legacy_github)
+    p_legacy_github.set_defaults(func=_cmd_fetch_github)
 
     p_tok = sub.add_parser("tokens", help="count tokens for text or messages")
     p_tok.add_argument("model_id", help="model identifier")

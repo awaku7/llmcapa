@@ -13,13 +13,39 @@ import time
 import urllib.request
 import warnings
 from dataclasses import replace
+from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 from functools import lru_cache
 from importlib import resources
 from pathlib import Path
-from typing import ClassVar
+from typing import Callable, ClassVar
+from urllib.error import HTTPError
 from urllib.parse import quote
 
 from .models import Capability
+
+_HF_MAX_RETRIES = 5
+_HF_MAX_BACKOFF_SECONDS = 60.0
+
+
+def _huggingface_retry_delay(retry_after: str | None, retry_index: int) -> float:
+    """Return exponential backoff, honoring a longer server Retry-After value."""
+    delay = min(2.0**retry_index, _HF_MAX_BACKOFF_SECONDS)
+    if not retry_after:
+        return delay
+    try:
+        server_delay = max(0.0, float(retry_after))
+    except ValueError:
+        try:
+            retry_at = parsedate_to_datetime(retry_after)
+            if retry_at.tzinfo is None:
+                retry_at = retry_at.replace(tzinfo=timezone.utc)
+            server_delay = max(
+                0.0, (retry_at - datetime.now(timezone.utc)).total_seconds()
+            )
+        except (TypeError, ValueError, OverflowError):
+            server_delay = 0.0
+    return max(delay, server_delay)
 
 
 @lru_cache(maxsize=1)
@@ -512,6 +538,7 @@ class Registry:
     def fetch_openrouter(
         self,
         cache_ttl: int = 86400,
+        progress_callback: Callable[[str], None] | None = None,
     ) -> int:
         """Fetch all models dynamically from OpenRouter API and register them.
 
@@ -544,6 +571,8 @@ class Registry:
                         pass
 
         if not records:
+            if progress_callback:
+                progress_callback("Requesting OpenRouter model list")
             url = "https://openrouter.ai/api/v1/models"
             ctx = ssl._create_unverified_context()
             try:
@@ -558,6 +587,9 @@ class Registry:
                 raise RuntimeError(
                     f"Failed to fetch models from OpenRouter: {e}"
                 ) from e
+
+        if progress_callback:
+            progress_callback(f"Registering {len(records)} OpenRouter models")
 
             # Cache the response
             if cache_ttl > 0:
@@ -583,6 +615,10 @@ class Registry:
             cap = self._map_openrouter_record(r)
             self.register(cap)
             count += 1
+            if progress_callback and count % 500 == 0:
+                progress_callback(f"Registered {count} OpenRouter models")
+        if progress_callback:
+            progress_callback(f"Registered {count} OpenRouter models")
         return count
 
     # ------------------------------------------------------------------
@@ -697,69 +733,159 @@ class Registry:
 
     def fetch_huggingface(
         self,
-        limit: int = 100,
+        limit: int | None = None,
         cache_ttl: int | None = None,
+        progress_callback: Callable[[str], None] | None = None,
     ) -> int:
         """Fetch popular HuggingFace models across pipeline tasks and register them.
 
-        Retrieves the most downloaded models across HF tasks, maps known modalities,
-        and caches the result locally in ~/.llmcapa/huggingface_all_tasks_cache.json.
+        Retrieves the ranked model list across HF tasks, follows pagination by
+        default, maps known modalities, and optionally caches the result locally.
 
         Args:
-            limit: Maximum total number of models to fetch (default 100).
+            limit: Optional maximum total number of models to fetch. ``None`` fetches
+                every page available from the API.
             cache_ttl: Cache lifetime in seconds. If provided, the response is cached
                        to avoid redundant API requests. Pass 0 to force refresh.
+            progress_callback: Optional callback receiving human-readable progress.
         """
         self._ensure_loaded()
+        if limit is not None and limit < 1:
+            raise ValueError("limit must be a positive integer or None")
 
         records = []
         cache_file = None
         if cache_ttl is not None:
-            import os
-            import time
-
             home = os.path.expanduser("~")
             cache_dir = os.path.join(home, ".llmcapa")
             os.makedirs(cache_dir, exist_ok=True)
-            cache_file = os.path.join(cache_dir, "huggingface_all_tasks_cache.json")
+            cache_suffix = "all" if limit is None else f"limit_{limit}"
+            cache_file = os.path.join(
+                cache_dir, f"huggingface_all_tasks_cache_{cache_suffix}.json"
+            )
 
             if os.path.exists(cache_file):
                 mtime = os.path.getmtime(cache_file)
                 if time.time() - mtime < cache_ttl:
                     try:
                         with open(cache_file, "r", encoding="utf-8") as f:
-                            records = json.load(f)
+                            cache_data = json.load(f)
+                        if (
+                            isinstance(cache_data, dict)
+                            and cache_data.get("limit") == limit
+                            and isinstance(cache_data.get("models"), list)
+                        ):
+                            records = cache_data["models"]
                     except Exception:  # noqa: BLE001, S110
                         pass
 
         if not records:
             ctx = ssl._create_unverified_context()
             headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
-            records = []
-
-            # No pipeline_tag filter: include all task types in HF's ranked model list.
+            page_size = 100 if limit is None else min(100, limit)
             url = (
                 "https://huggingface.co/api/models"
-                f"?sort=downloads&direction=-1&limit={limit}"
+                f"?sort=downloads&direction=-1&limit={page_size}"
             )
-            try:
-                req = urllib.request.Request(url, headers=headers)
-                with urllib.request.urlopen(req, context=ctx, timeout=30) as response:
-                    records = json.loads(response.read().decode("utf-8"))
-            except Exception as e:
-                raise RuntimeError(
-                    f"Failed to fetch models from HuggingFace: {e}"
-                ) from e
+            visited_urls: set[str] = set()
+            page_count = 0
+            while url:
+                if url in visited_urls:
+                    raise RuntimeError("HuggingFace pagination returned a repeated URL")
+                visited_urls.add(url)
+                if progress_callback and (
+                    page_count == 0 or page_count % 10 == 0
+                ):
+                    progress_callback(
+                        f"Fetching HuggingFace page {page_count + 1}; "
+                        f"{len(records)} models downloaded"
+                    )
+                try:
+                    retry_index = 0
+                    while True:
+                        try:
+                            req = urllib.request.Request(url, headers=headers)
+                            with urllib.request.urlopen(
+                                req, context=ctx, timeout=30
+                            ) as response:
+                                page_records = json.loads(
+                                    response.read().decode("utf-8")
+                                )
+                                response_headers = getattr(response, "headers", {})
+                                link_header = response_headers.get("Link", "")
+                            break
+                        except HTTPError as exc:
+                            if exc.code not in {429, 500, 502, 503, 504} or (
+                                retry_index >= _HF_MAX_RETRIES
+                            ):
+                                raise
+                            retry_after = (
+                                exc.headers.get("Retry-After")
+                                if exc.headers is not None
+                                else None
+                            )
+                            delay = _huggingface_retry_delay(
+                                retry_after, retry_index
+                            )
+                            if progress_callback:
+                                progress_callback(
+                                    f"HuggingFace HTTP {exc.code}; retry "
+                                    f"{retry_index + 1}/{_HF_MAX_RETRIES} "
+                                    f"in {delay:g}s"
+                                )
+                            exc.close()
+                            time.sleep(delay)
+                            retry_index += 1
+                    if not isinstance(page_records, list):
+                        raise TypeError("HuggingFace API response must be a list")
+                except Exception as e:
+                    raise RuntimeError(
+                        f"Failed to fetch HuggingFace page {page_count + 1}: {e}"
+                    ) from e
+
+                records.extend(page_records)
+                page_count += 1
+                next_url = next(
+                    (
+                        match.group(1)
+                        for match in re.finditer(
+                            r'<([^>]+)>\s*;\s*rel="?([^";,]+)"?', link_header
+                        )
+                        if match.group(2).strip() == "next"
+                    ),
+                    None,
+                )
+                if limit is not None and len(records) >= limit:
+                    records = records[:limit]
+                    next_url = None
+                url = next_url
+                if progress_callback and (
+                    page_count == 1 or page_count % 10 == 0 or url is None
+                ):
+                    progress_callback(
+                        f"Downloaded {len(records)} HuggingFace models "
+                        f"across {page_count} page(s)"
+                    )
 
             if cache_file and records:
                 try:
                     with open(cache_file, "w", encoding="utf-8") as f:
-                        json.dump(records, f, ensure_ascii=False, indent=2)
+                        json.dump(
+                            {"limit": limit, "models": records},
+                            f,
+                            ensure_ascii=False,
+                            indent=2,
+                        )
                 except Exception:  # noqa: BLE001, S110
                     pass
+        elif progress_callback:
+            progress_callback(f"Loaded {len(records)} HuggingFace models from cache")
+
+        if progress_callback:
+            progress_callback(f"Registering {len(records)} HuggingFace models")
 
         count = 0
-        for r in records:
+        for index, r in enumerate(records, 1):
             model_id = r.get("modelId") or r.get("_id") or r.get("id")
             if not model_id:
                 continue
@@ -767,8 +893,16 @@ class Registry:
                 cap = self._map_huggingface_record(r)
                 self.register(cap)
                 count += 1
+                if progress_callback and index % 1000 == 0:
+                    progress_callback(
+                        f"Registered {count} models ({index}/{len(records)} records)"
+                    )
             except Exception:  # noqa: BLE001, S112
                 continue
+        if progress_callback:
+            progress_callback(
+                f"Registered {count} of {len(records)} HuggingFace models"
+            )
         return count
 
     # ------------------------------------------------------------------
@@ -910,6 +1044,7 @@ class Registry:
         cache_ttl: int = 86400,
         ref: str = "main",
         write_bundled: bool = True,
+        progress_callback: Callable[[str], None] | None = None,
     ) -> int:
         """Fetch this project's bundled catalog for one provider from GitHub.
 
@@ -968,6 +1103,8 @@ class Registry:
             raise ValueError(
                 f"No bundled GitHub catalog found for provider: {provider}"
             )
+        if progress_callback:
+            progress_callback(f"Found {len(catalog_files)} GitHub catalog file(s)")
 
         # Key the cache by the actual remote files so aliases share one copy.
         cache_key = hashlib.sha256(
@@ -1013,7 +1150,11 @@ class Registry:
         if cached_files is None:
             raw_ref = quote(ref, safe="/")
             context = ssl.create_default_context()
-            for filename in catalog_files:
+            for file_index, filename in enumerate(catalog_files, 1):
+                if progress_callback:
+                    progress_callback(
+                        f"Downloading GitHub file {file_index}/{len(catalog_files)}: {filename}"
+                    )
                 url = (
                     "https://raw.githubusercontent.com/awaku7/llmcapa/"
                     f"{raw_ref}/src/llmcapa/data/{quote(filename, safe='')}"
@@ -1031,8 +1172,12 @@ class Registry:
                     raise RuntimeError(
                         f"Failed to fetch GitHub catalog {filename} at {ref}: {exc}"
                     ) from exc
+        elif progress_callback:
+            progress_callback(f"Loaded {len(downloaded_files)} GitHub file(s) from cache")
 
         capabilities: list[Capability] = []
+        if progress_callback:
+            progress_callback("Parsing GitHub catalog records")
         try:
             for filename, text in downloaded_files.items():
                 payload = json.loads(text)
@@ -1083,7 +1228,9 @@ class Registry:
             except OSError:
                 pass
 
-        for cap in capabilities:
+        if progress_callback:
+            progress_callback(f"Registering {len(capabilities)} GitHub models")
+        for index, cap in enumerate(capabilities, 1):
             if cache_is_older_than_bundle:
                 provider = self._normalize_provider(cap.provider)
                 existing = self._by_provider.get(provider, {})
@@ -1091,6 +1238,10 @@ class Registry:
                     self.register(cap)
             else:
                 self._register_refreshed_catalog_record(cap)
+            if progress_callback and index % 1000 == 0:
+                progress_callback(f"Registered {index}/{len(capabilities)} GitHub models")
+        if progress_callback:
+            progress_callback(f"Registered {len(capabilities)} GitHub models")
         return len(capabilities)
 
     def _lookup_candidates(self, model_id: str) -> list[str]:

@@ -164,16 +164,16 @@ def fetch_openrouter(cache_ttl: int = 86400) -> int:
 
 
 def fetch_huggingface(
-    limit: int = 100,
+    limit: int | None = None,
     cache_ttl: int | None = None,
 ) -> int:
-    """Fetch popular HuggingFace models across pipeline tasks and register them.
+    """Fetch HuggingFace models across pipeline tasks and register them.
 
-    Retrieves the most downloaded models across HF tasks, maps known modalities,
-    and caches the result locally in ~/.llmcapa/huggingface_all_tasks_cache.json.
+    By default, follows pagination to retrieve the full ranked model list and maps
+    known modalities. An optional limit caps the total number of returned models.
 
     Args:
-        limit: Maximum total number of models to fetch (default 100).
+        limit: Optional maximum number of models to fetch. None fetches all pages.
         cache_ttl: Cache lifetime in seconds. Pass 0 to force refresh.
     """
     return default_registry().fetch_huggingface(limit=limit, cache_ttl=cache_ttl)

@@ -4,7 +4,9 @@ import hashlib
 import json
 import os
 import sys
+from io import BytesIO
 from pathlib import Path
+from urllib.error import HTTPError
 
 import pytest
 
@@ -204,6 +206,100 @@ def test_dynamic_huggingface_fetch_queries_all_pipeline_tasks(monkeypatch):
     assert registry.get("org/image-generator", provider="org").output_modalities == [
         "image"
     ]
+
+
+def test_dynamic_huggingface_fetch_follows_next_links_by_default(monkeypatch):
+    registry = Registry()
+    requests_seen = []
+    progress = []
+    next_url = (
+        "https://huggingface.co/api/models?sort=downloads&direction=-1"
+        "&limit=100&cursor=page-two"
+    )
+    payloads = [
+        [
+            {"id": "org/image-classifier", "pipeline_tag": "image-classification"}
+        ],
+        [{"id": "org/audio-generator", "pipeline_tag": "text-to-audio"}],
+    ]
+
+    class Response:
+        def __init__(self, payload, link=""):
+            self.payload = json.dumps(payload).encode("utf-8")
+            self.headers = {"Link": link}
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            return None
+
+        def read(self):
+            return self.payload
+
+    def fake_urlopen(request, *, context, timeout):
+        requests_seen.append((request.full_url, context, timeout))
+        page = len(requests_seen) - 1
+        return Response(payloads[page], f'<{next_url}>; rel="next"' if page == 0 else "")
+
+    monkeypatch.setattr(registry_module.urllib.request, "urlopen", fake_urlopen)
+
+    assert registry.fetch_huggingface(progress_callback=progress.append) == 2
+    assert len(requests_seen) == 2
+    assert "limit=100" in requests_seen[0][0]
+    assert requests_seen[1][0] == next_url
+    assert registry.get("org/image-classifier", provider="org").input_modalities == [
+        "image"
+    ]
+    assert registry.get("org/audio-generator", provider="org").output_modalities == [
+        "audio"
+    ]
+    assert any("2 page(s)" in message for message in progress)
+    assert progress[-1] == "Registered 2 of 2 HuggingFace models"
+
+
+def test_dynamic_huggingface_retries_rate_limits_with_exponential_backoff(monkeypatch):
+    registry = Registry()
+    progress = []
+    sleeps = []
+    attempts = []
+    payload = json.dumps(
+        [{"id": "org/retried-image-model", "pipeline_tag": "image-classification"}]
+    ).encode("utf-8")
+
+    class Response:
+        def __init__(self):
+            self.headers = {}
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            return None
+
+        def read(self):
+            return payload
+
+    def fake_urlopen(request, *, context, timeout):
+        attempts.append(request.full_url)
+        if len(attempts) < 3:
+            raise HTTPError(
+                request.full_url,
+                429,
+                "Too Many Requests",
+                {"Retry-After": "0"},
+                BytesIO(),
+            )
+        return Response()
+
+    monkeypatch.setattr(registry_module.urllib.request, "urlopen", fake_urlopen)
+    monkeypatch.setattr(registry_module.time, "sleep", sleeps.append)
+
+    assert registry.fetch_huggingface(limit=1, progress_callback=progress.append) == 1
+    assert len(attempts) == 3
+    assert sleeps == [1.0, 2.0]
+    assert any("retry 1/5 in 1s" in message for message in progress)
+    assert registry.get("org/retried-image-model", provider="org") is not None
 
 
 def test_dynamic_huggingface_mapping_recognizes_multimodal_and_nontext_tasks():

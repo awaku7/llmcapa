@@ -41,7 +41,7 @@ llmcapa.search(prefix, provider=None, include_deprecated=False, limit=None)
 llmcapa.register(capability)
 llmcapa.load_extra(path)
 llmcapa.fetch_openrouter(cache_ttl=86400)
-llmcapa.fetch_huggingface(limit=100, cache_ttl=None)
+llmcapa.fetch_huggingface(limit=None, cache_ttl=None)
 llmcapa.count_tokens(text, model_id)
 llmcapa.count_messages_tokens(messages, model_id)
 llmcapa.supports_json_mode(model_id, provider=None)
@@ -310,10 +310,10 @@ The output is JSON-compatible. Optional `None` fields, empty `extra`, and intern
 
 ```python
 llmcapa.fetch_openrouter(cache_ttl=86400)
-llmcapa.fetch_huggingface(limit=100, cache_ttl=None)
+llmcapa.fetch_huggingface(limit=None, cache_ttl=None)
 ```
 
-These functions access external APIs, register returned records, and return the number of registered records. `cache_ttl=0` forces refresh. Normal capability lookup remains offline and uses bundled data plus valid local caches.
+These functions access external APIs, register returned records, and return the number of registered records. `fetch_huggingface(limit=None)` follows the API's pagination links to retrieve every page across pipeline tasks; pass a positive `limit` to cap the total. Full retrieval may take time and is subject to Hugging Face API rate limits. HTTP 429 and transient 5xx responses are retried up to five times with exponential backoff, honoring `Retry-After` when it requests a longer wait. `cache_ttl=0` forces refresh. Normal capability lookup remains offline and uses bundled data plus valid local caches.
 
 ## 11. CLI
 
@@ -324,9 +324,13 @@ llmcapa list [--provider NAME] [--json] [--no-deprecated]
 llmcapa providers
 llmcapa search PREFIX [--provider NAME] [--json] [--no-deprecated] [--limit N]
 llmcapa tokens MODEL_ID [TEXT] [--messages]
-llmcapa update
-llmcapa fetch-hf [--limit N]
+llmcapa update [openrouter]
+llmcapa update hf
+llmcapa update gh --provider PROVIDER [--ref REF] [--cache-ttl SECONDS] [--refresh]
 ```
+
+`update` without a source is retained as an alias for `update openrouter`. The former
+flat `fetch-hf` and `fetch-github` commands also remain accepted for compatibility.
 
 Global option:
 

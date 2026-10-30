@@ -559,10 +559,10 @@ print(llmcapa.providers())
 
 ### オンデマンドでの HuggingFace 連携（キャッシュ更新）
 
-`fetch_huggingface()` を使うと、HuggingFace API からダウンロード数の多いモデルを、タスクを限定せずオンデマンドで取得・登録できます。`pipeline_tag` から判定可能なモダリティを記録し、結果は `~/.llmcapa/huggingface_all_tasks_cache.json` にキャッシュします。
+`fetch_huggingface()` は、HuggingFace API のタスク横断ランキングをページングして全件取得・登録します。`pipeline_tag` から判定可能なモダリティを記録し、`cache_ttl` を指定した場合は `~/.llmcapa/huggingface_all_tasks_cache_all.json` にキャッシュします。全件取得は時間がかかり、API のレート制限を受ける可能性があります。Python API では `limit=N` を指定して総取得数を制限できます。
 
 ```python
-# 上位 100 の HuggingFace モデルを動的に取得・登録
+# HuggingFace の全ランキングページを取得・登録
 count = llmcapa.fetch_huggingface()
 print(f"Registered {count} models from HuggingFace!")
 
@@ -571,7 +571,7 @@ cap = llmcapa.get("deepseek-ai/DeepSeek-V4-Flash")
 print(cap.context_window)   # 4096（推定。HF API では正確な値が取れない場合あり）
 print(cap.supports_vision)  # False（text-generation パイプライン）
 
-# 取得件数を変更
+# 必要な場合は取得件数を制限
 count = llmcapa.fetch_huggingface(limit=200)
 ```
 
@@ -593,8 +593,8 @@ count = llmcapa.fetch_github_catalog("openai", cache_ttl=0, ref="main")
 CLIからも実行できます:
 
 ```bash
-llmcapa fetch-github --provider openai
-llmcapa fetch-github --provider modellix --refresh
+llmcapa update gh --provider openai
+llmcapa update gh --provider modellix --refresh
 ```
 
 既定では、取得したプロバイダーJSONで対応する同梱ファイルを更新します（パッケージのデータディレクトリが書き込み可能な場合）。更新前のファイルは `~/.llmcapa/github_catalog_backups` にバックアップします。読み取り専用の場合、または `write_bundled=False` の場合は、永続的なユーザーカタログを `~/.llmcapa/catalogs/github` に保存し、次回以降の起動時にも読み込みます（同梱カタログより優先）。ユーザー上書きを解除するには、このディレクトリを削除してください。24時間のダウンロードキャッシュとは別に管理されます。本番利用前にデータの出所と仕様を確認してください。
@@ -773,7 +773,11 @@ llmcapa tokens gpt-4o --messages '[{"role":"user","content":"Hi"}]'
 llmcapa --extra my_models.json show gpt-4o
 
 # OpenRouterのキャッシュだけを明示的に取得・更新
-llmcapa update
+llmcapa update openrouter
+
+# HuggingFaceモデル、またはGitHub公開カタログを取得
+llmcapa update hf
+llmcapa update gh --provider openai --refresh
 
 # 開発用: OpenAI公式カタログを動的に再取得
 python scripts/_update_all_providers.py --provider openai
