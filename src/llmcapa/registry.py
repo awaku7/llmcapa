@@ -591,20 +591,20 @@ class Registry:
         if progress_callback:
             progress_callback(f"Registering {len(records)} OpenRouter models")
 
-            # Cache the response
-            if cache_ttl > 0:
-                import os
-                import time
+        # Cache the response
+        if cache_ttl > 0:
+            import os
+            import time
 
-                home = os.path.expanduser("~")
-                cache_dir = os.path.join(home, ".llmcapa")
-                os.makedirs(cache_dir, exist_ok=True)
-                cache_file = os.path.join(cache_dir, "openrouter_cache.json")
-                try:
-                    with open(cache_file, "w", encoding="utf-8") as f:
-                        json.dump(records, f, ensure_ascii=False, indent=2)
-                except Exception:  # noqa: BLE001, S110
-                    pass
+            home = os.path.expanduser("~")
+            cache_dir = os.path.join(home, ".llmcapa")
+            os.makedirs(cache_dir, exist_ok=True)
+            cache_file = os.path.join(cache_dir, "openrouter_cache.json")
+            try:
+                with open(cache_file, "w", encoding="utf-8") as f:
+                    json.dump(records, f, ensure_ascii=False, indent=2)
+            except Exception:  # noqa: BLE001, S110
+                pass
 
         count = 0
         for r in records:
