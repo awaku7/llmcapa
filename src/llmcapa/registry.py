@@ -1483,8 +1483,22 @@ class Registry:
         ``supports_vision=True`` or short forms like ``vision=True``.
         """
         self._ensure_loaded()
+        if provider is None:
+            # The flat model index is intentionally first-wins for unqualified
+            # lookups. A catalog search must instead examine every provider's
+            # record; otherwise a native model can hide another provider's
+            # record when their model IDs or aliases overlap.
+            candidates = [
+                cap
+                for provider_name in sorted(self._by_provider)
+                for cap in self._by_provider[provider_name].values()
+                if include_deprecated or not cap.deprecated
+            ]
+        else:
+            candidates = self.list_models(provider, include_deprecated)
+
         result = []
-        for cap in self.list_models(provider, include_deprecated):
+        for cap in candidates:
             if (cap.context_window or 0) < min_context_window:
                 continue
             if (cap.max_output_tokens or 0) < min_max_output_tokens:
