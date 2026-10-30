@@ -1,6 +1,9 @@
-"""Build/refresh amazon.json from AWS Bedrock / Nova official pricing.
+"""Build/refresh amazon.json from AWS Bedrock model cards and Nova pricing.
 
-Sources (Playwright + meteredUnitMaps):
+The model inventory is read from AWS's Models at a glance page and its linked
+model cards, so all officially listed Bedrock publishers are included.
+
+Nova pricing sources (official AWS pages and metered unit map):
 - https://aws.amazon.com/bedrock/pricing/ (Amazon → Amazon Nova)
 - https://aws.amazon.com/nova/pricing/
 - https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/bedrock.json
@@ -15,8 +18,11 @@ Cache read = 75% less than on-demand input (official).
 from __future__ import annotations
 
 import json
+import re
 import shutil
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
+from urllib.request import Request, urlopen
 
 from _computer_use_metadata import anthropic_computer_use_capability
 
@@ -35,6 +41,10 @@ INSTALLED = (
 )
 SOURCE_BEDROCK = "https://aws.amazon.com/bedrock/pricing/"
 SOURCE_NOVA = "https://aws.amazon.com/nova/pricing/"
+MODEL_CARDS_URL = "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards.md"
+BEDROCK_DOCS_BASE = "https://docs.aws.amazon.com/bedrock/latest/userguide/"
+BEDROCK_RUNTIME_URL = "https://bedrock-runtime.{region}.amazonaws.com"
+BEDROCK_MANTLE_URL = "https://bedrock-mantle.{region}.api.aws"
 ANTHROPIC_DATA = WORKDIR / "src" / "llmcapa" / "data" / "anthropic.json"
 BEDROCK_CLAUDE_MODELS = {
     "anthropic.claude-opus-5-5": ("claude-opus-5-5", "anthropic-claude-opus-5-5"),
@@ -64,6 +74,396 @@ SOURCE_API = (
 )
 REGION_NOTE = "US East (N. Virginia) on-demand standard"
 NOVA_PRICING_MODE = "live"
+
+
+def fetch_text(url: str) -> str:
+    """Fetch a bounded UTF-8 document from an official AWS source."""
+    request = Request(url, headers={"User-Agent": "llmcapa-bedrock-updater/1.0"})
+    with urlopen(request, timeout=30) as response:
+        content = response.read(8 * 1024 * 1024 + 1)
+    if len(content) > 8 * 1024 * 1024:
+        raise RuntimeError(f"AWS documentation response is too large: {url}")
+    return content.decode("utf-8")
+
+
+def discover_model_card_urls(index_markdown: str) -> list[str]:
+    """Return every model-card link in AWS's official models-at-a-glance page."""
+    links = re.findall(
+        r"\[[^\]]+\]\((model-card-[^)#]+\.md)(?:#[^)]*)?\)",
+        index_markdown,
+        flags=re.IGNORECASE,
+    )
+    return list(dict.fromkeys(BEDROCK_DOCS_BASE + link for link in links))
+
+
+def _clean_markdown(value: str) -> str:
+    value = re.sub(r"!\[([^\]]*)\]\([^)]*\)", r"\1", value)
+    value = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", value)
+    return re.sub(r"[*`_]", "", value).strip()
+
+
+def _section(markdown: str, title: str) -> str:
+    match = re.search(
+        rf"^##\s+{re.escape(title)}\s*$\n(.*?)(?=^##\s+|\Z)",
+        markdown,
+        flags=re.IGNORECASE | re.MULTILINE | re.DOTALL,
+    )
+    return match.group(1) if match else ""
+
+
+def _markdown_tables(section: str) -> list[tuple[list[str], list[list[str]]]]:
+    """Extract simple pipe tables as normalized headers and raw cell values."""
+    lines = section.splitlines()
+    result = []
+    index = 0
+    while index < len(lines) - 1:
+        if not lines[index].lstrip().startswith("|") or not re.search(
+            r"\|\s*:?-{2,}", lines[index + 1]
+        ):
+            index += 1
+            continue
+        headers = [
+            _clean_markdown(cell) for cell in lines[index].strip().strip("|").split("|")
+        ]
+        rows: list[list[str]] = []
+        index += 2
+        while index < len(lines) and lines[index].lstrip().startswith("|"):
+            row = [cell.strip() for cell in lines[index].strip().strip("|").split("|")]
+            if len(row) == len(headers):
+                rows.append(row)
+            index += 1
+        result.append((headers, rows))
+    return result
+
+
+def _supported(value: str) -> bool | None:
+    """Interpret AWS's yes/no icon markup without treating 'not-supported' as yes."""
+    lowered = value.lower()
+    if "icon-no" in lowered or "not-supported" in lowered or "not supported" in lowered:
+        return False
+    if "icon-yes" in lowered or re.search(r"\bsupported\b", lowered):
+        return True
+    return None
+
+
+def _model_ids(cell: str) -> list[str]:
+    """Read model identifiers from code-formatted AWS documentation cells."""
+    values = re.findall(r"`([^`]+)`", cell)
+    if not values:
+        values = re.findall(
+            r"\b(?:[a-z][a-z0-9-]*\.)+[a-z0-9][a-z0-9.:-]*\b", cell, re.IGNORECASE
+        )
+    return [
+        value.strip()
+        for value in values
+        if value.strip().lower() not in {"n/a", "not supported", "none"}
+    ]
+
+
+def _parse_programmatic_access(markdown: str) -> tuple[str, list[str], dict[str, str]]:
+    section = _section(markdown, "Programmatic Access") or _section(
+        markdown, "Call the model"
+    )
+    aliases: list[str] = []
+    endpoint_urls: dict[str, str] = {}
+    canonical = ""
+    for headers, rows in _markdown_tables(section):
+        normalized = [header.lower() for header in headers]
+        if not any("model id" in header for header in normalized):
+            continue
+        id_column = next(
+            i for i, header in enumerate(normalized) if "model id" in header
+        )
+        endpoint_column = next(
+            (i for i, header in enumerate(normalized) if header == "endpoint"), None
+        )
+        url_column = next(
+            (i for i, header in enumerate(normalized) if "endpoint url" in header), None
+        )
+        alias_columns = [
+            i
+            for i, header in enumerate(normalized)
+            if "inference id" in header or "profile id" in header
+        ]
+        for row in rows:
+            if id_column >= len(row):
+                continue
+            ids = _model_ids(row[id_column])
+            endpoint = (
+                _clean_markdown(row[endpoint_column]).lower()
+                if endpoint_column is not None
+                else ""
+            )
+            if ids and (not canonical or endpoint == "bedrock-runtime"):
+                canonical = ids[0]
+            for value in ids[1:]:
+                if value not in aliases:
+                    aliases.append(value)
+            for column in alias_columns:
+                for value in _model_ids(row[column]):
+                    if value not in aliases:
+                        aliases.append(value)
+            if endpoint and url_column is not None and url_column < len(row):
+                urls = re.findall(r"https?://[^\s|<>]+", row[url_column])
+                if urls:
+                    endpoint_urls[endpoint] = urls[0].rstrip(".,`")
+    return canonical, aliases, endpoint_urls
+
+
+def _parse_modalities(markdown: str) -> tuple[list[str], list[str]]:
+    for headers, rows in _markdown_tables(markdown):
+        normalized = [header.lower() for header in headers]
+        if not any("input modalities" in item for item in normalized) or not any(
+            "output modalities" in item for item in normalized
+        ):
+            continue
+        input_index = next(
+            i for i, value in enumerate(normalized) if "input modalities" in value
+        )
+        output_index = next(
+            i for i, value in enumerate(normalized) if "output modalities" in value
+        )
+        inputs: list[str] = []
+        outputs: list[str] = []
+        for row in rows:
+            cells = ((row[input_index], inputs), (row[output_index], outputs))
+            for cell, target in cells:
+                if _supported(cell) is not True:
+                    continue
+                label = _clean_markdown(cell).lower()
+                match = re.search(
+                    r"\b(audio|embedding|image|speech|text|video)\b", label
+                )
+                if match and match.group(1) not in target:
+                    target.append(match.group(1))
+        return inputs, outputs
+    return [], []
+
+
+def _parse_api_support(markdown: str) -> dict[str, bool]:
+    section = _section(markdown, "Endpoints and APIs supported")
+    result: dict[str, bool] = {}
+    lines = section.splitlines()
+    for index, line in enumerate(lines):
+        heading = re.search(
+            r"APIs supported on.*?`(bedrock-[a-z-]+)`", line, re.IGNORECASE
+        )
+        if not heading:
+            continue
+        endpoint_tables = _markdown_tables("\n".join(lines[index + 1 :]))
+        if not endpoint_tables:
+            continue
+        headers, rows = endpoint_tables[0]
+        for row in rows[:1]:
+            for header, value in zip(headers, row):
+                key = _clean_markdown(header).lower()
+                if key in {
+                    "messages",
+                    "responses",
+                    "chat completions",
+                    "converse",
+                    "invoke",
+                }:
+                    result[f"{heading.group(1).lower()}:{key}"] = (
+                        _supported(value) is True
+                    )
+    return result
+
+
+def _parse_endpoint_support(markdown: str) -> set[str]:
+    section = _section(markdown, "Endpoints and APIs supported")
+    for headers, rows in _markdown_tables(section):
+        normalized = [header.lower() for header in headers]
+        if "endpoint" not in normalized or "supported" not in normalized:
+            continue
+        endpoint_index = normalized.index("endpoint")
+        supported_index = normalized.index("supported")
+        return {
+            _clean_markdown(row[endpoint_index]).lower()
+            for row in rows
+            if _supported(row[supported_index]) is True
+        }
+    return set()
+
+
+def _token_count(markdown: str, label: str) -> int:
+    match = re.search(
+        rf"\*\*{re.escape(label)}:\*\*\s*([\d,.]+)\s*([KMB])?\s*(?:tokens?)?",
+        markdown,
+        flags=re.IGNORECASE,
+    )
+    if not match:
+        return 0
+    value = float(match.group(1).replace(",", ""))
+    multiplier = {"k": 1_000, "m": 1_000_000, "b": 1_000_000_000}.get(
+        (match.group(2) or "").lower(), 1
+    )
+    return int(value * multiplier)
+
+
+def _explicit_feature(markdown: str, pattern: str) -> bool:
+    for line in markdown.splitlines():
+        for segment in re.split(r"<br\s*/?>|\|", line, flags=re.IGNORECASE):
+            if not re.search(pattern, segment, re.IGNORECASE):
+                continue
+            status = _supported(segment)
+            if status is True:
+                return True
+            if status is False:
+                continue
+            positive = re.search(
+                r"\b(supports?|supported|enabled|available|yes)\b",
+                segment,
+                re.IGNORECASE,
+            )
+            negative = re.search(
+                r"\b(does not|not supported|unsupported|no longer)\b",
+                segment,
+                re.IGNORECASE,
+            )
+            if positive and not negative:
+                return True
+    return False
+
+
+def parse_bedrock_model_card(markdown: str, source_url: str) -> dict | None:
+    """Normalize one AWS model card into an Amazon/Bedrock catalog record."""
+    model_id, aliases, endpoint_urls = _parse_programmatic_access(markdown)
+    if not model_id:
+        return None
+    title_match = re.search(r"^#\s+(.+?)\s*$", markdown, re.MULTILINE)
+    display = _clean_markdown(title_match.group(1)) if title_match else model_id
+    publisher_match = re.search(
+        r"^##\s+.*?\s([\w .&/+()-]+?)\s+[—–-]\s+.+$",
+        markdown,
+        re.MULTILINE,
+    )
+    publisher = _clean_markdown(publisher_match.group(1)) if publisher_match else ""
+    input_modalities, output_modalities = _parse_modalities(markdown)
+    api_support = _parse_api_support(markdown)
+    endpoint_support = _parse_endpoint_support(markdown) or {"bedrock-runtime"}
+
+    endpoints = []
+    if "bedrock-runtime" in endpoint_support:
+        endpoints.append(
+            {
+                "base_url": BEDROCK_RUNTIME_URL,
+                "protocol": "aws-bedrock",
+                "auth": "sigv4",
+                "source": source_url,
+            }
+        )
+    if "bedrock-mantle" in endpoint_support:
+        endpoints.append(
+            {
+                "base_url": endpoint_urls.get("bedrock-mantle", BEDROCK_MANTLE_URL),
+                "protocol": "aws-bedrock-mantle",
+                "auth": "bearer",
+                "source": source_url,
+            }
+        )
+
+    modalities = input_modalities or ["text"]
+    output_modalities = output_modalities or ["text"]
+    knowledge = re.search(
+        r"\*\*Knowledge cutoff:\*\*\s*([^\n]+)", markdown, re.IGNORECASE
+    )
+    lifecycle = re.search(
+        r"\*\*Model lifecycle:\*\*\s*([^\n]+)", markdown, re.IGNORECASE
+    )
+    reasoning_line = re.search(
+        r"\*\*Reasoning:\*\*\s*([^\n]+)", markdown, re.IGNORECASE
+    )
+    reasoning_effort = bool(
+        re.search(
+            r"^\s*\*\*Reasoning effort\*\*",
+            markdown,
+            re.IGNORECASE | re.MULTILINE,
+        )
+        or _explicit_feature(markdown, r"Reasoning effort|effort level configurable")
+    )
+    reasoning = bool(
+        (reasoning_line and _supported(reasoning_line.group(1)) is True)
+        or reasoning_effort
+    )
+    record = base(
+        model_id=model_id,
+        display=display,
+        ctx=_token_count(markdown, "Context window"),
+        max_out=_token_count(markdown, "Max output tokens"),
+        pricing=None,
+        aliases=aliases,
+        knowledge_cutoff=_clean_markdown(knowledge.group(1)) if knowledge else None,
+        input_modalities=modalities,
+        output_modalities=output_modalities,
+        vision="image" in modalities,
+        reasoning=reasoning,
+        function_calling=_explicit_feature(
+            markdown, r"tool use|tool calling|function calling|client-side tools?"
+        ),
+        streaming=_explicit_feature(markdown, r"Response streaming"),
+        json_mode=_explicit_feature(
+            markdown, r"Structured outputs?|JSON Schema output|JSON mode"
+        ),
+        chat=any(
+            value
+            for key, value in api_support.items()
+            if key.endswith((":messages", ":chat completions", ":converse"))
+        ),
+        include_nova_pricing_sources=False,
+        extra={
+            "source": source_url,
+            "bedrock_model_provider": publisher or None,
+            "endpoints": endpoints,
+            "supported_bedrock_endpoints": sorted(endpoint_support),
+        },
+    )
+    # Keep only model/profile IDs explicitly listed by AWS, not synthetic IDs
+    # from another provider's routing convention.
+    record["aliases"] = aliases
+    record["deprecated"] = bool(
+        lifecycle
+        and _clean_markdown(lifecycle.group(1)).lower()
+        in {"legacy", "deprecated", "end of life"}
+    )
+    record["supports_reasoning_effort"] = reasoning_effort
+    record["supports_responses_api"] = any(
+        value for key, value in api_support.items() if key.endswith(":responses")
+    )
+    record["supports_anthropic_api"] = any(
+        value for key, value in api_support.items() if key.endswith(":messages")
+    )
+    return record
+
+
+def fetch_bedrock_models() -> list[dict]:
+    """Fetch all model cards linked from AWS's official model inventory."""
+    index = fetch_text(MODEL_CARDS_URL)
+    urls = discover_model_card_urls(index)
+    if not urls:
+        raise RuntimeError("AWS Bedrock model inventory contained no model cards")
+    models: list[dict] = []
+    errors: list[str] = []
+    with ThreadPoolExecutor(max_workers=8) as executor:
+        futures = {executor.submit(fetch_text, url): url for url in urls}
+        for future in as_completed(futures):
+            url = futures[future]
+            try:
+                record = parse_bedrock_model_card(future.result(), url)
+            except (OSError, ValueError, RuntimeError) as exc:
+                errors.append(f"{url}: {exc}")
+                continue
+            if record is not None:
+                models.append(record)
+    if not models:
+        detail = "; ".join(errors[:3])
+        raise RuntimeError(f"Could not parse any AWS Bedrock model cards. {detail}")
+    if errors:
+        print(
+            "AWS Bedrock model cards skipped after fetch/parse errors: "
+            f"{len(errors)}"
+        )
+    return sorted(models, key=lambda item: item["model_id"].lower())
 
 
 def fetch_nova_prices() -> dict[str, dict[str, float]]:
@@ -117,6 +517,7 @@ def base(
     streaming: bool = True,
     json_mode: bool = False,
     chat: bool = True,
+    include_nova_pricing_sources: bool = True,
 ) -> dict:
     aliases = list(aliases or [])
     # Native catalog: Bedrock harness alias amazon.<id>:0 only.
@@ -175,13 +576,16 @@ def base(
     else:
         row["pricing"] = None
 
-    ex = {
-        "source": SOURCE_BEDROCK,
-        "nova_pricing": SOURCE_NOVA,
-        "price_api": SOURCE_API,
-        "region": REGION_NOTE,
-        **(extra or {}),
-    }
+    ex = {"source": SOURCE_BEDROCK}
+    if include_nova_pricing_sources:
+        ex.update(
+            {
+                "nova_pricing": SOURCE_NOVA,
+                "price_api": SOURCE_API,
+                "region": REGION_NOTE,
+            }
+        )
+    ex.update(extra or {})
     row["extra"] = ex
     return row
 
@@ -240,7 +644,10 @@ def add_bedrock_claude_models(models: list[dict]) -> int:
         )
         model = base(
             model_id=bedrock_id,
-            display=f"Anthropic {source.get('display_name', anthropic_id)} (Amazon Bedrock)",
+            display=(
+                f"Anthropic {source.get('display_name', anthropic_id)} "
+                "(Amazon Bedrock)"
+            ),
             ctx=source.get("context_window") or 0,
             max_out=source.get("max_output_tokens") or 0,
             pricing=None,
@@ -252,8 +659,11 @@ def add_bedrock_claude_models(models: list[dict]) -> int:
             extra={
                 "bedrock_model_family": "anthropic-claude",
                 "source": card_url,
-                "computer_use_note": "Computer Use is documented on this Bedrock model card.",
+                "computer_use_note": (
+                    "Computer Use is documented on this " "Bedrock model card."
+                ),
             },
+            include_nova_pricing_sources=False,
         )
         model["display_name"] = (
             f"Anthropic {source.get('display_name', anthropic_id)} (Amazon Bedrock)"
@@ -278,12 +688,70 @@ def add_bedrock_claude_models(models: list[dict]) -> int:
     return inserted
 
 
-def build(nova_prices: dict[str, dict[str, float]]) -> list[dict]:
-    """Refresh Nova prices and carry forward records from the published catalog.
+def _merge_official_model(existing: dict, official: dict) -> dict:
+    """Refresh documented fields while retaining curated/pricing metadata."""
+    merged = dict(existing)
+    refresh_fields = {
+        "provider",
+        "display_name",
+        "context_window",
+        "max_output_tokens",
+        "input_modalities",
+        "output_modalities",
+        "supports_function_calling",
+        "supports_json_mode",
+        "supports_streaming",
+        "supports_vision",
+        "supports_reasoning",
+        "supports_chat_completion",
+        "supports_responses_api",
+        "supports_reasoning_effort",
+        "supports_thinking_budget",
+        "supports_anthropic_api",
+        "knowledge_cutoff",
+        "deprecated",
+        "license_type",
+    }
+    conservative_flags = {
+        "supports_function_calling",
+        "supports_json_mode",
+        "supports_streaming",
+        "supports_reasoning",
+        "supports_chat_completion",
+        "supports_responses_api",
+        "supports_reasoning_effort",
+        "supports_anthropic_api",
+    }
+    for key in refresh_fields:
+        if key not in official:
+            continue
+        if (
+            key in conservative_flags
+            and official[key] is False
+            and merged.get(key) is True
+        ):
+            continue
+        merged[key] = official[key]
+    aliases = list(merged.get("aliases") or [])
+    for alias in official.get("aliases") or []:
+        if alias not in aliases and alias != official.get("model_id"):
+            aliases.append(alias)
+    merged["aliases"] = aliases
+    merged_extra = dict(merged.get("extra") or {})
+    merged_extra.update(official.get("extra") or {})
+    merged["extra"] = merged_extra
+    return merged
 
-    The updater does not read a separately curated legacy-model manifest. The
-    existing catalog is used only to preserve metadata for records not covered
-    by the current Nova pricing page.
+
+def build(
+    nova_prices: dict[str, dict[str, float]],
+    bedrock_models: list[dict] | None = None,
+) -> list[dict]:
+    """Refresh AWS's full model-card inventory and Nova pricing.
+
+    The previous catalog is retained as a compatibility source for legacy
+    records. AWS's official Models at a glance index is the source of truth
+    for the currently documented Bedrock model inventory.
     """
     if not nova_prices:
         raise RuntimeError("official AWS pricing returned no Nova models")
@@ -301,6 +769,22 @@ def build(nova_prices: dict[str, dict[str, float]]) -> list[dict]:
                 model["model_id"], "amazon"
             )
     bedrock_claude_inserted = add_bedrock_claude_models(models)
+
+    by_id = {str(model.get("model_id", "")): model for model in models}
+    for official in bedrock_models or []:
+        model_id = str(official.get("model_id", ""))
+        if not model_id:
+            continue
+        existing = by_id.get(model_id)
+        if existing is None:
+            model = dict(official)
+            models.append(model)
+            by_id[model_id] = model
+        else:
+            model = _merge_official_model(existing, official)
+            index = models.index(existing)
+            models[index] = model
+            by_id[model_id] = model
 
     by_id = {str(model.get("model_id", "")): model for model in models}
     for model_id, rate in nova_prices.items():
@@ -371,7 +855,8 @@ def dedupe_model_ids(models: list[dict]) -> list[dict]:
 
 def main() -> None:
     nova_prices = fetch_nova_prices()
-    models = build(nova_prices)
+    bedrock_models = fetch_bedrock_models()
+    models = build(nova_prices, bedrock_models)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     payload = {"models": models}
     OUT.write_text(
