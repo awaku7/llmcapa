@@ -520,6 +520,30 @@ def test_get_without_provider_returns_first():
     assert cap.provider in ("deepseek", "openrouter")
 
 
+def test_provider_native_id_overrides_huggingface_alias() -> None:
+    registry = Registry()
+    registry._loaded = True
+    registry.register(
+        Capability(
+            provider="huggingface",
+            model_id="community/gpt-5.6-sol",
+            aliases=["gpt-5.6-sol"],
+        )
+    )
+    native = Capability(
+        provider="openai",
+        model_id="gpt-5.6-sol",
+        aliases=["gpt-5.6"],
+        supports_reasoning_mode=True,
+        reasoning_mode_values=["standard", "pro"],
+    )
+    registry.register(native)
+
+    assert registry.get("gpt-5.6-sol").provider == "openai"
+    assert registry.get("gpt-5.6").provider == "openai"
+    assert registry.get("gpt-5.6-sol", provider="openai").provider == "openai"
+
+
 def test_get_with_provider_alias() -> None:
     """get(model_id, provider='bedrock') should resolve to amazon provider."""
     cap = llmcapa.get("nova-pro-v1", provider="bedrock")
@@ -624,15 +648,13 @@ def test_new_provider_models_accessible() -> None:
     assert sakura.provider == "sakura"
     assert sakura.model_id == "Weblab-MedLLM-gpt-oss-120b"
 
-    # huggingface.json now holds real HF API records (2900+ models);
-    # the old "huggingface-default" placeholder no longer exists.
-    hf_models = llmcapa.list_models(provider="huggingface")
-    assert len(hf_models) > 1
-    hf = hf_models[0]
+    # The Hugging Face catalog now includes the newly published diffusion LLM.
+    # Context length is not returned by the HF models API, so unknown (0) is valid.
+    hf = llmcapa.get("Diffuspace/Clover-35B-A3B-Preview", provider="huggingface")
     assert hf.provider == "huggingface"
-    assert hf.context_window > 0
-    # Spot-check a well-known record resolves through the registry.
-    assert llmcapa.get(hf.model_id).provider == "huggingface"
+    assert hf.context_window == 0
+    assert "diffusion" in hf.extra["huggingface_tags"]
+    assert llmcapa.get(hf.model_id, provider="huggingface").provider == "huggingface"
 
 
 def test_provider_alias_hf_resolves_to_huggingface() -> None:

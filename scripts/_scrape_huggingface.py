@@ -46,7 +46,7 @@ from pathlib import Path
 import requests
 
 API_BASE = "https://huggingface.co/api/models"
-DEFAULT_MIN_DOWNLOADS = 5000  # skip models with fewer downloads
+DEFAULT_MIN_DOWNLOADS = 1000  # skip models with fewer than 1,000 downloads
 BATCH_SIZE = 500  # max per API call
 MAX_RETRIES = 5
 MAX_BACKOFF_SECONDS = 60.0

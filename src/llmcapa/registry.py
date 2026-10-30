@@ -206,6 +206,7 @@ class Registry:
             "azure_foundry.json",
             "foundry_local.json",
             "lmstudio.json",
+            "llama_cpp.json",
             "vllm.json",
             "ollama.json",
             "modellix.json",
@@ -430,11 +431,20 @@ class Registry:
             "azure-foundry",
             "foundry-local",
             "lmstudio",
+            "llama-cpp",
             "vllm",
             "ollama",
             "modellix",
+            "huggingface",
         }
         existing = self._models.get(key)
+        if existing is None:
+            # A community-catalog alias may claim a provider's exact model ID
+            # before that provider is loaded. Treat the alias owner like the
+            # existing record so the provider-native ID can take precedence.
+            alias_target = self._alias_index.get(key)
+            if alias_target is not None:
+                existing = self._models.get(alias_target)
         existing_provider = (
             self._normalize_provider(existing.provider) if existing is not None else ""
         )

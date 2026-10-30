@@ -43,7 +43,7 @@ any SSR (Server-Side Rendering) limitations and known issues.
 | **Data file** | `src/llmcapa/data/huggingface.json` |
 | **Method** | HuggingFace REST API (`https://huggingface.co/api/models`) |
 | **SSR issue** | The web UI (`huggingface.co/models`) uses SSR with URL-based pagination (`?p=0..99`, 30 models/page). This could theoretically miss models on pages >100. However, the **REST API** uses cursor-based pagination which accesses **all models** without limitation, so there is no SSR issue for API scrapers. |
-| **Filter** | Only `pipeline_tag=text-generation` models with >= 5,000 downloads are collected. |
+| **Filter** | Models across all `pipeline_tag` values with >= 1,000 downloads are collected. |
 | **Metadata limit** | Context window, max tokens, and modality information are **not available** from the API. Defaults are used. |
 | **Script** | `scripts/_scrape_huggingface.py` |
 

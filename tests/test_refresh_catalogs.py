@@ -178,6 +178,10 @@ def test_timeout_terminates_provider_process_group_before_restore(
     assert calls[2:] == ["reaped", "restored"]
 
 
+def test_huggingface_default_min_downloads_is_1000():
+    assert hf_scraper.DEFAULT_MIN_DOWNLOADS == 1000
+
+
 def test_huggingface_scraper_retries_and_stops_at_download_cutoff(
     monkeypatch, capsys
 ):
