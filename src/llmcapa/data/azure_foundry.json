@@ -71,7 +71,7 @@
           "wait"
         ],
         "source_url": "https://ai.azure.com/catalog/models",
-        "checked_at": "2026-10-28"
+        "checked_at": "2026-10-30"
       }
     },
     {
@@ -4783,7 +4783,7 @@
         "requires_beta": true,
         "enable_zoom": false,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-28",
+        "checked_at": "2026-10-30",
         "beta_header": "computer-use-2025-01-24"
       }
     },
@@ -4885,7 +4885,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-28",
+        "checked_at": "2026-10-30",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -4946,7 +4946,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-28",
+        "checked_at": "2026-10-30",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -5006,7 +5006,7 @@
         "requires_beta": true,
         "enable_zoom": false,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-28",
+        "checked_at": "2026-10-30",
         "beta_header": "computer-use-2025-01-24"
       }
     },
@@ -5067,7 +5067,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-28",
+        "checked_at": "2026-10-30",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -6398,7 +6398,6 @@
         ],
         "deployment_options": "UnifiedEndpointMaaS,ServerlessMaaS,Serverless API",
         "inference_retirement_date": "2027-02-15T00:00:00Z",
-        "inference_deprecation_date": "2026-11-15T00:00:00Z",
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Cohere Embed English is the market's leading text representation model used for semantic search, retrieval-augmented generation (RAG), classification, and clustering."
@@ -6441,7 +6440,6 @@
         ],
         "deployment_options": "UnifiedEndpointMaaS,ServerlessMaaS,Serverless API",
         "inference_retirement_date": "2027-02-15T00:00:00Z",
-        "inference_deprecation_date": "2026-11-15T00:00:00Z",
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Cohere Embed Multilingual is the market's leading text representation model used for semantic search, retrieval-augmented generation (RAG), classification, and clustering."
@@ -6913,7 +6911,6 @@
           "standard-paygo"
         ],
         "deployment_options": "UnifiedEndpointMaaS,Serverless API",
-        "inference_deprecation_date": "2027-10-20T00:00:00Z",
         "version": 1,
         "maas_or_paygo": true,
         "summary": "DeepSeek V4.1 Flash 1017 is a multimodal update to DeepSeek V4.1 Flash with improved reasoning, coding, agentic, and visual performance, reduced task execution time and output length, and a 1,048,576-token context window on Fireworks.",
@@ -7283,6 +7280,46 @@
     },
     {
       "provider": "fireworks",
+      "model_id": "FW-NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16",
+      "display_name": "NVIDIA Nemotron 3 Ultra 550B A55B BF16",
+      "context_window": 262144,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "fw-nvidia-nemotron-3-ultra-550b-a55b-bf16",
+        "fireworks/FW-NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16"
+      ],
+      "extra": {
+        "azure_offers": [
+          "PTU"
+        ],
+        "deployment_options": "UnifiedEndpointMaaS,Serverless API",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "NVIDIA Nemotron 3 Ultra 550B A55B BF16 is a 550B-parameter hybrid Mamba-2 and LatentMoE language model with 55B active parameters, configurable reasoning, tool use, and multilingual support for complex agentic workloads.",
+        "long_context": true,
+        "context_window": 262144
+      }
+    },
+    {
+      "provider": "fireworks",
       "model_id": "FW-NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4",
       "display_name": "NVIDIA Nemotron 3.5 Super VL 120B A12B NVFP4",
       "context_window": 1048576,
@@ -7316,7 +7353,6 @@
           "PTU"
         ],
         "deployment_options": "UnifiedEndpointMaaS,Serverless API",
-        "inference_deprecation_date": "2027-10-20T00:00:00Z",
         "version": 1,
         "maas_or_paygo": true,
         "summary": "NVIDIA Nemotron 3.5 Super VL 120B A12B NVFP4 is an open multimodal model for long-running agents with text, image, document, and video understanding, a hybrid Mamba-Transformer Mixture-of-Experts architecture, 120B total and 12B active parameters, and a 1,",
@@ -8124,7 +8160,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 4,
+        "version": 5,
         "maas_or_paygo": true,
         "summary": "ALIA 40B instruction model for long-context multilingual chat across Iberian languages and English."
       }
@@ -8460,7 +8496,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 5,
+        "version": 6,
         "maas_or_paygo": true,
         "summary": "Telecom-specialized text-only Gemma 4 31B instruction model for RAG, standards, and operations workflows.",
         "long_context": true,
@@ -8583,7 +8619,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 6,
+        "version": 7,
         "maas_or_paygo": true,
         "summary": "Instruction-tuned multimodal Gemma 4 model for reasoning, coding, and image understanding.",
         "long_context": true,
@@ -8840,7 +8876,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 4,
+        "version": 5,
         "maas_or_paygo": true,
         "summary": "Granite 4.0 H Small 32B long-context instruct model for enterprise text generation."
       }
@@ -9135,7 +9171,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 1,
+        "version": 2,
         "maas_or_paygo": true,
         "summary": "English 1024-dimensional E5 embedding model for retrieval and similarity with query/passage prefixes."
       }
@@ -9488,7 +9524,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 1,
+        "version": 2,
         "maas_or_paygo": true,
         "summary": "9B multimodal browser-use agent that reasons over screenshots and emits grounded browser actions.",
         "long_context": true,
@@ -9829,7 +9865,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 3,
+        "version": 4,
         "maas_or_paygo": true,
         "summary": "FP8 Mistral Nemo 12B instruct model for multilingual chat, coding, and tool-use workflows."
       }
@@ -9872,7 +9908,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 1,
+        "version": 2,
         "maas_or_paygo": true,
         "summary": "24B multimodal Mistral Small 3.1 instruct model for text, vision, function calling, and long context."
       }
@@ -9915,7 +9951,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 4,
+        "version": 5,
         "maas_or_paygo": true,
         "summary": "12B Pixtral multimodal instruct model for text and image understanding with a 128k context window."
       }
@@ -10420,7 +10456,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 1,
+        "version": 2,
         "maas_or_paygo": true,
         "summary": "Multilingual 8B embedding model for retrieval, semantic search, and RAG with flexible 4096-dim vectors."
       }
@@ -10764,7 +10800,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 2,
+        "version": 3,
         "maas_or_paygo": true,
         "summary": "Full-precision Nemotron 3.5 Lightning 30B reference model for customization and domain adaptation.",
         "long_context": true,
@@ -10808,7 +10844,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 2,
+        "version": 3,
         "maas_or_paygo": true,
         "summary": "Efficient Nemotron 3.5 Lightning 30B NVFP4 model for long-running agents and local inference.",
         "long_context": true,
@@ -11348,7 +11384,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 4,
+        "version": 5,
         "maas_or_paygo": true,
         "summary": "Dense 14.8B Qwen3 reasoning model with multilingual chat, tool use, and switchable thinking modes."
       }
@@ -13496,7 +13532,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 2,
+        "version": 3,
         "maas_or_paygo": true,
         "summary": "QwQ 32B reasoning model for math, coding, and analytical text generation."
       }
@@ -13800,7 +13836,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 3,
+        "version": 4,
         "maas_or_paygo": true,
         "summary": "384-dimensional English sentence embedding model for semantic search, clustering, and sentence similarity."
       }
@@ -13884,7 +13920,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 1,
+        "version": 2,
         "maas_or_paygo": true,
         "summary": "768-dimensional English MS MARCO sentence embedding model optimized for dot-product retrieval."
       }
@@ -13926,7 +13962,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 1,
+        "version": 2,
         "maas_or_paygo": true,
         "summary": "Multilingual 1024-dimensional Snowflake Arctic embedding model for retrieval and semantic similarity."
       }
@@ -13968,7 +14004,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 1,
+        "version": 2,
         "maas_or_paygo": true,
         "summary": "English 1024-dimensional GTE embedding model for retrieval, clustering, classification, and similarity."
       }
@@ -19931,7 +19967,7 @@
         "pricing_match_key": "microsoft-decision-1",
         "official_model_catalog_url": "https://ai.azure.com/catalog/models/Microsoft-Decision-1",
         "official_usage_docs": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-microsoft-decision",
-        "official_catalog_checked_at": "2026-10-28",
+        "official_catalog_checked_at": "2026-10-30",
         "deployment_types": [
           "DataZoneStandard",
           "GlobalStandard"
@@ -20342,7 +20378,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-28",
+        "checked_at": "2026-10-30",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -20388,7 +20424,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-28",
+        "checked_at": "2026-10-30",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -20434,7 +20470,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-28",
+        "checked_at": "2026-10-30",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -20480,7 +20516,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-28",
+        "checked_at": "2026-10-30",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -20526,7 +20562,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-28",
+        "checked_at": "2026-10-30",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -20572,7 +20608,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-28",
+        "checked_at": "2026-10-30",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -20618,7 +20654,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-28",
+        "checked_at": "2026-10-30",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -20664,7 +20700,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-28",
+        "checked_at": "2026-10-30",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -20728,6 +20764,84 @@
       ],
       "extra": {
         "pricing_match_key": "gpt-realtime-whisper"
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "CohereLabs-North-Mini-Code-1.0-fp8",
+      "display_name": "CohereLabs-North-Mini-Code-1.0-fp8",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "coherelabs-north-mini-code-1.0-fp8",
+        "azure-foundrylocalonazurelocal/CohereLabs-North-Mini-Code-1.0-fp8"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
+      }
+    },
+    {
+      "provider": "azure-foundrylocalonazurelocal",
+      "model_id": "CohereLabs-North-Mini-Code-1.0-w4a16",
+      "display_name": "CohereLabs-North-Mini-Code-1.0-w4a16",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "coherelabs-north-mini-code-1.0-w4a16",
+        "azure-foundrylocalonazurelocal/CohereLabs-North-Mini-Code-1.0-w4a16"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "version": 1
       }
     },
     {

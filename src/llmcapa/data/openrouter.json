@@ -178,7 +178,7 @@
       "model_id": "openrouter/auto-beta",
       "display_name": "Auto Router (Beta)",
       "context_window": 2000000,
-      "max_output_tokens": 0,
+      "max_output_tokens": 65536,
       "input_modalities": [
         "text",
         "image",
@@ -289,7 +289,7 @@
         "tokenizer": "Router",
         "top_provider": {
           "context_length": null,
-          "max_completion_tokens": null,
+          "max_completion_tokens": 65536,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -297,9 +297,10 @@
           "include_reasoning",
           "logit_bias",
           "logprobs",
+          "max_completion_tokens",
           "max_tokens",
           "min_p",
-          "prediction",
+          "parallel_tool_calls",
           "presence_penalty",
           "reasoning",
           "reasoning_effort",
@@ -315,7 +316,7 @@
           "top_k",
           "top_logprobs",
           "top_p",
-          "web_search_options"
+          "verbosity"
         ],
         "created": "2026-07-17",
         "description": "The experimental version of our Auto Router where we test new improvements. Use it to get the latest and greatest version of our general purpose auto router, but expect beta...",
@@ -333,7 +334,6 @@
           "audio_input",
           "file_input",
           "image_output",
-          "web_search",
           "router"
         ]
       },
@@ -1209,8 +1209,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.0166,
-        "output_per_1m": 1.8,
+        "input_per_1m": 0.0339,
+        "output_per_1m": 1.14,
         "currency": "USD"
       },
       "extra": {
@@ -1253,7 +1253,7 @@
         ],
         "created": "2026-09-14",
         "description": "This model always redirects to the latest model in the DeepSeek Flash family.",
-        "cache_read_per_1m": 0.0165,
+        "cache_read_per_1m": 0.0336,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -1318,8 +1318,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.2542,
-        "output_per_1m": 8.0,
+        "input_per_1m": 0.1035,
+        "output_per_1m": 4.0,
         "currency": "USD"
       },
       "extra": {
@@ -1360,7 +1360,7 @@
         ],
         "created": "2026-09-14",
         "description": "This model always redirects to the latest model in the DeepSeek Pro family.",
-        "cache_read_per_1m": 0.25,
+        "cache_read_per_1m": 0.1,
         "default_parameters": {
           "temperature": 1,
           "top_p": 1
@@ -1427,8 +1427,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.0475,
-        "output_per_1m": 0.1568,
+        "input_per_1m": 0.0398,
+        "output_per_1m": 0.1677,
         "currency": "USD"
       },
       "extra": {
@@ -1996,8 +1996,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.179,
-        "output_per_1m": 11.5,
+        "input_per_1m": 0.1719,
+        "output_per_1m": 9.3388,
         "currency": "USD"
       },
       "extra": {
@@ -2040,7 +2040,7 @@
         ],
         "created": "2026-04-27",
         "description": "This model always redirects to the latest model in the Kimi family.",
-        "cache_read_per_1m": 0.169,
+        "cache_read_per_1m": 0.17,
         "default_parameters": {
           "top_p": 0.95
         },
@@ -2157,7 +2157,7 @@
         "top_provider": {
           "context_length": 1050000,
           "max_completion_tokens": 128000,
-          "is_moderated": false
+          "is_moderated": true
         },
         "supported_parameters": [
           "include_reasoning",
@@ -2599,7 +2599,7 @@
         "top_provider": {
           "context_length": 1050000,
           "max_completion_tokens": 128000,
-          "is_moderated": false
+          "is_moderated": true
         },
         "supported_parameters": [
           "include_reasoning",
@@ -3254,8 +3254,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.0379,
-        "output_per_1m": 0.0798,
+        "input_per_1m": 0.0477,
+        "output_per_1m": 0.0701,
         "currency": "USD"
       },
       "extra": {
@@ -4760,10 +4760,6 @@
         "links": {
           "details": "/api/v1/models/amazon/nova-lite-v1/endpoints"
         },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
         "features": [
           "tools",
           "vision"
@@ -4835,10 +4831,6 @@
         "description": "Amazon Nova Micro 1.0 is a text-only model that delivers the lowest latency responses in the Amazon Nova family of models at a very low cost. With a context length...",
         "links": {
           "details": "/api/v1/models/amazon/nova-micro-v1/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
         },
         "features": [
           "tools"
@@ -4914,8 +4906,7 @@
           "details": "/api/v1/models/amazon/nova-premier-v1/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 1,
-          "artificial_analysis": 1
+          "design_arena": 1
         },
         "features": [
           "tools",
@@ -4991,8 +4982,7 @@
           "details": "/api/v1/models/amazon/nova-pro-v1/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 1,
-          "artificial_analysis": 1
+          "design_arena": 1
         },
         "features": [
           "tools",
@@ -6357,8 +6347,7 @@
           "details": "/api/v1/models/anthropic/claude-4.1-opus-20250805/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 8,
-          "artificial_analysis": 1
+          "design_arena": 8
         },
         "features": [
           "tools",
@@ -6465,8 +6454,7 @@
           "details": "/api/v1/models/anthropic/claude-4.1-opus-20250805/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 8,
-          "artificial_analysis": 1
+          "design_arena": 8
         },
         "features": [
           "tools",
@@ -6577,8 +6565,7 @@
           "details": "/api/v1/models/anthropic/claude-4.5-opus-20251124/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 12,
-          "artificial_analysis": 1
+          "design_arena": 12
         },
         "features": [
           "tools",
@@ -6687,8 +6674,7 @@
           "details": "/api/v1/models/anthropic/claude-4.5-opus-20251124/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 12,
-          "artificial_analysis": 1
+          "design_arena": 12
         },
         "features": [
           "tools",
@@ -6811,8 +6797,7 @@
           "details": "/api/v1/models/anthropic/claude-4.6-opus-20260205/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 15,
-          "artificial_analysis": 1
+          "design_arena": 15
         },
         "features": [
           "tools",
@@ -6942,8 +6927,7 @@
           "details": "/api/v1/models/anthropic/claude-4.6-opus-20260205/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 15,
-          "artificial_analysis": 1
+          "design_arena": 15
         },
         "features": [
           "tools",
@@ -7590,7 +7574,7 @@
           "details": "/api/v1/models/anthropic/claude-opus-5-20260723/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 17,
+          "design_arena": 18,
           "artificial_analysis": 1
         },
         "features": [
@@ -7718,7 +7702,7 @@
           "details": "/api/v1/models/anthropic/claude-opus-5.5-20260921/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 12,
+          "design_arena": 13,
           "artificial_analysis": 1
         },
         "features": [
@@ -7845,7 +7829,7 @@
           "details": "/api/v1/models/anthropic/claude-opus-5.5-20260921/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 12,
+          "design_arena": 13,
           "artificial_analysis": 1
         },
         "features": [
@@ -7974,7 +7958,7 @@
           "details": "/api/v1/models/anthropic/claude-opus-5-20260723/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 17,
+          "design_arena": 18,
           "artificial_analysis": 1
         },
         "features": [
@@ -8615,7 +8599,7 @@
           "details": "/api/v1/models/anthropic/claude-sonnet-5-20260630/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 19,
+          "design_arena": 20,
           "artificial_analysis": 1
         },
         "features": [
@@ -8743,7 +8727,7 @@
           "details": "/api/v1/models/anthropic/claude-sonnet-5.5-20260928/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 10,
+          "design_arena": 11,
           "artificial_analysis": 1
         },
         "features": [
@@ -8870,7 +8854,7 @@
           "details": "/api/v1/models/anthropic/claude-sonnet-5.5-20260928/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 10,
+          "design_arena": 11,
           "artificial_analysis": 1
         },
         "features": [
@@ -8999,7 +8983,7 @@
           "details": "/api/v1/models/anthropic/claude-sonnet-5-20260630/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 19,
+          "design_arena": 20,
           "artificial_analysis": 1
         },
         "features": [
@@ -9019,6 +9003,59 @@
         "high",
         "xhigh"
       ]
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "assemblyai/assemblyai-tts-1",
+      "display_name": "AssemblyAI: TTS 1",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "speech"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "assemblyai-tts-1",
+        "openrouter/assemblyai/assemblyai-tts-1"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 15.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "assemblyai",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 0,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "AssemblyAI TTS 1 is a text-to-speech model from AssemblyAI. It is suited for voice agents, narration, and multilingual applications, and draws on a public library of several thousand voices across languages. Voices are selected by slug or ID, and the spoken language follows the chosen voice or can be set explicitly through the `language` provider option."
+      }
     },
     {
       "provider": "openrouter",
@@ -9355,11 +9392,12 @@
     {
       "provider": "openrouter",
       "model_id": "baseten/elephant-1",
-      "display_name": "Baseten: Elephant 1 (free)",
+      "display_name": "Baseten: Elephant 1",
       "context_window": 16384,
       "max_output_tokens": 0,
       "input_modalities": [
-        "text"
+        "text",
+        "image"
       ],
       "output_modalities": [
         "decisions"
@@ -9367,7 +9405,7 @@
       "supports_function_calling": false,
       "supports_json_mode": false,
       "supports_streaming": true,
-      "supports_vision": false,
+      "supports_vision": true,
       "supports_reasoning": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
@@ -9383,9 +9421,9 @@
         "elephant-1",
         "openrouter/baseten/elephant-1"
       ],
-      "license_type": "free",
+      "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.0,
+        "input_per_1m": 0.035,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
@@ -9403,17 +9441,20 @@
         },
         "supported_parameters": [],
         "description": "Elephant 1 is a 9B decision model from Base Labs, Baseten's research team, built on Qwen3.5-9B. Given a state (text or JSON) and typed questions (yes/no, multiple choice, or ordinal score), it returns a calibrated probability for every option in a single forward pass, with no text generation. It is TypeSafe System One compatible and suits routing, classification, and scoring where you need a score",
-        "free_tier": true
+        "features": [
+          "vision"
+        ]
       }
     },
     {
       "provider": "openrouter",
-      "model_id": "baseten/mammoth-1",
-      "display_name": "Baseten: Mammoth 1 (free)",
+      "model_id": "baseten/joey-1",
+      "display_name": "Baseten: Joey 1",
       "context_window": 16384,
       "max_output_tokens": 0,
       "input_modalities": [
-        "text"
+        "text",
+        "image"
       ],
       "output_modalities": [
         "decisions"
@@ -9421,7 +9462,64 @@
       "supports_function_calling": false,
       "supports_json_mode": false,
       "supports_streaming": true,
-      "supports_vision": false,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "joey-1",
+        "openrouter/baseten/joey-1"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.01,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "baseten",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 16384,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "Joey 1 is a 2B decision model from Base Labs, Baseten's research team, built on Qwen3.5-2B. Given a state (text or JSON) and typed questions (yes/no, multiple choice, or ordinal score), it returns a calibrated probability for every option in a single forward pass, with no text generation. It is TypeSafe System One compatible and suits high-volume routing, classification, and guardrail checks where",
+        "features": [
+          "vision"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "baseten/mammoth-1",
+      "display_name": "Baseten: Mammoth 1",
+      "context_window": 16384,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "decisions"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
       "supports_reasoning": false,
       "supports_chat_completion": true,
       "supports_responses_api": true,
@@ -9437,9 +9535,9 @@
         "mammoth-1",
         "openrouter/baseten/mammoth-1"
       ],
-      "license_type": "free",
+      "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.0,
+        "input_per_1m": 0.1,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
@@ -9457,7 +9555,9 @@
         },
         "supported_parameters": [],
         "description": "Mammoth 1 is a 27B decision model from Base Labs, Baseten's research team, built on Qwen3.5-27B. Given a state (text or JSON) and typed questions (yes/no, multiple choice, or ordinal score), it returns a calibrated probability for every option in a single forward pass, with no text generation. It is TypeSafe System One compatible and suits classification, routing, and scoring where you need a scor",
-        "free_tier": true
+        "features": [
+          "vision"
+        ]
       }
     },
     {
@@ -12030,6 +12130,63 @@
     },
     {
       "provider": "openrouter",
+      "model_id": "cloudflare/clairic",
+      "display_name": "Cloudflare: Clairic",
+      "context_window": 65536,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "decisions"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "clairic",
+        "openrouter/cloudflare/clairic"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "cloudflare",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 65536,
+          "max_completion_tokens": 65536,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "Clairic is Cloudflare's System One-style extraction model served on Workers AI. Given a text state and optional images plus a schema of typed fields, it extracts, computes, estimates, and forecasts strongly typed values (text spans, numbers, dates, times, durations, lists, estimates, forecasts) in a single pass, returning a confidence score and null probability for every field instead of generatin",
+        "features": [
+          "vision"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
       "model_id": "cloudflare/clef",
       "display_name": "Cloudflare: Clef",
       "context_window": 65537,
@@ -12064,7 +12221,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.042,
+        "input_per_1m": 0.192,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
@@ -12076,7 +12233,7 @@
         "native_provider": "cloudflare",
         "tokenizer": "",
         "top_provider": {
-          "context_length": 65536,
+          "context_length": 65537,
           "max_completion_tokens": null,
           "is_moderated": null
         },
@@ -12121,7 +12278,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/cloudflare/clef",
-        "checked_at": "2026-10-28",
+        "checked_at": "2026-10-30",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -12169,7 +12326,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.019,
+        "input_per_1m": 0.018,
         "output_per_1m": 0.0,
         "currency": "USD"
       },
@@ -12181,7 +12338,7 @@
         "native_provider": "cloudflare",
         "tokenizer": "",
         "top_provider": {
-          "context_length": 24576,
+          "context_length": 16384,
           "max_completion_tokens": null,
           "is_moderated": null
         },
@@ -12226,7 +12383,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/cloudflare/clef-flash",
-        "checked_at": "2026-10-28",
+        "checked_at": "2026-10-30",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -12489,10 +12646,6 @@
         "description": "Command A is an open-weights 111B parameter model with a 256k context window focused on delivering great performance across agentic, multilingual, and coding use cases. Compared to other leading proprietary...",
         "links": {
           "details": "/api/v1/models/cohere/command-a-03-2025/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
         },
         "features": [
           "structured_outputs"
@@ -13547,7 +13700,7 @@
       "model_id": "deepseek/deepseek-chat-v3.1",
       "display_name": "DeepSeek: DeepSeek V3.1",
       "context_window": 163840,
-      "max_output_tokens": 32768,
+      "max_output_tokens": 147456,
       "input_modalities": [
         "text"
       ],
@@ -13594,7 +13747,7 @@
         "instruct_type": "deepseek-v3.1",
         "top_provider": {
           "context_length": 163840,
-          "max_completion_tokens": 32768,
+          "max_completion_tokens": 147456,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -13628,8 +13781,7 @@
           "details": "/api/v1/models/deepseek/deepseek-chat-v3.1/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 7,
-          "artificial_analysis": 1
+          "design_arena": 7
         },
         "features": [
           "tools",
@@ -13724,8 +13876,7 @@
           "details": "/api/v1/models/deepseek/deepseek-r1-0528/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 7,
-          "artificial_analysis": 1
+          "design_arena": 7
         },
         "features": [
           "tools",
@@ -13795,7 +13946,6 @@
           "max_tokens",
           "reasoning",
           "response_format",
-          "stop",
           "structured_outputs",
           "temperature",
           "tool_choice",
@@ -14004,8 +14154,7 @@
           "details": "/api/v1/models/deepseek/deepseek-v3.2-exp/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 7,
-          "artificial_analysis": 1
+          "design_arena": 7
         },
         "features": [
           "tools",
@@ -14019,7 +14168,7 @@
       "model_id": "deepseek/deepseek-v4-flash",
       "display_name": "DeepSeek: DeepSeek V4 Flash 0423",
       "context_window": 1048576,
-      "max_output_tokens": 131072,
+      "max_output_tokens": 943717,
       "input_modalities": [
         "text"
       ],
@@ -14050,8 +14199,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.14,
-        "output_per_1m": 0.28,
+        "input_per_1m": 0.091,
+        "output_per_1m": 0.182,
         "currency": "USD"
       },
       "extra": {
@@ -14065,8 +14214,8 @@
         "modality": "text->text",
         "tokenizer": "DeepSeek",
         "top_provider": {
-          "context_length": 1048576,
-          "max_completion_tokens": 131072,
+          "context_length": 1048575,
+          "max_completion_tokens": 943717,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -14095,7 +14244,7 @@
         ],
         "created": "2026-04-24",
         "description": "DeepSeek V4 Flash is an efficiency-optimized Mixture-of-Experts model from DeepSeek with 284B total parameters and 13B activated parameters, supporting a 1M-token context window. It is designed for fast inference and...",
-        "cache_read_per_1m": 0.028,
+        "cache_read_per_1m": 0.0182,
         "reasoning_meta": {
           "mandatory": false,
           "supported_efforts": [
@@ -14396,8 +14545,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.875394,
-        "output_per_1m": 1.750788,
+        "input_per_1m": 0.816234,
+        "output_per_1m": 1.632468,
         "currency": "USD"
       },
       "extra": {
@@ -14440,7 +14589,7 @@
         ],
         "created": "2026-04-24",
         "description": "DeepSeek V4 Pro is a large-scale Mixture-of-Experts model from DeepSeek with 1.6T total parameters and 49B activated parameters, supporting a 1M-token context window. It is designed for advanced reasoning, coding,...",
-        "cache_read_per_1m": 0.07295,
+        "cache_read_per_1m": 0.068019,
         "default_parameters": {
           "temperature": 1,
           "top_p": 1
@@ -14680,7 +14829,7 @@
       "model_id": "deepseek/deepseek-v4.1-flash",
       "display_name": "DeepSeek: DeepSeek V4.1 Flash",
       "context_window": 1048576,
-      "max_output_tokens": 131072,
+      "max_output_tokens": 943718,
       "input_modalities": [
         "text",
         "image"
@@ -14712,8 +14861,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.14,
-        "output_per_1m": 0.42,
+        "input_per_1m": 0.045,
+        "output_per_1m": 0.5,
         "currency": "USD"
       },
       "extra": {
@@ -14728,7 +14877,7 @@
         "tokenizer": "DeepSeek",
         "top_provider": {
           "context_length": 1048576,
-          "max_completion_tokens": 131072,
+          "max_completion_tokens": 943718,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -14757,7 +14906,7 @@
         ],
         "created": "2026-09-10",
         "description": "DeepSeek V4.1 Flash is a sparse mixture-of-experts model from DeepSeek, and the first built on the company's Causal Encoder-Decoder (CED) architecture. It activates 8B parameters on input and 16B on...",
-        "cache_read_per_1m": 0.0042,
+        "cache_read_per_1m": 0.006,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -14771,10 +14920,6 @@
         },
         "links": {
           "details": "/api/v1/models/deepseek/deepseek-v4.1-flash-20260910/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
         },
         "features": [
           "tools",
@@ -14970,8 +15115,7 @@
           "details": "/api/v1/models/deepseek/deepseek-v4.1-flash-20261017/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 9,
-          "artificial_analysis": 1
+          "design_arena": 9
         },
         "features": [
           "tools",
@@ -15084,10 +15228,6 @@
         },
         "links": {
           "details": "/api/v1/models/deepseek/deepseek-v4.1-flash-20260910/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
         },
         "features": [
           "tools",
@@ -16936,8 +17076,7 @@
           "details": "/api/v1/models/google/gemini-2.5-flash/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 7,
-          "artificial_analysis": 1
+          "design_arena": 7
         },
         "features": [
           "tools",
@@ -17188,10 +17327,6 @@
         },
         "links": {
           "details": "/api/v1/models/google/gemini-2.5-flash-lite/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
         },
         "features": [
           "tools",
@@ -17664,8 +17799,7 @@
           "details": "/api/v1/models/google/gemini-3-flash-preview-20251217/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 12,
-          "artificial_analysis": 1
+          "design_arena": 12
         },
         "features": [
           "tools",
@@ -17841,8 +17975,7 @@
           "details": "/api/v1/models/google/gemini-3-flash-preview-20251217/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 12,
-          "artificial_analysis": 1
+          "design_arena": 12
         },
         "features": [
           "tools",
@@ -19158,7 +19291,7 @@
           "details": "/api/v1/models/google/gemini-3.1-pro-preview-20260219/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 22,
+          "design_arena": 24,
           "artificial_analysis": 1
         },
         "features": [
@@ -19523,7 +19656,7 @@
           "details": "/api/v1/models/google/gemini-3.1-pro-preview-20260219/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 22,
+          "design_arena": 24,
           "artificial_analysis": 1
         },
         "features": [
@@ -20488,7 +20621,7 @@
           "details": "/api/v1/models/google/gemini-3.6-flash-20260721/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 16,
+          "design_arena": 17,
           "artificial_analysis": 1
         },
         "features": [
@@ -20665,7 +20798,7 @@
           "details": "/api/v1/models/google/gemini-3.6-flash-20260721/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 16,
+          "design_arena": 17,
           "artificial_analysis": 1
         },
         "features": [
@@ -21197,7 +21330,7 @@
           "details": "/api/v1/models/google/gemini-3.8-flash-20260902/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 16,
+          "design_arena": 17,
           "artificial_analysis": 1
         },
         "features": [
@@ -21511,7 +21644,7 @@
           "details": "/api/v1/models/google/gemini-3.8-flash-20260902/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 16,
+          "design_arena": 17,
           "artificial_analysis": 1
         },
         "features": [
@@ -21624,7 +21757,7 @@
           "details": "/api/v1/models/google/gemini-4-argon-20261013/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 9,
+          "design_arena": 10,
           "artificial_analysis": 1
         },
         "features": [
@@ -21782,7 +21915,7 @@
           "details": "/api/v1/models/google/gemini-4-argon-20261013/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 9,
+          "design_arena": 10,
           "artificial_analysis": 1
         },
         "features": [
@@ -24143,7 +24276,7 @@
       "license_type": "api",
       "pricing": {
         "input_per_1m": 0.06,
-        "output_per_1m": 0.25,
+        "output_per_1m": 0.15,
         "currency": "USD"
       },
       "extra": {
@@ -24412,10 +24545,6 @@
         "links": {
           "details": "/api/v1/models/inception/mercury-2.5-20260908/endpoints"
         },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
         "features": [
           "tools",
           "structured_outputs",
@@ -24626,7 +24755,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/inception/mercury-decide",
-        "checked_at": "2026-10-28",
+        "checked_at": "2026-10-30",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -24867,8 +24996,8 @@
       "provider": "openrouter",
       "model_id": "inclusionai/ling-3.1-flash",
       "display_name": "inclusionAI: Ling 3.1 Flash",
-      "context_window": 262144,
-      "max_output_tokens": 235929,
+      "context_window": 1000000,
+      "max_output_tokens": 262144,
       "input_modalities": [
         "text"
       ],
@@ -24913,8 +25042,8 @@
         "modality": "text->text",
         "tokenizer": "Other",
         "top_provider": {
-          "context_length": 262144,
-          "max_completion_tokens": 235929,
+          "context_length": 1000000,
+          "max_completion_tokens": 262144,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -24947,10 +25076,6 @@
         },
         "links": {
           "details": "/api/v1/models/inclusionai/ling-3.1-flash-20261002/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
         },
         "features": [
           "tools",
@@ -25400,7 +25525,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/jaredpalmer/kev-4b",
-        "checked_at": "2026-10-28",
+        "checked_at": "2026-10-30",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -26002,7 +26127,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/liquid/d1",
-        "checked_at": "2026-10-28",
+        "checked_at": "2026-10-30",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -26744,10 +26869,6 @@
         "links": {
           "details": "/api/v1/models/meta-llama/llama-3.1-70b-instruct/endpoints"
         },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
         "features": [
           "tools",
           "structured_outputs"
@@ -26759,7 +26880,7 @@
       "model_id": "meta-llama/llama-3.1-8b-instruct",
       "display_name": "Meta: Llama 3.1 8B Instruct",
       "context_window": 131072,
-      "max_output_tokens": 16384,
+      "max_output_tokens": 117964,
       "input_modalities": [
         "text"
       ],
@@ -26789,8 +26910,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.02,
-        "output_per_1m": 0.04,
+        "input_per_1m": 0.05,
+        "output_per_1m": 0.08,
         "currency": "USD"
       },
       "extra": {
@@ -26806,7 +26927,7 @@
         "instruct_type": "llama3",
         "top_provider": {
           "context_length": 131072,
-          "max_completion_tokens": 16384,
+          "max_completion_tokens": 117964,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -26830,6 +26951,7 @@
         ],
         "created": "2024-07-23",
         "description": "Meta's latest class of model (Llama 3.1) launched with a variety of sizes & flavors. This 8B instruct-tuned version is fast and efficient. It has demonstrated strong performance compared to...",
+        "cache_read_per_1m": 0.025,
         "links": {
           "details": "/api/v1/models/meta-llama/llama-3.1-8b-instruct/endpoints"
         },
@@ -26915,10 +27037,6 @@
         "description": "Llama 3.2 1B is a 1-billion-parameter language model focused on efficiently performing natural language tasks, such as summarization, dialogue, and multilingual text analysis. Its smaller size allows it to operate...",
         "links": {
           "details": "/api/v1/models/meta-llama/llama-3.2-1b-instruct/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
         }
       }
     },
@@ -26997,10 +27115,6 @@
         "description": "Llama 3.2 3B is a 3-billion-parameter multilingual large language model, optimized for advanced natural language processing tasks like dialogue generation, reasoning, and summarization. Designed with the latest transformer architecture, it...",
         "links": {
           "details": "/api/v1/models/meta-llama/llama-3.2-3b-instruct/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
         },
         "features": [
           "structured_outputs"
@@ -27454,7 +27568,7 @@
           "details": "/api/v1/models/meta/muse-glimmer-30b-20260810/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 3,
+          "design_arena": 4,
           "artificial_analysis": 1
         },
         "features": [
@@ -28414,7 +28528,7 @@
       "model_id": "meta/muse-spark-open",
       "display_name": "Meta: Muse Spark Open",
       "context_window": 1048576,
-      "max_output_tokens": 943718,
+      "max_output_tokens": 131072,
       "input_modalities": [
         "text",
         "image",
@@ -28463,7 +28577,7 @@
         "tokenizer": "Other",
         "top_provider": {
           "context_length": 1048576,
-          "max_completion_tokens": 943718,
+          "max_completion_tokens": 131072,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -29644,10 +29758,6 @@
         "links": {
           "details": "/api/v1/models/microsoft/phi-4/endpoints"
         },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
         "features": [
           "structured_outputs"
         ]
@@ -30091,10 +30201,6 @@
         "links": {
           "details": "/api/v1/models/minimax/minimax-m1/endpoints"
         },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
         "features": [
           "tools",
           "reasoning"
@@ -30114,7 +30220,7 @@
         "text"
       ],
       "supports_function_calling": true,
-      "supports_json_mode": true,
+      "supports_json_mode": false,
       "supports_json_schema": true,
       "supports_streaming": true,
       "supports_vision": false,
@@ -30156,22 +30262,12 @@
           "is_moderated": false
         },
         "supported_parameters": [
-          "frequency_penalty",
           "include_reasoning",
-          "logprobs",
           "max_tokens",
-          "presence_penalty",
           "reasoning",
-          "repetition_penalty",
-          "response_format",
-          "seed",
-          "stop",
-          "structured_outputs",
           "temperature",
           "tool_choice",
           "tools",
-          "top_k",
-          "top_logprobs",
           "top_p"
         ],
         "created": "2025-10-23",
@@ -30187,12 +30283,10 @@
           "details": "/api/v1/models/minimax/minimax-m2/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 7,
-          "artificial_analysis": 1
+          "design_arena": 7
         },
         "features": [
           "tools",
-          "structured_outputs",
           "reasoning"
         ]
       }
@@ -30346,8 +30440,7 @@
           "details": "/api/v1/models/minimax/minimax-m2.1/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 7,
-          "artificial_analysis": 1
+          "design_arena": 7
         },
         "features": [
           "tools",
@@ -30446,8 +30539,7 @@
           "details": "/api/v1/models/minimax/minimax-m2.5-20260211/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 7,
-          "artificial_analysis": 1
+          "design_arena": 7
         },
         "features": [
           "tools",
@@ -30676,7 +30768,7 @@
           "details": "/api/v1/models/minimax/minimax-m3-20260531/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 17,
+          "design_arena": 18,
           "artificial_analysis": 1
         },
         "features": [
@@ -31670,10 +31762,6 @@
         "links": {
           "details": "/api/v1/models/mistralai/mistral-large/endpoints"
         },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
         "features": [
           "tools",
           "structured_outputs",
@@ -31773,10 +31861,6 @@
         },
         "links": {
           "details": "/api/v1/models/mistralai/mistral-large-2407/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
         },
         "features": [
           "tools",
@@ -31927,8 +32011,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 1.36,
-        "output_per_1m": 4.18,
+        "input_per_1m": 0.7,
+        "output_per_1m": 2.1,
         "currency": "USD"
       },
       "extra": {
@@ -31938,6 +32022,7 @@
         "base_url": "https://openrouter.ai/api/v1",
         "native_provider": "mistralai",
         "canonical_slug": "mistralai/mistral-large-4-0-20261006",
+        "hugging_face_id": "mistralai/Mistral-Large-4-1T-A52B",
         "modality": "text+image->text",
         "tokenizer": "Mistral",
         "top_provider": {
@@ -31965,7 +32050,7 @@
         ],
         "created": "2026-10-06",
         "description": "Mistral Large 4 is a frontier multimodal (text and image input) model from Mistral AI built for reasoning, coding, and agentic workloads. It offers a 1M-token context window with up...",
-        "cache_read_per_1m": 0.14,
+        "cache_read_per_1m": 0.07,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -32094,8 +32179,7 @@
           "details": "/api/v1/models/mistralai/mistral-medium-3/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 6,
-          "artificial_analysis": 1
+          "design_arena": 6
         },
         "features": [
           "tools",
@@ -32640,10 +32724,6 @@
         "links": {
           "details": "/api/v1/models/mistralai/mistral-saba-2502/endpoints"
         },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
         "features": [
           "tools",
           "structured_outputs",
@@ -32727,10 +32807,6 @@
         },
         "links": {
           "details": "/api/v1/models/mistralai/mistral-small-24b-instruct-2501/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
         },
         "features": [
           "structured_outputs"
@@ -33120,10 +33196,6 @@
         },
         "links": {
           "details": "/api/v1/models/mistralai/mixtral-8x22b-instruct/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
         },
         "features": [
           "tools",
@@ -33986,8 +34058,7 @@
           "details": "/api/v1/models/moonshotai/kimi-k2/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 5,
-          "artificial_analysis": 1
+          "design_arena": 5
         },
         "features": [
           "tools"
@@ -34069,8 +34140,7 @@
           "details": "/api/v1/models/moonshotai/kimi-k2-0905/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 2,
-          "artificial_analysis": 1
+          "design_arena": 2
         },
         "features": [
           "tools",
@@ -34136,7 +34206,6 @@
         "supported_parameters": [
           "frequency_penalty",
           "include_reasoning",
-          "logprobs",
           "max_tokens",
           "presence_penalty",
           "reasoning",
@@ -34149,7 +34218,6 @@
           "tool_choice",
           "tools",
           "top_k",
-          "top_logprobs",
           "top_p"
         ],
         "created": "2025-11-06",
@@ -34510,8 +34578,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.179,
-        "output_per_1m": 11.5,
+        "input_per_1m": 0.192,
+        "output_per_1m": 15.0,
         "currency": "USD"
       },
       "video": {
@@ -34586,7 +34654,7 @@
         ],
         "created": "2026-07-16",
         "description": "Kimi K3 is a 2.8T parameter open-weight multimodal reasoning model from Moonshot AI. It is suited for complex coding, knowledge work, and long-horizon agentic workflows, and is particularly strong at...",
-        "cache_read_per_1m": 0.169,
+        "cache_read_per_1m": 0.182,
         "default_parameters": {
           "top_p": 0.95
         },
@@ -35590,10 +35658,6 @@
         "links": {
           "details": "/api/v1/models/nousresearch/hermes-3-llama-3.1-70b/endpoints"
         },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
         "features": [
           "structured_outputs"
         ]
@@ -35676,10 +35740,6 @@
         },
         "links": {
           "details": "/api/v1/models/nousresearch/hermes-4-405b/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
         },
         "features": [
           "structured_outputs",
@@ -36246,8 +36306,8 @@
       "provider": "openrouter",
       "model_id": "nvidia/nemotron-3-super-120b-a12b",
       "display_name": "NVIDIA: Nemotron 3 Super",
-      "context_window": 262144,
-      "max_output_tokens": 235929,
+      "context_window": 1048576,
+      "max_output_tokens": 262144,
       "input_modalities": [
         "text"
       ],
@@ -36278,8 +36338,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.08,
-        "output_per_1m": 0.45,
+        "input_per_1m": 0.3,
+        "output_per_1m": 2.4,
         "currency": "USD"
       },
       "extra": {
@@ -36293,8 +36353,8 @@
         "modality": "text->text",
         "tokenizer": "Other",
         "top_provider": {
-          "context_length": 262144,
-          "max_completion_tokens": 235929,
+          "context_length": 1048576,
+          "max_completion_tokens": 262144,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -36321,6 +36381,7 @@
         ],
         "created": "2026-03-11",
         "description": "NVIDIA Nemotron 3 Super is a 120B-parameter open hybrid MoE model, activating just 12B parameters for maximum compute efficiency and accuracy in complex multi-agent applications. Built on a hybrid Mamba-Transformer...",
+        "cache_read_per_1m": 0.15,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -37425,6 +37486,62 @@
     },
     {
       "provider": "openrouter",
+      "model_id": "nvidia/nemotron-3.5-transcribe",
+      "display_name": "NVIDIA: Nemotron 3.5 Transcribe",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "audio"
+      ],
+      "output_modalities": [
+        "transcription"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "nemotron-3.5-transcribe",
+        "openrouter/nvidia/nemotron-3.5-transcribe"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 33.3,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "nvidia",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 0,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "Nemotron 3.5 Transcribe is an open-weight speech recognition model from NVIDIA, a 30B mixture-of-experts with about 4B active parameters. It transcribes recordings of up to one hour in 40 languages, with speaker attribution, speech translation, and prompt-guided vocabulary and style.",
+        "features": [
+          "audio_input"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
       "model_id": "nvidia/parakeet-tdt-0.6b-v3",
       "display_name": "NVIDIA: Parakeet TDT 0.6B v3",
       "context_window": 0,
@@ -37780,12 +37897,10 @@
           "logit_bias",
           "logprobs",
           "max_completion_tokens",
-          "max_tokens",
           "presence_penalty",
           "response_format",
           "seed",
           "stop",
-          "structured_outputs",
           "temperature",
           "tool_choice",
           "tools",
@@ -37810,7 +37925,7 @@
     {
       "provider": "openrouter",
       "model_id": "openai/gpt-4-turbo",
-      "display_name": "OpenAI: GPT-4 Turbo",
+      "display_name": "OpenAI: GPT-4 Turbo (batch)",
       "context_window": 128000,
       "max_output_tokens": 4096,
       "input_modalities": [
@@ -37833,7 +37948,7 @@
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
-      "tokenizer_name": "GPT",
+      "tokenizer_name": "",
       "knowledge_cutoff": "2023-12",
       "deprecated": false,
       "aliases": [
@@ -37843,49 +37958,40 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 10.0,
-        "output_per_1m": 30.0,
+        "input_per_1m": 5.0,
+        "output_per_1m": 15.0,
         "currency": "USD"
       },
       "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
         "base_url": "https://openrouter.ai/api/v1",
         "native_provider": "openai",
-        "canonical_slug": "openai/gpt-4-turbo",
-        "modality": "text+image->text",
-        "tokenizer": "GPT",
+        "tokenizer": "",
         "top_provider": {
           "context_length": 128000,
           "max_completion_tokens": 4096,
-          "is_moderated": true
+          "is_moderated": null
         },
         "supported_parameters": [
+          "seed",
+          "max_tokens",
+          "response_format",
+          "structured_outputs",
+          "tools",
+          "tool_choice",
           "frequency_penalty",
           "logit_bias",
           "logprobs",
-          "max_tokens",
           "presence_penalty",
-          "response_format",
-          "seed",
           "stop",
-          "structured_outputs",
           "temperature",
-          "tool_choice",
-          "tools",
           "top_logprobs",
           "top_p"
         ],
-        "created": "2024-04-09",
         "description": "The latest GPT-4 Turbo model with vision capabilities. Vision requests can now use JSON mode and function calling.\n\nTraining data: up to December 2023.",
-        "links": {
-          "details": "/api/v1/models/openai/gpt-4-turbo/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
+        "web_search_per_request_usd": 0.01,
         "features": [
           "tools",
           "structured_outputs",
@@ -38073,8 +38179,7 @@
           "details": "/api/v1/models/openai/gpt-4.1-2025-04-14/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 6,
-          "artificial_analysis": 1
+          "design_arena": 6
         },
         "features": [
           "tools",
@@ -38364,7 +38469,6 @@
         },
         "supported_parameters": [
           "max_completion_tokens",
-          "max_tokens",
           "response_format",
           "seed",
           "structured_outputs",
@@ -38585,8 +38689,7 @@
           "details": "/api/v1/models/openai/gpt-4.1-2025-04-14/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 6,
-          "artificial_analysis": 1
+          "design_arena": 6
         },
         "features": [
           "tools",
@@ -38782,8 +38885,6 @@
           "logit_bias",
           "logprobs",
           "max_completion_tokens",
-          "max_tokens",
-          "prediction",
           "presence_penalty",
           "response_format",
           "seed",
@@ -38911,10 +39012,6 @@
         "links": {
           "details": "/api/v1/models/openai/gpt-4o-2024-08-06/endpoints"
         },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
         "features": [
           "tools",
           "structured_outputs",
@@ -39019,10 +39116,6 @@
         "cache_read_per_1m": 1.25,
         "links": {
           "details": "/api/v1/models/openai/gpt-4o-2024-11-20/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
         },
         "features": [
           "tools",
@@ -40329,8 +40422,7 @@
           "details": "/api/v1/models/openai/gpt-5-nano-2025-08-07/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 6,
-          "artificial_analysis": 1
+          "design_arena": 6
         },
         "features": [
           "tools",
@@ -40453,8 +40545,7 @@
           "details": "/api/v1/models/openai/gpt-5-nano-2025-08-07/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 6,
-          "artificial_analysis": 1
+          "design_arena": 6
         },
         "features": [
           "tools",
@@ -40916,8 +41007,7 @@
           "details": "/api/v1/models/openai/gpt-5.1-codex-20251113/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 8,
-          "artificial_analysis": 1
+          "design_arena": 8
         },
         "features": [
           "tools",
@@ -41121,8 +41211,7 @@
           "details": "/api/v1/models/openai/gpt-5.1-codex-mini-20251113/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 8,
-          "artificial_analysis": 1
+          "design_arena": 8
         },
         "features": [
           "tools",
@@ -41371,8 +41460,7 @@
           "details": "/api/v1/models/openai/gpt-5.2-20251211/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 13,
-          "artificial_analysis": 1
+          "design_arena": 13
         },
         "features": [
           "tools",
@@ -41574,8 +41662,7 @@
           "details": "/api/v1/models/openai/gpt-5.2-codex-20260114/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 5,
-          "artificial_analysis": 1
+          "design_arena": 5
         },
         "features": [
           "tools",
@@ -41934,8 +42021,7 @@
           "details": "/api/v1/models/openai/gpt-5.2-20251211/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 13,
-          "artificial_analysis": 1
+          "design_arena": 13
         },
         "features": [
           "tools",
@@ -42060,8 +42146,7 @@
           "details": "/api/v1/models/openai/gpt-5.3-codex-20260224/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 13,
-          "artificial_analysis": 1
+          "design_arena": 13
         },
         "features": [
           "tools",
@@ -45047,7 +45132,7 @@
         "top_provider": {
           "context_length": 1050000,
           "max_completion_tokens": 128000,
-          "is_moderated": false
+          "is_moderated": true
         },
         "supported_parameters": [
           "include_reasoning",
@@ -45708,7 +45793,7 @@
         "top_provider": {
           "context_length": 1050000,
           "max_completion_tokens": 128000,
-          "is_moderated": false
+          "is_moderated": true
         },
         "supported_parameters": [
           "include_reasoning",
@@ -46269,7 +46354,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/openai/gpt-6-luna-decisions",
-        "checked_at": "2026-10-28",
+        "checked_at": "2026-10-30",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -46801,10 +46886,6 @@
         "links": {
           "details": "/api/v1/models/openai/gpt-6-sol-20260922/endpoints"
         },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
         "features": [
           "tools",
           "structured_outputs",
@@ -47204,10 +47285,6 @@
         },
         "links": {
           "details": "/api/v1/models/openai/gpt-6-sol-20260922/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
         },
         "features": [
           "tools",
@@ -49474,213 +49551,6 @@
     },
     {
       "provider": "openrouter",
-      "model_id": "openai/o1",
-      "display_name": "OpenAI: o1",
-      "context_window": 200000,
-      "max_output_tokens": 100000,
-      "input_modalities": [
-        "text",
-        "image",
-        "file"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_json_schema": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "GPT",
-      "knowledge_cutoff": "2023-10",
-      "deprecated": false,
-      "aliases": [
-        "o1",
-        "openrouter/openai/o1",
-        "openai/o1-2024-12-17",
-        "openai/o1"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 15.0,
-        "output_per_1m": 60.0,
-        "currency": "USD"
-      },
-      "document": {
-        "accepts_file": true,
-        "input_formats": [
-          "file"
-        ],
-        "input_mime_types": [
-          "application/pdf",
-          "text/plain",
-          "text/markdown",
-          "text/csv",
-          "application/json",
-          "application/xml",
-          "text/html"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-10"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "openai",
-        "canonical_slug": "openai/o1-2024-12-17",
-        "modality": "text+image+file->text",
-        "tokenizer": "GPT",
-        "top_provider": {
-          "context_length": 200000,
-          "max_completion_tokens": 100000,
-          "is_moderated": true
-        },
-        "supported_parameters": [
-          "include_reasoning",
-          "max_tokens",
-          "reasoning",
-          "response_format",
-          "seed",
-          "structured_outputs",
-          "tool_choice",
-          "tools"
-        ],
-        "created": "2024-12-17",
-        "description": "The latest and strongest model family from OpenAI, o1 is designed to spend more time thinking before responding. The o1 model series is trained with large-scale reinforcement learning to reason...",
-        "cache_read_per_1m": 7.5,
-        "web_search_per_request_usd": 0.01,
-        "reasoning_meta": {
-          "mandatory": true
-        },
-        "links": {
-          "details": "/api/v1/models/openai/o1-2024-12-17/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
-        "features": [
-          "tools",
-          "structured_outputs",
-          "reasoning",
-          "vision",
-          "file_input"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "openai/o1-pro",
-      "display_name": "OpenAI: o1-pro",
-      "context_window": 200000,
-      "max_output_tokens": 100000,
-      "input_modalities": [
-        "text",
-        "image",
-        "file"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": true,
-      "supports_json_schema": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "GPT",
-      "knowledge_cutoff": "2023-10",
-      "deprecated": false,
-      "aliases": [
-        "o1-pro",
-        "openrouter/openai/o1-pro",
-        "openai/o1-pro"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 150.0,
-        "output_per_1m": 600.0,
-        "currency": "USD"
-      },
-      "document": {
-        "accepts_file": true,
-        "input_formats": [
-          "file"
-        ],
-        "input_mime_types": [
-          "application/pdf",
-          "text/plain",
-          "text/markdown",
-          "text/csv",
-          "application/json",
-          "application/xml",
-          "text/html"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-10"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "openai",
-        "canonical_slug": "openai/o1-pro",
-        "modality": "text+image+file->text",
-        "tokenizer": "GPT",
-        "top_provider": {
-          "context_length": 200000,
-          "max_completion_tokens": 100000,
-          "is_moderated": true
-        },
-        "supported_parameters": [
-          "include_reasoning",
-          "max_tokens",
-          "reasoning",
-          "response_format",
-          "seed",
-          "structured_outputs"
-        ],
-        "created": "2025-03-19",
-        "description": "The o1 series of models are trained with reinforcement learning to think before they answer and perform complex reasoning. The o1-pro model uses more compute to think harder and provide...",
-        "web_search_per_request_usd": 0.01,
-        "reasoning_meta": {
-          "mandatory": true
-        },
-        "links": {
-          "details": "/api/v1/models/openai/o1-pro/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
-        "features": [
-          "structured_outputs",
-          "reasoning",
-          "vision",
-          "file_input"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
       "model_id": "openai/o3",
       "display_name": "OpenAI: o3",
       "context_window": 200000,
@@ -49773,8 +49643,7 @@
           "details": "/api/v1/models/openai/o3-2025-04-16/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 5,
-          "artificial_analysis": 1
+          "design_arena": 5
         },
         "features": [
           "tools",
@@ -49788,7 +49657,7 @@
     {
       "provider": "openrouter",
       "model_id": "openai/o3-mini",
-      "display_name": "OpenAI: o3 Mini",
+      "display_name": "OpenAI: o3 Mini (batch)",
       "context_window": 200000,
       "max_output_tokens": 100000,
       "input_modalities": [
@@ -49811,7 +49680,7 @@
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
-      "tokenizer_name": "GPT",
+      "tokenizer_name": "",
       "knowledge_cutoff": "2023-10",
       "deprecated": false,
       "aliases": [
@@ -49822,8 +49691,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 1.1,
-        "output_per_1m": 4.4,
+        "input_per_1m": 0.55,
+        "output_per_1m": 2.2,
         "currency": "USD"
       },
       "document": {
@@ -49844,43 +49713,30 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
         "base_url": "https://openrouter.ai/api/v1",
         "native_provider": "openai",
-        "canonical_slug": "openai/o3-mini-2025-01-31",
-        "modality": "text+file->text",
-        "tokenizer": "GPT",
+        "tokenizer": "",
         "top_provider": {
           "context_length": 200000,
           "max_completion_tokens": 100000,
-          "is_moderated": true
+          "is_moderated": null
         },
         "supported_parameters": [
-          "include_reasoning",
-          "max_tokens",
           "reasoning",
-          "response_format",
+          "include_reasoning",
           "seed",
+          "max_tokens",
+          "response_format",
           "structured_outputs",
-          "tool_choice",
-          "tools"
+          "tools",
+          "tool_choice"
         ],
-        "created": "2025-01-31",
-        "description": "OpenAI o3-mini is a cost-efficient language model optimized for STEM reasoning tasks, particularly excelling in science, mathematics, and coding. This model supports the `reasoning_effort` parameter, which can be set to...",
-        "cache_read_per_1m": 0.55,
+        "description": "OpenAI o3-mini is a cost-efficient language model optimized for STEM reasoning tasks, particularly excelling in science, mathematics, and coding.\n\nThis model supports the `reasoning_effort` parameter, which can be set to \"high\", \"medium\", or \"low\" to control the thinking time of the model. The default is \"medium\". OpenRouter also offers the model slug `openai/o3-mini-high` to default the parameter",
+        "cache_read_per_1m": 0.275,
         "web_search_per_request_usd": 0.01,
-        "reasoning_meta": {
-          "mandatory": true
-        },
-        "links": {
-          "details": "/api/v1/models/openai/o3-mini-2025-01-31/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
         "features": [
           "tools",
           "structured_outputs",
@@ -49888,124 +49744,6 @@
           "file_input"
         ]
       }
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "openai/o3-mini-high",
-      "display_name": "OpenAI: o3 Mini High",
-      "context_window": 200000,
-      "max_output_tokens": 100000,
-      "input_modalities": [
-        "text",
-        "file"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_json_schema": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "GPT",
-      "knowledge_cutoff": "2023-10",
-      "deprecated": false,
-      "aliases": [
-        "o3-mini-high",
-        "openrouter/openai/o3-mini-high",
-        "openai/o3-mini-high-2025-01-31",
-        "openai/o3-mini-high"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 1.1,
-        "output_per_1m": 4.4,
-        "currency": "USD"
-      },
-      "document": {
-        "accepts_file": true,
-        "input_formats": [
-          "file"
-        ],
-        "input_mime_types": [
-          "application/pdf",
-          "text/plain",
-          "text/markdown",
-          "text/csv",
-          "application/json",
-          "application/xml",
-          "text/html"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-10"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "openai",
-        "canonical_slug": "openai/o3-mini-high-2025-01-31",
-        "modality": "text+file->text",
-        "tokenizer": "GPT",
-        "top_provider": {
-          "context_length": 200000,
-          "max_completion_tokens": 100000,
-          "is_moderated": true
-        },
-        "supported_parameters": [
-          "include_reasoning",
-          "max_tokens",
-          "reasoning",
-          "reasoning_effort",
-          "response_format",
-          "seed",
-          "structured_outputs",
-          "tool_choice",
-          "tools"
-        ],
-        "created": "2025-02-12",
-        "description": "OpenAI o3-mini-high is the same model as [o3-mini](/openai/o3-mini) with reasoning_effort set to high. o3-mini is a cost-efficient language model optimized for STEM reasoning tasks, particularly excelling in science, mathematics, and...",
-        "cache_read_per_1m": 0.55,
-        "web_search_per_request_usd": 0.01,
-        "reasoning_meta": {
-          "mandatory": true,
-          "supported_efforts": [
-            "high"
-          ],
-          "default_effort": "high"
-        },
-        "links": {
-          "details": "/api/v1/models/openai/o3-mini-high-2025-01-31/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
-        "features": [
-          "tools",
-          "structured_outputs",
-          "reasoning",
-          "reasoning_effort",
-          "file_input"
-        ]
-      },
-      "reasoning_effort_values": [
-        "none",
-        "minimal",
-        "low",
-        "medium",
-        "high",
-        "xhigh"
-      ]
     },
     {
       "provider": "openrouter",
@@ -50098,10 +49836,6 @@
         },
         "links": {
           "details": "/api/v1/models/openai/o3-mini-2025-01-31/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
         },
         "features": [
           "tools",
@@ -50202,10 +49936,6 @@
         },
         "links": {
           "details": "/api/v1/models/openai/o3-pro-2025-06-10/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
         },
         "features": [
           "tools",
@@ -50310,8 +50040,7 @@
           "details": "/api/v1/models/openai/o3-2025-04-16/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 5,
-          "artificial_analysis": 1
+          "design_arena": 5
         },
         "features": [
           "tools",
@@ -50325,7 +50054,7 @@
     {
       "provider": "openrouter",
       "model_id": "openai/o4-mini",
-      "display_name": "OpenAI: o4 Mini",
+      "display_name": "OpenAI: o4 Mini (batch)",
       "context_window": 200000,
       "max_output_tokens": 100000,
       "input_modalities": [
@@ -50349,7 +50078,7 @@
       "supports_anthropic_api": false,
       "supports_google_api": false,
       "supports_fim": false,
-      "tokenizer_name": "GPT",
+      "tokenizer_name": "",
       "knowledge_cutoff": "2024-06",
       "deprecated": false,
       "aliases": [
@@ -50360,8 +50089,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 1.1,
-        "output_per_1m": 4.4,
+        "input_per_1m": 0.55,
+        "output_per_1m": 2.2,
         "currency": "USD"
       },
       "document": {
@@ -50382,43 +50111,30 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
         "base_url": "https://openrouter.ai/api/v1",
         "native_provider": "openai",
-        "canonical_slug": "openai/o4-mini-2025-04-16",
-        "modality": "text+image+file->text",
-        "tokenizer": "GPT",
+        "tokenizer": "",
         "top_provider": {
           "context_length": 200000,
           "max_completion_tokens": 100000,
-          "is_moderated": true
+          "is_moderated": null
         },
         "supported_parameters": [
-          "include_reasoning",
-          "max_tokens",
           "reasoning",
+          "include_reasoning",
+          "structured_outputs",
           "response_format",
           "seed",
-          "structured_outputs",
-          "tool_choice",
-          "tools"
+          "max_tokens",
+          "tools",
+          "tool_choice"
         ],
-        "created": "2025-04-16",
-        "description": "OpenAI o4-mini is a compact reasoning model in the o-series, optimized for fast, cost-efficient performance while retaining strong multimodal and agentic capabilities. It supports tool use and demonstrates competitive reasoning...",
-        "cache_read_per_1m": 0.275,
+        "description": "OpenAI o4-mini is a compact reasoning model in the o-series, optimized for fast, cost-efficient performance while retaining strong multimodal and agentic capabilities. It supports tool use and demonstrates competitive reasoning and coding performance across benchmarks like AIME (99.5% with Python) and SWE-bench, outperforming its predecessor o3-mini and even approaching o3 in some domains.\n\nDespit",
+        "cache_read_per_1m": 0.1375,
         "web_search_per_request_usd": 0.01,
-        "reasoning_meta": {
-          "mandatory": true
-        },
-        "links": {
-          "details": "/api/v1/models/openai/o4-mini-2025-04-16/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 6,
-          "artificial_analysis": 1
-        },
         "features": [
           "tools",
           "structured_outputs",
@@ -50427,122 +50143,6 @@
           "file_input"
         ]
       }
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "openai/o4-mini-high",
-      "display_name": "OpenAI: o4 Mini High",
-      "context_window": 200000,
-      "max_output_tokens": 100000,
-      "input_modalities": [
-        "image",
-        "text",
-        "file"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_json_schema": true,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "GPT",
-      "knowledge_cutoff": "2024-06",
-      "deprecated": false,
-      "aliases": [
-        "o4-mini-high",
-        "openrouter/openai/o4-mini-high",
-        "openai/o4-mini-high-2025-04-16",
-        "openai/o4-mini-high"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 1.1,
-        "output_per_1m": 4.4,
-        "currency": "USD"
-      },
-      "document": {
-        "accepts_file": true,
-        "input_formats": [
-          "file"
-        ],
-        "input_mime_types": [
-          "application/pdf",
-          "text/plain",
-          "text/markdown",
-          "text/csv",
-          "application/json",
-          "application/xml",
-          "text/html"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-10"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "openai",
-        "canonical_slug": "openai/o4-mini-high-2025-04-16",
-        "modality": "text+image+file->text",
-        "tokenizer": "GPT",
-        "top_provider": {
-          "context_length": 200000,
-          "max_completion_tokens": 100000,
-          "is_moderated": true
-        },
-        "supported_parameters": [
-          "include_reasoning",
-          "max_tokens",
-          "reasoning",
-          "reasoning_effort",
-          "response_format",
-          "seed",
-          "structured_outputs",
-          "tool_choice",
-          "tools"
-        ],
-        "created": "2025-04-16",
-        "description": "OpenAI o4-mini-high is the same model as [o4-mini](/openai/o4-mini) with reasoning_effort set to high. OpenAI o4-mini is a compact reasoning model in the o-series, optimized for fast, cost-efficient performance while retaining...",
-        "cache_read_per_1m": 0.275,
-        "web_search_per_request_usd": 0.01,
-        "reasoning_meta": {
-          "mandatory": true,
-          "supported_efforts": [
-            "high"
-          ],
-          "default_effort": "high"
-        },
-        "links": {
-          "details": "/api/v1/models/openai/o4-mini-high-2025-04-16/endpoints"
-        },
-        "features": [
-          "tools",
-          "structured_outputs",
-          "reasoning",
-          "reasoning_effort",
-          "vision",
-          "file_input"
-        ]
-      },
-      "reasoning_effort_values": [
-        "none",
-        "minimal",
-        "low",
-        "medium",
-        "high",
-        "xhigh"
-      ]
     },
     {
       "provider": "openrouter",
@@ -50638,8 +50238,7 @@
           "details": "/api/v1/models/openai/o4-mini-2025-04-16/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 6,
-          "artificial_analysis": 1
+          "design_arena": 6
         },
         "features": [
           "tools",
@@ -51072,6 +50671,117 @@
     },
     {
       "provider": "openrouter",
+      "model_id": "particle-ai/particle-1",
+      "display_name": "Particle AI: Particle-1",
+      "context_window": 1048576,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "particle-1",
+        "openrouter/particle-ai/particle-1",
+        "particle-ai/particle-1-20261027"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.25,
+        "output_per_1m": 1.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "particle-ai",
+        "canonical_slug": "particle-ai/particle-1-20261027",
+        "modality": "text+image->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 1048576,
+          "max_completion_tokens": 131072,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "logprobs",
+          "max_tokens",
+          "min_p",
+          "presence_penalty",
+          "reasoning",
+          "reasoning_effort",
+          "repetition_penalty",
+          "response_format",
+          "seed",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_k",
+          "top_logprobs",
+          "top_p"
+        ],
+        "created": "2026-10-28",
+        "description": "Particle-1 is a token-efficient agentic coding model from Particle AI, post-trained on DeepSeek V4.1 Flash. It is suited for software engineering work such as terminal workflows, codebase changes, and data...",
+        "cache_read_per_1m": 0.03,
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low",
+            "minimal",
+            "none"
+          ],
+          "default_effort": "high"
+        },
+        "links": {
+          "details": "/api/v1/models/particle-ai/particle-1-20261027/endpoints"
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "reasoning_effort",
+          "vision"
+        ]
+      },
+      "reasoning_effort_values": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ]
+    },
+    {
+      "provider": "openrouter",
       "model_id": "perceptron/perceptron-mk1",
       "display_name": "Perceptron: Perceptron Mk1",
       "context_window": 32768,
@@ -51430,7 +51140,7 @@
       },
       "extra": {
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-10-28",
+        "provider_refresh_checked_at": "2026-10-30",
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -51754,10 +51464,6 @@
         "links": {
           "details": "/api/v1/models/perplexity/sonar/endpoints"
         },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
         "features": [
           "vision",
           "web_search"
@@ -51913,10 +51619,6 @@
         "web_search_per_request_usd": 0.005,
         "links": {
           "details": "/api/v1/models/perplexity/sonar-pro/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
         },
         "features": [
           "vision",
@@ -52081,10 +51783,6 @@
         },
         "links": {
           "details": "/api/v1/models/perplexity/sonar-reasoning-pro/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
         },
         "features": [
           "reasoning",
@@ -52700,10 +52398,6 @@
         "links": {
           "details": "/api/v1/models/qwen/qwen-2.5-72b-instruct/endpoints"
         },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
         "features": [
           "tools",
           "structured_outputs"
@@ -52865,10 +52559,6 @@
         "description": "Qwen2.5-Coder is the latest series of Code-Specific Qwen large language models (formerly known as CodeQwen). Qwen2.5-Coder brings the following improvements upon CodeQwen1.5: - Significantly improvements in **code generation**, **code reasoning**...",
         "links": {
           "details": "/api/v1/models/qwen/qwen-2.5-coder-32b-instruct/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
         },
         "features": [
           "structured_outputs"
@@ -53676,8 +53366,7 @@
           "details": "/api/v1/models/qwen/qwen3-235b-a22b-07-25/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 6,
-          "artificial_analysis": 1
+          "design_arena": 6
         },
         "features": [
           "tools",
@@ -53856,8 +53545,7 @@
           "details": "/api/v1/models/qwen/qwen3-30b-a3b-04-28/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 5,
-          "artificial_analysis": 1
+          "design_arena": 5
         },
         "features": [
           "tools",
@@ -53943,10 +53631,6 @@
         "cache_read_per_1m": 0.1,
         "links": {
           "details": "/api/v1/models/qwen/qwen3-30b-a3b-instruct-2507/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
         },
         "features": [
           "tools",
@@ -54257,7 +53941,6 @@
         "supported_parameters": [
           "frequency_penalty",
           "logit_bias",
-          "logprobs",
           "max_tokens",
           "min_p",
           "presence_penalty",
@@ -54270,7 +53953,6 @@
           "tool_choice",
           "tools",
           "top_k",
-          "top_logprobs",
           "top_p"
         ],
         "created": "2025-07-23",
@@ -54280,8 +53962,7 @@
           "details": "/api/v1/models/qwen/qwen3-coder-480b-a35b-07-25/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 5,
-          "artificial_analysis": 1
+          "design_arena": 5
         },
         "features": [
           "tools",
@@ -54361,8 +54042,7 @@
           "details": "/api/v1/models/qwen/qwen3-coder-30b-a3b-instruct/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 3,
-          "artificial_analysis": 1
+          "design_arena": 3
         },
         "features": [
           "tools",
@@ -54771,106 +54451,9 @@
         "links": {
           "details": "/api/v1/models/qwen/qwen3-next-80b-a3b-instruct-2509/endpoints"
         },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
         "features": [
           "tools",
           "structured_outputs"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "qwen/qwen3-next-80b-a3b-thinking",
-      "display_name": "Qwen: Qwen3 Next 80B A3B Thinking",
-      "context_window": 262144,
-      "max_output_tokens": 235929,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_json_schema": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Qwen3",
-      "knowledge_cutoff": "2025-09",
-      "deprecated": false,
-      "aliases": [
-        "qwen3-next-80b-a3b-thinking",
-        "openrouter/qwen/qwen3-next-80b-a3b-thinking",
-        "qwen/qwen3-next-80b-a3b-thinking-2509",
-        "qwen/qwen3-next-80b-a3b-thinking"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.15,
-        "output_per_1m": 1.2,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "qwen",
-        "canonical_slug": "qwen/qwen3-next-80b-a3b-thinking-2509",
-        "hugging_face_id": "Qwen/Qwen3-Next-80B-A3B-Thinking",
-        "modality": "text->text",
-        "tokenizer": "Qwen3",
-        "top_provider": {
-          "context_length": 262144,
-          "max_completion_tokens": 235929,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "frequency_penalty",
-          "include_reasoning",
-          "logprobs",
-          "max_tokens",
-          "presence_penalty",
-          "reasoning",
-          "repetition_penalty",
-          "response_format",
-          "seed",
-          "stop",
-          "structured_outputs",
-          "temperature",
-          "tool_choice",
-          "tools",
-          "top_k",
-          "top_logprobs",
-          "top_p"
-        ],
-        "created": "2025-09-11",
-        "description": "Qwen3-Next-80B-A3B-Thinking is a reasoning-first chat model in the Qwen3-Next line that outputs structured “thinking” traces by default. It’s designed for hard multi-step problems; math proofs, code synthesis/debugging, logic, and agentic...",
-        "reasoning_meta": {
-          "mandatory": true
-        },
-        "links": {
-          "details": "/api/v1/models/qwen/qwen3-next-80b-a3b-thinking-2509/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
-        "features": [
-          "tools",
-          "structured_outputs",
-          "reasoning"
         ]
       }
     },
@@ -55020,10 +54603,6 @@
         "links": {
           "details": "/api/v1/models/qwen/qwen3-vl-235b-a22b-instruct/endpoints"
         },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
         "features": [
           "tools",
           "structured_outputs",
@@ -55116,10 +54695,6 @@
         "links": {
           "details": "/api/v1/models/qwen/qwen3-vl-30b-a3b-instruct/endpoints"
         },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
         "features": [
           "tools",
           "structured_outputs",
@@ -55208,10 +54783,6 @@
         },
         "links": {
           "details": "/api/v1/models/qwen/qwen3-vl-30b-a3b-thinking/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
         },
         "features": [
           "tools",
@@ -55303,10 +54874,6 @@
         },
         "links": {
           "details": "/api/v1/models/qwen/qwen3-vl-8b-instruct/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
         },
         "features": [
           "tools",
@@ -55570,10 +55137,6 @@
         },
         "links": {
           "details": "/api/v1/models/qwen/qwen3.5-27b-20260224/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
         },
         "features": [
           "tools",
@@ -56367,7 +55930,7 @@
       "model_id": "qwen/qwen3.6-27b",
       "display_name": "Qwen: Qwen3.6 27B",
       "context_window": 262144,
-      "max_output_tokens": 65536,
+      "max_output_tokens": 81920,
       "input_modalities": [
         "text",
         "image",
@@ -56400,8 +55963,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.45,
-        "output_per_1m": 2.7,
+        "input_per_1m": 0.32,
+        "output_per_1m": 3.2,
         "currency": "USD"
       },
       "video": {
@@ -56447,7 +56010,7 @@
         "tokenizer": "Qwen3",
         "top_provider": {
           "context_length": 262144,
-          "max_completion_tokens": 65536,
+          "max_completion_tokens": 81920,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -57324,7 +56887,7 @@
       "model_id": "qwen/qwen3.8-2.4t-a95b",
       "display_name": "Qwen: Qwen3.8 2.4T A95B",
       "context_window": 1048576,
-      "max_output_tokens": 909000,
+      "max_output_tokens": 131072,
       "input_modalities": [
         "text"
       ],
@@ -57370,8 +56933,8 @@
         "modality": "text->text",
         "tokenizer": "Qwen",
         "top_provider": {
-          "context_length": 1010000,
-          "max_completion_tokens": 909000,
+          "context_length": 1000000,
+          "max_completion_tokens": 131072,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -59560,10 +59123,6 @@
         "links": {
           "details": "/api/v1/models/rekaai/reka-flash-3/endpoints"
         },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
         "features": [
           "structured_outputs",
           "reasoning"
@@ -59790,7 +59349,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/respan/span-01",
-        "checked_at": "2026-10-28",
+        "checked_at": "2026-10-30",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -59882,7 +59441,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/respan/span-01-lite",
-        "checked_at": "2026-10-28",
+        "checked_at": "2026-10-30",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -61588,6 +61147,70 @@
     },
     {
       "provider": "openrouter",
+      "model_id": "sourceful/riverflow-v2.6-pro",
+      "display_name": "Sourceful: Riverflow V2.6 Pro",
+      "context_window": 32768,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "image"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "riverflow-v2.6-pro",
+        "openrouter/sourceful/riverflow-v2.6-pro"
+      ],
+      "license_type": "free",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "sourceful",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 32768,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [
+          "reasoning",
+          "include_reasoning"
+        ],
+        "description": "Riverflow 2.6 Pro is the flagship model of Sourceful's Riverflow 2.6 lineup, a unified text-to-image and image-to-image family that treats generation as a production workflow: an integrated reasoning model plans multi-step edits and judges candidates before accepting a result, combining that reasoning with a mix of closed and open image diffusion models for accuracy and steerability. Reasoning eff",
+        "free_tier": true,
+        "image_output_per_1m": 31.137725,
+        "features": [
+          "reasoning",
+          "vision",
+          "image_output"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
       "model_id": "stepfun/step-3.5-flash",
       "display_name": "StepFun: Step 3.5 Flash",
       "context_window": 262144,
@@ -61658,10 +61281,6 @@
         },
         "links": {
           "details": "/api/v1/models/stepfun/step-3.5-flash/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
         },
         "features": [
           "tools",
@@ -61871,7 +61490,6 @@
         "supported_parameters": [
           "frequency_penalty",
           "include_reasoning",
-          "logit_bias",
           "logprobs",
           "max_tokens",
           "min_p",
@@ -61955,6 +61573,67 @@
         ],
         "checked_at": "2026-10-28",
         "status": "inferred"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "tbc/mischief-1",
+      "display_name": "TBC: Mischief 1",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "video"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mischief-1",
+        "openrouter/tbc/mischief-1"
+      ],
+      "license_type": "free",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "tbc",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 0,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [
+          "temperature",
+          "max_tokens"
+        ],
+        "description": "TBC Mischief 1 is the world's first neuron-derived video model from The Biological Computing Co. It supports image to video and is a fast and affordable way to bring ideas to life. Ideal for ideation, previsualization, moodboarding and variant testing.",
+        "free_tier": true,
+        "features": [
+          "vision"
+        ]
       }
     },
     {
@@ -63635,7 +63314,7 @@
           "https://openrouter.ai/api/v1/chat/completions"
         ],
         "source_url": "https://openrouter.ai/togethercomputer/tev1-4b-experimental",
-        "checked_at": "2026-10-28",
+        "checked_at": "2026-10-30",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openai-compatible-chat-completions",
@@ -64287,7 +63966,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/upstage/solar-decide",
-        "checked_at": "2026-10-28",
+        "checked_at": "2026-10-30",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -64387,7 +64066,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/upstage/solar-decide-flash",
-        "checked_at": "2026-10-28",
+        "checked_at": "2026-10-30",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -64489,115 +64168,7 @@
           "details": "/api/v1/models/upstage/solar-mini4-20260922/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 5,
-          "artificial_analysis": 1
-        },
-        "features": [
-          "tools",
-          "structured_outputs",
-          "reasoning",
-          "reasoning_effort"
-        ]
-      },
-      "reasoning_effort_values": [
-        "none",
-        "minimal",
-        "low",
-        "medium",
-        "high",
-        "xhigh"
-      ]
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "upstage/solar-pro-3",
-      "display_name": "Upstage: Solar Pro 3",
-      "context_window": 131072,
-      "max_output_tokens": 117964,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_json_schema": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "solar-pro-3",
-        "openrouter/upstage/solar-pro-3",
-        "upstage/solar-pro-3"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.15,
-        "output_per_1m": 0.6,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "upstage",
-        "canonical_slug": "upstage/solar-pro-3",
-        "modality": "text->text",
-        "tokenizer": "Other",
-        "top_provider": {
-          "context_length": 131072,
-          "max_completion_tokens": 117964,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "frequency_penalty",
-          "include_reasoning",
-          "max_tokens",
-          "parallel_tool_calls",
-          "presence_penalty",
-          "reasoning",
-          "reasoning_effort",
-          "response_format",
-          "structured_outputs",
-          "temperature",
-          "tool_choice",
-          "tools",
-          "top_p"
-        ],
-        "created": "2026-01-27",
-        "description": "Solar Pro 3 is Upstage's powerful Mixture-of-Experts (MoE) language model. With 102B total parameters and 12B active parameters per forward pass, it delivers exceptional performance while maintaining computational efficiency. Optimized...",
-        "expiration_date": "2026-10-30",
-        "cache_read_per_1m": 0.015,
-        "reasoning_meta": {
-          "mandatory": false,
-          "default_enabled": false,
-          "supported_efforts": [
-            "high",
-            "medium",
-            "low",
-            "minimal",
-            "none"
-          ],
-          "default_effort": "medium"
-        },
-        "links": {
-          "details": "/api/v1/models/upstage/solar-pro-3/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
+          "design_arena": 5
         },
         "features": [
           "tools",
@@ -65461,8 +65032,7 @@
           "details": "/api/v1/models/x-ai/grok-4.20-20260309/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 14,
-          "artificial_analysis": 1
+          "design_arena": 14
         },
         "features": [
           "tools",
@@ -65717,7 +65287,7 @@
           "details": "/api/v1/models/x-ai/grok-4.3-20260430/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 23,
+          "design_arena": 24,
           "artificial_analysis": 1
         },
         "features": [
@@ -65853,7 +65423,7 @@
           "details": "/api/v1/models/x-ai/grok-4.3-20260430/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 23,
+          "design_arena": 24,
           "artificial_analysis": 1
         },
         "features": [
@@ -65988,7 +65558,7 @@
           "details": "/api/v1/models/x-ai/grok-4.5-20260708/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 18,
+          "design_arena": 19,
           "artificial_analysis": 1
         },
         "features": [
@@ -66126,7 +65696,7 @@
           "details": "/api/v1/models/x-ai/grok-4.6-20260810/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 17,
+          "design_arena": 18,
           "artificial_analysis": 1
         },
         "features": [
@@ -67908,8 +67478,7 @@
           "details": "/api/v1/models/z-ai/glm-4.5/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 7,
-          "artificial_analysis": 1
+          "design_arena": 7
         },
         "features": [
           "tools",
@@ -68000,8 +67569,7 @@
           "details": "/api/v1/models/z-ai/glm-4.5-air/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 7,
-          "artificial_analysis": 1
+          "design_arena": 7
         },
         "features": [
           "tools",
@@ -68093,10 +67661,6 @@
         "links": {
           "details": "/api/v1/models/z-ai/glm-4.5v/endpoints"
         },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
         "features": [
           "tools",
           "structured_outputs",
@@ -68140,8 +67704,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.55,
-        "output_per_1m": 2.2,
+        "input_per_1m": 0.5,
+        "output_per_1m": 2.0,
         "currency": "USD"
       },
       "extra": {
@@ -68155,7 +67719,7 @@
         "modality": "text->text",
         "tokenizer": "Other",
         "top_provider": {
-          "context_length": 204800,
+          "context_length": 202752,
           "max_completion_tokens": 131072,
           "is_moderated": false
         },
@@ -68180,7 +67744,7 @@
         ],
         "created": "2025-09-30",
         "description": "Compared with GLM-4.5, this generation brings several key improvements: Longer context window: The context window has been expanded from 128K to 200K tokens, enabling the model to handle more complex...",
-        "cache_read_per_1m": 0.11,
+        "cache_read_per_1m": 0.1,
         "default_parameters": {
           "temperature": 0.6
         },
@@ -68307,7 +67871,7 @@
         ],
         "created": "2025-12-08",
         "description": "GLM-4.6V is a large multimodal model designed for high-fidelity visual understanding and long-context reasoning across images, documents, and mixed media. It supports up to 128K tokens, processes complex page layouts...",
-        "cache_read_per_1m": 0.05,
+        "cache_read_per_1m": 0.055,
         "default_parameters": {
           "temperature": 0.8,
           "top_p": 0.6
@@ -68317,10 +67881,6 @@
         },
         "links": {
           "details": "/api/v1/models/z-ai/glm-4.6-20251208/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
         },
         "features": [
           "tools",
@@ -68520,8 +68080,7 @@
           "details": "/api/v1/models/z-ai/glm-4.7-flash-20260119/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 7,
-          "artificial_analysis": 1
+          "design_arena": 7
         },
         "features": [
           "tools",
@@ -68619,8 +68178,7 @@
           "details": "/api/v1/models/z-ai/glm-5-20260211/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 13,
-          "artificial_analysis": 1
+          "design_arena": 13
         },
         "features": [
           "tools",
@@ -68709,8 +68267,7 @@
           "details": "/api/v1/models/z-ai/glm-5-turbo-20260315/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 8,
-          "artificial_analysis": 1
+          "design_arena": 8
         },
         "features": [
           "tools",
@@ -68856,7 +68413,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.0341,
+        "input_per_1m": 0.006,
         "output_per_1m": 7.0,
         "currency": "USD"
       },
@@ -68900,7 +68457,7 @@
         ],
         "created": "2026-06-16",
         "description": "GLM 5.2 is a large-scale reasoning model from Z.ai. It supports text input and output with a 1M-token context window, and is suited for long-horizon agent workflows, project-level software engineering,...",
-        "cache_read_per_1m": 0.033,
+        "cache_read_per_1m": 0.005,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -68919,7 +68476,7 @@
           "details": "/api/v1/models/z-ai/glm-5.2-20260616/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 16,
+          "design_arena": 17,
           "artificial_analysis": 1
         },
         "features": [
@@ -68974,8 +68531,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.0699,
-        "output_per_1m": 1.4,
+        "input_per_1m": 0.08,
+        "output_per_1m": 3.6,
         "currency": "USD"
       },
       "extra": {
@@ -69018,7 +68575,7 @@
         ],
         "created": "2026-08-18",
         "description": "GLM-5.3 is a large-scale reasoning model from Z.ai, built for complex software engineering and long-horizon agent tasks. It supports text input and output with a 1M-token context window, and improves...",
-        "cache_read_per_1m": 0.0689,
+        "cache_read_per_1m": 0.076,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -69061,7 +68618,7 @@
       "model_id": "z-ai/glm-5.3-flash",
       "display_name": "Z.ai: GLM 5.3 Flash",
       "context_window": 1048576,
-      "max_output_tokens": 943717,
+      "max_output_tokens": 131072,
       "input_modalities": [
         "text",
         "image",
@@ -69094,8 +68651,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.15,
-        "output_per_1m": 0.5,
+        "input_per_1m": 0.0477,
+        "output_per_1m": 0.0701,
         "currency": "USD"
       },
       "video": {
@@ -69140,8 +68697,8 @@
         "modality": "text+image+video->text",
         "tokenizer": "Other",
         "top_provider": {
-          "context_length": 1048575,
-          "max_completion_tokens": 943717,
+          "context_length": 1048576,
+          "max_completion_tokens": 131072,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -69831,8 +69388,7 @@
           "details": "/api/v1/models/z-ai/glm-5v-turbo-20260401/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 21,
-          "artificial_analysis": 1
+          "design_arena": 21
         },
         "features": [
           "tools",
@@ -69841,6 +69397,659 @@
           "vision"
         ]
       }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "openai/o1",
+      "display_name": "OpenAI: o1",
+      "context_window": 200000,
+      "max_output_tokens": 100000,
+      "input_modalities": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "GPT",
+      "knowledge_cutoff": "2023-10",
+      "deprecated": false,
+      "aliases": [
+        "o1",
+        "openrouter/openai/o1",
+        "openai/o1-2024-12-17",
+        "openai/o1"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 15.0,
+        "output_per_1m": 60.0,
+        "currency": "USD"
+      },
+      "document": {
+        "accepts_file": true,
+        "input_formats": [
+          "file"
+        ],
+        "input_mime_types": [
+          "application/pdf",
+          "text/plain",
+          "text/markdown",
+          "text/csv",
+          "application/json",
+          "application/xml",
+          "text/html"
+        ],
+        "status": "inferred",
+        "checked_at": "2026-10-10"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "openai",
+        "canonical_slug": "openai/o1-2024-12-17",
+        "modality": "text+image+file->text",
+        "tokenizer": "GPT",
+        "top_provider": {
+          "context_length": 200000,
+          "max_completion_tokens": 100000,
+          "is_moderated": true
+        },
+        "supported_parameters": [
+          "include_reasoning",
+          "max_tokens",
+          "reasoning",
+          "response_format",
+          "seed",
+          "structured_outputs",
+          "tool_choice",
+          "tools"
+        ],
+        "created": "2024-12-17",
+        "description": "The latest and strongest model family from OpenAI, o1 is designed to spend more time thinking before responding. The o1 model series is trained with large-scale reinforcement learning to reason...",
+        "cache_read_per_1m": 7.5,
+        "web_search_per_request_usd": 0.01,
+        "reasoning_meta": {
+          "mandatory": true
+        },
+        "links": {
+          "details": "/api/v1/models/openai/o1-2024-12-17/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 0,
+          "artificial_analysis": 1
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "vision",
+          "file_input"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-30"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "openai/o1-pro",
+      "display_name": "OpenAI: o1-pro",
+      "context_window": 200000,
+      "max_output_tokens": 100000,
+      "input_modalities": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "GPT",
+      "knowledge_cutoff": "2023-10",
+      "deprecated": false,
+      "aliases": [
+        "o1-pro",
+        "openrouter/openai/o1-pro",
+        "openai/o1-pro"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 150.0,
+        "output_per_1m": 600.0,
+        "currency": "USD"
+      },
+      "document": {
+        "accepts_file": true,
+        "input_formats": [
+          "file"
+        ],
+        "input_mime_types": [
+          "application/pdf",
+          "text/plain",
+          "text/markdown",
+          "text/csv",
+          "application/json",
+          "application/xml",
+          "text/html"
+        ],
+        "status": "inferred",
+        "checked_at": "2026-10-10"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "openai",
+        "canonical_slug": "openai/o1-pro",
+        "modality": "text+image+file->text",
+        "tokenizer": "GPT",
+        "top_provider": {
+          "context_length": 200000,
+          "max_completion_tokens": 100000,
+          "is_moderated": true
+        },
+        "supported_parameters": [
+          "include_reasoning",
+          "max_tokens",
+          "reasoning",
+          "response_format",
+          "seed",
+          "structured_outputs"
+        ],
+        "created": "2025-03-19",
+        "description": "The o1 series of models are trained with reinforcement learning to think before they answer and perform complex reasoning. The o1-pro model uses more compute to think harder and provide...",
+        "web_search_per_request_usd": 0.01,
+        "reasoning_meta": {
+          "mandatory": true
+        },
+        "links": {
+          "details": "/api/v1/models/openai/o1-pro/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 0,
+          "artificial_analysis": 1
+        },
+        "features": [
+          "structured_outputs",
+          "reasoning",
+          "vision",
+          "file_input"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-30"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "openai/o3-mini-high",
+      "display_name": "OpenAI: o3 Mini High",
+      "context_window": 200000,
+      "max_output_tokens": 100000,
+      "input_modalities": [
+        "text",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "GPT",
+      "knowledge_cutoff": "2023-10",
+      "deprecated": false,
+      "aliases": [
+        "o3-mini-high",
+        "openrouter/openai/o3-mini-high",
+        "openai/o3-mini-high-2025-01-31",
+        "openai/o3-mini-high"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 1.1,
+        "output_per_1m": 4.4,
+        "currency": "USD"
+      },
+      "document": {
+        "accepts_file": true,
+        "input_formats": [
+          "file"
+        ],
+        "input_mime_types": [
+          "application/pdf",
+          "text/plain",
+          "text/markdown",
+          "text/csv",
+          "application/json",
+          "application/xml",
+          "text/html"
+        ],
+        "status": "inferred",
+        "checked_at": "2026-10-10"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "openai",
+        "canonical_slug": "openai/o3-mini-high-2025-01-31",
+        "modality": "text+file->text",
+        "tokenizer": "GPT",
+        "top_provider": {
+          "context_length": 200000,
+          "max_completion_tokens": 100000,
+          "is_moderated": true
+        },
+        "supported_parameters": [
+          "include_reasoning",
+          "max_tokens",
+          "reasoning",
+          "reasoning_effort",
+          "response_format",
+          "seed",
+          "structured_outputs",
+          "tool_choice",
+          "tools"
+        ],
+        "created": "2025-02-12",
+        "description": "OpenAI o3-mini-high is the same model as [o3-mini](/openai/o3-mini) with reasoning_effort set to high. o3-mini is a cost-efficient language model optimized for STEM reasoning tasks, particularly excelling in science, mathematics, and...",
+        "cache_read_per_1m": 0.55,
+        "web_search_per_request_usd": 0.01,
+        "reasoning_meta": {
+          "mandatory": true,
+          "supported_efforts": [
+            "high"
+          ],
+          "default_effort": "high"
+        },
+        "links": {
+          "details": "/api/v1/models/openai/o3-mini-high-2025-01-31/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 0,
+          "artificial_analysis": 1
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "reasoning_effort",
+          "file_input"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-30"
+      },
+      "reasoning_effort_values": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "openai/o4-mini-high",
+      "display_name": "OpenAI: o4 Mini High",
+      "context_window": 200000,
+      "max_output_tokens": 100000,
+      "input_modalities": [
+        "image",
+        "text",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "GPT",
+      "knowledge_cutoff": "2024-06",
+      "deprecated": false,
+      "aliases": [
+        "o4-mini-high",
+        "openrouter/openai/o4-mini-high",
+        "openai/o4-mini-high-2025-04-16",
+        "openai/o4-mini-high"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 1.1,
+        "output_per_1m": 4.4,
+        "currency": "USD"
+      },
+      "document": {
+        "accepts_file": true,
+        "input_formats": [
+          "file"
+        ],
+        "input_mime_types": [
+          "application/pdf",
+          "text/plain",
+          "text/markdown",
+          "text/csv",
+          "application/json",
+          "application/xml",
+          "text/html"
+        ],
+        "status": "inferred",
+        "checked_at": "2026-10-10"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "openai",
+        "canonical_slug": "openai/o4-mini-high-2025-04-16",
+        "modality": "text+image+file->text",
+        "tokenizer": "GPT",
+        "top_provider": {
+          "context_length": 200000,
+          "max_completion_tokens": 100000,
+          "is_moderated": true
+        },
+        "supported_parameters": [
+          "include_reasoning",
+          "max_tokens",
+          "reasoning",
+          "reasoning_effort",
+          "response_format",
+          "seed",
+          "structured_outputs",
+          "tool_choice",
+          "tools"
+        ],
+        "created": "2025-04-16",
+        "description": "OpenAI o4-mini-high is the same model as [o4-mini](/openai/o4-mini) with reasoning_effort set to high. OpenAI o4-mini is a compact reasoning model in the o-series, optimized for fast, cost-efficient performance while retaining...",
+        "cache_read_per_1m": 0.275,
+        "web_search_per_request_usd": 0.01,
+        "reasoning_meta": {
+          "mandatory": true,
+          "supported_efforts": [
+            "high"
+          ],
+          "default_effort": "high"
+        },
+        "links": {
+          "details": "/api/v1/models/openai/o4-mini-high-2025-04-16/endpoints"
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "reasoning_effort",
+          "vision",
+          "file_input"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-30"
+      },
+      "reasoning_effort_values": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "qwen/qwen3-next-80b-a3b-thinking",
+      "display_name": "Qwen: Qwen3 Next 80B A3B Thinking",
+      "context_window": 262144,
+      "max_output_tokens": 235929,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Qwen3",
+      "knowledge_cutoff": "2025-09",
+      "deprecated": false,
+      "aliases": [
+        "qwen3-next-80b-a3b-thinking",
+        "openrouter/qwen/qwen3-next-80b-a3b-thinking",
+        "qwen/qwen3-next-80b-a3b-thinking-2509",
+        "qwen/qwen3-next-80b-a3b-thinking"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.15,
+        "output_per_1m": 1.2,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "qwen",
+        "canonical_slug": "qwen/qwen3-next-80b-a3b-thinking-2509",
+        "hugging_face_id": "Qwen/Qwen3-Next-80B-A3B-Thinking",
+        "modality": "text->text",
+        "tokenizer": "Qwen3",
+        "top_provider": {
+          "context_length": 262144,
+          "max_completion_tokens": 235929,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "logprobs",
+          "max_tokens",
+          "presence_penalty",
+          "reasoning",
+          "repetition_penalty",
+          "response_format",
+          "seed",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_k",
+          "top_logprobs",
+          "top_p"
+        ],
+        "created": "2025-09-11",
+        "description": "Qwen3-Next-80B-A3B-Thinking is a reasoning-first chat model in the Qwen3-Next line that outputs structured “thinking” traces by default. It’s designed for hard multi-step problems; math proofs, code synthesis/debugging, logic, and agentic...",
+        "reasoning_meta": {
+          "mandatory": true
+        },
+        "links": {
+          "details": "/api/v1/models/qwen/qwen3-next-80b-a3b-thinking-2509/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 0,
+          "artificial_analysis": 1
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-30"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "upstage/solar-pro-3",
+      "display_name": "Upstage: Solar Pro 3",
+      "context_window": 131072,
+      "max_output_tokens": 117964,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "solar-pro-3",
+        "openrouter/upstage/solar-pro-3",
+        "upstage/solar-pro-3"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.6,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "upstage",
+        "canonical_slug": "upstage/solar-pro-3",
+        "modality": "text->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 131072,
+          "max_completion_tokens": 117964,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "max_tokens",
+          "parallel_tool_calls",
+          "presence_penalty",
+          "reasoning",
+          "reasoning_effort",
+          "response_format",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_p"
+        ],
+        "created": "2026-01-27",
+        "description": "Solar Pro 3 is Upstage's powerful Mixture-of-Experts (MoE) language model. With 102B total parameters and 12B active parameters per forward pass, it delivers exceptional performance while maintaining computational efficiency. Optimized...",
+        "expiration_date": "2026-10-30",
+        "cache_read_per_1m": 0.015,
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": false,
+          "supported_efforts": [
+            "high",
+            "medium",
+            "low",
+            "minimal",
+            "none"
+          ],
+          "default_effort": "medium"
+        },
+        "links": {
+          "details": "/api/v1/models/upstage/solar-pro-3/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 0,
+          "artificial_analysis": 1
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "reasoning_effort"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-30"
+      },
+      "reasoning_effort_values": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ]
     }
   ]
 }

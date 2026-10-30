@@ -92,6 +92,48 @@
     },
     {
       "provider": "mistral",
+      "model_id": "deepseek-v4-1-flash-1017",
+      "display_name": "DeepSeek V4.1 Flash 1017",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "currency": "USD",
+        "input_per_1m": 0.0
+      },
+      "extra": {
+        "source": "https://docs.mistral.ai/models/deepseek-v4-flash-1017",
+        "card_slug": "deepseek-v4-flash-1017",
+        "status": "Public Preview",
+        "version": "4.1",
+        "release_date": "October 28, 2026",
+        "description": "DeepSeek V4.1 Flash 1017 is a third-party open weight text model from DeepSeek, hosted by Mistral. Ideal for long-context coding and agentic workflows. The model is served without Mistral modifications."
+      }
+    },
+    {
+      "provider": "mistral",
       "model_id": "ministral-14b-2512",
       "display_name": "Ministral 3 14B",
       "context_window": 256000,
@@ -614,6 +656,7 @@
         "source": "https://docs.mistral.ai/models/shieldstral-1-0",
         "card_slug": "shieldstral-1-0",
         "status": "Public Preview",
+        "version": "4.1",
         "release_date": "August 4, 2026",
         "description": "A compact multimodal moderation model for prompt moderation, response moderation, prompt-response pair classification, refusal detection, and safety filtering across text and image inputs. It uses natural-language policy questions and returns a yes or no classification.",
         "supports_moderation": true
@@ -653,6 +696,7 @@
         "source": "https://docs.mistral.ai/models/timestral-1-0-123m",
         "card_slug": "timestral-1-0-123m",
         "status": "Public Preview",
+        "version": "4.1",
         "description": "Timestral 1.0 123M is a time series foundation model for zero-shot forecasting. Part of the Timestral family, it offers a balance of forecast accuracy and efficiency, with support for contexts up to 32K timesteps, past-only and known-future covariates, and probabilistic quantile outputs."
       }
     },
@@ -690,6 +734,7 @@
         "source": "https://docs.mistral.ai/models/timestral-1-0-209m",
         "card_slug": "timestral-1-0-209m",
         "status": "Public Preview",
+        "version": "4.1",
         "description": "Timestral 1.0 209M is a time series foundation model for zero-shot forecasting. It ranks first among pretrained and zero-shot models on GIFT-Eval, TIME, and fev-bench, with support for contexts up to 32K timesteps, past-only and known-future covariates, and probabilistic quantile outputs."
       }
     },
@@ -727,6 +772,7 @@
         "source": "https://docs.mistral.ai/models/timestral-1-0-28m",
         "card_slug": "timestral-1-0-28m",
         "status": "Public Preview",
+        "version": "4.1",
         "description": "Timestral 1.0 28M is a time series foundation model for zero-shot forecasting. Part of the Timestral family, it is optimised for low-latency forecasting, with support for contexts up to 32K timesteps, past-only and known-future covariates, and probabilistic quantile outputs."
       }
     },
@@ -764,6 +810,7 @@
         "source": "https://docs.mistral.ai/models/timestral-1-0-5m",
         "card_slug": "timestral-1-0-5m",
         "status": "Public Preview",
+        "version": "4.1",
         "description": "Timestral 1.0 5M is a time series foundation model for zero-shot forecasting. The smallest model in the Timestral family, it delivers fast, lightweight forecasts, with support for contexts up to 32K timesteps, past-only and known-future covariates, and probabilistic quantile outputs."
       }
     },
@@ -806,7 +853,11 @@
         "alias_count": "1",
         "description": "An efficient audio input model, pre-trained and optimized for transcription purposes only.",
         "price_per_min": 0.003,
-        "supports_transcription": true
+        "supports_transcription": true,
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -883,7 +934,11 @@
         "alias_count": "2",
         "description": "Voxtral Mini Transcribe 3 achieves strong transcription and diarization performance at a competitive price point. It ranks 3rd on the FLEURS multilingual transcription and English diarization benchmarks, surpassing state-of-the-art models such as Gemini 3.5 Transcribe, while being small enough to be",
         "price_per_min": 0.0035,
-        "supports_transcription": true
+        "supports_transcription": true,
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -940,7 +995,11 @@
         "alias_count": "1",
         "description": "An efficient audio input model, pre-trained and optimized for live transcription purposes only.",
         "price_per_min": 0.006,
-        "supports_transcription": true
+        "supports_transcription": true,
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -1006,7 +1065,11 @@
         "alias_count": "2",
         "description": "Voxtral Realtime Transcribe 3 is a realtime transcription model built for agentic use-cases. It achieves state-of-the-art streaming transcription with configurable latency (80 ms to 2,400 ms), built-in end-of-turn detection, context biasing, and speaker diarization, all in a single streaming session",
         "price_per_min": 0.008,
-        "supports_transcription": true
+        "supports_transcription": true,
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -1066,7 +1129,11 @@
         "price_per_1m_chars": 16.0,
         "tts_price": 16.0,
         "supports_tts": true,
-        "tts_input_price": 0.0
+        "tts_input_price": 0.0,
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "audio": {
         "accepts_audio_input": false,
@@ -1130,7 +1197,11 @@
         "description": "Our state-of-the-art text-to-speech model with zero-shot voice cloning and professional voice cloning. Supports 35+ languages and 50+ dialects, streaming with ~90 ms time-to-first-audio, 5 output formats, 34 emotion tags, and 2 pace tags.",
         "price_per_1m_chars": 13.0,
         "tts_price": 13.0,
-        "supports_tts": true
+        "supports_tts": true,
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "audio": {
         "accepts_audio_input": false,
@@ -1188,7 +1259,11 @@
         "version": "1",
         "release_date": "July 15, 2025",
         "alias_count": "1",
-        "description": "Our first model with audio input capabilities for instruct use cases."
+        "description": "Our first model with audio input capabilities for instruct use cases.",
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -1244,7 +1319,11 @@
         "alias_count": "2",
         "description": "Voxtral Small Transcribe 3 is our flagship transcription and diarization model. It achieves SOTA transcription scores, outperforming Microsoft AI Transcribe 2, Whisper large-v3, GPT-Transcribe, Scribe v2, and Gemini 3.5 Transcribe. It also supports translation, speech Q&A, summarization, and functio",
         "price_per_min": 0.004,
-        "supports_transcription": true
+        "supports_transcription": true,
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -1385,6 +1464,7 @@
         "source": "https://docs.mistral.ai/models/codestral-24-05",
         "card_slug": "codestral-24-05",
         "status": "Retired",
+        "version": "4.1",
         "release_date": "May 29, 2024",
         "retirement_date": "6/16/2025",
         "replacement": "Codestral",
@@ -2061,6 +2141,7 @@
         "source": "https://docs.mistral.ai/models/mathstral-7b-0-1",
         "card_slug": "mathstral-7b-0-1",
         "status": "Retired",
+        "version": "4.1",
         "release_date": "July 16, 2024",
         "replacement": "Mistral Small 4",
         "description": "A math dedicated model for research purposes under an open license."
@@ -2192,6 +2273,7 @@
         "source": "https://docs.mistral.ai/models/mistral-7b-0-1",
         "card_slug": "mistral-7b-0-1",
         "status": "Retired",
+        "version": "4.1",
         "release_date": "September 27, 2023",
         "retirement_date": "3/30/2025",
         "replacement": "Ministral 3 8B",
@@ -2236,6 +2318,7 @@
         "source": "https://docs.mistral.ai/models/mistral-7b-0-2",
         "card_slug": "mistral-7b-0-2",
         "status": "Retired",
+        "version": "4.1",
         "release_date": "December 11, 2023",
         "retirement_date": "3/30/2025",
         "replacement": "Ministral 3 8B",
@@ -2281,6 +2364,7 @@
         "source": "https://docs.mistral.ai/models/mistral-large-1-0-24-02",
         "card_slug": "mistral-large-1-0-24-02",
         "status": "Retired",
+        "version": "4.1",
         "release_date": "February 26, 2024",
         "retirement_date": "6/16/2025",
         "replacement": "Mistral Large 3",
@@ -2326,6 +2410,7 @@
         "source": "https://docs.mistral.ai/models/mistral-large-2-0-24-07",
         "card_slug": "mistral-large-2-0-24-07",
         "status": "Retired",
+        "version": "4.1",
         "release_date": "July 24, 2024",
         "retirement_date": "3/30/2025",
         "replacement": "Mistral Large 3",
@@ -2417,6 +2502,7 @@
         "source": "https://docs.mistral.ai/models/mistral-medium-1-0-23-12",
         "card_slug": "mistral-medium-1-0-23-12",
         "status": "Retired",
+        "version": "4.1",
         "release_date": "December 11, 2023",
         "retirement_date": "6/16/2025",
         "replacement": "Mistral Medium 3.5",
@@ -2591,6 +2677,7 @@
         "source": "https://docs.mistral.ai/models/mistral-next",
         "card_slug": "mistral-next",
         "status": "Retired",
+        "version": "4.1",
         "release_date": "February 26, 2024",
         "replacement": "Mistral Large 3",
         "description": "A prototype model, designed to be brief and concise."
@@ -2630,6 +2717,7 @@
         "source": "https://docs.mistral.ai/models/ocr-25-03",
         "card_slug": "ocr-25-03",
         "status": "Deprecated",
+        "version": "4.1",
         "release_date": "March 6, 2025",
         "deprecation_date": "12/2/2025",
         "replacement": "OCR 4.1",
@@ -2755,6 +2843,7 @@
         "source": "https://docs.mistral.ai/models/mistral-saba-25-02",
         "card_slug": "mistral-saba-25-02",
         "status": "Retired",
+        "version": "4.1",
         "release_date": "February 17, 2025",
         "retirement_date": "9/30/2025",
         "replacement": "Mistral Small 4",
@@ -2801,6 +2890,7 @@
         "source": "https://docs.mistral.ai/models/mistral-small-1-0-24-02",
         "card_slug": "mistral-small-1-0-24-02",
         "status": "Retired",
+        "version": "4.1",
         "release_date": "February 26, 2024",
         "retirement_date": "6/16/2025",
         "replacement": "Mistral Small 4",
@@ -3029,6 +3119,7 @@
         "source": "https://docs.mistral.ai/models/codestral-mamba-7b-0-1",
         "card_slug": "codestral-mamba-7b-0-1",
         "status": "Retired",
+        "version": "4.1",
         "release_date": "July 16, 2024",
         "retirement_date": "6/6/2025",
         "replacement": "Codestral",
@@ -3073,6 +3164,7 @@
         "source": "https://docs.mistral.ai/models/mistral-7b-0-3",
         "card_slug": "mistral-7b-0-3",
         "status": "Retired",
+        "version": "4.1",
         "release_date": "May 22, 2024",
         "retirement_date": "3/30/2025",
         "replacement": "Ministral 3 8B",
@@ -3163,6 +3255,7 @@
         "source": "https://docs.mistral.ai/models/mixtral-8x22b-0-1-0-3",
         "card_slug": "mixtral-8x22b-0-1-0-3",
         "status": "Retired",
+        "version": "4.1",
         "release_date": "April 17, 2024",
         "retirement_date": "3/30/2025",
         "replacement": "Mistral Small 4",
@@ -3207,6 +3300,7 @@
         "source": "https://docs.mistral.ai/models/mixtral-8x7b-0-1",
         "card_slug": "mixtral-8x7b-0-1",
         "status": "Retired",
+        "version": "4.1",
         "release_date": "December 11, 2023",
         "retirement_date": "3/30/2025",
         "replacement": "Mistral Small 4",
@@ -3338,7 +3432,11 @@
         "deprecation_date": "2/27/2026",
         "replacement": "Voxtral Mini Transcribe 2",
         "alias_count": "1",
-        "description": "A mini version of our first audio input model."
+        "description": "A mini version of our first audio input model.",
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -3394,7 +3492,11 @@
         "deprecation_date": "2/27/2026",
         "replacement": "Voxtral Mini Transcribe 2",
         "description": "An efficient audio input model, pre-trained and optimized for transcription purposes only.",
-        "supports_transcription": true
+        "supports_transcription": true,
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "audio": {
         "accepts_audio_input": true,

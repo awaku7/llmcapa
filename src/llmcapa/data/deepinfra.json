@@ -1515,7 +1515,11 @@
         ],
         "quantization": null,
         "replaced_by": null,
-        "is_partner": true
+        "is_partner": true,
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -1580,7 +1584,11 @@
         ],
         "quantization": null,
         "replaced_by": null,
-        "is_partner": true
+        "is_partner": true,
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -1645,7 +1653,11 @@
         ],
         "quantization": null,
         "replaced_by": null,
-        "is_partner": true
+        "is_partner": true,
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -1710,7 +1722,11 @@
         ],
         "quantization": null,
         "replaced_by": null,
-        "is_partner": true
+        "is_partner": true,
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -1775,7 +1791,11 @@
         ],
         "quantization": null,
         "replaced_by": null,
-        "is_partner": true
+        "is_partner": true,
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -1840,7 +1860,11 @@
         ],
         "quantization": null,
         "replaced_by": null,
-        "is_partner": true
+        "is_partner": true,
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -2110,7 +2134,12 @@
         ],
         "quantization": "fp8",
         "replaced_by": null,
-        "is_partner": false
+        "is_partner": false,
+        "refresh_metadata_fallbacks": [
+          "audio",
+          "video"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -2207,7 +2236,11 @@
         ],
         "quantization": "fp4",
         "replaced_by": null,
-        "is_partner": false
+        "is_partner": false,
+        "refresh_metadata_fallbacks": [
+          "video"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "video": {
         "accepts_video_input": true,
@@ -2288,7 +2321,11 @@
         ],
         "quantization": "fp8",
         "replaced_by": null,
-        "is_partner": true
+        "is_partner": true,
+        "refresh_metadata_fallbacks": [
+          "video"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "video": {
         "accepts_video_input": true,
@@ -2320,50 +2357,6 @@
         ],
         "checked_at": "2026-10-28",
         "status": "inferred"
-      }
-    },
-    {
-      "provider": "deepinfra",
-      "model_id": "Gryphe/MythoMax-L2-13b",
-      "display_name": "Gryphe/MythoMax-L2-13b",
-      "context_window": 4096,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_responses_api": null,
-      "pricing": {
-        "input_per_1m": 0.4,
-        "currency": "USD",
-        "output_per_1m": 0.4
-      },
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "extra": {
-        "source": "https://api.deepinfra.com/models/list",
-        "model_type": "text-generation",
-        "reported_type": "text-generation",
-        "description": "",
-        "tags": [
-          "flex",
-          "json",
-          "non-reasoning",
-          "openai",
-          "structured-output"
-        ],
-        "quantization": "fp16",
-        "replaced_by": "Sao10K/L3-8B-Lunaris-v1-Turbo",
-        "is_partner": false
       }
     },
     {
@@ -2501,7 +2494,11 @@
         ],
         "quantization": "fp16",
         "replaced_by": null,
-        "is_partner": false
+        "is_partner": false,
+        "refresh_metadata_fallbacks": [
+          "video"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "video": {
         "accepts_video_input": true,
@@ -3100,7 +3097,11 @@
         ],
         "quantization": "fp8",
         "replaced_by": null,
-        "is_partner": false
+        "is_partner": false,
+        "refresh_metadata_fallbacks": [
+          "video"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "video": {
         "accepts_video_input": true,
@@ -3922,7 +3923,11 @@
         ],
         "quantization": "fp4",
         "replaced_by": null,
-        "is_partner": false
+        "is_partner": false,
+        "refresh_metadata_fallbacks": [
+          "video"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "video": {
         "accepts_video_input": true,
@@ -4080,7 +4085,6 @@
         "tags": [
           "flex",
           "json",
-          "no-web-search",
           "openai",
           "priority",
           "reasoning",
@@ -4674,7 +4678,11 @@
         ],
         "quantization": "fp8",
         "replaced_by": null,
-        "is_partner": false
+        "is_partner": false,
+        "refresh_metadata_fallbacks": [
+          "video"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "video": {
         "accepts_video_input": true,
@@ -4756,7 +4764,11 @@
         ],
         "quantization": "fp8",
         "replaced_by": null,
-        "is_partner": false
+        "is_partner": false,
+        "refresh_metadata_fallbacks": [
+          "video"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "video": {
         "accepts_video_input": true,
@@ -4839,7 +4851,11 @@
         ],
         "quantization": "fp8",
         "replaced_by": null,
-        "is_partner": false
+        "is_partner": false,
+        "refresh_metadata_fallbacks": [
+          "video"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "video": {
         "accepts_video_input": true,
@@ -4921,7 +4937,11 @@
         ],
         "quantization": "bfloat16",
         "replaced_by": null,
-        "is_partner": false
+        "is_partner": false,
+        "refresh_metadata_fallbacks": [
+          "video"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "video": {
         "accepts_video_input": true,
@@ -5003,7 +5023,11 @@
         ],
         "quantization": "fp8",
         "replaced_by": null,
-        "is_partner": false
+        "is_partner": false,
+        "refresh_metadata_fallbacks": [
+          "video"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "video": {
         "accepts_video_input": true,
@@ -5086,7 +5110,11 @@
         ],
         "quantization": "fp8",
         "replaced_by": null,
-        "is_partner": false
+        "is_partner": false,
+        "refresh_metadata_fallbacks": [
+          "video"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "video": {
         "accepts_video_input": true,
@@ -5216,7 +5244,11 @@
         ],
         "quantization": null,
         "replaced_by": null,
-        "is_partner": false
+        "is_partner": false,
+        "refresh_metadata_fallbacks": [
+          "video"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "video": {
         "accepts_video_input": true,
@@ -5728,88 +5760,6 @@
     },
     {
       "provider": "deepinfra",
-      "model_id": "stepfun-ai/Step-5-Preview",
-      "display_name": "stepfun-ai/Step-5-Preview",
-      "context_window": 1048576,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image",
-        "video"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_responses_api": null,
-      "pricing": {
-        "input_per_1m": 1.0,
-        "currency": "USD",
-        "output_per_1m": 2.7
-      },
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "extra": {
-        "source": "https://api.deepinfra.com/models/list",
-        "model_type": "text-generation",
-        "reported_type": "text-generation",
-        "description": "Step 5 Preview is StepFun's flagship model for agentic work. It is a sparse Mixture-of-Experts model with 600B total parameters and 27B active per token, a 1M-token context window, and text and image input. It delivers frontier-level performance in software engineering, long-horizon agentic execution with repeated tool calls, and professional knowledge work, with particular strength in finance.",
-        "tags": [
-          "cc-native",
-          "featured",
-          "input-video",
-          "json",
-          "multimodal",
-          "openai",
-          "openrouter",
-          "reasoning",
-          "structured-output",
-          "tools"
-        ],
-        "quantization": "fp8",
-        "replaced_by": null,
-        "is_partner": false
-      },
-      "video": {
-        "accepts_video_input": true,
-        "generation": false,
-        "understanding": true,
-        "text_to_video": false,
-        "image_to_video": false,
-        "video_to_video": false,
-        "supports_streaming": true,
-        "supports_realtime": null,
-        "extra": {},
-        "endpoints": {
-          "understanding": true,
-          "streaming": true
-        },
-        "input_formats": [
-          "mp4",
-          "mov",
-          "webm",
-          "mkv",
-          "avi"
-        ],
-        "input_mime_types": [
-          "video/mp4",
-          "video/quicktime",
-          "video/webm",
-          "video/x-matroska",
-          "video/x-msvideo"
-        ],
-        "checked_at": "2026-10-28",
-        "status": "inferred"
-      }
-    },
-    {
-      "provider": "deepinfra",
       "model_id": "tencent/Hy4-preview",
       "display_name": "tencent/Hy4-preview",
       "context_window": 1048576,
@@ -5974,7 +5924,11 @@
         ],
         "quantization": "fp8",
         "replaced_by": null,
-        "is_partner": false
+        "is_partner": false,
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -6041,7 +5995,12 @@
         ],
         "quantization": "fp8",
         "replaced_by": null,
-        "is_partner": false
+        "is_partner": false,
+        "refresh_metadata_fallbacks": [
+          "audio",
+          "video"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -6139,7 +6098,12 @@
         ],
         "quantization": "fp8",
         "replaced_by": null,
-        "is_partner": false
+        "is_partner": false,
+        "refresh_metadata_fallbacks": [
+          "audio",
+          "video"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -6426,7 +6390,141 @@
         ],
         "quantization": "fp4",
         "replaced_by": null,
-        "is_partner": false
+        "is_partner": false,
+        "refresh_metadata_fallbacks": [
+          "video"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
+      },
+      "video": {
+        "accepts_video_input": true,
+        "generation": false,
+        "understanding": true,
+        "text_to_video": false,
+        "image_to_video": false,
+        "video_to_video": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "understanding": true,
+          "streaming": true
+        },
+        "input_formats": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv",
+          "avi"
+        ],
+        "input_mime_types": [
+          "video/mp4",
+          "video/quicktime",
+          "video/webm",
+          "video/x-matroska",
+          "video/x-msvideo"
+        ],
+        "checked_at": "2026-10-28",
+        "status": "inferred"
+      }
+    },
+    {
+      "provider": "deepinfra",
+      "model_id": "Gryphe/MythoMax-L2-13b",
+      "display_name": "Gryphe/MythoMax-L2-13b",
+      "context_window": 4096,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 0.4,
+        "currency": "USD",
+        "output_per_1m": 0.4
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://api.deepinfra.com/models/list",
+        "model_type": "text-generation",
+        "reported_type": "text-generation",
+        "description": "",
+        "tags": [
+          "flex",
+          "json",
+          "non-reasoning",
+          "openai",
+          "structured-output"
+        ],
+        "quantization": "fp16",
+        "replaced_by": "Sao10K/L3-8B-Lunaris-v1-Turbo",
+        "is_partner": false,
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-30"
+      }
+    },
+    {
+      "provider": "deepinfra",
+      "model_id": "stepfun-ai/Step-5-Preview",
+      "display_name": "stepfun-ai/Step-5-Preview",
+      "context_window": 1048576,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 1.0,
+        "currency": "USD",
+        "output_per_1m": 2.7
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://api.deepinfra.com/models/list",
+        "model_type": "text-generation",
+        "reported_type": "text-generation",
+        "description": "Step 5 Preview is StepFun's flagship model for agentic work. It is a sparse Mixture-of-Experts model with 600B total parameters and 27B active per token, a 1M-token context window, and text and image input. It delivers frontier-level performance in software engineering, long-horizon agentic execution with repeated tool calls, and professional knowledge work, with particular strength in finance.",
+        "tags": [
+          "cc-native",
+          "featured",
+          "input-video",
+          "json",
+          "multimodal",
+          "openai",
+          "openrouter",
+          "reasoning",
+          "structured-output",
+          "tools"
+        ],
+        "quantization": "fp8",
+        "replaced_by": null,
+        "is_partner": false,
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-30"
       },
       "video": {
         "accepts_video_input": true,

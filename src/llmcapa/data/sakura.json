@@ -2,8 +2,8 @@
   "models": [
     {
       "provider": "sakura",
-      "model_id": "Chat completions （テキスト生成）",
-      "display_name": "Chat completions （テキスト生成）",
+      "model_id": "Chat completions（テキスト生成）",
+      "display_name": "Chat completions（テキスト生成）",
       "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
@@ -28,7 +28,7 @@
       "knowledge_cutoff": null,
       "deprecated": false,
       "aliases": [
-        "sakura/Chat completions （テキスト生成）"
+        "sakura/Chat completions（テキスト生成）"
       ],
       "license_type": "custom",
       "pricing": null,
@@ -40,7 +40,7 @@
         "openai_compatible": true,
         "tax_included": true,
         "fx_jpy_per_usd_shell": 150.0,
-        "official_catalog_checked_at": "2026-10-24",
+        "official_catalog_checked_at": "2026-10-30",
         "tier": "closed",
         "pricing_status": "quote/application; price not published on product page"
       }
@@ -89,7 +89,7 @@
         "openai_compatible": true,
         "tax_included": true,
         "fx_jpy_per_usd_shell": 150.0,
-        "official_catalog_checked_at": "2026-10-24",
+        "official_catalog_checked_at": "2026-10-30",
         "pricing_jpy": {
           "input_per_10k_tokens": 0.15,
           "output_per_10k_tokens": 0.75,
@@ -102,6 +102,1233 @@
         "context_window_basis": "upstream_base_model",
         "context_window_source": "https://huggingface.co/llm-jp/llm-jp-3.1-8x13b-instruct4",
         "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification."
+      }
+    },
+    {
+      "provider": "sakura",
+      "model_id": "パブリックプレビューモデル Qwen3-0.6B-cpu",
+      "display_name": "パブリックプレビューモデル Qwen3-0.6B-cpu",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "sakura/パブリックプレビューモデル Qwen3-0.6B-cpu"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.006667,
+        "output_per_1m": 0.02,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
+        "playground": "https://playground.aipf.sakura.ad.jp/",
+        "control_panel": "https://secure.sakura.ad.jp/ai/",
+        "domestic_jp_cloud": true,
+        "openai_compatible": true,
+        "tax_included": true,
+        "fx_jpy_per_usd_shell": 150.0,
+        "official_catalog_checked_at": "2026-10-30",
+        "pricing_jpy": {
+          "input_per_10k_tokens": 0.01,
+          "output_per_10k_tokens": 0.03,
+          "input_per_1m": 1.0,
+          "output_per_1m": 3.0,
+          "currency": "JPY",
+          "tax": "included"
+        },
+        "tier": "standard"
+      }
+    },
+    {
+      "provider": "sakura",
+      "model_id": "パブリックプレビューモデル Phi-4-mini-instruct-cpu",
+      "display_name": "パブリックプレビューモデル Phi-4-mini-instruct-cpu",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "sakura/パブリックプレビューモデル Phi-4-mini-instruct-cpu"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.006667,
+        "output_per_1m": 0.02,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
+        "playground": "https://playground.aipf.sakura.ad.jp/",
+        "control_panel": "https://secure.sakura.ad.jp/ai/",
+        "domestic_jp_cloud": true,
+        "openai_compatible": true,
+        "tax_included": true,
+        "fx_jpy_per_usd_shell": 150.0,
+        "official_catalog_checked_at": "2026-10-30",
+        "pricing_jpy": {
+          "input_per_10k_tokens": 0.01,
+          "output_per_10k_tokens": 0.03,
+          "input_per_1m": 1.0,
+          "output_per_1m": 3.0,
+          "currency": "JPY",
+          "tax": "included"
+        },
+        "tier": "standard"
+      }
+    },
+    {
+      "provider": "sakura",
+      "model_id": "パブリックプレビューモデル Qwen3-VL-30B-A3B-Instruct",
+      "display_name": "パブリックプレビューモデル Qwen3-VL-30B-A3B-Instruct",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "sakura/パブリックプレビューモデル Qwen3-VL-30B-A3B-Instruct"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.066667,
+        "output_per_1m": 0.2,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
+        "playground": "https://playground.aipf.sakura.ad.jp/",
+        "control_panel": "https://secure.sakura.ad.jp/ai/",
+        "domestic_jp_cloud": true,
+        "openai_compatible": true,
+        "tax_included": true,
+        "fx_jpy_per_usd_shell": 150.0,
+        "official_catalog_checked_at": "2026-10-30",
+        "pricing_jpy": {
+          "input_per_10k_tokens": 0.1,
+          "output_per_10k_tokens": 0.3,
+          "input_per_1m": 10.0,
+          "output_per_1m": 30.0,
+          "currency": "JPY",
+          "tax": "included"
+        },
+        "tier": "standard"
+      }
+    },
+    {
+      "provider": "sakura",
+      "model_id": "パブリックプレビューモデル Kimi-K2.6",
+      "display_name": "パブリックプレビューモデル Kimi-K2.6",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "sakura/パブリックプレビューモデル Kimi-K2.6"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.4,
+        "output_per_1m": 2.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
+        "playground": "https://playground.aipf.sakura.ad.jp/",
+        "control_panel": "https://secure.sakura.ad.jp/ai/",
+        "domestic_jp_cloud": true,
+        "openai_compatible": true,
+        "tax_included": true,
+        "fx_jpy_per_usd_shell": 150.0,
+        "official_catalog_checked_at": "2026-10-30",
+        "pricing_jpy": {
+          "input_per_10k_tokens": 0.6,
+          "output_per_10k_tokens": 3.0,
+          "input_per_1m": 60.0,
+          "output_per_1m": 300.0,
+          "currency": "JPY",
+          "tax": "included"
+        },
+        "tier": "standard"
+      }
+    },
+    {
+      "provider": "sakura",
+      "model_id": "パブリックプレビューモデル Qwen3.6-35B-A3B",
+      "display_name": "パブリックプレビューモデル Qwen3.6-35B-A3B",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "sakura/パブリックプレビューモデル Qwen3.6-35B-A3B"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.2,
+        "output_per_1m": 1.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
+        "playground": "https://playground.aipf.sakura.ad.jp/",
+        "control_panel": "https://secure.sakura.ad.jp/ai/",
+        "domestic_jp_cloud": true,
+        "openai_compatible": true,
+        "tax_included": true,
+        "fx_jpy_per_usd_shell": 150.0,
+        "official_catalog_checked_at": "2026-10-30",
+        "pricing_jpy": {
+          "input_per_10k_tokens": 0.3,
+          "output_per_10k_tokens": 1.5,
+          "input_per_1m": 30.0,
+          "output_per_1m": 150.0,
+          "currency": "JPY",
+          "tax": "included"
+        },
+        "tier": "standard"
+      }
+    },
+    {
+      "provider": "sakura",
+      "model_id": "パブリックプレビューモデル gemma-4-31B-it",
+      "display_name": "パブリックプレビューモデル gemma-4-31B-it",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "sakura/パブリックプレビューモデル gemma-4-31B-it"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.16,
+        "output_per_1m": 0.64,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
+        "playground": "https://playground.aipf.sakura.ad.jp/",
+        "control_panel": "https://secure.sakura.ad.jp/ai/",
+        "domestic_jp_cloud": true,
+        "openai_compatible": true,
+        "tax_included": true,
+        "fx_jpy_per_usd_shell": 150.0,
+        "official_catalog_checked_at": "2026-10-30",
+        "pricing_jpy": {
+          "input_per_10k_tokens": 0.24,
+          "output_per_10k_tokens": 0.96,
+          "input_per_1m": 24.0,
+          "output_per_1m": 96.0,
+          "currency": "JPY",
+          "tax": "included"
+        },
+        "tier": "standard"
+      }
+    },
+    {
+      "provider": "sakura",
+      "model_id": "パブリックプレビューモデル Kimi-K2.7-Code",
+      "display_name": "パブリックプレビューモデル Kimi-K2.7-Code",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "sakura/パブリックプレビューモデル Kimi-K2.7-Code"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.346667,
+        "output_per_1m": 3.36,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
+        "playground": "https://playground.aipf.sakura.ad.jp/",
+        "control_panel": "https://secure.sakura.ad.jp/ai/",
+        "domestic_jp_cloud": true,
+        "openai_compatible": true,
+        "tax_included": true,
+        "fx_jpy_per_usd_shell": 150.0,
+        "official_catalog_checked_at": "2026-10-30",
+        "pricing_jpy": {
+          "input_per_10k_tokens": 0.52,
+          "output_per_10k_tokens": 5.04,
+          "input_per_1m": 52.0,
+          "output_per_1m": 504.0,
+          "currency": "JPY",
+          "tax": "included"
+        },
+        "tier": "standard"
+      }
+    },
+    {
+      "provider": "sakura",
+      "model_id": "パブリックプレビューモデル Weblab-MedLLM-gpt-oss-120b",
+      "display_name": "パブリックプレビューモデル Weblab-MedLLM-gpt-oss-120b",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "sakura/パブリックプレビューモデル Weblab-MedLLM-gpt-oss-120b"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.6,
+        "output_per_1m": 3.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
+        "playground": "https://playground.aipf.sakura.ad.jp/",
+        "control_panel": "https://secure.sakura.ad.jp/ai/",
+        "domestic_jp_cloud": true,
+        "openai_compatible": true,
+        "tax_included": true,
+        "fx_jpy_per_usd_shell": 150.0,
+        "official_catalog_checked_at": "2026-10-30",
+        "pricing_jpy": {
+          "input_per_10k_tokens": 0.9,
+          "output_per_10k_tokens": 4.5,
+          "input_per_1m": 90.0,
+          "output_per_1m": 450.0,
+          "currency": "JPY",
+          "tax": "included"
+        },
+        "tier": "standard"
+      }
+    },
+    {
+      "provider": "sakura",
+      "model_id": "Audio transcription（音声の文字起こし）",
+      "display_name": "Audio transcription（音声の文字起こし）",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "sakura/Audio transcription（音声の文字起こし）"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
+        "playground": "https://playground.aipf.sakura.ad.jp/",
+        "control_panel": "https://secure.sakura.ad.jp/ai/",
+        "domestic_jp_cloud": true,
+        "openai_compatible": true,
+        "tax_included": true,
+        "fx_jpy_per_usd_shell": 150.0,
+        "official_catalog_checked_at": "2026-10-30",
+        "price_per_60_seconds_jpy": 0.5,
+        "free_requests_per_month": 50,
+        "tier": "standard",
+        "unit": "60_seconds"
+      }
+    },
+    {
+      "provider": "sakura",
+      "model_id": "Embeddings（テキストのベクトル化）",
+      "display_name": "Embeddings（テキストのベクトル化）",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embedding"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "sakura/Embeddings（テキストのベクトル化）"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 1.333333,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
+        "playground": "https://playground.aipf.sakura.ad.jp/",
+        "control_panel": "https://secure.sakura.ad.jp/ai/",
+        "domestic_jp_cloud": true,
+        "openai_compatible": true,
+        "tax_included": true,
+        "fx_jpy_per_usd_shell": 150.0,
+        "official_catalog_checked_at": "2026-10-30",
+        "pricing_jpy": {
+          "input_per_10k_tokens": 2.0,
+          "output_per_10k_tokens": 0.0,
+          "input_per_1m": 200.0,
+          "output_per_1m": 0.0,
+          "currency": "JPY",
+          "tax": "included"
+        },
+        "tier": "standard"
+      }
+    },
+    {
+      "provider": "sakura",
+      "model_id": "パブリックプレビューモデル Qwen3-Embedding-4B(FP16)",
+      "display_name": "パブリックプレビューモデル Qwen3-Embedding-4B(FP16)",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embedding"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "sakura/パブリックプレビューモデル Qwen3-Embedding-4B(FP16)"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
+        "playground": "https://playground.aipf.sakura.ad.jp/",
+        "control_panel": "https://secure.sakura.ad.jp/ai/",
+        "domestic_jp_cloud": true,
+        "openai_compatible": true,
+        "tax_included": true,
+        "fx_jpy_per_usd_shell": 150.0,
+        "official_catalog_checked_at": "2026-10-30",
+        "pricing_jpy": {
+          "input_per_10k_tokens": 3.0,
+          "output_per_10k_tokens": 0.0,
+          "input_per_1m": 300.0,
+          "output_per_1m": 0.0,
+          "currency": "JPY",
+          "tax": "included"
+        },
+        "tier": "standard"
+      }
+    },
+    {
+      "provider": "sakura",
+      "model_id": "Text-to-Speech（テキスト読み上げ）",
+      "display_name": "Text-to-Speech（テキスト読み上げ）",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "sakura/Text-to-Speech（テキスト読み上げ）"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
+        "playground": "https://playground.aipf.sakura.ad.jp/",
+        "control_panel": "https://secure.sakura.ad.jp/ai/",
+        "domestic_jp_cloud": true,
+        "openai_compatible": true,
+        "tax_included": true,
+        "fx_jpy_per_usd_shell": 150.0,
+        "official_catalog_checked_at": "2026-10-30",
+        "price_per_10k_mora_jpy": 3.0,
+        "tier": "standard",
+        "unit": "10k_mora"
+      }
+    },
+    {
+      "provider": "sakura",
+      "model_id": "VOICEVOX:東北ずん子",
+      "display_name": "VOICEVOX:東北ずん子",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "audio"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "sakura/VOICEVOX:東北ずん子"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
+        "playground": "https://playground.aipf.sakura.ad.jp/",
+        "control_panel": "https://secure.sakura.ad.jp/ai/",
+        "domestic_jp_cloud": true,
+        "openai_compatible": true,
+        "tax_included": true,
+        "fx_jpy_per_usd_shell": 150.0,
+        "official_catalog_checked_at": "2026-10-30",
+        "tier": "standard",
+        "pricing_status": "not listed for this model on current product page",
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": null,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
+      }
+    },
+    {
+      "provider": "sakura",
+      "model_id": "VOICEVOX:東北きりたん",
+      "display_name": "VOICEVOX:東北きりたん",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "audio"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "sakura/VOICEVOX:東北きりたん"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
+        "playground": "https://playground.aipf.sakura.ad.jp/",
+        "control_panel": "https://secure.sakura.ad.jp/ai/",
+        "domestic_jp_cloud": true,
+        "openai_compatible": true,
+        "tax_included": true,
+        "fx_jpy_per_usd_shell": 150.0,
+        "official_catalog_checked_at": "2026-10-30",
+        "tier": "standard",
+        "pricing_status": "not listed for this model on current product page",
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": null,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
+      }
+    },
+    {
+      "provider": "sakura",
+      "model_id": "VOICEVOX:東北イタコ",
+      "display_name": "VOICEVOX:東北イタコ",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "audio"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "sakura/VOICEVOX:東北イタコ"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
+        "playground": "https://playground.aipf.sakura.ad.jp/",
+        "control_panel": "https://secure.sakura.ad.jp/ai/",
+        "domestic_jp_cloud": true,
+        "openai_compatible": true,
+        "tax_included": true,
+        "fx_jpy_per_usd_shell": 150.0,
+        "official_catalog_checked_at": "2026-10-30",
+        "tier": "standard",
+        "pricing_status": "not listed for this model on current product page",
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": null,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
+      }
+    },
+    {
+      "provider": "sakura",
+      "model_id": "VOICEVOX:四国めたん",
+      "display_name": "VOICEVOX:四国めたん",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "audio"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "sakura/VOICEVOX:四国めたん"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
+        "playground": "https://playground.aipf.sakura.ad.jp/",
+        "control_panel": "https://secure.sakura.ad.jp/ai/",
+        "domestic_jp_cloud": true,
+        "openai_compatible": true,
+        "tax_included": true,
+        "fx_jpy_per_usd_shell": 150.0,
+        "official_catalog_checked_at": "2026-10-30",
+        "tier": "standard",
+        "pricing_status": "not listed for this model on current product page",
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": null,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
+      }
+    },
+    {
+      "provider": "sakura",
+      "model_id": "VOICEVOX:あんこもん",
+      "display_name": "VOICEVOX:あんこもん",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "audio"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "sakura/VOICEVOX:あんこもん"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
+        "playground": "https://playground.aipf.sakura.ad.jp/",
+        "control_panel": "https://secure.sakura.ad.jp/ai/",
+        "domestic_jp_cloud": true,
+        "openai_compatible": true,
+        "tax_included": true,
+        "fx_jpy_per_usd_shell": 150.0,
+        "official_catalog_checked_at": "2026-10-30",
+        "tier": "standard",
+        "pricing_status": "not listed for this model on current product page",
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": null,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
+      }
+    },
+    {
+      "provider": "sakura",
+      "model_id": "VOICEVOX:冥鳴ひまり",
+      "display_name": "VOICEVOX:冥鳴ひまり",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "audio"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "sakura/VOICEVOX:冥鳴ひまり"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
+        "playground": "https://playground.aipf.sakura.ad.jp/",
+        "control_panel": "https://secure.sakura.ad.jp/ai/",
+        "domestic_jp_cloud": true,
+        "openai_compatible": true,
+        "tax_included": true,
+        "fx_jpy_per_usd_shell": 150.0,
+        "official_catalog_checked_at": "2026-10-30",
+        "tier": "standard",
+        "pricing_status": "not listed for this model on current product page",
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": null,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
+      }
+    },
+    {
+      "provider": "sakura",
+      "model_id": "VOICEVOX:春日部つむぎ",
+      "display_name": "VOICEVOX:春日部つむぎ",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "audio"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "sakura/VOICEVOX:春日部つむぎ"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
+        "playground": "https://playground.aipf.sakura.ad.jp/",
+        "control_panel": "https://secure.sakura.ad.jp/ai/",
+        "domestic_jp_cloud": true,
+        "openai_compatible": true,
+        "tax_included": true,
+        "fx_jpy_per_usd_shell": 150.0,
+        "official_catalog_checked_at": "2026-10-30",
+        "tier": "standard",
+        "pricing_status": "not listed for this model on current product page",
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": null,
+        "supports_realtime": null,
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "inferred"
+      }
+    },
+    {
+      "provider": "sakura",
+      "model_id": "RAG（ドキュメント管理・検索）",
+      "display_name": "RAG（ドキュメント管理・検索）",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "sakura/RAG（ドキュメント管理・検索）"
+      ],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
+        "playground": "https://playground.aipf.sakura.ad.jp/",
+        "control_panel": "https://secure.sakura.ad.jp/ai/",
+        "domestic_jp_cloud": true,
+        "openai_compatible": true,
+        "tax_included": true,
+        "fx_jpy_per_usd_shell": 150.0,
+        "official_catalog_checked_at": "2026-10-30",
+        "tier": "standard",
+        "pricing_status": "not listed for this model on current product page"
+      }
+    },
+    {
+      "provider": "sakura",
+      "model_id": "cotomi v3",
+      "display_name": "cotomi v3",
+      "context_window": 131072,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "sakura/cotomi v3"
+      ],
+      "license_type": "custom",
+      "pricing": null,
+      "extra": {
+        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
+        "playground": "https://playground.aipf.sakura.ad.jp/",
+        "control_panel": "https://secure.sakura.ad.jp/ai/",
+        "domestic_jp_cloud": true,
+        "openai_compatible": true,
+        "tax_included": true,
+        "fx_jpy_per_usd_shell": 150.0,
+        "official_catalog_checked_at": "2026-10-30",
+        "tier": "closed",
+        "pricing_status": "quote/application; price not published on product page",
+        "context_window_basis": "upstream_base_model",
+        "context_window_source": "https://jpn.nec.com/techrep/journal/g25/n01/250104.html",
+        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification."
+      }
+    },
+    {
+      "provider": "sakura",
+      "model_id": "Chat completions （テキスト生成）",
+      "display_name": "Chat completions （テキスト生成）",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "sakura/Chat completions （テキスト生成）"
+      ],
+      "license_type": "custom",
+      "pricing": null,
+      "extra": {
+        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
+        "playground": "https://playground.aipf.sakura.ad.jp/",
+        "control_panel": "https://secure.sakura.ad.jp/ai/",
+        "domestic_jp_cloud": true,
+        "openai_compatible": true,
+        "tax_included": true,
+        "fx_jpy_per_usd_shell": 150.0,
+        "official_catalog_checked_at": "2026-10-24",
+        "tier": "closed",
+        "pricing_status": "quote/application; price not published on product page",
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-30"
       }
     },
     {
@@ -148,7 +1375,9 @@
         "price_per_60_seconds_jpy": 0.5,
         "free_requests_per_month": 50,
         "tier": "standard",
-        "unit": "60_seconds"
+        "unit": "60_seconds",
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-30"
       }
     },
     {
@@ -205,7 +1434,9 @@
           "tax": "included"
         },
         "free_requests_per_month": 10000,
-        "tier": "standard"
+        "tier": "standard",
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-30"
       }
     },
     {
@@ -252,506 +1483,9 @@
         "price_per_10k_mora_jpy": 3.0,
         "free_requests_per_month": 50,
         "tier": "standard",
-        "unit": "10k_mora"
-      }
-    },
-    {
-      "provider": "sakura",
-      "model_id": "VOICEVOX:東北ずん子",
-      "display_name": "VOICEVOX:東北ずん子",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "audio"
-      ],
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": null,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "sakura/VOICEVOX:東北ずん子"
-      ],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
-        "playground": "https://playground.aipf.sakura.ad.jp/",
-        "control_panel": "https://secure.sakura.ad.jp/ai/",
-        "domestic_jp_cloud": true,
-        "openai_compatible": true,
-        "tax_included": true,
-        "fx_jpy_per_usd_shell": 150.0,
-        "official_catalog_checked_at": "2026-10-24",
-        "tier": "standard",
-        "pricing_status": "not listed for this model on current product page"
-      },
-      "audio": {
-        "accepts_audio_input": false,
-        "speech_generation": true,
-        "speech_understanding": false,
-        "supports_streaming": null,
-        "supports_realtime": null,
-        "extra": {},
-        "endpoints": {
-          "speech_generation": true
-        },
-        "checked_at": "2026-10-28",
-        "status": "inferred"
-      }
-    },
-    {
-      "provider": "sakura",
-      "model_id": "VOICEVOX:東北きりたん",
-      "display_name": "VOICEVOX:東北きりたん",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "audio"
-      ],
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": null,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "sakura/VOICEVOX:東北きりたん"
-      ],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
-        "playground": "https://playground.aipf.sakura.ad.jp/",
-        "control_panel": "https://secure.sakura.ad.jp/ai/",
-        "domestic_jp_cloud": true,
-        "openai_compatible": true,
-        "tax_included": true,
-        "fx_jpy_per_usd_shell": 150.0,
-        "official_catalog_checked_at": "2026-10-24",
-        "tier": "standard",
-        "pricing_status": "not listed for this model on current product page"
-      },
-      "audio": {
-        "accepts_audio_input": false,
-        "speech_generation": true,
-        "speech_understanding": false,
-        "supports_streaming": null,
-        "supports_realtime": null,
-        "extra": {},
-        "endpoints": {
-          "speech_generation": true
-        },
-        "checked_at": "2026-10-28",
-        "status": "inferred"
-      }
-    },
-    {
-      "provider": "sakura",
-      "model_id": "VOICEVOX:東北イタコ",
-      "display_name": "VOICEVOX:東北イタコ",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "audio"
-      ],
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": null,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "sakura/VOICEVOX:東北イタコ"
-      ],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
-        "playground": "https://playground.aipf.sakura.ad.jp/",
-        "control_panel": "https://secure.sakura.ad.jp/ai/",
-        "domestic_jp_cloud": true,
-        "openai_compatible": true,
-        "tax_included": true,
-        "fx_jpy_per_usd_shell": 150.0,
-        "official_catalog_checked_at": "2026-10-24",
-        "tier": "standard",
-        "pricing_status": "not listed for this model on current product page"
-      },
-      "audio": {
-        "accepts_audio_input": false,
-        "speech_generation": true,
-        "speech_understanding": false,
-        "supports_streaming": null,
-        "supports_realtime": null,
-        "extra": {},
-        "endpoints": {
-          "speech_generation": true
-        },
-        "checked_at": "2026-10-28",
-        "status": "inferred"
-      }
-    },
-    {
-      "provider": "sakura",
-      "model_id": "VOICEVOX:四国めたん",
-      "display_name": "VOICEVOX:四国めたん",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "audio"
-      ],
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": null,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "sakura/VOICEVOX:四国めたん"
-      ],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
-        "playground": "https://playground.aipf.sakura.ad.jp/",
-        "control_panel": "https://secure.sakura.ad.jp/ai/",
-        "domestic_jp_cloud": true,
-        "openai_compatible": true,
-        "tax_included": true,
-        "fx_jpy_per_usd_shell": 150.0,
-        "official_catalog_checked_at": "2026-10-24",
-        "tier": "standard",
-        "pricing_status": "not listed for this model on current product page"
-      },
-      "audio": {
-        "accepts_audio_input": false,
-        "speech_generation": true,
-        "speech_understanding": false,
-        "supports_streaming": null,
-        "supports_realtime": null,
-        "extra": {},
-        "endpoints": {
-          "speech_generation": true
-        },
-        "checked_at": "2026-10-28",
-        "status": "inferred"
-      }
-    },
-    {
-      "provider": "sakura",
-      "model_id": "VOICEVOX:あんこもん",
-      "display_name": "VOICEVOX:あんこもん",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "audio"
-      ],
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": null,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "sakura/VOICEVOX:あんこもん"
-      ],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
-        "playground": "https://playground.aipf.sakura.ad.jp/",
-        "control_panel": "https://secure.sakura.ad.jp/ai/",
-        "domestic_jp_cloud": true,
-        "openai_compatible": true,
-        "tax_included": true,
-        "fx_jpy_per_usd_shell": 150.0,
-        "official_catalog_checked_at": "2026-10-24",
-        "tier": "standard",
-        "pricing_status": "not listed for this model on current product page"
-      },
-      "audio": {
-        "accepts_audio_input": false,
-        "speech_generation": true,
-        "speech_understanding": false,
-        "supports_streaming": null,
-        "supports_realtime": null,
-        "extra": {},
-        "endpoints": {
-          "speech_generation": true
-        },
-        "checked_at": "2026-10-28",
-        "status": "inferred"
-      }
-    },
-    {
-      "provider": "sakura",
-      "model_id": "VOICEVOX:冥鳴ひまり",
-      "display_name": "VOICEVOX:冥鳴ひまり",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "audio"
-      ],
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": null,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "sakura/VOICEVOX:冥鳴ひまり"
-      ],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
-        "playground": "https://playground.aipf.sakura.ad.jp/",
-        "control_panel": "https://secure.sakura.ad.jp/ai/",
-        "domestic_jp_cloud": true,
-        "openai_compatible": true,
-        "tax_included": true,
-        "fx_jpy_per_usd_shell": 150.0,
-        "official_catalog_checked_at": "2026-10-24",
-        "tier": "standard",
-        "pricing_status": "not listed for this model on current product page"
-      },
-      "audio": {
-        "accepts_audio_input": false,
-        "speech_generation": true,
-        "speech_understanding": false,
-        "supports_streaming": null,
-        "supports_realtime": null,
-        "extra": {},
-        "endpoints": {
-          "speech_generation": true
-        },
-        "checked_at": "2026-10-28",
-        "status": "inferred"
-      }
-    },
-    {
-      "provider": "sakura",
-      "model_id": "VOICEVOX:春日部つむぎ",
-      "display_name": "VOICEVOX:春日部つむぎ",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "audio"
-      ],
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": null,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "sakura/VOICEVOX:春日部つむぎ"
-      ],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
-        "playground": "https://playground.aipf.sakura.ad.jp/",
-        "control_panel": "https://secure.sakura.ad.jp/ai/",
-        "domestic_jp_cloud": true,
-        "openai_compatible": true,
-        "tax_included": true,
-        "fx_jpy_per_usd_shell": 150.0,
-        "official_catalog_checked_at": "2026-10-24",
-        "tier": "standard",
-        "pricing_status": "not listed for this model on current product page"
-      },
-      "audio": {
-        "accepts_audio_input": false,
-        "speech_generation": true,
-        "speech_understanding": false,
-        "supports_streaming": null,
-        "supports_realtime": null,
-        "extra": {},
-        "endpoints": {
-          "speech_generation": true
-        },
-        "checked_at": "2026-10-28",
-        "status": "inferred"
-      }
-    },
-    {
-      "provider": "sakura",
-      "model_id": "RAG（ドキュメント管理・検索）",
-      "display_name": "RAG（ドキュメント管理・検索）",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": null,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "sakura/RAG（ドキュメント管理・検索）"
-      ],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
-        "playground": "https://playground.aipf.sakura.ad.jp/",
-        "control_panel": "https://secure.sakura.ad.jp/ai/",
-        "domestic_jp_cloud": true,
-        "openai_compatible": true,
-        "tax_included": true,
-        "fx_jpy_per_usd_shell": 150.0,
-        "official_catalog_checked_at": "2026-10-24",
-        "tier": "standard",
-        "pricing_status": "not listed for this model on current product page"
-      }
-    },
-    {
-      "provider": "sakura",
-      "model_id": "cotomi v3",
-      "display_name": "cotomi v3",
-      "context_window": 131072,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": null,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "sakura/cotomi v3"
-      ],
-      "license_type": "custom",
-      "pricing": null,
-      "extra": {
-        "source": "https://ai.sakura.ad.jp/sakura-ai/ai-engine/",
-        "playground": "https://playground.aipf.sakura.ad.jp/",
-        "control_panel": "https://secure.sakura.ad.jp/ai/",
-        "domestic_jp_cloud": true,
-        "openai_compatible": true,
-        "tax_included": true,
-        "fx_jpy_per_usd_shell": 150.0,
-        "official_catalog_checked_at": "2026-10-24",
-        "tier": "closed",
-        "pricing_status": "quote/application; price not published on product page",
-        "context_window_basis": "upstream_base_model",
-        "context_window_source": "https://jpn.nec.com/techrep/journal/g25/n01/250104.html",
-        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification."
+        "unit": "10k_mora",
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-30"
       }
     },
     {
@@ -811,7 +1545,9 @@
         "tier": "preview",
         "context_window_basis": "upstream_base_model",
         "context_window_source": "https://huggingface.co/Qwen/Qwen3-0.6B",
-        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification."
+        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification.",
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-30"
       }
     },
     {
@@ -870,7 +1606,9 @@
         "tier": "preview",
         "context_window_basis": "upstream_base_model",
         "context_window_source": "https://huggingface.co/microsoft/Phi-4-mini-instruct",
-        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification."
+        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification.",
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-30"
       }
     },
     {
@@ -929,7 +1667,9 @@
         "tier": "preview",
         "context_window_basis": "upstream_base_model",
         "context_window_source": "https://huggingface.co/Qwen/Qwen3-VL-30B-A3B-Instruct",
-        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification."
+        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification.",
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-30"
       }
     },
     {
@@ -988,7 +1728,9 @@
         "tier": "preview",
         "context_window_basis": "upstream_base_model",
         "context_window_source": "https://platform.kimi.ai/docs/guide/kimi-k2-6-quickstart",
-        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification."
+        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification.",
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-30"
       }
     },
     {
@@ -1047,7 +1789,9 @@
         "tier": "preview",
         "context_window_basis": "upstream_base_model",
         "context_window_source": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B",
-        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification."
+        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification.",
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-30"
       }
     },
     {
@@ -1106,7 +1850,9 @@
         "tier": "preview",
         "context_window_basis": "upstream_base_model",
         "context_window_source": "https://ai.google.dev/gemma/docs/core/model_card_4",
-        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification."
+        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification.",
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-30"
       }
     },
     {
@@ -1165,7 +1911,9 @@
         "tier": "preview",
         "context_window_basis": "upstream_base_model",
         "context_window_source": "https://platform.kimi.ai/docs/guide/kimi-k2-7-code-quickstart",
-        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification."
+        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification.",
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-30"
       }
     },
     {
@@ -1225,7 +1973,9 @@
         "tier": "preview",
         "context_window_basis": "upstream_base_model",
         "context_window_source": "https://huggingface.co/Qwen/Qwen3-Embedding-4B",
-        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification."
+        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification.",
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-30"
       }
     },
     {
@@ -1284,7 +2034,9 @@
         "tier": "preview",
         "context_window_basis": "upstream_base_model",
         "context_window_source": "https://developers.openai.com/api/docs/models/gpt-oss-120b",
-        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification."
+        "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification.",
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-10-30"
       }
     },
     {
@@ -1334,7 +2086,7 @@
         "context_window_source": "https://www.preferred.jp/ja/blog/tech/plamo-3-0-prime-release",
         "context_window_note": "Sakura deployment-specific context limit is not published; this is the upstream base-model specification.",
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-10-24"
+        "provider_refresh_checked_at": "2026-10-30"
       }
     }
   ]
