@@ -570,10 +570,10 @@ print(cap.pricing)         # {'input_per_1m': 0.1, 'output_per_1m': 0.32, 'curre
 
 ### On-demand HuggingFace Integration (Caching)
 
-You can also fetch and register popular models from the HuggingFace API on-demand using `fetch_huggingface()`. This retrieves the most downloaded models across Hugging Face pipeline tasks, records modalities where the task metadata is sufficient, and caches the result locally in `~/.llmcapa/huggingface_all_tasks_cache.json`.
+You can fetch and register the full ranked model list across Hugging Face pipeline tasks with `fetch_huggingface()`. By default, it follows the API's pagination links until all pages are fetched, records known modalities, and stores a cache in `~/.llmcapa/huggingface_all_tasks_cache_all.json` when `cache_ttl` is supplied. This may take time and is subject to Hugging Face API rate limits. Pass `limit=N` in Python to cap the total number of models.
 
 ```python
-# Fetch and register top 100 HuggingFace models dynamically
+# Fetch and register all ranked HuggingFace models dynamically
 count = llmcapa.fetch_huggingface()
 print(f"Registered {count} models from HuggingFace!")
 
@@ -582,7 +582,7 @@ cap = llmcapa.get("deepseek-ai/DeepSeek-V4-Flash")
 print(cap.context_window)   # 4096 (estimated; exact value not available via HF API)
 print(cap.supports_vision)  # False (text-generation pipeline)
 
-# Fetch a different number of models
+# Optionally cap the number fetched
 count = llmcapa.fetch_huggingface(limit=200)
 ```
 
@@ -604,8 +604,8 @@ count = llmcapa.fetch_github_catalog("openai", cache_ttl=0, ref="main")
 CLI equivalent:
 
 ```bash
-llmcapa fetch-github --provider openai
-llmcapa fetch-github --provider modellix --refresh
+llmcapa update gh --provider openai
+llmcapa update gh --provider modellix --refresh
 ```
 
 By default, the fetched provider JSON files replace the corresponding bundled files when the package directory is writable. Previous files are backed up under `~/.llmcapa/github_catalog_backups`. If the package directory is read-only—or `write_bundled=False` is set—llmcapa saves a persistent user catalog under `~/.llmcapa/catalogs/github` and loads it on later runs, overlaying bundled records. Remove that directory to discard the user overrides. The 24-hour download cache is separate. Verify catalog provenance and specifications before relying on them in production.
@@ -818,7 +818,7 @@ llmcapa tokens gpt-4o --messages '[{"role":"user","content":"Hi"}]'
 llmcapa --extra my_models.json show gpt-4o
 
 # Explicitly fetch and update the OpenRouter cache only
-llmcapa update
+llmcapa update openrouter
 
 # Development: refresh the OpenAI catalog from official documentation
 python scripts/_update_all_providers.py --provider openai
@@ -830,8 +830,11 @@ python scripts/_update_all_providers.py --provider nebius
 python scripts/_update_all_providers.py --provider baseten
 
 # Fetch and register popular models from HuggingFace
-llmcapa fetch-hf
-llmcapa fetch-hf --limit 200
+llmcapa update hf
+
+# Fetch a published provider catalog from the llmcapa GitHub repository
+llmcapa update gh --provider openai
+llmcapa update gh --provider modellix --refresh
 ```
 
 ## Notes

@@ -1827,7 +1827,11 @@
         "free_endpoint": true,
         "api_base": "https://integrate.api.nvidia.com/v1",
         "pricing_status": "free_endpoint",
-        "use_case": "physics-aware video generation for physical AI"
+        "use_case": "physics-aware video generation for physical AI",
+        "refresh_metadata_fallbacks": [
+          "video"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "video": {
         "accepts_video_input": false,
@@ -1898,7 +1902,11 @@
         "pricing_status": "free_endpoint",
         "use_case": "physical-world video/image reasoning",
         "context_window_source": "https://build.nvidia.com/models",
-        "context_window_basis": "official_catalog_snapshot"
+        "context_window_basis": "official_catalog_snapshot",
+        "refresh_metadata_fallbacks": [
+          "video"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "pricing": {
         "input_per_1m": 0.0,
@@ -2391,7 +2399,12 @@
           "reasoning"
         ],
         "context_window_source": "https://build.nvidia.com/models",
-        "context_window_basis": "official_catalog_snapshot"
+        "context_window_basis": "official_catalog_snapshot",
+        "refresh_metadata_fallbacks": [
+          "audio",
+          "video"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "pricing": {
         "input_per_1m": 0.0,

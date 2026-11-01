@@ -27,6 +27,10 @@ CATALOG_FILENAME_OVERRIDES = {
     "foundry-local": "foundry_local.json",
     "llama-cpp": "llama_cpp.json",
 }
+PROVIDER_TIMEOUT_OVERRIDES = {
+    "azure-foundry": 600,
+    "huggingface": 600,
+}
 
 
 def catalog_filename(provider: str) -> str:
@@ -389,12 +393,16 @@ def run_provider(
                 "--provider",
                 provider,
             ]
+            child_env = os.environ.copy()
+            # Preserve page-level progress from nested updater subprocesses.
+            child_env["PYTHONUNBUFFERED"] = "1"
             proc = subprocess.Popen(
                 command,
                 cwd=ROOT,
                 stdin=subprocess.DEVNULL,
                 stdout=log,
                 stderr=subprocess.STDOUT,
+                env=child_env,
                 start_new_session=os.name != "nt",
                 creationflags=(
                     subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0
@@ -535,10 +543,16 @@ def refresh(
     )
     statuses = []
     for index, provider in enumerate(providers, 1):
-        print(f"[{index}/{len(providers)}] {provider}", flush=True)
+        provider_timeout = max(
+            timeout_seconds, PROVIDER_TIMEOUT_OVERRIDES.get(provider, timeout_seconds)
+        )
+        print(
+            f"[{index}/{len(providers)}] {provider} (timeout={provider_timeout}s)",
+            flush=True,
+        )
         result = run_provider(
             provider,
-            timeout_seconds=timeout_seconds,
+            timeout_seconds=provider_timeout,
             log_directory=output_directory / "logs",
         )
         statuses.append(result)

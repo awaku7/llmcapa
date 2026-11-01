@@ -284,6 +284,8 @@ def test_fetch_github_cli_forces_refresh_when_requested(monkeypatch, capsys):
 
     class DummyRegistry:
         def fetch_github_catalog(self, **kwargs):
+            progress = kwargs.pop("progress_callback")
+            progress("Downloading GitHub file 1/1: openai.json")
             calls.update(kwargs)
             return 3
 
@@ -293,4 +295,70 @@ def test_fetch_github_cli_forces_refresh_when_requested(monkeypatch, capsys):
         == 0
     )
     assert calls == {"provider": "openai", "ref": "main", "cache_ttl": 0}
-    assert "registered 3 models" in capsys.readouterr().out.lower()
+    captured = capsys.readouterr()
+    assert "registered 3 models" in captured.out.lower()
+    assert "downloading github file 1/1" in captured.err.lower()
+
+
+def test_update_openrouter_and_bare_update(monkeypatch, capsys):
+    calls = []
+
+    class DummyRegistry:
+        def fetch_openrouter(self, **kwargs):
+            progress = kwargs.pop("progress_callback")
+            progress("Registered 12 OpenRouter models")
+            calls.append(kwargs)
+            return 7
+
+    monkeypatch.setattr(cli, "default_registry", lambda: DummyRegistry())
+    assert cli.main(["update", "openrouter"]) == 0
+    captured = capsys.readouterr()
+    assert "registered 12 openrouter models" in captured.err.lower()
+    # Keep the former bare `update` invocation working as an OpenRouter alias.
+    assert cli.main(["update"]) == 0
+    capsys.readouterr()
+    assert calls == [{"cache_ttl": 0}, {"cache_ttl": 0}]
+
+
+def test_update_hf_cli_fetches_all_pages_and_shows_progress(monkeypatch, capsys):
+    calls = []
+
+    class DummyRegistry:
+        def fetch_huggingface(self, **kwargs):
+            progress = kwargs.pop("progress_callback")
+            progress("Downloaded 200 HuggingFace models across 2 pages")
+            calls.append(kwargs)
+            return 200
+
+    monkeypatch.setattr(cli, "default_registry", lambda: DummyRegistry())
+    assert cli.main(["update", "hf"]) == 0
+    captured = capsys.readouterr()
+    assert "registered 200 models" in captured.out.lower()
+    assert "downloaded 200 huggingface models across 2 pages" in captured.err.lower()
+    # Keep the former flat command working while promoting the nested spelling.
+    assert cli.main(["fetch-hf"]) == 0
+    assert "registered 200 models" in capsys.readouterr().out.lower()
+    assert calls == [{"cache_ttl": 0}] * 2
+
+
+def test_update_github_cli_forces_refresh_when_requested(monkeypatch, capsys):
+    calls = {}
+
+    class DummyRegistry:
+        def fetch_github_catalog(self, **kwargs):
+            progress = kwargs.pop("progress_callback")
+            progress("Downloading GitHub file 1/1: openai.json")
+            calls.update(kwargs)
+            return 3
+
+    monkeypatch.setattr(cli, "default_registry", lambda: DummyRegistry())
+    assert (
+        cli.main(
+            ["update", "gh", "--provider", "openai", "--ref", "main", "--refresh"]
+        )
+        == 0
+    )
+    assert calls == {"provider": "openai", "ref": "main", "cache_ttl": 0}
+    captured = capsys.readouterr()
+    assert "registered 3 models" in captured.out.lower()
+    assert "downloading github file 1/1" in captured.err.lower()

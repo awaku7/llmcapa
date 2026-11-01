@@ -504,7 +504,7 @@
           "image/png"
         ],
         "max_input_bytes": 20971520,
-        "checked_at": "2026-10-28"
+        "checked_at": "2026-10-30"
       }
     },
     {
@@ -568,7 +568,7 @@
           "image/png"
         ],
         "max_input_bytes": 20971520,
-        "checked_at": "2026-10-28"
+        "checked_at": "2026-10-30"
       }
     },
     {
@@ -628,7 +628,7 @@
           "image/png"
         ],
         "max_input_bytes": 20971520,
-        "checked_at": "2026-10-28"
+        "checked_at": "2026-10-30"
       }
     },
     {
@@ -674,7 +674,11 @@
           "720p",
           "1080p"
         ],
-        "source": "https://docs.x.ai/developers/models"
+        "source": "https://docs.x.ai/developers/models",
+        "refresh_metadata_fallbacks": [
+          "video"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "video": {
         "accepts_video_input": false,
@@ -740,7 +744,11 @@
         "price_per_second": 0.08,
         "unit": "second",
         "note": "1.5 tier retained; docs headline $0.05/sec",
-        "source": "https://docs.x.ai/developers/models"
+        "source": "https://docs.x.ai/developers/models",
+        "refresh_metadata_fallbacks": [
+          "video"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "video": {
         "accepts_video_input": false,
@@ -807,7 +815,11 @@
         "price_per_hour": 3.0,
         "unit": "hour",
         "source": "https://docs.x.ai/developers/models",
-        "api": "voice-agent"
+        "api": "voice-agent",
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -863,7 +875,11 @@
         "price_per_1m_chars": 15.0,
         "unit": "1m_chars",
         "source": "https://docs.x.ai/developers/models",
-        "api": "tts"
+        "api": "tts",
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "audio": {
         "accepts_audio_input": false,
@@ -925,7 +941,11 @@
         "price_per_hour": 0.1,
         "unit": "hour",
         "source": "https://docs.x.ai/developers/models",
-        "api": "stt-batch"
+        "api": "stt-batch",
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -1002,7 +1022,11 @@
         "price_per_hour": 0.2,
         "unit": "hour",
         "source": "https://docs.x.ai/developers/models",
-        "api": "stt-streaming"
+        "api": "stt-streaming",
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-10-30"
       },
       "audio": {
         "accepts_audio_input": true,
