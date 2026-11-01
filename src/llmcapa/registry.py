@@ -423,8 +423,9 @@ class Registry:
         key = cap.model_id.lower()
         prov = self._normalize_provider(cap.provider)
 
-        # First-registered-wins for the flat model_id index.
-        # Also skip if key is already claimed as an alias for another model.
+        # First-registered-wins for canonical model IDs. A canonical ID must
+        # still be indexed when an earlier model claimed the same string only
+        # as an alias; the exact model ID takes precedence over that alias.
         aggregators = {
             "openrouter",
             "novita",
@@ -462,10 +463,16 @@ class Registry:
             overwrite
             or replace_with_native
             or prefer_openrouter
-            or (key not in self._models and key not in self._alias_index)
+            or key not in self._models
         ):
             self._models[key] = cap
-            self._alias_index[key] = key
+            if (
+                overwrite
+                or replace_with_native
+                or prefer_openrouter
+                or key not in self._alias_index
+            ):
+                self._alias_index[key] = key
             for alias in cap.aliases:
                 if alias.lower() not in self._alias_index:
                     self._alias_index[alias.lower()] = key

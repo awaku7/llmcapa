@@ -54,7 +54,7 @@ jobs:
         run: |
           python scripts/refresh_catalogs.py \
             --provider "$SELECTED_PROVIDER" \
-            --timeout-seconds 180 \
+            --timeout-seconds 900 \
             --output outputs/catalog_refresh
 
       - name: Run full regression suite (record pre-existing failures)

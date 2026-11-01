@@ -129,7 +129,7 @@
         "status": "Public Preview",
         "version": "4.1",
         "release_date": "October 28, 2026",
-        "description": "DeepSeek V4.1 Flash 1017 is a third-party open weight text model from DeepSeek, hosted by Mistral. Ideal for long-context coding and agentic workflows. The model is served without Mistral modifications."
+        "description": "DeepSeek V4.1 Flash 1017 is a third-party open weight model from DeepSeek, hosted by Mistral, with support for text and image inputs. Ideal for long-context coding and agentic workflows. The model is served without Mistral modifications."
       }
     },
     {
@@ -312,53 +312,6 @@
     },
     {
       "provider": "mistral",
-      "model_id": "mistral-large-2512",
-      "display_name": "Mistral Large 3",
-      "context_window": 256000,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "mistral-large-latest",
-        "mistral-large"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "currency": "USD",
-        "input_per_1m": 0.0
-      },
-      "extra": {
-        "source": "https://docs.mistral.ai/models/mistral-large-3-25-12",
-        "card_slug": "mistral-large-3-25-12",
-        "status": "GA",
-        "version": "1",
-        "release_date": "December 2, 2025",
-        "alias_count": "1",
-        "description": "Mistral Large 3, is a state-of-the-art, open-weight, general-purpose multimodal model with a granular Mixture-of-Experts architecture. It features 41B active parameters and 675B total parameters."
-      }
-    },
-    {
-      "provider": "mistral",
       "model_id": "mistral-large-4",
       "display_name": "Mistral Large 4",
       "context_window": 1000000,
@@ -399,54 +352,6 @@
         "release_date": "October 6, 2026",
         "alias_count": "1",
         "description": "Mistral Large 4 is a state-of-the-art, open-weight, general-purpose multimodal model with a granular Mixture-of-Experts architecture. It features 52B active parameters and 1.05T total parameters, and a 1.6B vision encoder."
-      }
-    },
-    {
-      "provider": "mistral",
-      "model_id": "mistral-medium-3-5",
-      "display_name": "Mistral Medium 3.5",
-      "context_window": 256000,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "mistral-medium-latest",
-        "mistral-medium"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "currency": "USD",
-        "input_per_1m": 1.5,
-        "output_per_1m": 7.5
-      },
-      "extra": {
-        "source": "https://docs.mistral.ai/models/mistral-medium-3-5-26-04",
-        "card_slug": "mistral-medium-3-5-26-04",
-        "status": "GA",
-        "version": "1",
-        "release_date": "April 28, 2026",
-        "alias_count": "2",
-        "description": "Our frontier-class multimodal model optimized for agentic and coding use cases. Released as open weights under a Modified MIT license."
       }
     },
     {
@@ -816,87 +721,6 @@
     },
     {
       "provider": "mistral",
-      "model_id": "voxtral-mini-transcribe-2602",
-      "display_name": "Voxtral Mini Transcribe 2",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "audio"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": false,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://docs.mistral.ai/models/voxtral-mini-transcribe-26-02",
-        "card_slug": "voxtral-mini-transcribe-26-02",
-        "status": "GA",
-        "version": "1",
-        "release_date": "February 4, 2026",
-        "alias_count": "1",
-        "description": "An efficient audio input model, pre-trained and optimized for transcription purposes only.",
-        "price_per_min": 0.003,
-        "supports_transcription": true,
-        "refresh_metadata_fallbacks": [
-          "audio"
-        ],
-        "refresh_metadata_fallback_checked_at": "2026-10-30"
-      },
-      "audio": {
-        "accepts_audio_input": true,
-        "speech_generation": false,
-        "speech_understanding": true,
-        "supports_streaming": false,
-        "supports_realtime": null,
-        "transcription": true,
-        "input_formats": [
-          "flac",
-          "mp3",
-          "mp4",
-          "mpeg",
-          "mpga",
-          "m4a",
-          "ogg",
-          "wav",
-          "webm"
-        ],
-        "input_mime_types": [
-          "audio/flac",
-          "audio/mpeg",
-          "audio/mp4",
-          "audio/ogg",
-          "audio/wav",
-          "audio/webm"
-        ],
-        "source_url": "https://docs.mistral.ai/capabilities/audio/",
-        "extra": {},
-        "endpoints": {
-          "transcription": true,
-          "speech_understanding": true
-        },
-        "checked_at": "2026-10-28",
-        "status": "documented"
-      }
-    },
-    {
-      "provider": "mistral",
       "model_id": "voxtral-mini-transcribe-3-0",
       "display_name": "Voxtral Mini Transcribe 3",
       "context_window": 32000,
@@ -938,7 +762,7 @@
         "refresh_metadata_fallbacks": [
           "audio"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-10-30"
+        "refresh_metadata_fallback_checked_at": "2026-11-01"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -954,76 +778,6 @@
         },
         "checked_at": "2026-10-28",
         "status": "inferred"
-      }
-    },
-    {
-      "provider": "mistral",
-      "model_id": "voxtral-mini-transcribe-realtime-2602",
-      "display_name": "Voxtral Mini Transcribe Realtime",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "audio"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://docs.mistral.ai/models/voxtral-mini-transcribe-realtime-26-02",
-        "card_slug": "voxtral-mini-transcribe-realtime-26-02",
-        "status": "GA",
-        "version": "1",
-        "release_date": "February 4, 2026",
-        "alias_count": "1",
-        "description": "An efficient audio input model, pre-trained and optimized for live transcription purposes only.",
-        "price_per_min": 0.006,
-        "supports_transcription": true,
-        "refresh_metadata_fallbacks": [
-          "audio"
-        ],
-        "refresh_metadata_fallback_checked_at": "2026-10-30"
-      },
-      "audio": {
-        "accepts_audio_input": true,
-        "speech_generation": false,
-        "speech_understanding": true,
-        "supports_streaming": true,
-        "supports_realtime": true,
-        "transcription": true,
-        "input_formats": [
-          "pcm"
-        ],
-        "input_mime_types": [
-          "audio/pcm"
-        ],
-        "source_url": "https://docs.mistral.ai/capabilities/audio/",
-        "extra": {},
-        "endpoints": {
-          "transcription": true,
-          "speech_understanding": true,
-          "realtime": true,
-          "streaming": true
-        },
-        "checked_at": "2026-10-28",
-        "status": "documented"
       }
     },
     {
@@ -1069,7 +823,7 @@
         "refresh_metadata_fallbacks": [
           "audio"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-10-30"
+        "refresh_metadata_fallback_checked_at": "2026-11-01"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -1086,75 +840,6 @@
         },
         "checked_at": "2026-10-28",
         "status": "inferred"
-      }
-    },
-    {
-      "provider": "mistral",
-      "model_id": "voxtral-mini-tts-2603",
-      "display_name": "Voxtral TTS",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "audio"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": false,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "pricing": null,
-      "extra": {
-        "source": "https://docs.mistral.ai/models/voxtral-tts-26-03",
-        "card_slug": "voxtral-tts-26-03",
-        "status": "GA",
-        "version": "1",
-        "release_date": "March 23, 2026",
-        "alias_count": "1",
-        "description": "Our state-of-the-art text-to-speech model with zero-shot voice cloning. Supports 9 languages, streaming with ~90ms time-to-first-audio, and no transcript required for voice prompts.",
-        "price_per_1m_chars": 16.0,
-        "tts_price": 16.0,
-        "supports_tts": true,
-        "tts_input_price": 0.0,
-        "refresh_metadata_fallbacks": [
-          "audio"
-        ],
-        "refresh_metadata_fallback_checked_at": "2026-10-30"
-      },
-      "audio": {
-        "accepts_audio_input": false,
-        "speech_generation": true,
-        "speech_understanding": false,
-        "supports_streaming": true,
-        "supports_realtime": null,
-        "output_formats": [
-          "wav"
-        ],
-        "output_mime_types": [
-          "audio/wav"
-        ],
-        "source_url": "https://docs.mistral.ai/capabilities/audio/",
-        "extra": {},
-        "endpoints": {
-          "speech_generation": true,
-          "streaming": true
-        },
-        "checked_at": "2026-10-28",
-        "status": "documented"
       }
     },
     {
@@ -1201,7 +886,7 @@
         "refresh_metadata_fallbacks": [
           "audio"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-10-30"
+        "refresh_metadata_fallback_checked_at": "2026-11-01"
       },
       "audio": {
         "accepts_audio_input": false,
@@ -1263,7 +948,7 @@
         "refresh_metadata_fallbacks": [
           "audio"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-10-30"
+        "refresh_metadata_fallback_checked_at": "2026-11-01"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -1323,7 +1008,7 @@
         "refresh_metadata_fallbacks": [
           "audio"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-10-30"
+        "refresh_metadata_fallback_checked_at": "2026-11-01"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -2465,6 +2150,55 @@
     },
     {
       "provider": "mistral",
+      "model_id": "mistral-large-2512",
+      "display_name": "Mistral Large 3",
+      "context_window": 256000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [
+        "mistral-large-latest",
+        "mistral-large"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "currency": "USD",
+        "input_per_1m": 0.0
+      },
+      "extra": {
+        "source": "https://docs.mistral.ai/models/mistral-large-3-25-12",
+        "card_slug": "mistral-large-3-25-12",
+        "status": "Deprecated",
+        "version": "1",
+        "release_date": "December 2, 2025",
+        "deprecation_date": "10/31/2026",
+        "replacement": "Mistral Large 4",
+        "alias_count": "1",
+        "description": "Mistral Large 3, is a state-of-the-art, open-weight, general-purpose multimodal model with a granular Mixture-of-Experts architecture. It features 41B active parameters and 675B total parameters."
+      }
+    },
+    {
+      "provider": "mistral",
       "model_id": "mistral-medium-2312",
       "display_name": "Mistral Medium 1.0",
       "context_window": 32000,
@@ -2599,6 +2333,56 @@
         "deprecation_date": "5/22/2026",
         "replacement": "Mistral Medium 3.5",
         "description": "Our frontier-class multimodal model released August 2025. Improving tone and performance."
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "mistral-medium-3-5",
+      "display_name": "Mistral Medium 3.5",
+      "context_window": 256000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [
+        "mistral-medium-latest",
+        "mistral-medium"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "currency": "USD",
+        "input_per_1m": 1.5,
+        "output_per_1m": 7.5
+      },
+      "extra": {
+        "source": "https://docs.mistral.ai/models/mistral-medium-3-5-26-04",
+        "card_slug": "mistral-medium-3-5-26-04",
+        "status": "Deprecated",
+        "version": "1",
+        "release_date": "April 28, 2026",
+        "deprecation_date": "10/31/2026",
+        "replacement": "Mistral Large 4",
+        "alias_count": "2",
+        "description": "Our frontier-class multimodal model optimized for agentic and coding use cases. Released as open weights under a Modified MIT license."
       }
     },
     {
@@ -3431,12 +3215,11 @@
         "release_date": "July 15, 2025",
         "deprecation_date": "2/27/2026",
         "replacement": "Voxtral Mini Transcribe 2",
-        "alias_count": "1",
         "description": "A mini version of our first audio input model.",
         "refresh_metadata_fallbacks": [
           "audio"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-10-30"
+        "refresh_metadata_fallback_checked_at": "2026-11-01"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -3496,7 +3279,7 @@
         "refresh_metadata_fallbacks": [
           "audio"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-10-30"
+        "refresh_metadata_fallback_checked_at": "2026-11-01"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -3512,6 +3295,232 @@
         },
         "checked_at": "2026-10-28",
         "status": "inferred"
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "voxtral-mini-transcribe-2602",
+      "display_name": "Voxtral Mini Transcribe 2",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": false,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://docs.mistral.ai/models/voxtral-mini-transcribe-26-02",
+        "card_slug": "voxtral-mini-transcribe-26-02",
+        "status": "Deprecated",
+        "version": "1",
+        "release_date": "February 4, 2026",
+        "deprecation_date": "10/31/2026",
+        "replacement": "Voxtral Mini Transcribe 3",
+        "alias_count": "1",
+        "description": "An efficient audio input model, pre-trained and optimized for transcription purposes only.",
+        "supports_transcription": true,
+        "price_per_min": 0.003,
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-11-01"
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": false,
+        "supports_realtime": null,
+        "transcription": true,
+        "input_formats": [
+          "flac",
+          "mp3",
+          "mp4",
+          "mpeg",
+          "mpga",
+          "m4a",
+          "ogg",
+          "wav",
+          "webm"
+        ],
+        "input_mime_types": [
+          "audio/flac",
+          "audio/mpeg",
+          "audio/mp4",
+          "audio/ogg",
+          "audio/wav",
+          "audio/webm"
+        ],
+        "source_url": "https://docs.mistral.ai/capabilities/audio/",
+        "extra": {},
+        "endpoints": {
+          "transcription": true,
+          "speech_understanding": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "documented"
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "voxtral-mini-transcribe-realtime-2602",
+      "display_name": "Voxtral Mini Transcribe Realtime",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "audio"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://docs.mistral.ai/models/voxtral-mini-transcribe-realtime-26-02",
+        "card_slug": "voxtral-mini-transcribe-realtime-26-02",
+        "status": "Deprecated",
+        "version": "1",
+        "release_date": "February 4, 2026",
+        "deprecation_date": "10/31/2026",
+        "replacement": "Voxtral Mini Transcribe Realtime 3",
+        "alias_count": "1",
+        "description": "An efficient audio input model, pre-trained and optimized for live transcription purposes only.",
+        "supports_transcription": true,
+        "price_per_min": 0.006,
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-11-01"
+      },
+      "audio": {
+        "accepts_audio_input": true,
+        "speech_generation": false,
+        "speech_understanding": true,
+        "supports_streaming": true,
+        "supports_realtime": true,
+        "transcription": true,
+        "input_formats": [
+          "pcm"
+        ],
+        "input_mime_types": [
+          "audio/pcm"
+        ],
+        "source_url": "https://docs.mistral.ai/capabilities/audio/",
+        "extra": {},
+        "endpoints": {
+          "transcription": true,
+          "speech_understanding": true,
+          "realtime": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "documented"
+      }
+    },
+    {
+      "provider": "mistral",
+      "model_id": "voxtral-mini-tts-2603",
+      "display_name": "Voxtral TTS",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "audio"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": true,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "source": "https://docs.mistral.ai/models/voxtral-tts-26-03",
+        "card_slug": "voxtral-tts-26-03",
+        "status": "Deprecated",
+        "version": "1",
+        "release_date": "March 23, 2026",
+        "deprecation_date": "10/31/2026",
+        "replacement": "Voxtral TTS 3",
+        "alias_count": "1",
+        "description": "Our state-of-the-art text-to-speech model with zero-shot voice cloning. Supports 9 languages, streaming with ~90ms time-to-first-audio, and no transcript required for voice prompts.",
+        "supports_tts": true,
+        "price_per_1m_chars": 16.0,
+        "tts_price": 16.0,
+        "tts_input_price": 0.0,
+        "refresh_metadata_fallbacks": [
+          "audio"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-11-01"
+      },
+      "audio": {
+        "accepts_audio_input": false,
+        "speech_generation": true,
+        "speech_understanding": false,
+        "supports_streaming": true,
+        "supports_realtime": null,
+        "output_formats": [
+          "wav"
+        ],
+        "output_mime_types": [
+          "audio/wav"
+        ],
+        "source_url": "https://docs.mistral.ai/capabilities/audio/",
+        "extra": {},
+        "endpoints": {
+          "speech_generation": true,
+          "streaming": true
+        },
+        "checked_at": "2026-10-28",
+        "status": "documented"
       }
     },
     {
@@ -3556,6 +3565,7 @@
         "release_date": "August 6, 2026",
         "deprecation_date": "9/29/2026",
         "replacement": "Z.ai GLM 5.3",
+        "alias_count": "1",
         "description": "A third-party open weight text model from Z.ai, hosted by Mistral for long-context coding and agentic workflows. The model is served without Mistral modifications."
       }
     }

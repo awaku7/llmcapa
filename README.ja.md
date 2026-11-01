@@ -256,7 +256,7 @@ print(cap.document.input_formats)
 print(cap.spatial.kind_values)
 ```
 
-Sarashina API の同梱カタログでは、チャット、Embedding、Rerank、翻訳のモデルと公式 API エンドポイントを確認できます（[公式ドキュメント](https://docs.sarashina.ai/)）。料金はユーザーからの確認に基づき0円（JPY）として収録しています（公式ドキュメントには金額表なし）。
+Sarashina API の同梱カタログでは、チャット（Sarashina3.2 mini thinking を含む）、Embedding、Rerank、翻訳のモデルと公式 API エンドポイントを確認できます。思考モデルの `reasoning_effort` 対応やモデル別RPMも公式ドキュメントに基づき収録しています（[公式ドキュメント](https://docs.sarashina.ai/)）。料金はユーザーからの確認に基づき0円（JPY）として収録しています（公式ドキュメントには金額表なし）。
 
 ```python
 sarashina = llmcapa.get("sarashina3-mini", provider="sarashina")

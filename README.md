@@ -258,7 +258,7 @@ print(cap.document.input_formats)
 print(cap.spatial.kind_values)
 ```
 
-The bundled Sarashina API catalog covers chat, embeddings, reranking, translation, and official API endpoints ([official docs](https://docs.sarashina.ai/)). Pricing is recorded as JPY 0 based on user confirmation; the official documentation does not publish a numeric price table.
+The bundled Sarashina API catalog covers chat (including Sarashina3.2 mini thinking), embeddings, reranking, translation, and official API endpoints. It records the thinking model's `reasoning_effort` support and model-specific RPM based on the official documentation ([official docs](https://docs.sarashina.ai/)). Pricing is recorded as JPY 0 based on user confirmation; the official documentation does not publish a numeric price table.
 
 ```python
 sarashina = llmcapa.get("sarashina3-mini", provider="sarashina")

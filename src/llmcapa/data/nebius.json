@@ -399,7 +399,7 @@
       "provider": "nebius",
       "model_id": "deepseek-ai/DeepSeek-V4-Flash-0731",
       "display_name": "DeepSeek-V4-Flash-0731",
-      "context_window": 1024000,
+      "context_window": 1048576,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -504,7 +504,7 @@
       "provider": "nebius",
       "model_id": "deepseek-ai/DeepSeek-V4-Pro-0813",
       "display_name": "DeepSeek-V4-Pro-0813",
-      "context_window": 979000,
+      "context_window": 1048576,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -551,7 +551,7 @@
       "provider": "nebius",
       "model_id": "deepseek-ai/DeepSeek-V4.1-Flash",
       "display_name": "DeepSeek V4.1 Flash",
-      "context_window": 1048000,
+      "context_window": 1048576,
       "max_output_tokens": 0,
       "input_modalities": [
         "text",
@@ -830,55 +830,6 @@
           "reasoning",
           "responses_api",
           "summarization",
-          "text"
-        ],
-        "tags": [],
-        "external_provider": false
-      }
-    },
-    {
-      "provider": "nebius",
-      "model_id": "moonshotai/Kimi-K3",
-      "display_name": "Kimi-K3",
-      "context_window": 1024000,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": null,
-      "supports_function_calling": true,
-      "supports_json_mode": null,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_responses_api": true,
-      "pricing": {
-        "input_per_1m": 3.0,
-        "output_per_1m": 15.0,
-        "currency": "USD"
-      },
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "extra": {
-        "source": "https://tokenfactory.nebius.com/api/public/models_info",
-        "vendor": "moonshotai",
-        "model_type": "image2text",
-        "regions": [
-          "eu-west2"
-        ],
-        "use_cases": [
-          "code",
-          "context_and_rag",
-          "dedicated-endpoint",
-          "function_calling",
-          "image",
-          "reasoning",
-          "responses_api",
           "text"
         ],
         "tags": [],
@@ -1375,7 +1326,7 @@
       "provider": "nebius",
       "model_id": "zai-org/GLM-5.3",
       "display_name": "GLM-5.3",
-      "context_window": 1024000,
+      "context_window": 1048576,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -1422,7 +1373,7 @@
       "provider": "nebius",
       "model_id": "zai-org/GLM-5.3-Flash",
       "display_name": "GLM-5.3-Flash",
-      "context_window": 1024000,
+      "context_window": 1048576,
       "max_output_tokens": 0,
       "input_modalities": [
         "text",
@@ -1465,6 +1416,57 @@
         ],
         "tags": [],
         "external_provider": false
+      }
+    },
+    {
+      "provider": "nebius",
+      "model_id": "moonshotai/Kimi-K3",
+      "display_name": "Kimi-K3",
+      "context_window": 1024000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": null,
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_responses_api": true,
+      "pricing": {
+        "input_per_1m": 3.0,
+        "output_per_1m": 15.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://tokenfactory.nebius.com/api/public/models_info",
+        "vendor": "moonshotai",
+        "model_type": "image2text",
+        "regions": [
+          "eu-west2"
+        ],
+        "use_cases": [
+          "code",
+          "context_and_rag",
+          "dedicated-endpoint",
+          "function_calling",
+          "image",
+          "reasoning",
+          "responses_api",
+          "text"
+        ],
+        "tags": [],
+        "external_provider": false,
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-01"
       }
     }
   ]

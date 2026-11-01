@@ -71,7 +71,7 @@
           "wait"
         ],
         "source_url": "https://ai.azure.com/catalog/models",
-        "checked_at": "2026-10-30"
+        "checked_at": "2026-11-01"
       }
     },
     {
@@ -4783,7 +4783,7 @@
         "requires_beta": true,
         "enable_zoom": false,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-30",
+        "checked_at": "2026-11-01",
         "beta_header": "computer-use-2025-01-24"
       }
     },
@@ -4885,7 +4885,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-30",
+        "checked_at": "2026-11-01",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -4946,7 +4946,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-30",
+        "checked_at": "2026-11-01",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -5006,7 +5006,7 @@
         "requires_beta": true,
         "enable_zoom": false,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-30",
+        "checked_at": "2026-11-01",
         "beta_header": "computer-use-2025-01-24"
       }
     },
@@ -5067,7 +5067,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-30",
+        "checked_at": "2026-11-01",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -5245,8 +5245,7 @@
         "deployment_options": "AOAI,UnifiedEndpointMaaS,Serverless API",
         "version": "2026-09-08",
         "maas_or_paygo": true,
-        "summary": "An advanced image model for high-quality creation, editing, and production-ready visuals.",
-        "not_listed_in_current_docs": true
+        "summary": "An advanced image model for high-quality creation, editing, and production-ready visuals."
       },
       "image": {
         "generation": true,
@@ -8083,6 +8082,90 @@
     },
     {
       "provider": "huggingface",
+      "model_id": "baai--bge-large-zh",
+      "display_name": "bge-large-zh",
+      "context_window": 512,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embeddings"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Embeddings",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "baai-bge-large-zh",
+        "huggingface/baai--bge-large-zh"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "deployment_options": "MaaP,Managed Compute",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "Chinese 1024-dimensional BGE embedding model for retrieval and semantic similarity."
+      }
+    },
+    {
+      "provider": "huggingface",
+      "model_id": "baai--bge-large-zh-v1.5",
+      "display_name": "bge-large-zh-v1.5",
+      "context_window": 512,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embeddings"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Embeddings",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "baai-bge-large-zh-v1.5",
+        "huggingface/baai--bge-large-zh-v1.5"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "deployment_options": "MaaP,Managed Compute",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "Chinese 1024-dimensional BGE v1.5 embedding model for retrieval and semantic similarity with a more reasonable similarity distribution."
+      }
+    },
+    {
+      "provider": "huggingface",
       "model_id": "bsc-lt--alia-40b-instruct-2601",
       "display_name": "ALIA-40b-instruct-2601",
       "context_window": 163840,
@@ -8413,6 +8496,51 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Multimodal DeepSeek V4.1 Flash MoE for long-context reasoning, coding, and agents.",
+        "long_context": true,
+        "context_window": 1048576
+      }
+    },
+    {
+      "provider": "huggingface",
+      "model_id": "deepseek-ai--deepseek-v4.1-flash-1017",
+      "display_name": "DeepSeek-V4.1-Flash-1017",
+      "context_window": 1048576,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "deepseek-ai-deepseek-v4.1-flash-1017",
+        "huggingface/deepseek-ai--deepseek-v4.1-flash-1017"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "deployment_options": "MaaP,Managed Compute",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "DeepSeek V4.1 Flash 1017 multimodal MoE update for faster reasoning, coding, and agents.",
         "long_context": true,
         "context_window": 1048576
       }
@@ -9174,6 +9302,48 @@
         "version": 2,
         "maas_or_paygo": true,
         "summary": "English 1024-dimensional E5 embedding model for retrieval and similarity with query/passage prefixes."
+      }
+    },
+    {
+      "provider": "huggingface",
+      "model_id": "intfloat--multilingual-e5-large",
+      "display_name": "multilingual-e5-large",
+      "context_window": 512,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embeddings"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Embeddings",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "open-source",
+      "aliases": [
+        "intfloat-multilingual-e5-large",
+        "huggingface/intfloat--multilingual-e5-large"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "deployment_options": "MaaP,Managed Compute",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "Multilingual 1024-dimensional E5 embedding model for retrieval and similarity across 94 languages with query/passage prefixes."
       }
     },
     {
@@ -14835,6 +15005,46 @@
       }
     },
     {
+      "provider": "meta",
+      "model_id": "muse-spark-1.3",
+      "display_name": "Muse-Spark-1.3",
+      "context_window": 0,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "Preview",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "meta/muse-spark-1.3"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maas-inference"
+        ],
+        "azure_offers": [
+          "standard-paygo"
+        ],
+        "deployment_options": "ServerlessMaaS,UnifiedEndpointMaaS,Serverless API",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "Muse-Spark-1.3 is a Meta text-generation model for conversational experiences, drafting, summarization, and question answering."
+      }
+    },
+    {
       "provider": "microsoft",
       "model_id": "Azure-AI-Content-Understanding",
       "display_name": "Azure-AI-Content-Understanding",
@@ -15513,8 +15723,7 @@
         "deployment_options": "UnifiedEndpointMaaS,ServerlessMaaS,Serverless API",
         "version": "2026-07-31",
         "maas_or_paygo": true,
-        "summary": "Built for creatives, delivering enhanced photorealism at scale.",
-        "not_listed_in_current_docs": true
+        "summary": "Built for creatives, delivering enhanced photorealism at scale."
       },
       "image": {
         "generation": true,
@@ -19967,7 +20176,7 @@
         "pricing_match_key": "microsoft-decision-1",
         "official_model_catalog_url": "https://ai.azure.com/catalog/models/Microsoft-Decision-1",
         "official_usage_docs": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-microsoft-decision",
-        "official_catalog_checked_at": "2026-10-30",
+        "official_catalog_checked_at": "2026-11-01",
         "deployment_types": [
           "DataZoneStandard",
           "GlobalStandard"
@@ -20378,7 +20587,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-30",
+        "checked_at": "2026-11-01",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -20424,7 +20633,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-30",
+        "checked_at": "2026-11-01",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -20470,7 +20679,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-30",
+        "checked_at": "2026-11-01",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -20516,7 +20725,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-30",
+        "checked_at": "2026-11-01",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -20562,7 +20771,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-30",
+        "checked_at": "2026-11-01",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -20608,7 +20817,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-30",
+        "checked_at": "2026-11-01",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -20654,7 +20863,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-30",
+        "checked_at": "2026-11-01",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -20700,7 +20909,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-10-30",
+        "checked_at": "2026-11-01",
         "beta_header": "computer-use-2025-11-24"
       }
     },

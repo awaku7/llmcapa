@@ -352,6 +352,42 @@ def test_huggingface_scraper_fetches_without_a_text_only_pipeline_filter(monkeyp
     assert "pipeline_tag" not in calls[0][1]["params"]
 
 
+def test_huggingface_scraper_stops_after_download_threshold(monkeypatch):
+    scraper = _load_script("scrape_huggingface")
+    calls = []
+
+    class Response:
+        def __init__(self):
+            self.status_code = 200
+            self.headers = {
+                "Link": '<https://huggingface.co/api/models?cursor=next>; rel="next"'
+            }
+            self.text = ""
+
+        def json(self):
+            return [
+                {"id": "org/popular-1", "downloads": 100},
+                {"id": "org/popular-2", "downloads": 50},
+                {"id": "org/below-threshold", "downloads": 49},
+            ]
+
+    class Session:
+        def get(self, url, **kwargs):
+            calls.append((url, kwargs))
+            return Response()
+
+        def close(self):
+            pass
+
+    monkeypatch.setattr(scraper.requests, "Session", Session)
+    monkeypatch.setattr(scraper.time, "sleep", lambda _seconds: None)
+
+    rows = scraper.fetch_models(min_downloads=50)
+
+    assert [row["id"] for row in rows] == ["org/popular-1", "org/popular-2"]
+    assert len(calls) == 1
+
+
 def test_huggingface_scraper_collects_multiple_modalities_and_leaves_unknowns_unknown():
     scraper = _load_script("scrape_huggingface")
     rows = scraper.convert_to_catalog_format(

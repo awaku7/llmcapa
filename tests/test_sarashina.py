@@ -36,6 +36,18 @@ def test_sarashina_catalog_is_registered_with_documented_capabilities() -> None:
     assert mini.supports_function_calling is True
     assert mini.supports_json_schema is True
     assert mini.extra["endpoints"][0]["path"] == "/chat/completions"
+    assert mini.extra["requests_per_minute"] == 30
+    guard = llmcapa.get("sarashina3-guard", provider="sarashina")
+    assert guard.extra["requests_per_minute"] == 6
+
+    thinking = llmcapa.get(_update_sarashina.THINKING_MODEL, provider="sarashina")
+    assert thinking.display_name == "Sarashina3.2 mini thinking"
+    assert thinking.context_window == 128_000
+    assert thinking.max_output_tokens == 8_000
+    assert thinking.supports_reasoning is True
+    assert thinking.supports_reasoning_effort is True
+    assert thinking.supports_function_calling is True
+    assert thinking.extra["reasoning_effort_values"] == ["low", "medium", "high"]
 
     embedding = llmcapa.get("sarashina3-embedding", provider="sarashina")
     assert embedding.embedding.dimensions == 1_536
@@ -53,6 +65,7 @@ def test_sarashina_catalog_is_registered_with_documented_capabilities() -> None:
     assert translate.supports_streaming is False
     assert translate.extra["input_limit"] == 5_000
     assert translate.extra["source_language_values"] == ["ja", "en"]
+    assert translate.extra["requests_per_minute"] == 30
 
 
 def test_sarashina_updater_requires_all_official_model_and_endpoint_docs() -> None:
@@ -70,7 +83,7 @@ def test_sarashina_updater_requires_all_official_model_and_endpoint_docs() -> No
         "rate_limits": " ".join(_update_sarashina.ALL_MODELS),
     }
     catalog = _update_sarashina.catalog_from_docs(pages, checked_at="2026-10-14")
-    assert len(catalog["models"]) == 6
+    assert len(catalog["models"]) == 7
     assert all(
         model["pricing"]
         == {"input_per_1m": 0.0, "output_per_1m": 0.0, "currency": "JPY"}

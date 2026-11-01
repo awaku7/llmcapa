@@ -36,6 +36,36 @@ def test_data_files_exist():
     assert list(DATA_DIR.glob("*.json")), "no bundled data files"
 
 
+def test_canonical_model_id_is_not_dropped_by_an_earlier_alias():
+    registry = Registry()
+    registry._loaded = True
+    alias_model = Capability.from_dict(
+        {
+            "provider": "huggingface",
+            "model_id": "org/model-snapshot",
+            "context_window": 0,
+            "max_output_tokens": 0,
+            "aliases": ["native-model-id"],
+        }
+    )
+    native_model = Capability.from_dict(
+        {
+            "provider": "native-provider",
+            "model_id": "native-model-id",
+            "context_window": 0,
+            "max_output_tokens": 0,
+        }
+    )
+
+    registry.register(alias_model)
+    registry.register(native_model)
+
+    assert {cap.model_id for cap in registry.list_models()} == {
+        "org/model-snapshot",
+        "native-model-id",
+    }
+
+
 @pytest.mark.parametrize("fname,record", list(_all_records()))
 def test_record_schema(fname, record):
     missing = REQUIRED_KEYS - set(record)

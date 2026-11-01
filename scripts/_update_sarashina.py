@@ -29,7 +29,13 @@ ENDPOINTS = {
     "translate": f"{BASE_URL}/translate",
 }
 
-CHAT_MODELS = ("sarashina3-mini", "sarashina3-nano", "sarashina3-guard")
+THINKING_MODEL = "sarashina3.2-mini-thinking"
+CHAT_MODELS = (
+    THINKING_MODEL,
+    "sarashina3-mini",
+    "sarashina3-nano",
+    "sarashina3-guard",
+)
 ALL_MODELS = CHAT_MODELS + (
     "sarashina3-embedding",
     "sarashina3-rerank",
@@ -102,6 +108,7 @@ def _base_model(
     checked_at: str,
     supports_chat_completion: bool = False,
     supports_streaming: bool = False,
+    supports_reasoning_effort: bool = False,
     supports_function_calling: bool | None = False,
     supports_json_mode: bool | None = False,
     supports_json_schema: bool | None = False,
@@ -141,7 +148,7 @@ def _base_model(
         "supports_reasoning": supports_reasoning,
         "supports_chat_completion": supports_chat_completion,
         "supports_responses_api": False,
-        "supports_reasoning_effort": False,
+        "supports_reasoning_effort": supports_reasoning_effort,
         "supports_thinking_budget": False,
         "supports_thinking_level": False,
         "supports_anthropic_api": False,
@@ -163,7 +170,7 @@ def _base_model(
 
 
 def catalog_from_docs(pages: dict[str, str], checked_at: str | None = None) -> dict:
-    """Build the six-model catalog after checking each official docs page."""
+    """Build the catalog after checking each official docs page."""
     _require_documentation(pages)
     checked_at = checked_at or datetime.now(timezone.utc).date().isoformat()
     chat_source = DOCS["chat"]
@@ -171,6 +178,31 @@ def catalog_from_docs(pages: dict[str, str], checked_at: str | None = None) -> d
     rerank_source = DOCS["rerank"]
     translate_source = DOCS["translate"]
     models = [
+        _base_model(
+            THINKING_MODEL,
+            display_name="Sarashina3.2 mini thinking",
+            context_window=128_000,
+            max_output_tokens=8_000,
+            input_modalities=["text"],
+            output_modalities=["text"],
+            endpoint=_endpoint("/chat/completions", "openai-compatible", chat_source),
+            source_pages=[DOCS["models"], chat_source, DOCS["rate_limits"]],
+            checked_at=checked_at,
+            supports_chat_completion=True,
+            supports_streaming=True,
+            supports_reasoning=True,
+            supports_reasoning_effort=True,
+            supports_function_calling=True,
+            supports_json_mode=True,
+            supports_json_schema=True,
+            rpm=30,
+            extra={
+                "api_max_completion_tokens": 8_000,
+                "reasoning_effort_values": ["low", "medium", "high"],
+                "supported_response_formats": ["text", "json_object", "json_schema"],
+                "compatibility_note": "OpenAI Chat Completions subset; undocumented parameters are ignored.",
+            },
+        ),
         _base_model(
             "sarashina3-mini",
             display_name="Sarashina3 mini",
@@ -187,11 +219,11 @@ def catalog_from_docs(pages: dict[str, str], checked_at: str | None = None) -> d
             supports_json_mode=True,
             supports_json_schema=True,
             supports_reasoning=False,
-            rpm=6,
+            rpm=30,
             extra={
                 "api_max_completion_tokens": 8_000,
                 "supported_response_formats": ["text", "json_object", "json_schema"],
-                "compatibility_note": "OpenAI Chat Completions subset; undocumented parameters are rejected.",
+                "compatibility_note": "OpenAI Chat Completions subset; undocumented parameters are ignored.",
             },
         ),
         _base_model(
@@ -214,7 +246,7 @@ def catalog_from_docs(pages: dict[str, str], checked_at: str | None = None) -> d
             extra={
                 "api_max_completion_tokens": 8_000,
                 "supported_response_formats": ["text", "json_object", "json_schema"],
-                "compatibility_note": "OpenAI Chat Completions subset; undocumented parameters are rejected.",
+                "compatibility_note": "OpenAI Chat Completions subset; undocumented parameters are ignored.",
             },
         ),
         _base_model(
@@ -322,7 +354,7 @@ def catalog_from_docs(pages: dict[str, str], checked_at: str | None = None) -> d
             source_pages=[DOCS["models"], translate_source, DOCS["rate_limits"]],
             checked_at=checked_at,
             supports_streaming=False,
-            rpm=6,
+            rpm=30,
             extra={
                 "model_parameter_required": False,
                 "input_limit": 5_000,
@@ -352,10 +384,8 @@ def main() -> None:
         model["extra"] = {**old_extra, **model["extra"]}
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(
-        json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
-
+    with OUT.open("w", encoding="utf-8", newline="\r\n") as handle:
+        handle.write(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
     print(f"sarashina.json: {len(payload['models'])} models updated; pricing=JPY 0")
 
 
