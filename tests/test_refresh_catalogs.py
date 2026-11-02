@@ -72,6 +72,24 @@ def test_provider_filename_special_cases():
     assert refresh.catalog_filename("openrouter") == "openrouter.json"
 
 
+def test_resume_accepts_only_explicitly_staged_catalog_changes():
+    staged_catalog = {"src/llmcapa/data/ai21.json"}
+    with pytest.raises(ValueError, match="--resume-staged-catalogs"):
+        refresh.validate_staged_catalogs(
+            staged_catalog, allow_staged_catalogs=False
+        )
+
+    refresh.validate_staged_catalogs(staged_catalog, allow_staged_catalogs=True)
+    refresh.validate_staged_catalogs(
+        {"scripts/refresh_catalogs.py"}, allow_staged_catalogs=True
+    )
+
+    with pytest.raises(ValueError, match="unrelated staged changes"):
+        refresh.validate_staged_catalogs(
+            {"src/llmcapa/registry.py"}, allow_staged_catalogs=True
+        )
+
+
 def test_report_lists_all_model_changes_and_failed_provider(tmp_path):
     results = [
         {

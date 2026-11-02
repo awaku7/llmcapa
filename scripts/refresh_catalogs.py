@@ -371,6 +371,47 @@ def restore_unstaged() -> None:
     subprocess.run(["git", "restore", "--worktree", "--", "."], cwd=ROOT, check=True)
 
 
+def validate_staged_catalogs(
+    staged_paths: set[str], *, allow_staged_catalogs: bool
+) -> None:
+    """Reject staged changes unless explicitly resuming a catalog refresh.
+
+    A refresh stages each successful provider immediately. If an all-provider
+    run is interrupted, this lets the operator rerun it without discarding
+    those verified catalog updates. Only catalog files and the refresh runner,
+    its provider-specific fixes, and their tests are permitted on resume.
+    """
+    if not staged_paths:
+        return
+    if not allow_staged_catalogs:
+        raise ValueError(
+            "catalog refresh requires a clean Git index; use "
+            "--resume-staged-catalogs only to continue a previous refresh"
+        )
+    catalog_paths = {
+        f"src/llmcapa/data/{catalog_filename(provider)}"
+        for provider in PROVIDER_SCRIPTS
+    }
+    # The refresh runner and its regression tests may also be staged when the
+    # resume guard itself was just fixed to support this retry.
+    resumable_paths = catalog_paths | {
+        "scripts/refresh_catalogs.py",
+        "scripts/_image_capability_postprocess.py",
+        "scripts/_update_meta.py",
+        "scripts/_update_openrouter.py",
+        "scripts/_update_xai.py",
+        "tests/test_refresh_catalogs.py",
+        "tests/test_image_capability_postprocess.py",
+        "tests/test_computer_use_updaters.py",
+    }
+    unexpected = staged_paths - resumable_paths
+    if unexpected:
+        raise ValueError(
+            "cannot resume with unrelated staged changes: "
+            f"{sorted(unexpected)}"
+        )
+
+
 def run_provider(
     provider: str, *, timeout_seconds: int, log_directory: Path
 ) -> dict[str, Any]:
@@ -524,16 +565,31 @@ def write_reports(
 
 
 def refresh(
-    selected_provider: str, timeout_seconds: int, output_directory: Path
+    selected_provider: str,
+    timeout_seconds: int,
+    output_directory: Path,
+    *,
+    allow_staged_catalogs: bool = False,
 ) -> dict[str, int]:
-    # A rollback restores the working tree from the Git index. Never do that
-    # when a developer already has uncommitted or staged changes.
-    for args in (
-        ["git", "diff", "--quiet", "--"],
-        ["git", "diff", "--cached", "--quiet", "--"],
-    ):
-        if subprocess.run(args, cwd=ROOT, check=False).returncode:
-            raise ValueError("catalog refresh requires a clean Git working tree")
+    # Per-provider rollback restores the worktree from the index. Keep the
+    # default strict, but allow an explicit resume after earlier providers have
+    # already been staged by this script. Never permit unstaged tracked edits.
+    if subprocess.run(
+        ["git", "diff", "--quiet", "--"], cwd=ROOT, check=False
+    ).returncode:
+        raise ValueError("catalog refresh requires no unstaged tracked changes")
+    staged = subprocess.run(
+        ["git", "diff", "--cached", "--name-only", "-z", "--"],
+        cwd=ROOT,
+        check=True,
+        stdout=subprocess.PIPE,
+    )
+    staged_paths = {
+        name for name in staged.stdout.decode("utf-8").split("\0") if name
+    }
+    validate_staged_catalogs(
+        staged_paths, allow_staged_catalogs=allow_staged_catalogs
+    )
 
     if selected_provider != "all" and selected_provider not in PROVIDER_SCRIPTS:
         raise ValueError(f"unknown provider: {selected_provider}")
@@ -580,11 +636,21 @@ def main() -> int:
     parser.add_argument("--provider", default="all")
     parser.add_argument("--timeout-seconds", type=int, default=900)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument(
+        "--resume-staged-catalogs",
+        action="store_true",
+        help="resume after this script staged successful catalog updates",
+    )
     args = parser.parse_args()
     if args.timeout_seconds < 1:
         parser.error("--timeout-seconds must be positive")
     try:
-        totals = refresh(args.provider, args.timeout_seconds, args.output)
+        totals = refresh(
+            args.provider,
+            args.timeout_seconds,
+            args.output,
+            allow_staged_catalogs=args.resume_staged_catalogs,
+        )
     except ValueError as exc:
         parser.error(str(exc))
     # Partial failure is shown explicitly in the report and PR.

@@ -839,6 +839,16 @@
         "currency": "USD"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 100000,
+            "prompt": "0.0000005",
+            "completion": "0.0000025",
+            "input_cache_read": "0.00000005",
+            "input_cache_write": "0.000000625",
+            "input_cache_write_1h": "0.000001"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -871,16 +881,6 @@
         "cache_write_per_1m": 0.125,
         "cache_write_1h_per_1m": 0.2,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 100000,
-            "prompt": "0.0000005",
-            "completion": "0.0000025",
-            "input_cache_read": "0.00000005",
-            "input_cache_write": "0.000000625",
-            "input_cache_write_1h": "0.000001"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "supported_efforts": [
@@ -1209,8 +1209,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.0339,
-        "output_per_1m": 1.14,
+        "input_per_1m": 0.035,
+        "output_per_1m": 0.5,
         "currency": "USD"
       },
       "extra": {
@@ -1253,7 +1253,7 @@
         ],
         "created": "2026-09-14",
         "description": "This model always redirects to the latest model in the DeepSeek Flash family.",
-        "cache_read_per_1m": 0.0336,
+        "cache_read_per_1m": 0.005,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -1319,7 +1319,7 @@
       "license_type": "api",
       "pricing": {
         "input_per_1m": 0.1035,
-        "output_per_1m": 4.0,
+        "output_per_1m": 8.0,
         "currency": "USD"
       },
       "extra": {
@@ -1427,8 +1427,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.0398,
-        "output_per_1m": 0.1677,
+        "input_per_1m": 0.059,
+        "output_per_1m": 0.3,
         "currency": "USD"
       },
       "extra": {
@@ -1471,7 +1471,7 @@
         ],
         "created": "2026-08-01",
         "description": "This model always redirects to the latest model in the DeepSeek V4 Flash family.",
-        "cache_read_per_1m": 0.028,
+        "cache_read_per_1m": 0.035,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -1996,8 +1996,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.1719,
-        "output_per_1m": 9.3388,
+        "input_per_1m": 0.1495,
+        "output_per_1m": 7.15,
         "currency": "USD"
       },
       "extra": {
@@ -2040,7 +2040,7 @@
         ],
         "created": "2026-04-27",
         "description": "This model always redirects to the latest model in the Kimi family.",
-        "cache_read_per_1m": 0.17,
+        "cache_read_per_1m": 0.07475,
         "default_parameters": {
           "top_p": 0.95
         },
@@ -2146,6 +2146,15 @@
         "currency": "USD"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.00002",
+            "completion": "0.000075",
+            "input_cache_read": "0.000002",
+            "input_cache_write": "0.000025"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -2177,15 +2186,6 @@
         "cache_read_per_1m": 1.0,
         "cache_write_per_1m": 12.5,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.00002",
-            "completion": "0.000075",
-            "input_cache_read": "0.000002",
-            "input_cache_write": "0.000025"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true,
           "default_enabled": true,
@@ -2336,6 +2336,15 @@
         "currency": "USD"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.0000002",
+            "completion": "0.00000075",
+            "input_cache_read": "0.00000002",
+            "input_cache_write": "0.00000025"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -2367,15 +2376,6 @@
         "cache_read_per_1m": 0.01,
         "cache_write_per_1m": 0.125,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.0000002",
-            "completion": "0.00000075",
-            "input_cache_read": "0.00000002",
-            "input_cache_write": "0.00000025"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -2588,6 +2588,15 @@
         "currency": "USD"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.000004",
+            "completion": "0.000015",
+            "input_cache_read": "0.0000002",
+            "input_cache_write": "0.000005"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -2619,15 +2628,6 @@
         "cache_read_per_1m": 0.1,
         "cache_write_per_1m": 2.5,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.000004",
-            "completion": "0.000015",
-            "input_cache_read": "0.0000002",
-            "input_cache_write": "0.000005"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true,
           "default_enabled": true,
@@ -2718,6 +2718,15 @@
         "currency": "USD"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.000002",
+            "completion": "0.0000075",
+            "input_cache_read": "0.0000001",
+            "input_cache_write": "0.0000025"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -2749,15 +2758,6 @@
         "cache_read_per_1m": 0.05,
         "cache_write_per_1m": 1.25,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.000002",
-            "completion": "0.0000075",
-            "input_cache_read": "0.0000001",
-            "input_cache_write": "0.0000025"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -3126,6 +3126,14 @@
         "currency": "USD"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.000004",
+            "completion": "0.000012",
+            "input_cache_read": "0.000001"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -3158,14 +3166,6 @@
         "description": "This model always redirects to the latest Grok model from xAI.",
         "cache_read_per_1m": 0.5,
         "web_search_per_request_usd": 0.005,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 200000,
-            "prompt": "0.000004",
-            "completion": "0.000012",
-            "input_cache_read": "0.000001"
-          }
-        ],
         "default_parameters": {
           "temperature": 0.7,
           "top_p": 0.95
@@ -3254,8 +3254,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.0477,
-        "output_per_1m": 0.0701,
+        "input_per_1m": 0.0285,
+        "output_per_1m": 0.0923,
         "currency": "USD"
       },
       "extra": {
@@ -3297,7 +3297,7 @@
         ],
         "created": "2026-08-27",
         "description": "This model always redirects to the latest model in the GLM Flash family.",
-        "cache_read_per_1m": 0.03,
+        "cache_read_per_1m": 0.0285,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -6018,6 +6018,16 @@
         "currency": "USD"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 100000,
+            "prompt": "0.0000005",
+            "completion": "0.0000025",
+            "input_cache_read": "0.00000005",
+            "input_cache_write": "0.000000625",
+            "input_cache_write_1h": "0.000001"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -6050,16 +6060,6 @@
         "cache_write_per_1m": 0.125,
         "cache_write_1h_per_1m": 0.2,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 100000,
-            "prompt": "0.0000005",
-            "completion": "0.0000025",
-            "input_cache_read": "0.00000005",
-            "input_cache_write": "0.000000625",
-            "input_cache_write_1h": "0.000001"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "supported_efforts": [
@@ -6076,7 +6076,7 @@
           "details": "/api/v1/models/anthropic/claude-haiku-5.5-20261007/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 7,
+          "design_arena": 8,
           "artificial_analysis": 1
         },
         "features": [
@@ -6155,6 +6155,16 @@
         "currency": "USD"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 100000,
+            "prompt": "0.00000025",
+            "completion": "0.00000125",
+            "input_cache_read": "0.000000025",
+            "input_cache_write": "0.0000003125",
+            "input_cache_write_1h": "0.0000005"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -6186,16 +6196,6 @@
         "cache_write_per_1m": 0.0625,
         "cache_write_1h_per_1m": 0.1,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 100000,
-            "prompt": "0.00000025",
-            "completion": "0.00000125",
-            "input_cache_read": "0.000000025",
-            "input_cache_write": "0.0000003125",
-            "input_cache_write_1h": "0.0000005"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "supported_efforts": [
@@ -6212,7 +6212,7 @@
           "details": "/api/v1/models/anthropic/claude-haiku-5.5-20261007/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 7,
+          "design_arena": 8,
           "artificial_analysis": 1
         },
         "features": [
@@ -6797,7 +6797,7 @@
           "details": "/api/v1/models/anthropic/claude-4.6-opus-20260205/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 15
+          "design_arena": 16
         },
         "features": [
           "tools",
@@ -6927,7 +6927,7 @@
           "details": "/api/v1/models/anthropic/claude-4.6-opus-20260205/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 15
+          "design_arena": 16
         },
         "features": [
           "tools",
@@ -7315,7 +7315,7 @@
           "details": "/api/v1/models/anthropic/claude-4.8-opus-20260528/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 23,
+          "design_arena": 24,
           "artificial_analysis": 1
         },
         "features": [
@@ -7444,7 +7444,7 @@
           "details": "/api/v1/models/anthropic/claude-4.8-opus-20260528/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 23,
+          "design_arena": 24,
           "artificial_analysis": 1
         },
         "features": [
@@ -8039,6 +8039,16 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.000006",
+            "completion": "0.0000225",
+            "input_cache_read": "0.0000006",
+            "input_cache_write": "0.0000075",
+            "input_cache_write_1h": "0.000012"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -8072,16 +8082,6 @@
         "cache_write_per_1m": 3.75,
         "cache_write_1h_per_1m": 6.0,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 200000,
-            "prompt": "0.000006",
-            "completion": "0.0000225",
-            "input_cache_read": "0.0000006",
-            "input_cache_write": "0.0000075",
-            "input_cache_write_1h": "0.000012"
-          }
-        ],
         "default_parameters": {
           "temperature": 1,
           "top_p": 1
@@ -8165,6 +8165,16 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.000003",
+            "completion": "0.00001125",
+            "input_cache_read": "0.0000003",
+            "input_cache_write": "0.00000375",
+            "input_cache_write_1h": "0.000006"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -8197,16 +8207,6 @@
         "cache_write_per_1m": 1.875,
         "cache_write_1h_per_1m": 3.0,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 200000,
-            "prompt": "0.000003",
-            "completion": "0.00001125",
-            "input_cache_read": "0.0000003",
-            "input_cache_write": "0.00000375",
-            "input_cache_write_1h": "0.000006"
-          }
-        ],
         "default_parameters": {
           "temperature": 1,
           "top_p": 1
@@ -10344,6 +10344,13 @@
         "status": "inferred"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 128000,
+            "prompt": "0.0000005",
+            "completion": "0.000004"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -10373,13 +10380,6 @@
         "created": "2025-12-23",
         "description": "Seed 1.6 is a general-purpose model released by the ByteDance Seed team. It incorporates multimodal capabilities and adaptive deep thinking with a 256K context window.",
         "expiration_date": "2026-11-11",
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 128000,
-            "prompt": "0.0000005",
-            "completion": "0.000004"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false
         },
@@ -10468,6 +10468,13 @@
         "status": "inferred"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 128000,
+            "prompt": "0.0000001",
+            "completion": "0.0000008"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -10497,13 +10504,6 @@
         "created": "2025-12-23",
         "description": "Seed 1.6 Flash is an ultra-fast multimodal deep thinking model by ByteDance Seed, supporting both text and visual understanding. It features a 256k context window and can generate outputs of...",
         "expiration_date": "2026-11-11",
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 128000,
-            "prompt": "0.0000001",
-            "completion": "0.0000008"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false
         },
@@ -10708,6 +10708,13 @@
         "status": "inferred"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 128000,
+            "prompt": "0.000001",
+            "completion": "0.000006"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -10738,13 +10745,6 @@
         "created": "2026-08-12",
         "description": "Seed 2.0 Code is a model from ByteDance Seed optimized for agentic coding. It is suited for frontend development, multilingual programming tasks, and coding-agent workflows in tools such as Claude...",
         "expiration_date": "2026-11-11",
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 128000,
-            "prompt": "0.000001",
-            "completion": "0.000006"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "supported_efforts": [
@@ -10849,6 +10849,13 @@
         "status": "inferred"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 128000,
+            "prompt": "0.0000005",
+            "completion": "0.000004"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -10878,13 +10885,6 @@
         ],
         "created": "2026-03-10",
         "description": "Seed-2.0-Lite is a versatile, cost‑efficient enterprise workhorse that delivers strong multimodal and agent capabilities while offering noticeably lower latency, making it a practical default choice for most production workloads across...",
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 128000,
-            "prompt": "0.0000005",
-            "completion": "0.000004"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "supported_efforts": [
@@ -10990,6 +10990,13 @@
         "status": "inferred"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 128000,
+            "prompt": "0.0000002",
+            "completion": "0.0000008"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -11019,13 +11026,6 @@
         ],
         "created": "2026-02-26",
         "description": "Seed-2.0-mini targets latency-sensitive, high-concurrency, and cost-sensitive scenarios, emphasizing fast response and flexible inference deployment. It delivers performance comparable to ByteDance-Seed-1.6, supports 256k context, four reasoning effort modes (minimal/low/medium/high), multimodal understanding,...",
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 128000,
-            "prompt": "0.0000002",
-            "completion": "0.0000008"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "supported_efforts": [
@@ -12130,63 +12130,6 @@
     },
     {
       "provider": "openrouter",
-      "model_id": "cloudflare/clairic",
-      "display_name": "Cloudflare: Clairic",
-      "context_window": 65536,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "decisions"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": false,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "clairic",
-        "openrouter/cloudflare/clairic"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.1,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "cloudflare",
-        "tokenizer": "",
-        "top_provider": {
-          "context_length": 65536,
-          "max_completion_tokens": 65536,
-          "is_moderated": null
-        },
-        "supported_parameters": [],
-        "description": "Clairic is Cloudflare's System One-style extraction model served on Workers AI. Given a text state and optional images plus a schema of typed fields, it extracts, computes, estimates, and forecasts strongly typed values (text spans, numbers, dates, times, durations, lists, estimates, forecasts) in a single pass, returning a confidence score and null probability for every field instead of generatin",
-        "features": [
-          "vision"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
       "model_id": "cloudflare/clef",
       "display_name": "Cloudflare: Clef",
       "context_window": 65537,
@@ -12278,7 +12221,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/cloudflare/clef",
-        "checked_at": "2026-10-30",
+        "checked_at": "2026-11-02",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -12383,7 +12326,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/cloudflare/clef-flash",
-        "checked_at": "2026-10-30",
+        "checked_at": "2026-11-02",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -13977,7 +13920,7 @@
       "model_id": "deepseek/deepseek-v3.2",
       "display_name": "DeepSeek: DeepSeek V3.2",
       "context_window": 163840,
-      "max_output_tokens": 65536,
+      "max_output_tokens": 147456,
       "input_modalities": [
         "text"
       ],
@@ -14008,8 +13951,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.28,
-        "output_per_1m": 0.42,
+        "input_per_1m": 0.26,
+        "output_per_1m": 0.38,
         "currency": "USD"
       },
       "extra": {
@@ -14023,8 +13966,8 @@
         "modality": "text->text",
         "tokenizer": "DeepSeek",
         "top_provider": {
-          "context_length": 131072,
-          "max_completion_tokens": 65536,
+          "context_length": 163840,
+          "max_completion_tokens": 147456,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -14050,7 +13993,7 @@
         ],
         "created": "2025-12-01",
         "description": "DeepSeek-V3.2 is a large language model designed to harmonize high computational efficiency with strong reasoning and agentic tool-use performance. It introduces DeepSeek Sparse Attention (DSA), a fine-grained sparse attention mechanism...",
-        "cache_read_per_1m": 0.028,
+        "cache_read_per_1m": 0.13,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -14514,7 +14457,7 @@
       "model_id": "deepseek/deepseek-v4-pro",
       "display_name": "DeepSeek: DeepSeek V4 Pro 0423",
       "context_window": 1048576,
-      "max_output_tokens": 384000,
+      "max_output_tokens": 393216,
       "input_modalities": [
         "text"
       ],
@@ -14545,8 +14488,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.816234,
-        "output_per_1m": 1.632468,
+        "input_per_1m": 1.6,
+        "output_per_1m": 3.2,
         "currency": "USD"
       },
       "extra": {
@@ -14560,8 +14503,8 @@
         "modality": "text->text",
         "tokenizer": "DeepSeek",
         "top_provider": {
-          "context_length": 1024000,
-          "max_completion_tokens": 384000,
+          "context_length": 1048576,
+          "max_completion_tokens": 393216,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -14589,7 +14532,7 @@
         ],
         "created": "2026-04-24",
         "description": "DeepSeek V4 Pro is a large-scale Mixture-of-Experts model from DeepSeek with 1.6T total parameters and 49B activated parameters, supporting a 1M-token context window. It is designed for advanced reasoning, coding,...",
-        "cache_read_per_1m": 0.068019,
+        "cache_read_per_1m": 0.135,
         "default_parameters": {
           "temperature": 1,
           "top_p": 1
@@ -14631,7 +14574,7 @@
       "model_id": "deepseek/deepseek-v4-pro-0813",
       "display_name": "DeepSeek: DeepSeek V4 Pro 0813",
       "context_window": 1048576,
-      "max_output_tokens": 393216,
+      "max_output_tokens": 943718,
       "input_modalities": [
         "text"
       ],
@@ -14662,50 +14605,11 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 1.32,
-        "output_per_1m": 3.96,
+        "input_per_1m": 0.115,
+        "output_per_1m": 4.0,
         "currency": "USD"
       },
       "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "deepseek",
-        "canonical_slug": "deepseek/deepseek-v4-pro-20260813",
-        "hugging_face_id": "deepseek-ai/DeepSeek-V4-Pro-0813",
-        "modality": "text->text",
-        "tokenizer": "DeepSeek",
-        "top_provider": {
-          "context_length": 1048576,
-          "max_completion_tokens": 393216,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "frequency_penalty",
-          "include_reasoning",
-          "logit_bias",
-          "logprobs",
-          "max_tokens",
-          "min_p",
-          "presence_penalty",
-          "reasoning",
-          "reasoning_effort",
-          "repetition_penalty",
-          "response_format",
-          "seed",
-          "stop",
-          "structured_outputs",
-          "temperature",
-          "tool_choice",
-          "tools",
-          "top_k",
-          "top_logprobs",
-          "top_p"
-        ],
-        "created": "2026-08-12",
-        "description": "DeepSeek V4 Pro 0813 is a large-scale mixture-of-experts model from DeepSeek. This is the GA release of DeepSeek V4 Pro.",
-        "cache_read_per_1m": 0.044,
         "pricing_overrides": [
           {
             "utc_days": [
@@ -14787,6 +14691,45 @@
             "input_cache_read": "0.000000022"
           }
         ],
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "deepseek",
+        "canonical_slug": "deepseek/deepseek-v4-pro-20260813",
+        "hugging_face_id": "deepseek-ai/DeepSeek-V4-Pro-0813",
+        "modality": "text->text",
+        "tokenizer": "DeepSeek",
+        "top_provider": {
+          "context_length": 1048576,
+          "max_completion_tokens": 943718,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "logit_bias",
+          "logprobs",
+          "max_tokens",
+          "min_p",
+          "presence_penalty",
+          "reasoning",
+          "reasoning_effort",
+          "repetition_penalty",
+          "response_format",
+          "seed",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_k",
+          "top_logprobs",
+          "top_p"
+        ],
+        "created": "2026-08-12",
+        "description": "DeepSeek V4 Pro 0813 is a large-scale mixture-of-experts model from DeepSeek. This is the GA release of DeepSeek V4 Pro.",
+        "cache_read_per_1m": 0.11,
         "default_parameters": {
           "temperature": 1,
           "top_p": 1
@@ -14978,47 +14921,6 @@
         "currency": "USD"
       },
       "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "deepseek",
-        "canonical_slug": "deepseek/deepseek-v4.1-flash-20261017",
-        "hugging_face_id": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
-        "modality": "text+image->text",
-        "tokenizer": "DeepSeek",
-        "top_provider": {
-          "context_length": 1048576,
-          "max_completion_tokens": 393216,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "frequency_penalty",
-          "include_reasoning",
-          "logit_bias",
-          "logprobs",
-          "max_completion_tokens",
-          "max_tokens",
-          "min_p",
-          "parallel_tool_calls",
-          "presence_penalty",
-          "reasoning",
-          "reasoning_effort",
-          "repetition_penalty",
-          "response_format",
-          "seed",
-          "stop",
-          "structured_outputs",
-          "temperature",
-          "tool_choice",
-          "tools",
-          "top_k",
-          "top_logprobs",
-          "top_p"
-        ],
-        "created": "2026-10-17",
-        "description": "DeepSeek V4.1 Flash 1017 is the October 17, 2026 snapshot of DeepSeek V4.1 Flash, served by DeepSeek under the `deepseek-flash` API model name. V4.1 Flash is a sparse mixture-of-experts model...",
-        "cache_read_per_1m": 0.006,
         "pricing_overrides": [
           {
             "utc_days": [
@@ -15100,6 +15002,47 @@
             "input_cache_read": "0.000000003"
           }
         ],
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "deepseek",
+        "canonical_slug": "deepseek/deepseek-v4.1-flash-20261017",
+        "hugging_face_id": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+        "modality": "text+image->text",
+        "tokenizer": "DeepSeek",
+        "top_provider": {
+          "context_length": 1048576,
+          "max_completion_tokens": 393216,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "logit_bias",
+          "logprobs",
+          "max_completion_tokens",
+          "max_tokens",
+          "min_p",
+          "parallel_tool_calls",
+          "presence_penalty",
+          "reasoning",
+          "reasoning_effort",
+          "repetition_penalty",
+          "response_format",
+          "seed",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_k",
+          "top_logprobs",
+          "top_p"
+        ],
+        "created": "2026-10-17",
+        "description": "DeepSeek V4.1 Flash 1017 is the October 17, 2026 snapshot of DeepSeek V4.1 Flash, served by DeepSeek under the `deepseek-flash` API model name. V4.1 Flash is a sparse mixture-of-experts model...",
+        "cache_read_per_1m": 0.006,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -17444,6 +17387,16 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.0000025",
+            "completion": "0.000015",
+            "audio": "0.0000025",
+            "input_audio_cache": "0.00000025",
+            "input_cache_read": "0.00000025"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -17477,16 +17430,6 @@
         "image_input_per_1m": 1.25,
         "audio_input_per_1m": 1.25,
         "internal_reasoning_per_1m": 10.0,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 200000,
-            "prompt": "0.0000025",
-            "completion": "0.000015",
-            "audio": "0.0000025",
-            "input_audio_cache": "0.00000025",
-            "input_cache_read": "0.00000025"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true
         },
@@ -17582,6 +17525,16 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.0000025",
+            "completion": "0.000015",
+            "audio": "0.0000025",
+            "input_audio_cache": "0.00000025",
+            "input_cache_read": "0.00000025"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -17616,16 +17569,6 @@
         "image_input_per_1m": 1.25,
         "audio_input_per_1m": 1.25,
         "internal_reasoning_per_1m": 10.0,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 200000,
-            "prompt": "0.0000025",
-            "completion": "0.000015",
-            "audio": "0.0000025",
-            "input_audio_cache": "0.00000025",
-            "input_cache_read": "0.00000025"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true
         },
@@ -19233,6 +19176,16 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.000004",
+            "completion": "0.000018",
+            "audio": "0.000004",
+            "input_audio_cache": "0.0000004",
+            "input_cache_read": "0.0000004"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -19268,16 +19221,6 @@
         "image_input_per_1m": 2.0,
         "audio_input_per_1m": 2.0,
         "internal_reasoning_per_1m": 12.0,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 200000,
-            "prompt": "0.000004",
-            "completion": "0.000018",
-            "audio": "0.000004",
-            "input_audio_cache": "0.0000004",
-            "input_cache_read": "0.0000004"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true,
           "supported_efforts": [
@@ -19420,6 +19363,16 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.000004",
+            "completion": "0.000018",
+            "audio": "0.000004",
+            "input_audio_cache": "0.0000004",
+            "input_cache_read": "0.0000004"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -19454,16 +19407,6 @@
         "image_input_per_1m": 2.0,
         "audio_input_per_1m": 2.0,
         "internal_reasoning_per_1m": 12.0,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 200000,
-            "prompt": "0.000004",
-            "completion": "0.000018",
-            "audio": "0.000004",
-            "input_audio_cache": "0.0000004",
-            "input_cache_read": "0.0000004"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true,
           "supported_efforts": [
@@ -19602,6 +19545,14 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.000002",
+            "completion": "0.000009",
+            "audio": "0.000002"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -19635,14 +19586,6 @@
         "image_input_per_1m": 1.0,
         "audio_input_per_1m": 1.0,
         "internal_reasoning_per_1m": 6.0,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 200000,
-            "prompt": "0.000002",
-            "completion": "0.000009",
-            "audio": "0.000002"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true,
           "supported_efforts": [
@@ -19835,7 +19778,7 @@
           "details": "/api/v1/models/google/gemini-3.5-flash-20260519/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 23,
+          "design_arena": 24,
           "artificial_analysis": 1
         },
         "features": [
@@ -20368,7 +20311,7 @@
           "details": "/api/v1/models/google/gemini-3.5-flash-20260519/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 23,
+          "design_arena": 24,
           "artificial_analysis": 1
         },
         "features": [
@@ -20976,7 +20919,7 @@
           "details": "/api/v1/models/google/gemini-3.7-flash-20260813/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 16,
+          "design_arena": 17,
           "artificial_analysis": 1
         },
         "features": [
@@ -21152,7 +21095,7 @@
           "details": "/api/v1/models/google/gemini-3.7-flash-20260813/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 16,
+          "design_arena": 17,
           "artificial_analysis": 1
         },
         "features": [
@@ -22775,7 +22718,7 @@
       "model_id": "google/gemma-4-26b-a4b-it",
       "display_name": "Google: Gemma 4 26B A4B ",
       "context_window": 262144,
-      "max_output_tokens": 235929,
+      "max_output_tokens": 32768,
       "input_modalities": [
         "image",
         "text",
@@ -22808,8 +22751,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.0765,
-        "output_per_1m": 0.255,
+        "input_per_1m": 0.026,
+        "output_per_1m": 0.077,
         "currency": "USD"
       },
       "video": {
@@ -22855,7 +22798,7 @@
         "tokenizer": "Gemma",
         "top_provider": {
           "context_length": 262144,
-          "max_completion_tokens": 235929,
+          "max_completion_tokens": 32768,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -22882,7 +22825,7 @@
         ],
         "created": "2026-04-03",
         "description": "Gemma 4 26B A4B IT is an instruction-tuned Mixture-of-Experts (MoE) model from Google DeepMind. Despite 25.2B total parameters, only 3.8B activate per token during inference — delivering near-31B quality at...",
-        "cache_read_per_1m": 0.0425,
+        "cache_read_per_1m": 0.013,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95,
@@ -23126,6 +23069,7 @@
           "include_reasoning",
           "logit_bias",
           "logprobs",
+          "max_completion_tokens",
           "max_tokens",
           "min_p",
           "presence_penalty",
@@ -24755,7 +24699,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/inception/mercury-decide",
-        "checked_at": "2026-10-30",
+        "checked_at": "2026-11-02",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -25525,7 +25469,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/jaredpalmer/kev-4b",
-        "checked_at": "2026-10-30",
+        "checked_at": "2026-11-02",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -26127,7 +26071,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/liquid/d1",
-        "checked_at": "2026-10-30",
+        "checked_at": "2026-11-02",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -27045,7 +26989,7 @@
       "model_id": "meta-llama/llama-3.2-3b-instruct",
       "display_name": "Meta: Llama 3.2 3B Instruct",
       "context_window": 131072,
-      "max_output_tokens": 117964,
+      "max_output_tokens": 72000,
       "input_modalities": [
         "text"
       ],
@@ -27075,8 +27019,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.05,
-        "output_per_1m": 0.33,
+        "input_per_1m": 0.0509,
+        "output_per_1m": 0.335,
         "currency": "USD"
       },
       "extra": {
@@ -27091,8 +27035,8 @@
         "tokenizer": "Llama3",
         "instruct_type": "llama3",
         "top_provider": {
-          "context_length": 131072,
-          "max_completion_tokens": 117964,
+          "context_length": 80000,
+          "max_completion_tokens": 72000,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -27816,7 +27760,7 @@
           "details": "/api/v1/models/meta/muse-spark-1.1-20260709/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 18,
+          "design_arena": 19,
           "artificial_analysis": 1
         },
         "features": [
@@ -27989,7 +27933,7 @@
           "details": "/api/v1/models/meta/muse-spark-1.2-20260805/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 17,
+          "design_arena": 18,
           "artificial_analysis": 1
         },
         "features": [
@@ -28332,7 +28276,7 @@
           "details": "/api/v1/models/meta/muse-spark-1.3-20260902/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 15,
+          "design_arena": 17,
           "artificial_analysis": 1
         },
         "features": [
@@ -30454,7 +30398,7 @@
       "model_id": "minimax/minimax-m2.5",
       "display_name": "MiniMax: MiniMax M2.5",
       "context_window": 204800,
-      "max_output_tokens": 131072,
+      "max_output_tokens": 32768,
       "input_modalities": [
         "text"
       ],
@@ -30485,8 +30429,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.3,
-        "output_per_1m": 1.2,
+        "input_per_1m": 0.27,
+        "output_per_1m": 0.95,
         "currency": "USD"
       },
       "extra": {
@@ -30500,8 +30444,8 @@
         "modality": "text->text",
         "tokenizer": "Other",
         "top_provider": {
-          "context_length": 204800,
-          "max_completion_tokens": 131072,
+          "context_length": 198000,
+          "max_completion_tokens": 32768,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -30768,7 +30712,7 @@
           "details": "/api/v1/models/minimax/minimax-m3-20260531/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 18,
+          "design_arena": 19,
           "artificial_analysis": 1
         },
         "features": [
@@ -30859,6 +30803,22 @@
         "created": "2026-10-19",
         "description": "MiniMax-M3.1-Flash is a multimodal model from MiniMax. Compared with M3, it delivers significant improvements across multiple benchmarks, particularly in complex agentic tasks, coding, and cybersecurity. It is built for complex,...",
         "cache_read_per_1m": 0.015,
+        "pricing_overrides": [
+          {
+            "utc_start": 1500,
+            "utc_end": 100,
+            "prompt": "0.000000075",
+            "completion": "0.0000003",
+            "input_cache_read": "0.0000000075"
+          },
+          {
+            "utc_start": 100,
+            "utc_end": 1500,
+            "prompt": "0.00000015",
+            "completion": "0.0000006",
+            "input_cache_read": "0.000000015"
+          }
+        ],
         "reasoning_meta": {
           "mandatory": true,
           "supported_efforts": [
@@ -34477,8 +34437,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.56,
-        "output_per_1m": 3.1,
+        "input_per_1m": 0.6,
+        "output_per_1m": 3.5,
         "currency": "USD"
       },
       "extra": {
@@ -34673,7 +34633,7 @@
           "details": "/api/v1/models/moonshotai/kimi-k3-20260715/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 17,
+          "design_arena": 18,
           "artificial_analysis": 1
         },
         "features": [
@@ -34783,7 +34743,7 @@
           "details": "/api/v1/models/moonshotai/kimi-k3.1-pro-20261023/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 7,
+          "design_arena": 9,
           "artificial_analysis": 1
         },
         "features": [
@@ -34963,7 +34923,7 @@
           "details": "/api/v1/models/moonshotai/kimi-k3-20260715/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 17,
+          "design_arena": 18,
           "artificial_analysis": 1
         },
         "features": [
@@ -37816,7 +37776,6 @@
           "logit_bias",
           "logprobs",
           "max_completion_tokens",
-          "max_tokens",
           "presence_penalty",
           "response_format",
           "seed",
@@ -42226,6 +42185,14 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.000005",
+            "completion": "0.0000225",
+            "input_cache_read": "0.0000005"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -42256,14 +42223,6 @@
         "description": "GPT-5.4 is OpenAI’s latest frontier model, unifying the Codex and GPT lines into a single system. It features a 1M+ token context window (922K input, 128K output) with support for...",
         "cache_read_per_1m": 0.25,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.000005",
-            "completion": "0.0000225",
-            "input_cache_read": "0.0000005"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": false,
@@ -42999,6 +42958,13 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.00006",
+            "completion": "0.00027"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -43028,13 +42994,6 @@
         "created": "2026-03-05",
         "description": "GPT-5.4 Pro is OpenAI's most advanced model, building on GPT-5.4's unified architecture with enhanced reasoning capabilities for complex, high-stakes tasks. It features a 1M+ token context window (922K input, 128K...",
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.00006",
-            "completion": "0.00027"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true,
           "supported_efforts": [
@@ -43125,6 +43084,13 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.00003",
+            "completion": "0.000135"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -43153,13 +43119,6 @@
         "created": "2026-03-05",
         "description": "GPT-5.4 Pro is OpenAI's most advanced model, building on GPT-5.4's unified architecture with enhanced reasoning capabilities for complex, high-stakes tasks. It features a 1M+ token context window (922K input, 128K...",
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.00003",
-            "completion": "0.000135"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true,
           "supported_efforts": [
@@ -43250,6 +43209,14 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.0000025",
+            "completion": "0.00001125",
+            "input_cache_read": "0.00000025"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -43279,14 +43246,6 @@
         "description": "GPT-5.4 is OpenAI’s latest frontier model, unifying the Codex and GPT lines into a single system. It features a 1M+ token context window (922K input, 128K output) with support for...",
         "cache_read_per_1m": 0.125,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.0000025",
-            "completion": "0.00001125",
-            "input_cache_read": "0.00000025"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": false,
@@ -43384,6 +43343,14 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.00001",
+            "completion": "0.000045",
+            "input_cache_read": "0.000001"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -43414,14 +43381,6 @@
         "description": "GPT-5.5 is OpenAI’s frontier model designed for complex professional workloads, building on GPT-5.4 with stronger reasoning, higher reliability, and improved token efficiency on hard tasks. It features a 1M+ token...",
         "cache_read_per_1m": 0.5,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.00001",
-            "completion": "0.000045",
-            "input_cache_read": "0.000001"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -43519,6 +43478,13 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.00006",
+            "completion": "0.00027"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -43547,13 +43513,6 @@
         "created": "2026-04-24",
         "description": "GPT-5.5 Pro is OpenAI’s high-capability model optimized for deep reasoning and accuracy on complex, high-stakes workloads. It features a 1M+ token context window (922K input, 128K output) with support for...",
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.00006",
-            "completion": "0.00027"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true,
           "supported_efforts": [
@@ -43644,6 +43603,13 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.00003",
+            "completion": "0.000135"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -43672,13 +43638,6 @@
         "created": "2026-04-24",
         "description": "GPT-5.5 Pro is OpenAI’s high-capability model optimized for deep reasoning and accuracy on complex, high-stakes workloads. It features a 1M+ token context window (922K input, 128K output) with support for...",
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.00003",
-            "completion": "0.000135"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true,
           "supported_efforts": [
@@ -43769,6 +43728,14 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.000005",
+            "completion": "0.0000225",
+            "input_cache_read": "0.0000005"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -43798,14 +43765,6 @@
         "description": "GPT-5.5 is OpenAI’s frontier model designed for complex professional workloads, building on GPT-5.4 with stronger reasoning, higher reliability, and improved token efficiency on hard tasks. It features a 1M+ token...",
         "cache_read_per_1m": 0.25,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.000005",
-            "completion": "0.0000225",
-            "input_cache_read": "0.0000005"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -43903,6 +43862,15 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.0000004",
+            "completion": "0.0000018",
+            "input_cache_read": "0.00000004",
+            "input_cache_write": "0.0000005"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -43934,15 +43902,6 @@
         "cache_read_per_1m": 0.02,
         "cache_write_per_1m": 0.25,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.0000004",
-            "completion": "0.0000018",
-            "input_cache_read": "0.00000004",
-            "input_cache_write": "0.0000005"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -44041,6 +44000,15 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.0000004",
+            "completion": "0.0000018",
+            "input_cache_read": "0.00000004",
+            "input_cache_write": "0.0000005"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -44072,15 +44040,6 @@
         "cache_read_per_1m": 0.02,
         "cache_write_per_1m": 0.25,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.0000004",
-            "completion": "0.0000018",
-            "input_cache_read": "0.00000004",
-            "input_cache_write": "0.0000005"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -44175,6 +44134,14 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.0000002",
+            "completion": "0.0000009",
+            "input_cache_read": "0.00000002"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -44204,14 +44171,6 @@
         "description": "GPT-5.6 Luna Pro is the same underlying model as [GPT-5.6 Luna](https://openrouter.ai/openai/gpt-5.6-luna), served with `reasoning.mode` set to `pro` for higher-quality responses on complex tasks. **Cost note:** pro mode spends far more...",
         "cache_read_per_1m": 0.01,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.0000002",
-            "completion": "0.0000009",
-            "input_cache_read": "0.00000002"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -44306,6 +44265,14 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.0000002",
+            "completion": "0.0000009",
+            "input_cache_read": "0.00000002"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -44335,14 +44302,6 @@
         "description": "GPT-5.6 Luna is a fast, cost-efficient model in OpenAI's GPT-5.6 series. It is suited for high-volume, latency-sensitive tasks such as chat, classification, and lightweight agentic workflows, providing capable reasoning for...",
         "cache_read_per_1m": 0.01,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.0000002",
-            "completion": "0.0000009",
-            "input_cache_read": "0.00000002"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -44441,6 +44400,15 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.000008",
+            "completion": "0.00003",
+            "input_cache_read": "0.0000008",
+            "input_cache_write": "0.00001"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -44472,15 +44440,6 @@
         "cache_read_per_1m": 0.4,
         "cache_write_per_1m": 5.0,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.000008",
-            "completion": "0.00003",
-            "input_cache_read": "0.0000008",
-            "input_cache_write": "0.00001"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -44579,6 +44538,15 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.000008",
+            "completion": "0.00003",
+            "input_cache_read": "0.0000008",
+            "input_cache_write": "0.00001"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -44610,15 +44578,6 @@
         "cache_read_per_1m": 0.4,
         "cache_write_per_1m": 5.0,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.000008",
-            "completion": "0.00003",
-            "input_cache_read": "0.0000008",
-            "input_cache_write": "0.00001"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -44713,6 +44672,15 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.000004",
+            "completion": "0.000015",
+            "input_cache_read": "0.0000004",
+            "input_cache_write": "0.000005"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -44743,15 +44711,6 @@
         "cache_read_per_1m": 0.2,
         "cache_write_per_1m": 2.5,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.000004",
-            "completion": "0.000015",
-            "input_cache_read": "0.0000004",
-            "input_cache_write": "0.000005"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -44846,6 +44805,15 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.000004",
+            "completion": "0.000015",
+            "input_cache_read": "0.0000004",
+            "input_cache_write": "0.000005"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -44876,15 +44844,6 @@
         "cache_read_per_1m": 0.2,
         "cache_write_per_1m": 2.5,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.000004",
-            "completion": "0.000015",
-            "input_cache_read": "0.0000004",
-            "input_cache_write": "0.000005"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -44983,6 +44942,15 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.000004",
+            "completion": "0.000018",
+            "input_cache_read": "0.0000004",
+            "input_cache_write": "0.000005"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -45014,15 +44982,6 @@
         "cache_read_per_1m": 0.2,
         "cache_write_per_1m": 2.5,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.000004",
-            "completion": "0.000018",
-            "input_cache_read": "0.0000004",
-            "input_cache_write": "0.000005"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -45121,6 +45080,15 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.000004",
+            "completion": "0.000018",
+            "input_cache_read": "0.0000004",
+            "input_cache_write": "0.000005"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -45152,15 +45120,6 @@
         "cache_read_per_1m": 0.2,
         "cache_write_per_1m": 2.5,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.000004",
-            "completion": "0.000018",
-            "input_cache_read": "0.0000004",
-            "input_cache_write": "0.000005"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -45255,6 +45214,14 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.000002",
+            "completion": "0.000009",
+            "input_cache_read": "0.0000002"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -45284,14 +45251,6 @@
         "description": "GPT-5.6 Terra Pro is the same underlying model as [GPT-5.6 Terra](https://openrouter.ai/openai/gpt-5.6-terra), served with `reasoning.mode` set to `pro` for higher-quality responses on complex tasks. **Cost note:** pro mode spends far more...",
         "cache_read_per_1m": 0.1,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.000002",
-            "completion": "0.000009",
-            "input_cache_read": "0.0000002"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -45386,6 +45345,14 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.000002",
+            "completion": "0.000009",
+            "input_cache_read": "0.0000002"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -45415,14 +45382,6 @@
         "description": "GPT-5.6 Terra is a balanced model in OpenAI's GPT-5.6 series, positioned between the flagship Sol tier and the cost-efficient Luna tier. It is suited for everyday coding, reasoning, and agentic...",
         "cache_read_per_1m": 0.1,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.000002",
-            "completion": "0.000009",
-            "input_cache_read": "0.0000002"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -45645,6 +45604,15 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.00002",
+            "completion": "0.000075",
+            "input_cache_read": "0.000002",
+            "input_cache_write": "0.000025"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -45676,15 +45644,6 @@
         "cache_read_per_1m": 1.0,
         "cache_write_per_1m": 12.5,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.00002",
-            "completion": "0.000075",
-            "input_cache_read": "0.000002",
-            "input_cache_write": "0.000025"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true,
           "default_enabled": true,
@@ -45782,6 +45741,15 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.00002",
+            "completion": "0.000075",
+            "input_cache_read": "0.000002",
+            "input_cache_write": "0.000025"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -45813,15 +45781,6 @@
         "cache_read_per_1m": 1.0,
         "cache_write_per_1m": 12.5,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.00002",
-            "completion": "0.000075",
-            "input_cache_read": "0.000002",
-            "input_cache_write": "0.000025"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true,
           "default_enabled": true,
@@ -45915,6 +45874,15 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.00001",
+            "completion": "0.0000375",
+            "input_cache_read": "0.000001",
+            "input_cache_write": "0.0000125"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -45945,15 +45913,6 @@
         "cache_read_per_1m": 0.5,
         "cache_write_per_1m": 6.25,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.00001",
-            "completion": "0.0000375",
-            "input_cache_read": "0.000001",
-            "input_cache_write": "0.0000125"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true,
           "default_enabled": true,
@@ -46047,6 +46006,15 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.00001",
+            "completion": "0.0000375",
+            "input_cache_read": "0.000001",
+            "input_cache_write": "0.0000125"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -46077,15 +46045,6 @@
         "cache_read_per_1m": 0.5,
         "cache_write_per_1m": 6.25,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.00001",
-            "completion": "0.0000375",
-            "input_cache_read": "0.000001",
-            "input_cache_write": "0.0000125"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true,
           "default_enabled": true,
@@ -46183,6 +46142,15 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.0000002",
+            "completion": "0.00000075",
+            "input_cache_read": "0.00000002",
+            "input_cache_write": "0.00000025"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -46214,15 +46182,6 @@
         "cache_read_per_1m": 0.01,
         "cache_write_per_1m": 0.125,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.0000002",
-            "completion": "0.00000075",
-            "input_cache_read": "0.00000002",
-            "input_cache_write": "0.00000025"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -46354,7 +46313,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/openai/gpt-6-luna-decisions",
-        "checked_at": "2026-10-30",
+        "checked_at": "2026-11-02",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -46426,6 +46385,15 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.0000002",
+            "completion": "0.00000075",
+            "input_cache_read": "0.00000002",
+            "input_cache_write": "0.00000025"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -46457,15 +46425,6 @@
         "cache_read_per_1m": 0.01,
         "cache_write_per_1m": 0.125,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.0000002",
-            "completion": "0.00000075",
-            "input_cache_read": "0.00000002",
-            "input_cache_write": "0.00000025"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -46560,6 +46519,15 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.0000001",
+            "completion": "0.000000375",
+            "input_cache_read": "0.00000001",
+            "input_cache_write": "0.000000125"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -46590,15 +46558,6 @@
         "cache_read_per_1m": 0.005,
         "cache_write_per_1m": 0.0625,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.0000001",
-            "completion": "0.000000375",
-            "input_cache_read": "0.00000001",
-            "input_cache_write": "0.000000125"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -46693,6 +46652,15 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.0000001",
+            "completion": "0.000000375",
+            "input_cache_read": "0.00000001",
+            "input_cache_write": "0.000000125"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -46723,15 +46691,6 @@
         "cache_read_per_1m": 0.005,
         "cache_write_per_1m": 0.0625,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.0000001",
-            "completion": "0.000000375",
-            "input_cache_read": "0.00000001",
-            "input_cache_write": "0.000000125"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -46830,6 +46789,15 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.000004",
+            "completion": "0.000015",
+            "input_cache_read": "0.0000004",
+            "input_cache_write": "0.000005"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -46861,15 +46829,6 @@
         "cache_read_per_1m": 0.2,
         "cache_write_per_1m": 2.5,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.000004",
-            "completion": "0.000015",
-            "input_cache_read": "0.0000004",
-            "input_cache_write": "0.000005"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -46964,6 +46923,15 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.000004",
+            "completion": "0.000015",
+            "input_cache_read": "0.0000004",
+            "input_cache_write": "0.000005"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -46995,15 +46963,6 @@
         "cache_read_per_1m": 0.2,
         "cache_write_per_1m": 2.5,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.000004",
-            "completion": "0.000015",
-            "input_cache_read": "0.0000004",
-            "input_cache_write": "0.000005"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -47098,6 +47057,15 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.000002",
+            "completion": "0.0000075",
+            "input_cache_read": "0.0000002",
+            "input_cache_write": "0.0000025"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -47128,15 +47096,6 @@
         "cache_read_per_1m": 0.1,
         "cache_write_per_1m": 1.25,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.000002",
-            "completion": "0.0000075",
-            "input_cache_read": "0.0000002",
-            "input_cache_write": "0.0000025"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -47231,6 +47190,15 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.000002",
+            "completion": "0.0000075",
+            "input_cache_read": "0.0000002",
+            "input_cache_write": "0.0000025"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -47261,15 +47229,6 @@
         "cache_read_per_1m": 0.1,
         "cache_write_per_1m": 1.25,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.000002",
-            "completion": "0.0000075",
-            "input_cache_read": "0.0000002",
-            "input_cache_write": "0.0000025"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -47364,6 +47323,15 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.000004",
+            "completion": "0.000015",
+            "input_cache_read": "0.0000002",
+            "input_cache_write": "0.000005"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -47395,15 +47363,6 @@
         "cache_read_per_1m": 0.1,
         "cache_write_per_1m": 2.5,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.000004",
-            "completion": "0.000015",
-            "input_cache_read": "0.0000002",
-            "input_cache_write": "0.000005"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true,
           "default_enabled": true,
@@ -47420,7 +47379,7 @@
           "details": "/api/v1/models/openai/gpt-6.1-sol-20260929/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 10,
+          "design_arena": 11,
           "artificial_analysis": 1
         },
         "features": [
@@ -47501,6 +47460,15 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.000004",
+            "completion": "0.000015",
+            "input_cache_read": "0.0000002",
+            "input_cache_write": "0.000005"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -47532,15 +47500,6 @@
         "cache_read_per_1m": 0.1,
         "cache_write_per_1m": 2.5,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.000004",
-            "completion": "0.000015",
-            "input_cache_read": "0.0000002",
-            "input_cache_write": "0.000005"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true,
           "default_enabled": true,
@@ -47615,6 +47574,15 @@
         "currency": "USD"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.000002",
+            "completion": "0.0000075",
+            "input_cache_read": "0.0000001",
+            "input_cache_write": "0.0000025"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -47645,15 +47613,6 @@
         "cache_read_per_1m": 0.05,
         "cache_write_per_1m": 1.25,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.000002",
-            "completion": "0.0000075",
-            "input_cache_read": "0.0000001",
-            "input_cache_write": "0.0000025"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true,
           "default_enabled": true,
@@ -47728,6 +47687,15 @@
         "currency": "USD"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.000002",
+            "completion": "0.0000075",
+            "input_cache_read": "0.0000001",
+            "input_cache_write": "0.0000025"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -47758,15 +47726,6 @@
         "cache_read_per_1m": 0.05,
         "cache_write_per_1m": 1.25,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.000002",
-            "completion": "0.0000075",
-            "input_cache_read": "0.0000001",
-            "input_cache_write": "0.0000025"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true,
           "default_enabled": true,
@@ -47783,7 +47742,7 @@
           "details": "/api/v1/models/openai/gpt-6.1-sol-20260929/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 10,
+          "design_arena": 11,
           "artificial_analysis": 1
         },
         "features": [
@@ -47845,6 +47804,15 @@
         "currency": "USD"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.000002",
+            "completion": "0.0000075",
+            "input_cache_read": "0.0000001",
+            "input_cache_write": "0.0000025"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -47876,15 +47844,6 @@
         "cache_read_per_1m": 0.05,
         "cache_write_per_1m": 1.25,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.000002",
-            "completion": "0.0000075",
-            "input_cache_read": "0.0000001",
-            "input_cache_write": "0.0000025"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -47964,6 +47923,15 @@
         "currency": "USD"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.000002",
+            "completion": "0.0000075",
+            "input_cache_read": "0.0000001",
+            "input_cache_write": "0.0000025"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -47995,15 +47963,6 @@
         "cache_read_per_1m": 0.05,
         "cache_write_per_1m": 1.25,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.000002",
-            "completion": "0.0000075",
-            "input_cache_read": "0.0000001",
-            "input_cache_write": "0.0000025"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true,
           "default_enabled": true,
@@ -48078,6 +48037,15 @@
         "currency": "USD"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.000001",
+            "completion": "0.00000375",
+            "input_cache_read": "0.00000005",
+            "input_cache_write": "0.00000125"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -48108,15 +48076,6 @@
         "cache_read_per_1m": 0.025,
         "cache_write_per_1m": 0.625,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.000001",
-            "completion": "0.00000375",
-            "input_cache_read": "0.00000005",
-            "input_cache_write": "0.00000125"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true,
           "default_enabled": true,
@@ -48191,6 +48150,15 @@
         "currency": "USD"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.000001",
+            "completion": "0.00000375",
+            "input_cache_read": "0.00000005",
+            "input_cache_write": "0.00000125"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -48221,15 +48189,6 @@
         "cache_read_per_1m": 0.025,
         "cache_write_per_1m": 0.625,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.000001",
-            "completion": "0.00000375",
-            "input_cache_read": "0.00000005",
-            "input_cache_write": "0.00000125"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -50704,8 +50663,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.25,
-        "output_per_1m": 1.0,
+        "input_per_1m": 0.05,
+        "output_per_1m": 0.5,
         "currency": "USD"
       },
       "extra": {
@@ -50745,7 +50704,7 @@
         ],
         "created": "2026-10-28",
         "description": "Particle-1 is a token-efficient agentic coding model from Particle AI, post-trained on DeepSeek V4.1 Flash. It is suited for software engineering work such as terminal workflows, codebase changes, and data...",
-        "cache_read_per_1m": 0.03,
+        "cache_read_per_1m": 0.003,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -51140,7 +51099,7 @@
       },
       "extra": {
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-10-30",
+        "provider_refresh_checked_at": "2026-11-02",
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -51788,326 +51747,6 @@
           "reasoning",
           "vision",
           "web_search"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "poolside/laguna-s-2.1",
-      "display_name": "Poolside: Laguna S 2.1",
-      "context_window": 1048576,
-      "max_output_tokens": 131072,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_json_schema": null,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "laguna-s-2.1",
-        "openrouter/poolside/laguna-s-2.1",
-        "poolside/laguna-s-2.1-20260720",
-        "poolside/laguna-s-2.1"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.09,
-        "output_per_1m": 0.18,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "poolside",
-        "canonical_slug": "poolside/laguna-s-2.1-20260720",
-        "hugging_face_id": "poolside/Laguna-S-2.1",
-        "modality": "text->text",
-        "tokenizer": "Other",
-        "top_provider": {
-          "context_length": 1048576,
-          "max_completion_tokens": 131072,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "include_reasoning",
-          "max_tokens",
-          "reasoning",
-          "temperature",
-          "tool_choice",
-          "tools"
-        ],
-        "created": "2026-07-21",
-        "description": "Laguna S 2.1 is the latest coding agent model from [Poolside](<https://poolside.ai/>). Laguna S 2.1 is a 118B total parameter model with 8B active parameters, scoring 70.2% on Terminal-Bench 2.1 and...",
-        "expiration_date": "2026-10-31",
-        "cache_read_per_1m": 0.009,
-        "reasoning_meta": {
-          "mandatory": false,
-          "default_enabled": true
-        },
-        "links": {
-          "details": "/api/v1/models/poolside/laguna-s-2.1-20260720/endpoints"
-        },
-        "features": [
-          "tools",
-          "reasoning"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "poolside/laguna-s-2.1:free",
-      "display_name": "Poolside: Laguna S 2.1 (free)",
-      "context_window": 262144,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_json_schema": null,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "laguna-s-2.1:free",
-        "openrouter/poolside/laguna-s-2.1:free",
-        "poolside/laguna-s-2.1-20260720",
-        "poolside/laguna-s-2.1:free"
-      ],
-      "license_type": "free",
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "poolside",
-        "canonical_slug": "poolside/laguna-s-2.1-20260720",
-        "hugging_face_id": "poolside/Laguna-S-2.1",
-        "modality": "text->text",
-        "tokenizer": "Other",
-        "top_provider": {
-          "context_length": 262144,
-          "max_completion_tokens": 32768,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "include_reasoning",
-          "max_tokens",
-          "reasoning",
-          "temperature",
-          "tool_choice",
-          "tools"
-        ],
-        "created": "2026-07-21",
-        "description": "Laguna S 2.1 is the latest coding agent model from [Poolside](<https://poolside.ai/>). Laguna S 2.1 is a 118B total parameter model with 8B active parameters, scoring 70.2% on Terminal-Bench 2.1 and...",
-        "expiration_date": "2026-10-31",
-        "free_tier": true,
-        "reasoning_meta": {
-          "mandatory": false,
-          "default_enabled": true
-        },
-        "links": {
-          "details": "/api/v1/models/poolside/laguna-s-2.1-20260720/endpoints"
-        },
-        "features": [
-          "tools",
-          "reasoning"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "poolside/laguna-xs-2.1",
-      "display_name": "Poolside: Laguna XS 2.1",
-      "context_window": 262144,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_json_schema": null,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "laguna-xs-2.1",
-        "openrouter/poolside/laguna-xs-2.1",
-        "poolside/laguna-xs-2.1-20260625",
-        "poolside/laguna-xs-2.1"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.06,
-        "output_per_1m": 0.12,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "poolside",
-        "canonical_slug": "poolside/laguna-xs-2.1-20260625",
-        "hugging_face_id": "poolside/Laguna-XS-2.1",
-        "modality": "text->text",
-        "tokenizer": "Other",
-        "top_provider": {
-          "context_length": 262144,
-          "max_completion_tokens": 32768,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "include_reasoning",
-          "max_tokens",
-          "reasoning",
-          "temperature",
-          "tool_choice",
-          "tools"
-        ],
-        "created": "2026-07-02",
-        "description": "Laguna XS 2.1 is the latest coding agent model in the 33B-A3B category from [Poolside](https://poolside.ai/) and a step forward from their Laguna XS.2 model (released in April 2026). It combines...",
-        "expiration_date": "2026-10-31",
-        "cache_read_per_1m": 0.03,
-        "reasoning_meta": {
-          "mandatory": false,
-          "default_enabled": true
-        },
-        "links": {
-          "details": "/api/v1/models/poolside/laguna-xs-2.1-20260625/endpoints"
-        },
-        "features": [
-          "tools",
-          "reasoning"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "poolside/laguna-xs-2.1:free",
-      "display_name": "Poolside: Laguna XS 2.1 (free)",
-      "context_window": 262144,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_json_schema": null,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "laguna-xs-2.1:free",
-        "openrouter/poolside/laguna-xs-2.1:free",
-        "poolside/laguna-xs-2.1-20260625",
-        "poolside/laguna-xs-2.1:free"
-      ],
-      "license_type": "free",
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "poolside",
-        "canonical_slug": "poolside/laguna-xs-2.1-20260625",
-        "hugging_face_id": "poolside/Laguna-XS-2.1",
-        "modality": "text->text",
-        "tokenizer": "Other",
-        "top_provider": {
-          "context_length": 262144,
-          "max_completion_tokens": 32768,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "include_reasoning",
-          "max_tokens",
-          "reasoning",
-          "temperature",
-          "tool_choice",
-          "tools"
-        ],
-        "created": "2026-07-02",
-        "description": "Laguna XS 2.1 is the latest coding agent model in the 33B-A3B category from [Poolside](https://poolside.ai/) and a step forward from their Laguna XS.2 model (released in April 2026). It combines...",
-        "expiration_date": "2026-10-31",
-        "free_tier": true,
-        "reasoning_meta": {
-          "mandatory": false,
-          "default_enabled": true
-        },
-        "links": {
-          "details": "/api/v1/models/poolside/laguna-xs-2.1-20260625/endpoints"
-        },
-        "features": [
-          "tools",
-          "reasoning"
         ]
       }
     },
@@ -53056,6 +52695,15 @@
         "currency": "USD"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 256000,
+            "prompt": "0.00000078",
+            "completion": "0.00000234",
+            "input_cache_read": "0.000000156",
+            "input_cache_write": "0.000000975"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -53089,15 +52737,6 @@
         "description": "Qwen-Plus, based on the Qwen2.5 foundation model, is a 131K context model with a balanced performance, speed, and cost combination.",
         "cache_read_per_1m": 0.052,
         "cache_write_per_1m": 0.325,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 256000,
-            "prompt": "0.00000078",
-            "completion": "0.00000234",
-            "input_cache_read": "0.000000156",
-            "input_cache_write": "0.000000975"
-          }
-        ],
         "links": {
           "details": "/api/v1/models/qwen/qwen-plus-2025-01-25/endpoints"
         },
@@ -54005,8 +53644,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.07,
-        "output_per_1m": 0.28,
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.6,
         "currency": "USD"
       },
       "extra": {
@@ -54022,7 +53661,7 @@
         "top_provider": {
           "context_length": 262144,
           "max_completion_tokens": 235929,
-          "is_moderated": false
+          "is_moderated": true
         },
         "supported_parameters": [
           "frequency_penalty",
@@ -54090,6 +53729,22 @@
         "currency": "USD"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 32000,
+            "prompt": "0.000000325",
+            "completion": "0.000001625",
+            "input_cache_read": "0.000000065",
+            "input_cache_write": "0.00000040625"
+          },
+          {
+            "min_prompt_tokens": 128000,
+            "prompt": "0.00000052",
+            "completion": "0.0000026",
+            "input_cache_read": "0.000000104",
+            "input_cache_write": "0.00000065"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -54122,22 +53777,6 @@
         "description": "Qwen3 Coder Flash is Alibaba's fast and cost efficient version of their proprietary Qwen3 Coder Plus. It is a powerful coding agent model specializing in autonomous programming via tool calling...",
         "cache_read_per_1m": 0.039,
         "cache_write_per_1m": 0.24375,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 32000,
-            "prompt": "0.000000325",
-            "completion": "0.000001625",
-            "input_cache_read": "0.000000065",
-            "input_cache_write": "0.00000040625"
-          },
-          {
-            "min_prompt_tokens": 128000,
-            "prompt": "0.00000052",
-            "completion": "0.0000026",
-            "input_cache_read": "0.000000104",
-            "input_cache_write": "0.00000065"
-          }
-        ],
         "links": {
           "details": "/api/v1/models/qwen/qwen3-coder-flash/endpoints"
         },
@@ -55739,6 +55378,13 @@
         "status": "inferred"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 256000,
+            "prompt": "0.000000325",
+            "completion": "0.00000195"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -55772,13 +55418,6 @@
         ],
         "created": "2026-02-16",
         "description": "The Qwen3.5 native vision-language series Plus models are built on a hybrid architecture that integrates linear attention mechanisms with sparse mixture-of-experts models, achieving higher inference efficiency. In a variety of...",
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 256000,
-            "prompt": "0.000000325",
-            "completion": "0.00000195"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false
         },
@@ -55869,6 +55508,14 @@
         "status": "inferred"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 256000,
+            "prompt": "0.000000375",
+            "completion": "0.00000225",
+            "input_cache_write": "0.00000046875"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -55903,14 +55550,6 @@
         "created": "2026-04-27",
         "description": "Qwen3.5 Plus (April 2026) is a large-scale multimodal language model from Alibaba. It accepts text, image, and video input and produces text output, with a 1M token context window. This...",
         "cache_write_per_1m": 0.375,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 256000,
-            "prompt": "0.000000375",
-            "completion": "0.00000225",
-            "input_cache_write": "0.00000046875"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false
         },
@@ -55930,7 +55569,7 @@
       "model_id": "qwen/qwen3.6-27b",
       "display_name": "Qwen: Qwen3.6 27B",
       "context_window": 262144,
-      "max_output_tokens": 81920,
+      "max_output_tokens": 65536,
       "input_modalities": [
         "text",
         "image",
@@ -55963,8 +55602,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.32,
-        "output_per_1m": 3.2,
+        "input_per_1m": 0.45,
+        "output_per_1m": 2.7,
         "currency": "USD"
       },
       "video": {
@@ -56010,7 +55649,7 @@
         "tokenizer": "Qwen3",
         "top_provider": {
           "context_length": 262144,
-          "max_completion_tokens": 81920,
+          "max_completion_tokens": 65536,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -56264,6 +55903,14 @@
         "status": "inferred"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 256000,
+            "prompt": "0.00000075",
+            "completion": "0.000003",
+            "input_cache_write": "0.0000009375"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -56298,14 +55945,6 @@
         "created": "2026-04-27",
         "description": "Qwen3.6 Flash is a fast, efficient language model from Alibaba's Qwen 3.6 series. It supports text, image, and video input with a 1M token context window. Tiered pricing kicks in...",
         "cache_write_per_1m": 0.234375,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 256000,
-            "prompt": "0.00000075",
-            "completion": "0.000003",
-            "input_cache_write": "0.0000009375"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false
         },
@@ -56394,6 +56033,14 @@
         "status": "inferred"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 256000,
+            "prompt": "0.0000013",
+            "completion": "0.0000039",
+            "input_cache_write": "0.000001625"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -56428,14 +56075,6 @@
         "created": "2026-04-02",
         "description": "Qwen 3.6 Plus builds on a hybrid architecture that combines efficient linear attention with sparse mixture-of-experts routing, enabling strong scalability and high-performance inference. Compared to the 3.5 series, it delivers...",
         "cache_write_per_1m": 0.40625,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 256000,
-            "prompt": "0.0000013",
-            "completion": "0.0000039",
-            "input_cache_write": "0.000001625"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false
         },
@@ -56528,6 +56167,22 @@
         "status": "inferred"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 32000,
+            "prompt": "0.0000001",
+            "completion": "0.0000004",
+            "input_cache_read": "0.00000002",
+            "input_cache_write": "0.000000125"
+          },
+          {
+            "min_prompt_tokens": 256000,
+            "prompt": "0.0000002",
+            "completion": "0.0000008",
+            "input_cache_read": "0.00000004",
+            "input_cache_write": "0.00000025"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -56559,22 +56214,6 @@
         "description": "Qwen3.7 Flash is a vision-language reasoning model from Alibaba. It is suited for multimodal agents, visual coding, search, and computer interaction, with strengths in object recognition, spatial understanding, and real-world...",
         "cache_read_per_1m": 0.006,
         "cache_write_per_1m": 0.038,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 32000,
-            "prompt": "0.0000001",
-            "completion": "0.0000004",
-            "input_cache_read": "0.00000002",
-            "input_cache_write": "0.000000125"
-          },
-          {
-            "min_prompt_tokens": 256000,
-            "prompt": "0.0000002",
-            "completion": "0.0000008",
-            "input_cache_read": "0.00000004",
-            "input_cache_write": "0.00000025"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -56675,7 +56314,7 @@
           "details": "/api/v1/models/qwen/qwen3.7-max-20260520/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 17,
+          "design_arena": 18,
           "artificial_analysis": 1
         },
         "features": [
@@ -56727,6 +56366,15 @@
         "currency": "USD"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 256000,
+            "prompt": "0.00000096",
+            "completion": "0.00000384",
+            "input_cache_read": "0.000000192",
+            "input_cache_write": "0.0000012"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -56762,15 +56410,6 @@
         "description": "Qwen3.7-Plus is a cost-effective model in Alibaba's Qwen3.7 series. It supports text and image input with text output, building on the series' text capabilities with a comprehensive upgrade to its...",
         "cache_read_per_1m": 0.064,
         "cache_write_per_1m": 0.4,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 256000,
-            "prompt": "0.00000096",
-            "completion": "0.00000384",
-            "input_cache_read": "0.000000192",
-            "input_cache_write": "0.0000012"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true
@@ -57005,7 +56644,7 @@
       "model_id": "qwen/qwen3.8-27b",
       "display_name": "Qwen: Qwen3.8 27B",
       "context_window": 1000000,
-      "max_output_tokens": 65536,
+      "max_output_tokens": 235929,
       "input_modalities": [
         "text",
         "image",
@@ -57038,8 +56677,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.039,
-        "output_per_1m": 1.25,
+        "input_per_1m": 0.15,
+        "output_per_1m": 1.875,
         "currency": "USD"
       },
       "video": {
@@ -57085,7 +56724,7 @@
         "tokenizer": "Qwen",
         "top_provider": {
           "context_length": 262144,
-          "max_completion_tokens": 65536,
+          "max_completion_tokens": 235929,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -57113,7 +56752,7 @@
         ],
         "created": "2026-08-14",
         "description": "Qwen3.8 27B is an open-weight dense vision-language model from Qwen. It is suited for coding, professional workflows, research, multimodal interaction, and long-running agent tasks, with flexible thinking that can be...",
-        "cache_read_per_1m": 0.0039,
+        "cache_read_per_1m": 0.0375,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95,
@@ -59349,7 +58988,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/respan/span-01",
-        "checked_at": "2026-10-30",
+        "checked_at": "2026-11-02",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -59441,7 +59080,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/respan/span-01-lite",
-        "checked_at": "2026-10-30",
+        "checked_at": "2026-11-02",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -59846,6 +59485,14 @@
         "currency": "USD"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.00001",
+            "completion": "0.000045",
+            "input_cache_read": "0.000001"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -59872,14 +59519,6 @@
         "description": "Fugu Ultra is the higher-performance model in Sakana AI's Fugu family. Rather than a single monolithic model, Fugu is a learned multi-agent orchestration system: a language model trained to route...",
         "cache_read_per_1m": 0.5,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.00001",
-            "completion": "0.000045",
-            "input_cache_read": "0.000001"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true,
           "default_enabled": true,
@@ -59971,6 +59610,14 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 272000,
+            "prompt": "0.00001",
+            "completion": "0.000045",
+            "input_cache_read": "0.000001"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -59997,14 +59644,6 @@
         "description": "Fugu Ultra v2 is the higher-performance model in Sakana AI's Fugu family. Rather than a single monolithic model, Fugu is a learned multi-agent orchestration system: a language model trained to...",
         "cache_read_per_1m": 0.5,
         "web_search_per_request_usd": 0.01,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 272000,
-            "prompt": "0.00001",
-            "completion": "0.000045",
-            "input_cache_read": "0.000001"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true,
           "default_enabled": true,
@@ -61578,7 +61217,7 @@
     {
       "provider": "openrouter",
       "model_id": "tbc/mischief-1",
-      "display_name": "TBC: Mischief 1",
+      "display_name": "TBC: mischief 1",
       "context_window": 0,
       "max_output_tokens": 0,
       "input_modalities": [
@@ -61629,7 +61268,7 @@
           "temperature",
           "max_tokens"
         ],
-        "description": "TBC Mischief 1 is the world's first neuron-derived video model from The Biological Computing Co. It supports image to video and is a fast and affordable way to bring ideas to life. Ideal for ideation, previsualization, moodboarding and variant testing.",
+        "description": "TBC mischief 1 is the world's first neuron-derived video model from The Biological Computing Co. It supports image to video and is a fast and affordable way to bring ideas to life. Ideal for ideation, previsualization, moodboarding and variant testing.",
         "free_tier": true,
         "features": [
           "vision"
@@ -62038,6 +61677,22 @@
         "currency": "USD"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "utc_start": 0,
+            "utc_end": 1600,
+            "prompt": "0.000000132",
+            "completion": "0.000000528",
+            "input_cache_read": "0.000000033"
+          },
+          {
+            "utc_start": 1600,
+            "utc_end": 0,
+            "prompt": "0.0000000825",
+            "completion": "0.00000033",
+            "input_cache_read": "0.000000020625"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -62076,22 +61731,6 @@
         "created": "2026-07-06",
         "description": "Hy3 is a 295B-parameter Mixture-of-Experts model from Tencent (21B active, 192 experts with top-8 routing) built for reasoning, agentic workflows, and real-world production use. It supports a configurable reasoning effort:...",
         "cache_read_per_1m": 0.033,
-        "pricing_overrides": [
-          {
-            "utc_start": 0,
-            "utc_end": 1600,
-            "prompt": "0.000000132",
-            "completion": "0.000000528",
-            "input_cache_read": "0.000000033"
-          },
-          {
-            "utc_start": 1600,
-            "utc_end": 0,
-            "prompt": "0.0000000825",
-            "completion": "0.00000033",
-            "input_cache_read": "0.000000020625"
-          }
-        ],
         "default_parameters": {
           "temperature": 0.9,
           "top_p": 1
@@ -62274,6 +61913,22 @@
         "currency": "USD"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "utc_start": 0,
+            "utc_end": 1600,
+            "prompt": "0.000000834",
+            "completion": "0.000002501",
+            "input_cache_read": "0.000000042"
+          },
+          {
+            "utc_start": 1600,
+            "utc_end": 0,
+            "prompt": "0.0000007506",
+            "completion": "0.0000022509",
+            "input_cache_read": "0.0000000378"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -62315,22 +61970,6 @@
         "created": "2026-08-28",
         "description": "Tencent: Hy4 preview is a mixture-of-experts model from Tencent, with 49B active parameters out of 770B total. It is designed for coding agents, complex tool-use workflows, and productivity tasks that...",
         "cache_read_per_1m": 0.042,
-        "pricing_overrides": [
-          {
-            "utc_start": 0,
-            "utc_end": 1600,
-            "prompt": "0.000000834",
-            "completion": "0.000002501",
-            "input_cache_read": "0.000000042"
-          },
-          {
-            "utc_start": 1600,
-            "utc_end": 0,
-            "prompt": "0.0000007506",
-            "completion": "0.0000022509",
-            "input_cache_read": "0.0000000378"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -63314,7 +62953,7 @@
           "https://openrouter.ai/api/v1/chat/completions"
         ],
         "source_url": "https://openrouter.ai/togethercomputer/tev1-4b-experimental",
-        "checked_at": "2026-10-30",
+        "checked_at": "2026-11-02",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openai-compatible-chat-completions",
@@ -63966,7 +63605,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/upstage/solar-decide",
-        "checked_at": "2026-10-30",
+        "checked_at": "2026-11-02",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -64066,7 +63705,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/upstage/solar-decide-flash",
-        "checked_at": "2026-10-30",
+        "checked_at": "2026-11-02",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -64985,6 +64624,14 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.0000025",
+            "completion": "0.000005",
+            "input_cache_read": "0.0000004"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -65016,14 +64663,6 @@
         "description": "Grok 4.20 is a reasoning model from SpaceXAI with industry-leading speed and agentic tool calling capabilities. It combines the lowest hallucination rate on the market with strict prompt adherance, delivering...",
         "cache_read_per_1m": 0.2,
         "web_search_per_request_usd": 0.005,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 200000,
-            "prompt": "0.0000025",
-            "completion": "0.000005",
-            "input_cache_read": "0.0000004"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": false
@@ -65103,6 +64742,14 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.0000025",
+            "completion": "0.000005",
+            "input_cache_read": "0.0000004"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -65133,14 +64780,6 @@
         "description": "Grok 4.20 Multi-Agent is a variant of SpaceXAI’s Grok 4.20 designed for collaborative, agent-based workflows. Multiple agents operate in parallel to conduct deep research, coordinate tool use, and synthesize information...",
         "cache_read_per_1m": 0.2,
         "web_search_per_request_usd": 0.005,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 200000,
-            "prompt": "0.0000025",
-            "completion": "0.000005",
-            "input_cache_read": "0.0000004"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true,
           "default_enabled": true,
@@ -65232,6 +64871,14 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.0000025",
+            "completion": "0.000005",
+            "input_cache_read": "0.0000004"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -65264,14 +64911,6 @@
         "description": "Grok 4.3 is a reasoning model from SpaceXAI. It accepts text and image inputs with text output, and is suited for agentic workflows, instruction-following tasks, and applications requiring high factual...",
         "cache_read_per_1m": 0.2,
         "web_search_per_request_usd": 0.005,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 200000,
-            "prompt": "0.0000025",
-            "completion": "0.000005",
-            "input_cache_read": "0.0000004"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -65368,6 +65007,14 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.000002",
+            "completion": "0.000004",
+            "input_cache_read": "0.00000032"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -65400,14 +65047,6 @@
         "description": "Grok 4.3 is a reasoning model from SpaceXAI. It accepts text and image inputs with text output, and is suited for agentic workflows, instruction-following tasks, and applications requiring high factual...",
         "cache_read_per_1m": 0.16,
         "web_search_per_request_usd": 0.005,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 200000,
-            "prompt": "0.000002",
-            "completion": "0.000004",
-            "input_cache_read": "0.00000032"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -65504,6 +65143,14 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.000004",
+            "completion": "0.000012",
+            "input_cache_read": "0.0000006"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -65536,14 +65183,6 @@
         "description": "Grok 4.5 is a model from SpaceXAI with frontier performance on coding, knowledge work, and STEM.",
         "cache_read_per_1m": 0.3,
         "web_search_per_request_usd": 0.005,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 200000,
-            "prompt": "0.000004",
-            "completion": "0.000012",
-            "input_cache_read": "0.0000006"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true,
           "default_enabled": true,
@@ -65639,6 +65278,14 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.000004",
+            "completion": "0.000012",
+            "input_cache_read": "0.000001"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -65673,14 +65320,6 @@
         "description": "Grok 4.6 is a model from SpaceXAI with frontier performance on coding, knowledge work, and STEM. It is succeeded by [Grok 4.7](/x-ai/grok-4.7).",
         "cache_read_per_1m": 0.5,
         "web_search_per_request_usd": 0.005,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 200000,
-            "prompt": "0.000004",
-            "completion": "0.000012",
-            "input_cache_read": "0.000001"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true,
           "default_enabled": true,
@@ -65777,6 +65416,14 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.000004",
+            "completion": "0.000012",
+            "input_cache_read": "0.000001"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -65809,14 +65456,6 @@
         "description": "Grok 4.7 is SpaceXAI's flagship model for coding, agentic tasks, and knowledge work, succeeding Grok 4.6. It is particularly strong at long-running software engineering tasks, verifying its own work, and...",
         "cache_read_per_1m": 0.5,
         "web_search_per_request_usd": 0.005,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 200000,
-            "prompt": "0.000004",
-            "completion": "0.000012",
-            "input_cache_read": "0.000001"
-          }
-        ],
         "default_parameters": {
           "temperature": 0.7,
           "top_p": 0.95
@@ -65836,7 +65475,7 @@
           "details": "/api/v1/models/x-ai/grok-4.7-20260916/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 6,
+          "design_arena": 9,
           "artificial_analysis": 1
         },
         "features": [
@@ -65917,6 +65556,14 @@
         "checked_at": "2026-10-10"
       },
       "extra": {
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.000002",
+            "completion": "0.000004",
+            "input_cache_read": "0.0000004"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -65948,14 +65595,6 @@
         "description": "Grok Build 0.1 is SpaceXAI’s fast coding model trained specifically for agentic software engineering workflows. It supports text and image inputs with text output, and is optimized for interactive coding...",
         "cache_read_per_1m": 0.2,
         "web_search_per_request_usd": 0.005,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 200000,
-            "prompt": "0.000002",
-            "completion": "0.000004",
-            "input_cache_read": "0.0000004"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true
         },
@@ -67926,8 +67565,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.54,
-        "output_per_1m": 1.98,
+        "input_per_1m": 0.6,
+        "output_per_1m": 2.2,
         "currency": "USD"
       },
       "extra": {
@@ -67941,7 +67580,7 @@
         "modality": "text->text",
         "tokenizer": "Other",
         "top_provider": {
-          "context_length": 204800,
+          "context_length": 202752,
           "max_completion_tokens": 131072,
           "is_moderated": false
         },
@@ -67967,7 +67606,8 @@
         ],
         "created": "2025-12-22",
         "description": "GLM-4.7 is Z.ai’s latest flagship model, featuring upgrades in two key areas: enhanced programming capabilities and more stable multi-step reasoning/execution. It demonstrates significant improvements in executing complex agent tasks while...",
-        "cache_read_per_1m": 0.099,
+        "expiration_date": "2026-12-31",
+        "cache_read_per_1m": 0.11,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -68367,7 +68007,7 @@
           "details": "/api/v1/models/z-ai/glm-5.1-20260406/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 22,
+          "design_arena": 23,
           "artificial_analysis": 1
         },
         "features": [
@@ -68414,7 +68054,7 @@
       "license_type": "api",
       "pricing": {
         "input_per_1m": 0.006,
-        "output_per_1m": 7.0,
+        "output_per_1m": 6.8,
         "currency": "USD"
       },
       "extra": {
@@ -68476,7 +68116,7 @@
           "details": "/api/v1/models/z-ai/glm-5.2-20260616/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 17,
+          "design_arena": 18,
           "artificial_analysis": 1
         },
         "features": [
@@ -68651,8 +68291,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.0477,
-        "output_per_1m": 0.0701,
+        "input_per_1m": 0.0285,
+        "output_per_1m": 0.0923,
         "currency": "USD"
       },
       "video": {
@@ -68726,7 +68366,7 @@
         ],
         "created": "2026-08-26",
         "description": "GLM-5.3-Flash is a native multimodal model from Z.ai. It is suited for efficient coding and long-horizon agent tasks. Its hybrid sparse and linear attention architecture maintains accurate long-context behavior while...",
-        "cache_read_per_1m": 0.03,
+        "cache_read_per_1m": 0.0285,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -69400,6 +69040,393 @@
     },
     {
       "provider": "openrouter",
+      "model_id": "cloudflare/clairic",
+      "display_name": "Cloudflare: Clairic",
+      "context_window": 65536,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "decisions"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "clairic",
+        "openrouter/cloudflare/clairic"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "cloudflare",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 65536,
+          "max_completion_tokens": 65536,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "Clairic is Cloudflare's System One-style extraction model served on Workers AI. Given a text state and optional images plus a schema of typed fields, it extracts, computes, estimates, and forecasts strongly typed values (text spans, numbers, dates, times, durations, lists, estimates, forecasts) in a single pass, returning a confidence score and null probability for every field instead of generatin",
+        "features": [
+          "vision"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-02"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "poolside/laguna-s-2.1",
+      "display_name": "Poolside: Laguna S 2.1",
+      "context_window": 1048576,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_json_schema": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "laguna-s-2.1",
+        "openrouter/poolside/laguna-s-2.1",
+        "poolside/laguna-s-2.1-20260720",
+        "poolside/laguna-s-2.1"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.09,
+        "output_per_1m": 0.18,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "poolside",
+        "canonical_slug": "poolside/laguna-s-2.1-20260720",
+        "hugging_face_id": "poolside/Laguna-S-2.1",
+        "modality": "text->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 1048576,
+          "max_completion_tokens": 131072,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "include_reasoning",
+          "max_tokens",
+          "reasoning",
+          "temperature",
+          "tool_choice",
+          "tools"
+        ],
+        "created": "2026-07-21",
+        "description": "Laguna S 2.1 is the latest coding agent model from [Poolside](<https://poolside.ai/>). Laguna S 2.1 is a 118B total parameter model with 8B active parameters, scoring 70.2% on Terminal-Bench 2.1 and...",
+        "expiration_date": "2026-10-31",
+        "cache_read_per_1m": 0.009,
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": true
+        },
+        "links": {
+          "details": "/api/v1/models/poolside/laguna-s-2.1-20260720/endpoints"
+        },
+        "features": [
+          "tools",
+          "reasoning"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-02"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "poolside/laguna-s-2.1:free",
+      "display_name": "Poolside: Laguna S 2.1 (free)",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_json_schema": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "laguna-s-2.1:free",
+        "openrouter/poolside/laguna-s-2.1:free",
+        "poolside/laguna-s-2.1-20260720",
+        "poolside/laguna-s-2.1:free"
+      ],
+      "license_type": "free",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "poolside",
+        "canonical_slug": "poolside/laguna-s-2.1-20260720",
+        "hugging_face_id": "poolside/Laguna-S-2.1",
+        "modality": "text->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 262144,
+          "max_completion_tokens": 32768,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "include_reasoning",
+          "max_tokens",
+          "reasoning",
+          "temperature",
+          "tool_choice",
+          "tools"
+        ],
+        "created": "2026-07-21",
+        "description": "Laguna S 2.1 is the latest coding agent model from [Poolside](<https://poolside.ai/>). Laguna S 2.1 is a 118B total parameter model with 8B active parameters, scoring 70.2% on Terminal-Bench 2.1 and...",
+        "expiration_date": "2026-10-31",
+        "free_tier": true,
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": true
+        },
+        "links": {
+          "details": "/api/v1/models/poolside/laguna-s-2.1-20260720/endpoints"
+        },
+        "features": [
+          "tools",
+          "reasoning"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-02"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "poolside/laguna-xs-2.1",
+      "display_name": "Poolside: Laguna XS 2.1",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_json_schema": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "laguna-xs-2.1",
+        "openrouter/poolside/laguna-xs-2.1",
+        "poolside/laguna-xs-2.1-20260625",
+        "poolside/laguna-xs-2.1"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.06,
+        "output_per_1m": 0.12,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "poolside",
+        "canonical_slug": "poolside/laguna-xs-2.1-20260625",
+        "hugging_face_id": "poolside/Laguna-XS-2.1",
+        "modality": "text->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 262144,
+          "max_completion_tokens": 32768,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "include_reasoning",
+          "max_tokens",
+          "reasoning",
+          "temperature",
+          "tool_choice",
+          "tools"
+        ],
+        "created": "2026-07-02",
+        "description": "Laguna XS 2.1 is the latest coding agent model in the 33B-A3B category from [Poolside](https://poolside.ai/) and a step forward from their Laguna XS.2 model (released in April 2026). It combines...",
+        "expiration_date": "2026-10-31",
+        "cache_read_per_1m": 0.03,
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": true
+        },
+        "links": {
+          "details": "/api/v1/models/poolside/laguna-xs-2.1-20260625/endpoints"
+        },
+        "features": [
+          "tools",
+          "reasoning"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-02"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "poolside/laguna-xs-2.1:free",
+      "display_name": "Poolside: Laguna XS 2.1 (free)",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_json_schema": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "laguna-xs-2.1:free",
+        "openrouter/poolside/laguna-xs-2.1:free",
+        "poolside/laguna-xs-2.1-20260625",
+        "poolside/laguna-xs-2.1:free"
+      ],
+      "license_type": "free",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "poolside",
+        "canonical_slug": "poolside/laguna-xs-2.1-20260625",
+        "hugging_face_id": "poolside/Laguna-XS-2.1",
+        "modality": "text->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 262144,
+          "max_completion_tokens": 32768,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "include_reasoning",
+          "max_tokens",
+          "reasoning",
+          "temperature",
+          "tool_choice",
+          "tools"
+        ],
+        "created": "2026-07-02",
+        "description": "Laguna XS 2.1 is the latest coding agent model in the 33B-A3B category from [Poolside](https://poolside.ai/) and a step forward from their Laguna XS.2 model (released in April 2026). It combines...",
+        "expiration_date": "2026-10-31",
+        "free_tier": true,
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": true
+        },
+        "links": {
+          "details": "/api/v1/models/poolside/laguna-xs-2.1-20260625/endpoints"
+        },
+        "features": [
+          "tools",
+          "reasoning"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-02"
+      }
+    },
+    {
+      "provider": "openrouter",
       "model_id": "openai/o1",
       "display_name": "OpenAI: o1",
       "context_window": 200000,
@@ -69503,7 +69530,7 @@
           "file_input"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-10-30"
+        "provider_refresh_checked_at": "2026-11-02"
       }
     },
     {
@@ -69606,7 +69633,7 @@
           "file_input"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-10-30"
+        "provider_refresh_checked_at": "2026-11-02"
       }
     },
     {
@@ -69718,7 +69745,7 @@
           "file_input"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-10-30"
+        "provider_refresh_checked_at": "2026-11-02"
       },
       "reasoning_effort_values": [
         "none",
@@ -69836,7 +69863,7 @@
           "file_input"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-10-30"
+        "provider_refresh_checked_at": "2026-11-02"
       },
       "reasoning_effort_values": [
         "none",
@@ -69939,7 +69966,7 @@
           "reasoning"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-10-30"
+        "provider_refresh_checked_at": "2026-11-02"
       }
     },
     {
@@ -70040,7 +70067,7 @@
           "reasoning_effort"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-10-30"
+        "provider_refresh_checked_at": "2026-11-02"
       },
       "reasoning_effort_values": [
         "none",

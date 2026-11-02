@@ -22,6 +22,7 @@ URL = "https://ollama.com/api/tags"
 RESPONSES_API_SOURCE = "https://docs.ollama.com/api/openai-compatibility"
 RESPONSES_API_MIN_VERSION = "0.13.3"
 STRUCTURED_OUTPUT_SOURCE = "https://docs.ollama.com/capabilities/structured-outputs"
+OLLAMA_COMMAND_A_SOURCE = "https://ollama.com/library/command-a"
 
 
 def fetch() -> list[dict]:
@@ -114,6 +115,45 @@ def entry(raw: dict, old: dict | None) -> dict:
     return d
 
 
+def apply_verified_model_specs(models: list[dict]) -> None:
+    """Apply explicit Ollama Library facts omitted by the tags endpoint."""
+    for model in models:
+        model_id = str(model.get("model_id", "")).casefold()
+        base_id, _, variant = model_id.partition(":")
+        if base_id == "command-a":
+            # Ollama's library lists the latest Command A tag at 16K context
+            # and documents support up to 256K when configured. The tags API
+            # does not publish a maximum output-token limit.
+            model["context_window"] = 16_384
+            extra = dict(model.get("extra") or {})
+            extra.update(
+                {
+                    "context_window_source": OLLAMA_COMMAND_A_SOURCE,
+                    "context_window_basis": "official_latest_tag_default",
+                    "model_max_context_window": 256_000,
+                    "model_max_context_window_source": OLLAMA_COMMAND_A_SOURCE,
+                    "max_output_tokens_status": "not_published_by_ollama",
+                }
+            )
+            model["max_output_tokens"] = 0
+            model["extra"] = extra
+        elif base_id == "deepseek-r1":
+            # Ollama's model library publishes 128K for regular/distilled tags
+            # and 160K for the full 671B tag. Output caps are not published.
+            is_full_671b = variant.startswith("671b")
+            model["context_window"] = 160_000 if is_full_671b else 128_000
+            model["max_output_tokens"] = 0
+            extra = dict(model.get("extra") or {})
+            extra.update(
+                {
+                    "context_window_source": "https://ollama.com/library/deepseek-r1",
+                    "context_window_basis": "official_model_tag_context",
+                    "max_output_tokens_status": "not_published_by_ollama",
+                }
+            )
+            model["extra"] = extra
+
+
 def main() -> None:
     data = json.loads(DATA.read_text(encoding="utf-8"))
     models = {m.get("model_id", "").lower(): m for m in data.get("models", [])}
@@ -122,6 +162,7 @@ def main() -> None:
         name = (raw.get("name") or raw.get("model") or "").lower()
         if name:
             models[name] = entry(raw, models.get(name))
+    apply_verified_model_specs(list(models.values()))
     result = {
         "models": sorted(models.values(), key=lambda m: m.get("model_id", "").lower())
     }

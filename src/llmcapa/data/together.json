@@ -26,7 +26,7 @@
       },
       "extra": {
         "source": "https://www.together.ai/pricing",
-        "pricing_retrieved_at": "2026-11-01T07:22:26.854161+00:00",
+        "pricing_retrieved_at": "2026-11-02T04:00:15.100772+00:00",
         "endpoints": [
           {
             "base_url": "https://api.together.xyz/v1",
@@ -63,7 +63,7 @@
       },
       "extra": {
         "source": "https://www.together.ai/pricing",
-        "pricing_retrieved_at": "2026-11-01T07:22:26.854175+00:00",
+        "pricing_retrieved_at": "2026-11-02T04:00:15.100792+00:00",
         "endpoints": [
           {
             "base_url": "https://api.together.xyz/v1",
@@ -137,7 +137,7 @@
       },
       "extra": {
         "source": "https://www.together.ai/pricing",
-        "pricing_retrieved_at": "2026-11-01T07:22:26.854186+00:00",
+        "pricing_retrieved_at": "2026-11-02T04:00:15.100806+00:00",
         "endpoints": [
           {
             "base_url": "https://api.together.xyz/v1",
@@ -174,7 +174,7 @@
       },
       "extra": {
         "source": "https://www.together.ai/pricing",
-        "pricing_retrieved_at": "2026-11-01T07:22:26.854191+00:00",
+        "pricing_retrieved_at": "2026-11-02T04:00:15.100811+00:00",
         "endpoints": [
           {
             "base_url": "https://api.together.xyz/v1",
@@ -211,7 +211,7 @@
       },
       "extra": {
         "source": "https://www.together.ai/pricing",
-        "pricing_retrieved_at": "2026-11-01T07:22:26.854195+00:00",
+        "pricing_retrieved_at": "2026-11-02T04:00:15.100817+00:00",
         "endpoints": [
           {
             "base_url": "https://api.together.xyz/v1",
@@ -322,7 +322,7 @@
       },
       "extra": {
         "source": "https://www.together.ai/pricing",
-        "pricing_retrieved_at": "2026-11-01T07:22:26.854205+00:00",
+        "pricing_retrieved_at": "2026-11-02T04:00:15.100828+00:00",
         "endpoints": [
           {
             "base_url": "https://api.together.xyz/v1",
@@ -359,7 +359,7 @@
       },
       "extra": {
         "source": "https://www.together.ai/pricing",
-        "pricing_retrieved_at": "2026-11-01T07:22:26.854210+00:00",
+        "pricing_retrieved_at": "2026-11-02T04:00:15.100833+00:00",
         "endpoints": [
           {
             "base_url": "https://api.together.xyz/v1",
@@ -410,9 +410,9 @@
     {
       "provider": "together",
       "model_id": "deepseek-ai/DeepSeek-V4-Pro",
-      "display_name": "DeepSeek-V4-Pro",
+      "display_name": "DeepSeek V4 Pro",
       "context_window": 512000,
-      "max_output_tokens": 4096,
+      "max_output_tokens": 0,
       "supports_chat_completion": true,
       "supports_function_calling": true,
       "supports_vision": false,
@@ -427,8 +427,8 @@
       ],
       "deprecated": false,
       "pricing": {
-        "input_per_1m": 1.74,
-        "output_per_1m": 3.48,
+        "input_per_1m": 2.1,
+        "output_per_1m": 4.4,
         "currency": "USD"
       },
       "extra": {
@@ -441,7 +441,13 @@
             "auth": "bearer",
             "source": "https://docs.together.ai/reference"
           }
-        ]
+        ],
+        "official_model_specs_source": "https://docs.together.ai/docs/changelog",
+        "official_model_specs_checked_at": "2026-11-02",
+        "official_model_id": "deepseek-ai/DeepSeek-V4-Pro",
+        "cached_input_per_1m": 0.2,
+        "model_listing_status": "historical_changelog_entry",
+        "max_output_tokens_status": "not_published_by_together"
       }
     },
     {
@@ -537,7 +543,7 @@
       },
       "extra": {
         "source": "https://www.together.ai/pricing",
-        "pricing_retrieved_at": "2026-11-01T07:22:26.854229+00:00",
+        "pricing_retrieved_at": "2026-11-02T04:00:15.100854+00:00",
         "endpoints": [
           {
             "base_url": "https://api.together.xyz/v1",
@@ -634,7 +640,7 @@
       },
       "extra": {
         "source": "https://www.together.ai/pricing",
-        "pricing_retrieved_at": "2026-11-01T07:22:26.854240+00:00",
+        "pricing_retrieved_at": "2026-11-02T04:00:15.100866+00:00",
         "endpoints": [
           {
             "base_url": "https://api.together.xyz/v1",
@@ -671,7 +677,7 @@
       },
       "extra": {
         "source": "https://www.together.ai/pricing",
-        "pricing_retrieved_at": "2026-11-01T07:22:26.854244+00:00",
+        "pricing_retrieved_at": "2026-11-02T04:00:15.100871+00:00",
         "endpoints": [
           {
             "base_url": "https://api.together.xyz/v1",
@@ -4267,6 +4273,42 @@
         ],
         "status": "inferred",
         "checked_at": "2026-10-14"
+      }
+    },
+    {
+      "provider": "together",
+      "model_id": "deepseek-ai/DeepSeek-V4-Pro-0813",
+      "display_name": "DeepSeek V4 Pro 0813",
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_vision": false,
+      "supports_streaming": null,
+      "deprecated": false,
+      "aliases": [],
+      "context_window": 1048576,
+      "max_output_tokens": 0,
+      "pricing": {
+        "input_per_1m": 1.32,
+        "output_per_1m": 3.96,
+        "currency": "USD"
+      },
+      "extra": {
+        "official_model_specs_source": "https://docs.together.ai/docs/serverless/models",
+        "official_model_specs_checked_at": "2026-11-02",
+        "official_model_id": "deepseek-ai/DeepSeek-V4-Pro-0813",
+        "cached_input_per_1m": 0.13,
+        "quantization": "NVFP4",
+        "max_output_tokens_status": "not_published_by_together",
+        "source": "https://www.together.ai/pricing",
+        "pricing_retrieved_at": "2026-11-02T04:00:15.101232+00:00",
+        "model_listing_status": "current_serverless_model"
       }
     }
   ]

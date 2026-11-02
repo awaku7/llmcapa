@@ -262,10 +262,19 @@ def audit(data_dir: Path = DEFAULT_DATA) -> dict[str, Any]:
     }
 
 
-def apply(data_dir: Path = DEFAULT_DATA) -> dict[str, int]:
-    """Add only conservative missing ImageCapability records to catalogs."""
+def apply(
+    data_dir: Path = DEFAULT_DATA, *, providers: set[str] | None = None
+) -> dict[str, int]:
+    """Add conservative missing image capabilities, optionally scoped by catalog.
+
+    Provider updaters pass their own catalog name so a single-provider refresh
+    cannot rewrite unrelated provider files. The default still processes all
+    catalogs for the dedicated batch postprocessor.
+    """
     changed = Counter()
     for path in sorted(data_dir.glob("*.json")):
+        if providers is not None and path.stem not in providers:
+            continue
         raw = path.read_bytes()
         crlf = b"\r\n" in raw
         text = raw.decode("utf-8").replace("\r\n", "\n")

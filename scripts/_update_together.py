@@ -11,6 +11,28 @@ from bs4 import BeautifulSoup
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "together.json"
 URL = "https://www.together.ai/pricing"
+SERVERLESS_MODELS_URL = "https://docs.together.ai/docs/serverless/models"
+CURRENT_VERIFIED_MODELS = {
+    "deepseek-ai/DeepSeek-V4-Pro": {
+        "display_name": "DeepSeek V4 Pro",
+        "context_window": 512_000,
+        "input_per_1m": 2.10,
+        "output_per_1m": 4.40,
+        "cached_input_per_1m": 0.20,
+        "source": "https://docs.together.ai/docs/changelog",
+        "status": "historical_changelog_entry",
+    },
+    "deepseek-ai/DeepSeek-V4-Pro-0813": {
+        "display_name": "DeepSeek V4 Pro 0813",
+        "context_window": 1_048_576,
+        "input_per_1m": 1.32,
+        "output_per_1m": 3.96,
+        "cached_input_per_1m": 0.13,
+        "quantization": "NVFP4",
+        "source": SERVERLESS_MODELS_URL,
+        "status": "current_serverless_model",
+    },
+}
 
 
 def _price(value: str) -> float | None:
@@ -49,6 +71,60 @@ def _key(name: str) -> str:
     return re.sub(r"[^a-z0-9]+", "", name.lower())
 
 
+def apply_verified_model_specs(
+    models: list[dict], *, checked_at: str | None = None
+) -> None:
+    """Upsert current official serverless model IDs and published limits."""
+    checked_at = checked_at or datetime.now(timezone.utc).date().isoformat()
+    by_id = {str(model.get("model_id", "")): model for model in models}
+    for model_id, spec in CURRENT_VERIFIED_MODELS.items():
+        model = by_id.get(model_id)
+        if model is None:
+            model = {
+                "provider": "together",
+                "model_id": model_id,
+                "display_name": spec["display_name"],
+                "input_modalities": ["text"],
+                "output_modalities": ["text"],
+                "supports_chat_completion": True,
+                "supports_function_calling": True,
+                "supports_json_mode": True,
+                "supports_vision": False,
+                "supports_streaming": None,
+                "deprecated": False,
+                "aliases": [],
+            }
+            models.append(model)
+            by_id[model_id] = model
+        model.update(
+            {
+                "provider": "together",
+                "display_name": spec["display_name"],
+                "context_window": spec["context_window"],
+                # Together's official model table does not publish an output cap.
+                "max_output_tokens": 0,
+                "pricing": {
+                    "input_per_1m": spec["input_per_1m"],
+                    "output_per_1m": spec["output_per_1m"],
+                    "currency": "USD",
+                },
+            }
+        )
+        extra = dict(model.get("extra") or {})
+        spec_extra = {
+            "official_model_specs_source": spec["source"],
+            "official_model_specs_checked_at": checked_at,
+            "official_model_id": model_id,
+            "cached_input_per_1m": spec["cached_input_per_1m"],
+            "model_listing_status": spec["status"],
+            "max_output_tokens_status": "not_published_by_together",
+        }
+        if spec.get("quantization"):
+            spec_extra["quantization"] = spec["quantization"]
+        extra.update(spec_extra)
+        model["extra"] = extra
+
+
 def main() -> None:
     scraped = scrape()
     aliases = {
@@ -78,6 +154,7 @@ def main() -> None:
         model["extra"]["pricing_retrieved_at"] = datetime.now(timezone.utc).isoformat()
         changed += 1
         matched.append(model["model_id"])
+    apply_verified_model_specs(data["models"])
     DATA.write_text(
         json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )

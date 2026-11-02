@@ -336,4 +336,4 @@ if __name__ == "__main__":
     main()
     from _image_capability_postprocess import apply
 
-    apply()
+    apply(providers={"xai"})

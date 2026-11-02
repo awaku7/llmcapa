@@ -346,6 +346,24 @@ def test_openrouter_live_refresh_preserves_curated_metadata_but_uses_live_fields
     assert merged["extra"]["supported_parameters"] == ["response_format"]
 
 
+def test_openrouter_refresh_keeps_omitted_pricing_overrides_but_accepts_live_values():
+    updater = _script_module("_update_openrouter")
+    old_overrides = [{"min_prompt_tokens": 100000, "input_per_1m": 2.0}]
+    previous = {
+        "model_id": "deepseek/deepseek-v4-pro-0813",
+        "extra": {"pricing_overrides": old_overrides},
+    }
+    live = {"model_id": previous["model_id"], "extra": {"source": "live"}}
+
+    carried = updater.preserve_openrouter_metadata(live, previous)
+    assert carried["extra"]["pricing_overrides"] == old_overrides
+
+    new_overrides = [{"min_prompt_tokens": 120000, "input_per_1m": 1.5}]
+    live["extra"]["pricing_overrides"] = new_overrides
+    replaced = updater.preserve_openrouter_metadata(live, previous)
+    assert replaced["extra"]["pricing_overrides"] == new_overrides
+
+
 def test_vertex_updater_refuses_to_overwrite_with_empty_sdk_result(monkeypatch):
     updater = _script_module("_update_vertex_ai")
     monkeypatch.setattr(updater, "discover_models", list)

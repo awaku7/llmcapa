@@ -274,6 +274,23 @@ def build_catalog(
         row["extra"] = extra
         rows[model_id] = row
 
+    for model in rows.values():
+        if str(model.get("model_id", "")).casefold() != "command-a":
+            continue
+        # Cohere's official Command A model page specifies 256K context. Local
+        # inference output limits are runtime-configured, so keep them unknown.
+        model["context_window"] = 256_000
+        model["max_output_tokens"] = 0
+        extra = dict(model.get("extra") or {})
+        extra.update(
+            {
+                "context_window_source": "https://docs.cohere.com/docs/command-a",
+                "context_window_basis": "official_base_model_limit",
+                "max_output_tokens_status": "runtime_configured_or_not_published",
+            }
+        )
+        model["extra"] = extra
+
     if not rows:
         raise ValueError(f"HF snapshot contains no model records for {provider}")
     return {"models": [rows[model_id] for model_id in sorted(rows, key=str.casefold)]}

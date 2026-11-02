@@ -1,9 +1,52 @@
+import json
 from scripts._image_capability_postprocess import (
+    apply,
     known_analysis_capability,
     minimal_image_capability,
     parse_image_input_constraints,
 )
 from scripts._update_meta import parse_image_generation_page
+
+
+def test_provider_scoped_apply_does_not_modify_sibling_catalog(tmp_path):
+    meta = tmp_path / "meta.json"
+    xai = tmp_path / "xai.json"
+    meta.write_text(
+        json.dumps(
+            {
+                "models": [
+                    {
+                        "provider": "meta",
+                        "model_id": "muse-image-1.0",
+                        "input_modalities": ["text"],
+                        "output_modalities": ["image"],
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    xai.write_text(
+        json.dumps(
+            {
+                "models": [
+                    {
+                        "provider": "xai",
+                        "model_id": "grok-imagine-image",
+                        "input_modalities": ["text"],
+                        "output_modalities": ["image"],
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    xai_before = xai.read_bytes()
+
+    changed = apply(tmp_path, providers={"meta"})
+
+    assert changed == {"meta": 1}
+    assert xai.read_bytes() == xai_before
 
 
 def test_image_input_only_is_not_classified_as_generation():

@@ -950,7 +950,6 @@ def preserve_openrouter_metadata(record: dict, previous: dict | None) -> dict:
         "audio_input_per_1m",
         "audio_output_per_1m",
         "internal_reasoning_per_1m",
-        "pricing_overrides",
         "default_parameters",
         "per_request_limits",
         "reasoning_meta",

@@ -493,6 +493,31 @@ def test_local_runtime_catalogs_enrich_existing_ids_from_hf_without_connecting()
         )
 
 
+def test_local_command_a_metadata_uses_official_model_limit_not_stale_server_values():
+    updater = _load_script("update_local_inference_catalogs_from_hf")
+    previous = [
+        {
+            "provider": "llama-cpp",
+            "model_id": "command-a",
+            "context_window": 131_072,
+            "max_output_tokens": 32_768,
+            "extra": {"metadata_source": "previous_catalog_no_exact_hf_match"},
+        }
+    ]
+
+    catalog = updater.build_catalog({"models": []}, previous, provider="llama-cpp")
+    model = catalog["models"][0]
+
+    assert model["context_window"] == 256_000
+    assert model["max_output_tokens"] == 0
+    assert model["extra"]["context_window_source"] == (
+        "https://docs.cohere.com/docs/command-a"
+    )
+    assert model["extra"]["max_output_tokens_status"] == (
+        "runtime_configured_or_not_published"
+    )
+
+
 def test_hf_org_empty_inventory_retains_previous_rows(monkeypatch):
     updater = _load_script("update_hf_official_orgs")
     monkeypatch.setattr(updater, "_fetch_json", lambda _url: ([], None))

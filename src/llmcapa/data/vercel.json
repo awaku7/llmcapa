@@ -6734,13 +6734,13 @@
       "supports_json_schema": true,
       "thinking_budget_values": {
         "min": 1024,
-        "max": 131072
+        "max": 64000
       },
       "thinking_control": {
         "kind": "budget",
         "parameter": "thinking_budget",
         "min": 1024,
-        "max": 131072,
+        "max": 64000,
         "native_provider": "anthropic"
       }
     },
@@ -9105,7 +9105,7 @@
       "model_id": "deepseek-ai/DeepSeek-V4-Pro",
       "display_name": "DeepSeek-V4-Pro",
       "context_window": 512000,
-      "max_output_tokens": 1024,
+      "max_output_tokens": 0,
       "input_modalities": [
         "text"
       ],
@@ -9152,7 +9152,9 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "max_output_tokens_source": "https://vercel.com/ai-gateway/models/deepseek-v4-pro",
+        "max_output_tokens_status": "not_published_for_legacy_route_id"
       },
       "supports_json_schema": true
     },
@@ -9160,8 +9162,8 @@
       "provider": "vercel",
       "model_id": "DeepSeek-R1",
       "display_name": "DeepSeek-R1",
-      "context_window": 163840,
-      "max_output_tokens": 163840,
+      "context_window": 160000,
+      "max_output_tokens": 16000,
       "input_modalities": [
         "text"
       ],
@@ -9228,7 +9230,20 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "context_window_source": "https://vercel.com/ai-gateway/models/deepseek-r1",
+        "max_output_tokens_source": "https://vercel.com/ai-gateway/models/deepseek-r1",
+        "max_output_tokens_basis": "largest_documented_gateway_route",
+        "gateway_provider_limits": {
+          "DeepInfra": {
+            "context_window": 160000,
+            "max_output_tokens": 16000
+          },
+          "Bedrock": {
+            "context_window": 128000,
+            "max_output_tokens": 8000
+          }
+        }
       },
       "supports_json_schema": true,
       "supports_fim": false
@@ -9237,8 +9252,8 @@
       "provider": "vercel",
       "model_id": "DeepSeek-R1-0528",
       "display_name": "DeepSeek-R1-0528",
-      "context_window": 163840,
-      "max_output_tokens": 163840,
+      "context_window": 160000,
+      "max_output_tokens": 16000,
       "input_modalities": [
         "text"
       ],
@@ -9305,7 +9320,20 @@
             "auth": "bearer",
             "source": "https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions/structured-outputs"
           }
-        ]
+        ],
+        "context_window_source": "https://vercel.com/ai-gateway/models/deepseek-r1",
+        "max_output_tokens_source": "https://vercel.com/ai-gateway/models/deepseek-r1",
+        "max_output_tokens_basis": "largest_documented_gateway_route",
+        "gateway_provider_limits": {
+          "DeepInfra": {
+            "context_window": 160000,
+            "max_output_tokens": 16000
+          },
+          "Bedrock": {
+            "context_window": 128000,
+            "max_output_tokens": 8000
+          }
+        }
       },
       "supports_json_schema": true,
       "supports_fim": false

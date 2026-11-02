@@ -49,6 +49,26 @@ def test_haiku_55_catalog_has_official_limits_and_controls():
     assert cap.extra["assistant_prefill_supported"] is False
 
 
+def test_opus_45_uses_its_version_pinned_official_limits():
+    row = {
+        "provider": "anthropic",
+        "model_id": "claude-opus-4-5",
+        "context_window": 1_048_576,
+        "max_output_tokens": 131_072,
+        "extra": {"curated_note": "preserve"},
+    }
+
+    _update_anthropic._reconcile_opus_45(row)
+
+    assert row["context_window"] == 200_000
+    assert row["max_output_tokens"] == 64_000
+    assert row["extra"]["versioned_model_id"] == "claude-opus-4-5-20251101"
+    assert row["extra"]["context_window_source"] == (
+        "https://platform.claude.com/docs/en/models/opus-4-5/overview"
+    )
+    assert row["extra"]["curated_note"] == "preserve"
+
+
 def test_haiku_55_pricing_switches_entire_request_at_100k_input():
     cap = llmcapa.get("claude-haiku-5-5", provider="anthropic")
     assert cap.estimate_cost(100_000, 1_000)["cost"] == pytest.approx(0.0105)

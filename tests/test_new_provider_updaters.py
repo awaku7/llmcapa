@@ -18,6 +18,109 @@ def _load(name: str):
     return module
 
 
+def test_ollama_command_a_limits_use_current_library_snapshot():
+    updater = _load("update_ollama")
+    models = [
+        {
+            "provider": "ollama",
+            "model_id": "command-a:latest",
+            "context_window": 131_072,
+            "max_output_tokens": 32_768,
+            "extra": {"custom": "keep"},
+        },
+        {
+            "provider": "ollama",
+            "model_id": "deepseek-r1",
+            "context_window": 131_072,
+            "max_output_tokens": 32_768,
+        },
+        {
+            "provider": "ollama",
+            "model_id": "deepseek-r1:671b",
+            "context_window": 131_072,
+            "max_output_tokens": 32_768,
+        },
+    ]
+
+    updater.apply_verified_model_specs(models)
+
+    assert models[0]["context_window"] == 16_384
+    assert models[0]["max_output_tokens"] == 0
+    assert models[0]["extra"]["model_max_context_window"] == 256_000
+    assert models[0]["extra"]["context_window_source"] == (
+        "https://ollama.com/library/command-a"
+    )
+    assert models[0]["extra"]["custom"] == "keep"
+    assert models[1]["context_window"] == 128_000
+    assert models[1]["max_output_tokens"] == 0
+    assert models[2]["context_window"] == 160_000
+    assert models[2]["max_output_tokens"] == 0
+
+
+def test_together_updater_adds_current_versioned_deepseek_v4_pro():
+    updater = _load("update_together")
+    models = []
+
+    updater.apply_verified_model_specs(models, checked_at="2026-11-02")
+    updater.apply_verified_model_specs(models, checked_at="2026-11-02")
+
+    assert len(models) == 2
+    by_id = {model["model_id"]: model for model in models}
+    historical = by_id["deepseek-ai/DeepSeek-V4-Pro"]
+    assert historical["context_window"] == 512_000
+    assert historical["max_output_tokens"] == 0
+    assert historical["pricing"] == {
+        "input_per_1m": 2.10,
+        "output_per_1m": 4.40,
+        "currency": "USD",
+    }
+    assert historical["extra"]["model_listing_status"] == "historical_changelog_entry"
+
+    current = by_id["deepseek-ai/DeepSeek-V4-Pro-0813"]
+    assert current["context_window"] == 1_048_576
+    assert current["max_output_tokens"] == 0
+    assert current["pricing"] == {
+        "input_per_1m": 1.32,
+        "output_per_1m": 3.96,
+        "currency": "USD",
+    }
+    assert current["extra"]["cached_input_per_1m"] == 0.13
+    assert current["extra"]["official_model_specs_source"] == (
+        "https://docs.together.ai/docs/serverless/models"
+    )
+
+
+def test_vercel_gateway_limits_follow_published_deepseek_routes():
+    updater = _load("update_vercel")
+    models = [
+        {
+            "provider": "vercel",
+            "model_id": "DeepSeek-R1",
+            "context_window": 163_840,
+            "max_output_tokens": 163_840,
+            "extra": {},
+        },
+        {
+            "provider": "vercel",
+            "model_id": "deepseek-ai/DeepSeek-V4-Pro",
+            "context_window": 512_000,
+            "max_output_tokens": 1024,
+            "extra": {},
+        },
+    ]
+
+    updater.apply_verified_model_specs(models)
+
+    assert models[0]["context_window"] == 160_000
+    assert models[0]["max_output_tokens"] == 16_000
+    assert models[0]["extra"]["gateway_provider_limits"]["Bedrock"] == {
+        "context_window": 128_000,
+        "max_output_tokens": 8_000,
+    }
+    assert models[1]["context_window"] == 512_000
+    assert models[1]["max_output_tokens"] == 0
+
+
 def test_laya_parsers_extract_package_and_hub_inventory():
     updater = _load("update_laya")
     assert updater.parse_package_version({"info": {"version": "0.4.0"}}) == "0.4.0"

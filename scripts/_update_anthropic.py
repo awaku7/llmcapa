@@ -25,6 +25,7 @@ INSTALLED = (
 )
 SOURCE_OVERVIEW = "https://platform.claude.com/docs/en/about-claude/models/overview"
 SOURCE_PRICING = "https://platform.claude.com/docs/en/about-claude/pricing"
+OPUS_45_OVERVIEW = "https://platform.claude.com/docs/en/models/opus-4-5/overview"
 
 
 def base(
@@ -294,7 +295,30 @@ def _template(row: dict) -> dict:
         ),
     )
     _reconcile_haiku_55(model)
+    _reconcile_opus_45(model)
     return model
+
+
+def _reconcile_opus_45(model: dict) -> None:
+    """Keep Opus 4.5's version-pinned limits from its official model page.
+
+    The generic pricing page does not contain model limits, and its context
+    window must not be used as a fallback for this legacy version.
+    """
+    if model.get("model_id") != "claude-opus-4-5":
+        return
+    model["context_window"] = 200_000
+    model["max_output_tokens"] = 64_000
+    extra = dict(model.get("extra") or {})
+    extra.update(
+        {
+            "versioned_model_id": "claude-opus-4-5-20251101",
+            "context_window_source": OPUS_45_OVERVIEW,
+            "context_window_basis": "official_versioned_model_spec",
+            "max_output_tokens_source": OPUS_45_OVERVIEW,
+        }
+    )
+    model["extra"] = extra
 
 
 def _reconcile_haiku_55(model: dict) -> None:
@@ -464,6 +488,7 @@ def build() -> list[dict]:
     # Reconcile both discovered and carried-forward Haiku 5.5 records.
     for model in models:
         _reconcile_haiku_55(model)
+        _reconcile_opus_45(model)
 
     # Apply the current official Computer Use model/tool-version matrix after
     # the pricing refresh. This keeps the specialized capability from being

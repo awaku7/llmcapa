@@ -587,5 +587,5 @@ if __name__ == "__main__":
     code = main()
     from _image_capability_postprocess import apply
 
-    apply()
+    apply(providers={"meta"})
     raise SystemExit(code)
