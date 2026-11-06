@@ -22,6 +22,7 @@ from typing import Callable, ClassVar
 from urllib.error import HTTPError
 from urllib.parse import quote
 
+from .hf_overlay import expand_hf_overlay, is_hf_overlay
 from .models import Capability
 
 _HF_MAX_RETRIES = 5
@@ -74,6 +75,7 @@ class Registry:
         self._github_auto_refresh_attempted: set[str] = set()
 
         self._loaded = False
+        self._hf_catalog_source: dict | None = None
 
     # Provider aliases map: canonical name -> list of equivalent provider names
     # Used by list_models() so that e.g. provider="deepseek" also matches "deepseek-ai"
@@ -382,8 +384,16 @@ class Registry:
 
     def _load_json_text(self, text: str, catalog_name: str | None = None) -> int:
         payload = json.loads(text)
-        if isinstance(payload, dict):
+        if is_hf_overlay(payload):
+            source = self._hf_catalog_source
+            if source is None:
+                resource = resources.files("llmcapa.data").joinpath("huggingface.json")
+                source = json.loads(resource.read_text(encoding="utf-8"))
+            records = expand_hf_overlay(source, payload)["models"]
+        elif isinstance(payload, dict):
             records = payload.get("models", [])
+            if catalog_name == "huggingface.json":
+                self._hf_catalog_source = payload
         else:
             records = payload
         count = 0
@@ -810,9 +820,7 @@ class Registry:
                 if url in visited_urls:
                     raise RuntimeError("HuggingFace pagination returned a repeated URL")
                 visited_urls.add(url)
-                if progress_callback and (
-                    page_count == 0 or page_count % 10 == 0
-                ):
+                if progress_callback and (page_count == 0 or page_count % 10 == 0):
                     progress_callback(
                         f"Fetching HuggingFace page {page_count + 1}; "
                         f"{len(records)} models downloaded"
@@ -841,9 +849,7 @@ class Registry:
                                 if exc.headers is not None
                                 else None
                             )
-                            delay = _huggingface_retry_delay(
-                                retry_after, retry_index
-                            )
+                            delay = _huggingface_retry_delay(retry_after, retry_index)
                             if progress_callback:
                                 progress_callback(
                                     f"HuggingFace HTTP {exc.code}; retry "
@@ -1190,7 +1196,9 @@ class Registry:
                         f"Failed to fetch GitHub catalog {filename} at {ref}: {exc}"
                     ) from exc
         elif progress_callback:
-            progress_callback(f"Loaded {len(downloaded_files)} GitHub file(s) from cache")
+            progress_callback(
+                f"Loaded {len(downloaded_files)} GitHub file(s) from cache"
+            )
 
         capabilities: list[Capability] = []
         if progress_callback:
@@ -1256,7 +1264,9 @@ class Registry:
             else:
                 self._register_refreshed_catalog_record(cap)
             if progress_callback and index % 1000 == 0:
-                progress_callback(f"Registered {index}/{len(capabilities)} GitHub models")
+                progress_callback(
+                    f"Registered {index}/{len(capabilities)} GitHub models"
+                )
         if progress_callback:
             progress_callback(f"Registered {len(capabilities)} GitHub models")
         return len(capabilities)

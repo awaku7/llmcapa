@@ -9,12 +9,20 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+from llmcapa.hf_overlay import (
+    expand_hf_overlay,
+    is_hf_overlay,
+    pack_hf_overlay,
+)
+
 HUGGINGFACE_DATA = ROOT / "src" / "llmcapa" / "data" / "huggingface.json"
 HUGGINGFACE_MODEL_URL = "https://huggingface.co/{}"
 _VLLM_REASONING_EVIDENCE = (
@@ -307,9 +315,12 @@ def main() -> None:
     previous_data = (
         json.loads(data_path.read_text(encoding="utf-8")) if data_path.exists() else {}
     )
+    if is_hf_overlay(previous_data):
+        previous_data = expand_hf_overlay(source, previous_data)
     catalog = build_catalog(source, previous_data.get("models", []), provider=provider)
+    compact = pack_hf_overlay(source, catalog, provider=provider)
     data_path.write_text(
-        json.dumps(catalog, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        json.dumps(compact, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
     print(f"{provider}: {len(catalog['models'])} static HF-derived metadata records")
 
