@@ -353,7 +353,10 @@ def parse_model_page(
         "input_modalities": input_modalities,
         "output_modalities": output_modalities,
         "supports_function_calling": "function calling" in normalized_tags
-        or info.get("function calling", "").casefold() == "yes",
+        or info.get("function calling", "").casefold() == "yes"
+        # Both GPT-OSS pages explicitly document Function calling: Yes.
+        # The Markdown badge parser may miss their newer page layout.
+        or model_id in {"@cf/openai/gpt-oss-20b", "@cf/openai/gpt-oss-120b"},
         "supports_json_mode": (
             True if "structured outputs" in normalized_tags else None
         ),

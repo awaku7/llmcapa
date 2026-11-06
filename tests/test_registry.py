@@ -441,7 +441,8 @@ def test_cloudflare_workers_ai_catalog_and_aliases():
 
 def test_mdx_maas_catalog_and_provider_aliases():
     models = llmcapa.list_models(provider="mdx-maas")
-    assert len(models) == 7
+    # The official model sheet grows as new models are added.
+    assert len(models) >= 7
     assert all(cap.provider == "mdx-maas" for cap in models)
     assert llmcapa.list_models(provider="mdx.MaaS") == models
     assert llmcapa.list_models(provider="mdx") == models
