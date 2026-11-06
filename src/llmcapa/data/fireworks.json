@@ -2,6 +2,49 @@
   "models": [
     {
       "provider": "fireworks",
+      "model_id": "kimi-k3p1-pro",
+      "display_name": "Kimi K3.1 Pro",
+      "context_window": 1048576,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": null,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_streaming": null,
+      "supports_vision": null,
+      "supports_reasoning": null,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [
+        "accounts/fireworks/models/kimi-k3p1-pro"
+      ],
+      "license_type": "api",
+      "extra": {
+        "source": "https://fireworks.ai/models",
+        "source_type": "official_rendered_model_card",
+        "model_path": "accounts/fireworks/models/kimi-k3p1-pro",
+        "endpoints": [
+          {
+            "base_url": "https://api.fireworks.ai/inference/v1",
+            "protocol": "openai-compatible",
+            "auth": "bearer",
+            "source": "https://docs.fireworks.ai/"
+          }
+        ]
+      }
+    },
+    {
+      "provider": "fireworks",
       "model_id": "ember-1",
       "display_name": "Ember-1",
       "context_window": 1048576,
@@ -317,7 +360,7 @@
           }
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-10-24"
+        "provider_refresh_checked_at": "2026-11-06"
       }
     }
   ]

@@ -1207,7 +1207,7 @@
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_vision": false,
-      "supports_reasoning": false,
+      "supports_reasoning": true,
       "supports_responses_api": null,
       "pricing": {
         "input_per_1m": 1.3,
@@ -1228,9 +1228,9 @@
           "featured",
           "flex",
           "json",
-          "non-reasoning",
           "openai",
           "priority",
+          "reasoning",
           "structured-output",
           "tools"
         ],
@@ -1256,7 +1256,7 @@
       "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_vision": false,
-      "supports_reasoning": false,
+      "supports_reasoning": true,
       "supports_responses_api": null,
       "pricing": {
         "input_per_1m": 1.3,
@@ -1277,9 +1277,9 @@
           "featured",
           "flex",
           "json",
-          "non-reasoning",
           "openai",
           "priority",
+          "reasoning",
           "structured-output",
           "tools"
         ],
@@ -1519,7 +1519,7 @@
         "refresh_metadata_fallbacks": [
           "audio"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-02"
+        "refresh_metadata_fallback_checked_at": "2026-11-06"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -1588,7 +1588,7 @@
         "refresh_metadata_fallbacks": [
           "audio"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-02"
+        "refresh_metadata_fallback_checked_at": "2026-11-06"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -1657,7 +1657,7 @@
         "refresh_metadata_fallbacks": [
           "audio"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-02"
+        "refresh_metadata_fallback_checked_at": "2026-11-06"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -1726,7 +1726,7 @@
         "refresh_metadata_fallbacks": [
           "audio"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-02"
+        "refresh_metadata_fallback_checked_at": "2026-11-06"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -1795,7 +1795,7 @@
         "refresh_metadata_fallbacks": [
           "audio"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-02"
+        "refresh_metadata_fallback_checked_at": "2026-11-06"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -1864,7 +1864,7 @@
         "refresh_metadata_fallbacks": [
           "audio"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-02"
+        "refresh_metadata_fallback_checked_at": "2026-11-06"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -2139,7 +2139,7 @@
           "audio",
           "video"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-02"
+        "refresh_metadata_fallback_checked_at": "2026-11-06"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -2240,7 +2240,7 @@
         "refresh_metadata_fallbacks": [
           "video"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-02"
+        "refresh_metadata_fallback_checked_at": "2026-11-06"
       },
       "video": {
         "accepts_video_input": true,
@@ -2325,7 +2325,7 @@
         "refresh_metadata_fallbacks": [
           "video"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-02"
+        "refresh_metadata_fallback_checked_at": "2026-11-06"
       },
       "video": {
         "accepts_video_input": true,
@@ -2498,7 +2498,7 @@
         "refresh_metadata_fallbacks": [
           "video"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-02"
+        "refresh_metadata_fallback_checked_at": "2026-11-06"
       },
       "video": {
         "accepts_video_input": true,
@@ -2871,52 +2871,6 @@
     },
     {
       "provider": "deepinfra",
-      "model_id": "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo",
-      "display_name": "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo",
-      "context_window": 131072,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_responses_api": null,
-      "pricing": {
-        "input_per_1m": 0.4,
-        "currency": "USD",
-        "output_per_1m": 0.4
-      },
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "extra": {
-        "source": "https://api.deepinfra.com/models/list",
-        "model_type": "text-generation",
-        "reported_type": "text-generation",
-        "description": "Meta developed and released the Meta Llama 3.1 family of large language models (LLMs), a collection of pretrained and instruction tuned generative text models in 8B, 70B and 405B sizes",
-        "tags": [
-          "b200",
-          "flex",
-          "json",
-          "non-reasoning",
-          "openai",
-          "structured-output",
-          "tools"
-        ],
-        "quantization": "fp8",
-        "replaced_by": "meta-llama/Llama-3.3-70B-Instruct-Turbo",
-        "is_partner": false
-      }
-    },
-    {
-      "provider": "deepinfra",
       "model_id": "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
       "display_name": "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
       "context_window": 131072,
@@ -3101,7 +3055,7 @@
         "refresh_metadata_fallbacks": [
           "video"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-02"
+        "refresh_metadata_fallback_checked_at": "2026-11-06"
       },
       "video": {
         "accepts_video_input": true,
@@ -3377,27 +3331,28 @@
     },
     {
       "provider": "deepinfra",
-      "model_id": "NousResearch/Hermes-3-Llama-3.1-405B",
-      "display_name": "NousResearch/Hermes-3-Llama-3.1-405B",
-      "context_window": 131072,
+      "model_id": "moonshotai/Kimi-K3.1-Pro",
+      "display_name": "moonshotai/Kimi-K3.1-Pro",
+      "context_window": 1048576,
       "max_output_tokens": 0,
       "input_modalities": [
-        "text"
+        "text",
+        "image"
       ],
       "output_modalities": [
         "text"
       ],
       "supports_chat_completion": true,
       "supports_streaming": true,
-      "supports_function_calling": null,
+      "supports_function_calling": true,
       "supports_json_mode": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
+      "supports_vision": true,
+      "supports_reasoning": true,
       "supports_responses_api": null,
       "pricing": {
-        "input_per_1m": 1.0,
+        "input_per_1m": 2.0,
         "currency": "USD",
-        "output_per_1m": 1.0
+        "output_per_1m": 10.0
       },
       "deprecated": false,
       "aliases": [],
@@ -3406,63 +3361,23 @@
         "source": "https://api.deepinfra.com/models/list",
         "model_type": "text-generation",
         "reported_type": "text-generation",
-        "description": "Hermes 3 is a cutting-edge language model that offers advanced capabilities in roleplaying, reasoning, and conversation. It's a fine-tuned version of the Llama-3.1 405B foundation model, designed to align with user needs and provide powerful control. Key features include reliable function calling, structured output, generalist assistant capabilities, and improved code generation. Hermes 3 is competitive with Llama-3.1 Instruct models, with its own strengths and weaknesses.",
+        "description": "Kimi K3.1 Pro is an open-weight, natively multimodal agentic model, post-trained from Kimi K3 with large-scale joint reinforcement learning across hundreds of downstream domains, it is the first model in the K3.1 series. With a 1-million-token context window, Kimi K3.1 Pro delivers substantial improvements in coding, 3D creation, financial research, factual accuracy, and other agentic capabilities.",
         "tags": [
-          "flex",
-          "json",
-          "no-free-anon",
-          "non-reasoning",
-          "openai",
-          "structured-output"
-        ],
-        "quantization": "fp8",
-        "replaced_by": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
-        "is_partner": false
-      }
-    },
-    {
-      "provider": "deepinfra",
-      "model_id": "NousResearch/Hermes-3-Llama-3.1-70B",
-      "display_name": "NousResearch/Hermes-3-Llama-3.1-70B",
-      "context_window": 131072,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_responses_api": null,
-      "pricing": {
-        "input_per_1m": 0.7,
-        "currency": "USD",
-        "output_per_1m": 0.7
-      },
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "extra": {
-        "source": "https://api.deepinfra.com/models/list",
-        "model_type": "text-generation",
-        "reported_type": "text-generation",
-        "description": "Hermes 3 is a generalist language model with many improvements over Hermes 2, including advanced agentic capabilities, much better roleplaying, reasoning, multi-turn conversation, long context coherence, and improvements across the board.",
-        "tags": [
+          "can-disable-reasoning",
           "cc-native",
+          "featured",
           "flex",
           "json",
-          "non-reasoning",
+          "multimodal",
+          "no-free-anon",
           "openai",
           "priority",
-          "structured-output"
+          "reasoning",
+          "structured-output",
+          "tools"
         ],
-        "quantization": "fp8",
-        "replaced_by": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+        "quantization": null,
+        "replaced_by": null,
         "is_partner": false
       }
     },
@@ -3756,7 +3671,7 @@
       "supports_reasoning": true,
       "supports_responses_api": null,
       "pricing": {
-        "input_per_1m": 0.085,
+        "input_per_1m": 0.075,
         "currency": "USD",
         "output_per_1m": 0.4
       },
@@ -3927,7 +3842,7 @@
         "refresh_metadata_fallbacks": [
           "video"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-02"
+        "refresh_metadata_fallback_checked_at": "2026-11-06"
       },
       "video": {
         "accepts_video_input": true,
@@ -4682,7 +4597,7 @@
         "refresh_metadata_fallbacks": [
           "video"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-02"
+        "refresh_metadata_fallback_checked_at": "2026-11-06"
       },
       "video": {
         "accepts_video_input": true,
@@ -4768,7 +4683,7 @@
         "refresh_metadata_fallbacks": [
           "video"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-02"
+        "refresh_metadata_fallback_checked_at": "2026-11-06"
       },
       "video": {
         "accepts_video_input": true,
@@ -4855,7 +4770,7 @@
         "refresh_metadata_fallbacks": [
           "video"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-02"
+        "refresh_metadata_fallback_checked_at": "2026-11-06"
       },
       "video": {
         "accepts_video_input": true,
@@ -4941,7 +4856,7 @@
         "refresh_metadata_fallbacks": [
           "video"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-02"
+        "refresh_metadata_fallback_checked_at": "2026-11-06"
       },
       "video": {
         "accepts_video_input": true,
@@ -5027,7 +4942,7 @@
         "refresh_metadata_fallbacks": [
           "video"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-02"
+        "refresh_metadata_fallback_checked_at": "2026-11-06"
       },
       "video": {
         "accepts_video_input": true,
@@ -5114,7 +5029,7 @@
         "refresh_metadata_fallbacks": [
           "video"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-02"
+        "refresh_metadata_fallback_checked_at": "2026-11-06"
       },
       "video": {
         "accepts_video_input": true,
@@ -5248,7 +5163,7 @@
         "refresh_metadata_fallbacks": [
           "video"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-02"
+        "refresh_metadata_fallback_checked_at": "2026-11-06"
       },
       "video": {
         "accepts_video_input": true,
@@ -5928,7 +5843,7 @@
         "refresh_metadata_fallbacks": [
           "audio"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-02"
+        "refresh_metadata_fallback_checked_at": "2026-11-06"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -6000,7 +5915,7 @@
           "audio",
           "video"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-02"
+        "refresh_metadata_fallback_checked_at": "2026-11-06"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -6103,7 +6018,7 @@
           "audio",
           "video"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-02"
+        "refresh_metadata_fallback_checked_at": "2026-11-06"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -6394,7 +6309,7 @@
         "refresh_metadata_fallbacks": [
           "video"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-02"
+        "refresh_metadata_fallback_checked_at": "2026-11-06"
       },
       "video": {
         "accepts_video_input": true,
@@ -6426,6 +6341,149 @@
         ],
         "checked_at": "2026-10-28",
         "status": "inferred"
+      }
+    },
+    {
+      "provider": "deepinfra",
+      "model_id": "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo",
+      "display_name": "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo",
+      "context_window": 131072,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 0.4,
+        "currency": "USD",
+        "output_per_1m": 0.4
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://api.deepinfra.com/models/list",
+        "model_type": "text-generation",
+        "reported_type": "text-generation",
+        "description": "Meta developed and released the Meta Llama 3.1 family of large language models (LLMs), a collection of pretrained and instruction tuned generative text models in 8B, 70B and 405B sizes",
+        "tags": [
+          "b200",
+          "flex",
+          "json",
+          "non-reasoning",
+          "openai",
+          "structured-output",
+          "tools"
+        ],
+        "quantization": "fp8",
+        "replaced_by": "meta-llama/Llama-3.3-70B-Instruct-Turbo",
+        "is_partner": false,
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-06"
+      }
+    },
+    {
+      "provider": "deepinfra",
+      "model_id": "NousResearch/Hermes-3-Llama-3.1-405B",
+      "display_name": "NousResearch/Hermes-3-Llama-3.1-405B",
+      "context_window": 131072,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 1.0,
+        "currency": "USD",
+        "output_per_1m": 1.0
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://api.deepinfra.com/models/list",
+        "model_type": "text-generation",
+        "reported_type": "text-generation",
+        "description": "Hermes 3 is a cutting-edge language model that offers advanced capabilities in roleplaying, reasoning, and conversation. It's a fine-tuned version of the Llama-3.1 405B foundation model, designed to align with user needs and provide powerful control. Key features include reliable function calling, structured output, generalist assistant capabilities, and improved code generation. Hermes 3 is competitive with Llama-3.1 Instruct models, with its own strengths and weaknesses.",
+        "tags": [
+          "flex",
+          "json",
+          "no-free-anon",
+          "non-reasoning",
+          "openai",
+          "structured-output"
+        ],
+        "quantization": "fp8",
+        "replaced_by": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+        "is_partner": false,
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-06"
+      }
+    },
+    {
+      "provider": "deepinfra",
+      "model_id": "NousResearch/Hermes-3-Llama-3.1-70B",
+      "display_name": "NousResearch/Hermes-3-Llama-3.1-70B",
+      "context_window": 131072,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 0.7,
+        "currency": "USD",
+        "output_per_1m": 0.7
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://api.deepinfra.com/models/list",
+        "model_type": "text-generation",
+        "reported_type": "text-generation",
+        "description": "Hermes 3 is a generalist language model with many improvements over Hermes 2, including advanced agentic capabilities, much better roleplaying, reasoning, multi-turn conversation, long context coherence, and improvements across the board.",
+        "tags": [
+          "cc-native",
+          "flex",
+          "json",
+          "non-reasoning",
+          "openai",
+          "priority",
+          "structured-output"
+        ],
+        "quantization": "fp8",
+        "replaced_by": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+        "is_partner": false,
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-06"
       }
     },
     {
@@ -6471,7 +6529,7 @@
         "replaced_by": "Sao10K/L3-8B-Lunaris-v1-Turbo",
         "is_partner": false,
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-02"
+        "provider_refresh_checked_at": "2026-11-06"
       }
     },
     {
@@ -6524,7 +6582,7 @@
         "replaced_by": null,
         "is_partner": false,
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-02"
+        "provider_refresh_checked_at": "2026-11-06"
       },
       "video": {
         "accepts_video_input": true,
