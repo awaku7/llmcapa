@@ -576,6 +576,9 @@ jobs:
           PYCODE
           python -m black src/llmcapa/hf_overlay.py src/llmcapa/registry.py scripts/_update_local_inference_catalogs_from_hf.py scripts/refresh_catalogs.py scripts/compact_local_catalogs.py tests/test_registry.py tests/test_hf_overlay.py
           python -m black --check src/llmcapa/hf_overlay.py src/llmcapa/registry.py scripts/_update_local_inference_catalogs_from_hf.py scripts/refresh_catalogs.py scripts/compact_local_catalogs.py tests/test_registry.py tests/test_hf_overlay.py
+          python -m ruff check --fix src/llmcapa/hf_overlay.py src/llmcapa/registry.py scripts/_update_local_inference_catalogs_from_hf.py scripts/refresh_catalogs.py scripts/compact_local_catalogs.py tests/test_registry.py tests/test_hf_overlay.py
+          python -m black src/llmcapa/hf_overlay.py src/llmcapa/registry.py scripts/_update_local_inference_catalogs_from_hf.py scripts/refresh_catalogs.py scripts/compact_local_catalogs.py tests/test_registry.py tests/test_hf_overlay.py
+          python -m black --check src/llmcapa/hf_overlay.py src/llmcapa/registry.py scripts/_update_local_inference_catalogs_from_hf.py scripts/refresh_catalogs.py scripts/compact_local_catalogs.py tests/test_registry.py tests/test_hf_overlay.py
           python -m ruff check src/llmcapa/hf_overlay.py src/llmcapa/registry.py scripts/_update_local_inference_catalogs_from_hf.py scripts/refresh_catalogs.py scripts/compact_local_catalogs.py tests/test_registry.py tests/test_hf_overlay.py
           python scripts/compact_local_catalogs.py
           python -m pytest -q tests/test_hf_overlay.py
