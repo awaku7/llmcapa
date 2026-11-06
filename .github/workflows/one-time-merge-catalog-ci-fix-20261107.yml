@@ -1,0 +1,36 @@
+name: One-time synchronize catalog CI repairs into compaction PR
+on:
+  push:
+    branches:
+      - refactor/compact-local-catalogs-20261106
+    paths:
+      - .github/workflows/one-time-merge-catalog-ci-fix-20261107.yml
+permissions:
+  contents: write
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install tooling
+        run: python -m pip install -e . pytest black ruff==0.17.2 beautifulsoup4
+      - name: Merge PR 19, check Black Ruff pytest and commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin automation/catalog-refresh-42201846102
+          git merge --no-edit origin/automation/catalog-refresh-42201846102
+          python -m black --check src/llmcapa/hf_overlay.py src/llmcapa/registry.py scripts/_update_local_inference_catalogs_from_hf.py scripts/refresh_catalogs.py scripts/compact_local_catalogs.py tests/test_registry.py tests/test_hf_overlay.py scripts/_update_cloudflare_workers_ai.py tests/test_catalog_review_regressions.py
+          python -m ruff check src/llmcapa/hf_overlay.py src/llmcapa/registry.py scripts/_update_local_inference_catalogs_from_hf.py scripts/refresh_catalogs.py scripts/compact_local_catalogs.py tests/test_registry.py tests/test_hf_overlay.py scripts/_update_cloudflare_workers_ai.py tests/test_catalog_review_regressions.py
+          python -m pytest -q tests/test_hf_overlay.py tests/test_catalog_review_regressions.py::test_catalog_refresh_audit_reports_capture_mercury_25_status tests/test_registry.py::test_no_duplicate_model_ids_within_each_provider_file tests/test_registry.py::test_cloudflare_workers_ai_catalog_and_aliases tests/test_registry.py::test_mdx_maas_catalog_and_provider_aliases tests/test_new_provider_updaters.py::test_together_updater_adds_current_versioned_deepseek_v4_pro
+          git rm -f .github/workflows/one-time-merge-catalog-ci-fix-20261107.yml
+          git commit -m "chore: sync catalog CI repairs into local deduplication branch"
+          git push origin HEAD:refs/heads/refactor/compact-local-catalogs-20261106
