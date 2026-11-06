@@ -75,9 +75,7 @@ def test_provider_filename_special_cases():
 def test_resume_accepts_only_explicitly_staged_catalog_changes():
     staged_catalog = {"src/llmcapa/data/ai21.json"}
     with pytest.raises(ValueError, match="--resume-staged-catalogs"):
-        refresh.validate_staged_catalogs(
-            staged_catalog, allow_staged_catalogs=False
-        )
+        refresh.validate_staged_catalogs(staged_catalog, allow_staged_catalogs=False)
 
     refresh.validate_staged_catalogs(staged_catalog, allow_staged_catalogs=True)
     refresh.validate_staged_catalogs(
@@ -200,9 +198,7 @@ def test_huggingface_default_min_downloads_is_1000():
     assert hf_scraper.DEFAULT_MIN_DOWNLOADS == 1000
 
 
-def test_huggingface_scraper_retries_and_stops_at_download_cutoff(
-    monkeypatch, capsys
-):
+def test_huggingface_scraper_retries_and_stops_at_download_cutoff(monkeypatch, capsys):
     next_url = "https://huggingface.co/api/models?cursor=next"
     requests_seen = []
     sleeps = []

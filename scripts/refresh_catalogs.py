@@ -407,8 +407,7 @@ def validate_staged_catalogs(
     unexpected = staged_paths - resumable_paths
     if unexpected:
         raise ValueError(
-            "cannot resume with unrelated staged changes: "
-            f"{sorted(unexpected)}"
+            "cannot resume with unrelated staged changes: " f"{sorted(unexpected)}"
         )
 
 
@@ -584,12 +583,8 @@ def refresh(
         check=True,
         stdout=subprocess.PIPE,
     )
-    staged_paths = {
-        name for name in staged.stdout.decode("utf-8").split("\0") if name
-    }
-    validate_staged_catalogs(
-        staged_paths, allow_staged_catalogs=allow_staged_catalogs
-    )
+    staged_paths = {name for name in staged.stdout.decode("utf-8").split("\0") if name}
+    validate_staged_catalogs(staged_paths, allow_staged_catalogs=allow_staged_catalogs)
 
     if selected_provider != "all" and selected_provider not in PROVIDER_SCRIPTS:
         raise ValueError(f"unknown provider: {selected_provider}")
