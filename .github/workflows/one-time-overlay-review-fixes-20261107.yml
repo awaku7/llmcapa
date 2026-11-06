@@ -1,0 +1,459 @@
+name: One-time compact catalog review fixes
+on:
+  push:
+    branches:
+      - refactor/compact-local-catalogs-20261106
+    paths:
+      - .github/workflows/one-time-overlay-review-fixes-20261107.yml
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install quality and test requirements
+        run: python -m pip install -e . black ruff==0.17.2 pytest beautifulsoup4
+      - name: Patch, verify, and push review fixes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from __future__ import annotations
+          
+          from pathlib import Path
+          
+          
+          def update(path, old, new):
+              file = Path(path)
+              current = file.read_text(encoding="utf-8")
+              n = current.count(old)
+              if n != 1:
+                  raise AssertionError(f"{path}: expected one match, found {n}: {old[:85]!r}")
+              file.write_text(current.replace(old, new), encoding="utf-8")
+          
+          
+          update(
+              "src/llmcapa/hf_overlay.py",
+              '''    excluded = set(overlay.get("excluded", []))
+              overrides = overlay.get("overrides", {})
+              source_ids: set[str] = set()
+              rows: list[dict[str, Any]] = []
+              for hf_row in source["models"]:
+                  model_id = hf_row["model_id"]
+                  source_ids.add(model_id)
+                  if model_id in excluded:
+                      continue
+                  row = _baseline(hf_row, overlay)
+                  delta = overrides.get(model_id, {})
+          ''',
+              '''    excluded = {model_id.casefold() for model_id in overlay.get("excluded", [])}
+              overrides = {
+                  model_id.casefold(): delta
+                  for model_id, delta in overlay.get("overrides", {}).items()
+              }
+              unmatched: dict[str, dict[str, Any]] = {}
+              for record in overlay.get("unmatched", []):
+                  key = record["model_id"].casefold()
+                  if key in unmatched:
+                      raise ValueError("duplicate model IDs in unmatched overlay records")
+                  unmatched[key] = record
+              source_ids: set[str] = set()
+              rows: list[dict[str, Any]] = []
+              for hf_row in source["models"]:
+                  model_id = hf_row["model_id"]
+                  key = model_id.casefold()
+                  source_ids.add(key)
+                  # Newly discovered HF records may already exist in the local-only
+                  # inventory. Prefer the complete, provider-specific record; a future
+                  # updater can rebase it against the new HF source without data loss.
+                  if key in unmatched:
+                      rows.append(deepcopy(unmatched.pop(key)))
+                      continue
+                  if key in excluded:
+                      continue
+                  row = _baseline(hf_row, overlay)
+                  delta = overrides.get(key, {})
+          ''',
+          )
+          update(
+              "src/llmcapa/hf_overlay.py",
+              '''    rows.extend(deepcopy(overlay.get("unmatched", [])))
+              if len({row["model_id"].casefold() for row in rows}) != len(rows):
+          ''',
+              '''    rows.extend(deepcopy(list(unmatched.values())))
+              if len({row["model_id"].casefold() for row in rows}) != len(rows):
+          ''',
+          )
+          
+          # Remote source and local compact catalog must come from the *same* ref.
+          # The user override persists expanded capabilities; we intentionally do not
+          # replace a single bundled overlay without updating all dependent snapshots.
+          path = "src/llmcapa/registry.py"
+          update(
+              path,
+              '''                        cached_files = {name: files[name] for name in catalog_files}
+          ''',
+              '''                        cached_files = {name: files[name] for name in catalog_files}
+                                  if isinstance(files.get("huggingface.json"), str):
+                                      cached_files["huggingface.json"] = files["huggingface.json"]
+                                  elif any(
+                                      is_hf_overlay(json.loads(value))
+                                      for value in cached_files.values()
+                                  ):
+                                      # Old caches cannot be paired with the original HF
+                                      # source; download both files instead.
+                                      cached_files = None
+          ''',
+          )
+          update(
+              path,
+              '''            for file_index, filename in enumerate(catalog_files, 1):
+          ''',
+              '''            for file_index, filename in enumerate(catalog_files, 1):
+          ''',
+          )
+          update(
+              path,
+              '''                    downloaded_files[filename] = content.decode("utf-8")
+                          except Exception as exc:
+                              raise RuntimeError(
+                                  f"Failed to fetch GitHub catalog {filename} at {ref}: {exc}"
+                              ) from exc
+                  elif progress_callback:
+          ''',
+              '''                    downloaded_files[filename] = content.decode("utf-8")
+                          except Exception as exc:
+                              raise RuntimeError(
+                                  f"Failed to fetch GitHub catalog {filename} at {ref}: {exc}"
+                              ) from exc
+                      if any(
+                          is_hf_overlay(json.loads(downloaded_files[name]))
+                          for name in catalog_files
+                      ):
+                          filename = "huggingface.json"
+                          url = (
+                              "https://raw.githubusercontent.com/awaku7/llmcapa/"
+                              f"{raw_ref}/src/llmcapa/data/{filename}"
+                          )
+                          request = urllib.request.Request(url, headers={"User-Agent": "llmcapa"})
+                          try:
+                              with urllib.request.urlopen(
+                                  request, context=context, timeout=30
+                              ) as response:
+                                  content = response.read(64 * 1024 * 1024 + 1)
+                              if len(content) > 64 * 1024 * 1024:
+                                  raise RuntimeError("GitHub Hugging Face source is too large")
+                              downloaded_files[filename] = content.decode("utf-8")
+                          except Exception as exc:
+                              raise RuntimeError(
+                                  f"Failed to fetch matching Hugging Face source at {ref}: {exc}"
+                              ) from exc
+                  elif progress_callback:
+          ''',
+          )
+          update(
+              path,
+              '''            for filename, text in downloaded_files.items():
+                          payload = json.loads(text)
+                          if is_hf_overlay(payload):
+                              source = self._hf_catalog_source
+                              if source is None:
+                                  resource = resources.files("llmcapa.data").joinpath(
+                                      "huggingface.json"
+                                  )
+                                  source = json.loads(resource.read_text(encoding="utf-8"))
+                              payload = expand_hf_overlay(source, payload)
+          ''',
+              '''            remote_hf = downloaded_files.get("huggingface.json")
+                      remote_source = json.loads(remote_hf) if remote_hf is not None else None
+                      for filename in catalog_files:
+                          payload = json.loads(downloaded_files[filename])
+                          if is_hf_overlay(payload):
+                              if remote_source is None:
+                                  raise ValueError("missing matching Hugging Face source")
+                              payload = expand_hf_overlay(remote_source, payload)
+          ''',
+          )
+          update(
+              path,
+              '''        bundled_updated = False
+                  if not cache_is_older_than_bundle:
+                      if write_bundled:
+                          bundled_updated = self._write_bundled_catalog_files(downloaded_files)
+          ''',
+              '''        bundled_updated = False
+                  if not cache_is_older_than_bundle:
+                      is_remote_overlay = "huggingface.json" in downloaded_files
+                      # An overlay is only valid together with its matching HF source.
+                      # Replacing one bundled file would corrupt other installed local
+                      # providers; persist fully materialized user records instead.
+                      if write_bundled and not is_remote_overlay:
+                          bundled_updated = self._write_bundled_catalog_files(downloaded_files)
+          ''',
+          )
+          update(
+              path,
+              '''                for filename, text in files.items():
+          ''',
+              '''                remote_hf = files.get("huggingface.json")
+                          remote_source = (
+                              json.loads(remote_hf) if isinstance(remote_hf, str) else None
+                          )
+                          for filename, text in files.items():
+                              if filename == "huggingface.json":
+                                  continue
+          ''',
+          )
+          update(
+              path,
+              '''                    if is_hf_overlay(payload):
+                                  if self._hf_catalog_source is None:
+                                      continue
+                                  payload = expand_hf_overlay(self._hf_catalog_source, payload)
+          ''',
+              '''                    if is_hf_overlay(payload):
+                                  if remote_source is None:
+                                      # Older caches have no source snapshot; they cannot
+                                      # safely expand against the installed HF catalog.
+                                      continue
+                                  payload = expand_hf_overlay(remote_source, payload)
+          ''',
+          )
+          
+          # All four postprocessors must audit expanded records and re-pack modified
+          # overlays. Their existing paths for ordinary JSON remain unchanged.
+          helper = Path("scripts/_hf_catalog_io.py")
+          assert not helper.exists()
+          helper.write_text('''"""Read/write compact Hugging Face-backed catalogs for postprocessors."""
+          
+          from __future__ import annotations
+          
+          import json
+          import sys
+          from pathlib import Path
+          from typing import Any
+          
+          ROOT = Path(__file__).resolve().parents[1]
+          sys.path.insert(0, str(ROOT / "src"))
+          
+          from llmcapa.hf_overlay import expand_hf_overlay, is_hf_overlay, pack_hf_overlay
+          
+          
+          def _hf_source(path: Path) -> dict[str, Any]:
+              return json.loads((path.parent / "huggingface.json").read_text(encoding="utf-8"))
+          
+          
+          def load_catalog(path: Path, text: str | None = None) -> dict[str, Any]:
+              """Return a regular model list from either supported on-disk format."""
+              catalog = json.loads(text if text is not None else path.read_text(encoding="utf-8"))
+              if is_hf_overlay(catalog):
+                  return expand_hf_overlay(_hf_source(path), catalog)
+              return catalog
+          
+          
+          def serialize_catalog(path: Path, catalog: dict[str, Any]) -> str:
+              """Preserve an overlay representation after postprocessing the model data."""
+              original = json.loads(path.read_text(encoding="utf-8"))
+              if is_hf_overlay(original):
+                  catalog = pack_hf_overlay(
+                      _hf_source(path), catalog, provider=original["provider"]
+                  )
+              return json.dumps(catalog, ensure_ascii=False, indent=2) + "\\n"
+          ''', encoding="utf-8")
+          
+          for path in (
+              "scripts/_image_capability_postprocess.py",
+              "scripts/_audio_capability_postprocess.py",
+              "scripts/_video_capability_postprocess.py",
+              "scripts/_structured_capability_postprocess.py",
+          ):
+              content = Path(path).read_text(encoding="utf-8")
+              insert = '''try:
+              from _hf_catalog_io import load_catalog, serialize_catalog
+          except ImportError:  # package-style test imports
+              from scripts._hf_catalog_io import load_catalog, serialize_catalog
+          
+          '''
+              match = 'DEFAULT_DATA = '
+              assert content.count(match) == 1, path
+              content = content.replace(match, insert + match)
+              content = content.replace(
+                  'json.loads(path.read_text(encoding="utf-8"))',
+                  'load_catalog(path)',
+              )
+              content = content.replace('data = json.loads(text)', 'data = load_catalog(path, text)')
+              content = content.replace(
+                  'json.dumps(data, ensure_ascii=False, indent=2) + "\\n"',
+                  'serialize_catalog(path, data)',
+              )
+              assert "for record in data.get" in content
+              Path(path).write_text(content, encoding="utf-8")
+          
+          # Regression coverage for both kinds of source evolution, offline GitHub
+          # refetch, caching, and all media/structured postprocessor data paths.
+          path = Path("tests/test_hf_overlay.py")
+          code = path.read_text(encoding="utf-8")
+          old_test = '''    def fake_urlopen(request, context=None, timeout=None):
+                  requests.append(request.full_url)
+                  return BytesIO(raw)
+          '''
+          new_test = '''    def fake_urlopen(request, context=None, timeout=None):
+                  requests.append(request.full_url)
+                  if request.full_url.endswith("/huggingface.json"):
+                      return BytesIO(json.dumps(source).encode("utf-8"))
+                  return BytesIO(raw)
+          '''
+          assert code.count(old_test) == 1
+          code = code.replace(old_test, new_test)
+          assert code.count("assert len(requests) == 1") == 1
+          code = code.replace("assert len(requests) == 1", "assert len(requests) == 2")
+          code += '''
+          
+          def test_hf_refresh_reconciles_previously_unmatched_model():
+              from copy import deepcopy
+          
+              old_source = _source()
+              original = _local("lmstudio")
+              packed = pack_hf_overlay(old_source, original, provider="lmstudio")
+              assert len(packed["unmatched"]) == 1
+          
+              new_source = deepcopy(old_source)
+              new_hf = deepcopy(new_source["models"][0])
+              new_hf["model_id"] = "LOCAL-ONLY"
+              new_source["models"].append(new_hf)
+          
+              expanded = expand_hf_overlay(new_source, packed)
+              actual = {model["model_id"].casefold(): model for model in expanded["models"]}
+              assert len(actual) == 3
+              assert actual["local-only"] == original["models"][-1]
+              assert not any(model["model_id"] == "LOCAL-ONLY" for model in expanded["models"])
+          
+              rebased = pack_hf_overlay(new_source, expanded, provider="lmstudio")
+              assert expand_hf_overlay(new_source, rebased) == expanded
+          
+          
+          def test_remote_overlay_uses_matching_newer_hf_snapshot(tmp_path, monkeypatch):
+              import json
+              from copy import deepcopy
+              from io import BytesIO
+          
+              from llmcapa.registry import Registry
+          
+              monkeypatch.setenv("HOME", str(tmp_path))
+              monkeypatch.setenv("USERPROFILE", str(tmp_path))
+              old_source = _source()
+              new_source = deepcopy(old_source)
+              new_model = deepcopy(new_source["models"][0])
+              new_model["model_id"] = "org/new-on-remote"
+              new_source["models"].append(new_model)
+              local = _local("vllm")
+              local["models"].append(
+                  {
+                      "provider": "vllm",
+                      "model_id": "org/new-on-remote",
+                      "display_name": "New remote model",
+                      "max_output_tokens": 321,
+                      "context_window": 4096,
+                      "extra": {"backend": "vllm"},
+                  }
+              )
+              remote_overlay = pack_hf_overlay(new_source, local, provider="vllm")
+              registry = Registry()
+              registry._ensure_loaded()
+              registry._hf_catalog_source = old_source
+          
+              calls = []
+          
+              def fake_urlopen(request, context=None, timeout=None):
+                  calls.append(request.full_url)
+                  body = (
+                      json.dumps(new_source)
+                      if request.full_url.endswith("/huggingface.json")
+                      else json.dumps(remote_overlay)
+                  )
+                  return BytesIO(body.encode("utf-8"))
+          
+              monkeypatch.setattr("llmcapa.registry.urllib.request.urlopen", fake_urlopen)
+              count = registry.fetch_github_catalog("vllm")
+              assert count == 4
+              assert registry.get("org/new-on-remote", provider="vllm").max_output_tokens == 321
+              assert len(calls) == 2
+              # The installed HF source was not overwritten, and the remote results are
+              # durable even if the registry is rebuilt while offline.
+              offline = Registry()
+              cap = offline.get("org/new-on-remote", provider="vllm")
+              assert cap.max_output_tokens == 321
+              assert len(calls) == 2
+          
+          
+          def test_all_catalog_postprocessors_preserve_overlay_format(tmp_path):
+              import json
+              from copy import deepcopy
+          
+              from scripts import (
+                  _audio_capability_postprocess,
+                  _image_capability_postprocess,
+                  _structured_capability_postprocess,
+                  _video_capability_postprocess,
+              )
+          
+              source = _source()
+              source["models"] = [deepcopy(source["models"][0])]
+              hf = source["models"][0]
+              hf["model_id"] = "org/image-generator"
+              hf["input_modalities"] = ["text", "audio", "video", "file"]
+              hf["output_modalities"] = ["image", "audio", "video", "embedding"]
+              local = deepcopy(hf)
+              local.update({"provider": "vllm", "max_output_tokens": 1024})
+              local["extra"] = {"backend": "vllm"}
+              packed = pack_hf_overlay(source, {"models": [local]}, provider="vllm")
+          
+              (tmp_path / "huggingface.json").write_text(json.dumps(source), encoding="utf-8")
+              catalog_path = tmp_path / "vllm.json"
+              catalog_path.write_text(json.dumps(packed), encoding="utf-8")
+          
+              assert _image_capability_postprocess.audit(tmp_path)["image_output_records"] >= 1
+              assert _audio_capability_postprocess.audit(tmp_path).get("vllm", 0) >= 1
+              assert _video_capability_postprocess.audit(tmp_path).get("vllm", 0) >= 1
+              for module in (
+                  _image_capability_postprocess,
+                  _audio_capability_postprocess,
+                  _video_capability_postprocess,
+                  _structured_capability_postprocess,
+              ):
+                  module.apply(tmp_path)
+                  current = json.loads(catalog_path.read_text(encoding="utf-8"))
+                  assert is_hf_overlay(current)
+                  assert "models" not in current
+          
+              model = expand_hf_overlay(source, current)["models"][0]
+              assert model["image"]["generation"] is True
+              assert model["audio"]["speech_generation"] is True
+              assert model["video"]["generation"] is True
+              assert model["document"]["accepts_file"] is True
+              assert model["embedding"]["embedding"] is True
+              assert model["extra"] == local["extra"]
+          '''
+          path.write_text(code, encoding="utf-8")
+          print("Prepared overlay reconciler, remote matched-source fetch, 4 postprocessors and tests.", flush=True)
+          
+          PY
+          python -m black src/llmcapa/hf_overlay.py src/llmcapa/registry.py scripts/_hf_catalog_io.py scripts/_image_capability_postprocess.py scripts/_audio_capability_postprocess.py scripts/_video_capability_postprocess.py scripts/_structured_capability_postprocess.py tests/test_hf_overlay.py
+          python -m ruff check --fix src/llmcapa/hf_overlay.py src/llmcapa/registry.py scripts/_hf_catalog_io.py scripts/_image_capability_postprocess.py scripts/_audio_capability_postprocess.py scripts/_video_capability_postprocess.py scripts/_structured_capability_postprocess.py tests/test_hf_overlay.py
+          python -m black src/llmcapa/hf_overlay.py src/llmcapa/registry.py scripts/_hf_catalog_io.py scripts/_image_capability_postprocess.py scripts/_audio_capability_postprocess.py scripts/_video_capability_postprocess.py scripts/_structured_capability_postprocess.py tests/test_hf_overlay.py
+          python -m black --check src/llmcapa/hf_overlay.py src/llmcapa/registry.py scripts/_hf_catalog_io.py scripts/_image_capability_postprocess.py scripts/_audio_capability_postprocess.py scripts/_video_capability_postprocess.py scripts/_structured_capability_postprocess.py tests/test_hf_overlay.py
+          python -m ruff check src/llmcapa/hf_overlay.py src/llmcapa/registry.py scripts/_hf_catalog_io.py scripts/_image_capability_postprocess.py scripts/_audio_capability_postprocess.py scripts/_video_capability_postprocess.py scripts/_structured_capability_postprocess.py tests/test_hf_overlay.py
+          python -m pytest -q tests/test_hf_overlay.py
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/llmcapa/hf_overlay.py src/llmcapa/registry.py scripts/_hf_catalog_io.py scripts/_image_capability_postprocess.py scripts/_audio_capability_postprocess.py scripts/_video_capability_postprocess.py scripts/_structured_capability_postprocess.py tests/test_hf_overlay.py
+          git rm -f .github/workflows/one-time-overlay-review-fixes-20261107.yml
+          git commit -m "fix: reconcile HF snapshot changes in compact catalogs and postprocessors"
+          git push origin HEAD:refs/heads/refactor/compact-local-catalogs-20261106
