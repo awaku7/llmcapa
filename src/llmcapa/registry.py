@@ -290,7 +290,13 @@ class Registry:
                 ):
                     continue
                 provider_set = {self._canonical_provider(name) for name in providers}
+                remote_hf = files.get("huggingface.json")
+                remote_source = (
+                    json.loads(remote_hf) if isinstance(remote_hf, str) else None
+                )
                 for filename, text in files.items():
+                    if filename == "huggingface.json":
+                        continue
                     if not isinstance(filename, str) or Path(filename).name != filename:
                         continue
                     if not isinstance(text, str):
@@ -308,9 +314,11 @@ class Registry:
                         pass
                     payload = json.loads(text)
                     if is_hf_overlay(payload):
-                        if self._hf_catalog_source is None:
+                        if remote_source is None:
+                            # Older caches have no source snapshot; they cannot
+                            # safely expand against the installed HF catalog.
                             continue
-                        payload = expand_hf_overlay(self._hf_catalog_source, payload)
+                        payload = expand_hf_overlay(remote_source, payload)
                     records = (
                         payload.get("models", [])
                         if isinstance(payload, dict)
@@ -1155,6 +1163,15 @@ class Registry:
                         for filename in catalog_files
                     ):
                         cached_files = {name: files[name] for name in catalog_files}
+                        if isinstance(files.get("huggingface.json"), str):
+                            cached_files["huggingface.json"] = files["huggingface.json"]
+                        elif any(
+                            is_hf_overlay(json.loads(value))
+                            for value in cached_files.values()
+                        ):
+                            # Old caches cannot be paired with the original HF
+                            # source; download both files instead.
+                            cached_files = None
             except (OSError, ValueError, TypeError):
                 cached_files = None
 
@@ -1199,6 +1216,28 @@ class Registry:
                     raise RuntimeError(
                         f"Failed to fetch GitHub catalog {filename} at {ref}: {exc}"
                     ) from exc
+            if any(
+                is_hf_overlay(json.loads(downloaded_files[name]))
+                for name in catalog_files
+            ):
+                filename = "huggingface.json"
+                url = (
+                    "https://raw.githubusercontent.com/awaku7/llmcapa/"
+                    f"{raw_ref}/src/llmcapa/data/{filename}"
+                )
+                request = urllib.request.Request(url, headers={"User-Agent": "llmcapa"})
+                try:
+                    with urllib.request.urlopen(
+                        request, context=context, timeout=30
+                    ) as response:
+                        content = response.read(64 * 1024 * 1024 + 1)
+                    if len(content) > 64 * 1024 * 1024:
+                        raise RuntimeError("GitHub Hugging Face source is too large")
+                    downloaded_files[filename] = content.decode("utf-8")
+                except Exception as exc:
+                    raise RuntimeError(
+                        f"Failed to fetch matching Hugging Face source at {ref}: {exc}"
+                    ) from exc
         elif progress_callback:
             progress_callback(
                 f"Loaded {len(downloaded_files)} GitHub file(s) from cache"
@@ -1208,16 +1247,14 @@ class Registry:
         if progress_callback:
             progress_callback("Parsing GitHub catalog records")
         try:
-            for filename, text in downloaded_files.items():
-                payload = json.loads(text)
+            remote_hf = downloaded_files.get("huggingface.json")
+            remote_source = json.loads(remote_hf) if remote_hf is not None else None
+            for filename in catalog_files:
+                payload = json.loads(downloaded_files[filename])
                 if is_hf_overlay(payload):
-                    source = self._hf_catalog_source
-                    if source is None:
-                        resource = resources.files("llmcapa.data").joinpath(
-                            "huggingface.json"
-                        )
-                        source = json.loads(resource.read_text(encoding="utf-8"))
-                    payload = expand_hf_overlay(source, payload)
+                    if remote_source is None:
+                        raise ValueError("missing matching Hugging Face source")
+                    payload = expand_hf_overlay(remote_source, payload)
                 records = (
                     payload.get("models", []) if isinstance(payload, dict) else payload
                 )
@@ -1241,7 +1278,11 @@ class Registry:
 
         bundled_updated = False
         if not cache_is_older_than_bundle:
-            if write_bundled:
+            is_remote_overlay = "huggingface.json" in downloaded_files
+            # An overlay is only valid together with its matching HF source.
+            # Replacing one bundled file would corrupt other installed local
+            # providers; persist fully materialized user records instead.
+            if write_bundled and not is_remote_overlay:
                 bundled_updated = self._write_bundled_catalog_files(downloaded_files)
             if not bundled_updated:
                 self._write_user_catalog_override(

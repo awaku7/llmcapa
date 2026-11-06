@@ -130,6 +130,8 @@ def test_remote_overlay_refresh_support(tmp_path, monkeypatch):
 
     def fake_urlopen(request, context=None, timeout=None):
         requests.append(request.full_url)
+        if request.full_url.endswith("/huggingface.json"):
+            return BytesIO(json.dumps(source).encode("utf-8"))
         return BytesIO(raw)
 
     monkeypatch.setattr("llmcapa.registry.urllib.request.urlopen", fake_urlopen)
@@ -139,4 +141,130 @@ def test_remote_overlay_refresh_support(tmp_path, monkeypatch):
     assert (
         registry.fetch_github_catalog("vllm", cache_ttl=86400, write_bundled=False) == 3
     )
-    assert len(requests) == 1
+    assert len(requests) == 2
+
+
+def test_hf_refresh_reconciles_previously_unmatched_model():
+    from copy import deepcopy
+
+    old_source = _source()
+    original = _local("lmstudio")
+    packed = pack_hf_overlay(old_source, original, provider="lmstudio")
+    assert len(packed["unmatched"]) == 1
+
+    new_source = deepcopy(old_source)
+    new_hf = deepcopy(new_source["models"][0])
+    new_hf["model_id"] = "LOCAL-ONLY"
+    new_source["models"].append(new_hf)
+
+    expanded = expand_hf_overlay(new_source, packed)
+    actual = {model["model_id"].casefold(): model for model in expanded["models"]}
+    assert len(actual) == 3
+    assert actual["local-only"] == original["models"][-1]
+    assert not any(model["model_id"] == "LOCAL-ONLY" for model in expanded["models"])
+
+    rebased = pack_hf_overlay(new_source, expanded, provider="lmstudio")
+    assert expand_hf_overlay(new_source, rebased) == expanded
+
+
+def test_remote_overlay_uses_matching_newer_hf_snapshot(tmp_path, monkeypatch):
+    import json
+    from copy import deepcopy
+    from io import BytesIO
+
+    from llmcapa.registry import Registry
+
+    monkeypatch.setenv("HOME", str(tmp_path))
+    monkeypatch.setenv("USERPROFILE", str(tmp_path))
+    old_source = _source()
+    new_source = deepcopy(old_source)
+    new_model = deepcopy(new_source["models"][0])
+    new_model["model_id"] = "org/new-on-remote"
+    new_source["models"].append(new_model)
+    local = _local("vllm")
+    local["models"].append(
+        {
+            "provider": "vllm",
+            "model_id": "org/new-on-remote",
+            "display_name": "New remote model",
+            "max_output_tokens": 321,
+            "context_window": 4096,
+            "extra": {"backend": "vllm"},
+        }
+    )
+    remote_overlay = pack_hf_overlay(new_source, local, provider="vllm")
+    registry = Registry()
+    registry._ensure_loaded()
+    registry._hf_catalog_source = old_source
+
+    calls = []
+
+    def fake_urlopen(request, context=None, timeout=None):
+        calls.append(request.full_url)
+        body = (
+            json.dumps(new_source)
+            if request.full_url.endswith("/huggingface.json")
+            else json.dumps(remote_overlay)
+        )
+        return BytesIO(body.encode("utf-8"))
+
+    monkeypatch.setattr("llmcapa.registry.urllib.request.urlopen", fake_urlopen)
+    count = registry.fetch_github_catalog("vllm")
+    assert count == 4
+    assert registry.get("org/new-on-remote", provider="vllm").max_output_tokens == 321
+    assert len(calls) == 2
+    # The installed HF source was not overwritten, and the remote results are
+    # durable even if the registry is rebuilt while offline.
+    offline = Registry()
+    cap = offline.get("org/new-on-remote", provider="vllm")
+    assert cap.max_output_tokens == 321
+    assert len(calls) == 2
+
+
+def test_all_catalog_postprocessors_preserve_overlay_format(tmp_path):
+    import json
+    from copy import deepcopy
+
+    from scripts import (
+        _audio_capability_postprocess,
+        _image_capability_postprocess,
+        _structured_capability_postprocess,
+        _video_capability_postprocess,
+    )
+
+    source = _source()
+    source["models"] = [deepcopy(source["models"][0])]
+    hf = source["models"][0]
+    hf["model_id"] = "org/image-generator"
+    hf["input_modalities"] = ["text", "audio", "video", "file"]
+    hf["output_modalities"] = ["image", "audio", "video", "embedding"]
+    local = deepcopy(hf)
+    local.update({"provider": "vllm", "max_output_tokens": 1024})
+    local["extra"] = {"backend": "vllm"}
+    packed = pack_hf_overlay(source, {"models": [local]}, provider="vllm")
+
+    (tmp_path / "huggingface.json").write_text(json.dumps(source), encoding="utf-8")
+    catalog_path = tmp_path / "vllm.json"
+    catalog_path.write_text(json.dumps(packed), encoding="utf-8")
+
+    assert _image_capability_postprocess.audit(tmp_path)["image_output_records"] >= 1
+    assert _audio_capability_postprocess.audit(tmp_path).get("vllm", 0) >= 1
+    assert _video_capability_postprocess.audit(tmp_path).get("vllm", 0) >= 1
+    for module in (
+        _image_capability_postprocess,
+        _audio_capability_postprocess,
+        _video_capability_postprocess,
+        _structured_capability_postprocess,
+    ):
+        module.apply(tmp_path)
+        current = json.loads(catalog_path.read_text(encoding="utf-8"))
+        assert is_hf_overlay(current)
+        assert "models" not in current
+
+    model = expand_hf_overlay(source, current)["models"][0]
+    assert model["image"]["generation"] is True
+    assert model["audio"]["speech_generation"] is True
+    assert model["video"]["generation"] is True
+    assert model["document"]["accepts_file"] is True
+    assert model["embedding"]["embedding"] is True
+    assert model["extra"] == local["extra"]

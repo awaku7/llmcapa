@@ -187,17 +187,33 @@ def expand_hf_overlay(
         raise ValueError("unsupported overlay provider")
     if overlay.get("source") != "huggingface.json":
         raise ValueError("unsupported overlay source")
-    excluded = set(overlay.get("excluded", []))
-    overrides = overlay.get("overrides", {})
+    excluded = {model_id.casefold() for model_id in overlay.get("excluded", [])}
+    overrides = {
+        model_id.casefold(): delta
+        for model_id, delta in overlay.get("overrides", {}).items()
+    }
+    unmatched: dict[str, dict[str, Any]] = {}
+    for record in overlay.get("unmatched", []):
+        key = record["model_id"].casefold()
+        if key in unmatched:
+            raise ValueError("duplicate model IDs in unmatched overlay records")
+        unmatched[key] = record
     source_ids: set[str] = set()
     rows: list[dict[str, Any]] = []
     for hf_row in source["models"]:
         model_id = hf_row["model_id"]
-        source_ids.add(model_id)
-        if model_id in excluded:
+        key = model_id.casefold()
+        source_ids.add(key)
+        # Newly discovered HF records may already exist in the local-only
+        # inventory. Prefer the complete, provider-specific record; a future
+        # updater can rebase it against the new HF source without data loss.
+        if key in unmatched:
+            rows.append(deepcopy(unmatched.pop(key)))
+            continue
+        if key in excluded:
             continue
         row = _baseline(hf_row, overlay)
-        delta = overrides.get(model_id, {})
+        delta = overrides.get(key, {})
         for key in delta.get("unset", []):
             row.pop(key, None)
         row.update(deepcopy(delta.get("set", {})))
@@ -213,7 +229,7 @@ def expand_hf_overlay(
         rows.append(row)
     if not set(overrides).issubset(source_ids):
         raise ValueError("overlay refers to missing Hugging Face model IDs")
-    rows.extend(deepcopy(overlay.get("unmatched", [])))
+    rows.extend(deepcopy(list(unmatched.values())))
     if len({row["model_id"].casefold() for row in rows}) != len(rows):
         raise ValueError("duplicate model IDs in expanded overlay")
     rows.sort(key=lambda row: row["model_id"].casefold())
