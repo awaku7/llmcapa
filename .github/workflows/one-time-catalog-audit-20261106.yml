@@ -1,0 +1,50 @@
+name: One-time catalog deduplication audit
+on:
+  push:
+    branches:
+      - refactor/compact-local-catalogs-20261106
+    paths:
+      - .github/workflows/one-time-catalog-audit-20261106.yml
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Audit model field overlap and storage
+        shell: bash
+        run: |
+          python - <<'PY'
+          import collections, json, pathlib, statistics
+          root = pathlib.Path('src/llmcapa/data')
+          hf = json.loads((root / 'huggingface.json').read_text())['models']
+          hf_by_id = {m['model_id'].casefold():m for m in hf}
+          print('HF_COUNT:', len(hf), flush=True)
+          for filename in ('vllm.json', 'llama_cpp.json', 'lmstudio.json'):
+              path=root/filename
+              models=json.loads(path.read_text())['models']
+              matched=[(m,hf_by_id[m['model_id'].casefold()]) for m in models if m['model_id'].casefold() in hf_by_id]
+              print('FILE:',filename,'SIZE:',path.stat().st_size,'MODELS:',len(models),'MATCHED_HF:',len(matched),'UNMATCHED:',len(models)-len(matched),flush=True)
+              fields=collections.Counter(k for m in models for k in m)
+              print('TOP_FIELDS:',fields.most_common(35),flush=True)
+              counts=collections.Counter()
+              bytes_by_field=collections.Counter()
+              equal_hf=collections.Counter()
+              for m in models:
+                  for k,v in m.items():
+                      bytes_by_field[k]+=len(json.dumps({k:v},ensure_ascii=False))
+                  h=hf_by_id.get(m['model_id'].casefold())
+                  if h:
+                      for k,v in m.items():
+                          if k in h and h[k]==v:
+                              equal_hf[k]+=1
+              print('BYTES_BY_FIELD:',bytes_by_field.most_common(25),flush=True)
+              print('EQUAL_TO_HF:',equal_hf.most_common(25),flush=True)
+              print('EXTRA_SAMPLES:',[(m['model_id'],list(m.get('extra',{})),{k:len(json.dumps(v)) for k,v in m.get('extra',{}).items()}) for m in models[:2]],flush=True)
+              compact_size=len(json.dumps({'models':models},ensure_ascii=False,separators=(',',':')).encode())
+              print('COMPACT_JSON_BYTES:',compact_size,flush=True)
+          PY
