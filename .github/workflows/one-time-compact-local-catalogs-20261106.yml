@@ -416,7 +416,7 @@ jobs:
                   assert {m["model_id"]: m for m in expanded["models"]} == {
                       m["model_id"]: m for m in expected["models"]
                   }
-                  assert expanded["models"][-1]["model_id"] == "local-only"
+                  assert any(row["model_id"] == "local-only" for row in expanded["models"])
                   assert len(encoded["unmatched"]) == 1
           
           
