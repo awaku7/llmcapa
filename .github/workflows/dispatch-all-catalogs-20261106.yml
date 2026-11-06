@@ -1,0 +1,19 @@
+name: Dispatch full provider catalog refresh
+
+on:
+  push:
+    branches:
+      - automation/dispatch-all-catalogs-20261106
+
+permissions:
+  actions: write
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Start official all-provider refresh workflow
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: gh workflow run refresh_catalogs.yml --ref main -f provider=all
