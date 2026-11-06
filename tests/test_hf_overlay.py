@@ -110,3 +110,33 @@ def test_expanded_overlay_has_no_fabricated_unlisted_hf_models():
     assert packed["excluded"] == ["org/vision"]
     expanded = expand_hf_overlay(source, packed)
     assert expanded == catalog
+
+
+def test_remote_overlay_refresh_support(tmp_path, monkeypatch):
+    import json
+    from io import BytesIO
+
+    from llmcapa.registry import Registry
+
+    monkeypatch.setenv("HOME", str(tmp_path))
+    monkeypatch.setenv("USERPROFILE", str(tmp_path))
+    registry = Registry()
+    registry._ensure_loaded()
+    source = _source()
+    registry._hf_catalog_source = source
+    payload = pack_hf_overlay(source, _local("vllm"), provider="vllm")
+    raw = json.dumps(payload).encode("utf-8")
+    requests = []
+
+    def fake_urlopen(request, context=None, timeout=None):
+        requests.append(request.full_url)
+        return BytesIO(raw)
+
+    monkeypatch.setattr("llmcapa.registry.urllib.request.urlopen", fake_urlopen)
+    count = registry.fetch_github_catalog("vllm", cache_ttl=0, write_bundled=False)
+    assert count == 3
+    assert registry.get("local-only", provider="vllm").context_window == 1024
+    assert (
+        registry.fetch_github_catalog("vllm", cache_ttl=86400, write_bundled=False) == 3
+    )
+    assert len(requests) == 1

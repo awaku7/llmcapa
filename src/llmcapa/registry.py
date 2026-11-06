@@ -307,6 +307,10 @@ class Registry:
                     except OSError:
                         pass
                     payload = json.loads(text)
+                    if is_hf_overlay(payload):
+                        if self._hf_catalog_source is None:
+                            continue
+                        payload = expand_hf_overlay(self._hf_catalog_source, payload)
                     records = (
                         payload.get("models", [])
                         if isinstance(payload, dict)
@@ -1206,6 +1210,14 @@ class Registry:
         try:
             for filename, text in downloaded_files.items():
                 payload = json.loads(text)
+                if is_hf_overlay(payload):
+                    source = self._hf_catalog_source
+                    if source is None:
+                        resource = resources.files("llmcapa.data").joinpath(
+                            "huggingface.json"
+                        )
+                        source = json.loads(resource.read_text(encoding="utf-8"))
+                    payload = expand_hf_overlay(source, payload)
                 records = (
                     payload.get("models", []) if isinstance(payload, dict) else payload
                 )
