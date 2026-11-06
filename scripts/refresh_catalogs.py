@@ -27,6 +27,13 @@ CATALOG_FILENAME_OVERRIDES = {
     "foundry-local": "foundry_local.json",
     "llama-cpp": "llama_cpp.json",
 }
+sys.path.insert(0, str(ROOT / "src"))
+from llmcapa.hf_overlay import (
+    expand_hf_overlay,
+    is_hf_overlay,
+    pack_hf_overlay,
+)
+
 PROVIDER_TIMEOUT_OVERRIDES = {
     "azure-foundry": 600,
     "huggingface": 600,
@@ -60,6 +67,11 @@ def load_catalog(path: Path) -> dict[str, Any]:
         data = json.load(handle)
     if not isinstance(data, dict):
         raise TypeError("catalog root is not an object")
+    if is_hf_overlay(data):
+        source = json.loads(
+            (path.parent / "huggingface.json").read_text(encoding="utf-8")
+        )
+        data = expand_hf_overlay(source, data)
     model_index(data)
     return data
 
@@ -480,8 +492,16 @@ def run_provider(
         retained = retain_unlisted_models(previous, updated)
         fallbacks = preserve_known_capabilities(previous, updated)
         if retained or fallbacks:
+            saved = json.loads(path.read_text(encoding="utf-8"))
+            if is_hf_overlay(saved):
+                source = json.loads(
+                    (path.parent / "huggingface.json").read_text(encoding="utf-8")
+                )
+                saved = pack_hf_overlay(source, updated, provider=saved["provider"])
+            else:
+                saved = updated
             path.write_text(
-                json.dumps(updated, ensure_ascii=False, indent=2) + "\n",
+                json.dumps(saved, ensure_ascii=False, indent=2) + "\n",
                 encoding="utf-8",
             )
             with log_path.open("a", encoding="utf-8") as log:

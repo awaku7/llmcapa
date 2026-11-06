@@ -25,6 +25,11 @@ except ImportError:  # package-style test imports
     from scripts._metadata_loader import load_overrides
 
 ROOT = Path(__file__).resolve().parents[1]
+try:
+    from _hf_catalog_io import load_catalog, serialize_catalog
+except ImportError:  # package-style test imports
+    from scripts._hf_catalog_io import load_catalog, serialize_catalog
+
 DEFAULT_DATA = ROOT / "src" / "llmcapa" / "data"
 
 # Model-family markers for records whose image output is an image-generation
@@ -240,7 +245,7 @@ def audit(data_dir: Path = DEFAULT_DATA) -> dict[str, Any]:
     ambiguous: dict[str, list[str]] = defaultdict(list)
     image_records = 0
     for path in sorted(data_dir.glob("*.json")):
-        data = json.loads(path.read_text(encoding="utf-8"))
+        data = load_catalog(path)
         for record in data.get("models", []):
             if "image" not in {
                 str(x).lower() for x in record.get("output_modalities", [])
@@ -278,7 +283,7 @@ def apply(
         raw = path.read_bytes()
         crlf = b"\r\n" in raw
         text = raw.decode("utf-8").replace("\r\n", "\n")
-        data = json.loads(text)
+        data = load_catalog(path, text)
         file_changed = False
         for record in data.get("models", []):
             provider = str(record.get("provider", ""))
@@ -324,7 +329,7 @@ def apply(
             changed[str(record.get("provider", path.stem))] += 1
             file_changed = True
         if file_changed:
-            payload = json.dumps(data, ensure_ascii=False, indent=2) + "\n"
+            payload = serialize_catalog(path, data)
             path.write_bytes(
                 (payload.replace("\n", "\r\n") if crlf else payload).encode("utf-8")
             )

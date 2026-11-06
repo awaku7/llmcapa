@@ -15,6 +15,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 import llmcapa
 import llmcapa.registry as registry_module
 from llmcapa import Capability, ModelNotFoundError
+from llmcapa.hf_overlay import expand_hf_overlay, is_hf_overlay
 from llmcapa.registry import Registry
 
 DATA_DIR = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data"
@@ -25,6 +26,11 @@ REQUIRED_KEYS = {"provider", "model_id", "context_window", "max_output_tokens"}
 def _all_records():
     for path in sorted(DATA_DIR.glob("*.json")):
         payload = json.loads(path.read_text(encoding="utf-8"))
+        if is_hf_overlay(payload):
+            source = json.loads(
+                (DATA_DIR / "huggingface.json").read_text(encoding="utf-8")
+            )
+            payload = expand_hf_overlay(source, payload)
         for record in payload["models"]:
             yield path.name, record
 
@@ -89,6 +95,11 @@ def test_no_duplicate_model_ids_within_each_provider_file():
     for path in sorted(DATA_DIR.glob("*.json")):
         seen = set()
         payload = json.loads(path.read_text(encoding="utf-8"))
+        if is_hf_overlay(payload):
+            source = json.loads(
+                (DATA_DIR / "huggingface.json").read_text(encoding="utf-8")
+            )
+            payload = expand_hf_overlay(source, payload)
         for record in payload["models"]:
             mid = record["model_id"].lower()
             assert mid not in seen, f"duplicate model_id {mid} within {path.name}"
