@@ -60,6 +60,47 @@ REASONING_EFFORT = json.loads(
 )
 
 
+# Only explicit xAI statements qualify as an unbounded model output limit.
+# The Responses API default (128K) is not a model-specific hard limit.
+DOCUMENTED_UNBOUNDED_OUTPUT = {
+    "grok-4.7": "https://docs.x.ai/developers/grok-4-7",
+    "grok-4.6": "https://docs.x.ai/developers/release-notes",
+}
+
+
+def _positive_int(value: object) -> int:
+    """Interpret a documented token limit, ignoring zero/invalid placeholders."""
+    if isinstance(value, bool) or not isinstance(value, (int, str)):
+        return 0
+    try:
+        parsed = int(value)
+    except ValueError:
+        return 0
+    return max(0, parsed)
+
+
+def _output_limit(
+    model_id: str, published: object, previous: dict | None
+) -> tuple[int, str, str | None]:
+    """Return schema-compatible value, evidence status, and provenance URL."""
+    if model_id in DOCUMENTED_UNBOUNDED_OUTPUT:
+        return 0, "documented_unbounded", DOCUMENTED_UNBOUNDED_OUTPUT[model_id]
+    current = _positive_int(published)
+    if current:
+        return current, "published", SOURCE
+    previous = previous or {}
+    retained = _positive_int(previous.get("max_output_tokens"))
+    if retained:
+        previous_extra = previous.get("extra") or {}
+        source = (
+            previous_extra.get("max_output_tokens_source")
+            if isinstance(previous_extra, dict)
+            else None
+        )
+        return retained, "retained_previous", source
+    return 0, "not_published", None
+
+
 def _mods(nums: list[int] | None) -> list[str]:
     # ListModels: 1=text, 2=image (observed)
     mapping = {1: "text", 2: "image", 3: "audio", 4: "video"}
@@ -84,13 +125,16 @@ def _supports_effort(name: str) -> bool:
     return name in REASONING_EFFORT
 
 
-def text_row(entry: dict) -> dict:
+def text_row(entry: dict, *, previous: dict | None = None) -> dict:
     mid = entry["name"]
     in_mods = _mods(entry.get("inputModalities"))
     out_mods = _mods(entry.get("outputModalities"))
     vision = "image" in in_mods
     reasoning = _is_reasoning(mid)
     ctx = int(entry.get("maxPromptLength") or entry.get("contextWindow") or 0)
+    output_limit, output_status, output_source = _output_limit(
+        mid, entry.get("maxCompletionLength"), previous
+    )
 
     inp = float(entry["promptTextTokenPrice"])
     outp = float(entry["completionTextTokenPrice"])
@@ -113,7 +157,10 @@ def text_row(entry: dict) -> dict:
 
     extra: dict = {
         "source": f"{SOURCE}/{mid}" if mid.startswith("grok-4") else SOURCE,
+        "max_output_tokens_status": output_status,
     }
+    if output_source:
+        extra["max_output_tokens_source"] = output_source
     if cache is not None:
         extra["cached_input_per_1m"] = float(cache)
     if long_in is not None:
@@ -133,7 +180,7 @@ def text_row(entry: dict) -> dict:
         "model_id": mid,
         "display_name": DISPLAY.get(mid, mid),
         "context_window": ctx,
-        "max_output_tokens": int(entry["maxCompletionLength"] or 0),
+        "max_output_tokens": output_limit,
         "input_modalities": in_mods,
         "output_modalities": out_mods,
         "supports_function_calling": True,
@@ -165,14 +212,25 @@ def text_row(entry: dict) -> dict:
     return row
 
 
-def specialty_row(spec: dict, *, deprecated: bool = False) -> dict:
+def specialty_row(
+    spec: dict, *, deprecated: bool = False, previous: dict | None = None
+) -> dict:
     deprecated = deprecated or bool(spec.get("deprecated", False))
+    limit, status, source = _output_limit(
+        spec["model_id"], spec.get("max_output_tokens"), previous
+    )
+    if status == "not_published" and "text" not in spec["output_modalities"]:
+        status = "not_applicable"
+    extra = dict(spec["extra"])
+    extra["max_output_tokens_status"] = status
+    if source:
+        extra["max_output_tokens_source"] = source
     row = {
         "provider": "xai",
         "model_id": spec["model_id"],
         "display_name": spec["display_name"],
         "context_window": 0,
-        "max_output_tokens": 0,
+        "max_output_tokens": limit,
         "input_modalities": spec["input_modalities"],
         "output_modalities": spec["output_modalities"],
         "supports_function_calling": False,
@@ -197,20 +255,30 @@ def specialty_row(spec: dict, *, deprecated: bool = False) -> dict:
             "output_per_1m": None,
             "currency": "USD",
         },
-        "extra": dict(spec["extra"]),
+        "extra": extra,
     }
     if spec.get("image") is not None:
         row["image"] = dict(spec["image"])
     return row
 
 
-def legacy_row(spec: dict) -> dict:
+def legacy_row(spec: dict, *, previous: dict | None = None) -> dict:
+    limit, status, source = _output_limit(
+        spec["model_id"], spec.get("max_output_tokens"), previous
+    )
+    extra = {
+        "note": "legacy; not listed on current docs.x.ai models primary table",
+        "source": "retained from prior catalog",
+        "max_output_tokens_status": status,
+    }
+    if source:
+        extra["max_output_tokens_source"] = source
     return {
         "provider": "xai",
         "model_id": spec["model_id"],
         "display_name": spec["display_name"],
         "context_window": spec["context_window"],
-        "max_output_tokens": 0,
+        "max_output_tokens": limit,
         "input_modalities": spec["input_modalities"],
         "output_modalities": spec["output_modalities"],
         "supports_function_calling": True,
@@ -231,10 +299,7 @@ def legacy_row(spec: dict) -> dict:
         "aliases": list(spec["aliases"]),
         "license_type": "api",
         "pricing": dict(spec["pricing"]),
-        "extra": {
-            "note": "legacy; not listed on current docs.x.ai models primary table",
-            "source": "retained from prior catalog",
-        },
+        "extra": extra,
     }
 
 
@@ -294,6 +359,15 @@ def load_listmodels() -> list[dict]:
 
 def build() -> list[dict]:
     models: list[dict] = []
+    try:
+        prior_rows = json.loads(OUT.read_text(encoding="utf-8")).get("models", [])
+    except (OSError, ValueError, TypeError):
+        prior_rows = []
+    previous = {
+        row["model_id"]: row
+        for row in prior_rows
+        if isinstance(row, dict) and isinstance(row.get("model_id"), str)
+    }
     discovered = load_listmodels()
     if LISTMODELS_FALLBACK:
         try:
@@ -301,13 +375,13 @@ def build() -> list[dict]:
         except (OSError, json.JSONDecodeError):
             return []
     for e in discovered:
-        models.append(text_row(e))
-    for s in IMAGINE_MODELS:
-        models.append(specialty_row(s))
-    for s in VOICE_MODELS:
-        models.append(specialty_row(s))
-    for s in LEGACY:
-        models.append(legacy_row(s))
+        models.append(text_row(e, previous=previous.get(e["name"])))
+    for spec in IMAGINE_MODELS:
+        models.append(specialty_row(spec, previous=previous.get(spec["model_id"])))
+    for spec in VOICE_MODELS:
+        models.append(specialty_row(spec, previous=previous.get(spec["model_id"])))
+    for spec in LEGACY:
+        models.append(legacy_row(spec, previous=previous.get(spec["model_id"])))
     return models
 
 

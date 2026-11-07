@@ -4,6 +4,7 @@ The previous scraper captured the rendered page text but did not produce the
 structured ListModels shape consumed by the updater. This version parses the
 official Markdown endpoint directly and writes a compatible snapshot.
 """
+
 from __future__ import annotations
 
 import json
@@ -29,14 +30,19 @@ def context_tokens(value: str) -> int:
     if not m:
         return 0
     n = float(m.group(1))
-    return int(n * (1_000_000 if m.group(2) == "M" else 1_000 if m.group(2) == "K" else 1))
+    return int(
+        n * (1_000_000 if m.group(2) == "M" else 1_000 if m.group(2) == "K" else 1)
+    )
 
 
 def parse(text: str) -> list[dict]:
     rows = []
     in_table = False
     for line in text.splitlines():
-        if line.strip() == "| Model | Context | Input / 1M tokens | Cached input / 1M tokens | Output / 1M tokens |":
+        if (
+            line.strip()
+            == "| Model | Context | Input / 1M tokens | Cached input / 1M tokens | Output / 1M tokens |"
+        ):
             in_table = True
             continue
         if in_table and not line.strip().startswith("|"):
@@ -51,13 +57,18 @@ def parse(text: str) -> list[dict]:
         model = re.sub(r"\s*\([^)]*\)\s*$", "", cells[0]).strip()
         if not model or model.lower() == "model":
             continue
-        price = lambda s: float(re.search(r"[\d.]+", s.replace(",", "")).group()) if re.search(r"[\d.]+", s) else None
+        price = lambda s: (
+            float(re.search(r"[\d.]+", s.replace(",", "")).group())
+            if re.search(r"[\d.]+", s)
+            else None
+        )
         row = {
             "name": model,
             "inputModalities": [1, 2],
             "outputModalities": [1],
             "maxPromptLength": context_tokens(cells[1]),
-            "maxCompletionLength": 0,
+            # The pricing table does not publish an output token limit.
+            # Omit this field rather than reporting a made-up zero.
             "promptTextTokenPrice": price(cells[2]),
             "cachedPromptTokenPrice": price(cells[3]),
             "completionTextTokenPrice": price(cells[4]),
@@ -70,12 +81,18 @@ def parse(text: str) -> list[dict]:
         model = row["name"]
         existing = unique.get(model)
         if existing is None:
-            existing = {key: value for key, value in row.items() if key != "_longContext"}
+            existing = {
+                key: value for key, value in row.items() if key != "_longContext"
+            }
             unique[model] = existing
         elif row.get("_longContext"):
             existing["promptTextTokenPriceLongContext"] = row["promptTextTokenPrice"]
-            existing["cachedPromptTokenPriceLongContext"] = row["cachedPromptTokenPrice"]
-            existing["completionTextTokenPriceLongContext"] = row["completionTextTokenPrice"]
+            existing["cachedPromptTokenPriceLongContext"] = row[
+                "cachedPromptTokenPrice"
+            ]
+            existing["completionTextTokenPriceLongContext"] = row[
+                "completionTextTokenPrice"
+            ]
     return list(unique.values())
 
 
@@ -83,7 +100,9 @@ def main() -> None:
     models = parse(fetch())
     if not models:
         raise SystemExit("xAI official model table was not found")
-    OUT.write_text(json.dumps(models, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    OUT.write_text(
+        json.dumps(models, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
     print(f"wrote {OUT}: {len(models)} official text models")
 
 
