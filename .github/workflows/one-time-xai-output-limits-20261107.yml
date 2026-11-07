@@ -71,7 +71,7 @@ jobs:
                   parsed = int(value)
               except ValueError:
                   return 0
-              return parsed if parsed > 0 else 0
+              return max(0, parsed)
           
           
           def _output_limit(
