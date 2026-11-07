@@ -357,3 +357,91 @@ def test_clairic_bundle_has_typed_extraction_and_documented_price():
     assert clairic["extra"]["endpoints"][0]["protocol"] == "workers-ai-rest"
     assert "reference_date" in clairic["extra"]["typed_extraction"]["request_fields"]
     assert "openai_compatible_base_url_template" not in clairic["extra"]
+
+
+def test_official_markdown_copy_badges_and_linked_feature_table():
+    """Model ID Copy and linked labels must preserve documented capabilities."""
+    bt = chr(96)
+    model_id = "@cf/google/gemma-4-26b-a4b-it"
+    ref = {
+        "model_id": model_id,
+        "url": "https://developers.cloudflare.com/workers-ai/models/gemma-4-26b-a4b-it/index.md",
+        "summary": "Model",
+    }
+    for suffix in (" Copy", ""):
+        text = (
+            "# gemma-4-26b-a4b-it\n\n"
+            "Text Generation • Google\n\n"
+            "Model ID\n\n"
+            f"{bt}{model_id}{bt}{suffix}\n\n"
+            "- Cloudflare-hosted\n- Batch\n- Function calling\n"
+            "- Reasoning\n- Vision\n- Zero data retention\n\n"
+            "| Model Info | |\n| --- | --- |\n"
+            "| Function calling [↗](https://example.test) | Yes |\n"
+            "| Vision | Yes |\n"
+            "| Context Window [↗](https://example.test) | 256,000 tokens |\n"
+            "The OpenAI compatible endpoint is /v1/chat/completions.\n"
+        )
+        row = _UPDATER.parse_model_page(
+            ref, text, responses_model_slugs=set(), checked_at="2026-11-07"
+        )
+        assert row["supports_function_calling"] is True
+        assert row["supports_vision"] is True
+        assert row["supports_reasoning"] is True
+        assert row["input_modalities"] == ["text", "image"]
+        assert row["context_window"] == 256_000
+        assert row["extra"]["cloudflare_tags"] == [
+            "Cloudflare-hosted",
+            "Batch",
+            "Function calling",
+            "Reasoning",
+            "Vision",
+            "Zero data retention",
+        ]
+
+
+def test_missing_model_id_fails_instead_of_silently_dropping_capabilities():
+    import pytest
+
+    with pytest.raises(ValueError, match="Model ID not found"):
+        _UPDATER.parse_model_page(
+            {
+                "model_id": "@cf/example/model",
+                "url": "https://developers.cloudflare.com/workers-ai/models/model/index.md",
+            },
+            "# model\n\nText Generation • Example\n\n- Function calling\n- Vision\n",
+            responses_model_slugs=set(),
+            checked_at="2026-11-07",
+        )
+
+
+def test_bundled_cloudflare_preserves_documented_capability_badges():
+    import json
+
+    path = (
+        Path(__file__).resolve().parents[1]
+        / "src"
+        / "llmcapa"
+        / "data"
+        / "cloudflare-workers-ai.json"
+    )
+    records = json.loads(path.read_text(encoding="utf-8"))["models"]
+    by_id = {model["model_id"]: model for model in records}
+    assert all(model["extra"]["cloudflare_tags"] for model in records)
+    for model_id in (
+        "@cf/zai-org/glm-5.3",
+        "@cf/deepseek-ai/deepseek-v4.1-flash-1017",
+        "@cf/google/gemma-4-26b-a4b-it",
+    ):
+        assert by_id[model_id]["supports_function_calling"] is True
+        assert "Function calling" in by_id[model_id]["extra"]["cloudflare_tags"]
+    for model_id in (
+        "@cf/cloudflare/clairic",
+        "@cf/deepseek-ai/deepseek-v4.1-flash-1017",
+        "@cf/google/gemma-4-26b-a4b-it",
+    ):
+        assert by_id[model_id]["supports_vision"] is True
+        assert "Vision" in by_id[model_id]["extra"]["cloudflare_tags"]
+        assert "image" in by_id[model_id]["input_modalities"]
+    assert sum(bool(row["supports_function_calling"]) for row in records) >= 22
+    assert sum(bool(row["supports_vision"]) for row in records) >= 16

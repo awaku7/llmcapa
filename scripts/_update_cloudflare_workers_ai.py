@@ -104,7 +104,7 @@ def _model_info_rows(text: str) -> dict[str, str]:
         cells = [cell.strip() for cell in stripped.strip("|").split("|")]
         if len(cells) < 2 or set(cells[0]) <= {"-", ":", " "}:
             continue
-        label = _clean_markdown(cells[0]).casefold()
+        label = re.sub(r"\s*↗\s*", " ", _clean_markdown(cells[0])).strip().casefold()
         value = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", cells[1])
         value = re.sub(r"\s+", " ", value).strip()
         if label and label not in {"model info", ""}:
@@ -155,9 +155,12 @@ def _parse_pricing(value: str, task_type: str) -> dict[str, object] | None:
 
 def _feature_tags(text: str, model_id: str) -> list[str]:
     lines = text.splitlines()
-    marker = f"`{model_id}`"
+    marker = re.compile(rf"`{re.escape(model_id)}`(?:\s+Copy)?")
     try:
-        start = next(i for i, line in enumerate(lines) if line.strip() == marker) + 1
+        start = (
+            next(i for i, line in enumerate(lines) if marker.fullmatch(line.strip()))
+            + 1
+        )
     except StopIteration:
         return []
 
@@ -207,8 +210,10 @@ def parse_model_page(
     url_parts = model_ref["url"].rstrip("/").split("/")
     slug = url_parts[-2] if url_parts[-1] == "index.md" else url_parts[-1]
 
-    model_id_match = re.search(r"(?m)^`(@cf/[^`]+)`\s*$", text)
-    if model_id_match and model_id_match.group(1) != model_id:
+    model_id_match = re.search(r"(?m)^`(@cf/[^`]+)`(?:\s+Copy)?\s*$", text)
+    if model_id_match is None:
+        raise ValueError(f"Model ID not found in official page: {model_ref['url']}")
+    if model_id_match.group(1) != model_id:
         raise ValueError(
             f"Model ID mismatch for {model_ref['url']}: "
             f"index={model_id!r}, detail={model_id_match.group(1)!r}"
@@ -353,10 +358,7 @@ def parse_model_page(
         "input_modalities": input_modalities,
         "output_modalities": output_modalities,
         "supports_function_calling": "function calling" in normalized_tags
-        or info.get("function calling", "").casefold() == "yes"
-        # Both GPT-OSS pages explicitly document Function calling: Yes.
-        # The Markdown badge parser may miss their newer page layout.
-        or model_id in {"@cf/openai/gpt-oss-20b", "@cf/openai/gpt-oss-120b"},
+        or info.get("function calling", "").casefold() == "yes",
         "supports_json_mode": (
             True if "structured outputs" in normalized_tags else None
         ),
