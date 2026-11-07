@@ -267,6 +267,29 @@ def _parse_api_support(markdown: str) -> dict[str, bool]:
                     result[f"{heading.group(1).lower()}:{key}"] = (
                         _supported(value) is True
                     )
+    if not result:
+        # Current AWS model cards also expose an overview table with an
+        # "APIs supported" column alongside input/output modalities. Parse
+        # that authoritative matrix when an endpoint-specific API section is
+        # absent, instead of silently recording every API as unsupported.
+        api_names = ("messages", "responses", "chat completions", "converse", "invoke")
+        for headers, rows in _markdown_tables(markdown):
+            api_index = next(
+                (i for i, header in enumerate(headers) if "apis supported" in header.lower()),
+                None,
+            )
+            if api_index is None:
+                continue
+            for row in rows:
+                if api_index >= len(row):
+                    continue
+                label = _clean_markdown(row[api_index]).lower()
+                for api_name in api_names:
+                    if re.search(rf"\b{re.escape(api_name)}\b", label):
+                        status = _supported(row[api_index])
+                        if status is not None:
+                            result[f"overview:{api_name}"] = status
+                        break
     return result
 
 
@@ -326,6 +349,74 @@ def _explicit_feature(markdown: str, pattern: str) -> bool:
     return False
 
 
+def _parse_token_pricing(markdown: str) -> tuple[dict | None, dict]:
+    """Extract explicitly published USD rates from a token-pricing table.
+
+    Keep every named inference/region tier in ``extra``. The scalar pricing
+    fields use a Global CRIS tier when present, or the sole tier when there is
+    only one; we never select an arbitrary regional rate.
+    """
+    section = _section(markdown, "Pricing")
+    if not re.search(r"per\s+1\s+million\s+tokens", section, re.IGNORECASE):
+        return None, {}
+
+    for headers, rows in _markdown_tables(section):
+        normalized = [_clean_markdown(header).strip().lower() for header in headers]
+        input_index = next(
+            (i for i, header in enumerate(normalized) if header == "input"), None
+        )
+        output_index = next(
+            (i for i, header in enumerate(normalized) if header == "output"), None
+        )
+        if input_index is None or output_index is None:
+            continue
+        tier_index = next(
+            (
+                i
+                for i, header in enumerate(normalized)
+                if "inference option" in header or "region" in header or header == "tier"
+            ),
+            None,
+        )
+        tiers = []
+        for row in rows:
+            if max(input_index, output_index) >= len(row):
+                continue
+            rates = {}
+            for index, header in enumerate(headers):
+                if index == tier_index or index >= len(row):
+                    continue
+                amount = re.search(r"\$\s*([\d,]+(?:\.\d+)?)", row[index])
+                if amount:
+                    rates[_clean_markdown(header).strip().lower()] = float(
+                        amount.group(1).replace(",", "")
+                    )
+            if "input" not in rates and "output" not in rates:
+                continue
+            tier_name = (
+                _clean_markdown(row[tier_index]).strip()
+                if tier_index is not None and tier_index < len(row)
+                else "Standard"
+            )
+            tiers.append({"tier": tier_name, "rates_usd_per_1m_tokens": rates})
+        if not tiers:
+            continue
+
+        primary = next(
+            (item for item in tiers if "global cris" in item["tier"].lower()),
+            tiers[0] if len(tiers) == 1 else None,
+        )
+        pricing = None
+        if primary is not None:
+            rates = primary["rates_usd_per_1m_tokens"]
+            pricing = {"input": rates.get("input"), "output": rates.get("output")}
+        return pricing, {
+            "published_token_pricing_tiers": tiers,
+            "bedrock_token_pricing_basis": "USD per 1 million tokens; Standard tier",
+        }
+    return None, {}
+
+
 def parse_bedrock_model_card(markdown: str, source_url: str) -> dict | None:
     """Normalize one AWS model card into an Amazon/Bedrock catalog record."""
     model_id, aliases, endpoint_urls = _parse_programmatic_access(markdown)
@@ -341,6 +432,9 @@ def parse_bedrock_model_card(markdown: str, source_url: str) -> dict | None:
     publisher = _clean_markdown(publisher_match.group(1)) if publisher_match else ""
     input_modalities, output_modalities = _parse_modalities(markdown)
     api_support = _parse_api_support(markdown)
+    pricing, pricing_metadata = _parse_token_pricing(markdown)
+    if pricing_metadata:
+        pricing_metadata["bedrock_token_pricing_source"] = source_url
     endpoint_support = _parse_endpoint_support(markdown) or {"bedrock-runtime"}
 
     endpoints = []
@@ -391,7 +485,7 @@ def parse_bedrock_model_card(markdown: str, source_url: str) -> dict | None:
         display=display,
         ctx=_token_count(markdown, "Context window"),
         max_out=_token_count(markdown, "Max output tokens"),
-        pricing=None,
+        pricing=pricing,
         aliases=aliases,
         knowledge_cutoff=_clean_markdown(knowledge.group(1)) if knowledge else None,
         input_modalities=modalities,
@@ -416,6 +510,7 @@ def parse_bedrock_model_card(markdown: str, source_url: str) -> dict | None:
             "bedrock_model_provider": publisher or None,
             "endpoints": endpoints,
             "supported_bedrock_endpoints": sorted(endpoint_support),
+            **pricing_metadata,
         },
     )
     # Keep only model/profile IDs explicitly listed by AWS, not synthetic IDs
@@ -691,6 +786,10 @@ def add_bedrock_claude_models(models: list[dict]) -> int:
 def _merge_official_model(existing: dict, official: dict) -> dict:
     """Refresh documented fields while retaining curated/pricing metadata."""
     merged = dict(existing)
+    if merged.get("pricing") is None and official.get("pricing") is not None:
+        # Backfill rates explicitly published on AWS's model card without
+        # overwriting an existing curated/provider-specific price.
+        merged["pricing"] = official["pricing"]
     refresh_fields = {
         "provider",
         "display_name",

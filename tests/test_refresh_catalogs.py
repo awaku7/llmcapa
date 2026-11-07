@@ -72,6 +72,25 @@ def test_provider_filename_special_cases():
     assert refresh.catalog_filename("openrouter") == "openrouter.json"
 
 
+@pytest.mark.parametrize(
+    ("original_newline", "expected_newline"),
+    [(b"\n", b"\n"), (b"\r\n", b"\r\n"), (b"\r", b"\r")],
+)
+def test_preserve_line_endings_keeps_original_catalog_style(
+    tmp_path, original_newline, expected_newline
+):
+    path = tmp_path / "catalog.json"
+    path.write_bytes(original_newline.join((b"{", b'  \"models\": []', b"}")))
+    original = path.read_bytes()
+
+    # Simulate a Windows updater writing CRLF regardless of the source file.
+    path.write_bytes(b"{\r\n  \"models\": []\r\n}\r\n")
+    refresh.preserve_line_endings(path, original)
+
+    expected = expected_newline.join((b"{", b'  \"models\": []', b"}", b""))
+    assert path.read_bytes() == expected
+
+
 def test_resume_accepts_only_explicitly_staged_catalog_changes():
     staged_catalog = {"src/llmcapa/data/ai21.json"}
     with pytest.raises(ValueError, match="--resume-staged-catalogs"):
@@ -80,6 +99,21 @@ def test_resume_accepts_only_explicitly_staged_catalog_changes():
     refresh.validate_staged_catalogs(staged_catalog, allow_staged_catalogs=True)
     refresh.validate_staged_catalogs(
         {"scripts/refresh_catalogs.py"}, allow_staged_catalogs=True
+    )
+    refresh.validate_staged_catalogs(
+        {
+            "scripts/_update_amazon.py",
+            "tests/test_amazon_catalog_updater.py",
+            "scripts/_update_azure_foundry.py",
+            "scripts/_scrape_huggingface.py",
+            "tests/test_catalog_refresh_regressions.py",
+            "scripts/provider_updates/bytedance-seed.py",
+            "tests/test_provider_inventory_refresh.py",
+            "tests/test_provider_http.py",
+            "scripts/_update_sarashina.py",
+            "tests/test_sarashina.py",
+        },
+        allow_staged_catalogs=True,
     )
 
     with pytest.raises(ValueError, match="unrelated staged changes"):
@@ -702,3 +736,43 @@ def test_xai_refresh_without_scratch_snapshot(tmp_path, monkeypatch):
     assert models == [{"name": "grok-test", "promptTextTokenPrice": 1.0}]
     assert json.loads(snapshot.read_text(encoding="utf-8")) == models
     assert _update_xai.LISTMODELS_FALLBACK is False
+
+
+def test_hf_pipeline_change_replaces_old_modalities_in_refresh_guard():
+    previous = _complete_catalog()
+    old_row = previous["models"][0]
+    old_row.update(
+        {
+            "provider": "huggingface",
+            "pipeline_tag": "image-to-image",
+            "input_modalities": ["image"],
+            "output_modalities": ["image"],
+            "supports_vision": True,
+        }
+    )
+    updated = json.loads(json.dumps(previous))
+    new_row = updated["models"][0]
+    new_row.update(
+        {
+            "pipeline_tag": "text-to-image",
+            "input_modalities": ["text"],
+            "output_modalities": ["image"],
+            "supports_vision": False,
+        }
+    )
+
+    assert refresh.preserve_known_capabilities(previous, updated) == 0
+    refresh.validate_refreshed_catalog(previous, updated)
+    assert new_row["input_modalities"] == ["text"]
+
+
+def test_hf_legacy_output_placeholder_migrates_to_unknown():
+    previous = _complete_catalog()
+    old_row = previous["models"][0]
+    old_row["provider"] = "huggingface"
+    old_row["max_output_tokens"] = refresh.HF_LEGACY_MAX_OUTPUT_DEFAULT
+    updated = json.loads(json.dumps(previous))
+    updated["models"][0]["max_output_tokens"] = 0
+
+    assert refresh.preserve_known_capabilities(previous, updated) == 0
+    refresh.validate_refreshed_catalog(previous, updated)

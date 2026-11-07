@@ -21,7 +21,8 @@ ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "src" / "llmcapa" / "data" / "bytedance-seed.json"
 SOURCE = "https://www.volcengine.com/docs/ark/model-list"
 MODEL_ID_PATTERN = re.compile(
-    r"\b(doubao-(?:seed(?:ream)?|seedance)-[a-z0-9]+(?:[.-][a-z0-9]+)*)\b", re.I
+    r"\b(doubao-(?:seed(?:ream)?|seedance)-[a-z0-9]+(?:[.-][a-z0-9]+)*)\b",
+    re.IGNORECASE,
 )
 
 
@@ -104,7 +105,13 @@ def fetch_inventory() -> str:
     except (HTTPError, URLError):
         page = ""
     if "模型列表" in page and "Model ID" in page and MODEL_ID_PATTERN.search(page):
-        return page
+        parser = _TableRows()
+        parser.feed(page)
+        # The server-rendered shell may contain model-ID tokens but omit the
+        # hydrated table cells (including retirement status). Only trust the
+        # static response when the model IDs are present in actual table rows.
+        if any(MODEL_ID_PATTERN.search(row) for row in parser.rows):
+            return page
     try:
         return _fetch_rendered_inventory()
     except Exception as exc:
@@ -123,7 +130,9 @@ def _tokens(value: str) -> int:
 
 
 def _row_context(row: str, label: str) -> int:
-    match = re.search(label + r"\s*[:：]\s*([\d,.]+\s*[kKmM]?)", row, re.I)
+    match = re.search(
+        label + r"\s*[:：]\s*([\d,.]+\s*[kKmM]?)", row, re.IGNORECASE
+    )
     return _tokens(match.group(1)) if match else 0
 
 
@@ -149,13 +158,15 @@ def parse_model_inventory(page: str) -> list[dict]:
                 if kind == "image"
                 else ["video"] if kind == "video" else ["text"]
             )
-            if kind == "image" and re.search(r"图生图|参考图", table_row):
-                input_modalities.append("image")
-            elif kind == "video" and re.search(
-                r"图生视频|视频编辑|参考图|首尾帧", table_row
-            ):
-                input_modalities.append("image")
-            elif kind == "text" and "多模态理解" in table_row:
+            has_image_input = (
+                (kind == "image" and re.search(r"图生图|参考图", table_row))
+                or (
+                    kind == "video"
+                    and re.search(r"图生视频|视频编辑|参考图|首尾帧", table_row)
+                )
+                or (kind == "text" and "多模态理解" in table_row)
+            )
+            if has_image_input:
                 input_modalities.append("image")
             record = {
                 "model_id": model_id,
@@ -185,6 +196,14 @@ def parse_model_inventory(page: str) -> list[dict]:
                 record["input_modalities"] = sorted(
                     set(record["input_modalities"]) | set(old["input_modalities"])
                 )
+                if (
+                    record["supports_vision"] is True
+                    or old.get("supports_vision") is True
+                ):
+                    record["input_modalities"] = sorted(
+                        set(record["input_modalities"]) | {"image"}
+                    )
+                record["supports_vision"] = "image" in record["input_modalities"]
                 for field in (
                     "supports_function_calling",
                     "supports_json_mode",

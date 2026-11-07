@@ -34,6 +34,9 @@ from llmcapa.hf_overlay import (
     pack_hf_overlay,
 )
 
+# Historical HF rows were populated with this generic placeholder, not source data.
+HF_LEGACY_MAX_OUTPUT_DEFAULT = 2048
+
 PROVIDER_TIMEOUT_OVERRIDES = {
     "azure-foundry": 600,
     "huggingface": 600,
@@ -76,6 +79,33 @@ def load_catalog(path: Path) -> dict[str, Any]:
     return data
 
 
+def preserve_line_endings(path: Path, original: bytes) -> None:
+    """Keep a provider updater from rewriting an entire catalog's newlines.
+
+    ``Path.write_text`` translates LF to the host platform's newline by
+    default. Provider updates run on Windows as well as POSIX, so a small
+    metadata refresh must not turn every LF in a bundled catalog into CRLF
+    (or vice versa). JSON string newlines are escaped, making normalization of
+    the file's structural line endings safe.
+    """
+    crlf_count = original.count(b"\r\n")
+    lf_count = original.count(b"\n") - crlf_count
+    cr_count = original.count(b"\r") - crlf_count
+    if crlf_count and crlf_count >= lf_count and crlf_count >= cr_count:
+        newline = b"\r\n"
+    elif cr_count and cr_count > lf_count:
+        newline = b"\r"
+    else:
+        newline = b"\n"
+
+    current = path.read_bytes()
+    normalized = current.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    if newline != b"\n":
+        normalized = normalized.replace(b"\n", newline)
+    if normalized != current:
+        path.write_bytes(normalized)
+
+
 def retain_unlisted_models(
     previous: dict[str, Any], updated: dict[str, Any], *, checked_at: str | None = None
 ) -> int:
@@ -102,6 +132,18 @@ def retain_unlisted_models(
         row["extra"] = extra
         rows.append(row)
     return len(missing)
+
+
+def _has_authoritative_hf_pipeline_change(
+    previous: dict[str, Any], refreshed: dict[str, Any]
+) -> bool:
+    """Whether current HF task metadata supersedes previously inferred modalities."""
+    return (
+        previous.get("provider") == "huggingface"
+        and refreshed.get("provider") == "huggingface"
+        and bool(refreshed.get("pipeline_tag"))
+        and previous.get("pipeline_tag") != refreshed.get("pipeline_tag")
+    )
 
 
 def preserve_known_capabilities(
@@ -140,6 +182,13 @@ def preserve_known_capabilities(
         for field in ("context_window", "max_output_tokens"):
             old_value = previous_row.get(field, 0)
             if (
+                field == "max_output_tokens"
+                and previous_row.get("provider") == "huggingface"
+                and old_value == HF_LEGACY_MAX_OUTPUT_DEFAULT
+                and not refreshed.get(field)
+            ):
+                continue
+            if (
                 isinstance(old_value, int)
                 and old_value > 0
                 and not refreshed.get(field)
@@ -150,6 +199,12 @@ def preserve_known_capabilities(
             old_values = previous_row.get(field)
             new_values = refreshed.get(field)
             if not isinstance(old_values, list) or not old_values:
+                continue
+            if (
+                _has_authoritative_hf_pipeline_change(previous_row, refreshed)
+                and isinstance(new_values, list)
+                and new_values
+            ):
                 continue
             if not isinstance(new_values, list):
                 new_values = []
@@ -274,6 +329,12 @@ def validate_refreshed_catalog(
                 raise ValueError(f"{model_id}: documented {key} was lost")
         for key in ("context_window", "max_output_tokens"):
             if previous_row.get(key, 0) > 0 and refreshed[key] == 0:
+                if (
+                    key == "max_output_tokens"
+                    and previous_row.get("provider") == "huggingface"
+                    and previous_row.get(key) == HF_LEGACY_MAX_OUTPUT_DEFAULT
+                ):
+                    continue
                 raise ValueError(f"{model_id}: known {key} became zero")
 
         for key in ("input_modalities", "output_modalities"):
@@ -281,6 +342,12 @@ def validate_refreshed_catalog(
             if not isinstance(documented, list) or not documented:
                 continue
             current = refreshed.get(key)
+            if (
+                _has_authoritative_hf_pipeline_change(previous_row, refreshed)
+                and isinstance(current, list)
+                and current
+            ):
+                continue
             if not isinstance(current, list) or any(
                 modality not in current for modality in documented
             ):
@@ -409,12 +476,22 @@ def validate_staged_catalogs(
     resumable_paths = catalog_paths | {
         "scripts/refresh_catalogs.py",
         "scripts/_image_capability_postprocess.py",
+        "scripts/_update_amazon.py",
+        "scripts/_update_azure_foundry.py",
+        "scripts/_scrape_huggingface.py",
+        "scripts/provider_updates/bytedance-seed.py",
         "scripts/_update_meta.py",
         "scripts/_update_openrouter.py",
         "scripts/_update_xai.py",
+        "scripts/_update_sarashina.py",
+        "tests/test_sarashina.py",
         "tests/test_refresh_catalogs.py",
         "tests/test_image_capability_postprocess.py",
         "tests/test_computer_use_updaters.py",
+        "tests/test_amazon_catalog_updater.py",
+        "tests/test_catalog_refresh_regressions.py",
+        "tests/test_provider_inventory_refresh.py",
+        "tests/test_provider_http.py",
     }
     unexpected = staged_paths - resumable_paths
     if unexpected:
@@ -437,6 +514,7 @@ def run_provider(
     log_directory.mkdir(parents=True, exist_ok=True)
     log_path = log_directory / f"{provider}.log"
     try:
+        original_bytes = path.read_bytes()
         previous = load_catalog(path)
         with log_path.open("w", encoding="utf-8") as log:
             command = [
@@ -507,6 +585,8 @@ def run_provider(
             with log_path.open("a", encoding="utf-8") as log:
                 log.write("\nRefresh safety fallbacks applied:")
                 log.write(f" retained_rows={retained}; capability_rows={fallbacks}.\n")
+        preserve_line_endings(path, original_bytes)
+        updated = load_catalog(path)
         validate_refreshed_catalog(previous, updated)
         diff = compare_catalogs(previous, updated)
         if relative_path in touched and any(diff.values()):

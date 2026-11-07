@@ -1393,7 +1393,7 @@ def build_entry(item: dict, price_map: dict[str, dict]) -> dict:
         row["context_window"] = (pv or {}).get("context_window") or 0
     if row.get("max_output_tokens") is None:
         pv = _PREV_LIMITS.get(name)
-        row["max_output_tokens"] = (pv or {}).get("max_output_tokens") or 2048
+        row["max_output_tokens"] = (pv or {}).get("max_output_tokens") or 0
 
     # Restore curated capability metadata when the catalog refresh rebuilds a
     # row, and refresh Anthropic model tool versions from the official matrix.

@@ -208,9 +208,9 @@ def test_cerebras_and_groq_share_http_read_but_keep_fallbacks(monkeypatch):
     for updater in (cerebras, groq):
         observed = {}
 
-        def fake_fetch_text(url, **kwargs):
-            observed["url"] = url
-            observed.update(kwargs)
+        def fake_fetch_text(url, _observed=observed, **kwargs):
+            _observed["url"] = url
+            _observed.update(kwargs)
             return "official model page"
 
         monkeypatch.setattr(updater, "fetch_text", fake_fetch_text)
@@ -233,7 +233,11 @@ def test_bytedance_seed_fetch_keeps_large_html_limit_and_error_policy(monkeypatc
     spec.loader.exec_module(updater)
 
     observed = {}
-    page = "模型列表 Model ID doubao-seed-2-1-pro-260915"
+    page = (
+        "<h1>模型列表 Model ID</h1><table><tr><td>"
+        "doubao-seed-2-1-pro-260915"
+        "</td><td>上下文窗口: 1024k</td></tr></table>"
+    )
 
     def fake_fetch_text(url, **kwargs):
         observed["url"] = url

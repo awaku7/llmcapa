@@ -254,7 +254,7 @@ def test_huggingface_refresh_preserves_curated_unknown_fields_for_current_models
             "provider": "huggingface",
             "model_id": "Qwen/Qwen3.6-35B-A3B",
             "context_window": 0,
-            "max_output_tokens": 2048,
+            "max_output_tokens": 0,
             "input_modalities": ["text", "image"],
             "output_modalities": ["text"],
             "aliases": ["Qwen3.6-35B-A3B"],
@@ -994,3 +994,118 @@ def test_local_inventory_legacy_json_update_remains_supported(tmp_path, monkeypa
             ]["note"]
             == "preserve"
         )
+
+
+def test_bytedance_seed_uses_rendered_table_for_unhydrated_static_shell(monkeypatch):
+    updater = _load_provider_update("bytedance-seed")
+    static_shell = "模型列表 Model ID doubao-seed-2-0-code-preview-260215"
+    rendered = """<h1>模型列表 Model ID</h1><table>
+    <tr><td>doubao-seed-2-0-code-preview-260215 即将下线</td>
+    <td>上下文窗口: 256k 最大回答(默认 4k): 128k 多模态理解</td></tr>
+    </table>"""
+    monkeypatch.setattr(updater, "fetch_text", lambda *_args, **_kwargs: static_shell)
+    monkeypatch.setattr(updater, "_fetch_rendered_inventory", lambda: rendered)
+
+    assert updater.fetch_inventory() == rendered
+    [row] = updater.parse_model_inventory(updater.fetch_inventory())
+    assert row["deprecated"] is True
+    assert row["input_modalities"] == ["text", "image"]
+
+
+def test_bytedance_seed_duplicate_rows_keep_vision_flag_consistent():
+    updater = _load_provider_update("bytedance-seed")
+    page = """<table>
+    <tr><td>doubao-seed-2-0-code-preview-260215</td><td>多模态理解</td></tr>
+    <tr><td>doubao-seed-2-0-code-preview-260215</td><td>工具调用</td></tr>
+    </table>"""
+
+    [row] = updater.parse_model_inventory(page)
+
+    assert row["input_modalities"] == ["image", "text"]
+    assert row["supports_vision"] is True
+
+
+def test_hf_pipeline_change_replaces_stale_modality_inference():
+    updater = _load_script("scrape_huggingface")
+    previous = [
+        {
+            "model_id": "example/flux-model",
+            "pipeline_tag": "image-to-image",
+            "input_modalities": ["image"],
+            "output_modalities": ["image"],
+        }
+    ]
+    current = [
+        {
+            "model_id": "example/flux-model",
+            "pipeline_tag": "text-to-image",
+            "input_modalities": ["text"],
+            "output_modalities": ["image"],
+        }
+    ]
+
+    [merged] = updater.retain_unlisted_models(current, previous)
+
+    assert merged["input_modalities"] == ["text"]
+    assert merged["output_modalities"] == ["image"]
+
+
+def test_huggingface_unknown_output_limit_is_zero_but_known_limit_is_retained():
+    updater = _load_script("scrape_huggingface")
+    [current] = updater.convert_to_catalog_format(
+        [{"id": "example/new-text-model", "pipeline_tag": "text-generation"}]
+    )
+    assert current["max_output_tokens"] == 0
+
+    previous = [
+        {
+            "model_id": "example/new-text-model",
+            "max_output_tokens": 8192,
+            "context_window": 16384,
+        }
+    ]
+    [merged] = updater.retain_unlisted_models([current], previous)
+    assert merged["max_output_tokens"] == 8192
+
+
+def test_huggingface_image_generation_pipeline_tags_set_output_modalities():
+    updater = _load_script("scrape_huggingface")
+
+    assert updater._modalities_for_metadata({"unconditional-image-generation"}) == (
+        [],
+        ["image"],
+    )
+    assert updater._modalities_for_metadata({"image-text-to-image"}) == (
+        ["text", "image"],
+        ["image"],
+    )
+    assert updater._modalities_for_metadata({"image-text-to-video"}) == (
+        ["text", "image"],
+        ["video"],
+    )
+    assert updater._modalities_for_metadata({"mask-generation"}) == (
+        ["image"],
+        ["image"],
+    )
+
+
+def test_huggingface_image_input_implies_vision_support_after_metadata_merge():
+    updater = _load_script("scrape_huggingface")
+    [current] = updater.convert_to_catalog_format(
+        [{"id": "example/image-model", "pipeline_tag": "text-generation"}]
+    )
+    previous = [
+        {
+            "provider": "huggingface",
+            "model_id": "example/image-model",
+            "pipeline_tag": "text-generation",
+            "input_modalities": ["image"],
+            "output_modalities": ["text"],
+            "supports_vision": False,
+        }
+    ]
+
+    [merged] = updater.retain_unlisted_models([current], previous)
+
+    assert merged["input_modalities"] == ["text", "image"]
+    assert merged["supports_vision"] is True

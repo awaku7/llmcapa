@@ -342,8 +342,12 @@ def test_openrouter_live_refresh_preserves_curated_metadata_but_uses_live_fields
     assert merged["pricing"]["input_per_1m"] == 1.0
     assert merged["document"] == {"accepts_file": True}
     assert merged["extra"]["curated_note"] == "retain me"
-    assert "cache_read_per_1m" not in merged["extra"]
+    assert merged["extra"]["cache_read_per_1m"] == 0.5
     assert merged["extra"]["supported_parameters"] == ["response_format"]
+
+    live["extra"]["cache_read_per_1m"] = 0.25
+    replaced = updater.preserve_openrouter_metadata(live, previous)
+    assert replaced["extra"]["cache_read_per_1m"] == 0.25
 
 
 def test_openrouter_refresh_keeps_omitted_pricing_overrides_but_accepts_live_values():

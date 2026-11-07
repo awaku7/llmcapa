@@ -938,18 +938,6 @@ def preserve_openrouter_metadata(record: dict, previous: dict | None) -> dict:
         "created",
         "description",
         "expiration_date",
-        "pricing_note",
-        "dynamic_pricing",
-        "free_tier",
-        "cache_read_per_1m",
-        "cache_write_per_1m",
-        "cache_write_1h_per_1m",
-        "web_search_per_request_usd",
-        "image_input_per_1m",
-        "image_output_per_1m",
-        "audio_input_per_1m",
-        "audio_output_per_1m",
-        "internal_reasoning_per_1m",
         "default_parameters",
         "per_request_limits",
         "reasoning_meta",
@@ -957,6 +945,8 @@ def preserve_openrouter_metadata(record: dict, previous: dict | None) -> dict:
         "benchmarks_present",
         "features",
     }
+    # Pricing/rate fields are intentionally excluded above so API omission
+    # retains the last known rate; a newly supplied API value still wins below.
     curated_extra = {
         key: value for key, value in old_extra.items() if key not in api_extra_fields
     }

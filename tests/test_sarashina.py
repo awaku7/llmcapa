@@ -18,7 +18,9 @@ import llmcapa
 def test_sarashina_catalog_is_registered_with_documented_capabilities() -> None:
     assert "sarashina" in llmcapa.providers()
     models = llmcapa.list_models(provider="sarashina")
-    assert {model.model_id for model in models} == set(_update_sarashina.ALL_MODELS)
+    assert {model.model_id for model in models} == (
+        set(_update_sarashina.ALL_MODELS) | {"sarashina3-translate"}
+    )
     assert all(model.provider == "sarashina" for model in models)
     assert all(
         model.pricing == {
@@ -60,12 +62,20 @@ def test_sarashina_catalog_is_registered_with_documented_capabilities() -> None:
     assert rerank.rerank.score_range == (0.0, 1.0)
     assert rerank.extra["top_n_filtering_supported"] is False
 
-    translate = llmcapa.get("sarashina3-translate", provider="sarashina")
+    translate = llmcapa.get("sarashina3.2-translate", provider="sarashina")
+    assert translate.display_name == "Sarashina3.2 translate"
     assert translate.supports_chat_completion is False
     assert translate.supports_streaming is False
     assert translate.extra["input_limit"] == 5_000
     assert translate.extra["source_language_values"] == ["ja", "en"]
     assert translate.extra["requests_per_minute"] == 30
+
+    legacy_translate = llmcapa.get("sarashina3-translate", provider="sarashina")
+    assert legacy_translate.supports_chat_completion is False
+    assert legacy_translate.supports_streaming is False
+    assert legacy_translate.extra["input_limit"] == 5_000
+    assert legacy_translate.extra["source_language_values"] == ["ja", "en"]
+    assert legacy_translate.extra["requests_per_minute"] == 30
 
 
 def test_sarashina_updater_requires_all_official_model_and_endpoint_docs() -> None:
@@ -78,7 +88,7 @@ def test_sarashina_updater_requires_all_official_model_and_endpoint_docs() -> No
         "embedding": "sarashina3-embedding "
         + _update_sarashina.ENDPOINTS["embedding"],
         "rerank": "sarashina3-rerank " + _update_sarashina.ENDPOINTS["rerank"],
-        "translate": "sarashina3-translate "
+        "translate": "sarashina3.2-translate "
         + _update_sarashina.ENDPOINTS["translate"],
         "rate_limits": " ".join(_update_sarashina.ALL_MODELS),
     }
@@ -94,6 +104,56 @@ def test_sarashina_updater_requires_all_official_model_and_endpoint_docs() -> No
     pages["rerank"] = "model information only"
     with pytest.raises(ValueError, match="rerank"):
         _update_sarashina.catalog_from_docs(pages, checked_at="2026-10-14")
+
+
+def test_sarashina_fetch_reads_rendered_page_text(monkeypatch) -> None:
+    url = "https://docs.sarashina.ai/models"
+    calls = []
+
+    class FakeLocator:
+        def inner_text(self, **kwargs):
+            calls.append(("inner_text", kwargs))
+            return "rendered official Sarashina model details"
+
+    class FakePage:
+        def goto(self, target, **kwargs):
+            calls.append(("goto", target, kwargs))
+
+        def wait_for_function(self, expression, **kwargs):
+            calls.append(("wait", expression, kwargs))
+
+        def locator(self, selector):
+            calls.append(("locator", selector))
+            return FakeLocator()
+
+    class FakeBrowser:
+        def new_page(self, **kwargs):
+            calls.append(("new_page", kwargs))
+            return FakePage()
+
+        def close(self):
+            calls.append(("close",))
+
+    class FakePlaywright:
+        chromium = type(
+            "FakeChromium",
+            (),
+            {"launch": staticmethod(lambda **kwargs: FakeBrowser())},
+        )()
+
+    class FakeManager:
+        def __enter__(self):
+            return FakePlaywright()
+
+        def __exit__(self, *_exc):
+            pass
+
+    monkeypatch.setattr(_update_sarashina, "sync_playwright", FakeManager)
+
+    assert _update_sarashina._fetch(url) == "rendered official Sarashina model details"
+    assert any(call[0] == "goto" and call[1] == url for call in calls)
+    assert ("locator", "body") in calls
+    assert ("close",) in calls
 
 
 def test_sarashina_provider_updater_is_registered() -> None:

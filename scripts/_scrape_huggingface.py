@@ -20,7 +20,7 @@ Output format (huggingface.json):
                 "model_id": "org/model-name",
                 "display_name": "org/model-name",
                 "context_window": 0,       # unknown unless read from model config
-                "max_output_tokens": 2048, # default
+                "max_output_tokens": 0,       # unknown unless source-backed
                 "input_modalities": ["text", "image"],
                 "output_modalities": ["text"],
                 "supports_function_calling": null,
@@ -47,6 +47,8 @@ import requests
 
 API_BASE = "https://huggingface.co/api/models"
 DEFAULT_MIN_DOWNLOADS = 1000  # skip models with fewer than 1,000 downloads
+# Historical placeholder used by earlier refreshes; it was not source metadata.
+LEGACY_MAX_OUTPUT_TOKENS_DEFAULT = 2048
 BATCH_SIZE = 500  # max per API call
 MAX_RETRIES = 5
 MAX_BACKOFF_SECONDS = 60.0
@@ -193,7 +195,7 @@ def convert_to_catalog_format(raw_models: list) -> list:
             "model_id": model_id,
             "display_name": model_id,
             "context_window": 0,
-            "max_output_tokens": 2048,
+            "max_output_tokens": 0,
             "input_modalities": input_mods,
             "output_modalities": output_mods,
             "supports_function_calling": None,
@@ -229,6 +231,8 @@ def _modalities_for_metadata(metadata: set[str]) -> tuple[list[str], list[str]]:
             "text2text-generation",
             "text-to-image",
             "text-to-video",
+            "image-text-to-image",
+            "image-text-to-video",
             "text-to-speech",
             "text-to-audio",
             "text-classification",
@@ -254,6 +258,9 @@ def _modalities_for_metadata(metadata: set[str]) -> tuple[list[str], list[str]]:
             "image-feature-extraction",
             "image-to-image",
             "image-to-video",
+            "image-text-to-image",
+            "image-text-to-video",
+            "mask-generation",
             "object-detection",
             "image-segmentation",
             "depth-estimation",
@@ -311,9 +318,20 @@ def _modalities_for_metadata(metadata: set[str]) -> tuple[list[str], list[str]]:
         "audio-feature-extraction",
     }:
         outputs.append("embedding")
-    if metadata & {"text-to-image", "image-to-image"}:
+    if metadata & {
+        "text-to-image",
+        "image-to-image",
+        "image-text-to-image",
+        "unconditional-image-generation",
+        "mask-generation",
+    }:
         outputs.append("image")
-    if metadata & {"text-to-video", "image-to-video", "video-to-video"}:
+    if metadata & {
+        "text-to-video",
+        "image-to-video",
+        "image-text-to-video",
+        "video-to-video",
+    }:
         outputs.append("video")
     if metadata & {
         "text-to-speech",
@@ -347,13 +365,29 @@ def retain_unlisted_models(current: list[dict], previous: list[dict]) -> list[di
         key = str(row["model_id"]).casefold()
         old = previous_by_id.get(key)
         if old:
+            pipeline_changed = bool(row.get("pipeline_tag")) and (
+                row.get("pipeline_tag") != old.get("pipeline_tag")
+            )
             for field in ("input_modalities", "output_modalities", "aliases"):
                 now = row.get(field) if isinstance(row.get(field), list) else []
                 before = old.get(field) if isinstance(old.get(field), list) else []
-                row[field] = list(dict.fromkeys([*now, *before]))
+                if field != "aliases" and pipeline_changed and now:
+                    # A newly reported HF pipeline task is the current source
+                    # of modality classification. Keep old modalities only
+                    # when the new task metadata provides no usable mapping.
+                    row[field] = now
+                else:
+                    row[field] = list(dict.fromkeys([*now, *before]))
+            if "image" in row.get("input_modalities", []):
+                row["supports_vision"] = True
             if not row.get("context_window") and old.get("context_window"):
                 row["context_window"] = old["context_window"]
-            if row.get("max_output_tokens") == 2048 and "max_output_tokens" in old:
+            if (
+                not row.get("max_output_tokens")
+                and old.get("max_output_tokens")
+                and old.get("max_output_tokens")
+                != LEGACY_MAX_OUTPUT_TOKENS_DEFAULT
+            ):
                 row["max_output_tokens"] = old["max_output_tokens"]
             if row.get("license_type") in (None, "", "unknown") and old.get(
                 "license_type"
@@ -378,6 +412,10 @@ def retain_unlisted_models(current: list[dict], previous: list[dict]) -> list[di
         if key in seen:
             continue
         row = dict(old)
+        if row.get("max_output_tokens") == 2048:
+            # 2048 was the scraper's historical default, not a published HF
+            # limit. Keep unknown generation limits unknown during migration.
+            row["max_output_tokens"] = 0
         raw_extra = row.get("extra")
         extra = dict(raw_extra) if isinstance(raw_extra, dict) else {}
         extra["not_in_current_update_selection"] = True

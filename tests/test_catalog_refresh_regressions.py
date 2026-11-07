@@ -211,3 +211,13 @@ def test_azure_foundry_retains_models_missing_from_live_catalog():
         "not_listed_in_current_docs": True,
     }
     assert previous["old-model"]["extra"] == {"verified": True}
+
+
+def test_azure_foundry_unknown_output_limit_is_not_fabricated(monkeypatch):
+    updater = _script_module("_update_azure_foundry")
+    monkeypatch.setattr(updater, "_PREV_LIMITS", {})
+
+    row = updater.build_entry({"name": "new-model-without-published-limits"}, {})
+
+    assert row["context_window"] == 0
+    assert row["max_output_tokens"] == 0

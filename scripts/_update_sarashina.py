@@ -7,8 +7,8 @@ import json
 import re
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.error import URLError
-from urllib.request import Request, urlopen
+
+from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "src" / "llmcapa" / "data" / "sarashina.json"
@@ -39,7 +39,7 @@ CHAT_MODELS = (
 ALL_MODELS = CHAT_MODELS + (
     "sarashina3-embedding",
     "sarashina3-rerank",
-    "sarashina3-translate",
+    "sarashina3.2-translate",
 )
 
 
@@ -50,11 +50,23 @@ def _plain_text(source: str) -> str:
 
 
 def _fetch(url: str) -> str:
-    request = Request(url, headers={"User-Agent": "llmcapa-sarashina-updater/1.0"})
+    """Fetch rendered documentation text (the docs are client-side rendered)."""
     try:
-        with urlopen(request, timeout=45) as response:
-            return response.read(5_000_000).decode("utf-8", "replace")
-    except URLError as exc:
+        with sync_playwright() as playwright:
+            browser = playwright.chromium.launch(headless=True)
+            try:
+                page = browser.new_page(
+                    user_agent="llmcapa-sarashina-updater/1.0"
+                )
+                page.goto(url, wait_until="domcontentloaded", timeout=45_000)
+                page.wait_for_function(
+                    "document.body && document.body.innerText.length > 200",
+                    timeout=30_000,
+                )
+                return page.locator("body").inner_text(timeout=10_000)
+            finally:
+                browser.close()
+    except Exception as exc:
         raise RuntimeError(
             f"could not fetch official Sarashina documentation: {url}"
         ) from exc
@@ -68,7 +80,7 @@ def _require_documentation(pages: dict[str, str]) -> None:
         "chat": (*CHAT_MODELS, ENDPOINTS["chat"]),
         "embedding": ("sarashina3-embedding", ENDPOINTS["embedding"]),
         "rerank": ("sarashina3-rerank", ENDPOINTS["rerank"]),
-        "translate": ("sarashina3-translate", ENDPOINTS["translate"]),
+        "translate": ("sarashina3.2-translate", ENDPOINTS["translate"]),
         "rate_limits": (*ALL_MODELS,),
     }
     missing = []
@@ -344,8 +356,8 @@ def catalog_from_docs(pages: dict[str, str], checked_at: str | None = None) -> d
             },
         ),
         _base_model(
-            "sarashina3-translate",
-            display_name="Sarashina3 translate",
+            "sarashina3.2-translate",
+            display_name="Sarashina3.2 translate",
             context_window=0,
             max_output_tokens=0,
             input_modalities=["text"],

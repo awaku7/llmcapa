@@ -227,3 +227,80 @@ def test_non_openai_bedrock_cards_are_parsed_and_merged_with_existing_catalog(
     assert luna["extra"]["curated_note"] == "keep"
     assert "ai21.jamba-1-5-large-v1:0" in by_id
     assert "nova-micro-v1" in by_id
+
+
+def test_overview_api_matrix_is_parsed_without_endpoint_api_section():
+    updater = _updater()
+    card = """# Kimi K3.1 Pro - Highspeed
+
+## ![Moonshot AI logo](moonshot.png) Moonshot AI — Kimi K3.1 Pro - Highspeed
+
+| **Input Modalities** | **Output Modalities** | **[APIs supported](apis.html)** | **[Endpoints supported](endpoints.html)** |
+| --- | --- | --- | --- |
+| ![supported](icon-yes.png) Image | ![supported](icon-yes.png) Text | ![supported](icon-yes.png) Responses | ![supported](icon-yes.png) bedrock-runtime |
+| ![supported](icon-yes.png) Text | ![supported](icon-yes.png) Text | ![supported](icon-yes.png) Chat Completions |  |
+
+## Pricing
+
+| **Inference option** | **Input** | **Output** | **Cache read** | **Cache write (30 min)** |
+| --- | --- | --- | --- | --- |
+| Global CRIS | $4.00 | $20.00 | $0.20 | $5.00 |
+| US CRIS | $4.40 | $22.00 | $0.22 | $5.50 |
+| IN CRIS | $4.40 | $22.00 | $0.22 | $5.50 |
+
+*All prices are per 1 million tokens. Pricing shown is for the Standard tier.*
+
+## Programmatic Access
+
+| **Endpoint** | **Model ID** | **In-Region endpoint URL** |
+| --- | --- | --- |
+| bedrock-runtime | `moonshotai.kimi-k3.1` | `https://bedrock-runtime.{region}.amazonaws.com` |
+"""
+
+    model = updater.parse_bedrock_model_card(card, "https://aws.example/kimi")
+
+    assert model is not None
+    assert model["model_id"] == "moonshotai.kimi-k3.1"
+    assert model["supports_chat_completion"] is True
+    assert model["supports_responses_api"] is True
+    assert model["input_modalities"] == ["image", "text"]
+    assert model["pricing"] == {
+        "input_per_1m": 4.0,
+        "output_per_1m": 20.0,
+        "currency": "USD",
+    }
+    assert model["extra"]["published_token_pricing_tiers"] == [
+        {
+            "tier": "Global CRIS",
+            "rates_usd_per_1m_tokens": {
+                "input": 4.0,
+                "output": 20.0,
+                "cache read": 0.2,
+                "cache write (30 min)": 5.0,
+            },
+        },
+        {
+            "tier": "US CRIS",
+            "rates_usd_per_1m_tokens": {
+                "input": 4.4,
+                "output": 22.0,
+                "cache read": 0.22,
+                "cache write (30 min)": 5.5,
+            },
+        },
+        {
+            "tier": "IN CRIS",
+            "rates_usd_per_1m_tokens": {
+                "input": 4.4,
+                "output": 22.0,
+                "cache read": 0.22,
+                "cache write (30 min)": 5.5,
+            },
+        },
+    ]
+    assert model["extra"]["bedrock_token_pricing_source"] == "https://aws.example/kimi"
+
+    backfilled = updater._merge_official_model({"pricing": None, "extra": {}}, model)
+    assert backfilled["pricing"] == model["pricing"]
+    curated = {"pricing": {"input_per_1m": 1.0}, "extra": {}}
+    assert updater._merge_official_model(curated, model)["pricing"] == curated["pricing"]
