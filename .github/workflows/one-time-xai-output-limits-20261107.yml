@@ -1,0 +1,433 @@
+name: One-time xAI output limit fix validation
+on:
+  push:
+    branches:
+      - fix/xai-output-limit-provenance-20261107
+    paths:
+      - .github/workflows/one-time-xai-output-limits-20261107.yml
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install quality and test dependencies
+        run: python -m pip install -e . black ruff==0.17.2 pytest
+      - name: Patch, check, test and commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from __future__ import annotations
+          
+          import json
+          from pathlib import Path
+          
+          def load_source(path: str) -> str:
+              return Path(path).read_text(encoding="utf-8")
+          
+          def save_source(path: str, value: str) -> None:
+              # Keep the original CRLF convention in these two updater scripts.
+              assert "\r" not in value
+              Path(path).write_bytes(value.replace("\n", "\r\n").encode("utf-8"))
+          
+          def replace_once(text: str, before: str, after: str) -> str:
+              assert text.count(before) == 1, (before[:100], text.count(before))
+              return text.replace(before, after)
+          
+          scraper = "scripts/_scrape_xai.py"
+          s = load_source(scraper)
+          s = replace_once(
+              s,
+              '            "maxCompletionLength": 0,\n',
+              '            # The pricing table does not publish an output token limit.\n'
+              '            # Omit this field rather than reporting a made-up zero.\n',
+          )
+          save_source(scraper, s)
+          
+          updater = "scripts/_update_xai.py"
+          s = load_source(updater)
+          marker = 'def _mods(nums: list[int] | None) -> list[str]:\n'
+          helper = '''# Only explicit xAI statements qualify as an unbounded model output limit.
+          # The Responses API default (128K) is not a model-specific hard limit.
+          DOCUMENTED_UNBOUNDED_OUTPUT = {
+              "grok-4.7": "https://docs.x.ai/developers/grok-4-7",
+              "grok-4.6": "https://docs.x.ai/developers/release-notes",
+          }
+          
+          
+          def _positive_int(value: object) -> int:
+              """Interpret a documented token limit, ignoring zero/invalid placeholders."""
+              if isinstance(value, bool) or not isinstance(value, (int, str)):
+                  return 0
+              try:
+                  parsed = int(value)
+              except ValueError:
+                  return 0
+              return parsed if parsed > 0 else 0
+          
+          
+          def _output_limit(
+              model_id: str, published: object, previous: dict | None
+          ) -> tuple[int, str, str | None]:
+              """Return schema-compatible value, evidence status, and provenance URL."""
+              if model_id in DOCUMENTED_UNBOUNDED_OUTPUT:
+                  return 0, "documented_unbounded", DOCUMENTED_UNBOUNDED_OUTPUT[model_id]
+              current = _positive_int(published)
+              if current:
+                  return current, "published", SOURCE
+              previous = previous or {}
+              retained = _positive_int(previous.get("max_output_tokens"))
+              if retained:
+                  previous_extra = previous.get("extra") or {}
+                  source = (
+                      previous_extra.get("max_output_tokens_source")
+                      if isinstance(previous_extra, dict)
+                      else None
+                  )
+                  return retained, "retained_previous", source
+              return 0, "not_published", None
+          
+          
+          '''
+          s=replace_once(s,marker,helper+marker)
+          s=replace_once(
+              s,
+              'def text_row(entry: dict) -> dict:\n',
+              'def text_row(entry: dict, *, previous: dict | None = None) -> dict:\n',
+          )
+          s=replace_once(
+              s,
+              '    ctx = int(entry.get("maxPromptLength") or entry.get("contextWindow") or 0)\n',
+              '    ctx = int(entry.get("maxPromptLength") or entry.get("contextWindow") or 0)\n'
+              '    output_limit, output_status, output_source = _output_limit(\n'
+              '        mid, entry.get("maxCompletionLength"), previous\n'
+              '    )\n',
+          )
+          s=replace_once(
+              s,
+              '    extra: dict = {\n        "source": f"{SOURCE}/{mid}" if mid.startswith("grok-4") else SOURCE,\n    }\n',
+              '    extra: dict = {\n'
+              '        "source": f"{SOURCE}/{mid}" if mid.startswith("grok-4") else SOURCE,\n'
+              '        "max_output_tokens_status": output_status,\n'
+              '    }\n'
+              '    if output_source:\n'
+              '        extra["max_output_tokens_source"] = output_source\n',
+          )
+          s=replace_once(
+              s,
+              '        "max_output_tokens": int(entry["maxCompletionLength"] or 0),\n',
+              '        "max_output_tokens": output_limit,\n',
+          )
+          s=replace_once(
+              s,
+              'def specialty_row(spec: dict, *, deprecated: bool = False) -> dict:\n'
+              '    deprecated = deprecated or bool(spec.get("deprecated", False))\n'
+              '    row = {\n',
+              'def specialty_row(\n'
+              '    spec: dict, *, deprecated: bool = False, previous: dict | None = None\n'
+              ') -> dict:\n'
+              '    deprecated = deprecated or bool(spec.get("deprecated", False))\n'
+              '    limit, status, source = _output_limit(\n'
+              '        spec["model_id"], spec.get("max_output_tokens"), previous\n'
+              '    )\n'
+              '    if status == "not_published" and "text" not in spec["output_modalities"]:\n'
+              '        status = "not_applicable"\n'
+              '    extra = dict(spec["extra"])\n'
+              '    extra["max_output_tokens_status"] = status\n'
+              '    if source:\n'
+              '        extra["max_output_tokens_source"] = source\n'
+              '    row = {\n',
+          )
+          s=replace_once(
+              s,
+              '        "max_output_tokens": 0,\n',
+              '        "max_output_tokens": limit,\n',
+          )
+          s=replace_once(
+              s,
+              '        "extra": dict(spec["extra"]),\n',
+              '        "extra": extra,\n',
+          )
+          s=replace_once(
+              s,
+              'def legacy_row(spec: dict) -> dict:\n    return {\n',
+              'def legacy_row(spec: dict, *, previous: dict | None = None) -> dict:\n'
+              '    limit, status, source = _output_limit(\n'
+              '        spec["model_id"], spec.get("max_output_tokens"), previous\n'
+              '    )\n'
+              '    extra = {\n'
+              '        "note": "legacy; not listed on current docs.x.ai models primary table",\n'
+              '        "source": "retained from prior catalog",\n'
+              '        "max_output_tokens_status": status,\n'
+              '    }\n'
+              '    if source:\n'
+              '        extra["max_output_tokens_source"] = source\n'
+              '    return {\n',
+          )
+          # A second "max_output_tokens": 0 appears in legacy_row; specialty already replaced.
+          s=replace_once(
+              s,
+              '        "max_output_tokens": 0,\n',
+              '        "max_output_tokens": limit,\n',
+          )
+          s=replace_once(
+              s,
+              '        "extra": {\n'
+              '            "note": "legacy; not listed on current docs.x.ai models primary table",\n'
+              '            "source": "retained from prior catalog",\n'
+              '        },\n',
+              '        "extra": extra,\n',
+          )
+          s=replace_once(
+              s,
+              'def build() -> list[dict]:\n'
+              '    models: list[dict] = []\n'
+              '    discovered = load_listmodels()\n',
+              'def build() -> list[dict]:\n'
+              '    models: list[dict] = []\n'
+              '    try:\n'
+              '        prior_rows = json.loads(OUT.read_text(encoding="utf-8")).get("models", [])\n'
+              '    except (OSError, ValueError, TypeError):\n'
+              '        prior_rows = []\n'
+              '    previous = {\n'
+              '        row["model_id"]: row\n'
+              '        for row in prior_rows\n'
+              '        if isinstance(row, dict) and isinstance(row.get("model_id"), str)\n'
+              '    }\n'
+              '    discovered = load_listmodels()\n',
+          )
+          s=replace_once(
+              s,
+              '    for e in discovered:\n        models.append(text_row(e))\n'
+              '    for s in IMAGINE_MODELS:\n        models.append(specialty_row(s))\n'
+              '    for s in VOICE_MODELS:\n        models.append(specialty_row(s))\n'
+              '    for s in LEGACY:\n        models.append(legacy_row(s))\n',
+              '    for e in discovered:\n'
+              '        models.append(text_row(e, previous=previous.get(e["name"])))\n'
+              '    for spec in IMAGINE_MODELS:\n'
+              '        models.append(\n'
+              '            specialty_row(spec, previous=previous.get(spec["model_id"]))\n'
+              '        )\n'
+              '    for spec in VOICE_MODELS:\n'
+              '        models.append(\n'
+              '            specialty_row(spec, previous=previous.get(spec["model_id"]))\n'
+              '        )\n'
+              '    for spec in LEGACY:\n'
+              '        models.append(legacy_row(spec, previous=previous.get(spec["model_id"])))\n',
+          )
+          save_source(updater, s)
+          
+          data_file=Path("src/llmcapa/data/xai.json")
+          data=json.loads(data_file.read_text(encoding="utf-8"))
+          old_count=len(data["models"])
+          assert old_count == 22
+          for row in data["models"]:
+              mid=row["model_id"]
+              extra=row["extra"]
+              if mid in ("grok-4.7","grok-4.6"):
+                  extra["max_output_tokens_status"]="documented_unbounded"
+                  extra["max_output_tokens_source"]=(
+                      "https://docs.x.ai/developers/grok-4-7" if mid=="grok-4.7"
+                      else "https://docs.x.ai/developers/release-notes"
+                  )
+              elif "text" in row["output_modalities"]:
+                  extra["max_output_tokens_status"]="not_published"
+              else:
+                  extra["max_output_tokens_status"]="not_applicable"
+          assert sum(x["max_output_tokens"] != 0 for x in data["models"]) == 0
+          data_file.write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          
+          test_file=Path("tests/test_xai_output_limits.py")
+          assert not test_file.exists()
+          test_file.write_text('''"""Regression tests for the xAI output-limit source and refresh policy."""
+          
+          from __future__ import annotations
+          
+          import importlib.util
+          import json
+          from pathlib import Path
+          
+          ROOT = Path(__file__).resolve().parents[1]
+          
+          
+          def _load(name: str):
+              path = ROOT / "scripts" / f"_{name}.py"
+              spec = importlib.util.spec_from_file_location(f"test_{name}_output", path)
+              assert spec and spec.loader
+              module = importlib.util.module_from_spec(spec)
+              spec.loader.exec_module(module)
+              return module
+          
+          
+          def _entry(name="grok-new", **overrides):
+              entry = {
+                  "name": name,
+                  "maxPromptLength": 500_000,
+                  "inputModalities": [1, 2],
+                  "outputModalities": [1],
+                  "promptTextTokenPrice": 2,
+                  "completionTextTokenPrice": 6,
+              }
+              return {**entry, **overrides}
+          
+          
+          def test_pricing_scraper_does_not_fabricate_output_cap():
+              scraper = _load("scrape_xai")
+              source = (
+                  "| Model | Context | Input / 1M tokens | "
+                  "Cached input / 1M tokens | Output / 1M tokens |\\n"
+                  "| --- | --- | --- | --- | --- |\\n"
+                  "| grok-new | 500K | $2 | $0.5 | $6 |\\n"
+              )
+              [record] = scraper.parse(source)
+              assert record["maxPromptLength"] == 500_000
+              assert "maxCompletionLength" not in record
+          
+          
+          def test_explicit_published_output_limit_is_recorded():
+              updater = _load("update_xai")
+              record = updater.text_row(_entry(maxCompletionLength=64_000))
+              assert record["max_output_tokens"] == 64_000
+              assert record["extra"]["max_output_tokens_status"] == "published"
+              assert record["extra"]["max_output_tokens_source"] == updater.SOURCE
+          
+          
+          def test_missing_output_limit_preserves_previous_positive_value():
+              updater = _load("update_xai")
+              previous = {
+                  "max_output_tokens": 16_384,
+                  "extra": {"max_output_tokens_source": "https://docs.x.ai/example"},
+              }
+              for value in (None, 0, -100, True, "unknown"):
+                  entry = _entry()
+                  if value is not None:
+                      entry["maxCompletionLength"] = value
+                  record = updater.text_row(entry, previous=previous)
+                  assert record["max_output_tokens"] == 16_384
+                  assert record["extra"]["max_output_tokens_status"] == "retained_previous"
+                  assert record["extra"]["max_output_tokens_source"] == (
+                      "https://docs.x.ai/example"
+                  )
+          
+          
+          def test_new_unverified_model_does_not_inherit_api_default():
+              updater = _load("update_xai")
+              record = updater.text_row(_entry())
+              assert record["max_output_tokens"] == 0
+              assert record["extra"]["max_output_tokens_status"] == "not_published"
+              assert "max_output_tokens_source" not in record["extra"]
+          
+          
+          def test_only_documented_unbounded_models_use_explicit_status():
+              updater = _load("update_xai")
+              for model_id in ("grok-4.6", "grok-4.7"):
+                  record = updater.text_row(_entry(model_id))
+                  assert record["max_output_tokens"] == 0
+                  assert record["extra"]["max_output_tokens_status"] == "documented_unbounded"
+                  assert record["extra"]["max_output_tokens_source"].startswith(
+                      "https://docs.x.ai/"
+                  )
+              other = updater.text_row(_entry("grok-4.5"))
+              assert other["extra"]["max_output_tokens_status"] == "not_published"
+          
+          
+          def test_specialty_and_legacy_limits_preserve_previous_facts():
+              updater = _load("update_xai")
+              specialty = {
+                  "model_id": "grok-special",
+                  "display_name": "Specialty",
+                  "input_modalities": ["text"],
+                  "output_modalities": ["image"],
+                  "extra": {},
+              }
+              new = updater.specialty_row(specialty)
+              assert new["max_output_tokens"] == 0
+              assert new["extra"]["max_output_tokens_status"] == "not_applicable"
+              previous = {"max_output_tokens": 12_000, "extra": {}}
+              old = updater.specialty_row(specialty, previous=previous)
+              assert old["max_output_tokens"] == 12_000
+              assert old["extra"]["max_output_tokens_status"] == "retained_previous"
+              legacy = next(entry for entry in updater.LEGACY if entry["model_id"] == "grok-3")
+              old_legacy = updater.legacy_row(legacy, previous=previous)
+              assert old_legacy["max_output_tokens"] == 12_000
+              assert old_legacy["extra"]["max_output_tokens_status"] == "retained_previous"
+          
+          
+          def test_build_preserves_previous_limit_after_docs_refresh(tmp_path, monkeypatch):
+              updater = _load("update_xai")
+              target = tmp_path / "xai.json"
+              target.write_text(
+                  json.dumps(
+                      {
+                          "models": [
+                              {
+                                  "model_id": "grok-new",
+                                  "max_output_tokens": 65_536,
+                                  "extra": {"max_output_tokens_source": "https://docs.x.ai/spec"},
+                              }
+                          ]
+                      }
+                  ),
+                  encoding="utf-8",
+              )
+              monkeypatch.setattr(updater, "OUT", target)
+              monkeypatch.setattr(updater, "LISTMODELS_FALLBACK", False)
+              monkeypatch.setattr(updater, "load_listmodels", lambda: [_entry()])
+              monkeypatch.setattr(updater, "IMAGINE_MODELS", [])
+              monkeypatch.setattr(updater, "VOICE_MODELS", [])
+              monkeypatch.setattr(updater, "LEGACY", [])
+              [row] = updater.build()
+              assert row["max_output_tokens"] == 65_536
+              assert row["extra"]["max_output_tokens_status"] == "retained_previous"
+              assert row["extra"]["max_output_tokens_source"] == "https://docs.x.ai/spec"
+          
+          
+          def test_bundled_xai_catalog_has_explicit_source_status():
+              rows = json.loads(
+                  (ROOT / "src" / "llmcapa" / "data" / "xai.json").read_text(encoding="utf-8")
+              )["models"]
+              assert len(rows) == 22
+              for row in rows:
+                  assert row["max_output_tokens"] >= 0
+                  assert row["extra"]["max_output_tokens_status"] in {
+                      "documented_unbounded",
+                      "not_published",
+                      "not_applicable",
+                      "published",
+                      "retained_previous",
+                  }
+              no_limit = {
+                  row["model_id"]
+                  for row in rows
+                  if row["extra"]["max_output_tokens_status"] == "documented_unbounded"
+              }
+              assert no_limit == {"grok-4.6", "grok-4.7"}
+          ''',encoding="utf-8")
+          print("PATCH_PREPARED: two scripts, xai.json, eight focused tests")
+          
+          PY
+          python -m black scripts/_scrape_xai.py scripts/_update_xai.py tests/test_xai_output_limits.py
+          python - <<'PY'
+          from pathlib import Path
+          for name in ("scripts/_scrape_xai.py","scripts/_update_xai.py"):
+              p=Path(name)
+              data=p.read_bytes()
+              p.write_bytes(data.replace(b"\r\n",b"\n").replace(b"\n",b"\r\n"))
+          PY
+          python -m black --check scripts/_scrape_xai.py scripts/_update_xai.py tests/test_xai_output_limits.py
+          python -m ruff check scripts/_scrape_xai.py scripts/_update_xai.py tests/test_xai_output_limits.py
+          python -m pytest -q tests/test_xai_output_limits.py tests/test_provider_update_dispatch.py
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/_scrape_xai.py scripts/_update_xai.py src/llmcapa/data/xai.json tests/test_xai_output_limits.py
+          git rm -f .github/workflows/one-time-xai-output-limits-20261107.yml
+          git commit -m "fix: track xAI output-limit provenance without losing known values"
+          git push origin HEAD:refs/heads/fix/xai-output-limit-provenance-20261107
