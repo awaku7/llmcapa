@@ -146,11 +146,8 @@ jobs:
               '        extra["max_output_tokens_source"] = source\n'
               '    row = {\n',
           )
-          s=replace_once(
-              s,
-              '        "max_output_tokens": 0,\n',
-              '        "max_output_tokens": limit,\n',
-          )
+          assert s.count('        "max_output_tokens": 0,\n') == 2
+          s = s.replace('        "max_output_tokens": 0,\n', '        "max_output_tokens": limit,\n')
           s=replace_once(
               s,
               '        "extra": dict(spec["extra"]),\n',
@@ -173,11 +170,6 @@ jobs:
               '    return {\n',
           )
           # A second "max_output_tokens": 0 appears in legacy_row; specialty already replaced.
-          s=replace_once(
-              s,
-              '        "max_output_tokens": 0,\n',
-              '        "max_output_tokens": limit,\n',
-          )
           s=replace_once(
               s,
               '        "extra": {\n'
