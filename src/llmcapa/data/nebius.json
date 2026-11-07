@@ -350,7 +350,7 @@
       "provider": "nebius",
       "model_id": "Qwen/Qwen3.8-27B",
       "display_name": "Qwen3.8-27B",
-      "context_window": 262144,
+      "context_window": 1000000,
       "max_output_tokens": 0,
       "input_modalities": [
         "text",
@@ -874,6 +874,54 @@
         "use_cases": [
           "code",
           "context_and_rag",
+          "dedicated-endpoint",
+          "function_calling",
+          "image",
+          "reasoning",
+          "responses_api",
+          "text"
+        ],
+        "tags": [],
+        "external_provider": false
+      }
+    },
+    {
+      "provider": "nebius",
+      "model_id": "moonshotai/Kimi-K3.1-Pro",
+      "display_name": "Kimi-K3.1-Pro",
+      "context_window": 1048576,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": null,
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_responses_api": true,
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://tokenfactory.nebius.com/api/public/models_info",
+        "vendor": "moonshotai",
+        "model_type": "image2text",
+        "regions": [
+          "us-north1"
+        ],
+        "use_cases": [
+          "code",
           "dedicated-endpoint",
           "function_calling",
           "image",

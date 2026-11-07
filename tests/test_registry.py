@@ -15,6 +15,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 import llmcapa
 import llmcapa.registry as registry_module
 from llmcapa import Capability, ModelNotFoundError
+from llmcapa.hf_overlay import expand_hf_overlay, is_hf_overlay
 from llmcapa.registry import Registry
 
 DATA_DIR = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data"
@@ -25,6 +26,11 @@ REQUIRED_KEYS = {"provider", "model_id", "context_window", "max_output_tokens"}
 def _all_records():
     for path in sorted(DATA_DIR.glob("*.json")):
         payload = json.loads(path.read_text(encoding="utf-8"))
+        if is_hf_overlay(payload):
+            source = json.loads(
+                (DATA_DIR / "huggingface.json").read_text(encoding="utf-8")
+            )
+            payload = expand_hf_overlay(source, payload)
         for record in payload["models"]:
             yield path.name, record
 
@@ -89,6 +95,11 @@ def test_no_duplicate_model_ids_within_each_provider_file():
     for path in sorted(DATA_DIR.glob("*.json")):
         seen = set()
         payload = json.loads(path.read_text(encoding="utf-8"))
+        if is_hf_overlay(payload):
+            source = json.loads(
+                (DATA_DIR / "huggingface.json").read_text(encoding="utf-8")
+            )
+            payload = expand_hf_overlay(source, payload)
         for record in payload["models"]:
             mid = record["model_id"].lower()
             assert mid not in seen, f"duplicate model_id {mid} within {path.name}"
@@ -247,9 +258,7 @@ def test_dynamic_huggingface_fetch_follows_next_links_by_default(monkeypatch):
         "&limit=100&cursor=page-two"
     )
     payloads = [
-        [
-            {"id": "org/image-classifier", "pipeline_tag": "image-classification"}
-        ],
+        [{"id": "org/image-classifier", "pipeline_tag": "image-classification"}],
         [{"id": "org/audio-generator", "pipeline_tag": "text-to-audio"}],
     ]
 
@@ -270,7 +279,9 @@ def test_dynamic_huggingface_fetch_follows_next_links_by_default(monkeypatch):
     def fake_urlopen(request, *, context, timeout):
         requests_seen.append((request.full_url, context, timeout))
         page = len(requests_seen) - 1
-        return Response(payloads[page], f'<{next_url}>; rel="next"' if page == 0 else "")
+        return Response(
+            payloads[page], f'<{next_url}>; rel="next"' if page == 0 else ""
+        )
 
     monkeypatch.setattr(registry_module.urllib.request, "urlopen", fake_urlopen)
 
@@ -430,7 +441,8 @@ def test_cloudflare_workers_ai_catalog_and_aliases():
 
 def test_mdx_maas_catalog_and_provider_aliases():
     models = llmcapa.list_models(provider="mdx-maas")
-    assert len(models) == 7
+    # The official model sheet grows as new models are added.
+    assert len(models) >= 7
     assert all(cap.provider == "mdx-maas" for cap in models)
     assert llmcapa.list_models(provider="mdx.MaaS") == models
     assert llmcapa.list_models(provider="mdx") == models

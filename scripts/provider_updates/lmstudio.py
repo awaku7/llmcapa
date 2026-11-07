@@ -8,12 +8,16 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "src"))
+from llmcapa.hf_overlay import expand_hf_overlay, is_hf_overlay, pack_hf_overlay
+
 DATA = ROOT / "src" / "llmcapa" / "data" / "lmstudio.json"
 DEFAULT_BASE_URL = "http://127.0.0.1:1234/api/v1"
 SOURCE = "https://lmstudio.ai/docs/developer/rest/list"
@@ -153,14 +157,25 @@ def merge_inventory(
 def update_catalog(
     snapshots: list[dict], *, base_url: str | None = None, checked_at: str | None = None
 ) -> int:
-    data = json.loads(DATA.read_text(encoding="utf-8"))
+    stored = json.loads(DATA.read_text(encoding="utf-8"))
+    source = None
+    if is_hf_overlay(stored):
+        source = json.loads(
+            (DATA.parent / "huggingface.json").read_text(encoding="utf-8")
+        )
+        data = expand_hf_overlay(source, stored)
+    else:
+        data = stored
     checked_at = checked_at or datetime.now(timezone.utc).date().isoformat()
     base_url = (
         base_url or os.environ.get("LMSTUDIO_API_BASE") or DEFAULT_BASE_URL
     ).rstrip("/")
     models = merge_inventory(snapshots, data.get("models") or [], checked_at, base_url)
+    updated = {**data, "models": models}
+    if source is not None:
+        updated = pack_hf_overlay(source, updated, provider="lmstudio")
     DATA.write_text(
-        json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n",
+        json.dumps(updated, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
     print(

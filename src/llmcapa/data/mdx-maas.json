@@ -34,7 +34,7 @@
         "official_source": "https://maas.mdx1.jp/",
         "official_model_list_source": "https://docs.google.com/spreadsheets/d/18eMqI3kPDjVVBLRdyHSuinkJ-6ZVQ-Uh-8BWXHNBO0g/edit?gid=0#gid=0",
         "official_api_source": "https://github.com/mdx-jp/mdx-maas-docs/blob/main/chat_completions_api_document.md",
-        "official_catalog_checked_at": "2026-11-02",
+        "official_catalog_checked_at": "2026-11-06",
         "protocol": "openai-compatible",
         "api_base_url": "https://api.maas.mdx1.jp/v1",
         "supported_endpoints": [
@@ -45,7 +45,56 @@
           "batch": true,
           "may_require_cold_start": true
         },
-        "description": "国立情報学研究所（NII）が開発した最新の日英対応の33B推論モデル",
+        "description": "国立情報学研究所（NII）が開発した最新の日英対応の33B推論モデル\n（リソース効率性を重視し、コンテキスト長を32kに短縮して提供）",
+        "context_window_note": "The mdx-MaaS model list does not publish a deployment-specific limit."
+      }
+    },
+    {
+      "provider": "mdx-maas",
+      "model_id": "llm-jp/llm-jp-4.1-33b-thinking-64k",
+      "display_name": "llm-jp/llm-jp-4.1-33b-thinking-64k",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": null,
+      "extra": {
+        "official_source": "https://maas.mdx1.jp/",
+        "official_model_list_source": "https://docs.google.com/spreadsheets/d/18eMqI3kPDjVVBLRdyHSuinkJ-6ZVQ-Uh-8BWXHNBO0g/edit?gid=0#gid=0",
+        "official_api_source": "https://github.com/mdx-jp/mdx-maas-docs/blob/main/chat_completions_api_document.md",
+        "official_catalog_checked_at": "2026-11-06",
+        "protocol": "openai-compatible",
+        "api_base_url": "https://api.maas.mdx1.jp/v1",
+        "supported_endpoints": [
+          "/v1/chat/completions"
+        ],
+        "api_availability": {
+          "immediate": true,
+          "batch": true,
+          "may_require_cold_start": true
+        },
+        "description": "国立情報学研究所（NII）が開発した最新の日英対応の33B推論モデルを、kv cacheのFP8量子化を行い、モデル本来の64k（65,536 トークン）のコンテキストに対応させたもの。\n長い資料の読み込みや、長い出力が必要な処理向け。",
         "context_window_note": "The mdx-MaaS model list does not publish a deployment-specific limit."
       }
     },
@@ -83,7 +132,7 @@
         "official_source": "https://maas.mdx1.jp/",
         "official_model_list_source": "https://docs.google.com/spreadsheets/d/18eMqI3kPDjVVBLRdyHSuinkJ-6ZVQ-Uh-8BWXHNBO0g/edit?gid=0#gid=0",
         "official_api_source": "https://github.com/mdx-jp/mdx-maas-docs/blob/main/chat_completions_api_document.md",
-        "official_catalog_checked_at": "2026-11-02",
+        "official_catalog_checked_at": "2026-11-06",
         "protocol": "openai-compatible",
         "api_base_url": "https://api.maas.mdx1.jp/v1",
         "supported_endpoints": [
@@ -132,7 +181,7 @@
         "official_source": "https://maas.mdx1.jp/",
         "official_model_list_source": "https://docs.google.com/spreadsheets/d/18eMqI3kPDjVVBLRdyHSuinkJ-6ZVQ-Uh-8BWXHNBO0g/edit?gid=0#gid=0",
         "official_api_source": "https://github.com/mdx-jp/mdx-maas-docs/blob/main/chat_completions_api_document.md",
-        "official_catalog_checked_at": "2026-11-02",
+        "official_catalog_checked_at": "2026-11-06",
         "protocol": "openai-compatible",
         "api_base_url": "https://api.maas.mdx1.jp/v1",
         "supported_endpoints": [
@@ -181,7 +230,7 @@
         "official_source": "https://maas.mdx1.jp/",
         "official_model_list_source": "https://docs.google.com/spreadsheets/d/18eMqI3kPDjVVBLRdyHSuinkJ-6ZVQ-Uh-8BWXHNBO0g/edit?gid=0#gid=0",
         "official_api_source": "https://github.com/mdx-jp/mdx-maas-docs/blob/main/chat_completions_api_document.md",
-        "official_catalog_checked_at": "2026-11-02",
+        "official_catalog_checked_at": "2026-11-06",
         "protocol": "openai-compatible",
         "api_base_url": "https://api.maas.mdx1.jp/v1",
         "supported_endpoints": [
@@ -231,7 +280,7 @@
         "official_source": "https://maas.mdx1.jp/",
         "official_model_list_source": "https://docs.google.com/spreadsheets/d/18eMqI3kPDjVVBLRdyHSuinkJ-6ZVQ-Uh-8BWXHNBO0g/edit?gid=0#gid=0",
         "official_api_source": "https://github.com/mdx-jp/mdx-maas-docs/blob/main/chat_completions_api_document.md",
-        "official_catalog_checked_at": "2026-11-02",
+        "official_catalog_checked_at": "2026-11-06",
         "protocol": "openai-compatible",
         "api_base_url": "https://api.maas.mdx1.jp/v1",
         "supported_endpoints": [
@@ -282,7 +331,7 @@
         "official_source": "https://maas.mdx1.jp/",
         "official_model_list_source": "https://docs.google.com/spreadsheets/d/18eMqI3kPDjVVBLRdyHSuinkJ-6ZVQ-Uh-8BWXHNBO0g/edit?gid=0#gid=0",
         "official_api_source": "https://github.com/mdx-jp/mdx-maas-docs/blob/main/chat_completions_api_document.md",
-        "official_catalog_checked_at": "2026-11-02",
+        "official_catalog_checked_at": "2026-11-06",
         "protocol": "openai-compatible",
         "api_base_url": "https://api.maas.mdx1.jp/v1",
         "supported_endpoints": [
@@ -298,7 +347,7 @@
         "refresh_metadata_fallbacks": [
           "video"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-02"
+        "refresh_metadata_fallback_checked_at": "2026-11-06"
       },
       "video": {
         "accepts_video_input": true,
@@ -368,7 +417,7 @@
         "official_source": "https://maas.mdx1.jp/",
         "official_model_list_source": "https://docs.google.com/spreadsheets/d/18eMqI3kPDjVVBLRdyHSuinkJ-6ZVQ-Uh-8BWXHNBO0g/edit?gid=0#gid=0",
         "official_api_source": "https://github.com/mdx-jp/mdx-maas-docs/blob/main/chat_completions_api_document.md",
-        "official_catalog_checked_at": "2026-11-02",
+        "official_catalog_checked_at": "2026-11-06",
         "protocol": "openai-compatible",
         "api_base_url": "https://api.maas.mdx1.jp/v1",
         "supported_endpoints": [

@@ -20,6 +20,11 @@ try:
 except ImportError:  # package-style test imports
     from scripts._metadata_loader import load_overrides
 
+try:
+    from _hf_catalog_io import load_catalog, serialize_catalog
+except ImportError:  # package-style test imports
+    from scripts._hf_catalog_io import load_catalog, serialize_catalog
+
 DEFAULT_DATA = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data"
 
 AUDIO_INPUT_FORMATS = [
@@ -104,7 +109,7 @@ def apply(data_dir: Path = DEFAULT_DATA) -> dict[str, int]:
     changed = Counter()
     checked = 0
     for path in sorted(data_dir.glob("*.json")):
-        data = json.loads(path.read_text(encoding="utf-8"))
+        data = load_catalog(path)
         file_changed = False
         for record in data.get("models", []):
             provider = str(record.get("provider", ""))
@@ -143,9 +148,7 @@ def apply(data_dir: Path = DEFAULT_DATA) -> dict[str, int]:
                 file_changed = True
             checked += 1
         if file_changed:
-            path.write_text(
-                json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-            )
+            path.write_text(serialize_catalog(path, data), encoding="utf-8")
     return {
         "records_checked": checked,
         "records_changed": sum(changed.values()),
@@ -156,7 +159,7 @@ def apply(data_dir: Path = DEFAULT_DATA) -> dict[str, int]:
 def audit(data_dir: Path = DEFAULT_DATA) -> dict[str, int]:
     counts = Counter()
     for path in sorted(data_dir.glob("*.json")):
-        data = json.loads(path.read_text(encoding="utf-8"))
+        data = load_catalog(path)
         for record in data.get("models", []):
             if "audio" in {
                 str(x).lower()
