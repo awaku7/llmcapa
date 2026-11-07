@@ -860,3 +860,137 @@ def test_previously_authenticated_provider_updaters_now_fetch_public_docs_withou
         source = inspect.getsource(updater.fetch_inventory)
         assert "API_KEY" not in source
         assert "Authorization" not in source
+
+
+def test_local_inventory_overlay_update_keeps_new_and_previous_models(
+    tmp_path, monkeypatch
+):
+    import json
+
+    from llmcapa.hf_overlay import (
+        expand_hf_overlay,
+        is_hf_overlay,
+        pack_hf_overlay,
+    )
+
+    source = {
+        "models": [
+            {"model_id": "org/present", "context_window": 8192},
+            {"model_id": "org/other", "context_window": 4096},
+        ]
+    }
+    (tmp_path / "huggingface.json").write_text(json.dumps(source), encoding="utf-8")
+
+    for name, provider in (("lmstudio", "lmstudio"), ("llama_cpp", "llama-cpp")):
+        updater = _load_provider_update(name)
+        catalog_path = tmp_path / f"{name}.json"
+        monkeypatch.setattr(updater, "DATA", catalog_path)
+        original = {
+            "models": [
+                {
+                    "provider": provider,
+                    "model_id": "org/present",
+                    "context_window": 8192,
+                    "extra": {"hand_verified": True},
+                },
+                {
+                    "provider": provider,
+                    "model_id": "org/other",
+                    "context_window": 4096,
+                    "extra": {"retain": "yes"},
+                },
+                {
+                    "provider": provider,
+                    "model_id": "local-older",
+                    "extra": {"local_only": True},
+                },
+            ]
+        }
+        catalog_path.write_text(
+            json.dumps(pack_hf_overlay(source, original, provider=provider)),
+            encoding="utf-8",
+        )
+        snapshots = [
+            {"model_id": "org/present", "display_name": "Installed model"},
+            {"model_id": "local-new", "display_name": "New installation"},
+        ]
+        assert (
+            updater.update_catalog(
+                snapshots, base_url="http://127.0.0.1:1234", checked_at="2026-11-07"
+            )
+            == 2
+        )
+        stored = json.loads(catalog_path.read_text(encoding="utf-8"))
+        assert is_hf_overlay(stored)
+        assert "models" not in stored
+        expanded = expand_hf_overlay(source, stored)["models"]
+        by_id = {model["model_id"]: model for model in expanded}
+        assert set(by_id) == {"org/present", "org/other", "local-new", "local-older"}
+        assert by_id["org/present"]["extra"]["hand_verified"] is True
+        assert by_id["org/present"]["display_name"] == "Installed model"
+        assert by_id["org/other"]["extra"]["retain"] == "yes"
+        assert by_id["local-older"]["extra"]["local_only"] is True
+        assert by_id["local-new"]["display_name"] == "New installation"
+        assert by_id["local-new"]["extra"]["model_server_base_url"] == (
+            "http://127.0.0.1:1234"
+        )
+        if name == "lmstudio":
+            missing_field = "not_listed_in_current_installation"
+        else:
+            missing_field = "not_listed_in_current_server"
+        assert by_id["org/other"]["extra"][missing_field] is True
+        assert by_id["local-older"]["extra"][missing_field] is True
+
+        # A second refresh must retain previous facts and the local-only IDs.
+        assert (
+            updater.update_catalog(
+                snapshots[:1],
+                base_url="http://127.0.0.1:1234",
+                checked_at="2026-11-08",
+            )
+            == 1
+        )
+        stored = json.loads(catalog_path.read_text(encoding="utf-8"))
+        by_id = {
+            model["model_id"]: model
+            for model in expand_hf_overlay(source, stored)["models"]
+        }
+        assert set(by_id) == {"org/present", "org/other", "local-new", "local-older"}
+        assert by_id["local-new"]["extra"][missing_field] is True
+
+
+def test_local_inventory_legacy_json_update_remains_supported(tmp_path, monkeypatch):
+    import json
+
+    for name, provider in (("lmstudio", "lmstudio"), ("llama_cpp", "llama-cpp")):
+        updater = _load_provider_update(name)
+        path = tmp_path / f"{name}.json"
+        monkeypatch.setattr(updater, "DATA", path)
+        path.write_text(
+            json.dumps(
+                {
+                    "models": [
+                        {
+                            "provider": provider,
+                            "model_id": "existing",
+                            "extra": {"note": "preserve"},
+                        }
+                    ]
+                }
+            ),
+            encoding="utf-8",
+        )
+        updater.update_catalog(
+            [{"model_id": "new", "display_name": "New"}],
+            base_url="http://localhost:1234",
+            checked_at="2026-11-07",
+        )
+        stored = json.loads(path.read_text(encoding="utf-8"))
+        assert "_format" not in stored
+        assert {row["model_id"] for row in stored["models"]} == {"existing", "new"}
+        assert (
+            next(row for row in stored["models"] if row["model_id"] == "existing")[
+                "extra"
+            ]["note"]
+            == "preserve"
+        )
