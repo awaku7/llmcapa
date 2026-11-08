@@ -388,6 +388,8 @@
         "currency": "USD"
       },
       "extra": {
+        "pricing_note": "dynamic/router pricing (API prompt=-1); billed at routed model rate",
+        "dynamic_pricing": true,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -429,8 +431,6 @@
         ],
         "created": "2026-11-05",
         "description": "Auto Code is OpenRouter’s router built specifically for coding agents and harnesses. It uses the same routing engine as the [Auto Router](https://openrouter.ai/openrouter/auto), with every request treated as part of an...",
-        "pricing_note": "dynamic/router pricing (API prompt=-1); billed at routed model rate",
-        "dynamic_pricing": true,
         "links": {
           "details": "/api/v1/models/openrouter/auto-code/endpoints"
         },
@@ -1536,7 +1536,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.0553,
+        "input_per_1m": 0.0434,
         "output_per_1m": 0.3,
         "currency": "USD"
       },
@@ -2105,12 +2105,12 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.1643,
-        "output_per_1m": 9.3388,
+        "input_per_1m": 0.1824,
+        "output_per_1m": 10.5634,
         "currency": "USD"
       },
       "extra": {
-        "cache_read_per_1m": 0.16,
+        "cache_read_per_1m": 0.18,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -3246,6 +3246,7 @@
         ],
         "cache_read_per_1m": 0.5,
         "web_search_per_request_usd": 0.01,
+        "cache_write_per_1m": 0.0,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -3278,7 +3279,6 @@
         ],
         "created": "2026-07-08",
         "description": "This model always redirects to the latest Grok model from xAI.",
-        "cache_write_per_1m": 0.0,
         "default_parameters": {
           "temperature": 0.7,
           "top_p": 0.95
@@ -3367,12 +3367,12 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.0285,
-        "output_per_1m": 0.0923,
+        "input_per_1m": 0.0335,
+        "output_per_1m": 0.083,
         "currency": "USD"
       },
       "extra": {
-        "cache_read_per_1m": 0.0285,
+        "cache_read_per_1m": 0.03,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -5314,6 +5314,7 @@
         "currency": "USD"
       },
       "extra": {
+        "cache_read_per_1m": 2.5,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -5349,7 +5350,6 @@
         ],
         "created": "2024-10-22",
         "description": "This is a series of models designed to replicate the prose quality of the Claude 3 models, specifically Sonnet(https://openrouter.ai/anthropic/claude-3.5-sonnet) and Opus(https://openrouter.ai/anthropic/claude-3-opus).\n\nThe model is fine-tuned on top of [Qwen2.5 72B](https://openrouter.ai/qwen/qwen-2.5-72b-instruct).",
-        "cache_read_per_1m": 2.5,
         "links": {
           "details": "/api/v1/models/anthracite-org/magnum-v4-72b/endpoints"
         },
@@ -8841,7 +8841,7 @@
           "details": "/api/v1/models/anthropic/claude-sonnet-5.5-20260928/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 12,
+          "design_arena": 13,
           "artificial_analysis": 1
         },
         "features": [
@@ -8968,7 +8968,7 @@
           "details": "/api/v1/models/anthropic/claude-sonnet-5.5-20260928/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 12,
+          "design_arena": 13,
           "artificial_analysis": 1
         },
         "features": [
@@ -12394,7 +12394,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/cloudflare/clef",
-        "checked_at": "2026-11-07",
+        "checked_at": "2026-11-08",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -12499,7 +12499,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/cloudflare/clef-flash",
-        "checked_at": "2026-11-07",
+        "checked_at": "2026-11-08",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -13546,6 +13546,7 @@
         "currency": "USD"
       },
       "extra": {
+        "free_tier": true,
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -13558,8 +13559,7 @@
           "is_moderated": null
         },
         "supported_parameters": [],
-        "description": "Rerank 5 Fast is the low-latency tier of Cohere's Rerank 5 family of reranking models. It scores and reorders candidate documents against a query and is suited for high-throughput retrieval such as high-volume search, agent tool loops, and first-pass filtering before a more expensive step.\n\nRelevance scores are calibrated to a 0-1 range so a fixed threshold behaves consistently across queries. Rer",
-        "free_tier": true
+        "description": "Rerank 5 Fast is the low-latency tier of Cohere's Rerank 5 family of reranking models. It scores and reorders candidate documents against a query and is suited for high-throughput retrieval such as high-volume search, agent tool loops, and first-pass filtering before a more expensive step.\n\nRelevance scores are calibrated to a 0-1 range so a fixed threshold behaves consistently across queries. Rer"
       }
     },
     {
@@ -13600,6 +13600,7 @@
         "currency": "USD"
       },
       "extra": {
+        "free_tier": true,
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -13612,8 +13613,7 @@
           "is_moderated": null
         },
         "supported_parameters": [],
-        "description": "Rerank 5 Pro is the higher-accuracy tier of Cohere's Rerank 5 family of reranking models. It scores and reorders candidate documents against a query and is suited for retrieval pipelines where ranking quality matters most: complex or reasoning-heavy queries, long or domain-specific documents, and RAG systems that feed a small number of passages to a generator.\n\nRelevance scores are calibrated to a",
-        "free_tier": true
+        "description": "Rerank 5 Pro is the higher-accuracy tier of Cohere's Rerank 5 family of reranking models. It scores and reorders candidate documents against a query and is suited for retrieval pipelines where ranking quality matters most: complex or reasoning-heavy queries, long or domain-specific documents, and RAG systems that feed a small number of passages to a generator.\n\nRelevance scores are calibrated to a"
       }
     },
     {
@@ -14670,7 +14670,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.0553,
+        "input_per_1m": 0.0434,
         "output_per_1m": 0.3,
         "currency": "USD"
       },
@@ -14789,6 +14789,7 @@
         "currency": "USD"
       },
       "extra": {
+        "cache_read_per_1m": 0.012,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -14825,7 +14826,6 @@
         ],
         "created": "2026-07-31",
         "description": "DeepSeek V4 Flash 0731 is a sparse mixture-of-experts model from DeepSeek, with 13B active parameters out of 284B total. This re-post-trained revision is suited for coding, reasoning, and agent workflows....",
-        "cache_read_per_1m": 0.012,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -15012,12 +15012,12 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.859908,
-        "output_per_1m": 1.719816,
+        "input_per_1m": 0.211062,
+        "output_per_1m": 0.422124,
         "currency": "USD"
       },
       "extra": {
-        "cache_read_per_1m": 0.071659,
+        "cache_read_per_1m": 0.017588,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -15129,8 +15129,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.1165,
-        "output_per_1m": 4.66,
+        "input_per_1m": 0.111,
+        "output_per_1m": 4.44,
         "currency": "USD"
       },
       "extra": {
@@ -15215,7 +15215,7 @@
             "input_cache_read": "0.000000022"
           }
         ],
-        "cache_read_per_1m": 0.111,
+        "cache_read_per_1m": 0.097,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -15410,7 +15410,7 @@
       "model_id": "deepseek/deepseek-v4.1-flash-1017",
       "display_name": "DeepSeek: DeepSeek V4.1 Flash 1017",
       "context_window": 1048576,
-      "max_output_tokens": 393216,
+      "max_output_tokens": 943718,
       "input_modalities": [
         "text",
         "image"
@@ -15440,8 +15440,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.15,
-        "output_per_1m": 0.6,
+        "input_per_1m": 0.006,
+        "output_per_1m": 0.5,
         "currency": "USD"
       },
       "extra": {
@@ -15526,7 +15526,7 @@
             "input_cache_read": "0.000000003"
           }
         ],
-        "cache_read_per_1m": 0.003,
+        "cache_read_per_1m": 0.005,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -15538,7 +15538,7 @@
         "tokenizer": "DeepSeek",
         "top_provider": {
           "context_length": 1048576,
-          "max_completion_tokens": 393216,
+          "max_completion_tokens": 943718,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -15604,10 +15604,121 @@
     },
     {
       "provider": "openrouter",
+      "model_id": "deepseek/deepseek-v4.1-flash-1017:batch",
+      "display_name": "DeepSeek: DeepSeek V4.1 Flash 1017 (batch)",
+      "context_window": 1048576,
+      "max_output_tokens": 943718,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "DeepSeek",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "deepseek-v4.1-flash-1017:batch",
+        "openrouter/deepseek/deepseek-v4.1-flash-1017:batch",
+        "deepseek/deepseek-v4.1-flash-20261017"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.011,
+        "output_per_1m": 0.2,
+        "currency": "USD"
+      },
+      "extra": {
+        "cache_read_per_1m": 0.002,
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "deepseek",
+        "canonical_slug": "deepseek/deepseek-v4.1-flash-20261017",
+        "hugging_face_id": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+        "modality": "text+image->text",
+        "tokenizer": "DeepSeek",
+        "top_provider": {
+          "context_length": 1048576,
+          "max_completion_tokens": 943718,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "logit_bias",
+          "max_tokens",
+          "min_p",
+          "presence_penalty",
+          "reasoning",
+          "reasoning_effort",
+          "repetition_penalty",
+          "seed",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_k",
+          "top_p"
+        ],
+        "created": "2026-10-17",
+        "description": "DeepSeek V4.1 Flash 1017 is the October 17, 2026 snapshot of DeepSeek V4.1 Flash, served by DeepSeek under the `deepseek-flash` API model name. V4.1 Flash is a sparse mixture-of-experts model...",
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "max",
+            "high",
+            "low",
+            "none"
+          ],
+          "default_effort": "high"
+        },
+        "links": {
+          "details": "/api/v1/models/deepseek/deepseek-v4.1-flash-20261017/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 9,
+          "artificial_analysis": 1
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "reasoning_effort",
+          "vision"
+        ]
+      },
+      "reasoning_effort_values": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ]
+    },
+    {
+      "provider": "openrouter",
       "model_id": "deepseek/deepseek-v4.1-flash:batch",
       "display_name": "DeepSeek: DeepSeek V4.1 Flash (batch)",
       "context_window": 1048576,
-      "max_output_tokens": 131072,
+      "max_output_tokens": 943718,
       "input_modalities": [
         "text",
         "image"
@@ -15639,12 +15750,12 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.112,
-        "output_per_1m": 0.336,
+        "input_per_1m": 0.011,
+        "output_per_1m": 0.2,
         "currency": "USD"
       },
       "extra": {
-        "cache_read_per_1m": 0.00336,
+        "cache_read_per_1m": 0.002,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -15656,7 +15767,7 @@
         "tokenizer": "DeepSeek",
         "top_provider": {
           "context_length": 1048576,
-          "max_completion_tokens": 131072,
+          "max_completion_tokens": 943718,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -22932,6 +23043,7 @@
         "currency": "USD"
       },
       "extra": {
+        "web_search_per_request_usd": 0.014,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -22956,7 +23068,6 @@
         ],
         "created": "2026-11-04",
         "description": "Gemini Omni 1.1 Flash is Google's native multimodal video generation and editing model, the generally available successor to Gemini Omni Flash Preview. It is suited for text-to-video, image-to-video, first and...",
-        "web_search_per_request_usd": 0.014,
         "reasoning_meta": {
           "mandatory": true,
           "supported_efforts": [
@@ -23025,6 +23136,7 @@
         "currency": "USD"
       },
       "extra": {
+        "web_search_per_request_usd": 0.014,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -23049,7 +23161,6 @@
         ],
         "created": "2026-11-05",
         "description": "Gemini Omni 1.2 Flash is Google's native multimodal video generation and editing model, the successor to Gemini Omni 1.1 Flash. It generates clips up to 15 seconds long with native...",
-        "web_search_per_request_usd": 0.014,
         "reasoning_meta": {
           "mandatory": true,
           "supported_efforts": [
@@ -25011,314 +25122,6 @@
     },
     {
       "provider": "openrouter",
-      "model_id": "inception/mercury-2",
-      "display_name": "Inception: Mercury 2",
-      "context_window": 128000,
-      "max_output_tokens": 50000,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_json_schema": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "mercury-2",
-        "openrouter/inception/mercury-2",
-        "inception/mercury-2-20260304",
-        "inception/mercury-2"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.25,
-        "output_per_1m": 0.75,
-        "currency": "USD"
-      },
-      "extra": {
-        "cache_read_per_1m": 0.025,
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "inception",
-        "canonical_slug": "inception/mercury-2-20260304",
-        "modality": "text->text",
-        "tokenizer": "Other",
-        "top_provider": {
-          "context_length": 128000,
-          "max_completion_tokens": 50000,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "include_reasoning",
-          "max_tokens",
-          "reasoning",
-          "reasoning_effort",
-          "response_format",
-          "stop",
-          "structured_outputs",
-          "temperature",
-          "tool_choice",
-          "tools"
-        ],
-        "created": "2026-03-04",
-        "description": "Mercury 2 is an extremely fast reasoning LLM, and the first reasoning diffusion LLM (dLLM). Instead of generating tokens sequentially, Mercury 2 produces and refines multiple tokens in parallel, achieving...",
-        "expiration_date": "2026-11-08",
-        "default_parameters": {
-          "temperature": 0.75
-        },
-        "reasoning_meta": {
-          "mandatory": false,
-          "default_enabled": true,
-          "supported_efforts": [
-            "high",
-            "medium",
-            "low",
-            "none"
-          ],
-          "default_effort": "medium"
-        },
-        "links": {
-          "details": "/api/v1/models/inception/mercury-2-20260304/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 8,
-          "artificial_analysis": 1
-        },
-        "features": [
-          "tools",
-          "structured_outputs",
-          "reasoning",
-          "reasoning_effort"
-        ]
-      },
-      "reasoning_effort_values": [
-        "none",
-        "minimal",
-        "low",
-        "medium",
-        "high",
-        "xhigh"
-      ]
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "inception/mercury-2.5",
-      "display_name": "Inception: Mercury 2.5",
-      "context_window": 260000,
-      "max_output_tokens": 65536,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_json_schema": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "mercury-2.5",
-        "openrouter/inception/mercury-2.5",
-        "inception/mercury-2.5-20260908",
-        "inception/mercury-2.5"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.04,
-        "output_per_1m": 0.15,
-        "currency": "USD"
-      },
-      "extra": {
-        "cache_read_per_1m": 0.004,
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "inception",
-        "canonical_slug": "inception/mercury-2.5-20260908",
-        "modality": "text->text",
-        "tokenizer": "Other",
-        "top_provider": {
-          "context_length": 260000,
-          "max_completion_tokens": 65536,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "include_reasoning",
-          "max_tokens",
-          "reasoning",
-          "reasoning_effort",
-          "response_format",
-          "stop",
-          "structured_outputs",
-          "temperature",
-          "tool_choice",
-          "tools"
-        ],
-        "created": "2026-09-08",
-        "description": "Mercury 2.5 is the fastest reasoning LLM, and the latest diffusion LLM (dLLM) from Inception. Instead of generating tokens sequentially, Mercury 2.5 produces and refines multiple tokens in parallel, achieving...",
-        "expiration_date": "2026-11-08",
-        "reasoning_meta": {
-          "mandatory": false,
-          "default_enabled": true,
-          "supported_efforts": [
-            "high",
-            "medium",
-            "low",
-            "none"
-          ],
-          "default_effort": "medium"
-        },
-        "links": {
-          "details": "/api/v1/models/inception/mercury-2.5-20260908/endpoints"
-        },
-        "features": [
-          "tools",
-          "structured_outputs",
-          "reasoning",
-          "reasoning_effort"
-        ]
-      },
-      "reasoning_effort_values": [
-        "none",
-        "minimal",
-        "low",
-        "medium",
-        "high",
-        "xhigh"
-      ]
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "inception/mercury-3",
-      "display_name": "Inception: Mercury 3",
-      "context_window": 1000000,
-      "max_output_tokens": 131072,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "mercury-3",
-        "openrouter/inception/mercury-3",
-        "inception/mercury-3-20261019"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.1,
-        "output_per_1m": 0.35,
-        "currency": "USD"
-      },
-      "extra": {
-        "cache_read_per_1m": 0.01,
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "inception",
-        "canonical_slug": "inception/mercury-3-20261019",
-        "modality": "text->text",
-        "tokenizer": "Other",
-        "top_provider": {
-          "context_length": 1000000,
-          "max_completion_tokens": 131072,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "include_reasoning",
-          "max_tokens",
-          "reasoning",
-          "reasoning_effort",
-          "response_format",
-          "stop",
-          "structured_outputs",
-          "temperature",
-          "tool_choice",
-          "tools"
-        ],
-        "created": "2026-10-16",
-        "description": "Mercury 3 is a diffusion-based language model from Inception, and the lab's most capable model to date. It is suited for agentic workflows and real-time applications where latency compounds, such...",
-        "expiration_date": "2026-11-08",
-        "reasoning_meta": {
-          "mandatory": false,
-          "default_enabled": true,
-          "supported_efforts": [
-            "high",
-            "medium",
-            "low",
-            "none"
-          ],
-          "default_effort": "medium"
-        },
-        "links": {
-          "details": "/api/v1/models/inception/mercury-3-20261019/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 7
-        },
-        "features": [
-          "tools",
-          "structured_outputs",
-          "reasoning",
-          "reasoning_effort"
-        ]
-      },
-      "reasoning_effort_values": [
-        "none",
-        "minimal",
-        "low",
-        "medium",
-        "high",
-        "xhigh"
-      ]
-    },
-    {
-      "provider": "openrouter",
       "model_id": "inception/mercury-decide",
       "display_name": "Inception: Mercury Decide",
       "context_window": 65536,
@@ -25359,6 +25162,8 @@
       },
       "extra": {
         "cache_read_per_1m": 0.0,
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-08",
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -25687,6 +25492,7 @@
         "currency": "USD"
       },
       "extra": {
+        "cache_read_per_1m": 0.003,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -25720,7 +25526,6 @@
         ],
         "created": "2026-08-06",
         "description": "Ling 3.0 Tiny is a mixture-of-experts model from InclusionAI, with 1.3B active parameters out of 7.9B total. It is designed for responsive agents, instruction following, and multi-turn conversations, with switchable...",
-        "cache_read_per_1m": 0.003,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95,
@@ -26277,7 +26082,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/jaredpalmer/kev-4b",
-        "checked_at": "2026-11-07",
+        "checked_at": "2026-11-08",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -26879,7 +26684,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/liquid/d1",
-        "checked_at": "2026-11-07",
+        "checked_at": "2026-11-08",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -27412,6 +27217,7 @@
         "currency": "USD"
       },
       "extra": {
+        "cache_read_per_1m": 0.02,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -27449,7 +27255,6 @@
         ],
         "created": "2026-11-06",
         "description": "A compact 1.7B-parameter text model with a 256K-token context, post-trained for agents, tool calling, and structured outputs. It reasons before it answers. Prompts and outputs may be retained and used...",
-        "cache_read_per_1m": 0.02,
         "default_parameters": {
           "temperature": 0.1,
           "top_k": 50,
@@ -27507,6 +27312,7 @@
         "currency": "USD"
       },
       "extra": {
+        "free_tier": true,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -27544,7 +27350,6 @@
         ],
         "created": "2026-11-06",
         "description": "A compact 1.7B-parameter text model with a 256K-token context, post-trained for agents, tool calling, and structured outputs. It reasons before it answers. Prompts and outputs may be retained and used...",
-        "free_tier": true,
         "default_parameters": {
           "temperature": 0.1,
           "top_k": 50,
@@ -27603,6 +27408,7 @@
         "currency": "USD"
       },
       "extra": {
+        "cache_read_per_1m": 0.4,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -27636,7 +27442,6 @@
         ],
         "created": "2023-08-02",
         "description": "An attempt to recreate Claude-style verbosity, but don't expect the same level of coherence or memory. Meant for use in roleplay/narrative situations.",
-        "cache_read_per_1m": 0.4,
         "links": {
           "details": "/api/v1/models/mancer/weaver/endpoints"
         },
@@ -27812,7 +27617,7 @@
       "model_id": "meta-llama/llama-3.1-8b-instruct",
       "display_name": "Meta: Llama 3.1 8B Instruct",
       "context_window": 131072,
-      "max_output_tokens": 117964,
+      "max_output_tokens": 16384,
       "input_modalities": [
         "text"
       ],
@@ -27842,8 +27647,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.05,
-        "output_per_1m": 0.08,
+        "input_per_1m": 0.02,
+        "output_per_1m": 0.04,
         "currency": "USD"
       },
       "extra": {
@@ -27860,7 +27665,7 @@
         "instruct_type": "llama3",
         "top_provider": {
           "context_length": 131072,
-          "max_completion_tokens": 117964,
+          "max_completion_tokens": 16384,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -27978,7 +27783,7 @@
       "model_id": "meta-llama/llama-3.2-3b-instruct",
       "display_name": "Meta: Llama 3.2 3B Instruct",
       "context_window": 131072,
-      "max_output_tokens": 72000,
+      "max_output_tokens": 117964,
       "input_modalities": [
         "text"
       ],
@@ -28008,8 +27813,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.0509,
-        "output_per_1m": 0.335,
+        "input_per_1m": 0.05,
+        "output_per_1m": 0.33,
         "currency": "USD"
       },
       "extra": {
@@ -28024,8 +27829,8 @@
         "tokenizer": "Llama3",
         "instruct_type": "llama3",
         "top_provider": {
-          "context_length": 80000,
-          "max_completion_tokens": 72000,
+          "context_length": 131072,
+          "max_completion_tokens": 117964,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -28046,7 +27851,6 @@
         ],
         "created": "2024-09-25",
         "description": "Llama 3.2 3B is a 3-billion-parameter multilingual large language model, optimized for advanced natural language processing tasks like dialogue generation, reasoning, and summarization. Designed with the latest transformer architecture, it...",
-        "expiration_date": "2026-11-20",
         "links": {
           "details": "/api/v1/models/meta-llama/llama-3.2-3b-instruct/endpoints"
         },
@@ -28095,6 +27899,7 @@
         "currency": "USD"
       },
       "extra": {
+        "cache_read_per_1m": 0.295,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -28131,7 +27936,6 @@
         ],
         "created": "2024-12-06",
         "description": "The Meta Llama 3.3 multilingual large language model (LLM) is a pretrained and instruction tuned generative model in 70B (text in/text out). The Llama 3.3 instruction tuned text only model...",
-        "cache_read_per_1m": 0.295,
         "links": {
           "details": "/api/v1/models/meta-llama/llama-3.3-70b-instruct/endpoints"
         },
@@ -28563,6 +28367,7 @@
         "currency": "USD"
       },
       "extra": {
+        "cache_read_per_1m": 0.032,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -28599,7 +28404,6 @@
         ],
         "created": "2026-08-09",
         "description": "Muse Glimmer 30B is a dense, open-weight multimodal model from Meta Superintelligence Labs, distilled from Muse Spark and optimized for autonomous agents on consumer hardware. It is suited for long-horizon...",
-        "cache_read_per_1m": 0.032,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95,
@@ -28867,7 +28671,7 @@
           "details": "/api/v1/models/meta/muse-spark-1.1-20260709/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 19,
+          "design_arena": 20,
           "artificial_analysis": 1
         },
         "features": [
@@ -29040,7 +28844,7 @@
           "details": "/api/v1/models/meta/muse-spark-1.2-20260805/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 18,
+          "design_arena": 19,
           "artificial_analysis": 1
         },
         "features": [
@@ -31723,6 +31527,7 @@
         "currency": "USD"
       },
       "extra": {
+        "cache_read_per_1m": 0.0448,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -31757,7 +31562,6 @@
         ],
         "created": "2026-05-31",
         "description": "MiniMax-M3 is a multimodal foundation model from MiniMax. It supports text, image, and video inputs with text output, a 1M-token context window, and is suited for long-horizon agentic work, coding,...",
-        "cache_read_per_1m": 0.0448,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -34716,6 +34520,7 @@
         "currency": "USD"
       },
       "extra": {
+        "free_tier": true,
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -34728,8 +34533,7 @@
           "is_moderated": null
         },
         "supported_parameters": [],
-        "description": "rerank-2.5 is a cutting-edge reranker optimized for quality, delivering a 7.94% improvement in retrieval accuracy over Cohere Rerank v3.5 across 93 datasets. It also outperformed Cohere Rerank v3.5 by 12.70% on the Massive Instructed Retrieval Benchmark (MAIR). The model supports a combined context length of 32K tokens per query–document pair, including up to 8K tokens for the query, enabling more",
-        "free_tier": true
+        "description": "rerank-2.5 is a cutting-edge reranker optimized for quality, delivering a 7.94% improvement in retrieval accuracy over Cohere Rerank v3.5 across 93 datasets. It also outperformed Cohere Rerank v3.5 by 12.70% on the Massive Instructed Retrieval Benchmark (MAIR). The model supports a combined context length of 32K tokens per query–document pair, including up to 8K tokens for the query, enabling more"
       }
     },
     {
@@ -34770,6 +34574,7 @@
         "currency": "USD"
       },
       "extra": {
+        "free_tier": true,
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -34782,8 +34587,7 @@
           "is_moderated": null
         },
         "supported_parameters": [],
-        "description": "rerank-2.5-lite is a reranker optimized for both latency and quality, delivering a 7.16% improvement in retrieval accuracy over Cohere Rerank v3.5 across 93 datasets. It also outperformed Cohere Rerank v3.5 by 10.36% on the Massive Instructed Retrieval Benchmark (MAIR). The model supports a combined context length of 32K tokens per query–document pair, including up to 8K tokens for the query, enab",
-        "free_tier": true
+        "description": "rerank-2.5-lite is a reranker optimized for both latency and quality, delivering a 7.16% improvement in retrieval accuracy over Cohere Rerank v3.5 across 93 datasets. It also outperformed Cohere Rerank v3.5 by 10.36% on the Massive Instructed Retrieval Benchmark (MAIR). The model supports a combined context length of 32K tokens per query–document pair, including up to 8K tokens for the query, enab"
       }
     },
     {
@@ -34824,6 +34628,7 @@
         "currency": "USD"
       },
       "extra": {
+        "free_tier": true,
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -34836,8 +34641,7 @@
           "is_moderated": null
         },
         "supported_parameters": [],
-        "description": "rerank-3 is a reranker optimized for quality and a drop-in upgrade to rerank-2.5, improving on it by 0.80% NDCG@10 on average across domain evaluations and by 3.35% on long-document evaluations, with code retrieval gains of 2.01% atop voyage-3-large and 1.96% atop voyage-4-large. Across 93 retrieval datasets it outperforms Cohere Rerank v4.0 Pro by 2.14% and Qwen3-Reranker-8B by 3.31%. The model s",
-        "free_tier": true
+        "description": "rerank-3 is a reranker optimized for quality and a drop-in upgrade to rerank-2.5, improving on it by 0.80% NDCG@10 on average across domain evaluations and by 3.35% on long-document evaluations, with code retrieval gains of 2.01% atop voyage-3-large and 1.96% atop voyage-4-large. Across 93 retrieval datasets it outperforms Cohere Rerank v4.0 Pro by 2.14% and Qwen3-Reranker-8B by 3.31%. The model s"
       }
     },
     {
@@ -34878,6 +34682,7 @@
         "currency": "USD"
       },
       "extra": {
+        "free_tier": true,
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -34890,8 +34695,7 @@
           "is_moderated": null
         },
         "supported_parameters": [],
-        "description": "rerank-3-lite is a reranker optimized for both latency and quality and a drop-in upgrade to rerank-2.5-lite, improving on it by 0.94% NDCG@10 on average across domain evaluations and by 1.86% on long-document evaluations, with code retrieval gains of 2.77% atop voyage-3-large and 2.59% atop voyage-4-large. It matches the retrieval quality of rerank-2.5, and across 93 retrieval datasets it outperfo",
-        "free_tier": true
+        "description": "rerank-3-lite is a reranker optimized for both latency and quality and a drop-in upgrade to rerank-2.5-lite, improving on it by 0.94% NDCG@10 on average across domain evaluations and by 1.86% on long-document evaluations, with code retrieval gains of 2.77% atop voyage-3-large and 2.59% atop voyage-4-large. It matches the retrieval quality of rerank-2.5, and across 93 retrieval datasets it outperfo"
       }
     },
     {
@@ -35530,6 +35334,7 @@
         },
         "supported_parameters": [
           "frequency_penalty",
+          "logprobs",
           "max_tokens",
           "presence_penalty",
           "repetition_penalty",
@@ -35541,6 +35346,7 @@
           "tool_choice",
           "tools",
           "top_k",
+          "top_logprobs",
           "top_p"
         ],
         "created": "2025-09-04",
@@ -35655,7 +35461,7 @@
       "model_id": "moonshotai/kimi-k2.5",
       "display_name": "MoonshotAI: Kimi K2.5",
       "context_window": 262144,
-      "max_output_tokens": 235929,
+      "max_output_tokens": 65536,
       "input_modalities": [
         "text",
         "image"
@@ -35687,12 +35493,12 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.5,
-        "output_per_1m": 2.5,
+        "input_per_1m": 0.532,
+        "output_per_1m": 3.325,
         "currency": "USD"
       },
       "extra": {
-        "cache_read_per_1m": 0.15,
+        "cache_read_per_1m": 0.209,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -35703,8 +35509,8 @@
         "modality": "text+image->text",
         "tokenizer": "Other",
         "top_provider": {
-          "context_length": 262144,
-          "max_completion_tokens": 235929,
+          "context_length": 256000,
+          "max_completion_tokens": 65536,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -35730,6 +35536,7 @@
         ],
         "created": "2026-01-27",
         "description": "Kimi K2.5 is Moonshot AI's native multimodal model, delivering state-of-the-art visual coding capability and a self-directed agent swarm paradigm. Built on Kimi K2 with continued pretraining over approximately 15T mixed...",
+        "expiration_date": "2026-11-18",
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true
@@ -36256,7 +36063,7 @@
       "model_id": "moonshotai/kimi-k3:batch",
       "display_name": "MoonshotAI: Kimi K3 (batch)",
       "context_window": 1048576,
-      "max_output_tokens": 16384,
+      "max_output_tokens": 943718,
       "input_modalities": [
         "text",
         "image",
@@ -36289,8 +36096,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 2.28,
-        "output_per_1m": 11.4,
+        "input_per_1m": 0.917,
+        "output_per_1m": 6.0,
         "currency": "USD"
       },
       "video": {
@@ -36325,7 +36132,7 @@
         "status": "inferred"
       },
       "extra": {
-        "cache_read_per_1m": 0.228,
+        "cache_read_per_1m": 0.226,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -36337,13 +36144,14 @@
         "tokenizer": "Other",
         "top_provider": {
           "context_length": 1048576,
-          "max_completion_tokens": 16384,
+          "max_completion_tokens": 943718,
           "is_moderated": false
         },
         "supported_parameters": [
           "frequency_penalty",
           "include_reasoning",
           "logit_bias",
+          "logprobs",
           "max_tokens",
           "min_p",
           "presence_penalty",
@@ -36358,6 +36166,7 @@
           "tool_choice",
           "tools",
           "top_k",
+          "top_logprobs",
           "top_p"
         ],
         "created": "2026-07-16",
@@ -36474,6 +36283,70 @@
     },
     {
       "provider": "openrouter",
+      "model_id": "morph/morph-v3-fast:batch",
+      "display_name": "Morph: Morph V3 Fast (batch)",
+      "context_window": 81920,
+      "max_output_tokens": 38000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "morph-v3-fast:batch",
+        "openrouter/morph/morph-v3-fast:batch",
+        "morph/morph-v3-fast"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.4,
+        "output_per_1m": 0.6,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "morph",
+        "canonical_slug": "morph/morph-v3-fast",
+        "modality": "text->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 81920,
+          "max_completion_tokens": 38000,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "max_tokens",
+          "stop",
+          "temperature"
+        ],
+        "created": "2025-07-07",
+        "description": "Morph's fastest apply model for code edits. ~10,500 tokens/sec with 96% accuracy for rapid code transformations. The model requires the prompt to be in the following format: <instruction>{instruction}</instruction> <code>{initial_code}</code> <update>{edit_snippet}</update>...",
+        "links": {
+          "details": "/api/v1/models/morph/morph-v3-fast/endpoints"
+        }
+      }
+    },
+    {
+      "provider": "openrouter",
       "model_id": "morph/morph-v3-large",
       "display_name": "Morph: Morph V3 Large",
       "context_window": 262144,
@@ -36509,6 +36382,77 @@
       "pricing": {
         "input_per_1m": 0.9,
         "output_per_1m": 1.9,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "morph",
+        "canonical_slug": "morph/morph-v3-large",
+        "modality": "text->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 262144,
+          "max_completion_tokens": 131072,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "logprobs",
+          "max_tokens",
+          "response_format",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "top_logprobs"
+        ],
+        "created": "2025-07-07",
+        "description": "Morph's high-accuracy apply model for complex code edits. ~4,500 tokens/sec with 98% accuracy for precise code transformations. The model requires the prompt to be in the following format: <instruction>{instruction}</instruction> <code>{initial_code}</code>...",
+        "links": {
+          "details": "/api/v1/models/morph/morph-v3-large/endpoints"
+        },
+        "features": [
+          "structured_outputs"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "morph/morph-v3-large:batch",
+      "display_name": "Morph: Morph V3 Large (batch)",
+      "context_window": 262144,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "morph-v3-large:batch",
+        "openrouter/morph/morph-v3-large:batch",
+        "morph/morph-v3-large"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.45,
+        "output_per_1m": 0.95,
         "currency": "USD"
       },
       "extra": {
@@ -36583,6 +36527,7 @@
         "currency": "USD"
       },
       "extra": {
+        "cache_read_per_1m": 0.008,
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -36596,7 +36541,6 @@
         },
         "supported_parameters": [],
         "description": "Morph's decision model. Answers typed choice, noul and score questions about a state. The state is prefix-cached across requests, so repeat questions on the same state bill at the cached-input rate. 65k context window.",
-        "cache_read_per_1m": 0.008,
         "features": [
           "vision"
         ]
@@ -38558,7 +38502,7 @@
           "details": "/api/v1/models/nvidia/nemotron-3.5-super-vl-20261015/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 5,
+          "design_arena": 6,
           "artificial_analysis": 1
         },
         "features": [
@@ -38677,7 +38621,7 @@
           "details": "/api/v1/models/nvidia/nemotron-3.5-super-vl-20261015/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 5,
+          "design_arena": 6,
           "artificial_analysis": 1
         },
         "features": [
@@ -47040,7 +46984,7 @@
         "top_provider": {
           "context_length": 1050000,
           "max_completion_tokens": 128000,
-          "is_moderated": false
+          "is_moderated": true
         },
         "supported_parameters": [
           "include_reasoning",
@@ -47589,7 +47533,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/openai/gpt-6-luna-decisions",
-        "checked_at": "2026-11-07",
+        "checked_at": "2026-11-08",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -50233,6 +50177,10 @@
         "currency": "USD"
       },
       "extra": {
+        "cache_read_per_1m": 2.0,
+        "cache_write_per_1m": 10.0,
+        "web_search_per_request_usd": 0.01,
+        "image_output_per_1m": 30.0,
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -50251,10 +50199,6 @@
           "structured_outputs"
         ],
         "description": "GPT Image 2.6 Flare is OpenAI's image generation and editing model optimized for speed: fast iteration and interactive text-to-image and image-to-image workflows, generating about 50% faster than GPT Image 2.5. It takes text and image inputs and produces images, with quality tiers from low to max, transparent backgrounds, and custom sizes in multiples of 16 pixels at aspect ratios from 1:3 to 3:1.",
-        "cache_read_per_1m": 2.0,
-        "cache_write_per_1m": 10.0,
-        "web_search_per_request_usd": 0.01,
-        "image_output_per_1m": 30.0,
         "features": [
           "structured_outputs",
           "vision",
@@ -50301,6 +50245,10 @@
         "currency": "USD"
       },
       "extra": {
+        "cache_read_per_1m": 2.0,
+        "cache_write_per_1m": 10.0,
+        "web_search_per_request_usd": 0.01,
+        "image_output_per_1m": 30.0,
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -50319,10 +50267,6 @@
           "structured_outputs"
         ],
         "description": "GPT Image 2.6 Sunburst is OpenAI's image generation and editing model optimized for detail: dense compositions, text-heavy layouts, and edits that keep details consistent from one edit to the next at medium or high quality, generating about 50% faster than GPT Image 2.5. It takes text and image inputs and produces images, with quality tiers from low to max, transparent backgrounds, and custom size",
-        "cache_read_per_1m": 2.0,
-        "cache_write_per_1m": 10.0,
-        "web_search_per_request_usd": 0.01,
-        "image_output_per_1m": 30.0,
         "features": [
           "structured_outputs",
           "vision",
@@ -50365,12 +50309,12 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.01,
-        "output_per_1m": 0.037,
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.6,
         "currency": "USD"
       },
       "extra": {
-        "cache_read_per_1m": 0.009,
+        "cache_read_per_1m": 0.075,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -52086,6 +52030,7 @@
         "currency": "USD"
       },
       "extra": {
+        "free_tier": true,
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -52098,8 +52043,7 @@
           "is_moderated": null
         },
         "supported_parameters": [],
-        "description": "Decisions Fast is Parallel's web-grounded Decisions model. Instead of generating text, it reads the content passed as `state` (text or JSON), researches the live web, and returns typed answers to named questions: the probability of yes for a yes/no question (`noul`), a choice with per-option probabilities (`choice`), or a level on an ordered rubric (`score`), with per-question refusals and request",
-        "free_tier": true
+        "description": "Decisions Fast is Parallel's web-grounded Decisions model. Instead of generating text, it reads the content passed as `state` (text or JSON), researches the live web, and returns typed answers to named questions: the probability of yes for a yes/no question (`noul`), a choice with per-option probabilities (`choice`), or a level on an ordered rubric (`score`), with per-question refusals and request"
       }
     },
     {
@@ -52573,7 +52517,7 @@
       },
       "extra": {
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07",
+        "provider_refresh_checked_at": "2026-11-08",
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -54440,6 +54384,7 @@
         "currency": "USD"
       },
       "extra": {
+        "cache_read_per_1m": 0.05,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -54475,7 +54420,6 @@
         ],
         "created": "2025-07-21",
         "description": "Qwen3-235B-A22B-Instruct-2507 is a multilingual, instruction-tuned mixture-of-experts language model based on the Qwen3-235B architecture, with 22B active parameters per forward pass. It is optimized for general-purpose text generation, including instruction following,...",
-        "cache_read_per_1m": 0.05,
         "links": {
           "details": "/api/v1/models/qwen/qwen3-235b-a22b-07-25/endpoints"
         },
@@ -57044,7 +56988,7 @@
       "model_id": "qwen/qwen3.6-27b",
       "display_name": "Qwen: Qwen3.6 27B",
       "context_window": 262144,
-      "max_output_tokens": 65536,
+      "max_output_tokens": 81920,
       "input_modalities": [
         "text",
         "image",
@@ -57077,8 +57021,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.45,
-        "output_per_1m": 2.7,
+        "input_per_1m": 0.32,
+        "output_per_1m": 3.2,
         "currency": "USD"
       },
       "video": {
@@ -57124,7 +57068,7 @@
         "tokenizer": "Qwen3",
         "top_provider": {
           "context_length": 262144,
-          "max_completion_tokens": 65536,
+          "max_completion_tokens": 81920,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -58307,6 +58251,7 @@
         "currency": "USD"
       },
       "extra": {
+        "cache_read_per_1m": 0.04,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -58343,7 +58288,6 @@
         ],
         "created": "2026-08-14",
         "description": "Qwen3.8 27B is an open-weight dense vision-language model from Qwen. It is suited for coding, professional workflows, research, multimodal interaction, and long-running agent tasks, with flexible thinking that can be...",
-        "cache_read_per_1m": 0.04,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95,
@@ -60580,7 +60524,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/respan/span-01",
-        "checked_at": "2026-11-07",
+        "checked_at": "2026-11-08",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -60672,7 +60616,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/respan/span-01-lite",
-        "checked_at": "2026-11-07",
+        "checked_at": "2026-11-08",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -60779,6 +60723,7 @@
         "currency": "USD"
       },
       "extra": {
+        "cache_read_per_1m": 0.05,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -60805,7 +60750,6 @@
         ],
         "created": "2026-11-04",
         "description": "Ripple-65B-Preview by ricursiveAI, a 65B model with native tool calling, served in BF16.",
-        "cache_read_per_1m": 0.05,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": false
@@ -62562,6 +62506,7 @@
         "currency": "USD"
       },
       "extra": {
+        "free_tier": true,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -62589,7 +62534,6 @@
         ],
         "created": "2026-11-03",
         "description": "Crouton Alpha is a lightweight model built for scalable coding, agentic, and multimodal workflows. It's ideal for executing agentic sub-tasks, tool use, and document analysis in high-volume, repeated work. Developers...",
-        "free_tier": true,
         "reasoning_meta": {
           "mandatory": true,
           "supported_efforts": [
@@ -63688,6 +63632,7 @@
         "currency": "USD"
       },
       "extra": {
+        "cache_read_per_1m": 0.021,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -63717,7 +63662,6 @@
         ],
         "created": "2026-11-04",
         "description": "The official release of Hy4 delivers comprehensive and substantial improvements over Hy4 Preview, with particularly strong gains in agentic capabilities and performance across a wide range of long-horizon, real-world productivity...",
-        "cache_read_per_1m": 0.021,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -64547,6 +64491,7 @@
         "currency": "USD"
       },
       "extra": {
+        "cache_read_per_1m": 0.08,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -64581,7 +64526,6 @@
         ],
         "created": "2026-07-30",
         "description": "Inkling Small is an open-weight multimodal mixture-of-experts model from Thinking Machines Lab, with 12B active parameters out of 276B total. It is positioned as the smaller, more efficient member of...",
-        "cache_read_per_1m": 0.08,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -64698,7 +64642,7 @@
           "https://openrouter.ai/api/v1/chat/completions"
         ],
         "source_url": "https://openrouter.ai/togethercomputer/tev1-4b-experimental",
-        "checked_at": "2026-11-07",
+        "checked_at": "2026-11-08",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openai-compatible-chat-completions",
@@ -65217,6 +65161,7 @@
         "currency": "USD"
       },
       "extra": {
+        "cache_read_per_1m": 0.35,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -65252,7 +65197,6 @@
         ],
         "created": "2023-07-22",
         "description": "A recreation trial of the original MythoMax-L2-B13 but with updated models. #merge",
-        "cache_read_per_1m": 0.35,
         "links": {
           "details": "/api/v1/models/undi95/remm-slerp-l2-13b/endpoints"
         },
@@ -65351,7 +65295,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/upstage/solar-decide",
-        "checked_at": "2026-11-07",
+        "checked_at": "2026-11-08",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -65451,7 +65395,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/upstage/solar-decide-flash",
-        "checked_at": "2026-11-07",
+        "checked_at": "2026-11-08",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -66581,6 +66525,16 @@
         "currency": "USD"
       },
       "extra": {
+        "cache_read_per_1m": 0.4,
+        "web_search_per_request_usd": 0.005,
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.0000032",
+            "completion": "0.0000096",
+            "input_cache_read": "0.0000008"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -66611,16 +66565,6 @@
         ],
         "created": "2026-08-12",
         "description": "Grok 4.6 is a model from SpaceXAI with frontier performance on coding, knowledge work, and STEM. It is succeeded by [Grok 4.7](/x-ai/grok-4.7).",
-        "cache_read_per_1m": 0.4,
-        "web_search_per_request_usd": 0.005,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 200000,
-            "prompt": "0.0000032",
-            "completion": "0.0000096",
-            "input_cache_read": "0.0000008"
-          }
-        ],
         "reasoning_meta": {
           "mandatory": true,
           "default_enabled": true,
@@ -66840,6 +66784,16 @@
         "currency": "USD"
       },
       "extra": {
+        "cache_read_per_1m": 0.4,
+        "web_search_per_request_usd": 0.005,
+        "pricing_overrides": [
+          {
+            "min_prompt_tokens": 200000,
+            "prompt": "0.0000032",
+            "completion": "0.0000096",
+            "input_cache_read": "0.0000008"
+          }
+        ],
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -66870,16 +66824,6 @@
         ],
         "created": "2026-09-21",
         "description": "Grok 4.7 is SpaceXAI's flagship model for coding, agentic tasks, and knowledge work, succeeding Grok 4.6. It is particularly strong at long-running software engineering tasks, verifying its own work, and...",
-        "cache_read_per_1m": 0.4,
-        "web_search_per_request_usd": 0.005,
-        "pricing_overrides": [
-          {
-            "min_prompt_tokens": 200000,
-            "prompt": "0.0000032",
-            "completion": "0.0000096",
-            "input_cache_read": "0.0000008"
-          }
-        ],
         "default_parameters": {
           "temperature": 0.7,
           "top_p": 0.95
@@ -69482,6 +69426,121 @@
     },
     {
       "provider": "openrouter",
+      "model_id": "z-ai/glm-5.2:batch",
+      "display_name": "Z.ai: GLM 5.2 (batch)",
+      "context_window": 1048576,
+      "max_output_tokens": 943718,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "glm-5.2:batch",
+        "openrouter/z-ai/glm-5.2:batch",
+        "z-ai/glm-5.2-20260616"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.341,
+        "output_per_1m": 1.381,
+        "currency": "USD"
+      },
+      "extra": {
+        "cache_read_per_1m": 0.115,
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "z-ai",
+        "canonical_slug": "z-ai/glm-5.2-20260616",
+        "hugging_face_id": "zai-org/GLM-5.2",
+        "modality": "text->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 1048576,
+          "max_completion_tokens": 943718,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "logit_bias",
+          "logprobs",
+          "max_tokens",
+          "min_p",
+          "presence_penalty",
+          "reasoning",
+          "reasoning_effort",
+          "repetition_penalty",
+          "response_format",
+          "seed",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_k",
+          "top_logprobs",
+          "top_p"
+        ],
+        "created": "2026-06-16",
+        "description": "GLM 5.2 is a large-scale reasoning model from Z.ai. It supports text input and output with a 1M-token context window, and is suited for long-horizon agent workflows, project-level software engineering,...",
+        "default_parameters": {
+          "temperature": 1,
+          "top_p": 0.95
+        },
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "xhigh",
+            "high",
+            "none"
+          ],
+          "default_effort": "high"
+        },
+        "links": {
+          "details": "/api/v1/models/z-ai/glm-5.2-20260616/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 19,
+          "artificial_analysis": 1
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "reasoning_effort"
+        ]
+      },
+      "reasoning_effort_values": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ]
+    },
+    {
+      "provider": "openrouter",
       "model_id": "z-ai/glm-5.3",
       "display_name": "Z.ai: GLM 5.3",
       "context_window": 1048576,
@@ -69603,7 +69662,7 @@
       "model_id": "z-ai/glm-5.3-flash",
       "display_name": "Z.ai: GLM 5.3 Flash",
       "context_window": 1048576,
-      "max_output_tokens": 943717,
+      "max_output_tokens": 131072,
       "input_modalities": [
         "text",
         "image",
@@ -69636,8 +69695,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.15,
-        "output_per_1m": 0.5,
+        "input_per_1m": 0.0335,
+        "output_per_1m": 0.083,
         "currency": "USD"
       },
       "video": {
@@ -69683,8 +69742,8 @@
         "modality": "text+image+video->text",
         "tokenizer": "Other",
         "top_provider": {
-          "context_length": 1048575,
-          "max_completion_tokens": 943717,
+          "context_length": 1048576,
+          "max_completion_tokens": 131072,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -70078,6 +70137,7 @@
         "currency": "USD"
       },
       "extra": {
+        "cache_read_per_1m": 0.075,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -70106,7 +70166,6 @@
         ],
         "created": "2026-11-02",
         "description": "GLM-5.3-FlashX-Legal (GLM-Legal) is Z.ai's legal-domain variant of GLM-5.3-FlashX, a native multimodal model that accepts text, image, and video input and produces text. It adds legal-domain mid-training and post-training with reinforcement...",
-        "cache_read_per_1m": 0.075,
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -70254,7 +70313,7 @@
       "model_id": "z-ai/glm-5.3:batch",
       "display_name": "Z.ai: GLM 5.3 (batch)",
       "context_window": 1048576,
-      "max_output_tokens": 131072,
+      "max_output_tokens": 943718,
       "input_modalities": [
         "text"
       ],
@@ -70285,12 +70344,12 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.45,
-        "output_per_1m": 2.0,
+        "input_per_1m": 0.341,
+        "output_per_1m": 1.381,
         "currency": "USD"
       },
       "extra": {
-        "cache_read_per_1m": 0.1,
+        "cache_read_per_1m": 0.115,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -70302,13 +70361,14 @@
         "tokenizer": "Other",
         "top_provider": {
           "context_length": 1048576,
-          "max_completion_tokens": 131072,
+          "max_completion_tokens": 943718,
           "is_moderated": false
         },
         "supported_parameters": [
           "frequency_penalty",
           "include_reasoning",
           "logit_bias",
+          "logprobs",
           "max_tokens",
           "min_p",
           "presence_penalty",
@@ -70323,6 +70383,7 @@
           "tool_choice",
           "tools",
           "top_k",
+          "top_logprobs",
           "top_p"
         ],
         "created": "2026-08-18",
@@ -70489,6 +70550,320 @@
     },
     {
       "provider": "openrouter",
+      "model_id": "inception/mercury-2",
+      "display_name": "Inception: Mercury 2",
+      "context_window": 128000,
+      "max_output_tokens": 50000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mercury-2",
+        "openrouter/inception/mercury-2",
+        "inception/mercury-2-20260304",
+        "inception/mercury-2"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.25,
+        "output_per_1m": 0.75,
+        "currency": "USD"
+      },
+      "extra": {
+        "cache_read_per_1m": 0.025,
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "inception",
+        "canonical_slug": "inception/mercury-2-20260304",
+        "modality": "text->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 128000,
+          "max_completion_tokens": 50000,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "include_reasoning",
+          "max_tokens",
+          "reasoning",
+          "reasoning_effort",
+          "response_format",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools"
+        ],
+        "created": "2026-03-04",
+        "description": "Mercury 2 is an extremely fast reasoning LLM, and the first reasoning diffusion LLM (dLLM). Instead of generating tokens sequentially, Mercury 2 produces and refines multiple tokens in parallel, achieving...",
+        "expiration_date": "2026-11-08",
+        "default_parameters": {
+          "temperature": 0.75
+        },
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "high",
+            "medium",
+            "low",
+            "none"
+          ],
+          "default_effort": "medium"
+        },
+        "links": {
+          "details": "/api/v1/models/inception/mercury-2-20260304/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 8,
+          "artificial_analysis": 1
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "reasoning_effort"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-08"
+      },
+      "reasoning_effort_values": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "inception/mercury-2.5",
+      "display_name": "Inception: Mercury 2.5",
+      "context_window": 260000,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mercury-2.5",
+        "openrouter/inception/mercury-2.5",
+        "inception/mercury-2.5-20260908",
+        "inception/mercury-2.5"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.04,
+        "output_per_1m": 0.15,
+        "currency": "USD"
+      },
+      "extra": {
+        "cache_read_per_1m": 0.004,
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "inception",
+        "canonical_slug": "inception/mercury-2.5-20260908",
+        "modality": "text->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 260000,
+          "max_completion_tokens": 65536,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "include_reasoning",
+          "max_tokens",
+          "reasoning",
+          "reasoning_effort",
+          "response_format",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools"
+        ],
+        "created": "2026-09-08",
+        "description": "Mercury 2.5 is the fastest reasoning LLM, and the latest diffusion LLM (dLLM) from Inception. Instead of generating tokens sequentially, Mercury 2.5 produces and refines multiple tokens in parallel, achieving...",
+        "expiration_date": "2026-11-08",
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "high",
+            "medium",
+            "low",
+            "none"
+          ],
+          "default_effort": "medium"
+        },
+        "links": {
+          "details": "/api/v1/models/inception/mercury-2.5-20260908/endpoints"
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "reasoning_effort"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-08"
+      },
+      "reasoning_effort_values": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "inception/mercury-3",
+      "display_name": "Inception: Mercury 3",
+      "context_window": 1000000,
+      "max_output_tokens": 131072,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "mercury-3",
+        "openrouter/inception/mercury-3",
+        "inception/mercury-3-20261019"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.35,
+        "currency": "USD"
+      },
+      "extra": {
+        "cache_read_per_1m": 0.01,
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "inception",
+        "canonical_slug": "inception/mercury-3-20261019",
+        "modality": "text->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 1000000,
+          "max_completion_tokens": 131072,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "include_reasoning",
+          "max_tokens",
+          "reasoning",
+          "reasoning_effort",
+          "response_format",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools"
+        ],
+        "created": "2026-10-16",
+        "description": "Mercury 3 is a diffusion-based language model from Inception, and the lab's most capable model to date. It is suited for agentic workflows and real-time applications where latency compounds, such...",
+        "expiration_date": "2026-11-08",
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "high",
+            "medium",
+            "low",
+            "none"
+          ],
+          "default_effort": "medium"
+        },
+        "links": {
+          "details": "/api/v1/models/inception/mercury-3-20261019/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 7
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "reasoning_effort"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-08"
+      },
+      "reasoning_effort_values": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ]
+    },
+    {
+      "provider": "openrouter",
       "model_id": "minimax/minimax-01",
       "display_name": "MiniMax: MiniMax-01",
       "context_window": 1000192,
@@ -70556,7 +70931,7 @@
           "vision"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       }
     },
     {
@@ -70642,7 +71017,7 @@
           "reasoning"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       }
     },
     {
@@ -70715,7 +71090,7 @@
           "details": "/api/v1/models/minimax/minimax-m2-her-20260123/endpoints"
         },
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       }
     },
     {
@@ -70804,7 +71179,7 @@
           "reasoning"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       }
     },
     {
@@ -70887,7 +71262,7 @@
           "structured_outputs"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       }
     },
     {
@@ -70969,7 +71344,7 @@
           "structured_outputs"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       }
     },
     {
@@ -71051,7 +71426,7 @@
           "vision"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       }
     },
     {
@@ -71169,7 +71544,7 @@
           "audio_input"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       },
       "reasoning_effort_values": [
         "none",
@@ -71295,7 +71670,7 @@
           "audio_input"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       },
       "reasoning_effort_values": [
         "none",
@@ -71359,7 +71734,7 @@
         "description": "rerank-2.5 is a cutting-edge reranker optimized for quality, delivering a 7.94% improvement in retrieval accuracy over Cohere Rerank v3.5 across 93 datasets. It also outperformed Cohere Rerank v3.5 by 12.70% on the Massive Instructed Retrieval Benchmark (MAIR). The model supports a combined context length of 32K tokens per query–document pair, including up to 8K tokens for the query, enabling more",
         "free_tier": true,
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       },
       "rerank": {
         "rerank": true,
@@ -71421,7 +71796,7 @@
         "description": "rerank-2.5-lite is a reranker optimized for both latency and quality, delivering a 7.16% improvement in retrieval accuracy over Cohere Rerank v3.5 across 93 datasets. It also outperformed Cohere Rerank v3.5 by 10.36% on the Massive Instructed Retrieval Benchmark (MAIR). The model supports a combined context length of 32K tokens per query–document pair, including up to 8K tokens for the query, enab",
         "free_tier": true,
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       },
       "rerank": {
         "rerank": true,
@@ -71483,7 +71858,7 @@
         "description": "rerank-3 is a reranker optimized for quality and a drop-in upgrade to rerank-2.5, improving on it by 0.80% NDCG@10 on average across domain evaluations and by 3.35% on long-document evaluations, with code retrieval gains of 2.01% atop voyage-3-large and 1.96% atop voyage-4-large. Across 93 retrieval datasets it outperforms Cohere Rerank v4.0 Pro by 2.14% and Qwen3-Reranker-8B by 3.31%. The model s",
         "free_tier": true,
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       },
       "rerank": {
         "rerank": true,
@@ -71545,7 +71920,7 @@
         "description": "rerank-3-lite is a reranker optimized for both latency and quality and a drop-in upgrade to rerank-2.5-lite, improving on it by 0.94% NDCG@10 on average across domain evaluations and by 1.86% on long-document evaluations, with code retrieval gains of 2.77% atop voyage-3-large and 2.59% atop voyage-4-large. It matches the retrieval quality of rerank-2.5, and across 93 retrieval datasets it outperfo",
         "free_tier": true,
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       },
       "rerank": {
         "rerank": true,
@@ -71609,7 +71984,7 @@
           "embeddings"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       },
       "embedding": {
         "embedding": true,
@@ -71675,7 +72050,7 @@
           "embeddings"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       },
       "embedding": {
         "embedding": true,
@@ -71741,7 +72116,7 @@
           "embeddings"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       },
       "embedding": {
         "embedding": true,
@@ -71807,7 +72182,7 @@
           "embeddings"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       },
       "embedding": {
         "embedding": true,
@@ -71875,7 +72250,7 @@
           "embeddings"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       },
       "embedding": {
         "embedding": true,
@@ -71965,7 +72340,7 @@
           "image_output"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       }
     },
     {
@@ -72047,7 +72422,7 @@
           "reasoning"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       }
     },
     {
@@ -72129,7 +72504,7 @@
           "reasoning"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       }
     },
     {
@@ -72211,7 +72586,7 @@
           "reasoning"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       }
     },
     {
@@ -72293,7 +72668,7 @@
           "reasoning"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       }
     },
     {
@@ -72401,7 +72776,7 @@
           "file_input"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       }
     },
     {
@@ -72504,7 +72879,7 @@
           "file_input"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       }
     },
     {
@@ -72616,7 +72991,7 @@
           "file_input"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       },
       "reasoning_effort_values": [
         "none",
@@ -72734,7 +73109,7 @@
           "file_input"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       },
       "reasoning_effort_values": [
         "none",
@@ -72837,7 +73212,7 @@
           "reasoning"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       }
     },
     {
@@ -72938,7 +73313,7 @@
           "reasoning_effort"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-07"
+        "provider_refresh_checked_at": "2026-11-08"
       },
       "reasoning_effort_values": [
         "none",
