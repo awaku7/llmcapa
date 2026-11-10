@@ -130,8 +130,6 @@ class Registry:
     def _canonical_capability(cls, cap: Capability) -> Capability:
         """Normalize provider aliases and apply verified exact-ID vLLM controls."""
         provider = cls._canonical_provider(cap.provider)
-        if cap.extra.get("source") == "azure_foundry":
-            provider = "azure-foundry"
         if provider == "azure-foundry" and cap.provider != provider:
             return replace(cap, provider=provider)
         if provider == "vllm" and cap.extra.get("metadata_source") in {
@@ -162,6 +160,15 @@ class Registry:
                 }
                 return replace(cap, **changes, extra=extra)
         return cap
+
+    @classmethod
+    def _catalog_capability(
+        cls, cap: Capability, catalog_name: str | None
+    ) -> Capability:
+        """Use the serving catalog, not copied metadata, to scope provider IDs."""
+        if catalog_name == "azure_foundry.json":
+            cap = replace(cap, provider="azure-foundry")
+        return cls._canonical_capability(cap)
 
     def _matching_providers(self, provider: str) -> set:
         """Return provider aliases, with Azure Foundry as the canonical name."""
@@ -331,8 +338,8 @@ class Registry:
                         continue
                     for record in records:
                         try:
-                            cap = self._canonical_capability(
-                                Capability.from_dict(record)
+                            cap = self._catalog_capability(
+                                Capability.from_dict(record), filename
                             )
                             provider = self._canonical_provider(cap.provider)
                             if (
@@ -415,7 +422,9 @@ class Registry:
             records = payload
         count = 0
         for record in records:
-            cap = self._canonical_capability(Capability.from_dict(record))
+            cap = self._catalog_capability(
+                Capability.from_dict(record), catalog_name
+            )
             if catalog_name:
                 provider = self._canonical_provider(cap.provider)
                 self._catalog_files_by_provider.setdefault(provider, set()).add(
