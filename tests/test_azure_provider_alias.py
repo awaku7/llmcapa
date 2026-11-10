@@ -169,6 +169,7 @@ def test_azure_foundry_vendor_record_stays_out_of_native_provider(registry):
     with pytest.raises(ModelNotFoundError):
         registry._get_local(model_id, provider="deepseek")
 
+
 def test_azure_foundry_provenance_does_not_rehome_vercel_models(registry):
     registry._ensure_loaded()
     model_id = "catalog-ownership-regression"
