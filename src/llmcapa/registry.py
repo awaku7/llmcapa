@@ -390,6 +390,11 @@ class Registry:
                 for record in records:
                     try:
                         cap = self._canonical_capability(Capability.from_dict(record))
+                        if (
+                            provider_set == {"azure-foundry"}
+                            and cap.extra.get("source") == "azure_foundry"
+                        ):
+                            cap = replace(cap, provider="azure-foundry")
                         provider = self._canonical_provider(cap.provider)
                         if (
                             provider not in provider_set
@@ -1279,7 +1284,9 @@ class Registry:
                         raise TypeError(
                             f"catalog {filename} contains a non-object record"
                         )
-                    cap = self._canonical_capability(Capability.from_dict(record))
+                    cap = self._catalog_capability(
+                        Capability.from_dict(record), filename
+                    )
                     if self._normalize_provider(cap.provider) in target_providers:
                         capabilities.append(cap)
         except (TypeError, ValueError, KeyError) as exc:
