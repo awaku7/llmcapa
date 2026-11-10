@@ -2,8 +2,8 @@
   "models": [
     {
       "provider": "anthropic",
-      "model_id": "claude-fable-5-1",
-      "display_name": "Claude Fable 5.1",
+      "model_id": "claude-fable-5-2",
+      "display_name": "Claude Fable 5.2",
       "context_window": 1000000,
       "max_output_tokens": 128000,
       "input_modalities": [
@@ -21,48 +21,63 @@
       "supports_chat_completion": true,
       "supports_responses_api": false,
       "supports_reasoning_effort": true,
-      "supports_thinking_budget": true,
+      "supports_thinking_budget": false,
       "supports_anthropic_api": true,
       "supports_google_api": false,
       "supports_fim": false,
       "tokenizer_name": "",
       "knowledge_cutoff": "2026-06",
       "deprecated": false,
-      "aliases": [],
+      "aliases": [
+        "anthropic/claude-fable-5-2"
+      ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 10.0,
-        "output_per_1m": 50.0,
+        "input_per_1m": 8.0,
+        "output_per_1m": 40.0,
         "currency": "USD"
       },
       "extra": {
         "source": "https://platform.claude.com/docs/en/about-claude/pricing",
-        "overview": "https://platform.claude.com/docs/en/models/overview",
-        "cache_write_5m_per_1m": 12.5,
-        "cache_write_1h_per_1m": 20.0,
-        "cache_hit_per_1m": 0.25,
-        "batch_input_per_1m": 5,
-        "batch_output_per_1m": 25,
+        "overview": "https://platform.claude.com/docs/en/models/fable-5-2/overview",
+        "cache_write_5m_per_1m": 10.0,
+        "cache_write_1h_per_1m": 16.0,
+        "cache_hit_per_1m": 0.2,
+        "batch_input_per_1m": 4.0,
+        "batch_output_per_1m": 20.0,
+        "context_window_source": "https://platform.claude.com/docs/en/models/fable-5-2/overview",
+        "context_window_basis": "official_model_spec",
         "long_context_window": 1000000,
         "long_context_at_standard_rates": true,
-        "context_window_source": "https://platform.claude.com/docs/en/about-claude/pricing",
-        "context_window_basis": "official_catalog_snapshot",
-        "knowledge_cutoff_source": "https://platform.claude.com/docs/en/models/overview"
+        "max_output_tokens_source": "https://platform.claude.com/docs/en/models/fable-5-2/overview",
+        "knowledge_cutoff_source": "https://platform.claude.com/docs/en/models/fable-5-2/overview",
+        "thinking_source": "https://platform.claude.com/docs/en/models/fable-5-2/whats-new-fable-5-2"
       },
       "reasoning_effort_values": [
         "low",
         "medium",
-        "high"
+        "high",
+        "xhigh",
+        "max"
       ],
-      "thinking_budget_values": {
-        "min": 1024,
-        "max": 128000
+      "thinking_control": {
+        "kind": "effort",
+        "parameter": "output_config.effort",
+        "values": [
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "max"
+        ],
+        "default": "high",
+        "thinking_type": "adaptive"
       },
       "computer_use": {
         "supported": true,
         "native": true,
         "provider": "anthropic",
-        "model": "claude-fable-5-1",
+        "model": "claude-fable-5-2",
         "api_type": "messages",
         "tool_type": "computer_toolset_20260801",
         "tool_version": "20260801",
@@ -73,7 +88,7 @@
         "requires_beta": false,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08"
+        "checked_at": "2026-11-10"
       }
     },
     {
@@ -151,7 +166,7 @@
         "requires_beta": false,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08"
+        "checked_at": "2026-11-10"
       }
     },
     {
@@ -233,7 +248,7 @@
         "requires_beta": false,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08"
+        "checked_at": "2026-11-10"
       }
     },
     {
@@ -329,7 +344,7 @@
         "requires_beta": false,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08"
+        "checked_at": "2026-11-10"
       },
       "reasoning_effort_values": [
         "low",
@@ -350,6 +365,175 @@
         ],
         "default": "medium",
         "thinking_type": "adaptive"
+      }
+    },
+    {
+      "provider": "anthropic",
+      "model_id": "claude-mythos-5-2",
+      "display_name": "Claude Mythos 5.2",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2026-06",
+      "deprecated": false,
+      "aliases": [
+        "anthropic/claude-mythos-5-2"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 8.0,
+        "output_per_1m": 40.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "overview": "https://platform.claude.com/docs/en/models/mythos-5-2/overview",
+        "cache_write_5m_per_1m": 10.0,
+        "cache_write_1h_per_1m": 16.0,
+        "cache_hit_per_1m": 0.2,
+        "batch_input_per_1m": 4.0,
+        "batch_output_per_1m": 20.0,
+        "context_window_source": "https://platform.claude.com/docs/en/models/mythos-5-2/overview",
+        "context_window_basis": "official_model_spec",
+        "long_context_window": 1000000,
+        "long_context_at_standard_rates": true,
+        "max_output_tokens_source": "https://platform.claude.com/docs/en/models/mythos-5-2/overview",
+        "knowledge_cutoff_source": "https://platform.claude.com/docs/en/models/mythos-5-2/overview",
+        "thinking_source": "https://platform.claude.com/docs/en/models/fable-5-2/whats-new-fable-5-2",
+        "availability": "verification_required",
+        "availability_source": "https://platform.claude.com/docs/en/models/mythos-5-2/overview"
+      },
+      "reasoning_effort_values": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "thinking_control": {
+        "kind": "effort",
+        "parameter": "output_config.effort",
+        "values": [
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "max"
+        ],
+        "default": "high",
+        "thinking_type": "adaptive"
+      },
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "anthropic",
+        "model": "claude-mythos-5-2",
+        "api_type": "messages",
+        "tool_type": "computer_toolset_20260801",
+        "tool_version": "20260801",
+        "status": "ga",
+        "environments": [
+          "desktop"
+        ],
+        "requires_beta": false,
+        "enable_zoom": true,
+        "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
+        "checked_at": "2026-11-10"
+      }
+    },
+    {
+      "provider": "anthropic",
+      "model_id": "claude-fable-5-1",
+      "display_name": "Claude Fable 5.1",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": true,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": "2026-06",
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 10.0,
+        "output_per_1m": 50.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "overview": "https://platform.claude.com/docs/en/models/overview",
+        "cache_write_5m_per_1m": 12.5,
+        "cache_write_1h_per_1m": 20.0,
+        "cache_hit_per_1m": 0.25,
+        "batch_input_per_1m": 5,
+        "batch_output_per_1m": 25,
+        "long_context_window": 1000000,
+        "long_context_at_standard_rates": true,
+        "context_window_source": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "context_window_basis": "official_catalog_snapshot",
+        "knowledge_cutoff_source": "https://platform.claude.com/docs/en/models/overview"
+      },
+      "reasoning_effort_values": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "thinking_budget_values": {
+        "min": 1024,
+        "max": 128000
+      },
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "anthropic",
+        "model": "claude-fable-5-1",
+        "api_type": "messages",
+        "tool_type": "computer_toolset_20260801",
+        "tool_version": "20260801",
+        "status": "ga",
+        "environments": [
+          "desktop"
+        ],
+        "requires_beta": false,
+        "enable_zoom": true,
+        "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
+        "checked_at": "2026-11-10"
       }
     },
     {
@@ -424,7 +608,7 @@
         "requires_beta": false,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08"
+        "checked_at": "2026-11-10"
       }
     },
     {
@@ -505,7 +689,7 @@
         "requires_beta": false,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08"
+        "checked_at": "2026-11-10"
       }
     },
     {
@@ -588,7 +772,7 @@
         "requires_beta": false,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08"
+        "checked_at": "2026-11-10"
       }
     },
     {
@@ -663,7 +847,7 @@
         "requires_beta": false,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08"
+        "checked_at": "2026-11-10"
       }
     },
     {
@@ -747,7 +931,7 @@
         "requires_beta": false,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08"
+        "checked_at": "2026-11-10"
       }
     },
     {
@@ -829,7 +1013,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -907,7 +1091,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -987,7 +1171,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -1188,7 +1372,7 @@
         "requires_beta": false,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08"
+        "checked_at": "2026-11-10"
       }
     },
     {
@@ -1265,7 +1449,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -1338,7 +1522,7 @@
         "requires_beta": true,
         "enable_zoom": false,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "beta_header": "computer-use-2025-01-24"
       }
     },
@@ -1470,7 +1654,7 @@
         "requires_beta": true,
         "enable_zoom": false,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "beta_header": "computer-use-2025-01-24"
       }
     },

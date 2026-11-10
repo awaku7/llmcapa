@@ -2,6 +2,41 @@
   "models": [
     {
       "provider": "modellix",
+      "model_id": "anthropic/claude-fable-5.2",
+      "display_name": "Claude Fable 5.2",
+      "context_window": 1000000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_vision": true,
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_responses_api": true,
+      "supports_anthropic_api": true,
+      "license_type": "api",
+      "deprecated": false,
+      "aliases": [],
+      "pricing": {
+        "input_per_1m": 8.0,
+        "output_per_1m": 40.0,
+        "currency": "USD",
+        "cache_read_per_1m": 0.2,
+        "cache_write_per_1m": 10.0
+      },
+      "extra": {
+        "official_source": "https://www.modellix.ai/llm",
+        "gateway_base_url": "https://llm.modellix.ai/v1",
+        "checked_at": "2026-11-10",
+        "catalog_source": "official_modellix_llm_price_table"
+      }
+    },
+    {
+      "provider": "modellix",
       "model_id": "openai/gpt-6.1-terra",
       "display_name": "GPT 6.1 Terra",
       "context_window": 1050000,
@@ -31,7 +66,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "catalog_source": "official_modellix_llm_price_table",
         "input_context_pricing_tiers": [
           {
@@ -83,7 +118,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "catalog_source": "official_modellix_llm_price_table"
       },
       "video": {
@@ -152,7 +187,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "catalog_source": "official_modellix_llm_price_table"
       },
       "audio": {
@@ -233,7 +268,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "catalog_source": "official_modellix_llm_price_table",
         "input_context_pricing_tiers": [
           {
@@ -284,7 +319,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "catalog_source": "official_modellix_llm_price_table",
         "input_context_pricing_tiers": [
           {
@@ -335,7 +370,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "catalog_source": "official_modellix_llm_price_table"
       },
       "max_output_tokens": 0
@@ -370,7 +405,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "catalog_source": "official_modellix_llm_price_table",
         "input_context_pricing_tiers": [
           {
@@ -421,7 +456,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "catalog_source": "official_modellix_llm_price_table",
         "input_context_pricing_tiers": [
           {
@@ -472,7 +507,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "catalog_source": "official_modellix_llm_price_table"
       },
       "max_output_tokens": 0
@@ -507,7 +542,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "catalog_source": "official_modellix_llm_price_table",
         "input_context_pricing_tiers": [
           {
@@ -558,7 +593,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "catalog_source": "official_modellix_llm_price_table"
       },
       "max_output_tokens": 0
@@ -595,7 +630,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "First input-context tier; Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table",
         "input_context_pricing_tiers": [
@@ -654,7 +689,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -744,7 +779,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "First input-context tier; Modellix may apply a displayed discount.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -782,7 +817,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -854,7 +889,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -926,7 +961,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "Modellix displayed price; availability may vary.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -997,7 +1032,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -1037,7 +1072,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -1078,7 +1113,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -1162,7 +1197,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -1205,7 +1240,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "First input-context tier; Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table",
         "input_context_pricing_tiers": [
@@ -1259,7 +1294,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -1296,7 +1331,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -1340,7 +1375,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -1408,7 +1443,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -1446,7 +1481,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -1486,7 +1521,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -1528,7 +1563,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -1564,7 +1599,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -1604,7 +1639,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "First input-context tier; Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table",
         "input_context_pricing_tiers": [
@@ -1661,7 +1696,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -1752,7 +1787,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "First input-context tier; Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table",
         "input_context_pricing_tiers": [
@@ -1857,7 +1892,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -1899,7 +1934,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -1940,7 +1975,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table"
       },
@@ -1977,7 +2012,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "First input-context tier; Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table",
         "input_context_pricing_tiers": [
@@ -2032,7 +2067,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "First input-context tier; Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table",
         "input_context_pricing_tiers": [
@@ -2087,7 +2122,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "First input-context tier; Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table",
         "input_context_pricing_tiers": [
@@ -2143,7 +2178,7 @@
       "extra": {
         "official_source": "https://www.modellix.ai/llm",
         "gateway_base_url": "https://llm.modellix.ai/v1",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "pricing_note": "First input-context tier; Modellix displayed price.",
         "catalog_source": "official_modellix_llm_price_table",
         "input_context_pricing_tiers": [

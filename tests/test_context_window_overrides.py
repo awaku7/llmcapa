@@ -121,6 +121,34 @@ def test_anthropic_template_uses_metadata_instead_of_name_guess() -> None:
     assert template["context_window"] == override["context_window"]
 
 
+def test_anthropic_fable_52_uses_officially_documented_context_window() -> None:
+    row = {
+        "provider": "anthropic",
+        "model_id": "claude-fable-5-2",
+        "context_window": 0,
+    }
+
+    assert _metadata_loader.apply_context_window_overrides([row]) == 1
+    assert row["context_window"] == 1_000_000
+    assert row["extra"]["context_window_source"] == (
+        "https://platform.claude.com/docs/en/models/fable-5-2/overview"
+    )
+
+
+def test_anthropic_mythos_52_context_is_officially_documented() -> None:
+    row = {
+        "provider": "anthropic",
+        "model_id": "claude-mythos-5-2",
+        "context_window": 0,
+    }
+
+    assert _metadata_loader.apply_context_window_overrides([row]) == 1
+    assert row["context_window"] == 1_000_000
+    assert row["extra"]["context_window_source"] == (
+        "https://platform.claude.com/docs/en/models/mythos-5-2/overview"
+    )
+
+
 def test_granite_base_and_long_context_are_distinct_metadata() -> None:
     override = _metadata_loader.context_window_override(
         "ibm-granite", "granite-4.2-30b"

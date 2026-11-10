@@ -44,6 +44,8 @@ GOOGLE_COMPUTER_USE_SHUTDOWNS = {
 # compatibility lists below.
 ANTHROPIC_TOOLSET_MODELS = frozenset(
     {
+        "claude-fable-5-2",
+        "claude-mythos-5-2",
         "claude-fable-5-1",
         "claude-mythos-5-1",
         "claude-fable-5",
@@ -79,6 +81,9 @@ ANTHROPIC_COMPUTER_20250124_MODELS = frozenset(
         "claude-sonnet-4",
         "claude-opus-4",
     }
+)
+AMAZON_COMPUTER_TOOLSET_MODELS = frozenset(
+    {"claude-fable-5-2", "claude-mythos-5-2"}
 )
 AMAZON_COMPUTER_20251124_MODELS = frozenset(
     {
@@ -181,8 +186,8 @@ def anthropic_computer_use_capability(
     """Return the documented Claude tool/version for a specific API platform.
 
     Anthropic API and Google Cloud support the current client toolset. Amazon
-    Bedrock and Microsoft Foundry expose the earlier beta tool versions only,
-    with Bedrock's documented Opus/Sonnet 5.5 exception.
+    Bedrock supports the current toolset for Fable/Mythos 5.2 and the earlier
+    beta tool versions for its other documented model families.
     """
     canonical = _claude_model_id(model_id)
     platform = platform.lower().replace("_", "-")
@@ -235,6 +240,24 @@ def anthropic_computer_use_capability(
         return None
 
     if platform in {"amazon", "amazon-bedrock"}:
+        # Fable/Mythos 5.2 support the current toolset on Bedrock. The model
+        # cards also retain computer_20251124 compatibility, but the current
+        # toolset is the preferred capability to advertise.
+        if canonical in AMAZON_COMPUTER_TOOLSET_MODELS:
+            return _computer_use_record(
+                provider="amazon",
+                model_id=model_id,
+                api_type="bedrock-runtime",
+                tool_type="computer_toolset_20260801",
+                tool_version="20260801",
+                status="ga",
+                source_url=(
+                    "https://docs.aws.amazon.com/bedrock/latest/userguide/"
+                    f"model-card-anthropic-claude-{'mythos' if 'mythos' in canonical else 'fable'}-5-2.html"
+                ),
+                environments=("desktop",),
+                enable_zoom=True,
+            )
         # Bedrock supports the earlier beta tool versions. Opus/Sonnet 5.5
         # are explicitly documented to accept computer_20251124 there.
         if canonical in AMAZON_COMPUTER_20251124_MODELS:

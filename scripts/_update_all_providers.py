@@ -75,6 +75,7 @@ PROVIDER_SCRIPTS = {
     "openai": "_update_openai.py",
     "openrouter": "_update_openrouter.py",
     "perceptron": "_update_hf_official_orgs.py",
+    "particle-ai": "provider_updates/particle-ai.py",
     "perplexity": "provider_updates/perplexity.py",
     "perplexity-router": "_update_perplexity_router.py",
     "poolside": "provider_updates/poolside.py",
@@ -141,6 +142,7 @@ ALIASES = {
     "mdx": "mdx-maas",
     "mdxmaas": "mdx-maas",
     "cloudflare": "cloudflare-workers-ai",
+    "particle": "particle-ai",
     "workers-ai": "cloudflare-workers-ai",
 }
 

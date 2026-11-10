@@ -194,6 +194,30 @@ def test_anthropic_tool_versions_are_platform_specific():
     )
 
 
+def test_anthropic_52_uses_latest_computer_toolsets_on_documented_platforms():
+    metadata = _script_module("_computer_use_metadata")
+    for model_id, family in (
+        ("claude-fable-5-2", "fable"),
+        ("claude-mythos-5-2", "mythos"),
+    ):
+        for platform in ("anthropic", "google-cloud"):
+            capability = metadata.anthropic_computer_use_capability(
+                model_id, platform
+            )
+            assert capability is not None
+            assert capability["tool_type"] == "computer_toolset_20260801"
+            assert capability["requires_beta"] is False
+
+        bedrock = metadata.anthropic_computer_use_capability(model_id, "amazon")
+        assert bedrock is not None
+        assert bedrock["provider"] == "amazon"
+        assert bedrock["api_type"] == "bedrock-runtime"
+        assert bedrock["tool_type"] == "computer_toolset_20260801"
+        assert bedrock["source_url"].endswith(
+            f"model-card-anthropic-claude-{family}-5-2.html"
+        )
+
+
 def test_openrouter_refresh_preserves_curated_computer_use_and_decision():
     updater = _script_module("update_catalog_from_openrouter")
     capability = {

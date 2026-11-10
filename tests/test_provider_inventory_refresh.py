@@ -130,6 +130,56 @@ def test_zai_model_parser_reads_chat_vision_audio_and_skips_generation_products(
     )
 
 
+def test_particle_ai_parser_reads_its_official_inventory_and_peak_prices():
+    updater = _load_provider_update("particle-ai")
+    models_markdown = """## particle-1
+Public model ID: `particle-ai/particle-1`
+Context window: 1,048,576 tokens
+Output ceiling: 131,072
+## deepseek-v41-flash-1017
+Model ID: `deepseek-ai/deepseek-v41-flash-1017`
+Context window: 1,048,576 tokens
+Output ceiling: 131,072
+## glm-5.3-flash
+Model ID: `glm-5.3-flash`
+Context window: 1,048,576 tokens
+Output ceiling: 131,072
+"""
+    pricing_markdown = r"""| Model | Input (uncached) | Cached input | Output |
+| - | - | - | - |
+| `particle-1` | \$0.25 | \$0.03 | \$1.00 |
+| `deepseek-v41-flash-1017` | \$0.25 | \$0.03 | \$1.00 |
+| `glm-5.3-flash` | \$0.12 | \$0.03 | \$0.40 |
+"""
+
+    models = updater.parse_inventory(
+        models_markdown, pricing_markdown, checked_at="2026-11-10"
+    )
+    by_id = {model["model_id"]: model for model in models}
+
+    assert set(by_id) == {
+        "particle-ai/particle-1",
+        "deepseek-ai/deepseek-v41-flash-1017",
+        "glm-5.3-flash",
+    }
+    assert by_id["particle-ai/particle-1"]["pricing"] == {
+        "input_per_1m": 0.25,
+        "output_per_1m": 1.0,
+        "currency": "USD",
+    }
+    assert by_id["glm-5.3-flash"]["reasoning_effort_values"] == [
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max",
+    ]
+    assert by_id["particle-ai/particle-1"]["extra"]["off_peak_pricing"][
+        "input_per_1m"
+    ] == 0.125
+
+
 def test_vllm_catalog_derives_static_records_from_huggingface_metadata():
     updater = _load_script("update_local_inference_catalogs_from_hf")
     source = {

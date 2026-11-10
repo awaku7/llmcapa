@@ -137,6 +137,27 @@ def test_rosalind_models_are_bundled_as_approval_gated_pricing_only_records():
     assert research.supports("responses_api") is None
 
 
+def test_particle_ai_provider_models_are_bundled_and_provider_scoped():
+    particle = llmcapa.get("particle-1", provider="particle-ai")
+    assert particle is not None
+    assert particle.model_id == "particle-ai/particle-1"
+    assert particle.context_window == 1_048_576
+    assert particle.max_output_tokens == 131_072
+    assert particle.pricing["input_per_1m"] == 0.25
+    assert particle.extra["cached_input_per_1m"] == 0.03
+    assert llmcapa.get("particle-1", provider="particle").model_id == (
+        "particle-ai/particle-1"
+    )
+
+    models = llmcapa.list_models(provider="particle-ai")
+    assert {model.model_id for model in models} == {
+        "particle-ai/particle-1",
+        "deepseek-ai/deepseek-v41-flash-1017",
+        "glm-5.3-flash",
+    }
+    assert "particle-ai" in llmcapa.providers()
+
+
 def test_get_unknown():
     with pytest.raises(ModelNotFoundError):
         llmcapa.get("this-model-does-not-exist")

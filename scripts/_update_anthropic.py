@@ -1,12 +1,8 @@
-"""Build/refresh anthropic.json from official Claude Platform docs.
+"""Build/refresh anthropic.json from the official Claude Platform docs.
 
-Sources (Playwright scrapes):
-- _scratch_anthropic_overview_live3.html
-- _scratch_anthropic_pricing_live3.html
-- https://platform.claude.com/docs/en/about-claude/models/overview
-- https://platform.claude.com/docs/en/about-claude/pricing
-
-Shape: Capability JSON with pricing + extra (cache 5m/1h/hit, batch, intro pricing)
+The pricing page is the live source for prices and model inventory. Model
+specifications that the pricing table omits are reconciled from their official
+model pages; Playwright is a fallback when the pricing table is client-rendered.
 """
 
 from __future__ import annotations
@@ -296,6 +292,7 @@ def _template(row: dict) -> dict:
     )
     _reconcile_haiku_55(model)
     _reconcile_opus_45(model)
+    _reconcile_fable_52(model)
     return model
 
 
@@ -397,6 +394,55 @@ def _reconcile_haiku_55(model: dict) -> None:
     model["extra"] = extra
 
 
+def _reconcile_fable_52(model: dict) -> None:
+    """Apply shared Fable/Mythos 5.2 specifications from Anthropic docs."""
+    model_id = model.get("model_id")
+    if model_id not in {"claude-fable-5-2", "claude-mythos-5-2"}:
+        return
+
+    is_mythos = model_id == "claude-mythos-5-2"
+    source = (
+        "https://platform.claude.com/docs/en/models/mythos-5-2/overview"
+        if is_mythos
+        else "https://platform.claude.com/docs/en/models/fable-5-2/overview"
+    )
+    effort_values = ["low", "medium", "high", "xhigh", "max"]
+    model.update(
+        context_window=1_000_000,
+        max_output_tokens=128_000,
+        knowledge_cutoff="2026-06",
+        supports_reasoning=True,
+        supports_reasoning_effort=True,
+        reasoning_effort_values=effort_values,
+        supports_thinking_budget=False,
+        thinking_control={
+            "kind": "effort",
+            "parameter": "output_config.effort",
+            "values": effort_values,
+            "default": "high",
+            "thinking_type": "adaptive",
+        },
+    )
+    model.pop("thinking_budget_values", None)
+    extra = dict(model.get("extra") or {})
+    extra.update(
+        overview=source,
+        context_window_source=source,
+        context_window_basis="official_model_spec",
+        max_output_tokens_source=source,
+        knowledge_cutoff_source=source,
+        thinking_source=(
+            "https://platform.claude.com/docs/en/models/fable-5-2/whats-new-fable-5-2"
+        ),
+    )
+    if is_mythos:
+        extra.update(
+            availability="verification_required",
+            availability_source=source,
+        )
+    model["extra"] = extra
+
+
 def apply_legacy_price_snapshot(models: list[dict], prices: dict) -> int:
     """Apply legacy price snapshots without erasing model-specific metadata."""
     updated = 0
@@ -419,6 +465,7 @@ def apply_legacy_price_snapshot(models: list[dict], prices: dict) -> int:
         model["max_output_tokens"] = max_output
         model["supports_anthropic_api"] = True
         model["supports_responses_api"] = False
+        _reconcile_fable_52(model)
         updated += 1
     return updated
 
@@ -489,6 +536,7 @@ def build() -> list[dict]:
     for model in models:
         _reconcile_haiku_55(model)
         _reconcile_opus_45(model)
+        _reconcile_fable_52(model)
 
     # Apply the current official Computer Use model/tool-version matrix after
     # the pricing refresh. This keeps the specialized capability from being

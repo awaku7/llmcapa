@@ -103,6 +103,7 @@ class Registry:
         # Modellix is a gateway with its own provider/name model IDs.
         "modellix": ["modellix-ai"],
         "cloudflare-workers-ai": ["cloudflare", "workers-ai"],
+        "particle-ai": ["particle"],
         # mdx.MaaS exposes models through an OpenAI-compatible inference API.
         "mdx-maas": ["mdx", "mdxmaas"],
         # llama.cpp is a local inference backend, kept distinct from Ollama.

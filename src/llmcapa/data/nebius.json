@@ -301,53 +301,6 @@
     },
     {
       "provider": "nebius",
-      "model_id": "Qwen/Qwen3.5-397B-A17B",
-      "display_name": "Qwen3.5-397B-A17B",
-      "context_window": 262144,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": null,
-      "supports_function_calling": true,
-      "supports_json_mode": null,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_responses_api": true,
-      "pricing": {
-        "input_per_1m": 0.6,
-        "output_per_1m": 3.6,
-        "currency": "USD"
-      },
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "extra": {
-        "source": "https://tokenfactory.nebius.com/api/public/models_info",
-        "vendor": "Qwen",
-        "model_type": "text2text",
-        "regions": [
-          "us-central1"
-        ],
-        "use_cases": [
-          "code",
-          "context_and_rag",
-          "dedicated-endpoint",
-          "function_calling",
-          "reasoning",
-          "responses_api",
-          "text"
-        ],
-        "tags": [],
-        "external_provider": false
-      }
-    },
-    {
-      "provider": "nebius",
       "model_id": "Qwen/Qwen3.8-27B",
       "display_name": "Qwen3.8-27B",
       "context_window": 1000000,
@@ -392,59 +345,6 @@
           "text"
         ],
         "tags": [],
-        "external_provider": false
-      }
-    },
-    {
-      "provider": "nebius",
-      "model_id": "deepseek-ai/DeepSeek-V4-Flash-0731",
-      "display_name": "DeepSeek-V4-Flash-0731",
-      "context_window": 1048576,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": null,
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_responses_api": true,
-      "pricing": {
-        "input_per_1m": 0.14,
-        "output_per_1m": 0.28,
-        "currency": "USD"
-      },
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "extra": {
-        "source": "https://tokenfactory.nebius.com/api/public/models_info",
-        "vendor": "deepseek",
-        "model_type": "text2text",
-        "regions": [
-          "us-central1"
-        ],
-        "use_cases": [
-          "code",
-          "context_and_rag",
-          "fine_tune",
-          "function_calling",
-          "reasoning",
-          "responses_api",
-          "text"
-        ],
-        "tags": [
-          "1m context",
-          "code",
-          "json mode",
-          "math",
-          "reasoning"
-        ],
         "external_provider": false
       }
     },
@@ -540,52 +440,6 @@
           "dedicated-endpoint",
           "function_calling",
           "reasoning",
-          "responses_api",
-          "text"
-        ],
-        "tags": [],
-        "external_provider": false
-      }
-    },
-    {
-      "provider": "nebius",
-      "model_id": "deepseek-ai/DeepSeek-V4.1-Flash",
-      "display_name": "DeepSeek V4.1 Flash",
-      "context_window": 1048576,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": null,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": true,
-      "supports_reasoning": null,
-      "supports_responses_api": true,
-      "pricing": {
-        "input_per_1m": 0.3,
-        "output_per_1m": 1.2,
-        "currency": "USD"
-      },
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "extra": {
-        "source": "https://tokenfactory.nebius.com/api/public/models_info",
-        "vendor": "deepseek",
-        "model_type": "image2text",
-        "regions": [
-          "us-north1"
-        ],
-        "use_cases": [
-          "code",
-          "dedicated-endpoint",
-          "image",
           "responses_api",
           "text"
         ],
@@ -730,107 +584,6 @@
           "responses_api",
           "text",
           "video"
-        ],
-        "tags": [],
-        "external_provider": false
-      }
-    },
-    {
-      "provider": "nebius",
-      "model_id": "moonshotai/Kimi-K2.6",
-      "display_name": "Kimi-K2.6",
-      "context_window": 262144,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": null,
-      "supports_function_calling": true,
-      "supports_json_mode": null,
-      "supports_vision": true,
-      "supports_reasoning": true,
-      "supports_responses_api": true,
-      "pricing": {
-        "input_per_1m": 0.95,
-        "output_per_1m": 4.0,
-        "currency": "USD"
-      },
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "extra": {
-        "source": "https://tokenfactory.nebius.com/api/public/models_info",
-        "vendor": "moonshotai",
-        "model_type": "image2text",
-        "regions": [
-          "us-central1"
-        ],
-        "use_cases": [
-          "code",
-          "complex_writing",
-          "context_and_rag",
-          "dedicated-endpoint",
-          "function_calling",
-          "image",
-          "reasoning",
-          "responses_api",
-          "summarization",
-          "text"
-        ],
-        "tags": [],
-        "external_provider": false
-      }
-    },
-    {
-      "provider": "nebius",
-      "model_id": "moonshotai/Kimi-K2.7-Code",
-      "display_name": "Kimi-K2.7-Code",
-      "context_window": 262144,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": null,
-      "supports_function_calling": true,
-      "supports_json_mode": null,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_responses_api": true,
-      "pricing": {
-        "input_per_1m": 0.95,
-        "output_per_1m": 4.0,
-        "currency": "USD"
-      },
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "extra": {
-        "source": "https://tokenfactory.nebius.com/api/public/models_info",
-        "vendor": "moonshotai",
-        "model_type": "text2text",
-        "regions": [
-          "us-central1"
-        ],
-        "use_cases": [
-          "code",
-          "complex_writing",
-          "context_and_rag",
-          "dedicated-endpoint",
-          "function_calling",
-          "image",
-          "reasoning",
-          "responses_api",
-          "summarization",
-          "text"
         ],
         "tags": [],
         "external_provider": false
@@ -1230,53 +983,6 @@
     },
     {
       "provider": "nebius",
-      "model_id": "openbmb/MiniCPM-V-4_5",
-      "display_name": "openbmb/MiniCPM-V-4_5",
-      "context_window": 32000,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": null,
-      "supports_function_calling": null,
-      "supports_json_mode": true,
-      "supports_vision": true,
-      "supports_reasoning": null,
-      "supports_responses_api": null,
-      "pricing": {
-        "input_per_1m": 0.658,
-        "output_per_1m": 1.11,
-        "currency": "USD"
-      },
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "extra": {
-        "source": "https://tokenfactory.nebius.com/api/public/models_info",
-        "vendor": "openbmb",
-        "model_type": "image2text",
-        "regions": [
-          "eu-north1"
-        ],
-        "use_cases": [
-          "context_and_rag",
-          "image",
-          "summarization",
-          "text"
-        ],
-        "tags": [
-          "json mode"
-        ],
-        "external_provider": false
-      }
-    },
-    {
-      "provider": "nebius",
       "model_id": "reflection/beam",
       "display_name": "Reflection Beam 1.0",
       "context_window": 1048576,
@@ -1513,6 +1219,312 @@
         ],
         "tags": [],
         "external_provider": false
+      }
+    },
+    {
+      "provider": "nebius",
+      "model_id": "Qwen/Qwen3.5-397B-A17B",
+      "display_name": "Qwen3.5-397B-A17B",
+      "context_window": 262144,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": null,
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_responses_api": true,
+      "pricing": {
+        "input_per_1m": 0.6,
+        "output_per_1m": 3.6,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://tokenfactory.nebius.com/api/public/models_info",
+        "vendor": "Qwen",
+        "model_type": "text2text",
+        "regions": [
+          "us-central1"
+        ],
+        "use_cases": [
+          "code",
+          "context_and_rag",
+          "dedicated-endpoint",
+          "function_calling",
+          "reasoning",
+          "responses_api",
+          "text"
+        ],
+        "tags": [],
+        "external_provider": false,
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-10"
+      }
+    },
+    {
+      "provider": "nebius",
+      "model_id": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "display_name": "DeepSeek-V4-Flash-0731",
+      "context_window": 1048576,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": null,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_responses_api": true,
+      "pricing": {
+        "input_per_1m": 0.14,
+        "output_per_1m": 0.28,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://tokenfactory.nebius.com/api/public/models_info",
+        "vendor": "deepseek",
+        "model_type": "text2text",
+        "regions": [
+          "us-central1"
+        ],
+        "use_cases": [
+          "code",
+          "context_and_rag",
+          "fine_tune",
+          "function_calling",
+          "reasoning",
+          "responses_api",
+          "text"
+        ],
+        "tags": [
+          "1m context",
+          "code",
+          "json mode",
+          "math",
+          "reasoning"
+        ],
+        "external_provider": false,
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-10"
+      }
+    },
+    {
+      "provider": "nebius",
+      "model_id": "deepseek-ai/DeepSeek-V4.1-Flash",
+      "display_name": "DeepSeek V4.1 Flash",
+      "context_window": 1048576,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": null,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "supports_responses_api": true,
+      "pricing": {
+        "input_per_1m": 0.3,
+        "output_per_1m": 1.2,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://tokenfactory.nebius.com/api/public/models_info",
+        "vendor": "deepseek",
+        "model_type": "image2text",
+        "regions": [
+          "us-north1"
+        ],
+        "use_cases": [
+          "code",
+          "dedicated-endpoint",
+          "image",
+          "responses_api",
+          "text"
+        ],
+        "tags": [],
+        "external_provider": false,
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-10"
+      }
+    },
+    {
+      "provider": "nebius",
+      "model_id": "moonshotai/Kimi-K2.6",
+      "display_name": "Kimi-K2.6",
+      "context_window": 262144,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": null,
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_responses_api": true,
+      "pricing": {
+        "input_per_1m": 0.95,
+        "output_per_1m": 4.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://tokenfactory.nebius.com/api/public/models_info",
+        "vendor": "moonshotai",
+        "model_type": "image2text",
+        "regions": [
+          "us-central1"
+        ],
+        "use_cases": [
+          "code",
+          "complex_writing",
+          "context_and_rag",
+          "dedicated-endpoint",
+          "function_calling",
+          "image",
+          "reasoning",
+          "responses_api",
+          "summarization",
+          "text"
+        ],
+        "tags": [],
+        "external_provider": false,
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-10"
+      }
+    },
+    {
+      "provider": "nebius",
+      "model_id": "moonshotai/Kimi-K2.7-Code",
+      "display_name": "Kimi-K2.7-Code",
+      "context_window": 262144,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": null,
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_responses_api": true,
+      "pricing": {
+        "input_per_1m": 0.95,
+        "output_per_1m": 4.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://tokenfactory.nebius.com/api/public/models_info",
+        "vendor": "moonshotai",
+        "model_type": "text2text",
+        "regions": [
+          "us-central1"
+        ],
+        "use_cases": [
+          "code",
+          "complex_writing",
+          "context_and_rag",
+          "dedicated-endpoint",
+          "function_calling",
+          "image",
+          "reasoning",
+          "responses_api",
+          "summarization",
+          "text"
+        ],
+        "tags": [],
+        "external_provider": false,
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-10"
+      }
+    },
+    {
+      "provider": "nebius",
+      "model_id": "openbmb/MiniCPM-V-4_5",
+      "display_name": "openbmb/MiniCPM-V-4_5",
+      "context_window": 32000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": null,
+      "supports_function_calling": null,
+      "supports_json_mode": true,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 0.658,
+        "output_per_1m": 1.11,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "source": "https://tokenfactory.nebius.com/api/public/models_info",
+        "vendor": "openbmb",
+        "model_type": "image2text",
+        "regions": [
+          "eu-north1"
+        ],
+        "use_cases": [
+          "context_and_rag",
+          "image",
+          "summarization",
+          "text"
+        ],
+        "tags": [
+          "json mode"
+        ],
+        "external_provider": false,
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-10"
       }
     }
   ]

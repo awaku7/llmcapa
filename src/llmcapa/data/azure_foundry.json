@@ -71,7 +71,7 @@
           "wait"
         ],
         "source_url": "https://ai.azure.com/catalog/models",
-        "checked_at": "2026-11-08"
+        "checked_at": "2026-11-10"
       }
     },
     {
@@ -1901,6 +1901,60 @@
     },
     {
       "provider": "azure-openai",
+      "model_id": "gpt-image-2",
+      "display_name": "GPT-image-2",
+      "context_window": 4096,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "image",
+        "text"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Image generation,Image to image",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "api",
+      "aliases": [
+        "azure-openai/gpt-image-2"
+      ],
+      "pricing": {
+        "input_per_1m": 5.0,
+        "output_per_1m": 0.0,
+        "currency": "USD",
+        "cached_input_per_1m": 1.25
+      },
+      "extra": {
+        "pricing_match_key": "gpt-image-2",
+        "deployment_types": [
+          "maap-inference",
+          "batch-enabled"
+        ],
+        "azure_offers": [
+          "VM"
+        ],
+        "deployment_options": "AOAI,UnifiedEndpointMaaS,MaaP,Serverless API",
+        "version": "2026-04-21",
+        "maas_or_paygo": true,
+        "summary": "An efficient AI solution for diverse text and image tasks, including high quality, and editing scenarios",
+        "refresh_metadata_fallbacks": [
+          "output_modalities"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-11-10"
+      }
+    },
+    {
+      "provider": "azure-openai",
       "model_id": "gpt-oss-120B",
       "display_name": "gpt-oss-120b",
       "context_window": 131072,
@@ -2132,6 +2186,55 @@
         },
         "checked_at": "2026-10-28",
         "status": "inferred"
+      }
+    },
+    {
+      "provider": "azure-openai",
+      "model_id": "gpt-realtime-2",
+      "display_name": "OpenAI gpt-realtime-2",
+      "context_window": 128000,
+      "max_output_tokens": 4096,
+      "input_modalities": [
+        "audio",
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "audio",
+        "text"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Audio generation",
+      "azure_lifecycle": "Preview",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "api",
+      "supports_audio_input": true,
+      "supports_audio_output": true,
+      "aliases": [
+        "azure-openai/gpt-realtime-2"
+      ],
+      "pricing": {
+        "input_per_1m": 4.0,
+        "output_per_1m": 24.0,
+        "currency": "USD",
+        "cached_input_per_1m": 0.4
+      },
+      "extra": {
+        "pricing_match_key": "gpt-realtime-2",
+        "deployment_types": [
+          "batch-enabled"
+        ],
+        "deployment_options": "UnifiedEndpointMaaS,AOAI",
+        "version": "2026-05-07",
+        "maas_or_paygo": true,
+        "summary": "Gpt‑realtime‑2 is a next‑generation speech‑to‑speech reasoning model that processes live audio input and generates audio responses with built‑in reasoning, enabling low‑latency conversational voice interactions."
       }
     },
     {
@@ -2869,6 +2972,55 @@
     },
     {
       "provider": "deepseek",
+      "model_id": "DeepSeek-V4-Flash",
+      "display_name": "DeepSeek-V4-Flash",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "deepseek-v4-flash",
+        "deepseek/DeepSeek-V4-Flash"
+      ],
+      "pricing": {
+        "input_per_1m": 0.19,
+        "output_per_1m": 0.51,
+        "currency": "USD"
+      },
+      "extra": {
+        "pricing_match_key": "deepseek-v4-flash",
+        "deployment_types": [
+          "maas-inference"
+        ],
+        "azure_offers": [
+          "standard-paygo"
+        ],
+        "deployment_options": "ServerlessMaaS,UnifiedEndpointMaaS,Serverless API",
+        "version": "2026-04-23",
+        "maas_or_paygo": true,
+        "summary": "DeepSeek V4 is an efficient MoE model family with 1M context and near state-of-the-art open-source reasoning performance.",
+        "long_context": true,
+        "context_window": 1000000
+      }
+    },
+    {
+      "provider": "deepseek",
       "model_id": "DeepSeek-V4-Flash-0731",
       "display_name": "DeepSeek-V4-Flash-0731",
       "context_window": 1000000,
@@ -2912,6 +3064,55 @@
         "version": "2026-07-31",
         "maas_or_paygo": true,
         "summary": "DeepSeek-V4-Flash-0731 is the official release of DeepSeek-V4-Flash, superseding the preview version, with substantially enhanced agentic capabilities.",
+        "long_context": true,
+        "context_window": 1000000
+      }
+    },
+    {
+      "provider": "deepseek",
+      "model_id": "DeepSeek-V4-Pro",
+      "display_name": "DeepSeek-V4-Pro",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "deepseek-v4-pro",
+        "deepseek/DeepSeek-V4-Pro"
+      ],
+      "pricing": {
+        "input_per_1m": 1.74,
+        "output_per_1m": 3.48,
+        "currency": "USD"
+      },
+      "extra": {
+        "pricing_match_key": "deepseek-v4-pro",
+        "deployment_types": [
+          "maas-inference"
+        ],
+        "azure_offers": [
+          "standard-paygo"
+        ],
+        "deployment_options": "ServerlessMaaS,UnifiedEndpointMaaS,Serverless API",
+        "version": "2026-04-23",
+        "maas_or_paygo": true,
+        "summary": "DeepSeek V4 is an efficient MoE model family with 1M context and near state-of-the-art open-source reasoning performance.",
         "long_context": true,
         "context_window": 1000000
       }
@@ -3761,7 +3962,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 4,
+        "version": 5,
         "maas_or_paygo": true,
         "summary": "DeepSeek V4 Flash 0731 MoE checkpoint for long-context reasoning and coding.",
         "long_context": true,
@@ -3963,7 +4164,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 8,
+        "version": 9,
         "maas_or_paygo": true,
         "summary": "OpenAI GPT-OSS 20B open-weight reasoning model with MXFP4 quantized weights."
       }
@@ -4529,6 +4730,56 @@
       }
     },
     {
+      "provider": "moonshot",
+      "model_id": "Kimi-K2.6",
+      "display_name": "Kimi-K2.6",
+      "context_window": 262144,
+      "max_output_tokens": 262144,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Chat completion",
+      "azure_lifecycle": "Preview",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "kimi-k2.6",
+        "moonshot/Kimi-K2.6"
+      ],
+      "pricing": {
+        "input_per_1m": 0.95,
+        "output_per_1m": 4.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "pricing_match_key": "kimi-k2.6",
+        "deployment_types": [
+          "maas-inference"
+        ],
+        "azure_offers": [
+          "standard-paygo"
+        ],
+        "deployment_options": "UnifiedEndpointMaaS,Serverless API",
+        "version": "2026-04-20",
+        "maas_or_paygo": true,
+        "summary": "Kimi K2.6 is an open-source, native multimodal agentic model that advances practical capabilities in long-horizon coding, coding-driven design, proactive autonomous execution, and swarm-based task orchestration.",
+        "long_context": true,
+        "context_window": 262144
+      }
+    },
+    {
       "provider": "nvidia",
       "model_id": "Llama-3.3-70B-Instruct-NIM-microservice",
       "display_name": "Llama-3.3-70B-Instruct-NIM-microservice",
@@ -5033,7 +5284,7 @@
         "requires_beta": true,
         "enable_zoom": false,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "beta_header": "computer-use-2025-01-24"
       }
     },
@@ -5135,7 +5386,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -5196,7 +5447,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -5257,7 +5508,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -5317,7 +5568,7 @@
         "requires_beta": true,
         "enable_zoom": false,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "beta_header": "computer-use-2025-01-24"
       }
     },
@@ -5378,7 +5629,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -7420,7 +7671,6 @@
           "standard-paygo"
         ],
         "deployment_options": "UnifiedEndpointMaaS,Serverless API",
-        "inference_deprecation_date": "2027-11-04T00:00:00Z",
         "version": 1,
         "maas_or_paygo": true,
         "summary": "Kimi K3.1 Pro is Moonshot AI's open-weight multimodal agentic model with a 1M-token context window, designed for coding, visual workflows, and long-context research.",
@@ -8513,7 +8763,8 @@
         "deployment_options": "MaaP,Managed Compute",
         "version": 5,
         "maas_or_paygo": true,
-        "summary": "ALIA 40B instruction model for long-context multilingual chat across Iberian languages and English."
+        "summary": "ALIA 40B instruction model for long-context multilingual chat across Iberian languages and English.",
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -8553,7 +8804,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 6,
+        "version": 7,
         "maas_or_paygo": true,
         "summary": "ALIA 40B instruction model for long-context multilingual chat across Iberian languages and English."
       }
@@ -8595,7 +8846,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 4,
+        "version": 5,
         "maas_or_paygo": true,
         "summary": "ALIA 40B instruction model for long-context multilingual chat across Iberian languages and English."
       }
@@ -8803,7 +9054,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 2,
+        "version": 3,
         "maas_or_paygo": true,
         "summary": "DeepSeek V4.1 Flash 1017 multimodal MoE update for faster reasoning, coding, and agents.",
         "long_context": true,
@@ -8893,7 +9144,8 @@
         "maas_or_paygo": true,
         "summary": "Telecom-specialized text-only Gemma 4 31B instruction model for RAG, standards, and operations workflows.",
         "long_context": true,
-        "context_window": 262144
+        "context_window": 262144,
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -8939,7 +9191,8 @@
         "maas_or_paygo": true,
         "summary": "Instruction-tuned multimodal Gemma 4 MoE model for reasoning, coding, and image understanding.",
         "long_context": true,
-        "context_window": 262144
+        "context_window": 262144,
+        "not_listed_in_current_docs": true
       },
       "video": {
         "accepts_video_input": true,
@@ -9016,7 +9269,8 @@
         "maas_or_paygo": true,
         "summary": "Instruction-tuned multimodal Gemma 4 model for reasoning, coding, and image understanding.",
         "long_context": true,
-        "context_window": 262144
+        "context_window": 262144,
+        "not_listed_in_current_docs": true
       },
       "video": {
         "accepts_video_input": true,
@@ -9093,7 +9347,8 @@
         "deployment_options": "MaaP,Managed Compute",
         "version": 8,
         "maas_or_paygo": true,
-        "summary": "Compact multimodal Gemma 4 model for reasoning, coding, and on-device text, image, and audio tasks."
+        "summary": "Compact multimodal Gemma 4 model for reasoning, coding, and on-device text, image, and audio tasks.",
+        "not_listed_in_current_docs": true
       },
       "audio": {
         "accepts_audio_input": true,
@@ -9184,7 +9439,8 @@
         "deployment_options": "MaaP,Managed Compute",
         "version": 9,
         "maas_or_paygo": true,
-        "summary": "Compact multimodal Gemma 4 model for reasoning, coding, and efficient text, image, and audio tasks."
+        "summary": "Compact multimodal Gemma 4 model for reasoning, coding, and efficient text, image, and audio tasks.",
+        "not_listed_in_current_docs": true
       },
       "audio": {
         "accepts_audio_input": true,
@@ -9269,7 +9525,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 5,
+        "version": 6,
         "maas_or_paygo": true,
         "summary": "Granite 4.0 H Small 32B long-context instruct model for enterprise text generation."
       }
@@ -9353,7 +9609,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 5,
+        "version": 6,
         "maas_or_paygo": true,
         "summary": "Granite 4.0 Micro 3B long-context instruct model for enterprise text generation."
       }
@@ -9869,7 +10125,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 3,
+        "version": 4,
         "maas_or_paygo": true,
         "summary": "27B multimodal browser-use agent that reasons over screenshots and emits grounded browser actions.",
         "long_context": true,
@@ -9959,7 +10215,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 3,
+        "version": 4,
         "maas_or_paygo": true,
         "summary": "9B multimodal browser-use agent that reasons over screenshots and emits grounded browser actions.",
         "long_context": true,
@@ -10171,7 +10427,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 2,
+        "version": 3,
         "maas_or_paygo": true,
         "summary": "7B Mistral model specialized for mathematical and scientific reasoning tasks."
       }
@@ -10214,7 +10470,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 2,
+        "version": 4,
         "maas_or_paygo": true,
         "summary": "FP8 3.8B Ministral 3 instruct model with vision, multilingual chat, tools, and 256k context.",
         "long_context": true,
@@ -10258,7 +10514,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 6,
+        "version": 7,
         "maas_or_paygo": true,
         "summary": "12B Mistral-Nemo instruct model for multilingual chat, coding, and tool-use workflows."
       }
@@ -10345,7 +10601,8 @@
         "deployment_options": "MaaP,Managed Compute",
         "version": 3,
         "maas_or_paygo": true,
-        "summary": "24B multimodal Mistral Small 3.1 instruct model for text, vision, function calling, and long context."
+        "summary": "24B multimodal Mistral Small 3.1 instruct model for text, vision, function calling, and long context.",
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -11363,7 +11620,8 @@
         "maas_or_paygo": true,
         "summary": "Frontier-scale NVFP4 reasoning and chat model for complex agentic workflows, long-context analysis, tool use, multilingual reasoning, and high-stakes RAG.",
         "long_context": true,
-        "context_window": 1048576
+        "context_window": 1048576,
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -11403,7 +11661,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 3,
+        "version": 5,
         "maas_or_paygo": true,
         "summary": "Full-precision Nemotron 3.5 Lightning 30B reference model for customization and domain adaptation.",
         "long_context": true,
@@ -11493,7 +11751,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 1,
+        "version": 2,
         "maas_or_paygo": true,
         "summary": "Nemotron 3.5 Super vision-language reasoning model for document, GUI, and video understanding.",
         "long_context": true,
@@ -11689,7 +11947,8 @@
         "deployment_options": "MaaP,Managed Compute",
         "version": 4,
         "maas_or_paygo": true,
-        "summary": "NVIDIA 32B code-reasoning model derived from Qwen2.5-32B-Instruct."
+        "summary": "NVIDIA 32B code-reasoning model derived from Qwen2.5-32B-Instruct.",
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -12121,7 +12380,8 @@
         "maas_or_paygo": true,
         "summary": "Qwen3 30B-A3B instruction model for long-context reasoning and generation.",
         "long_context": true,
-        "context_window": 262144
+        "context_window": 262144,
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -13906,7 +14166,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 10,
+        "version": 11,
         "maas_or_paygo": true,
         "summary": "FP8-quantized multimodal 27B Qwen3.6 model for coding, reasoning, OCR, GUI interaction, and long-context video understanding.",
         "long_context": true,
@@ -14179,7 +14439,8 @@
         "deployment_options": "MaaP,Managed Compute",
         "version": 6,
         "maas_or_paygo": true,
-        "summary": "Preview QwQ 32B reasoning model for experimental math and coding tasks."
+        "summary": "Preview QwQ 32B reasoning model for experimental math and coding tasks.",
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -14267,7 +14528,8 @@
         "deployment_options": "MaaP,Managed Compute",
         "version": 2,
         "maas_or_paygo": true,
-        "summary": "FP8-quantized 30B multimodal model for agentic tool use and image understanding."
+        "summary": "FP8-quantized 30B multimodal model for agentic tool use and image understanding.",
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -14967,7 +15229,8 @@
         "maas_or_paygo": true,
         "summary": "FP8 GLM-4.7 355B-A32B MoE model for agentic reasoning, coding, and tool use.",
         "long_context": true,
-        "context_window": 202752
+        "context_window": 202752,
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -16279,7 +16542,7 @@
         "refresh_metadata_fallbacks": [
           "input_modalities"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-08"
+        "refresh_metadata_fallback_checked_at": "2026-11-10"
       }
     },
     {
@@ -16441,7 +16704,7 @@
         "refresh_metadata_fallbacks": [
           "output_modalities"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-08"
+        "refresh_metadata_fallback_checked_at": "2026-11-10"
       }
     },
     {
@@ -19323,80 +19586,6 @@
     },
     {
       "provider": "azure-foundry",
-      "model_id": "DeepSeek-V4-Flash",
-      "display_name": "DeepSeek-V4-Flash",
-      "context_window": 1000000,
-      "max_output_tokens": 128000,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_function_calling": false,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": null,
-      "knowledge_cutoff": "",
-      "azure_type": "Chat completion",
-      "azure_lifecycle": "",
-      "source": "azure_foundry",
-      "supports_responses_api": false,
-      "license_type": "open-source",
-      "aliases": [
-        "deepseek-v4-flash",
-        "azure-foundry/DeepSeek-V4-Flash"
-      ],
-      "pricing": {
-        "input_per_1m": 0.19,
-        "output_per_1m": 0.51,
-        "currency": "USD"
-      },
-      "extra": {
-        "pricing_match_key": "deepseek-v4-flash"
-      }
-    },
-    {
-      "provider": "azure-foundry",
-      "model_id": "DeepSeek-V4-Pro",
-      "display_name": "DeepSeek-V4-Pro",
-      "context_window": 1000000,
-      "max_output_tokens": 128000,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_function_calling": false,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": null,
-      "knowledge_cutoff": "",
-      "azure_type": "Chat completion",
-      "azure_lifecycle": "",
-      "source": "azure_foundry",
-      "supports_responses_api": false,
-      "license_type": "open-source",
-      "aliases": [
-        "deepseek-v4-pro",
-        "azure-foundry/DeepSeek-V4-Pro"
-      ],
-      "pricing": {
-        "input_per_1m": 1.74,
-        "output_per_1m": 3.48,
-        "currency": "USD"
-      },
-      "extra": {
-        "pricing_match_key": "deepseek-v4-pro"
-      }
-    },
-    {
-      "provider": "azure-foundry",
       "model_id": "FW-DeepSeek-V4.1-Flash",
       "display_name": "FW-DeepSeek-V4.1-Flash",
       "context_window": 1048576,
@@ -19516,45 +19705,6 @@
           "currency": "USD"
         },
         "pricing_match_key": "fw-kimi-k3"
-      }
-    },
-    {
-      "provider": "azure-foundry",
-      "model_id": "Kimi-K2.6",
-      "display_name": "Kimi-K2.6",
-      "context_window": 262144,
-      "max_output_tokens": 16384,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_function_calling": false,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": null,
-      "knowledge_cutoff": "",
-      "azure_type": "Chat completion",
-      "azure_lifecycle": "",
-      "source": "azure_foundry",
-      "supports_responses_api": false,
-      "license_type": "open-source",
-      "aliases": [
-        "kimi-k2.6",
-        "azure-foundry/Kimi-K2.6"
-      ],
-      "pricing": {
-        "input_per_1m": 0.95,
-        "output_per_1m": 4.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "pricing_match_key": "kimi-k2.6",
-        "long_context": true,
-        "context_window": 262144
       }
     },
     {
@@ -19954,80 +20104,6 @@
       },
       "extra": {
         "pricing_match_key": "gpt-chat-latest-10142026"
-      }
-    },
-    {
-      "provider": "azure-foundry",
-      "model_id": "gpt-image-2",
-      "display_name": "gpt-image-2",
-      "context_window": 4096,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_function_calling": false,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": null,
-      "knowledge_cutoff": "",
-      "azure_type": "Chat completion",
-      "azure_lifecycle": "",
-      "source": "azure_foundry",
-      "supports_responses_api": true,
-      "license_type": "open-source",
-      "aliases": [
-        "azure-foundry/gpt-image-2"
-      ],
-      "pricing": {
-        "input_per_1m": 5.0,
-        "output_per_1m": 0.0,
-        "currency": "USD",
-        "cached_input_per_1m": 1.25
-      },
-      "extra": {
-        "pricing_match_key": "gpt-image-2"
-      }
-    },
-    {
-      "provider": "azure-foundry",
-      "model_id": "gpt-realtime-2",
-      "display_name": "gpt-realtime-2",
-      "context_window": 128000,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_function_calling": false,
-      "supports_json_mode": null,
-      "supports_streaming": null,
-      "supports_vision": false,
-      "supports_reasoning": null,
-      "knowledge_cutoff": "",
-      "azure_type": "Chat completion",
-      "azure_lifecycle": "",
-      "source": "azure_foundry",
-      "supports_responses_api": false,
-      "license_type": "open-source",
-      "aliases": [
-        "azure-foundry/gpt-realtime-2"
-      ],
-      "pricing": {
-        "input_per_1m": 4.0,
-        "output_per_1m": 24.0,
-        "currency": "USD",
-        "cached_input_per_1m": 0.4
-      },
-      "extra": {
-        "pricing_match_key": "gpt-realtime-2"
       }
     },
     {
@@ -20842,7 +20918,7 @@
         "pricing_match_key": "microsoft-decision-1",
         "official_model_catalog_url": "https://ai.azure.com/catalog/models/Microsoft-Decision-1",
         "official_usage_docs": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-microsoft-decision",
-        "official_catalog_checked_at": "2026-11-08",
+        "official_catalog_checked_at": "2026-11-10",
         "deployment_types": [
           "DataZoneStandard",
           "GlobalStandard"
@@ -21195,7 +21271,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -21241,7 +21317,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -21287,7 +21363,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -21333,7 +21409,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -21379,7 +21455,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -21425,7 +21501,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -21471,7 +21547,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-08",
+        "checked_at": "2026-11-10",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -47728,7 +47804,8 @@
           "VM"
         ],
         "deployment_options": "MaaP",
-        "version": 1
+        "version": 1,
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -124324,7 +124401,8 @@
           "VM"
         ],
         "deployment_options": "MaaP",
-        "version": 1
+        "version": 1,
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -131461,7 +131539,8 @@
           "VM"
         ],
         "deployment_options": "MaaP",
-        "version": 1
+        "version": 1,
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -146398,7 +146477,8 @@
           "VM"
         ],
         "deployment_options": "MaaP",
-        "version": 1
+        "version": 1,
+        "not_listed_in_current_docs": true
       }
     },
     {
