@@ -105,77 +105,23 @@ jobs:
             compile-${{ matrix.python-version }}.log
           if-no-files-found: ignore
 
-  diagnose-deepseek-wheels:
-    if: github.event_name == 'pull_request'
-    permissions:
-      contents: read
-      pull-requests: write
+  compare-published-deepseek-wheels:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        version: ["0.5.78", "0.5.79"]
+        llmcapa-version: ["0.5.78", "0.5.79"]
     steps:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Install exact published wheel
-        run: python -m pip install --only-binary=:all: --no-deps --target "$RUNNER_TEMP/llmcapa" "llmcapa==${{ matrix.version }}"
-      - name: Inspect capability resolution
-        shell: bash
-        run: |
-          set -o pipefail
-          PYTHONPATH="$RUNNER_TEMP/llmcapa" python - <<'PY' | tee wheel-results.log
-          import json
-          import llmcapa
-          from llmcapa.registry import default_registry
-
-          registry = default_registry()
-          print("installed_version", llmcapa.__version__, flush=True)
-          for provider in ("deepseek", None):
-              for model in ("deepseek-v4-flash", "deepseek-v4-flash-vision-exp", "deepseek-flash"):
-                  try:
-                      cap = registry._get_local(model, provider)
-                      print(
-                          "lookup",
-                          json.dumps(
-                              {
-                                  "provider_arg": provider,
-                                  "model_arg": model,
-                                  "resolved_provider": cap.provider,
-                                  "resolved_model": cap.model_id,
-                                  "vision": cap.supports("vision"),
-                                  "image_input": cap.supports("image_input"),
-                                  "responses_api": cap.supports("responses_api"),
-                                  "reasoning_effort": cap.supports("reasoning_effort"),
-                                  "reasoning_effort_values": cap.reasoning_effort_values,
-                              }
-                          ),
-                          flush=True,
-                      )
-                  except Exception as exc:
-                      print("lookup_error", provider, model, repr(exc), flush=True)
-                      raise
-
-          cap = registry._get_local("deepseek-v4-flash", "deepseek")
-          assert cap.provider == "deepseek", cap
-          assert cap.supports("responses_api") is True, cap
-          assert cap.supports("vision") is True, cap
-          PY
-      - name: Report diagnostic result on PR
-        if: always() && github.event_name == 'pull_request'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        shell: bash
-        run: |
-          {
-            printf 'Published llmcapa wheel **%s** diagnostic output:\n\n' '${{ matrix.version }}'
-            printf '%s\n' '```text'
-            if [ -f wheel-results.log ]; then
-              cat wheel-results.log
-            else
-              printf 'No diagnostic output; see Actions job log.\n'
-            fi
-            printf '\n%s\n' '```'
-          } > wheel-comment.md
-          gh pr comment "${{ github.event.pull_request.number }}" --repo "${{ github.repository }}" --body-file wheel-comment.md
+      - name: Install exact published llmcapa
+        run: python -m pip install --only-binary=:all: --no-deps llmcapa==${{ matrix.llmcapa-version }}
+      - name: Verify DeepSeek capability from installed wheel
+        run: >
+          python -c 'import llmcapa;
+          c=llmcapa.get("deepseek-v4-flash", provider="deepseek");
+          print(llmcapa.__version__, c.provider, c.model_id, c.supports("responses_api"), c.supports("vision"), c.reasoning_effort_values, flush=True);
+          assert c.provider == "deepseek";
+          assert c.supports("responses_api") is True;
+          assert c.supports("vision") is True'
