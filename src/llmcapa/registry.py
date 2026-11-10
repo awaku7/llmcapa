@@ -427,9 +427,7 @@ class Registry:
             records = payload
         count = 0
         for record in records:
-            cap = self._catalog_capability(
-                Capability.from_dict(record), catalog_name
-            )
+            cap = self._catalog_capability(Capability.from_dict(record), catalog_name)
             if catalog_name:
                 provider = self._canonical_provider(cap.provider)
                 self._catalog_files_by_provider.setdefault(provider, set()).add(
