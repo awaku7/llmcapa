@@ -211,3 +211,10 @@ def test_azure_foundry_provenance_does_not_rehome_vercel_models(registry):
     assert foundry.provider == "azure-foundry"
     assert foundry.context_window == 5678
     assert registry.get("gpt-5.4", provider="azure-foundry").supports("tool_search")
+
+
+def test_foundry_catalog_preserves_microsoft_decision_provider(registry):
+    decision = registry.get("Microsoft-Decision-1", provider="microsoft")
+    assert decision.provider == "microsoft"
+    assert decision.supports("decision_output")
+    assert "azure_foundry.json" in registry._catalog_files_by_provider["microsoft"]

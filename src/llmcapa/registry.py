@@ -165,8 +165,8 @@ class Registry:
     def _catalog_capability(
         cls, cap: Capability, catalog_name: str | None
     ) -> Capability:
-        """Use the serving catalog, not copied metadata, to scope provider IDs."""
-        if catalog_name == "azure_foundry.json":
+        """Separate overlapping DeepSeek IDs without relocating other vendors."""
+        if catalog_name == "azure_foundry.json" and cap.provider == "deepseek":
             cap = replace(cap, provider="azure-foundry")
         return cls._canonical_capability(cap)
 
@@ -392,6 +392,7 @@ class Registry:
                         cap = self._canonical_capability(Capability.from_dict(record))
                         if (
                             provider_set == {"azure-foundry"}
+                            and cap.provider == "deepseek"
                             and cap.extra.get("source") == "azure_foundry"
                         ):
                             cap = replace(cap, provider="azure-foundry")
