@@ -116,7 +116,8 @@ jobs:
         with:
           python-version: "3.11"
       - name: Install exact published llmcapa
-        run: python -m pip install --only-binary=:all: --no-deps llmcapa==${{ matrix.version }}
+        run: |
+          python -m pip install --only-binary=:all: --no-deps "llmcapa==${{ matrix.version }}"
       - name: Verify DeepSeek capability from installed wheel
         run: >
           python -c 'import llmcapa;
