@@ -331,7 +331,9 @@ class Registry:
                         continue
                     for record in records:
                         try:
-                            cap = self._canonical_capability(Capability.from_dict(record))
+                            cap = self._canonical_capability(
+                                Capability.from_dict(record)
+                            )
                             provider = self._canonical_provider(cap.provider)
                             if (
                                 provider not in provider_set
