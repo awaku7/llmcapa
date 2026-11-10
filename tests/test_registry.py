@@ -23,16 +23,13 @@ DATA_DIR = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data"
 REQUIRED_KEYS = {"provider", "model_id", "context_window", "max_output_tokens"}
 
 
-def _all_records():
-    for path in sorted(DATA_DIR.glob("*.json")):
-        payload = json.loads(path.read_text(encoding="utf-8"))
-        if is_hf_overlay(payload):
-            source = json.loads(
-                (DATA_DIR / "huggingface.json").read_text(encoding="utf-8")
-            )
-            payload = expand_hf_overlay(source, payload)
-        for record in payload["models"]:
-            yield path.name, record
+def _all_records(path):
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if is_hf_overlay(payload):
+        source = json.loads((DATA_DIR / "huggingface.json").read_text(encoding="utf-8"))
+        payload = expand_hf_overlay(source, payload)
+    for record in payload["models"]:
+        yield path.name, record
 
 
 # ----------------------------------------------------------------------
@@ -72,20 +69,75 @@ def test_canonical_model_id_is_not_dropped_by_an_earlier_alias():
     }
 
 
-@pytest.mark.parametrize("fname,record", list(_all_records()))
-def test_record_schema(fname, record):
-    missing = REQUIRED_KEYS - set(record)
-    assert not missing, f"{fname}: {record.get('model_id')}: missing {missing}"
-    assert isinstance(record["context_window"], int) and record["context_window"] >= 0
-    # Some bundled records may have max_output_tokens=0 when the provider
-    # does not publish a reliable limit.
-    assert (
-        isinstance(record["max_output_tokens"], int)
-        and record["max_output_tokens"] >= 0
+@pytest.mark.parametrize(
+    "path", sorted(DATA_DIR.glob("*.json")), ids=lambda path: path.name
+)
+def test_record_schema(path):
+    for fname, record in _all_records(path):
+        identity = f"{fname}: {record.get('model_id')}"
+        missing = REQUIRED_KEYS - set(record)
+        assert not missing, f"{identity}: missing {missing}"
+
+        context_window = record["context_window"]
+        assert (
+            isinstance(context_window, int) and context_window >= 0
+        ), f"{identity}: invalid context_window={context_window!r}"
+        # Some bundled records may have max_output_tokens=0 when the provider
+        # does not publish a reliable limit.
+        max_output_tokens = record["max_output_tokens"]
+        assert (
+            isinstance(max_output_tokens, int) and max_output_tokens >= 0
+        ), f"{identity}: invalid max_output_tokens={max_output_tokens!r}"
+        # must round-trip through Capability
+        try:
+            cap = Capability.from_dict(record)
+        except Exception as exc:
+            raise AssertionError(f"{identity}: Capability.from_dict failed") from exc
+        assert cap.model_id == record["model_id"], f"{identity}: model ID changed"
+
+
+@pytest.mark.parametrize("field", ["context_window", "max_output_tokens"])
+def test_record_schema_invalid_limit_identifies_model(monkeypatch, field):
+    record = {
+        "provider": "test",
+        "model_id": "broken-model",
+        "context_window": 1024,
+        "max_output_tokens": 128,
+    }
+    record[field] = -1
+    monkeypatch.setattr(
+        sys.modules[__name__],
+        "_all_records",
+        lambda path: iter([("sample.json", record)]),
     )
-    # must round-trip through Capability
-    cap = Capability.from_dict(record)
-    assert cap.model_id == record["model_id"]
+    with pytest.raises(
+        AssertionError, match=f"sample.json: broken-model: invalid {field}"
+    ):
+        test_record_schema(Path("sample.json"))
+
+
+def test_record_schema_parse_exception_identifies_model(monkeypatch):
+    record = {
+        "provider": "test",
+        "model_id": "broken-model",
+        "context_window": 1024,
+        "max_output_tokens": 128,
+    }
+    monkeypatch.setattr(
+        sys.modules[__name__],
+        "_all_records",
+        lambda path: iter([("sample.json", record)]),
+    )
+
+    def invalid_capability(_record):
+        raise ValueError("malformed metadata")
+
+    monkeypatch.setattr(Capability, "from_dict", invalid_capability)
+    with pytest.raises(
+        AssertionError, match="sample.json: broken-model: Capability.from_dict failed"
+    ) as exc_info:
+        test_record_schema(Path("sample.json"))
+    assert isinstance(exc_info.value.__cause__, ValueError)
 
 
 def test_no_duplicate_model_ids_within_each_provider_file():
