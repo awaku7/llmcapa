@@ -136,6 +136,7 @@ def test_azure_registration_normalizes_canonical_name_variants(registry, provide
         for model in registry.list_models(provider="azure-foundry")
     )
 
+
 def test_deepseek_native_capabilities_do_not_use_azure_foundry_record(registry):
     native = registry.get("deepseek-v4-flash", provider="deepseek")
     assert native.provider == "deepseek"
