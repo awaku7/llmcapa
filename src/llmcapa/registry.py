@@ -130,6 +130,8 @@ class Registry:
     def _canonical_capability(cls, cap: Capability) -> Capability:
         """Normalize provider aliases and apply verified exact-ID vLLM controls."""
         provider = cls._canonical_provider(cap.provider)
+        if cap.extra.get("source") == "azure_foundry":
+            provider = "azure-foundry"
         if provider == "azure-foundry" and cap.provider != provider:
             return replace(cap, provider=provider)
         if provider == "vllm" and cap.extra.get("metadata_source") in {
@@ -329,7 +331,7 @@ class Registry:
                         continue
                     for record in records:
                         try:
-                            cap = Capability.from_dict(record)
+                            cap = self._canonical_capability(Capability.from_dict(record))
                             provider = self._canonical_provider(cap.provider)
                             if (
                                 provider not in provider_set
@@ -378,7 +380,7 @@ class Registry:
                 provider_set = {self._canonical_provider(name) for name in providers}
                 for record in records:
                     try:
-                        cap = Capability.from_dict(record)
+                        cap = self._canonical_capability(Capability.from_dict(record))
                         provider = self._canonical_provider(cap.provider)
                         if (
                             provider not in provider_set
@@ -411,7 +413,7 @@ class Registry:
             records = payload
         count = 0
         for record in records:
-            cap = Capability.from_dict(record)
+            cap = self._canonical_capability(Capability.from_dict(record))
             if catalog_name:
                 provider = self._canonical_provider(cap.provider)
                 self._catalog_files_by_provider.setdefault(provider, set()).add(
@@ -1266,7 +1268,7 @@ class Registry:
                         raise TypeError(
                             f"catalog {filename} contains a non-object record"
                         )
-                    cap = Capability.from_dict(record)
+                    cap = self._canonical_capability(Capability.from_dict(record))
                     if self._normalize_provider(cap.provider) in target_providers:
                         capabilities.append(cap)
         except (TypeError, ValueError, KeyError) as exc:
