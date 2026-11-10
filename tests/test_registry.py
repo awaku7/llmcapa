@@ -106,9 +106,13 @@ def test_record_schema_invalid_limit_identifies_model(monkeypatch, field):
     }
     record[field] = -1
     monkeypatch.setattr(
-        sys.modules[__name__], "_all_records", lambda path: iter([("sample.json", record)])
+        sys.modules[__name__],
+        "_all_records",
+        lambda path: iter([("sample.json", record)]),
     )
-    with pytest.raises(AssertionError, match=f"sample.json: broken-model: invalid {field}"):
+    with pytest.raises(
+        AssertionError, match=f"sample.json: broken-model: invalid {field}"
+    ):
         test_record_schema(Path("sample.json"))
 
 
@@ -120,7 +124,9 @@ def test_record_schema_parse_exception_identifies_model(monkeypatch):
         "max_output_tokens": 128,
     }
     monkeypatch.setattr(
-        sys.modules[__name__], "_all_records", lambda path: iter([("sample.json", record)])
+        sys.modules[__name__],
+        "_all_records",
+        lambda path: iter([("sample.json", record)]),
     )
 
     def invalid_capability(_record):
