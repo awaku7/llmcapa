@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: read
+  pull-requests: write
 
 jobs:
   compare:
@@ -25,7 +26,8 @@ jobs:
       - name: Inspect capability resolution
         shell: bash
         run: |
-          PYTHONPATH="$RUNNER_TEMP/llmcapa" python - <<'PY'
+          set -o pipefail
+          PYTHONPATH="$RUNNER_TEMP/llmcapa" python - <<'PY' | tee wheel-results.log
           import json
           import llmcapa
           from llmcapa.registry import default_registry
@@ -62,3 +64,20 @@ jobs:
           assert cap.supports("responses_api") is True, cap
           assert cap.supports("vision") is True, cap
           PY
+      - name: Report diagnostic result on PR
+        if: always() && github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          {
+            printf 'Published llmcapa wheel **%s** diagnostic output:\n\n' '${{ matrix.version }}'
+            printf '\`\`\`text\n'
+            if [ -f wheel-results.log ]; then
+              cat wheel-results.log
+            else
+              printf 'No diagnostic output; see Actions job log.\n'
+            fi
+            printf '\n\`\`\`\n'
+          } > wheel-comment.md
+          gh pr comment "${{ github.event.pull_request.number }}" --repo "${{ github.repository }}" --body-file wheel-comment.md
