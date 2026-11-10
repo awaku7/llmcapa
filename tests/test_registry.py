@@ -23,16 +23,15 @@ DATA_DIR = Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data"
 REQUIRED_KEYS = {"provider", "model_id", "context_window", "max_output_tokens"}
 
 
-def _all_records():
-    for path in sorted(DATA_DIR.glob("*.json")):
-        payload = json.loads(path.read_text(encoding="utf-8"))
-        if is_hf_overlay(payload):
-            source = json.loads(
-                (DATA_DIR / "huggingface.json").read_text(encoding="utf-8")
-            )
-            payload = expand_hf_overlay(source, payload)
-        for record in payload["models"]:
-            yield path.name, record
+def _all_records(path):
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if is_hf_overlay(payload):
+        source = json.loads(
+            (DATA_DIR / "huggingface.json").read_text(encoding="utf-8")
+        )
+        payload = expand_hf_overlay(source, payload)
+    for record in payload["models"]:
+        yield path.name, record
 
 
 # ----------------------------------------------------------------------
@@ -72,20 +71,23 @@ def test_canonical_model_id_is_not_dropped_by_an_earlier_alias():
     }
 
 
-@pytest.mark.parametrize("fname,record", list(_all_records()))
-def test_record_schema(fname, record):
-    missing = REQUIRED_KEYS - set(record)
-    assert not missing, f"{fname}: {record.get('model_id')}: missing {missing}"
-    assert isinstance(record["context_window"], int) and record["context_window"] >= 0
-    # Some bundled records may have max_output_tokens=0 when the provider
-    # does not publish a reliable limit.
-    assert (
-        isinstance(record["max_output_tokens"], int)
-        and record["max_output_tokens"] >= 0
-    )
-    # must round-trip through Capability
-    cap = Capability.from_dict(record)
-    assert cap.model_id == record["model_id"]
+@pytest.mark.parametrize(
+    "path", sorted(DATA_DIR.glob("*.json")), ids=lambda path: path.name
+)
+def test_record_schema(path):
+    for fname, record in _all_records(path):
+        missing = REQUIRED_KEYS - set(record)
+        assert not missing, f"{fname}: {record.get('model_id')}: missing {missing}"
+        assert isinstance(record["context_window"], int) and record["context_window"] >= 0
+        # Some bundled records may have max_output_tokens=0 when the provider
+        # does not publish a reliable limit.
+        assert (
+            isinstance(record["max_output_tokens"], int)
+            and record["max_output_tokens"] >= 0
+        )
+        # must round-trip through Capability
+        cap = Capability.from_dict(record)
+        assert cap.model_id == record["model_id"]
 
 
 def test_no_duplicate_model_ids_within_each_provider_file():
