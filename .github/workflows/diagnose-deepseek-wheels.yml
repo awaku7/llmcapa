@@ -72,12 +72,12 @@ jobs:
         run: |
           {
             printf 'Published llmcapa wheel **%s** diagnostic output:\n\n' '${{ matrix.version }}'
-            printf '\`\`\`text\n'
+            printf '%s\n' '```text'
             if [ -f wheel-results.log ]; then
               cat wheel-results.log
             else
               printf 'No diagnostic output; see Actions job log.\n'
             fi
-            printf '\n\`\`\`\n'
+            printf '\n%s\n' '```'
           } > wheel-comment.md
           gh pr comment "${{ github.event.pull_request.number }}" --repo "${{ github.repository }}" --body-file wheel-comment.md
