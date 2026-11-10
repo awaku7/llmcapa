@@ -4,7 +4,7 @@ import json
 
 import pytest
 
-from llmcapa import Capability, Registry
+from llmcapa import Capability, ModelNotFoundError, Registry
 
 
 @pytest.fixture
@@ -135,3 +135,35 @@ def test_azure_registration_normalizes_canonical_name_variants(registry, provide
         model.model_id == model_id
         for model in registry.list_models(provider="azure-foundry")
     )
+
+def test_deepseek_native_capabilities_do_not_use_azure_foundry_record(registry):
+    native = registry.get("deepseek-v4-flash", provider="deepseek")
+    assert native.provider == "deepseek"
+    assert native.model_id == "deepseek-flash"
+    assert native.supports("responses_api") is True
+    assert native.supports("vision") is True
+    assert registry.get("deepseek-v4-flash") is native
+
+    foundry = registry.get("DeepSeek-V4-Flash", provider="azure-foundry")
+    assert foundry.provider == "azure-foundry"
+    assert foundry.extra["source"] == "azure_foundry"
+    assert registry.get("DeepSeek-V4-Flash", provider="azure") is foundry
+    assert registry.get("DeepSeek-V4-Flash", provider="azure-openai") is foundry
+
+
+def test_azure_foundry_vendor_record_stays_out_of_native_provider(registry):
+    registry._ensure_loaded()
+    model_id = "azure-vendor-scope-regression"
+    record = {
+        "provider": "deepseek",
+        "model_id": model_id,
+        "extra": {"source": "azure_foundry"},
+    }
+    registry._load_json_text(
+        json.dumps({"models": [record]}), catalog_name="azure_foundry.json"
+    )
+
+    assert registry.get(model_id, provider="azure-foundry").provider == "azure-foundry"
+    assert "azure_foundry.json" not in registry._catalog_files_by_provider["deepseek"]
+    with pytest.raises(ModelNotFoundError):
+        registry._get_local(model_id, provider="deepseek")
