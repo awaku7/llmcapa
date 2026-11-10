@@ -26,9 +26,7 @@ REQUIRED_KEYS = {"provider", "model_id", "context_window", "max_output_tokens"}
 def _all_records(path):
     payload = json.loads(path.read_text(encoding="utf-8"))
     if is_hf_overlay(payload):
-        source = json.loads(
-            (DATA_DIR / "huggingface.json").read_text(encoding="utf-8")
-        )
+        source = json.loads((DATA_DIR / "huggingface.json").read_text(encoding="utf-8"))
         payload = expand_hf_overlay(source, payload)
     for record in payload["models"]:
         yield path.name, record
@@ -79,8 +77,7 @@ def test_record_schema(path):
         missing = REQUIRED_KEYS - set(record)
         assert not missing, f"{fname}: {record.get('model_id')}: missing {missing}"
         assert (
-            isinstance(record["context_window"], int)
-            and record["context_window"] >= 0
+            isinstance(record["context_window"], int) and record["context_window"] >= 0
         )
         # Some bundled records may have max_output_tokens=0 when the provider
         # does not publish a reliable limit.
