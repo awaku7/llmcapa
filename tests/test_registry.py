@@ -78,7 +78,10 @@ def test_record_schema(path):
     for fname, record in _all_records(path):
         missing = REQUIRED_KEYS - set(record)
         assert not missing, f"{fname}: {record.get('model_id')}: missing {missing}"
-        assert isinstance(record["context_window"], int) and record["context_window"] >= 0
+        assert (
+            isinstance(record["context_window"], int)
+            and record["context_window"] >= 0
+        )
         # Some bundled records may have max_output_tokens=0 when the provider
         # does not publish a reliable limit.
         assert (
