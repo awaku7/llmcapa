@@ -161,6 +161,15 @@ class Registry:
                 return replace(cap, **changes, extra=extra)
         return cap
 
+    @classmethod
+    def _catalog_capability(
+        cls, cap: Capability, catalog_name: str | None
+    ) -> Capability:
+        """Separate overlapping DeepSeek IDs without relocating other vendors."""
+        if catalog_name == "azure_foundry.json" and cap.provider == "deepseek":
+            cap = replace(cap, provider="azure-foundry")
+        return cls._canonical_capability(cap)
+
     def _matching_providers(self, provider: str) -> set:
         """Return provider aliases, with Azure Foundry as the canonical name."""
         p = self._normalize_provider(provider)
@@ -329,7 +338,9 @@ class Registry:
                         continue
                     for record in records:
                         try:
-                            cap = Capability.from_dict(record)
+                            cap = self._catalog_capability(
+                                Capability.from_dict(record), filename
+                            )
                             provider = self._canonical_provider(cap.provider)
                             if (
                                 provider not in provider_set
@@ -378,7 +389,13 @@ class Registry:
                 provider_set = {self._canonical_provider(name) for name in providers}
                 for record in records:
                     try:
-                        cap = Capability.from_dict(record)
+                        cap = self._canonical_capability(Capability.from_dict(record))
+                        if (
+                            provider_set == {"azure-foundry"}
+                            and cap.provider == "deepseek"
+                            and cap.extra.get("source") == "azure_foundry"
+                        ):
+                            cap = replace(cap, provider="azure-foundry")
                         provider = self._canonical_provider(cap.provider)
                         if (
                             provider not in provider_set
@@ -411,7 +428,7 @@ class Registry:
             records = payload
         count = 0
         for record in records:
-            cap = Capability.from_dict(record)
+            cap = self._catalog_capability(Capability.from_dict(record), catalog_name)
             if catalog_name:
                 provider = self._canonical_provider(cap.provider)
                 self._catalog_files_by_provider.setdefault(provider, set()).add(
@@ -1266,7 +1283,9 @@ class Registry:
                         raise TypeError(
                             f"catalog {filename} contains a non-object record"
                         )
-                    cap = Capability.from_dict(record)
+                    cap = self._catalog_capability(
+                        Capability.from_dict(record), filename
+                    )
                     if self._normalize_provider(cap.provider) in target_providers:
                         capabilities.append(cap)
         except (TypeError, ValueError, KeyError) as exc:
