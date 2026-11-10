@@ -122,7 +122,7 @@ jobs:
         run: >
           python -c 'import llmcapa;
           c=llmcapa.get("deepseek-v4-flash", provider="deepseek");
-          print(llmcapa.__version__, c.provider, c.model_id, c.supports("responses_api"), c.supports("vision"), c.reasoning_effort_values, flush=True);
+          print(llmcapa.__version__, c.provider, c.model_id, c.supports("responses_api"), c.supports("vision"), c.reasoning_effort_values, c.extra, flush=True);
           assert c.provider == "deepseek";
           assert c.supports("responses_api") is True;
           assert c.supports("vision") is True'
