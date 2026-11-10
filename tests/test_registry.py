@@ -79,15 +79,15 @@ def test_record_schema(path):
         assert not missing, f"{identity}: missing {missing}"
 
         context_window = record["context_window"]
-        assert isinstance(context_window, int) and context_window >= 0, (
-            f"{identity}: invalid context_window={context_window!r}"
-        )
+        assert (
+            isinstance(context_window, int) and context_window >= 0
+        ), f"{identity}: invalid context_window={context_window!r}"
         # Some bundled records may have max_output_tokens=0 when the provider
         # does not publish a reliable limit.
         max_output_tokens = record["max_output_tokens"]
-        assert isinstance(max_output_tokens, int) and max_output_tokens >= 0, (
-            f"{identity}: invalid max_output_tokens={max_output_tokens!r}"
-        )
+        assert (
+            isinstance(max_output_tokens, int) and max_output_tokens >= 0
+        ), f"{identity}: invalid max_output_tokens={max_output_tokens!r}"
         # must round-trip through Capability
         try:
             cap = Capability.from_dict(record)
