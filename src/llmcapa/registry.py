@@ -232,8 +232,7 @@ class Registry:
         self._models = index.index("flat_models")
         self._alias_index = index.index("aliases")
         self._by_provider = {
-            provider: index.index("models", provider)
-            for provider in index.providers
+            provider: index.index("models", provider) for provider in index.providers
         }
         self._catalog_files_by_provider = index.provider_files
         self._catalog_index = index
