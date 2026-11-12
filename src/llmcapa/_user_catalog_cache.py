@@ -73,7 +73,9 @@ def startup_signature(registry, home, now):
     except PackageNotFoundError:
         package_version = "source-tree"
     payload = [_FORMAT, package_version, sources, timestamps, inputs]
-    return hashlib.sha256(json.dumps(payload, sort_keys=True).encode("utf-8")).hexdigest()
+    return hashlib.sha256(
+        json.dumps(payload, sort_keys=True).encode("utf-8")
+    ).hexdigest()
 
 
 def overlay_maps(registry):
@@ -146,9 +148,7 @@ def write_snapshot(path, signature, registry):
                             ).lastrowid
                             ids[identity] = record_id
                         record_id, alias, owner = ids[identity], None, value.provider
-                    rows.append(
-                        (kind, provider, key, ordinal, record_id, alias, owner)
-                    )
+                    rows.append((kind, provider, key, ordinal, record_id, alias, owner))
                 conn.executemany(
                     "INSERT INTO entries VALUES (?, ?, ?, ?, ?, ?, ?)", rows
                 )
@@ -214,10 +214,14 @@ class UserCatalogCache:
                     return [
                         (
                             name,
-                            None
-                            if keys_only
-                            else (
-                                owner if owner_only else self._value(record_id, alias)
+                            (
+                                None
+                                if keys_only
+                                else (
+                                    owner
+                                    if owner_only
+                                    else self._value(record_id, alias)
+                                )
                             ),
                         )
                         for name, record_id, alias, owner in rows

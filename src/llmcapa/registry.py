@@ -490,7 +490,9 @@ class Registry:
                     bundled_files = {
                         filename
                         for provider in provider_set
-                        for filename in self._catalog_files_by_provider.get(provider, ())
+                        for filename in self._catalog_files_by_provider.get(
+                            provider, ()
+                        )
                     }
                     if any(
                         isinstance(data / filename, Path)
