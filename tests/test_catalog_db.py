@@ -7,9 +7,8 @@ from contextlib import closing
 
 import pytest
 
-from llmcapa import Capability
+from llmcapa import Capability, _catalog_db
 from llmcapa import registry as registry_module
-from llmcapa import _catalog_db
 from llmcapa._catalog_db import build_catalog, check_catalog
 
 
