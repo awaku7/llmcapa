@@ -21770,8 +21770,8 @@
       "provider": "azure-foundry",
       "model_id": "muse-glimmer-30b",
       "display_name": "muse-glimmer-30b",
-      "context_window": 0,
-      "max_output_tokens": 0,
+      "context_window": 131072,
+      "max_output_tokens": 2048,
       "input_modalities": [
         "text",
         "image"
@@ -21793,7 +21793,14 @@
       "license_type": "open-source",
       "aliases": [
         "azure-foundry/muse-glimmer-30b"
-      ]
+      ],
+      "extra": {
+        "refresh_metadata_fallbacks": [
+          "context_window",
+          "max_output_tokens"
+        ],
+        "refresh_metadata_fallback_checked_at": "2026-11-12"
+      }
     },
     {
       "provider": "azure-foundrylocalonazurelocal",
@@ -301420,40 +301427,6 @@
           "VM"
         ],
         "version": 4
-      }
-    },
-    {
-      "provider": "azure-foundry",
-      "model_id": "Muse-Glimmer-30B",
-      "display_name": "Muse-Glimmer-30B",
-      "context_window": 131072,
-      "max_output_tokens": 2048,
-      "input_modalities": [
-        "text",
-        "image"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_function_calling": true,
-      "supports_json_mode": null,
-      "supports_streaming": true,
-      "supports_vision": true,
-      "supports_reasoning": null,
-      "knowledge_cutoff": "",
-      "azure_type": "Chat completion",
-      "azure_lifecycle": "",
-      "source": "azure_foundry",
-      "supports_responses_api": false,
-      "license_type": "open-source",
-      "aliases": [
-        "muse-glimmer-30b",
-        "azure-foundry/Muse-Glimmer-30B"
-      ],
-      "extra": {
-        "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-12"
       }
     }
   ]
