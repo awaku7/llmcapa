@@ -235,17 +235,20 @@ class Registry:
         from ._user_catalog_cache import (
             ERRORS,
             UserCatalogCache,
+            remove_old_generations,
             startup_signature,
             write_snapshot,
         )
 
         home = Path.home() / ".llmcapa"
         directory = home / "sqlite_cache"
+        started = time.time_ns()
         try:
             signature = startup_signature(self, home, time.time())
         except ERRORS:
             return False
         if signature is None:
+            remove_old_generations(directory, None, started)
             return False
         path = directory / f"cache-{signature}.sqlite3"
 
@@ -269,6 +272,9 @@ class Registry:
                     # original inputs were unchanged during registration.
                     if current == signature:
                         write_snapshot(path, current, self)
+                        remove_old_generations(directory, path, started)
+                else:
+                    remove_old_generations(directory, None, started)
             except ERRORS:
                 pass
             return True
@@ -283,14 +289,7 @@ class Registry:
                     provider, self._catalog_index.index("models", provider)
                 )
             mapping._user_cache = snapshot
-        # Old immutable generations are no longer selected. Windows may keep
-        # them locked while another process still uses an older registry.
-        for old in directory.glob("cache-*.sqlite3"):
-            if old != path:
-                try:
-                    old.unlink()
-                except OSError:
-                    pass
+        remove_old_generations(directory, path, started)
         return True
 
     def _try_load_sqlite(self) -> bool:
@@ -470,6 +469,7 @@ class Registry:
         seen: set[tuple[str, str]] = set()
         for override_path in override_paths:
             try:
+                original_stat = override_path.stat()
                 payload = json.loads(override_path.read_text(encoding="utf-8"))
                 if (
                     not isinstance(payload, dict)
@@ -496,12 +496,18 @@ class Registry:
                         isinstance(data / filename, Path)
                         and (data / filename).is_file()
                         and (data / filename).stat().st_mtime_ns
-                        > override_path.stat().st_mtime_ns
+                        > original_stat.st_mtime_ns
                         for filename in bundled_files
                     ):
                         # A newer installed catalog supersedes this main snapshot.
                         try:
-                            override_path.unlink()
+                            current_stat = override_path.stat()
+                            if (
+                                current_stat.st_mtime_ns == original_stat.st_mtime_ns
+                                and current_stat.st_size == original_stat.st_size
+                                and current_stat.st_ino == original_stat.st_ino
+                            ):
+                                override_path.unlink()
                         except OSError:
                             pass
                         continue

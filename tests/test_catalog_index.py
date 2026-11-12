@@ -418,3 +418,36 @@ def test_old_persistent_main_cache_is_removed(catalog, tmp_path):
     registry = Registry()
     assert registry.get("gpt-demo-1.2", "openai").context_window == 1000
     assert not path.exists()
+
+
+def test_user_cache_is_invalidated_when_persistent_source_changes(catalog, tmp_path):
+    home = tmp_path / "home" / ".llmcapa"
+    directory = home / "catalogs" / "github"
+    directory.mkdir(parents=True)
+    path = directory / "override.json"
+
+    def write(context_window):
+        path.write_text(
+            json.dumps(
+                {
+                    "source": "https://github.com/awaku7/llmcapa",
+                    "providers": ["openai"],
+                    "models": [
+                        {
+                            "provider": "openai",
+                            "model_id": "gpt-demo-1.2",
+                            "context_window": context_window,
+                        }
+                    ],
+                }
+            ),
+            encoding="utf-8",
+        )
+
+    write(1234)
+    assert Registry().get("gpt-demo-1.2", "openai").context_window == 1234
+    write(23456)
+    assert Registry().get("gpt-demo-1.2", "openai").context_window == 23456
+    path.unlink()
+    assert Registry().get("gpt-demo-1.2", "openai").context_window == 1000
+    assert not list((home / "sqlite_cache").glob("cache-*.sqlite3"))

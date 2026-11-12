@@ -42,7 +42,7 @@ CREATE TABLE entries (
 
 def startup_signature(registry, home, now):
     """Fingerprint inputs cheaply; include TTL decisions and bundled content."""
-    from importlib.metadata import version
+    from importlib.metadata import PackageNotFoundError, version
 
     inputs = []
     for directory, pattern, expires in (
@@ -67,13 +67,13 @@ def startup_signature(registry, home, now):
     sources = bundle.source_fingerprints
     timestamps = []
     for name in sorted(sources):
-        timestamps.append(
-            (name, (bundle.database.parent / name).stat().st_mtime_ns)
-        )
-    payload = [_FORMAT, version("llmcapa"), sources, timestamps, inputs]
-    return hashlib.sha256(
-        json.dumps(payload, sort_keys=True).encode("utf-8")
-    ).hexdigest()
+        timestamps.append((name, (bundle.database.parent / name).stat().st_mtime_ns))
+    try:
+        package_version = version("llmcapa")
+    except PackageNotFoundError:
+        package_version = "source-tree"
+    payload = [_FORMAT, package_version, sources, timestamps, inputs]
+    return hashlib.sha256(json.dumps(payload, sort_keys=True).encode("utf-8")).hexdigest()
 
 
 def overlay_maps(registry):
@@ -93,6 +93,23 @@ def overlay_maps(registry):
             provider,
             mapping._updates if isinstance(mapping, CatalogMapping) else mapping,
         )
+
+
+def remove_old_generations(directory, keep, before_ns):
+    """Remove superseded generations, never ones published during this startup."""
+    try:
+        paths = list(directory.glob("cache-*.sqlite3"))
+    except OSError:
+        return
+    for path in paths:
+        if path == keep:
+            continue
+        try:
+            if path.stat().st_mtime_ns < before_ns:
+                path.unlink()
+        except OSError:
+            # Another process may still have an immutable generation open.
+            pass
 
 
 def write_snapshot(path, signature, registry):
@@ -129,7 +146,9 @@ def write_snapshot(path, signature, registry):
                             ).lastrowid
                             ids[identity] = record_id
                         record_id, alias, owner = ids[identity], None, value.provider
-                    rows.append((kind, provider, key, ordinal, record_id, alias, owner))
+                    rows.append(
+                        (kind, provider, key, ordinal, record_id, alias, owner)
+                    )
                 conn.executemany(
                     "INSERT INTO entries VALUES (?, ?, ?, ?, ?, ?, ?)", rows
                 )
@@ -197,7 +216,9 @@ class UserCatalogCache:
                             name,
                             None
                             if keys_only
-                            else owner if owner_only else self._value(record_id, alias),
+                            else (
+                                owner if owner_only else self._value(record_id, alias)
+                            ),
                         )
                         for name, record_id, alias, owner in rows
                     ]
@@ -213,9 +234,12 @@ class UserCatalogCache:
             items = (
                 [(key, values[key])]
                 if key is not None and key in values
-                else [] if key is not None else values.items()
+                else ([] if key is not None else values.items())
             )
             return [
-                (name, None if keys_only else value.provider if owner_only else value)
+                (
+                    name,
+                    None if keys_only else (value.provider if owner_only else value),
+                )
                 for name, value in items
             ]
