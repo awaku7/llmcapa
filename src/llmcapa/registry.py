@@ -22,6 +22,7 @@ from typing import Callable, ClassVar
 from urllib.error import HTTPError
 from urllib.parse import quote
 
+from ._catalog_index import CatalogIndex
 from .hf_overlay import expand_hf_overlay, is_hf_overlay
 from .models import Capability
 
@@ -75,6 +76,7 @@ class Registry:
         self._github_auto_refresh_attempted: set[str] = set()
 
         self._loaded = False
+        self._catalog_index: CatalogIndex | None = None
         self._hf_catalog_source: dict | None = None
 
     # Provider aliases map: canonical name -> list of equivalent provider names
@@ -209,7 +211,8 @@ class Registry:
             self._load_bundled()
 
     def _load_bundled(self) -> None:
-        self._load_bundled_files()
+        if not self._try_load_sqlite():
+            self._load_bundled_files()
 
         # Reuse explicitly fetched GitHub snapshots without networking.
         self._load_github_catalog_caches()
@@ -218,6 +221,45 @@ class Registry:
 
         # Load local OpenRouter cache if it exists (up to 24h old) to override bundled data with latest updates
         self._load_openrouter_cache()
+
+    def _try_load_sqlite(self) -> bool:
+        """Initialize lazy indexes without changing registration precedence."""
+        if self._models or self._by_provider or self._alias_index:
+            return False
+        index = CatalogIndex.open()
+        if index is None:
+            return False
+        self._models = index.index("flat_models")
+        self._alias_index = index.index("aliases")
+        self._by_provider = {
+            provider: index.index("models", provider) for provider in index.providers
+        }
+        self._catalog_files_by_provider = index.provider_files
+        self._catalog_index = index
+        return True
+
+    def _materialize_sqlite(self) -> None:
+        """Switch to writable dictionaries before applying catalog changes."""
+        index = self._catalog_index
+        if index is None:
+            return
+        models = dict(self._models.items())
+        aliases = dict(self._alias_index.items())
+        by_provider = {
+            provider: dict(entries.items())
+            for provider, entries in self._by_provider.items()
+        }
+        if index._fallback is not None:
+            # A read error may have occurred halfway through materialization.
+            fallback = index._fallback
+            models = fallback._models
+            aliases = fallback._alias_index
+            by_provider = fallback._by_provider
+            self._catalog_files_by_provider = fallback._catalog_files_by_provider
+        self._models = models
+        self._alias_index = aliases
+        self._by_provider = by_provider
+        self._catalog_index = None
 
     def _load_bundled_files(self) -> None:
         """Load only package catalogs, without machine-specific overrides."""
@@ -467,6 +509,7 @@ class Registry:
         Provider-scoped lookups via ``get(..., provider=...)`` always
         find the correct provider's data regardless of registration order.
         """
+        self._materialize_sqlite()
         cap = self._canonical_capability(cap)
         key = cap.model_id.lower()
         prov = self._normalize_provider(cap.provider)
@@ -971,6 +1014,7 @@ class Registry:
     # ------------------------------------------------------------------
     def _register_refreshed_catalog_record(self, cap: Capability) -> None:
         """Upsert a fetched record without changing cross-provider precedence."""
+        self._materialize_sqlite()
         cap = self._canonical_capability(cap)
         key = cap.model_id.lower()
         provider = self._normalize_provider(cap.provider)
@@ -1034,6 +1078,9 @@ class Registry:
                     temporary_file.write(text)
                     temporary_path = Path(temporary_file.name)
                 os.chmod(temporary_path, mode)
+                # Invalidate the bundled index before replacing its source.
+                if (data_package / "catalog.sqlite3").is_file():
+                    (data_package / ".catalog.sqlite3.stale").touch()
                 os.replace(temporary_path, destination)
             except OSError as exc:
                 success = False
