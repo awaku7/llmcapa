@@ -997,6 +997,14 @@ def test_persistent_user_catalog_is_loaded_by_new_registry(tmp_path, monkeypatch
     monkeypatch.setenv("HOME", str(tmp_path))
     bundled_dir = tmp_path / "bundled"
     bundled_dir.mkdir()
+    (bundled_dir / "xai.json").write_text(
+        json.dumps(
+            {
+                "models": [{"provider": "xai", "model_id": "bundled-baseline"}]
+            }
+        ),
+        encoding="utf-8",
+    )
     monkeypatch.setattr(
         registry_module.resources, "files", lambda _package: bundled_dir
     )
