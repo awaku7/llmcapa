@@ -11,13 +11,14 @@ from contextlib import closing
 from importlib import resources
 from pathlib import Path
 
+from ._catalog_index import parse_numeric_name
 from .models import Capability
 from .registry import Registry
 
 _BLOCK_SIZE = 256
 
 _SCHEMA = """
-PRAGMA user_version = 1;
+PRAGMA user_version = 2;
 CREATE TABLE catalog_sources (
     filename TEXT PRIMARY KEY,
     sha256 TEXT NOT NULL
@@ -33,6 +34,15 @@ CREATE TABLE capabilities (
         DEFERRABLE INITIALLY DEFERRED,
     position INTEGER NOT NULL
 );
+CREATE TABLE lookup_names (
+    capability_id INTEGER NOT NULL REFERENCES capabilities(id),
+    kind TEXT NOT NULL,
+    name TEXT NOT NULL,
+    shape TEXT,
+    PRIMARY KEY (capability_id, kind, name)
+) WITHOUT ROWID;
+CREATE INDEX lookup_names_prefix ON lookup_names(name);
+CREATE INDEX lookup_names_shape ON lookup_names(shape) WHERE shape IS NOT NULL;
 CREATE TABLE providers (
     provider TEXT PRIMARY KEY,
     ordinal INTEGER NOT NULL
@@ -87,8 +97,11 @@ def check_catalog(database: Path) -> None:
     if not database.is_file():
         raise RuntimeError("Missing SQLite catalog; run scripts/build_catalog_db.py")
     with closing(sqlite3.connect(database.as_uri() + "?mode=ro", uri=True)) as conn:
-        if conn.execute("PRAGMA user_version").fetchone() != (1,):
-            raise RuntimeError("Unsupported SQLite catalog schema")
+        if conn.execute("PRAGMA user_version").fetchone() != (2,):
+            raise RuntimeError(
+                "Unsupported SQLite catalog schema; run scripts/build_catalog_db.py"
+            )
+        conn.execute("SELECT capability_id, kind, name, shape FROM lookup_names LIMIT 0")
         if dict(conn.execute("SELECT * FROM catalog_sources")) != _catalog_sources():
             raise RuntimeError("Stale SQLite catalog; run scripts/build_catalog_db.py")
         if conn.execute("PRAGMA integrity_check").fetchone() != ("ok",):
@@ -153,6 +166,26 @@ def build_catalog(destination: Path) -> None:
                         (record_id, block_id, len(pending)),
                     )
                     ids[key] = record_id
+                    names = [("model", capability.model_id)]
+                    if capability.display_name:
+                        names.append(("display", capability.display_name))
+                    for alias in capability.aliases or []:
+                        names.append(("alias", alias))
+                        if alias.strip() != alias:
+                            names.append(("alias_exact", alias.strip()))
+                    rows = []
+                    for kind, name in names:
+                        parsed = (
+                            parse_numeric_name(name)
+                            if kind in ("model", "alias")
+                            else None
+                        )
+                        rows.append(
+                            (record_id, kind, name.lower(), parsed[0] if parsed else None)
+                        )
+                    connection.executemany(
+                        "INSERT OR IGNORE INTO lookup_names VALUES (?, ?, ?, ?)", rows
+                    )
                     pending.append(capability.to_dict())
                     if len(pending) == _BLOCK_SIZE:
                         flush_block()

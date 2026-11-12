@@ -23,7 +23,7 @@ from typing import Callable, ClassVar
 from urllib.error import HTTPError
 from urllib.parse import quote
 
-from ._catalog_index import CatalogIndex, CatalogMapping
+from ._catalog_index import CatalogIndex, CatalogMapping, parse_numeric_name
 from .hf_overlay import expand_hf_overlay, is_hf_overlay
 from .models import Capability
 
@@ -1435,18 +1435,7 @@ class Registry:
         ``gpt-4.6``. Exact IDs and normal aliases are resolved before this
         conservative fallback is attempted.
         """
-        version_re = re.compile(r"(?<![A-Za-z])(\d+(?:\.\d+)+|\d+)(?![A-Za-z])")
-
-        def parse(value: str) -> tuple[str, tuple[int, ...]] | None:
-            text = value.strip().lower()
-            match = version_re.search(text)
-            if not match:
-                return None
-            version = tuple(int(part) for part in match.group(1).split("."))
-            shape = text[: match.start()] + "<version>" + text[match.end() :]
-            return shape, version
-
-        wanted = parse(requested)
+        wanted = parse_numeric_name(requested)
         if wanted is None:
             return None
         wanted_shape, wanted_version = wanted
@@ -1454,7 +1443,7 @@ class Registry:
         for capability in capabilities:
             names = [capability.model_id, *(capability.aliases or [])]
             for name in names:
-                parsed = parse(str(name))
+                parsed = parse_numeric_name(str(name))
                 if parsed is None:
                     continue
                 shape, version = parsed
@@ -1507,6 +1496,23 @@ class Registry:
                 raise
             return self._get_local(model_id, provider)
 
+    def _lookup_values(self, indexes, kind, term) -> list[Capability]:
+        """Select only possible matches, retaining overlay and iteration semantics."""
+        index = self._catalog_index
+        if index is None:
+            return [cap for entries in indexes for cap in entries.values()]
+        with index.batch():
+            candidate_ids = index.candidate_ids(kind, term)
+            return [
+                cap
+                for entries in indexes
+                for cap in (
+                    entries.matching_values(candidate_ids)
+                    if isinstance(entries, CatalogMapping)
+                    else entries.values()
+                )
+            ]
+
     def _get_local(self, model_id: str, provider: str | None = None) -> Capability:
         """Resolve a model id or alias to its Capability.
 
@@ -1542,31 +1548,39 @@ class Registry:
                         # provider when the same fallback alias is shared by
                         # multiple catalogs. Prefer an alias owned by this
                         # provider before giving up.
-                        for candidate in prov_index.values():
+                        for candidate in self._lookup_values(
+                            [prov_index], "alias", key
+                        ):
                             if key in {
                                 str(alias).strip().lower()
                                 for alias in (candidate.aliases or [])
                             }:
                                 return candidate
-            fallback = self._numeric_fallback(
-                model_id,
-                [
-                    cap
-                    for prov in ordered_providers
-                    for cap in self._by_provider.get(prov, {}).values()
-                ],
-            )
-            if fallback is not None:
-                return fallback
+            wanted = parse_numeric_name(model_id)
+            if wanted is not None:
+                fallback = self._numeric_fallback(
+                    model_id,
+                    self._lookup_values(
+                        [self._by_provider.get(prov, {}) for prov in ordered_providers],
+                        "numeric",
+                        wanted[0],
+                    ),
+                )
+                if fallback is not None:
+                    return fallback
             raise ModelNotFoundError(model_id)
         # Unqualified lookup: use alias index (first-registered-wins).
         for key in self._lookup_candidates(model_id):
             resolved = self._alias_index.get(key)
             if resolved is not None:
                 return self._models[resolved]
-        fallback = self._numeric_fallback(model_id, list(self._models.values()))
-        if fallback is not None:
-            return fallback
+        wanted = parse_numeric_name(model_id)
+        if wanted is not None:
+            fallback = self._numeric_fallback(
+                model_id, self._lookup_values([self._models], "numeric", wanted[0])
+            )
+            if fallback is not None:
+                return fallback
         raise ModelNotFoundError(model_id)
 
     def list_models(
@@ -1709,26 +1723,21 @@ class Registry:
         if not prefix_lower:
             return []
 
-        # Provider-scoped candidates via list_models so first-registered-wins
-        # flat index does not hide same-id models under other providers.
-        if provider is None:
-            # Search must inspect every provider-scoped index.  The flat index
-            # intentionally uses first-registered-wins for lookups, but that
-            # would hide an OpenRouter route when a native catalog has the same
-            # alias (for example ``meta/muse-spark-1.3``).
-            candidates = [
-                cap
-                for prov in sorted(self._by_provider)
-                for cap in self._by_provider[prov].values()
-                if include_deprecated or not cap.deprecated
-            ]
-        else:
-            candidates = self.list_models(
-                provider=provider,
-                include_deprecated=include_deprecated,
-            )
+        # Search provider-scoped indexes so flat precedence cannot hide routes.
+        providers = (
+            sorted(self._by_provider)
+            if provider is None
+            else self._scoped_provider_order(provider)
+        )
+        candidates = self._lookup_values(
+            [self._by_provider.get(prov, {}) for prov in providers],
+            "prefix",
+            prefix_lower,
+        )
         result = []
         for cap in candidates:
+            if not include_deprecated and cap.deprecated:
+                continue
             # Check model_id
             if cap.model_id.lower().startswith(prefix_lower):
                 result.append(cap)

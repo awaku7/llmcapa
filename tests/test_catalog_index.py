@@ -11,7 +11,7 @@ import pytest
 from llmcapa import registry as registry_module
 from llmcapa._catalog_db import build_catalog
 from llmcapa.models import Capability
-from llmcapa.registry import Registry
+from llmcapa.registry import ModelNotFoundError, Registry
 
 
 @pytest.fixture
@@ -45,6 +45,7 @@ def catalog(tmp_path, monkeypatch):
             {
                 "provider": "openai",
                 "model_id": "gpt-demo-1.4",
+                "aliases": ["collision"],
                 "deprecated": True,
             },
         ],
@@ -61,7 +62,12 @@ def catalog(tmp_path, monkeypatch):
             {
                 "provider": "openrouter",
                 "model_id": "router-only",
-                "aliases": ["route"],
+                "aliases": ["route", "collision"],
+            },
+            {
+                "provider": "openrouter",
+                "model_id": "router-second",
+                "aliases": ["collision"],
             },
         ],
     )
@@ -280,3 +286,60 @@ def test_startup_cache_overlays_match_json_without_full_decode(catalog, tmp_path
             "", provider, True
         )
     assert registry.providers() == baseline.providers()
+
+
+def test_unknown_model_does_not_decode_unrelated_records(catalog):
+    registry = Registry()
+    for provider in (None, "openai", "openrouter"):
+        for model in ("not-a-model", "gpt-99.1-unknown"):
+            with pytest.raises(ModelNotFoundError):
+                registry.get(model, provider)
+        assert registry.search("not-a-model", provider) == []
+    assert registry._catalog_index is not None
+    assert not registry._catalog_index._objects
+
+
+def test_indexed_numeric_and_prefix_candidates(catalog):
+    registry = Registry()
+    baseline = json_registry()
+    assert registry.get("gpt-demo-1.3", "openai") == baseline.get(
+        "gpt-demo-1.3", "openai"
+    )
+    index = registry._catalog_index
+    assert index is not None
+    assert len(index._objects) == 2
+    for prefix in ("demo model", "route", "collision", "gpt"):
+        for provider in (None, "openai", "openrouter"):
+            for deprecated in (True, False):
+                assert registry.search(prefix, provider, deprecated) == baseline.search(
+                    prefix, provider, deprecated
+                )
+
+
+def test_scoped_alias_and_prefix_follow_overlays_and_mutations(catalog):
+    registry = Registry()
+    baseline = json_registry()
+    for current in (registry, baseline):
+        assert current.get("collision", "openrouter").model_id == "router-only"
+        current.register(
+            Capability(provider="openrouter", model_id="router-only"),
+            overwrite=True,
+        )
+        assert current.get("collision", "openrouter").model_id == "router-second"
+        cap = current.get("gpt-demo-1.2", "openai")
+        cap.aliases.append("runtime-alias")
+        cap.display_name = "Runtime display"
+        assert current.get("runtime-alias", "openai") is cap
+    for prefix in ("collision", "runtime", "demo model"):
+        assert registry.search(prefix) == baseline.search(prefix)
+
+
+def test_legacy_database_keeps_lookup_compatibility(catalog):
+    _, database = catalog
+    with closing(sqlite3.connect(database)) as conn, conn:
+        conn.execute("DROP TABLE lookup_names")
+        conn.execute("PRAGMA user_version = 1")
+    registry = Registry()
+    assert registry.get("demo", "openai") == json_registry().get("demo", "openai")
+    assert registry.search("demo model") == json_registry().search("demo model")
+    assert registry._catalog_index is not None

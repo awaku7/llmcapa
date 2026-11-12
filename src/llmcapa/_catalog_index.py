@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sqlite3
 import zlib
 from collections.abc import Mapping
@@ -14,6 +15,26 @@ from threading import RLock
 from .models import Capability
 
 _READ_ERRORS = (OSError, sqlite3.Error, ValueError, KeyError, TypeError, zlib.error)
+
+
+_VERSION_RE = re.compile(r"(?<![A-Za-z])(\d+(?:\.\d+)+|\d+)(?![A-Za-z])")
+
+
+def parse_numeric_name(value: str):
+    text = value.strip().lower()
+    match = _VERSION_RE.search(text)
+    if match is None:
+        return None
+    version = tuple(int(part) for part in match.group(1).split("."))
+    shape = text[: match.start()] + "<version>" + text[match.end() :]
+    return shape, version
+
+
+def _prefix_end(prefix: str):
+    for position in range(len(prefix) - 1, -1, -1):
+        if ord(prefix[position]) < 0x10FFFF:
+            return prefix[:position] + chr(ord(prefix[position]) + 1)
+    return None
 
 
 class CatalogIndex:
@@ -74,8 +95,14 @@ class CatalogIndex:
             from ._catalog_db import _catalog_sources
 
             with reader._connect() as conn:
-                if conn.execute("PRAGMA user_version").fetchone() != (1,):
+                version = conn.execute("PRAGMA user_version").fetchone()
+                if version not in ((1,), (2,)):
                     return None
+                reader._schema_version = version[0]
+                if reader._schema_version == 2:
+                    conn.execute(
+                        "SELECT capability_id, kind, name, shape FROM lookup_names LIMIT 0"
+                    )
                 expected = dict(
                     conn.execute("SELECT filename, sha256 FROM catalog_sources")
                 )
@@ -191,6 +218,73 @@ class CatalogIndex:
                 return [(name,) for name, _ in items]
             return list(items)
 
+    def candidate_ids(self, kind, term):
+        """Find potential matches without decompressing capability payloads."""
+        if self._schema_version < 2 or self._fallback is not None:
+            return None
+        if kind == "alias":
+            where = "kind IN ('alias', 'alias_exact') AND name = ?"
+            args = [term]
+        elif kind == "numeric":
+            where = "shape = ?"
+            args = [term]
+        else:
+            end = _prefix_end(term)
+            where = "name >= ?"
+            args = [term]
+            if end is not None:
+                where += " AND name < ?"
+                args.append(end)
+        with self._lock:
+            try:
+                with self._connect() as conn:
+                    return {
+                        row[0]
+                        for row in conn.execute(
+                            f"SELECT DISTINCT capability_id FROM lookup_names WHERE {where}",
+                            args,
+                        )
+                    }
+            except _READ_ERRORS:
+                return None
+
+    def matching_items(self, table, provider, candidate_ids, updates):
+        """Read candidates in base order, then append new overlay keys."""
+        if candidate_ids is None:
+            combined = dict(self.read(table, provider))
+            combined.update(updates)
+            return combined.items()
+        where = " WHERE i.provider = ?" if provider is not None else ""
+        args = [provider] if provider is not None else []
+        with self._lock:
+            if self._fallback is None:
+                try:
+                    with self._connect() as conn:
+                        result = {}
+                        for key, record_id, block_id, position in conn.execute(
+                            f"SELECT i.model_key, c.id, c.block_id, c.position "
+                            f"FROM {table} AS i JOIN capabilities AS c "
+                            f"ON c.id = i.capability_id{where} ORDER BY i.ordinal",
+                            args,
+                        ):
+                            if key in updates:
+                                result[key] = updates[key]
+                            elif (
+                                record_id in candidate_ids
+                                or record_id in self._objects
+                            ):
+                                # Already decoded objects may have been mutated by callers.
+                                result[key] = self._capability(
+                                    conn, record_id, block_id, position
+                                )
+                        result.update(updates)
+                        return result.items()
+                except _READ_ERRORS:
+                    pass
+            combined = dict(self._json_index(table, provider))
+            combined.update(updates)
+            return combined.items()
+
     def index(self, table, provider=None):
         return CatalogMapping(self, table, provider)
 
@@ -243,3 +337,11 @@ class CatalogMapping(Mapping):
 
     def values(self):
         return [value for _, value in self.items()]
+
+    def matching_values(self, candidate_ids):
+        return [
+            value
+            for _, value in self.reader.matching_items(
+                self.table, self.provider, candidate_ids, self._updates
+            )
+        ]

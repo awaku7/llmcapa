@@ -55,7 +55,7 @@ def test_catalog_database_preserves_lookup_indexes(tmp_path, monkeypatch):
     check_catalog(destination)
 
     with closing(sqlite3.connect(destination)) as database:
-        assert database.execute("PRAGMA user_version").fetchone() == (1,)
+        assert database.execute("PRAGMA user_version").fetchone() == (2,)
         assert database.execute("PRAGMA integrity_check").fetchone() == ("ok",)
         assert database.execute("PRAGMA foreign_key_check").fetchall() == []
         blocks = {
@@ -88,6 +88,10 @@ def test_catalog_database_preserves_lookup_indexes(tmp_path, monkeypatch):
             for key, block_id, position in rows
         } == registry._models
         assert dict(database.execute("SELECT * FROM aliases")) == registry._alias_index
+        assert database.execute(
+            "SELECT COUNT(*) FROM lookup_names WHERE kind = 'alias' AND name = ?",
+            ("shared",),
+        ).fetchone() == (2,)
         assert database.execute(
             "SELECT model_key FROM scoped_aliases WHERE provider = ? AND alias = ?",
             ("openrouter", "shared"),
