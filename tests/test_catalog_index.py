@@ -663,3 +663,83 @@ def test_warm_cache_runtime_replacement_retains_numeric_tie_order(catalog):
         )
         assert registry.get("tie-1.2", "openai").model_id == "cache-first"
         assert registry.get("tie-1.2").model_id == "cache-first"
+
+
+def test_full_catalog_parity(catalog):
+    from llmcapa._catalog_parity import verify_catalog
+
+    counts = verify_catalog()
+    assert counts["providers"] == 2
+    assert counts["scoped_models"] == 5
+    assert counts["flat_models"] == 4
+    assert counts["lookup_postings"] > 0
+
+
+@pytest.mark.parametrize("kind", ["payload", "alias", "order", "postings"])
+def test_catalog_parity_detects_valid_sqlite_mismatch(catalog, kind):
+    from llmcapa._catalog_parity import CatalogParityError, verify_catalog
+
+    _, database = catalog
+    with closing(sqlite3.connect(database)) as conn, conn:
+        if kind == "payload":
+            payload = conn.execute(
+                "SELECT payload FROM capability_blocks WHERE id = 1"
+            ).fetchone()[0]
+            records = json.loads(zlib.decompress(payload))
+            records[0]["context_window"] = 123456
+            conn.execute(
+                "UPDATE capability_blocks SET payload = ? WHERE id = 1",
+                (zlib.compress(json.dumps(records).encode()),),
+            )
+        elif kind == "alias":
+            conn.execute(
+                "UPDATE alias_entries SET model_key_id = "
+                "(SELECT id FROM strings WHERE value = 'router-only') "
+                "WHERE alias_id = (SELECT id FROM strings WHERE value = 'demo')"
+            )
+        elif kind == "order":
+            conn.execute("UPDATE model_entries SET ordinal = -ordinal")
+        else:
+            conn.execute("DELETE FROM lookup_blocks WHERE kind = 'shape'")
+    with pytest.raises(CatalogParityError):
+        verify_catalog()
+
+
+def test_catalog_parity_with_warm_user_cache(catalog):
+    from llmcapa._catalog_parity import compare_registries
+
+    writer = Registry()
+    writer._write_user_catalog_override(
+        "parity",
+        "explicit-tag",
+        {"openai"},
+        [
+            Capability(
+                provider="openai",
+                model_id="gpt-demo-1.2",
+                aliases=["cache-alias"],
+                context_window=7654,
+            ),
+            Capability(provider="openai", model_id="cache-model-1.1"),
+        ],
+    )
+    expected = json_registry()
+    expected._load_startup_caches()
+    Registry()._ensure_loaded()
+    actual = Registry()
+    actual._ensure_loaded()
+    assert actual._models._user_cache is not None
+    compare_registries(expected, actual)
+    assert actual._models._user_cache._fallback is None
+
+
+def test_catalog_parity_rejects_candidate_query_fallback(catalog, monkeypatch):
+    from llmcapa import _catalog_index
+    from llmcapa._catalog_parity import CatalogParityError, verify_catalog
+
+    def failed_candidates(conn, kind, term):
+        raise sqlite3.OperationalError("candidate index read failed")
+
+    monkeypatch.setattr(_catalog_index, "candidate_ids", failed_candidates)
+    with pytest.raises(CatalogParityError, match="candidate lookup fell back"):
+        verify_catalog()
