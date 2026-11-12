@@ -12,6 +12,7 @@ import tempfile
 import time
 import urllib.request
 import warnings
+from contextlib import nullcontext
 from dataclasses import replace
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
@@ -22,7 +23,7 @@ from typing import Callable, ClassVar
 from urllib.error import HTTPError
 from urllib.parse import quote
 
-from ._catalog_index import CatalogIndex
+from ._catalog_index import CatalogIndex, CatalogMapping
 from .hf_overlay import expand_hf_overlay, is_hf_overlay
 from .models import Capability
 
@@ -65,10 +66,10 @@ class Registry:
     """In-memory registry of model capabilities."""
 
     def __init__(self) -> None:
-        self._models: dict[str, Capability] = {}
-        self._alias_index: dict[str, str] = {}
+        self._models: dict[str, Capability] | CatalogMapping = {}
+        self._alias_index: dict[str, str] | CatalogMapping = {}
         # Provider-scoped index: {provider_lower: {model_id_lower: Capability}}
-        self._by_provider: dict[str, dict[str, Capability]] = {}
+        self._by_provider: dict[str, dict[str, Capability] | CatalogMapping] = {}
         # Provider-to-bundled-file index used by the optional GitHub catalog
         # fetcher. Some providers (for example Modellix) have multiple files.
         self._catalog_files_by_provider: dict[str, set[str]] = {}
@@ -214,13 +215,15 @@ class Registry:
         if not self._try_load_sqlite():
             self._load_bundled_files()
 
-        # Reuse explicitly fetched GitHub snapshots without networking.
-        self._load_github_catalog_caches()
-        # Persistent user catalogs take precedence over the bundled snapshots.
-        self._load_persistent_github_catalogs()
-
-        # Load local OpenRouter cache if it exists (up to 24h old) to override bundled data with latest updates
-        self._load_openrouter_cache()
+        # Apply cache records as sparse overrides without expanding the bundle.
+        index = self._catalog_index
+        with index.batch() if index is not None else nullcontext():
+            # Reuse explicitly fetched GitHub snapshots without networking.
+            self._load_github_catalog_caches()
+            # Persistent user catalogs take precedence over bundled snapshots.
+            self._load_persistent_github_catalogs()
+            # Load fresh OpenRouter cache using the existing precedence rules.
+            self._load_openrouter_cache()
 
     def _try_load_sqlite(self) -> bool:
         """Initialize lazy indexes without changing registration precedence."""
@@ -237,29 +240,6 @@ class Registry:
         self._catalog_files_by_provider = index.provider_files
         self._catalog_index = index
         return True
-
-    def _materialize_sqlite(self) -> None:
-        """Switch to writable dictionaries before applying catalog changes."""
-        index = self._catalog_index
-        if index is None:
-            return
-        models = dict(self._models.items())
-        aliases = dict(self._alias_index.items())
-        by_provider = {
-            provider: dict(entries.items())
-            for provider, entries in self._by_provider.items()
-        }
-        if index._fallback is not None:
-            # A read error may have occurred halfway through materialization.
-            fallback = index._fallback
-            models = fallback._models
-            aliases = fallback._alias_index
-            by_provider = fallback._by_provider
-            self._catalog_files_by_provider = fallback._catalog_files_by_provider
-        self._models = models
-        self._alias_index = aliases
-        self._by_provider = by_provider
-        self._catalog_index = None
 
     def _load_bundled_files(self) -> None:
         """Load only package catalogs, without machine-specific overrides."""
@@ -509,7 +489,6 @@ class Registry:
         Provider-scoped lookups via ``get(..., provider=...)`` always
         find the correct provider's data regardless of registration order.
         """
-        self._materialize_sqlite()
         cap = self._canonical_capability(cap)
         key = cap.model_id.lower()
         prov = self._normalize_provider(cap.provider)
@@ -1014,7 +993,6 @@ class Registry:
     # ------------------------------------------------------------------
     def _register_refreshed_catalog_record(self, cap: Capability) -> None:
         """Upsert a fetched record without changing cross-provider precedence."""
-        self._materialize_sqlite()
         cap = self._canonical_capability(cap)
         key = cap.model_id.lower()
         provider = self._normalize_provider(cap.provider)

@@ -6,7 +6,7 @@ import json
 import sqlite3
 import zlib
 from collections.abc import Mapping
-from contextlib import closing
+from contextlib import ExitStack, closing, contextmanager, nullcontext
 from importlib import resources
 from pathlib import Path
 from threading import RLock
@@ -26,9 +26,34 @@ class CatalogIndex:
         self._block_id = None
         self._block = []
         self._fallback = None
+        self._batch_stack = None
+        self._batch_connection = None
 
     def _connect(self):
-        return closing(sqlite3.connect(self.database.as_uri() + "?mode=ro", uri=True))
+        if self._batch_stack is None:
+            return closing(
+                sqlite3.connect(self.database.as_uri() + "?mode=ro", uri=True)
+            )
+        if self._batch_connection is None:
+            self._batch_connection = self._batch_stack.enter_context(
+                closing(sqlite3.connect(self.database.as_uri() + "?mode=ro", uri=True))
+            )
+        return nullcontext(self._batch_connection)
+
+    @contextmanager
+    def batch(self):
+        """Reuse a read-only connection during cache registration, then close it."""
+        with self._lock:
+            if self._batch_stack is not None:
+                yield
+                return
+            with ExitStack() as stack:
+                self._batch_stack = stack
+                try:
+                    yield
+                finally:
+                    self._batch_connection = None
+                    self._batch_stack = None
 
     @classmethod
     def open(cls):
@@ -167,32 +192,54 @@ class CatalogIndex:
             return list(items)
 
     def index(self, table, provider=None):
-        return _Index(self, table, provider)
+        return CatalogMapping(self, table, provider)
 
 
-class _Index(Mapping):
-    """Read-only mapping implementing the existing registry lookup contract."""
+class CatalogMapping(Mapping):
+    """SQLite-backed mapping with in-memory additions and replacements."""
 
     def __init__(self, reader, table, provider):
         self.reader = reader
         self.table = table
         self.provider = provider
+        self._updates = {}
 
     def __getitem__(self, key):
+        if key in self._updates:
+            return self._updates[key]
         rows = self.reader.read(self.table, self.provider, key=key)
         if not rows:
             raise KeyError(key)
         return rows[0][1]
 
+    def __setitem__(self, key, value):
+        self._updates[key] = value
+
+    def __contains__(self, key):
+        return key in self._updates or bool(
+            self.reader.read(self.table, self.provider, key=key, keys_only=True)
+        )
+
+    def setdefault(self, key, default=None):
+        try:
+            return self[key]
+        except KeyError:
+            self[key] = default
+            return default
+
     def __iter__(self):
         rows = self.reader.read(self.table, self.provider, keys_only=True)
-        return iter(row[0] for row in rows)
+        keys = dict.fromkeys(row[0] for row in rows)
+        keys.update(dict.fromkeys(self._updates))
+        return iter(keys)
 
     def __len__(self):
-        return len(self.reader.read(self.table, self.provider, keys_only=True))
+        return sum(1 for _ in self)
 
     def items(self):
-        return self.reader.read(self.table, self.provider)
+        combined = dict(self.reader.read(self.table, self.provider))
+        combined.update(self._updates)
+        return combined.items()
 
     def values(self):
         return [value for _, value in self.items()]

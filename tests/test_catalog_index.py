@@ -116,12 +116,13 @@ def test_sqlite_lookup_is_lazy_and_matches_json(catalog, monkeypatch):
     )
 
 
-def test_materialization_preserves_identity_and_user_registration(catalog):
+def test_overlay_preserves_identity_and_user_registration(catalog):
     registry = Registry()
     original = registry.get("demo")
     assert registry._catalog_index is not None
     registry.register(Capability(provider="custom", model_id="user-model"))
-    assert registry._catalog_index is None
+    assert registry._catalog_index is not None
+    assert len(registry._catalog_index._objects) == 1
     assert registry.get("demo") is original
     assert registry.get("user-model").provider == "custom"
     registry.register(
@@ -141,7 +142,7 @@ def test_load_extra_after_sqlite_lookup(catalog, tmp_path):
     )
     assert registry.load_extra(extra) == 1
     assert registry.get("extra").provider == "custom"
-    assert registry._catalog_index is None
+    assert registry._catalog_index is not None
 
 
 def test_refresh_invalidates_database(catalog, tmp_path):
@@ -201,7 +202,10 @@ def test_persistent_cache_overrides_sqlite(catalog, tmp_path):
     )
     registry = Registry()
     assert registry.get("gpt-demo-1.2", "openai").context_window == 3456
-    assert registry._catalog_index is None
+    assert registry._catalog_index is not None
+    assert len(registry._catalog_index._objects) == 1
+    assert registry.get("gpt-demo-1.2").context_window == 3456
+    assert registry.get("gpt-demo-1.2", "openrouter").context_window == 2000
 
 
 def test_stale_source_with_preserved_mtime_falls_back(catalog):
@@ -216,3 +220,63 @@ def test_stale_source_with_preserved_mtime_falls_back(catalog):
     registry = Registry()
     assert registry.get("demo").context_window == 2000
     assert registry._catalog_index is None
+
+
+def test_startup_cache_overlays_match_json_without_full_decode(catalog, tmp_path):
+    home = tmp_path / "home" / ".llmcapa"
+    cache = home / "github_catalog_cache"
+    cache.mkdir(parents=True)
+    (cache / "main.json").write_text(
+        json.dumps(
+            {
+                "ref": "main",
+                "providers": ["openai"],
+                "files": {
+                    "openai.json": json.dumps(
+                        [
+                            {
+                                "provider": "openai",
+                                "model_id": "gpt-demo-1.2",
+                                "context_window": 2222,
+                                "aliases": ["new-alias"],
+                            }
+                        ]
+                    )
+                },
+            }
+        ),
+        encoding="utf-8",
+    )
+    # The cache loader ignores snapshots older than the installed source.
+    bundled = registry_module.Path(registry_module.__file__).parent / "data"
+    future = (bundled / "openai.json").stat().st_mtime + 1
+    os.utime(cache / "main.json", (future, future))
+    (home / "openrouter_cache.json").write_text(
+        json.dumps([{"id": "cache-only", "context_length": 8192}]),
+        encoding="utf-8",
+    )
+
+    baseline = json_registry()
+    baseline._load_github_catalog_caches()
+    baseline._load_persistent_github_catalogs()
+    baseline._load_openrouter_cache()
+
+    registry = Registry()
+    assert registry.get("new-alias", "openai") == baseline.get("new-alias", "openai")
+    assert registry.get("cache-only", "openrouter") == baseline.get(
+        "cache-only", "openrouter"
+    )
+    index = registry._catalog_index
+    assert index is not None
+    assert len(index._objects) == 1
+    assert index._batch_connection is None
+    assert index._batch_stack is None
+
+    for provider in (None, "openai", "openrouter"):
+        assert registry.list_models(provider, True) == baseline.list_models(
+            provider, True
+        )
+        assert registry.search("", provider, True) == baseline.search(
+            "", provider, True
+        )
+    assert registry.providers() == baseline.providers()
