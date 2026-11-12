@@ -180,8 +180,7 @@ def _decision_pck(cap: Capability) -> str:
     if all(v is None for v in slots):
         return "-"
     return "".join(
-        "-" if v is False else ("?" if v is None else ch)
-        for ch, v in zip("PCK", slots)
+        "-" if v is False else ("?" if v is None else ch) for ch, v in zip("PCK", slots)
     )
 
 
@@ -481,6 +480,7 @@ def _render_table(
             widths[i] = max(widths[i], len(cell))
 
     if max_width and ncols:
+
         def total(budget: list[int]) -> int:
             return sum(budget) + 2 * (ncols - 1)
 
@@ -528,6 +528,7 @@ def _emit(caps: list[Capability], args: argparse.Namespace) -> int:
         return 0
 
     if fmt == "md":
+
         def escape(cell: str) -> str:
             return cell.replace("|", "\\|")
 
@@ -564,9 +565,7 @@ def _format_show_value(value: Any) -> str:
     return str(value)
 
 
-def _iter_show_rows(
-    data: dict[str, Any], prefix: str = ""
-) -> list[tuple[str, str]]:
+def _iter_show_rows(data: dict[str, Any], prefix: str = "") -> list[tuple[str, str]]:
     """Flatten nested capability dicts into dotted ``key  value`` rows."""
     rows: list[tuple[str, str]] = []
     for key, value in data.items():
@@ -819,7 +818,9 @@ def _add_render_options(parser: argparse.ArgumentParser) -> None:
         default=None,
         help="output format (default: table)",
     )
-    parser.add_argument("--json", action="store_true", help="shortcut for --format json")
+    parser.add_argument(
+        "--json", action="store_true", help="shortcut for --format json"
+    )
     parser.add_argument(
         "--columns",
         default=None,
@@ -899,9 +900,7 @@ def build_parser() -> argparse.ArgumentParser:
     _add_render_options(p_list)
     p_list.set_defaults(func=_cmd_list)
 
-    p_find = sub.add_parser(
-        "find", help="find models by feature flags and size limits"
-    )
+    p_find = sub.add_parser("find", help="find models by feature flags and size limits")
     p_find.add_argument(
         "features",
         nargs="*",
@@ -987,7 +986,9 @@ def main(argv: list[str] | None = None) -> int:
     if not getattr(args, "command", None):
         parser.print_help()
         return 0
-    if getattr(args, "no_deprecated", False) and not getattr(args, "include_deprecated", False):
+    if getattr(args, "no_deprecated", False) and not getattr(
+        args, "include_deprecated", False
+    ):
         args.include_deprecated = False
     if args.extra:
         default_registry().load_extra(args.extra)
