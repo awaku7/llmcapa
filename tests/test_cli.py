@@ -187,6 +187,7 @@ def test_find_decision_models(capsys):
         "liquid",
         "perplexity",
         "microsoft",
+        "google",
     }
 
 
