@@ -2,7 +2,9 @@
 
 import json
 import os
+import sqlite3
 import time
+from contextlib import closing
 
 import pytest
 
@@ -93,3 +95,24 @@ def test_cleanup_at_registry_startup(tmp_path, monkeypatch):
     monkeypatch.setattr(Registry, "_load_bundled_files", lambda self: None)
     Registry()._ensure_loaded()
     assert not path.exists()
+
+
+def test_cleanup_skips_busy_publication_lock(tmp_path):
+    paths = [
+        _old_file(tmp_path / name, LEGACY_RETENTION + DAY)
+        for name in (
+            "openrouter_cache.json",
+            "huggingface_all_tasks_cache_all.json",
+        )
+    ]
+    with closing(sqlite3.connect(tmp_path / ".override-lock.sqlite3")) as conn:
+        conn.execute("BEGIN IMMEDIATE")
+        started = time.perf_counter()
+        cleanup_temporary_caches(tmp_path)
+        elapsed = time.perf_counter() - started
+        assert elapsed < 2
+        assert all(path.exists() for path in paths)
+        conn.rollback()
+
+    cleanup_temporary_caches(tmp_path)
+    assert not any(path.exists() for path in paths)

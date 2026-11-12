@@ -42,11 +42,11 @@ CREATE TABLE entries (
 
 
 @contextmanager
-def override_write_lock(directory):
+def override_write_lock(directory, *, timeout=5.0):
     """Serialize durable override publication and deletion across processes."""
     lock_path = directory / ".override-lock.sqlite3"
     try:
-        with closing(sqlite3.connect(lock_path)) as conn, conn:
+        with closing(sqlite3.connect(lock_path, timeout=timeout)) as conn, conn:
             conn.execute("BEGIN IMMEDIATE")
             yield
     except sqlite3.Error as exc:

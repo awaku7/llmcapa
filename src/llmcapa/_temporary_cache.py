@@ -101,7 +101,7 @@ def cleanup_temporary_caches(home, now=None):
                 info = path.lstat()
                 if not _expired(path, info, now):
                     continue
-                with override_write_lock(home):
+                with override_write_lock(home, timeout=0):
                     current = path.lstat()
                     if _identity(current) != _identity(info):
                         continue
@@ -110,7 +110,7 @@ def cleanup_temporary_caches(home, now=None):
                     path.unlink()
                     _expiry_path(path).unlink(missing_ok=True)
             except OSError:
-                # Locked files, concurrent removals and read-only homes are OK.
+                # Never wait for a publisher; locked files and read-only homes are OK.
                 continue
     except OSError:
         return
