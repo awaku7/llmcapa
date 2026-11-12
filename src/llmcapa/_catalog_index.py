@@ -37,6 +37,43 @@ def _prefix_end(prefix: str):
     return None
 
 
+def lookup_names(capability):
+    """Yield normalized lookup names with numeric shapes."""
+    names = [("model", capability.model_id)]
+    if capability.display_name:
+        names.append(("display", capability.display_name))
+    for alias in capability.aliases or []:
+        names.append(("alias", str(alias)))
+        if str(alias).strip() != str(alias):
+            names.append(("alias_exact", str(alias).strip()))
+    for kind, name in names:
+        parsed = parse_numeric_name(name) if kind in ("model", "alias") else None
+        yield kind, name.lower(), parsed[0] if parsed else None
+
+
+def candidate_ids(conn, kind, term):
+    if kind == "alias":
+        where = "kind IN ('alias', 'alias_exact') AND name = ?"
+        args = [term]
+    elif kind == "numeric":
+        where = "shape = ?"
+        args = [term]
+    else:
+        end = _prefix_end(term)
+        where = "name >= ?"
+        args = [term]
+        if end is not None:
+            where += " AND name < ?"
+            args.append(end)
+    return {
+        row[0]
+        for row in conn.execute(
+            f"SELECT DISTINCT capability_id FROM lookup_names WHERE {where}",
+            args,
+        )
+    }
+
+
 class CatalogIndex:
     """Share decoded capabilities across flat and provider-scoped indexes."""
 
@@ -49,6 +86,9 @@ class CatalogIndex:
         self._fallback = None
         self._batch_stack = None
         self._batch_connection = None
+        self._batch_metadata = {}
+        self._batch_owners = None
+        self._schema_version = 1
 
     def _connect(self):
         if self._batch_stack is None:
@@ -75,6 +115,8 @@ class CatalogIndex:
                 finally:
                     self._batch_connection = None
                     self._batch_stack = None
+                    self._batch_metadata.clear()
+                    self._batch_owners = None
 
     @classmethod
     def open(cls):
@@ -108,6 +150,7 @@ class CatalogIndex:
                 )
                 if expected != _catalog_sources():
                     return None
+                reader.source_fingerprints = expected
                 reader.providers = [
                     row[0]
                     for row in conn.execute(
@@ -218,40 +261,70 @@ class CatalogIndex:
                 return [(name,) for name, _ in items]
             return list(items)
 
+    def registration_metadata(self, table, provider):
+        """Load only keys and IDs once per index during bulk registration."""
+        with self._lock:
+            if self._batch_stack is None or self._fallback is not None:
+                return None
+            cache_key = (table, provider)
+            if cache_key not in self._batch_metadata:
+                columns = (
+                    "alias, model_key"
+                    if table == "aliases"
+                    else "model_key, capability_id"
+                )
+                where = " WHERE provider = ?" if provider is not None else ""
+                args = [provider] if provider is not None else []
+                try:
+                    with self._connect() as conn:
+                        self._batch_metadata[cache_key] = dict(
+                            conn.execute(f"SELECT {columns} FROM {table}{where}", args)
+                        )
+                except _READ_ERRORS:
+                    self._json_index(table, provider)
+                    return None
+            return self._batch_metadata[cache_key]
+
+    def registration_provider(self, record_id):
+        """Resolve a flat record's provider without decoding its payload."""
+        with self._lock:
+            if self._fallback is not None:
+                return None
+            cap = self._objects.get(record_id)
+            if cap is not None:
+                return cap.provider
+            if self._batch_owners is None:
+                try:
+                    with self._connect() as conn:
+                        self._batch_owners = dict(
+                            conn.execute("SELECT capability_id, provider FROM models")
+                        )
+                except _READ_ERRORS:
+                    self._json_index("flat_models", None)
+                    return None
+            # A flat-only record may not be in the scoped index. Its caller
+            # must fall back to decoding that individual capability.
+            return self._batch_owners.get(record_id)
+
     def candidate_ids(self, kind, term):
         """Find potential matches without decompressing capability payloads."""
         if self._schema_version < 2 or self._fallback is not None:
             return None
-        if kind == "alias":
-            where = "kind IN ('alias', 'alias_exact') AND name = ?"
-            args = [term]
-        elif kind == "numeric":
-            where = "shape = ?"
-            args = [term]
-        else:
-            end = _prefix_end(term)
-            where = "name >= ?"
-            args = [term]
-            if end is not None:
-                where += " AND name < ?"
-                args.append(end)
         with self._lock:
             try:
                 with self._connect() as conn:
-                    return {
-                        row[0]
-                        for row in conn.execute(
-                            f"SELECT DISTINCT capability_id FROM lookup_names WHERE {where}",
-                            args,
-                        )
-                    }
+                    return candidate_ids(conn, kind, term)
             except _READ_ERRORS:
                 return None
 
-    def matching_items(self, table, provider, candidate_ids, updates):
+    def matching_items(self, table, provider, candidate_ids, updates, excluded):
         """Read candidates in base order, then append new overlay keys."""
         if candidate_ids is None:
-            combined = dict(self.read(table, provider))
+            combined = {
+                key: value
+                for key, value in self.read(table, provider)
+                if key not in excluded or key in updates
+            }
             combined.update(updates)
             return combined.items()
         where = " WHERE i.provider = ?" if provider is not None else ""
@@ -269,7 +342,7 @@ class CatalogIndex:
                         ):
                             if key in updates:
                                 result[key] = updates[key]
-                            elif (
+                            elif key not in excluded and (
                                 record_id in candidate_ids
                                 or record_id in self._objects
                             ):
@@ -281,7 +354,11 @@ class CatalogIndex:
                         return result.items()
                 except _READ_ERRORS:
                     pass
-            combined = dict(self._json_index(table, provider))
+            combined = {
+                key: value
+                for key, value in self._json_index(table, provider).items()
+                if key not in excluded or key in updates
+            }
             combined.update(updates)
             return combined.items()
 
@@ -297,10 +374,23 @@ class CatalogMapping(Mapping):
         self.table = table
         self.provider = provider
         self._updates = {}
+        self._user_cache = None
+
+    def _cached_rows(self, key=None, **kwargs):
+        if self._user_cache is None:
+            return []
+        return self._user_cache.read(self.table, self.provider, key, **kwargs)
 
     def __getitem__(self, key):
         if key in self._updates:
             return self._updates[key]
+        cached = self._cached_rows(key)
+        if cached:
+            return cached[0][1]
+        if self.table == "aliases":
+            metadata = self.reader.registration_metadata(self.table, self.provider)
+            if metadata is not None:
+                return metadata[key]
         rows = self.reader.read(self.table, self.provider, key=key)
         if not rows:
             raise KeyError(key)
@@ -310,9 +400,31 @@ class CatalogMapping(Mapping):
         self._updates[key] = value
 
     def __contains__(self, key):
-        return key in self._updates or bool(
+        if key in self._updates or self._cached_rows(key, keys_only=True):
+            return True
+        metadata = self.reader.registration_metadata(self.table, self.provider)
+        if metadata is not None:
+            return key in metadata
+        return bool(
             self.reader.read(self.table, self.provider, key=key, keys_only=True)
         )
+
+    def registered_provider(self, key):
+        """Return the provider for a flat key, including in-memory overrides."""
+        if key in self._updates:
+            return self._updates[key].provider
+        cached = self._cached_rows(key, owner_only=True)
+        if cached:
+            return cached[0][1]
+        metadata = self.reader.registration_metadata(self.table, self.provider)
+        if metadata is not None:
+            if key not in metadata:
+                return None
+            provider = self.reader.registration_provider(metadata[key])
+            if provider is not None:
+                return provider
+        cap = self.get(key)
+        return cap.provider if cap is not None else None
 
     def setdefault(self, key, default=None):
         try:
@@ -324,6 +436,7 @@ class CatalogMapping(Mapping):
     def __iter__(self):
         rows = self.reader.read(self.table, self.provider, keys_only=True)
         keys = dict.fromkeys(row[0] for row in rows)
+        keys.update(dict.fromkeys(row[0] for row in self._cached_rows(keys_only=True)))
         keys.update(dict.fromkeys(self._updates))
         return iter(keys)
 
@@ -332,16 +445,26 @@ class CatalogMapping(Mapping):
 
     def items(self):
         combined = dict(self.reader.read(self.table, self.provider))
+        combined.update(self._cached_rows())
         combined.update(self._updates)
         return combined.items()
 
     def values(self):
         return [value for _, value in self.items()]
 
-    def matching_values(self, candidate_ids):
+
+    def matching_values(self, ids, kind, term):
+        cached = {}
+        excluded = set()
+        if self._user_cache is not None:
+            excluded = {key for key, _ in self._cached_rows(keys_only=True)}
+            cached = dict(
+                self._user_cache.matching_items(self.table, self.provider, kind, term)
+            )
+        cached.update(self._updates)
         return [
             value
             for _, value in self.reader.matching_items(
-                self.table, self.provider, candidate_ids, self._updates
+                self.table, self.provider, ids, cached, excluded
             )
         ]

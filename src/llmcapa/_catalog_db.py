@@ -11,7 +11,7 @@ from contextlib import closing
 from importlib import resources
 from pathlib import Path
 
-from ._catalog_index import parse_numeric_name
+from ._catalog_index import lookup_names
 from .models import Capability
 from .registry import Registry
 
@@ -166,25 +166,12 @@ def build_catalog(destination: Path) -> None:
                         (record_id, block_id, len(pending)),
                     )
                     ids[key] = record_id
-                    names = [("model", capability.model_id)]
-                    if capability.display_name:
-                        names.append(("display", capability.display_name))
-                    for alias in capability.aliases or []:
-                        names.append(("alias", alias))
-                        if alias.strip() != alias:
-                            names.append(("alias_exact", alias.strip()))
-                    rows = []
-                    for kind, name in names:
-                        parsed = (
-                            parse_numeric_name(name)
-                            if kind in ("model", "alias")
-                            else None
-                        )
-                        rows.append(
-                            (record_id, kind, name.lower(), parsed[0] if parsed else None)
-                        )
                     connection.executemany(
-                        "INSERT OR IGNORE INTO lookup_names VALUES (?, ?, ?, ?)", rows
+                        "INSERT OR IGNORE INTO lookup_names VALUES (?, ?, ?, ?)",
+                        (
+                            (record_id, kind, name, shape)
+                            for kind, name, shape in lookup_names(capability)
+                        ),
                     )
                     pending.append(capability.to_dict())
                     if len(pending) == _BLOCK_SIZE:
