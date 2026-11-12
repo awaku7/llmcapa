@@ -803,7 +803,9 @@ def test_hf_legacy_output_placeholder_migrates_to_unknown():
 
 
 @pytest.mark.parametrize("actions", [False, True])
-def test_refresh_syncs_sqlite_once_after_provider_updates(monkeypatch, tmp_path, actions):
+def test_refresh_syncs_sqlite_once_after_provider_updates(
+    monkeypatch, tmp_path, actions
+):
     monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
     if actions:
         monkeypatch.setenv("GITHUB_ACTIONS", "true")
