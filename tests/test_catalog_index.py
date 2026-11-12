@@ -11,7 +11,7 @@ import pytest
 from llmcapa import registry as registry_module
 from llmcapa._catalog_db import build_catalog
 from llmcapa.models import Capability
-from llmcapa.registry import Registry
+from llmcapa.registry import ModelNotFoundError, Registry
 
 
 @pytest.fixture
@@ -45,6 +45,7 @@ def catalog(tmp_path, monkeypatch):
             {
                 "provider": "openai",
                 "model_id": "gpt-demo-1.4",
+                "aliases": ["collision"],
                 "deprecated": True,
             },
         ],
@@ -61,7 +62,12 @@ def catalog(tmp_path, monkeypatch):
             {
                 "provider": "openrouter",
                 "model_id": "router-only",
-                "aliases": ["route"],
+                "aliases": ["route", "collision"],
+            },
+            {
+                "provider": "openrouter",
+                "model_id": "router-second",
+                "aliases": ["collision"],
             },
         ],
     )
@@ -586,7 +592,7 @@ def test_legacy_database_keeps_lookup_compatibility(catalog):
     assert registry._catalog_index is not None
 
 
-def test_warm_user_cache_candidate_search(catalog, tmp_path):
+def test_warm_user_cache_candidate_search(catalog):
     registry = Registry()
     registry._write_user_catalog_override(
         "test",
@@ -627,3 +633,32 @@ def test_warm_user_cache_candidate_search(catalog, tmp_path):
     cap.aliases.append("runtime-cache-alias")
     assert warm.get("runtime-cache-alias", "openai") is cap
     assert warm.search("runtime-cache") == [cap]
+
+
+def test_warm_cache_runtime_replacement_retains_numeric_tie_order(catalog):
+    writer = Registry()
+    writer._write_user_catalog_override(
+        "test",
+        "explicit-tag",
+        {"openai"},
+        [
+            Capability(provider="openai", model_id="cache-first"),
+            Capability(
+                provider="openai", model_id="cache-second", aliases=["tie-1.1"]
+            ),
+        ],
+    )
+    cold = Registry()
+    cold.get("demo", "openai")
+    warm = Registry()
+    warm.get("demo", "openai")
+    assert warm._by_provider["openai"]._user_cache is not None
+    for registry in (cold, warm):
+        registry.register(
+            Capability(
+                provider="openai", model_id="cache-first", aliases=["tie-1.1"]
+            ),
+            overwrite=True,
+        )
+        assert registry.get("tie-1.2", "openai").model_id == "cache-first"
+        assert registry.get("tie-1.2").model_id == "cache-first"

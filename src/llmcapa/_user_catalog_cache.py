@@ -278,7 +278,6 @@ class UserCatalogCache:
                 for name, value in items
             ]
 
-
     def matching_items(self, kind, provider, search_kind, term):
         """Decode only candidate overlay records, retaining loaded mutations."""
         with self._lock:

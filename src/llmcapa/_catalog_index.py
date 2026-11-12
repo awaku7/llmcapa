@@ -343,8 +343,7 @@ class CatalogIndex:
                             if key in updates:
                                 result[key] = updates[key]
                             elif key not in excluded and (
-                                record_id in candidate_ids
-                                or record_id in self._objects
+                                record_id in candidate_ids or record_id in self._objects
                             ):
                                 # Already decoded objects may have been mutated by callers.
                                 result[key] = self._capability(
@@ -452,15 +451,22 @@ class CatalogMapping(Mapping):
     def values(self):
         return [value for _, value in self.items()]
 
-
     def matching_values(self, ids, kind, term):
         cached = {}
         excluded = set()
         if self._user_cache is not None:
-            excluded = {key for key, _ in self._cached_rows(keys_only=True)}
-            cached = dict(
+            keys = [key for key, _ in self._cached_rows(keys_only=True)]
+            excluded = set(keys)
+            matches = dict(
                 self._user_cache.matching_items(self.table, self.provider, kind, term)
             )
+            # Runtime replacements retain their original snapshot position,
+            # even when the previous payload was not a search candidate.
+            for key in keys:
+                if key in self._updates:
+                    cached[key] = self._updates[key]
+                elif key in matches:
+                    cached[key] = matches[key]
         cached.update(self._updates)
         return [
             value
