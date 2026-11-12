@@ -334,7 +334,9 @@ def test_registration_metadata_preserves_flat_owner(catalog):
     assert index is not None
     with index.batch():
         registry._register_refreshed_catalog_record(
-            Capability(provider="openrouter", model_id="gpt-demo-1.2", context_window=789)
+            Capability(
+                provider="openrouter", model_id="gpt-demo-1.2", context_window=789
+            )
         )
     assert registry.get("gpt-demo-1.2") is original
     assert registry.get("gpt-demo-1.2", "openrouter").context_window == 789
