@@ -522,9 +522,7 @@ def test_stale_deletion_preserves_concurrent_publication(
         with original_lock(directory):
             yield
 
-    monkeypatch.setattr(
-        _user_catalog_cache, "override_write_lock", publish_before_lock
-    )
+    monkeypatch.setattr(_user_catalog_cache, "override_write_lock", publish_before_lock)
     assert Registry().get("gpt-demo-1.2", "openai").context_window == 1000
     assert publications == [True]
     assert path.exists()
