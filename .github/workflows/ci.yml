@@ -57,10 +57,25 @@ jobs:
         run: |
           set -o pipefail
           xargs -r python -m ruff check < changed-python.txt 2>&1 | tee ruff.log
+      - name: Verify committed SQLite catalog
+        run: |
+          git ls-files --error-unmatch src/llmcapa/data/catalog.sqlite3
+          python scripts/build_catalog_db.py --check
       - name: Build
         run: |
           set -o pipefail
           python -m build 2>&1 | tee build.log
+      - name: Verify bundled SQLite catalog
+        run: |
+          python -m pip install --no-deps dist/*.whl
+          python - <<'PY'
+          from importlib import resources
+          from llmcapa._catalog_db import check_catalog
+
+          database = resources.files("llmcapa.data") / "catalog.sqlite3"
+          check_catalog(database)
+          print("Catalog bytes:", database.stat().st_size)
+          PY
       - name: Upload quality diagnostics
         if: failure()
         uses: actions/upload-artifact@v4

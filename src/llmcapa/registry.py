@@ -209,6 +209,18 @@ class Registry:
             self._load_bundled()
 
     def _load_bundled(self) -> None:
+        self._load_bundled_files()
+
+        # Reuse explicitly fetched GitHub snapshots without networking.
+        self._load_github_catalog_caches()
+        # Persistent user catalogs take precedence over the bundled snapshots.
+        self._load_persistent_github_catalogs()
+
+        # Load local OpenRouter cache if it exists (up to 24h old) to override bundled data with latest updates
+        self._load_openrouter_cache()
+
+    def _load_bundled_files(self) -> None:
+        """Load only package catalogs, without machine-specific overrides."""
         data_pkg = resources.files("llmcapa.data")
         # Aggregator/reseller files are loaded last so native provider data
         # takes precedence via first-registered-wins.
@@ -240,12 +252,8 @@ class Registry:
                 entry.read_text(encoding="utf-8"), catalog_name=entry.name
             )
 
-        # Reuse explicitly fetched GitHub snapshots without networking.
-        self._load_github_catalog_caches()
-        # Persistent user catalogs take precedence over the bundled snapshots.
-        self._load_persistent_github_catalogs()
-
-        # Load local OpenRouter cache if it exists (up to 24h old) to override bundled data with latest updates
+    def _load_openrouter_cache(self) -> None:
+        """Load the existing local OpenRouter cache, if fresh."""
         import os
         import time
 
