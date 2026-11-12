@@ -2,13 +2,14 @@
 
 import json
 import sqlite3
+import zlib
 from contextlib import closing
 
 import pytest
 
 from llmcapa import Capability
 from llmcapa import registry as registry_module
-from llmcapa._catalog_db import build_catalog
+from llmcapa._catalog_db import build_catalog, check_catalog
 
 
 def test_catalog_database_preserves_lookup_indexes(tmp_path, monkeypatch):
@@ -52,6 +53,7 @@ def test_catalog_database_preserves_lookup_indexes(tmp_path, monkeypatch):
     registry._load_bundled_files()
     destination = tmp_path / "catalog.sqlite3"
     build_catalog(destination)
+    check_catalog(destination)
 
     with closing(sqlite3.connect(destination)) as database:
         assert database.execute("PRAGMA user_version").fetchone() == (1,)
@@ -67,7 +69,7 @@ def test_catalog_database_preserves_lookup_indexes(tmp_path, monkeypatch):
                 (provider,),
             )
             assert {
-                key: Capability.from_dict(json.loads(payload)) for key, payload in rows
+                key: Capability.from_dict(json.loads(zlib.decompress(payload))) for key, payload in rows
             } == models
         rows = database.execute(
             """
@@ -77,7 +79,7 @@ def test_catalog_database_preserves_lookup_indexes(tmp_path, monkeypatch):
             """
         )
         assert {
-            key: Capability.from_dict(json.loads(payload)) for key, payload in rows
+            key: Capability.from_dict(json.loads(zlib.decompress(payload))) for key, payload in rows
         } == registry._models
         assert dict(database.execute("SELECT * FROM aliases")) == registry._alias_index
         assert database.execute(
@@ -90,10 +92,26 @@ def test_catalog_database_preserves_lookup_indexes(tmp_path, monkeypatch):
             for filename in filenames
         }
 
+    source = data / "openai.json"
+    source.write_bytes(source.read_bytes() + b"\n")
+    with pytest.raises(RuntimeError, match="Stale SQLite catalog"):
+        check_catalog(destination)
+
+
+def test_missing_catalog_is_not_generated_by_check(tmp_path):
+    destination = tmp_path / "missing.sqlite3"
+    with pytest.raises(RuntimeError, match="Missing SQLite catalog"):
+        check_catalog(destination)
+    assert not destination.exists()
+
 
 def test_failed_build_keeps_existing_database(tmp_path, monkeypatch):
     destination = tmp_path / "catalog.sqlite3"
     destination.write_bytes(b"previous snapshot")
+
+    data = tmp_path / "data"
+    data.mkdir()
+    monkeypatch.setattr(registry_module.resources, "files", lambda _: data)
 
     def broken(_self):
         raise ValueError("invalid catalog")

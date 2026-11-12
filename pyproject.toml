@@ -41,9 +41,6 @@ all = ["tiktoken>=0.5.1", "sentencepiece>=0.2.1"]
 [tool.hatch.build.targets.wheel]
 packages = ["src/llmcapa"]
 
-[tool.hatch.build.targets.wheel.hooks.custom]
-path = "hatch_build.py"
-
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 norecursedirs = [".*", "build", "dist", "outputs", "CVS", "_darcs", "{arch}", "*.egg", "venv"]

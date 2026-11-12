@@ -491,12 +491,25 @@ Modellix は LLM ゲートウェイと画像・動画・音声のメディア AP
 
 ## SQLite配布用インデックス
 
-通常のwheelビルドでは、Hatchのビルドフックが同梱JSONから
-`llmcapa/data/catalog.sqlite3` を生成してwheelに追加します。
-JSONは正本として保持し、既存の更新スクリプトは変更しません。
-生成DBは `build/llmcapa-catalog/` に置き、Gitへコミットしません。
+JSONを正本として保持します。配布用DBは開発者のPCで生成し、JSONと一緒にコミットします。
+GitHub ActionsやwheelビルドではDBを生成・更新しません。
+
+リポジトリのルートで、JSONを更新した後に実行してください。
+
+```bat
+python scripts/build_catalog_db.py
+python scripts/build_catalog_db.py --check
+git add src/llmcapa/data/catalog.sqlite3
+```
+
+JSON変更も同じコミットに含めてください。DBは `src/llmcapa/data/catalog.sqlite3` に生成され、
+通常のwheelのパッケージデータとして同梱されます。
+DBには元JSON/メタデータのSHA-256を保存します。CIでは未コミット・欠落・更新漏れを検出し、
+DBを再生成せず整合性を検証します。WindowsとLinuxの改行差はハッシュ計算時に正規化します。
+GitHub Actionsの自動JSON更新PRも、マージ前にPCでDBを再生成して同じブランチへコミットしてください。
+GitHubの単一ファイル上限を考慮し、モデル詳細はzlib圧縮して格納します。
+DBが100 MiBを超える場合は既存DBを置き換えずエラーにします。
 ユーザー環境のGitHubキャッシュ・永続上書き・OpenRouterキャッシュは生成対象外です。
-既存レジストリと同じプロバイダー別・flat・エイリアスの優先順位を保存します。
-CIではwheelへの同梱、SQLiteの整合性、代表モデルの存在を確認します。
+既存レジストリのプロバイダー別・flat・エイリアスの優先順位を保存します。
 この段階では実行時検索は従来のJSONを使用します。SQLite検索への切り替えと
 実行時JSON更新との同期は別の変更で実装します。
