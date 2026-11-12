@@ -98,9 +98,12 @@ def test_catalog_database_preserves_lookup_indexes(tmp_path, monkeypatch):
             "(SELECT id FROM strings WHERE value = ?)",
             ("example",),
         ).fetchone() == (2,)
-        assert database.execute(
-            "SELECT name FROM sqlite_master WHERE name = 'scoped_aliases'"
-        ).fetchone() is None
+        assert (
+            database.execute(
+                "SELECT name FROM sqlite_master WHERE name = 'scoped_aliases'"
+            ).fetchone()
+            is None
+        )
         assert set(database.execute("SELECT * FROM provider_files")) == {
             (provider, filename)
             for provider, filenames in registry._catalog_files_by_provider.items()
