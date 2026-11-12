@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 from collections import defaultdict
+from unittest.mock import patch
 
 from ._catalog_db import check_catalog
 from ._catalog_index import (
@@ -110,14 +111,29 @@ def compare_registries(expected, actual):
         expected._catalog_files_by_provider,
         actual._catalog_files_by_provider,
     )
-    _query_probes(expected, actual)
+    index = actual._catalog_index
+    if index is None:
+        raise CatalogParityError("SQLite backend was not used")
+    candidate_ids = index.candidate_ids
+
+    def checked_candidates(kind, term):
+        ids = candidate_ids(kind, term)
+        if ids is None:
+            raise CatalogParityError(
+                f"SQLite candidate lookup fell back: {kind}/{term!r}"
+            )
+        return ids
+
+    with patch.object(index, "candidate_ids", side_effect=checked_candidates) as probe:
+        _query_probes(expected, actual)
+        if not probe.called:
+            raise CatalogParityError("SQLite candidate lookup was not exercised")
     checked = set()
     _compare_mapping("flat", expected._models, actual._models, checked)
     _require_equal("aliases", expected._alias_index, dict(actual._alias_index.items()))
     for provider, models in expected._by_provider.items():
         _compare_mapping(provider, models, actual._by_provider[provider], checked)
-    index = actual._catalog_index
-    if index is None or index._fallback is not None:
+    if index._fallback is not None:
         raise CatalogParityError("SQLite backend was not used throughout verification")
     return {
         "providers": len(expected._by_provider),

@@ -731,3 +731,15 @@ def test_catalog_parity_with_warm_user_cache(catalog):
     assert actual._models._user_cache is not None
     compare_registries(expected, actual)
     assert actual._models._user_cache._fallback is None
+
+
+def test_catalog_parity_rejects_candidate_query_fallback(catalog, monkeypatch):
+    from llmcapa import _catalog_index
+    from llmcapa._catalog_parity import CatalogParityError, verify_catalog
+
+    def failed_candidates(conn, kind, term):
+        raise sqlite3.OperationalError("candidate index read failed")
+
+    monkeypatch.setattr(_catalog_index, "candidate_ids", failed_candidates)
+    with pytest.raises(CatalogParityError, match="candidate lookup fell back"):
+        verify_catalog()
