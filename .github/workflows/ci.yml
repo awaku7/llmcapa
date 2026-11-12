@@ -61,6 +61,11 @@ jobs:
         run: |
           git ls-files --error-unmatch src/llmcapa/data/catalog.sqlite3
           python scripts/build_catalog_db.py --check
+      - name: Verify JSON and SQLite catalog parity
+        shell: bash
+        run: |
+          set -o pipefail
+          python scripts/verify_catalog_parity.py 2>&1 | tee parity.log
       - name: Build
         run: |
           set -o pipefail
@@ -86,6 +91,7 @@ jobs:
             black.log
             ruff.log
             build.log
+            parity.log
           if-no-files-found: ignore
 
   test:

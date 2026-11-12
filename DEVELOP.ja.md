@@ -499,6 +499,7 @@ GitHub ActionsやwheelビルドではDBを生成・更新しません。
 ```bat
 python scripts/build_catalog_db.py
 python scripts/build_catalog_db.py --check
+python scripts/verify_catalog_parity.py
 git add src/llmcapa/data/catalog.sqlite3
 ```
 
@@ -512,5 +513,8 @@ GitHubの単一ファイル上限を考慮し、モデル詳細は256レコー�
 DBが100 MiBを超える場合は既存DBを置き換えずエラーにします。
 ユーザー環境のGitHubキャッシュ・永続上書き・OpenRouterキャッシュは生成対象外です。
 既存レジストリのプロバイダー別・flat・エイリアスの優先順位を保存します。
-この段階では実行時検索は従来のJSONを使用します。SQLite検索への切り替えと
-実行時JSON更新との同期は別の変更で実装します。
+実行時はSQLiteを優先し、利用できない場合はJSONへフォールバックします。
+`verify_catalog_parity.py` はユーザーキャッシュを読み込まず、同梱JSONとSQLiteの全モデル・
+全Capability属性・登録順序・全エイリアス・全検索候補を比較します。検索APIの代表ケースも
+照合し、不一致やSQLiteからのフォールバックがあれば異常終了します。CIのqualityジョブで
+一度だけ実行し、DBやJSONは変更しません。永続キャッシュの上書きは回帰テストで検証します。
