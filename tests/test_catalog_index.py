@@ -203,7 +203,7 @@ def test_persistent_cache_overrides_sqlite(catalog, tmp_path):
     registry = Registry()
     assert registry.get("gpt-demo-1.2", "openai").context_window == 3456
     assert registry._catalog_index is not None
-    assert len(registry._catalog_index._objects) == 1
+    assert not registry._catalog_index._objects
     assert registry.get("gpt-demo-1.2").context_window == 3456
     assert registry.get("gpt-demo-1.2", "openrouter").context_window == 2000
 
@@ -268,7 +268,9 @@ def test_startup_cache_overlays_match_json_without_full_decode(catalog, tmp_path
     )
     index = registry._catalog_index
     assert index is not None
-    assert len(index._objects) == 1
+    assert not index._objects
+    assert not index._batch_metadata
+    assert index._batch_owners is None
     assert index._batch_connection is None
     assert index._batch_stack is None
 
@@ -280,3 +282,62 @@ def test_startup_cache_overlays_match_json_without_full_decode(catalog, tmp_path
             "", provider, True
         )
     assert registry.providers() == baseline.providers()
+
+
+def test_large_persistent_override_avoids_decoding_bundled_records(
+    catalog, tmp_path, monkeypatch
+):
+    from llmcapa._catalog_index import CatalogIndex
+
+    data, database = catalog
+    records = [
+        {
+            "provider": "openai",
+            "model_id": f"large-{n}",
+            "aliases": [f"alias-{n}"],
+            "context_window": 100,
+        }
+        for n in range(600)
+    ]
+    (data / "openai.json").write_text(json.dumps(records), encoding="utf-8")
+    build_catalog(database)
+
+    directory = tmp_path / "home" / ".llmcapa" / "catalogs" / "github"
+    directory.mkdir(parents=True)
+    updated = [{**record, "context_window": 200} for record in reversed(records)]
+    (directory / "override.json").write_text(
+        json.dumps(
+            {
+                "source": "https://github.com/awaku7/llmcapa",
+                "providers": ["openai"],
+                "models": updated,
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    def unexpected_decode(self, *args):
+        pytest.fail("Persistent overrides must not decode replaced bundled records")
+
+    monkeypatch.setattr(CatalogIndex, "_capability", unexpected_decode)
+    registry = Registry()
+    assert registry.get("large-0", "openai").context_window == 200
+    assert registry.get("alias-599").context_window == 200
+    assert registry._catalog_index is not None
+    assert not registry._catalog_index._objects
+
+
+def test_registration_metadata_preserves_mutated_provider(catalog):
+    registry = Registry()
+    original = registry.get("gpt-demo-1.2")
+    original.provider = "custom"
+    index = registry._catalog_index
+    assert index is not None
+    with index.batch():
+        registry._register_refreshed_catalog_record(
+            Capability(
+                provider="openai", model_id="gpt-demo-1.2", context_window=789
+            )
+        )
+    assert registry.get("gpt-demo-1.2") is original
+    assert registry.get("gpt-demo-1.2", "openai").context_window == 789

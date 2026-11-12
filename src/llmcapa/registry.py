@@ -479,6 +479,14 @@ class Registry:
         text = Path(path).read_text(encoding="utf-8")
         return self._load_json_text(text)
 
+    def _registered_flat_provider(self, key: str) -> str | None:
+        if isinstance(self._models, CatalogMapping):
+            provider = self._models.registered_provider(key)
+        else:
+            cap = self._models.get(key)
+            provider = cap.provider if cap is not None else None
+        return self._normalize_provider(provider) if provider is not None else None
+
     def register(self, cap: Capability, overwrite: bool = False) -> None:
         """Register a single Capability.
 
@@ -508,27 +516,16 @@ class Registry:
             "modellix",
             "huggingface",
         }
-        existing = self._models.get(key)
-        if existing is None:
-            # A community-catalog alias may claim a provider's exact model ID
-            # before that provider is loaded. Treat the alias owner like the
-            # existing record so the provider-native ID can take precedence.
+        existing_provider = self._registered_flat_provider(key)
+        if existing_provider is None:
+            # An alias owner can affect native vs aggregator precedence.
             alias_target = self._alias_index.get(key)
             if alias_target is not None:
-                existing = self._models.get(alias_target)
-        existing_provider = (
-            self._normalize_provider(existing.provider) if existing is not None else ""
-        )
+                existing_provider = self._registered_flat_provider(alias_target)
         replace_with_native = (
-            existing is not None
-            and existing_provider in aggregators
-            and prov not in aggregators
+            existing_provider in aggregators and prov not in aggregators
         )
-        prefer_openrouter = (
-            existing is not None
-            and existing_provider == "novita"
-            and prov == "openrouter"
-        )
+        prefer_openrouter = existing_provider == "novita" and prov == "openrouter"
         if (
             overwrite
             or replace_with_native
@@ -1004,11 +1001,7 @@ class Registry:
         # Refresh the provider-scoped entry. Only replace the flat lookup entry
         # when it already belongs to this provider; another provider may own it.
         provider_models[key] = cap
-        current = self._models.get(key)
-        if (
-            current is not None
-            and self._normalize_provider(current.provider) == provider
-        ):
+        if self._registered_flat_provider(key) == provider:
             self._models[key] = cap
         for alias in cap.aliases:
             self._alias_index.setdefault(alias.lower(), key)
