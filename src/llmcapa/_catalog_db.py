@@ -11,7 +11,7 @@ from contextlib import closing
 from importlib import resources
 from pathlib import Path
 
-from ._catalog_index import lookup_names
+from ._catalog_index import LOOKUP_SCHEMA, LookupBuilder, _decode_lookup_block
 from .models import Capability
 from .registry import Registry
 
@@ -34,15 +34,6 @@ CREATE TABLE capabilities (
         DEFERRABLE INITIALLY DEFERRED,
     position INTEGER NOT NULL
 );
-CREATE TABLE lookup_names (
-    capability_id INTEGER NOT NULL REFERENCES capabilities(id),
-    kind TEXT NOT NULL,
-    name TEXT NOT NULL,
-    shape TEXT,
-    PRIMARY KEY (capability_id, kind, name)
-) WITHOUT ROWID;
-CREATE INDEX lookup_names_prefix ON lookup_names(name);
-CREATE INDEX lookup_names_shape ON lookup_names(shape) WHERE shape IS NOT NULL;
 CREATE TABLE providers (
     provider TEXT PRIMARY KEY,
     ordinal INTEGER NOT NULL
@@ -102,7 +93,7 @@ def check_catalog(database: Path) -> None:
                 "Unsupported SQLite catalog schema; run scripts/build_catalog_db.py"
             )
         conn.execute(
-            "SELECT capability_id, kind, name, shape FROM lookup_names LIMIT 0"
+            "SELECT kind, bucket, ordinal, payload FROM lookup_blocks LIMIT 0"
         )
         if dict(conn.execute("SELECT * FROM catalog_sources")) != _catalog_sources():
             raise RuntimeError("Stale SQLite catalog; run scripts/build_catalog_db.py")
@@ -110,6 +101,13 @@ def check_catalog(database: Path) -> None:
             raise RuntimeError("Invalid SQLite catalog")
         if conn.execute("PRAGMA foreign_key_check").fetchone() is not None:
             raise RuntimeError("Invalid SQLite catalog references")
+        max_id = conn.execute(
+            "SELECT COALESCE(MAX(id), 0) FROM capabilities"
+        ).fetchone()[0]
+        for (payload,) in conn.execute("SELECT payload FROM lookup_blocks"):
+            for _, record_id, _ in _decode_lookup_block(payload):
+                if not 1 <= record_id <= max_id:
+                    raise RuntimeError("Invalid SQLite lookup record reference")
         if conn.execute("""
             SELECT 1 FROM capabilities AS c
             JOIN capability_blocks AS b ON b.id = c.block_id
@@ -134,7 +132,8 @@ def build_catalog(destination: Path) -> None:
         temporary = Path(directory) / destination.name
         with closing(sqlite3.connect(temporary)) as connection, connection:
             connection.execute("PRAGMA foreign_keys = ON")
-            connection.executescript(_SCHEMA)
+            connection.executescript(_SCHEMA + LOOKUP_SCHEMA)
+            lookup = LookupBuilder(connection)
             connection.executemany(
                 "INSERT INTO catalog_sources VALUES (?, ?)", sources.items()
             )
@@ -168,13 +167,7 @@ def build_catalog(destination: Path) -> None:
                         (record_id, block_id, len(pending)),
                     )
                     ids[key] = record_id
-                    connection.executemany(
-                        "INSERT OR IGNORE INTO lookup_names VALUES (?, ?, ?, ?)",
-                        (
-                            (record_id, kind, name, shape)
-                            for kind, name, shape in lookup_names(capability)
-                        ),
-                    )
+                    lookup.add(record_id, capability)
                     pending.append(capability.to_dict())
                     if len(pending) == _BLOCK_SIZE:
                         flush_block()
@@ -205,6 +198,7 @@ def build_catalog(destination: Path) -> None:
                     (key, capability_id(cap), order),
                 )
             flush_block()
+            lookup.finish()
             connection.executemany(
                 "INSERT INTO aliases VALUES (?, ?)", registry._alias_index.items()
             )
@@ -216,7 +210,13 @@ def build_catalog(destination: Path) -> None:
                     for filename in sorted(filenames)
                 ),
             )
+            connection.commit()
+            connection.execute("VACUUM")
         check_catalog(temporary)
-        if temporary.stat().st_size > 100 * 1024 * 1024:
-            raise RuntimeError("SQLite catalog exceeds GitHub's 100 MiB file limit")
+        size = temporary.stat().st_size
+        if size > 100 * 1024 * 1024:
+            raise RuntimeError(
+                f"SQLite catalog is {size / (1024 * 1024):.1f} MiB; "
+                "exceeds GitHub's 100 MiB file limit"
+            )
         temporary.replace(destination)

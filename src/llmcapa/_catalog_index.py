@@ -51,27 +51,97 @@ def lookup_names(capability):
         yield kind, name.lower(), parsed[0] if parsed else None
 
 
-def candidate_ids(conn, kind, term):
-    if kind == "alias":
-        where = "kind IN ('alias', 'alias_exact') AND name = ?"
-        args = [term]
-    elif kind == "numeric":
-        where = "shape = ?"
-        args = [term]
-    else:
-        end = _prefix_end(term)
-        where = "name >= ?"
-        args = [term]
-        if end is not None:
-            where += " AND name < ?"
-            args.append(end)
-    return {
-        row[0]
-        for row in conn.execute(
-            f"SELECT DISTINCT capability_id FROM lookup_names WHERE {where}",
-            args,
+# Store full names and numeric shapes once in compressed, bounded posting blocks.
+# The short bucket is the only text key in the SQLite B-tree.
+LOOKUP_SCHEMA = """
+CREATE TABLE lookup_blocks (
+    kind TEXT NOT NULL,
+    bucket TEXT NOT NULL,
+    ordinal INTEGER NOT NULL,
+    payload BLOB NOT NULL,
+    PRIMARY KEY (kind, bucket, ordinal)
+) WITHOUT ROWID;
+"""
+_BUCKET_LENGTH = 4
+_LOOKUP_BLOCK_SIZE = 4096
+
+
+class LookupBuilder:
+    """Build a compact name index without duplicating long strings in B-trees."""
+
+    def __init__(self, conn):
+        self.conn = conn
+        self.pending = {}
+        self.ordinals = {}
+
+    def _write(self, key, rows):
+        if not rows:
+            return
+        ordinal = self.ordinals.get(key, 0)
+        payload = zlib.compress(
+            json.dumps(
+                sorted(set(rows)), ensure_ascii=False, separators=(",", ":")
+            ).encode("utf-8"),
+            level=9,
         )
-    }
+        self.conn.execute(
+            "INSERT INTO lookup_blocks VALUES (?, ?, ?, ?)", (*key, ordinal, payload)
+        )
+        self.ordinals[key] = ordinal + 1
+        rows.clear()
+
+    def _add(self, kind, name, record_id, is_alias):
+        key = (kind, name[:_BUCKET_LENGTH])
+        rows = self.pending.setdefault(key, [])
+        rows.append((name, record_id, is_alias))
+        if len(rows) >= _LOOKUP_BLOCK_SIZE:
+            self._write(key, rows)
+
+    def add(self, record_id, capability):
+        for kind, name, shape in lookup_names(capability):
+            self._add("name", name, record_id, kind in ("alias", "alias_exact"))
+            if shape is not None:
+                self._add("shape", shape, record_id, False)
+
+    def finish(self):
+        for key, rows in self.pending.items():
+            self._write(key, rows)
+        self.pending.clear()
+
+
+def _decode_lookup_block(payload):
+    rows = json.loads(zlib.decompress(payload))
+    if not isinstance(rows, list):
+        raise ValueError("Invalid lookup block")
+    for name, record_id, is_alias in rows:
+        if not isinstance(name, str) or not isinstance(record_id, int):
+            raise ValueError("Invalid lookup record")
+        yield name, record_id, is_alias
+
+
+def candidate_ids(conn, kind, term):
+    bucket = term[:_BUCKET_LENGTH]
+    args = ["shape" if kind == "numeric" else "name", bucket]
+    if kind == "prefix" and len(term) < _BUCKET_LENGTH:
+        where = "kind = ? AND bucket >= ?"
+        end = _prefix_end(bucket)
+        if end is not None:
+            where += " AND bucket < ?"
+            args.append(end)
+    else:
+        where = "kind = ? AND bucket = ?"
+    result = set()
+    for (payload,) in conn.execute(
+        f"SELECT payload FROM lookup_blocks WHERE {where}", args
+    ):
+        for name, record_id, is_alias in _decode_lookup_block(payload):
+            if kind == "prefix":
+                matches = name.startswith(term)
+            else:
+                matches = name == term and (kind != "alias" or is_alias)
+            if matches:
+                result.add(record_id)
+    return result
 
 
 class CatalogIndex:
@@ -143,7 +213,7 @@ class CatalogIndex:
                 reader._schema_version = version[0]
                 if reader._schema_version == 2:
                     conn.execute(
-                        "SELECT capability_id, kind, name, shape FROM lookup_names LIMIT 0"
+                        "SELECT kind, bucket, ordinal, payload FROM lookup_blocks LIMIT 0"
                     )
                 expected = dict(
                     conn.execute("SELECT filename, sha256 FROM catalog_sources")

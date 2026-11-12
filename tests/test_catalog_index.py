@@ -584,7 +584,7 @@ def test_scoped_alias_and_prefix_follow_overlays_and_mutations(catalog):
 def test_legacy_database_keeps_lookup_compatibility(catalog):
     _, database = catalog
     with closing(sqlite3.connect(database)) as conn, conn:
-        conn.execute("DROP TABLE lookup_names")
+        conn.execute("DROP TABLE lookup_blocks")
         conn.execute("PRAGMA user_version = 1")
     registry = Registry()
     assert registry.get("demo", "openai") == json_registry().get("demo", "openai")

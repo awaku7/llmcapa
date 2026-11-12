@@ -12,11 +12,11 @@ from contextlib import closing, contextmanager
 from pathlib import Path
 from threading import RLock
 
-from ._catalog_index import candidate_ids, lookup_names
+from ._catalog_index import LOOKUP_SCHEMA, LookupBuilder, candidate_ids
 from .models import Capability
 
 ERRORS = (OSError, sqlite3.Error, ValueError, TypeError, KeyError, zlib.error)
-_FORMAT = 2
+_FORMAT = 3
 _SCHEMA = """
 CREATE TABLE metadata (signature TEXT NOT NULL);
 CREATE TABLE maps (
@@ -28,15 +28,6 @@ CREATE TABLE records (
     id INTEGER PRIMARY KEY,
     payload BLOB NOT NULL
 );
-CREATE TABLE lookup_names (
-    capability_id INTEGER NOT NULL REFERENCES records(id),
-    kind TEXT NOT NULL,
-    name TEXT NOT NULL,
-    shape TEXT,
-    PRIMARY KEY (capability_id, kind, name)
-) WITHOUT ROWID;
-CREATE INDEX lookup_names_prefix ON lookup_names(name);
-CREATE INDEX lookup_names_shape ON lookup_names(shape) WHERE shape IS NOT NULL;
 CREATE TABLE entries (
     kind TEXT NOT NULL,
     provider TEXT NOT NULL,
@@ -143,7 +134,8 @@ def write_snapshot(path, signature, registry):
         temporary = Path(directory) / path.name
         with closing(sqlite3.connect(temporary)) as conn, conn:
             conn.execute("PRAGMA foreign_keys = ON")
-            conn.executescript(_SCHEMA)
+            conn.executescript(_SCHEMA + LOOKUP_SCHEMA)
+            lookup = LookupBuilder(conn)
             conn.execute("INSERT INTO metadata VALUES (?)", (signature,))
             ids = {}
             for kind, provider, values in overlay_maps(registry):
@@ -169,18 +161,13 @@ def write_snapshot(path, signature, registry):
                                 "INSERT INTO records(payload) VALUES (?)", (payload,)
                             ).lastrowid
                             ids[identity] = record_id
-                            conn.executemany(
-                                "INSERT OR IGNORE INTO lookup_names VALUES (?, ?, ?, ?)",
-                                (
-                                    (record_id, kind, name, shape)
-                                    for kind, name, shape in lookup_names(value)
-                                ),
-                            )
+                            lookup.add(record_id, value)
                         record_id, alias, owner = ids[identity], None, value.provider
                     rows.append((kind, provider, key, ordinal, record_id, alias, owner))
                 conn.executemany(
                     "INSERT INTO entries VALUES (?, ?, ?, ?, ?, ?, ?)", rows
                 )
+            lookup.finish()
         temporary.replace(path)
 
 
@@ -205,7 +192,7 @@ class UserCatalogCache:
             self.maps = list(conn.execute("SELECT kind, provider FROM maps"))
             conn.execute("SELECT * FROM entries LIMIT 0")
             conn.execute("SELECT * FROM records LIMIT 0")
-            conn.execute("SELECT * FROM lookup_names LIMIT 0")
+            conn.execute("SELECT * FROM lookup_blocks LIMIT 0")
         except BaseException:
             conn.close()
             raise
