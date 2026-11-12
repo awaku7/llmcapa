@@ -10,6 +10,7 @@ import pytest
 from llmcapa import Capability, _catalog_db
 from llmcapa import registry as registry_module
 from llmcapa._catalog_db import build_catalog, check_catalog
+from llmcapa._catalog_index import candidate_ids
 
 
 def test_catalog_database_preserves_lookup_indexes(tmp_path, monkeypatch):
@@ -55,7 +56,7 @@ def test_catalog_database_preserves_lookup_indexes(tmp_path, monkeypatch):
     check_catalog(destination)
 
     with closing(sqlite3.connect(destination)) as database:
-        assert database.execute("PRAGMA user_version").fetchone() == (1,)
+        assert database.execute("PRAGMA user_version").fetchone() == (3,)
         assert database.execute("PRAGMA integrity_check").fetchone() == ("ok",)
         assert database.execute("PRAGMA foreign_key_check").fetchall() == []
         blocks = {
@@ -88,10 +89,21 @@ def test_catalog_database_preserves_lookup_indexes(tmp_path, monkeypatch):
             for key, block_id, position in rows
         } == registry._models
         assert dict(database.execute("SELECT * FROM aliases")) == registry._alias_index
+        assert len(candidate_ids(database, "alias", "shared")) == 2
         assert database.execute(
-            "SELECT model_key FROM scoped_aliases WHERE provider = ? AND alias = ?",
-            ("openrouter", "shared"),
-        ).fetchone() == ("example",)
+            "SELECT COUNT(*) FROM strings WHERE value = ?", ("example",)
+        ).fetchone() == (1,)
+        assert database.execute(
+            "SELECT COUNT(*) FROM model_entries WHERE model_key_id = "
+            "(SELECT id FROM strings WHERE value = ?)",
+            ("example",),
+        ).fetchone() == (2,)
+        assert (
+            database.execute(
+                "SELECT name FROM sqlite_master WHERE name = 'scoped_aliases'"
+            ).fetchone()
+            is None
+        )
         assert set(database.execute("SELECT * FROM provider_files")) == {
             (provider, filename)
             for provider, filenames in registry._catalog_files_by_provider.items()
@@ -126,3 +138,38 @@ def test_failed_build_keeps_existing_database(tmp_path, monkeypatch):
     with pytest.raises(ValueError, match="invalid catalog"):
         build_catalog(destination)
     assert destination.read_bytes() == b"previous snapshot"
+
+
+def test_compact_lookup_blocks_preserve_candidates(monkeypatch):
+    from llmcapa import _catalog_index
+
+    monkeypatch.setattr(_catalog_index, "_LOOKUP_BLOCK_SIZE", 2)
+    with closing(sqlite3.connect(":memory:")) as conn:
+        conn.executescript(_catalog_index.LOOKUP_SCHEMA)
+        builder = _catalog_index.LookupBuilder(conn)
+        for record_id, cap in enumerate(
+            (
+                Capability(
+                    provider="openai",
+                    model_id="model-long-1.1",
+                    display_name="模型Ａ",
+                    aliases=[" shared ", "family-2.1"],
+                ),
+                Capability(
+                    provider="openai",
+                    model_id="model-long-1.2",
+                    aliases=["shared"],
+                ),
+                Capability(provider="openai", model_id="model-long-1.3"),
+            ),
+            start=1,
+        ):
+            builder.add(record_id, cap)
+        builder.finish()
+        assert candidate_ids(conn, "alias", "shared") == {1, 2}
+        assert candidate_ids(conn, "prefix", "m") == {1, 2, 3}
+        assert candidate_ids(conn, "prefix", "model-long-1.2") == {2}
+        assert candidate_ids(conn, "prefix", "模型") == {1}
+        assert candidate_ids(conn, "numeric", "model-long-<version>") == {1, 2, 3}
+        assert candidate_ids(conn, "numeric", "family-<version>") == {1}
+        assert candidate_ids(conn, "prefix", "model-long-9") == set()

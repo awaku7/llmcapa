@@ -11,7 +11,7 @@ import pytest
 from llmcapa import registry as registry_module
 from llmcapa._catalog_db import build_catalog
 from llmcapa.models import Capability
-from llmcapa.registry import Registry
+from llmcapa.registry import ModelNotFoundError, Registry
 
 
 @pytest.fixture
@@ -45,6 +45,7 @@ def catalog(tmp_path, monkeypatch):
             {
                 "provider": "openai",
                 "model_id": "gpt-demo-1.4",
+                "aliases": ["collision"],
                 "deprecated": True,
             },
         ],
@@ -61,7 +62,12 @@ def catalog(tmp_path, monkeypatch):
             {
                 "provider": "openrouter",
                 "model_id": "router-only",
-                "aliases": ["route"],
+                "aliases": ["route", "collision"],
+            },
+            {
+                "provider": "openrouter",
+                "model_id": "router-second",
+                "aliases": ["collision"],
             },
         ],
     )
@@ -528,3 +534,132 @@ def test_stale_deletion_preserves_concurrent_publication(
     assert path.exists()
     assert json.loads(path.read_text(encoding="utf-8"))["ref"] == "explicit-tag"
     assert Registry().get("gpt-demo-1.2", "openai").context_window == 5678
+
+
+def test_unknown_model_does_not_decode_unrelated_records(catalog):
+    registry = Registry()
+    for provider in (None, "openai", "openrouter"):
+        for model in ("not-a-model", "gpt-99.1-unknown"):
+            with pytest.raises(ModelNotFoundError):
+                registry.get(model, provider)
+        assert registry.search("not-a-model", provider) == []
+    assert registry._catalog_index is not None
+    assert not registry._catalog_index._objects
+
+
+def test_indexed_numeric_and_prefix_candidates(catalog):
+    registry = Registry()
+    baseline = json_registry()
+    assert registry.get("gpt-demo-1.3", "openai") == baseline.get(
+        "gpt-demo-1.3", "openai"
+    )
+    index = registry._catalog_index
+    assert index is not None
+    assert len(index._objects) == 2
+    for prefix in ("demo model", "route", "collision", "gpt"):
+        for provider in (None, "openai", "openrouter"):
+            for deprecated in (True, False):
+                assert registry.search(prefix, provider, deprecated) == baseline.search(
+                    prefix, provider, deprecated
+                )
+
+
+def test_scoped_alias_and_prefix_follow_overlays_and_mutations(catalog):
+    registry = Registry()
+    baseline = json_registry()
+    for current in (registry, baseline):
+        assert current.get("collision", "openrouter").model_id == "router-only"
+        current.register(
+            Capability(provider="openrouter", model_id="router-only"),
+            overwrite=True,
+        )
+        assert current.get("collision", "openrouter").model_id == "router-second"
+        cap = current.get("gpt-demo-1.2", "openai")
+        cap.aliases.append("runtime-alias")
+        assert current.get("runtime-alias", "openai") is cap
+    for prefix in ("collision", "runtime", "demo model"):
+        assert registry.search(prefix) == baseline.search(prefix)
+
+
+def test_legacy_database_keeps_lookup_compatibility(catalog):
+    _, database = catalog
+    with closing(sqlite3.connect(database)) as conn, conn:
+        # Materialize the original text-keyed logical tables to exercise v1.
+        for table in ("models", "flat_models", "aliases"):
+            conn.execute(f"CREATE TABLE legacy_{table} AS SELECT * FROM {table}")
+            conn.execute(f"DROP VIEW {table}")
+            conn.execute(f"ALTER TABLE legacy_{table} RENAME TO {table}")
+        conn.execute("DROP TABLE lookup_blocks")
+        conn.execute("PRAGMA user_version = 1")
+    registry = Registry()
+    assert registry.get("demo", "openai") == json_registry().get("demo", "openai")
+    assert registry.search("demo model") == json_registry().search("demo model")
+    assert registry._catalog_index is not None
+
+
+def test_warm_user_cache_candidate_search(catalog):
+    registry = Registry()
+    registry._write_user_catalog_override(
+        "test",
+        "main",
+        {"openai"},
+        [
+            Capability(
+                provider="openai",
+                model_id="gpt-demo-1.2",
+                aliases=["new-cache-alias"],
+                context_window=5678,
+            ),
+            Capability(
+                provider="openai",
+                model_id="cache-demo-2.1",
+                aliases=["cache-2.1"],
+                display_name="Cache display",
+            ),
+        ],
+    )
+    cold = Registry()
+    cold.get("gpt-demo-1.2", "openai")
+    warm = Registry()
+    with pytest.raises(ModelNotFoundError):
+        warm.get("not-a-model", "openai")
+    assert warm.search("not-a-model") == []
+    index = warm._catalog_index
+    assert index is not None
+    assert not index._objects
+    cache = warm._by_provider["openai"]._user_cache
+    assert cache is not None
+    assert not cache._objects
+    assert warm.search("demo model", "openai") == []
+    assert warm.search("new-cache") == cold.search("new-cache")
+    assert warm.search("cache display") == cold.search("cache display")
+    assert warm.get("cache-2.2", "openai") == cold.get("cache-2.2", "openai")
+    cap = warm.get("gpt-demo-1.2", "openai")
+    cap.aliases.append("runtime-cache-alias")
+    assert warm.get("runtime-cache-alias", "openai") is cap
+    assert warm.search("runtime-cache") == [cap]
+
+
+def test_warm_cache_runtime_replacement_retains_numeric_tie_order(catalog):
+    writer = Registry()
+    writer._write_user_catalog_override(
+        "test",
+        "explicit-tag",
+        {"openai"},
+        [
+            Capability(provider="openai", model_id="cache-first"),
+            Capability(provider="openai", model_id="cache-second", aliases=["tie-1.1"]),
+        ],
+    )
+    cold = Registry()
+    cold.get("demo", "openai")
+    warm = Registry()
+    warm.get("demo", "openai")
+    assert warm._by_provider["openai"]._user_cache is not None
+    for registry in (cold, warm):
+        registry.register(
+            Capability(provider="openai", model_id="cache-first", aliases=["tie-1.1"]),
+            overwrite=True,
+        )
+        assert registry.get("tie-1.2", "openai").model_id == "cache-first"
+        assert registry.get("tie-1.2").model_id == "cache-first"

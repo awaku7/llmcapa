@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sqlite3
 import zlib
 from collections.abc import Mapping
@@ -14,6 +15,133 @@ from threading import RLock
 from .models import Capability
 
 _READ_ERRORS = (OSError, sqlite3.Error, ValueError, KeyError, TypeError, zlib.error)
+
+
+_VERSION_RE = re.compile(r"(?<![A-Za-z])(\d+(?:\.\d+)+|\d+)(?![A-Za-z])")
+
+
+def parse_numeric_name(value: str):
+    text = value.strip().lower()
+    match = _VERSION_RE.search(text)
+    if match is None:
+        return None
+    version = tuple(int(part) for part in match.group(1).split("."))
+    shape = text[: match.start()] + "<version>" + text[match.end() :]
+    return shape, version
+
+
+def _prefix_end(prefix: str):
+    for position in range(len(prefix) - 1, -1, -1):
+        if ord(prefix[position]) < 0x10FFFF:
+            return prefix[:position] + chr(ord(prefix[position]) + 1)
+    return None
+
+
+def lookup_names(capability):
+    """Yield normalized lookup names with numeric shapes."""
+    names = [("model", capability.model_id)]
+    if capability.display_name:
+        names.append(("display", capability.display_name))
+    for alias in capability.aliases or []:
+        names.append(("alias", str(alias)))
+        if str(alias).strip() != str(alias):
+            names.append(("alias_exact", str(alias).strip()))
+    for kind, name in names:
+        parsed = parse_numeric_name(name) if kind in ("model", "alias") else None
+        yield kind, name.lower(), parsed[0] if parsed else None
+
+
+# Store full names and numeric shapes once in compressed, bounded posting blocks.
+# The short bucket is the only text key in the SQLite B-tree.
+LOOKUP_SCHEMA = """
+CREATE TABLE lookup_blocks (
+    kind TEXT NOT NULL,
+    bucket TEXT NOT NULL,
+    ordinal INTEGER NOT NULL,
+    payload BLOB NOT NULL,
+    PRIMARY KEY (kind, bucket, ordinal)
+) WITHOUT ROWID;
+"""
+_BUCKET_LENGTH = 4
+_LOOKUP_BLOCK_SIZE = 4096
+
+
+class LookupBuilder:
+    """Build a compact name index without duplicating long strings in B-trees."""
+
+    def __init__(self, conn):
+        self.conn = conn
+        self.pending = {}
+        self.ordinals = {}
+
+    def _write(self, key, rows):
+        if not rows:
+            return
+        ordinal = self.ordinals.get(key, 0)
+        payload = zlib.compress(
+            json.dumps(
+                sorted(set(rows)), ensure_ascii=False, separators=(",", ":")
+            ).encode("utf-8"),
+            level=9,
+        )
+        self.conn.execute(
+            "INSERT INTO lookup_blocks VALUES (?, ?, ?, ?)", (*key, ordinal, payload)
+        )
+        self.ordinals[key] = ordinal + 1
+        rows.clear()
+
+    def _add(self, kind, name, record_id, is_alias):
+        key = (kind, name[:_BUCKET_LENGTH])
+        rows = self.pending.setdefault(key, [])
+        rows.append((name, record_id, is_alias))
+        if len(rows) >= _LOOKUP_BLOCK_SIZE:
+            self._write(key, rows)
+
+    def add(self, record_id, capability):
+        for kind, name, shape in lookup_names(capability):
+            self._add("name", name, record_id, kind in ("alias", "alias_exact"))
+            if shape is not None:
+                self._add("shape", shape, record_id, False)
+
+    def finish(self):
+        for key, rows in self.pending.items():
+            self._write(key, rows)
+        self.pending.clear()
+
+
+def _decode_lookup_block(payload):
+    rows = json.loads(zlib.decompress(payload))
+    if not isinstance(rows, list):
+        raise TypeError("Invalid lookup block")
+    for name, record_id, is_alias in rows:
+        if not isinstance(name, str) or not isinstance(record_id, int):
+            raise TypeError("Invalid lookup record")
+        yield name, record_id, is_alias
+
+
+def candidate_ids(conn, kind, term):
+    bucket = term[:_BUCKET_LENGTH]
+    args = ["shape" if kind == "numeric" else "name", bucket]
+    if kind == "prefix" and len(term) < _BUCKET_LENGTH:
+        where = "kind = ? AND bucket >= ?"
+        end = _prefix_end(bucket)
+        if end is not None:
+            where += " AND bucket < ?"
+            args.append(end)
+    else:
+        where = "kind = ? AND bucket = ?"
+    result = set()
+    for (payload,) in conn.execute(
+        f"SELECT payload FROM lookup_blocks WHERE {where}", args
+    ):
+        for name, record_id, is_alias in _decode_lookup_block(payload):
+            if kind == "prefix":
+                matches = name.startswith(term)
+            else:
+                matches = name == term and (kind != "alias" or is_alias)
+            if matches:
+                result.add(record_id)
+    return result
 
 
 class CatalogIndex:
@@ -30,6 +158,7 @@ class CatalogIndex:
         self._batch_connection = None
         self._batch_metadata = {}
         self._batch_owners = None
+        self._schema_version = 1
 
     def _connect(self):
         if self._batch_stack is None:
@@ -78,8 +207,14 @@ class CatalogIndex:
             from ._catalog_db import _catalog_sources
 
             with reader._connect() as conn:
-                if conn.execute("PRAGMA user_version").fetchone() != (1,):
+                version = conn.execute("PRAGMA user_version").fetchone()
+                if version not in ((1,), (2,), (3,)):
                     return None
+                reader._schema_version = version[0]
+                if reader._schema_version >= 2:
+                    conn.execute(
+                        "SELECT kind, bucket, ordinal, payload FROM lookup_blocks LIMIT 0"
+                    )
                 expected = dict(
                     conn.execute("SELECT filename, sha256 FROM catalog_sources")
                 )
@@ -241,6 +376,61 @@ class CatalogIndex:
             # must fall back to decoding that individual capability.
             return self._batch_owners.get(record_id)
 
+    def candidate_ids(self, kind, term):
+        """Find potential matches without decompressing capability payloads."""
+        if self._schema_version < 2 or self._fallback is not None:
+            return None
+        with self._lock:
+            try:
+                with self._connect() as conn:
+                    return candidate_ids(conn, kind, term)
+            except _READ_ERRORS:
+                return None
+
+    def matching_items(self, table, provider, candidate_ids, updates, excluded):
+        """Read candidates in base order, then append new overlay keys."""
+        if candidate_ids is None:
+            combined = {
+                key: value
+                for key, value in self.read(table, provider)
+                if key not in excluded or key in updates
+            }
+            combined.update(updates)
+            return combined.items()
+        where = " WHERE i.provider = ?" if provider is not None else ""
+        args = [provider] if provider is not None else []
+        with self._lock:
+            if self._fallback is None:
+                try:
+                    with self._connect() as conn:
+                        result = {}
+                        for key, record_id, block_id, position in conn.execute(
+                            f"SELECT i.model_key, c.id, c.block_id, c.position "
+                            f"FROM {table} AS i JOIN capabilities AS c "
+                            f"ON c.id = i.capability_id{where} ORDER BY i.ordinal",
+                            args,
+                        ):
+                            if key in updates:
+                                result[key] = updates[key]
+                            elif key not in excluded and (
+                                record_id in candidate_ids or record_id in self._objects
+                            ):
+                                # Already decoded objects may have been mutated by callers.
+                                result[key] = self._capability(
+                                    conn, record_id, block_id, position
+                                )
+                        result.update(updates)
+                        return result.items()
+                except _READ_ERRORS:
+                    pass
+            combined = {
+                key: value
+                for key, value in self._json_index(table, provider).items()
+                if key not in excluded or key in updates
+            }
+            combined.update(updates)
+            return combined.items()
+
     def index(self, table, provider=None):
         return CatalogMapping(self, table, provider)
 
@@ -330,3 +520,27 @@ class CatalogMapping(Mapping):
 
     def values(self):
         return [value for _, value in self.items()]
+
+    def matching_values(self, ids, kind, term):
+        cached = {}
+        excluded = set()
+        if self._user_cache is not None:
+            keys = [key for key, _ in self._cached_rows(keys_only=True)]
+            excluded = set(keys)
+            matches = dict(
+                self._user_cache.matching_items(self.table, self.provider, kind, term)
+            )
+            # Runtime replacements retain their original snapshot position,
+            # even when the previous payload was not a search candidate.
+            for key in keys:
+                if key in self._updates:
+                    cached[key] = self._updates[key]
+                elif key in matches:
+                    cached[key] = matches[key]
+        cached.update(self._updates)
+        return [
+            value
+            for _, value in self.reader.matching_items(
+                self.table, self.provider, ids, cached, excluded
+            )
+        ]

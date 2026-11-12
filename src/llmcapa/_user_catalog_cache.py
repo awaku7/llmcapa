@@ -12,10 +12,11 @@ from contextlib import closing, contextmanager
 from pathlib import Path
 from threading import RLock
 
+from ._catalog_index import LOOKUP_SCHEMA, LookupBuilder, candidate_ids
 from .models import Capability
 
 ERRORS = (OSError, sqlite3.Error, ValueError, TypeError, KeyError, zlib.error)
-_FORMAT = 1
+_FORMAT = 3
 _SCHEMA = """
 CREATE TABLE metadata (signature TEXT NOT NULL);
 CREATE TABLE maps (
@@ -133,7 +134,8 @@ def write_snapshot(path, signature, registry):
         temporary = Path(directory) / path.name
         with closing(sqlite3.connect(temporary)) as conn, conn:
             conn.execute("PRAGMA foreign_keys = ON")
-            conn.executescript(_SCHEMA)
+            conn.executescript(_SCHEMA + LOOKUP_SCHEMA)
+            lookup = LookupBuilder(conn)
             conn.execute("INSERT INTO metadata VALUES (?)", (signature,))
             ids = {}
             for kind, provider, values in overlay_maps(registry):
@@ -159,11 +161,13 @@ def write_snapshot(path, signature, registry):
                                 "INSERT INTO records(payload) VALUES (?)", (payload,)
                             ).lastrowid
                             ids[identity] = record_id
+                            lookup.add(record_id, value)
                         record_id, alias, owner = ids[identity], None, value.provider
                     rows.append((kind, provider, key, ordinal, record_id, alias, owner))
                 conn.executemany(
                     "INSERT INTO entries VALUES (?, ?, ?, ?, ?, ?, ?)", rows
                 )
+            lookup.finish()
         temporary.replace(path)
 
 
@@ -188,6 +192,7 @@ class UserCatalogCache:
             self.maps = list(conn.execute("SELECT kind, provider FROM maps"))
             conn.execute("SELECT * FROM entries LIMIT 0")
             conn.execute("SELECT * FROM records LIMIT 0")
+            conn.execute("SELECT * FROM lookup_blocks LIMIT 0")
         except BaseException:
             conn.close()
             raise
@@ -259,3 +264,24 @@ class UserCatalogCache:
                 )
                 for name, value in items
             ]
+
+    def matching_items(self, kind, provider, search_kind, term):
+        """Decode only candidate overlay records, retaining loaded mutations."""
+        with self._lock:
+            if self._fallback is None:
+                try:
+                    ids = candidate_ids(self._connection, search_kind, term)
+                    rows = self._connection.execute(
+                        "SELECT model_key, record_id, alias_value FROM entries "
+                        "WHERE kind = ? AND provider = ? ORDER BY ordinal",
+                        (kind, provider or ""),
+                    )
+                    return [
+                        (key, self._value(record_id, alias))
+                        for key, record_id, alias in rows
+                        if record_id in ids or record_id in self._objects
+                    ]
+                except ERRORS + (AttributeError,):
+                    # The existing read path handles recovery from corrupt data.
+                    return self.read(kind, provider)
+            return self.read(kind, provider)
