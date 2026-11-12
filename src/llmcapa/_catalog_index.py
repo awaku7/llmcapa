@@ -99,7 +99,7 @@ class CatalogIndex:
             raise ValueError("Invalid capability position")
         record = self._block[position]
         if not isinstance(record, dict):
-            raise ValueError("Invalid capability record")
+            raise TypeError("Invalid capability record")
         try:
             cap = Capability.from_dict(record)
         except AttributeError as exc:
