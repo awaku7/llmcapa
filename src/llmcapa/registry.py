@@ -215,6 +215,11 @@ class Registry:
         if not self._try_load_sqlite():
             self._load_bundled_files()
 
+        if self._catalog_index is not None and self._load_user_cache_snapshot():
+            return
+        self._load_startup_caches()
+
+    def _load_startup_caches(self) -> None:
         # Apply cache records as sparse overrides without expanding the bundle.
         index = self._catalog_index
         with index.batch() if index is not None else nullcontext():
@@ -224,6 +229,69 @@ class Registry:
             self._load_persistent_github_catalogs()
             # Load fresh OpenRouter cache using the existing precedence rules.
             self._load_openrouter_cache()
+
+    def _load_user_cache_snapshot(self) -> bool:
+        """Reuse or build a local SQLite generation without changing JSON sources."""
+        from ._user_catalog_cache import (
+            ERRORS,
+            UserCatalogCache,
+            startup_signature,
+            write_snapshot,
+        )
+
+        home = Path.home() / ".llmcapa"
+        directory = home / "sqlite_cache"
+        try:
+            signature = startup_signature(self, home, time.time())
+        except ERRORS:
+            return False
+        if signature is None:
+            return False
+        path = directory / f"cache-{signature}.sqlite3"
+
+        def fallback():
+            registry = Registry()
+            if not registry._try_load_sqlite():
+                registry._load_bundled_files()
+            registry._load_startup_caches()
+            return registry
+
+        try:
+            snapshot = UserCatalogCache(path, signature, fallback)
+        except ERRORS:
+            # First use or stale inputs: run the original registration path.
+            self._load_startup_caches()
+            try:
+                current = startup_signature(self, home, time.time())
+                if current is not None:
+                    path = directory / f"cache-{current}.sqlite3"
+                    # Do not publish data under a new input signature unless the
+                    # original inputs were unchanged during registration.
+                    if current == signature:
+                        write_snapshot(path, current, self)
+            except ERRORS:
+                pass
+            return True
+
+        for kind, provider in snapshot.maps:
+            if kind == "flat_models":
+                mapping = self._models
+            elif kind == "aliases":
+                mapping = self._alias_index
+            else:
+                mapping = self._by_provider.setdefault(
+                    provider, self._catalog_index.index("models", provider)
+                )
+            mapping._user_cache = snapshot
+        # Old immutable generations are no longer selected. Windows may keep
+        # them locked while another process still uses an older registry.
+        for old in directory.glob("cache-*.sqlite3"):
+            if old != path:
+                try:
+                    old.unlink()
+                except OSError:
+                    pass
+        return True
 
     def _try_load_sqlite(self) -> bool:
         """Initialize lazy indexes without changing registration precedence."""
@@ -417,6 +485,26 @@ class Registry:
                 ):
                     continue
                 provider_set = {self._canonical_provider(name) for name in providers}
+                if payload.get("ref", "main") == "main":
+                    data = resources.files("llmcapa.data")
+                    bundled_files = {
+                        filename
+                        for provider in provider_set
+                        for filename in self._catalog_files_by_provider.get(provider, ())
+                    }
+                    if any(
+                        isinstance(data / filename, Path)
+                        and (data / filename).is_file()
+                        and (data / filename).stat().st_mtime_ns
+                        > override_path.stat().st_mtime_ns
+                        for filename in bundled_files
+                    ):
+                        # A newer installed catalog supersedes this main snapshot.
+                        try:
+                            override_path.unlink()
+                        except OSError:
+                            pass
+                        continue
                 for record in records:
                     try:
                         cap = self._canonical_capability(Capability.from_dict(record))

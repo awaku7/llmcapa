@@ -340,3 +340,81 @@ def test_registration_metadata_preserves_flat_owner(catalog):
         )
     assert registry.get("gpt-demo-1.2") is original
     assert registry.get("gpt-demo-1.2", "openrouter").context_window == 789
+
+
+def test_warm_user_cache_uses_sqlite_without_json_registration(
+    catalog, tmp_path, monkeypatch
+):
+    home = tmp_path / "home" / ".llmcapa"
+    directory = home / "catalogs" / "github"
+    directory.mkdir(parents=True)
+    path = directory / "override.json"
+    path.write_text(
+        json.dumps(
+            {
+                "source": "https://github.com/awaku7/llmcapa",
+                "ref": "main",
+                "providers": ["openai"],
+                "models": [
+                    {
+                        "provider": "openai",
+                        "model_id": "gpt-demo-1.2",
+                        "context_window": 1234,
+                        "aliases": ["cached-alias"],
+                    },
+                    {
+                        "provider": "openai",
+                        "model_id": "new-cached-model",
+                    },
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    cold = Registry()
+    cap = cold.get("cached-alias")
+    assert cap.context_window == 1234
+    assert list((home / "sqlite_cache").glob("cache-*.sqlite3"))
+
+    def unexpected_load(self):
+        pytest.fail("Warm startup must not parse persistent JSON")
+
+    monkeypatch.setattr(Registry, "_load_startup_caches", unexpected_load)
+    warm = Registry()
+    result = warm.get("cached-alias")
+    assert result == cap
+    assert warm.get("gpt-demo-1.2", "openai") is result
+    assert warm.get("new-cached-model", "openai").provider == "openai"
+    assert warm._catalog_index is not None
+    assert not warm._catalog_index._objects
+    assert warm.list_models("openai") == cold.list_models("openai")
+    assert path.exists()
+
+
+def test_old_persistent_main_cache_is_removed(catalog, tmp_path):
+    data, _ = catalog
+    directory = tmp_path / "home" / ".llmcapa" / "catalogs" / "github"
+    directory.mkdir(parents=True)
+    path = directory / "old.json"
+    path.write_text(
+        json.dumps(
+            {
+                "source": "https://github.com/awaku7/llmcapa",
+                "ref": "main",
+                "providers": ["openai"],
+                "models": [
+                    {
+                        "provider": "openai",
+                        "model_id": "gpt-demo-1.2",
+                        "context_window": 9999,
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    older = (data / "openai.json").stat().st_mtime - 10
+    os.utime(path, (older, older))
+    registry = Registry()
+    assert registry.get("gpt-demo-1.2", "openai").context_window == 1000
+    assert not path.exists()
