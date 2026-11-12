@@ -1,4 +1,5 @@
 """Fetch current Amazon Nova prices from official AWS sources."""
+
 from __future__ import annotations
 
 import gzip
@@ -28,8 +29,8 @@ def _fetch(url: str) -> bytes:
 
 
 def _model_id(title: str) -> str:
-    name = re.sub(r"^Amazon\s+", "", title, flags=re.I)
-    name = re.sub(r"\s*\(Preview\)\s*$", "", name, flags=re.I)
+    name = re.sub(r"^Amazon\s+", "", title, flags=re.IGNORECASE)
+    name = re.sub(r"\s*\(Preview\)\s*$", "", name, flags=re.IGNORECASE)
     name = re.sub(r"\s+", "-", name.strip().lower())
     return (name if name.startswith("nova-") else "nova-" + name) + "-v1"
 
@@ -45,8 +46,13 @@ def fetch_nova_prices() -> dict[str, dict[str, float]]:
     region = meter["regions"][REGION]
     result: dict[str, dict[str, float]] = {}
 
-    for table in re.findall(r"<table>(.*?)</table>", page, re.I | re.S):
-        headers = [_plain(v).lower() for v in re.findall(r"<th[^>]*>(.*?)</th>", table, re.I | re.S)]
+    for table in re.findall(r"<table>(.*?)</table>", page, re.IGNORECASE | re.DOTALL):
+        headers = [
+            _plain(v).lower()
+            for v in re.findall(
+                r"<th[^>]*>(.*?)</th>", table, re.IGNORECASE | re.DOTALL
+            )
+        ]
         if not headers:
             continue
         input_index = next(
@@ -59,17 +65,19 @@ def fetch_nova_prices() -> dict[str, dict[str, float]]:
         )
         if input_index < 0 or output_index < 0:
             continue
-        for row in re.findall(r"<tr>\s*<td>(.*?)</td>(.*?)</tr>", table, re.I | re.S):
-            cells = [row[0]] + re.findall(r"<td>(.*?)</td>", row[1], re.I | re.S)
+        for row in re.findall(
+            r"<tr>\s*<td>(.*?)</td>(.*?)</tr>", table, re.IGNORECASE | re.DOTALL
+        ):
+            cells = [row[0]] + re.findall(
+                r"<td>(.*?)</td>", row[1], re.IGNORECASE | re.DOTALL
+            )
             if not cells or not _plain(cells[0]).lower().startswith("amazon nova"):
                 continue
             if max(input_index, output_index) >= len(cells):
                 continue
 
             def cell_price(cell: str) -> float | None:
-                match = re.search(
-                    r"priceOf!bedrock/bedrock!([^!]+)!\*!([0-9]+)", cell
-                )
+                match = re.search(r"priceOf!bedrock/bedrock!([^!]+)!\*!([0-9]+)", cell)
                 if not match:
                     return None
                 key, multiplier = match.groups()

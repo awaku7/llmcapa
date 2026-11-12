@@ -48,7 +48,7 @@ def catalog_filename(provider: str) -> str:
 
 
 def model_index(catalog: dict[str, Any]) -> dict[str, dict[str, Any]]:
-    """Validate a catalog and index models without silently losing duplicates."""
+    """Index models using the same case-insensitive identity as the registry."""
     models = catalog.get("models")
     if not isinstance(models, list) or not models:
         raise ValueError("catalog has no models")
@@ -59,9 +59,10 @@ def model_index(catalog: dict[str, Any]) -> dict[str, dict[str, Any]]:
         model_id = model.get("model_id")
         if not isinstance(model_id, str) or not model_id.strip():
             raise ValueError("model_id is missing or empty")
-        if model_id in result:
+        key = model_id.lower()
+        if key in result:
             raise ValueError(f"duplicate model_id: {model_id}")
-        result[model_id] = model
+        result[key] = model
     return result
 
 
@@ -418,13 +419,13 @@ def compare_catalogs(
 ) -> dict[str, Any]:
     old = model_index(previous)
     new = model_index(updated)
-    added = sorted(new.keys() - old.keys())
-    removed = sorted(old.keys() - new.keys())
+    added = sorted(new[key]["model_id"] for key in new.keys() - old.keys())
+    removed = sorted(old[key]["model_id"] for key in old.keys() - new.keys())
     modified: dict[str, list[str]] = {}
     for model_id in sorted(old.keys() & new.keys()):
         fields = changed_fields(old[model_id], new[model_id])
         if fields:
-            modified[model_id] = fields
+            modified[new[model_id]["model_id"]] = fields
 
     # An upstream HTTP error or parser regression must not empty a catalog.
     if len(removed) > max(1, len(old) // 5):

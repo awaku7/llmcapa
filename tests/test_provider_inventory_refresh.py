@@ -175,9 +175,10 @@ Output ceiling: 131,072
         "xhigh",
         "max",
     ]
-    assert by_id["particle-ai/particle-1"]["extra"]["off_peak_pricing"][
-        "input_per_1m"
-    ] == 0.125
+    assert (
+        by_id["particle-ai/particle-1"]["extra"]["off_peak_pricing"]["input_per_1m"]
+        == 0.125
+    )
 
 
 def test_vllm_catalog_derives_static_records_from_huggingface_metadata():

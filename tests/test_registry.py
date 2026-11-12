@@ -281,6 +281,9 @@ def test_vllm_catalog_uses_static_huggingface_metadata():
 
 def test_dynamic_huggingface_fetch_queries_all_pipeline_tasks(monkeypatch):
     registry = Registry()
+    # This test exercises the mocked remote fetch only; do not load every
+    # bundled catalog just to fetch into a fresh registry.
+    registry._loaded = True
     requests_seen = []
     payload = json.dumps(
         [
@@ -324,6 +327,8 @@ def test_dynamic_huggingface_fetch_queries_all_pipeline_tasks(monkeypatch):
 
 def test_dynamic_huggingface_fetch_follows_next_links_by_default(monkeypatch):
     registry = Registry()
+    # Keep the test isolated from the unrelated bundled catalog snapshots.
+    registry._loaded = True
     requests_seen = []
     progress = []
     next_url = (
@@ -374,6 +379,8 @@ def test_dynamic_huggingface_fetch_follows_next_links_by_default(monkeypatch):
 
 def test_dynamic_huggingface_retries_rate_limits_with_exponential_backoff(monkeypatch):
     registry = Registry()
+    # Keep the test isolated from the unrelated bundled catalog snapshots.
+    registry._loaded = True
     progress = []
     sleeps = []
     attempts = []
@@ -743,11 +750,11 @@ def test_load_extra_json(tmp_path) -> None:
 def test_find_by_model_id_from_registry() -> None:
     """Registry.find_by_model_id returns results from multiple providers."""
     reg = Registry()
-    reg._ensure_loaded()
+    reg._loaded = True
+    reg.register(Capability(provider="openai", model_id="gpt-4o"))
+    reg.register(Capability(provider="openrouter", model_id="gpt-4o"))
     results = reg.find_by_model_id("gpt-4o")
-    assert len(results) >= 1
-    # spot check: at least one result has provider=openai
-    assert any(p == "openai" for p, _ in results)
+    assert {provider for provider, _ in results} == {"openai", "openrouter"}
 
 
 def test_new_providers_registered() -> None:
@@ -879,6 +886,10 @@ def test_fetch_github_catalog_downloads_selected_provider_and_uses_cache(
     monkeypatch.setattr("llmcapa.registry.urllib.request.urlopen", fake_urlopen)
 
     registry = Registry()
+    # The mocked refresh needs only the catalog-to-file mapping, not all models.
+    registry._loaded = True
+    registry._catalog_files_by_provider = {"xai": {"xai.json"}}
+
     registered = registry.fetch_github_catalog("grok", write_bundled=False)
     assert registered >= 1
     assert registry.get("grok-github-cache-test", provider="xai").context_window == 8192
@@ -889,15 +900,19 @@ def test_fetch_github_catalog_downloads_selected_provider_and_uses_cache(
     assert list(user_catalogs.glob("*.json"))
 
     cached_registry = Registry()
-    assert cached_registry.get("grok-github-cache-test", provider="xai")
+    cached_registry._loaded = True
+    cached_registry._catalog_files_by_provider = {"xai": {"xai.json"}}
     assert (
         cached_registry.fetch_github_catalog("xai", write_bundled=False) == registered
     )
+    assert cached_registry.get("grok-github-cache-test", provider="xai")
     assert len(requests) == request_count
 
 
 def test_fetch_github_catalog_rejects_unknown_provider_and_unsafe_ref():
     registry = Registry()
+    # These checks exercise validation/error paths; no bundled data is needed.
+    registry._loaded = True
     with pytest.raises(ValueError, match="No bundled GitHub catalog"):
         registry.fetch_github_catalog("not-a-provider")
     with pytest.raises(ValueError, match="valid branch"):
@@ -906,6 +921,8 @@ def test_fetch_github_catalog_rejects_unknown_provider_and_unsafe_ref():
 
 def test_provider_scoped_get_refreshes_github_catalog_once_on_miss(monkeypatch):
     registry = Registry()
+    # Keep this unit test independent of the full bundled catalog set.
+    registry._loaded = True
     fresh_cap = Capability(
         provider="custom-provider",
         model_id="newly-published-model",
@@ -932,6 +949,8 @@ def test_provider_scoped_get_refreshes_github_catalog_once_on_miss(monkeypatch):
 
 def test_provider_scoped_search_refreshes_github_catalog_on_miss(monkeypatch):
     registry = Registry()
+    # Keep this unit test independent of the full bundled catalog set.
+    registry._loaded = True
     fresh_cap = Capability(
         provider="custom-provider",
         model_id="newly-published-search-model",
@@ -976,6 +995,15 @@ def test_bundled_catalog_writer_replaces_json_atomically(tmp_path, monkeypatch):
 def test_persistent_user_catalog_is_loaded_by_new_registry(tmp_path, monkeypatch):
     monkeypatch.setenv("USERPROFILE", str(tmp_path))
     monkeypatch.setenv("HOME", str(tmp_path))
+    bundled_dir = tmp_path / "bundled"
+    bundled_dir.mkdir()
+    (bundled_dir / "xai.json").write_text(
+        json.dumps({"models": [{"provider": "xai", "model_id": "bundled-baseline"}]}),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(
+        registry_module.resources, "files", lambda _package: bundled_dir
+    )
     capability = Capability(
         provider="xai",
         model_id="persistent-user-catalog-model",
@@ -1038,6 +1066,10 @@ def test_older_github_cache_does_not_override_newer_bundled_catalog(
 
     bundled_bytes = bundled_path.read_bytes()
     registry = Registry()
+    # Supply only the bundled OpenRouter row needed to verify stale-cache safety.
+    registry._loaded = True
+    registry._catalog_files_by_provider = {"openrouter": {"openrouter.json"}}
+    registry.register(Capability.from_dict(record))
     assert registry.fetch_github_catalog("openrouter") == 1
     cap = registry.get("typesafe/jev-1.13", provider="openrouter")
 

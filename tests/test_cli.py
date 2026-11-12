@@ -187,6 +187,7 @@ def test_find_decision_models(capsys):
         "liquid",
         "perplexity",
         "microsoft",
+        "google",
     }
 
 
@@ -353,9 +354,7 @@ def test_update_github_cli_forces_refresh_when_requested(monkeypatch, capsys):
 
     monkeypatch.setattr(cli, "default_registry", lambda: DummyRegistry())
     assert (
-        cli.main(
-            ["update", "gh", "--provider", "openai", "--ref", "main", "--refresh"]
-        )
+        cli.main(["update", "gh", "--provider", "openai", "--ref", "main", "--refresh"])
         == 0
     )
     assert calls == {"provider": "openai", "ref": "main", "cache_ttl": 0}

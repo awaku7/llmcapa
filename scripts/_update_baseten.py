@@ -13,6 +13,7 @@ import re
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]

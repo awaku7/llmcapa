@@ -43,6 +43,7 @@ packages = ["src/llmcapa"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+addopts = ["--durations=20"]
 norecursedirs = [".*", "build", "dist", "outputs", "CVS", "_darcs", "{arch}", "*.egg", "venv"]
 
 [tool.ruff.lint.per-file-ignores]

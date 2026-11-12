@@ -7,6 +7,7 @@ Outputs:
 Usage:
   python scripts/_scrape_azure_foundry_full.py
 """
+
 from __future__ import annotations
 
 import asyncio
@@ -31,18 +32,54 @@ ROOT = Path(__file__).resolve().parents[1]
 CATALOG_URL = "https://ai.azure.com/catalog/models"
 PRICING_URLS = [
     ("aoai", "https://azure.microsoft.com/en-us/pricing/details/azure-openai/"),
-    ("aoai_foundry", "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/aoai/"),
-    ("microsoft", "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/"),
-    ("mistral", "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/mistral-ai/"),
-    ("llama", "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/llama/"),
-    ("cohere", "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/cohere/"),
-    ("deepseek", "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/deepseek/"),
-    ("grok", "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/grok/"),
-    ("kimi", "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/kimi/"),
-    ("fireworks", "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/fireworks/"),
-    ("bfl", "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/black-forest-labs/"),
-    ("model_router", "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/model-router/"),
-    ("foundry_platform", "https://azure.microsoft.com/en-us/pricing/details/microsoft-foundry/"),
+    (
+        "aoai_foundry",
+        "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/aoai/",
+    ),
+    (
+        "microsoft",
+        "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+    ),
+    (
+        "mistral",
+        "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/mistral-ai/",
+    ),
+    (
+        "llama",
+        "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/llama/",
+    ),
+    (
+        "cohere",
+        "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/cohere/",
+    ),
+    (
+        "deepseek",
+        "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/deepseek/",
+    ),
+    (
+        "grok",
+        "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/grok/",
+    ),
+    (
+        "kimi",
+        "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/kimi/",
+    ),
+    (
+        "fireworks",
+        "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/fireworks/",
+    ),
+    (
+        "bfl",
+        "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/black-forest-labs/",
+    ),
+    (
+        "model_router",
+        "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/model-router/",
+    ),
+    (
+        "foundry_platform",
+        "https://azure.microsoft.com/en-us/pricing/details/microsoft-foundry/",
+    ),
 ]
 
 
@@ -186,7 +223,7 @@ async def scrape_pricing(page) -> dict:
             out[key] = data
             ntab = len(data.get("tables") or [])
             print(f"    -> tables={ntab} body_len={data.get('body_len')}")
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001 - continue scraping remaining pages
             print(f"    ERROR {e}")
             out[key] = {"error": str(e), "url": url}
     return out
@@ -201,7 +238,7 @@ async def apply_chat_filter(page) -> None:
         if await hdr.count():
             await hdr.click(timeout=3000)
             await page.wait_for_timeout(800)
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - best-effort legacy UI helper
         print(f"  filter expand warn: {e}")
 
     # Try checkbox / option for Chat completion
@@ -221,7 +258,9 @@ async def apply_chat_filter(page) -> None:
                 return
         except Exception:  # noqa: BLE001, S112
             continue
-    print("  WARN: could not apply chat filter; scraping unfiltered (will filter in post)")
+    print(
+        "  WARN: could not apply chat filter; scraping unfiltered (will filter in post)"
+    )
 
 
 async def scrape_catalog(page, max_pages: int = 500) -> list[dict]:
@@ -271,8 +310,7 @@ async def scrape_catalog(page, max_pages: int = 500) -> list[dict]:
         return names
 
     async def ui_state():
-        return await page.evaluate(
-            """() => {
+        return await page.evaluate("""() => {
                 const links = Array.from(document.querySelectorAll('a[href*="/catalog/models/"]'));
                 const names = links.map(a => (a.href || '').split('/').filter(Boolean).pop());
                 const text = (document.body?.innerText || '').slice(-1000);
@@ -281,8 +319,7 @@ async def scrape_catalog(page, max_pages: int = 500) -> list[dict]:
                 const rest = pos < 0 ? '' : text.slice(pos + marker.length).trim().split(String.fromCharCode(10)).join(' ');
                 const page = Number(rest.split(' ')[0]) || 0;
                 return {page, names};
-            }"""
-        )
+            }""")
 
     async def wait_for_ui_advance(previous_state):
         await page.wait_for_function(
@@ -346,7 +383,8 @@ async def scrape_catalog(page, max_pages: int = 500) -> list[dict]:
             await next_btn.click()
             clicks += 1
             done, _ = await asyncio.wait(
-                (response_task, ui_task), timeout=16,
+                (response_task, ui_task),
+                timeout=16,
                 return_when=asyncio.FIRST_COMPLETED,
             )
 
@@ -403,7 +441,9 @@ async def main():
         catalog = await scrape_catalog(page)
         cat_path = ROOT / "_scratch_azure_catalog_raw.json"
         cat_path.write_text(
-            json.dumps({"count": len(catalog), "items": catalog}, ensure_ascii=False, indent=2),
+            json.dumps(
+                {"count": len(catalog), "items": catalog}, ensure_ascii=False, indent=2
+            ),
             encoding="utf-8",
         )
         print(f"  saved {len(catalog)} -> {cat_path}")
@@ -411,7 +451,9 @@ async def main():
         print("\n[2/2] Pricing pages")
         pricing = await scrape_pricing(page)
         pr_path = ROOT / "_scratch_azure_pricing_tables.json"
-        pr_path.write_text(json.dumps(pricing, ensure_ascii=False, indent=2), encoding="utf-8")
+        pr_path.write_text(
+            json.dumps(pricing, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
         print(f"  saved pricing keys={list(pricing)} -> {pr_path}")
 
         await browser.close()

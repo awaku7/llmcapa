@@ -1,4 +1,5 @@
 import json
+
 from scripts._image_capability_postprocess import (
     apply,
     known_analysis_capability,

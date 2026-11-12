@@ -23,7 +23,8 @@ def test_sarashina_catalog_is_registered_with_documented_capabilities() -> None:
     )
     assert all(model.provider == "sarashina" for model in models)
     assert all(
-        model.pricing == {
+        model.pricing
+        == {
             "input_per_1m": 0.0,
             "output_per_1m": 0.0,
             "currency": "JPY",
@@ -85,8 +86,7 @@ def test_sarashina_updater_requires_all_official_model_and_endpoint_docs() -> No
         "chat": " ".join(_update_sarashina.CHAT_MODELS)
         + " "
         + _update_sarashina.ENDPOINTS["chat"],
-        "embedding": "sarashina3-embedding "
-        + _update_sarashina.ENDPOINTS["embedding"],
+        "embedding": "sarashina3-embedding " + _update_sarashina.ENDPOINTS["embedding"],
         "rerank": "sarashina3-rerank " + _update_sarashina.ENDPOINTS["rerank"],
         "translate": "sarashina3.2-translate "
         + _update_sarashina.ENDPOINTS["translate"],

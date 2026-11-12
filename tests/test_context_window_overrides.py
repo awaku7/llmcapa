@@ -31,7 +31,11 @@ def test_context_window_fallback_does_not_replace_live_value() -> None:
 
 
 def test_context_window_fallback_leaves_unknown_models_unknown() -> None:
-    row = {"provider": "unknown-provider", "model_id": "unknown-model", "context_window": 0}
+    row = {
+        "provider": "unknown-provider",
+        "model_id": "unknown-model",
+        "context_window": 0,
+    }
 
     applied = _metadata_loader.apply_context_window_overrides([row])
 
@@ -78,7 +82,9 @@ def test_static_provider_updaters_load_contexts_from_metadata() -> None:
         assert rows[model_id]["context_window"] == override["context_window"]
 
 
-def test_microsoft_base_uses_documented_context_and_unknown_service_stays_zero() -> None:
+def test_microsoft_base_uses_documented_context_and_unknown_service_stays_zero() -> (
+    None
+):
     import _update_microsoft
 
     model = _update_microsoft.base(

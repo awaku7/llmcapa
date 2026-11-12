@@ -37,9 +37,7 @@ def test_audio_postprocess_keeps_mai_realtime_override(tmp_path) -> None:
             }
         ]
     }
-    (tmp_path / "microsoft.json").write_text(
-        json.dumps(catalog), encoding="utf-8"
-    )
+    (tmp_path / "microsoft.json").write_text(json.dumps(catalog), encoding="utf-8")
 
     result = apply(tmp_path)
 

@@ -128,7 +128,9 @@ def parse_inventory(
     """Combine the official model catalog and billing table into records."""
     required_ids = {str(spec["model_id"]) for spec in MODEL_SPECS}
     if any(model_id not in models_markdown for model_id in required_ids):
-        raise ValueError("Particle model catalog is missing an expected public model ID")
+        raise ValueError(
+            "Particle model catalog is missing an expected public model ID"
+        )
     if "1,048,576" not in models_markdown or "131,072" not in models_markdown:
         raise ValueError("Particle model catalog no longer documents token limits")
     prices = parse_prices(pricing_markdown)
@@ -186,9 +188,7 @@ def parse_inventory(
                     },
                     "off_peak_period": "20:30-04:00 America/New_York",
                     "reasoning_default_effort": "high",
-                    "reasoning_can_be_disabled": spec[
-                        "reasoning_can_be_disabled"
-                    ],
+                    "reasoning_can_be_disabled": spec["reasoning_can_be_disabled"],
                     "tool_calling_status": spec["tool_calling_status"],
                     "structured_outputs_status": "json_schema_best_effort_no_guarantee",
                     "prompt_and_completion_share_context": True,
@@ -269,13 +269,13 @@ def update_catalog(
             max_bytes=2_000_000,
         )
     checked_at = checked_at or datetime.now(timezone.utc).date().isoformat()
-    current = parse_inventory(
-        models_markdown, pricing_markdown, checked_at=checked_at
-    )
+    current = parse_inventory(models_markdown, pricing_markdown, checked_at=checked_at)
     data = load_json(DATA) if DATA.exists() else {"models": []}
     merged = merge_inventory(current, data.get("models") or [], checked_at=checked_at)
     save_json(DATA, {**data, "models": merged})
-    print(f"particle-ai.json: refreshed {len(current)} official models; total={len(merged)}")
+    print(
+        f"particle-ai.json: refreshed {len(current)} official models; total={len(merged)}"
+    )
     return merged
 
 

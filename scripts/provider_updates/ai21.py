@@ -22,7 +22,10 @@ BASE_URL = "https://api.ai21.com/studio/v1"
 def fetch_docs() -> str:
     text = fetch_text(
         SOURCE + ".md",
-        headers={"Accept": "text/markdown,text/plain,*/*", "User-Agent": "llmcapa-provider-updater/1.0"},
+        headers={
+            "Accept": "text/markdown,text/plain,*/*",
+            "User-Agent": "llmcapa-provider-updater/1.0",
+        },
         timeout=30,
         max_bytes=1_000_000,
     )
@@ -36,7 +39,7 @@ def parse_model_ids(markdown: str) -> list[str]:
     ids: dict[str, str] = {}
     in_details = False
     for line in markdown.splitlines():
-        if re.match(r"^##\s+Model Details\s*$", line, re.I):
+        if re.match(r"^##\s+Model Details\s*$", line, re.IGNORECASE):
             in_details = True
             continue
         if in_details and re.match(r"^##\s+", line):
@@ -53,7 +56,11 @@ def parse_model_ids(markdown: str) -> list[str]:
     )
     if versioning:
         for line in versioning.group(1).splitlines():
-            match = re.search(r"`([^`]+)`\s+(?:currently\s+)?points to\s+`([^`]+)`", line, re.I)
+            match = re.search(
+                r"`([^`]+)`\s+(?:currently\s+)?points to\s+`([^`]+)`",
+                line,
+                re.IGNORECASE,
+            )
             if match:
                 for model_id in match.groups():
                     ids[model_id.casefold()] = model_id
@@ -86,7 +93,9 @@ def _new_record(model_id: str) -> dict:
     }
 
 
-def merge_catalog(model_ids: list[str], previous: list[dict], checked_at: str) -> list[dict]:
+def merge_catalog(
+    model_ids: list[str], previous: list[dict], checked_at: str
+) -> list[dict]:
     old_by_id = {
         str(row.get("model_id", "")).casefold(): row
         for row in previous
@@ -136,7 +145,9 @@ def update_catalog(model_ids: list[str], *, checked_at: str | None = None) -> in
     checked_at = checked_at or datetime.now(timezone.utc).date().isoformat()
     models = merge_catalog(model_ids, data.get("models") or [], checked_at)
     save_json(DATA, {**data, "models": models})
-    print(f"ai21.json: refreshed {len(model_ids)} documented API model IDs; total={len(models)}")
+    print(
+        f"ai21.json: refreshed {len(model_ids)} documented API model IDs; total={len(models)}"
+    )
     return len(model_ids)
 
 

@@ -12,6 +12,7 @@ import re
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urljoin
+
 try:
     from scripts.provider_updates._http import fetch_text as _shared_fetch_text
 except ModuleNotFoundError:  # Running this updater directly from the scripts directory.
@@ -27,7 +28,10 @@ SOURCE = "https://docs.liquid.ai/lfm/models/decision-models"
 def fetch_text(url: str, limit: int = 2_000_000) -> str:
     return _shared_fetch_text(
         url,
-        headers={"Accept": "text/markdown,text/plain,*/*", "User-Agent": "llmcapa-provider-updater/1.0"},
+        headers={
+            "Accept": "text/markdown,text/plain,*/*",
+            "User-Agent": "llmcapa-provider-updater/1.0",
+        },
         timeout=30,
         max_bytes=limit,
     )
@@ -44,7 +48,9 @@ def parse_decision_models(markdown: str) -> list[dict[str, str]]:
     if not section_match:
         raise ValueError("Liquid model matrix has no Decision Models section")
     section = text[section_match.end() :]
-    section = re.split(r"(?im)^\s*#{1,3}\s+|^Looking for an older model", section, maxsplit=1)[0]
+    section = re.split(
+        r"(?im)^\s*#{1,3}\s+|^Looking for an older model", section, maxsplit=1
+    )[0]
 
     found: list[dict[str, str]] = []
     for line in section.splitlines():
@@ -66,9 +72,9 @@ def parse_decision_models(markdown: str) -> list[dict[str, str]]:
                 "model_docs_url": urljoin("https://docs.liquid.ai", docs_path),
                 "huggingface_model": hf_match.group(0).rstrip(".,") if hf_match else "",
                 "hosted_api": any(
-                    re.search(r"\bAPI\b", cell, re.IGNORECASE)
-                    for cell in cells[1:3]
-                ) and hf_match is None,
+                    re.search(r"\bAPI\b", cell, re.IGNORECASE) for cell in cells[1:3]
+                )
+                and hf_match is None,
             }
         )
     if not found:
@@ -89,12 +95,27 @@ def parse_model_specs(markdown: str) -> dict[str, object]:
         if amount:
             value = float(amount.group(1).replace(",", ""))
             suffix = amount.group(2).lower()
-            result["context_window"] = int(value * (1_024 if suffix == "k" else 1_048_576 if suffix == "m" else 1))
-    parameters = re.search(r"(?im)^\|\s*Parameters\s*\|\s*([\d,.]+)\s*([kKmMbB]?)", markdown)
+            result["context_window"] = int(
+                value * (1_024 if suffix == "k" else 1_048_576 if suffix == "m" else 1)
+            )
+    parameters = re.search(
+        r"(?im)^\|\s*Parameters\s*\|\s*([\d,.]+)\s*([kKmMbB]?)", markdown
+    )
     if parameters:
         value = float(parameters.group(1).replace(",", ""))
         suffix = parameters.group(2).lower()
-        result["parameters"] = int(value * (1_000 if suffix == "k" else 1_000_000 if suffix == "m" else 1_000_000_000 if suffix == "b" else 1))
+        result["parameters"] = int(
+            value
+            * (
+                1_000
+                if suffix == "k"
+                else (
+                    1_000_000
+                    if suffix == "m"
+                    else 1_000_000_000 if suffix == "b" else 1
+                )
+            )
+        )
     audio_duration = re.search(r"(?i)audio[^\n]{0,100}?up to\s*([\d.]+)\s*s", markdown)
     if audio_duration:
         result["audio_max_duration_seconds"] = float(audio_duration.group(1))
@@ -140,27 +161,45 @@ def build_entry(model: dict[str, str], detail: str, checked_at: str) -> dict:
         "decision": {
             "decision": True,
             "question_kinds": ["choice", "score", "noul"],
-            "answer_fields": ["choice", "score", "noul", "confidence", "probabilities", "legend"],
+            "answer_fields": [
+                "choice",
+                "score",
+                "noul",
+                "confidence",
+                "probabilities",
+                "legend",
+            ],
             "returns_probabilities": True,
             "returns_confidence": True,
             "calibrated_confidence": None,
             "parallel_questions": True,
             "free_form_text": False,
             "type_errors_possible": False,
-            "state_shapes": ["string", "json_object"] + [x for x in modalities if x != "text"],
+            "state_shapes": ["string", "json_object"]
+            + [x for x in modalities if x != "text"],
             "max_state_tokens": None,
             "max_total_tokens": int(specs.get("context_window", 0)) or None,
             "output_token_billing": False,
             "language_values": [],
-            "endpoints": ["https://api.liquid.ai/decisions/v1/systemone"] if is_hosted else [],
+            "endpoints": (
+                ["https://api.liquid.ai/decisions/v1/systemone"] if is_hosted else []
+            ),
             "source_url": model["model_docs_url"],
             "checked_at": checked_at,
             "status": "documented",
             "extra": {
                 "base_url": "https://api.liquid.ai" if is_hosted else None,
-                "deployment": "hosted-liquid-api" if is_hosted else "local-open-weights",
-                **({"parameters": specs["parameters"]} if "parameters" in specs else {}),
-                **({"audio_max_duration_seconds": specs["audio_max_duration_seconds"]} if "audio_max_duration_seconds" in specs else {}),
+                "deployment": (
+                    "hosted-liquid-api" if is_hosted else "local-open-weights"
+                ),
+                **(
+                    {"parameters": specs["parameters"]} if "parameters" in specs else {}
+                ),
+                **(
+                    {"audio_max_duration_seconds": specs["audio_max_duration_seconds"]}
+                    if "audio_max_duration_seconds" in specs
+                    else {}
+                ),
             },
         },
         "extra": {
@@ -175,7 +214,12 @@ def build_entry(model: dict[str, str], detail: str, checked_at: str) -> dict:
     }
 
 
-def merge_models(discovered: list[dict[str, str]], details: dict[str, str], previous: list[dict], checked_at: str) -> list[dict]:
+def merge_models(
+    discovered: list[dict[str, str]],
+    details: dict[str, str],
+    previous: list[dict],
+    checked_at: str,
+) -> list[dict]:
     old_by_id = {
         str(model.get("model_id", "")).casefold(): model
         for model in previous
@@ -190,11 +234,19 @@ def merge_models(discovered: list[dict[str, str]], details: dict[str, str], prev
         if old:
             result = dict(old)
             old_decision = old.get("decision") or {}
-            old_exact_context = old_decision.get("max_total_tokens") if isinstance(old_decision, dict) else None
+            old_exact_context = (
+                old_decision.get("max_total_tokens")
+                if isinstance(old_decision, dict)
+                else None
+            )
             # Preserve curated capability, aliases, pricing, and provider-specific
             # details; refresh only facts the official source explicitly lists.
             result["display_name"] = old.get("display_name") or base["display_name"]
-            result["context_window"] = old_exact_context or old.get("context_window", 0) or base["context_window"]
+            result["context_window"] = (
+                old_exact_context
+                or old.get("context_window", 0)
+                or base["context_window"]
+            )
             result["input_modalities"] = base["input_modalities"]
             result["output_modalities"] = base["output_modalities"]
             result["supports_vision"] = base["supports_vision"]
@@ -228,15 +280,25 @@ def merge_models(discovered: list[dict[str, str]], details: dict[str, str], prev
     return merged
 
 
-def update_catalog(discovered: list[dict[str, str]], details: dict[str, str], *, checked_at: str | None = None) -> int:
+def update_catalog(
+    discovered: list[dict[str, str]],
+    details: dict[str, str],
+    *,
+    checked_at: str | None = None,
+) -> int:
     data = json.loads(DATA.read_text(encoding="utf-8"))
     previous = data.get("models") or []
     checked_at = checked_at or datetime.now(timezone.utc).date().isoformat()
     models = merge_models(discovered, details, previous, checked_at)
     if not models:
         raise ValueError("refusing to write an empty Liquid catalog")
-    DATA.write_text(json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"liquid.json: {len(discovered)} current decision-model rows; total={len(models)}")
+    DATA.write_text(
+        json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    print(
+        f"liquid.json: {len(discovered)} current decision-model rows; total={len(models)}"
+    )
     return len(discovered)
 
 
@@ -244,7 +306,10 @@ def main() -> None:
     library = fetch_text(LIBRARY_URL)
     decision_page = fetch_text(DECISION_URL)
     discovered = parse_decision_models(library)
-    details = {row["model_id"].casefold(): fetch_text(row["model_docs_url"]) for row in discovered}
+    details = {
+        row["model_id"].casefold(): fetch_text(row["model_docs_url"])
+        for row in discovered
+    }
     # The overview establishes the shared primitives; it is not a source for
     # numeric limits, which are taken from individual model pages only.
     if "Noul" not in decision_page and "Choice" not in decision_page:

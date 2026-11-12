@@ -170,6 +170,8 @@ class SpatialCapability(_TupleCapability):
 
     def to_dict(self) -> dict[str, Any]:
         return self._to_dict_values()
+
+
 @dataclass(frozen=True)
 class DecisionCapability(_TupleCapability):
     """Typed-decision output metadata for System One style models.

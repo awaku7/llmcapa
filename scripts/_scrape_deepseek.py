@@ -1,4 +1,5 @@
 """Scrape DeepSeek pricing from the official documentation."""
+
 from __future__ import annotations
 
 import json
@@ -64,7 +65,7 @@ def parse_pricing_text(text: str) -> dict[str, dict]:
         match = re.search(
             rf"{re.escape(label)}\s+(.*?)(?=(?:{labels})|$)",
             feature_text,
-            re.I,
+            re.IGNORECASE,
         )
         return (
             re.findall(r"✓|Not supported|Non-thinking mode only", match.group(1))
@@ -85,6 +86,7 @@ def parse_pricing_text(text: str) -> dict[str, dict]:
     required_prices = model_count * 6
     input_start = model_count * 3
     output_start = model_count * 5
+
     def row(start: int) -> list[float]:
         return (
             prices[start : start + model_count]
@@ -98,25 +100,23 @@ def parse_pricing_text(text: str) -> dict[str, dict]:
     input_prices = row(input_start)
     output_off_peak = row(model_count * 4)
     output_prices = row(output_start)
-    context_match = re.search(
-        r"CONTEXT LENGTH\s+([0-9.]+\s*[KM])", text, re.I
-    )
+    context_match = re.search(r"CONTEXT LENGTH\s+([0-9.]+\s*[KM])", text, re.IGNORECASE)
     max_output_match = re.search(
-        r"MAX(?:IMUM)?[:\s]+([0-9.]+\s*[KM])", text, re.I
+        r"MAX(?:IMUM)?[:\s]+([0-9.]+\s*[KM])", text, re.IGNORECASE
     )
     versions_match = re.search(
         r"MODEL VERSION\s+([A-Za-z0-9._-]+)\s+([A-Za-z0-9._-]+)",
         text,
-        re.I,
+        re.IGNORECASE,
     )
     versions = list(versions_match.groups()) if versions_match else []
     concurrency_text = re.sub(
-        r"Concurrency Limit\s*\([^)]*\)", "Concurrency Limit", text, flags=re.I
+        r"Concurrency Limit\s*\([^)]*\)", "Concurrency Limit", text, flags=re.IGNORECASE
     )
     concurrency_match = re.search(
         r"Concurrency Limit[^0-9]*([0-9]+)[^0-9]+([0-9]+)",
         concurrency_text,
-        re.I,
+        re.IGNORECASE,
     )
     concurrency = (
         [int(value) for value in concurrency_match.groups()]
@@ -124,7 +124,7 @@ def parse_pricing_text(text: str) -> dict[str, dict]:
         else []
     )
     legacy_match = re.search(
-        r"legacy names (.*?) are still accepted", normalized, re.I
+        r"legacy names (.*?) are still accepted", normalized, re.IGNORECASE
     )
     legacy_aliases = (
         re.findall(r"\bdeepseek-[a-z0-9]+(?:-[a-z0-9]+)*", legacy_match.group(1))
@@ -132,7 +132,7 @@ def parse_pricing_text(text: str) -> dict[str, dict]:
         else []
     )
     supports_reasoning = bool(
-        re.search(r"THINKING MODE .*?Supports both", normalized, re.I)
+        re.search(r"THINKING MODE .*?Supports both", normalized, re.IGNORECASE)
     )
     result: dict[str, dict] = {}
     for index, model_id in enumerate(model_ids):
@@ -152,15 +152,19 @@ def parse_pricing_text(text: str) -> dict[str, dict]:
             "version": versions[index] if index < len(versions) else "",
             "concurrency": concurrency[index] if index < len(concurrency) else 0,
             "aliases": legacy_aliases if index == 0 else [],
-            "supports_json_mode": feature_values("Json Output")[index:index + 1] == ["✓"],
-            "supports_function_calling": feature_values("Tool Calls")[index:index + 1] == ["✓"],
-            "supports_responses_api": feature_values("Responses API")[index:index + 1] == ["✓"],
-            "supports_anthropic_api": feature_values("Anthropic API")[index:index + 1] == ["✓"],
+            "supports_json_mode": feature_values("Json Output")[index : index + 1]
+            == ["✓"],
+            "supports_function_calling": feature_values("Tool Calls")[index : index + 1]
+            == ["✓"],
+            "supports_responses_api": feature_values("Responses API")[index : index + 1]
+            == ["✓"],
+            "supports_anthropic_api": feature_values("Anthropic API")[index : index + 1]
+            == ["✓"],
             "supports_fim": (
-                feature_values("FIM Completion（Beta）")[index:index + 1]
+                feature_values("FIM Completion（Beta）")[index : index + 1]
                 not in ([], ["Not supported"])
             ),
-            "supports_vision": feature_values("Vision")[index:index + 1] == ["✓"],
+            "supports_vision": feature_values("Vision")[index : index + 1] == ["✓"],
             "supports_reasoning": supports_reasoning,
         }
     return result
@@ -174,7 +178,7 @@ def fetch_official_text(url: str) -> str:
             text = _html_to_text(response.read().decode("utf-8", errors="replace"))
         if text.strip():
             return text
-    except Exception:
+    except Exception:  # noqa: BLE001, S110 - try browser fallback after fetch failure
         pass
 
     if sync_playwright is None:
@@ -210,10 +214,14 @@ def scrape_pricing() -> dict[str, dict]:
 
     thinking_text = re.sub(r"\s+", " ", fetch_official_text(THINKING_URL))
     effort_match = re.search(
-        r"reasoning_effort[^a-z]+(low/high/max)", thinking_text, re.I
+        r"reasoning_effort[^a-z]+(low/high/max)", thinking_text, re.IGNORECASE
     )
     effort_values = (
-        list(dict.fromkeys(re.findall(r"low|high|max", effort_match.group(1), re.I)))
+        list(
+            dict.fromkeys(
+                re.findall(r"low|high|max", effort_match.group(1), re.IGNORECASE)
+            )
+        )
         if effort_match
         else []
     )
@@ -235,7 +243,7 @@ if __name__ == "__main__":
                 ensure_ascii=False,
             )
         )
-    except Exception as exc:
+    except Exception as exc:  # noqa: BLE001 - serialize scraper failures for CLI use
         print(
             json.dumps(
                 {"error": str(exc), "traceback": traceback.format_exc()},

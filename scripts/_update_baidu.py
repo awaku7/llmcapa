@@ -5,8 +5,8 @@ from __future__ import annotations
 import json
 import time
 from datetime import datetime, timezone
-from urllib.error import URLError
 from pathlib import Path
+from urllib.error import URLError
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
