@@ -456,6 +456,8 @@ class Registry:
 
     def _load_persistent_github_catalogs(self) -> None:
         """Load durable user-owned GitHub catalog overrides, newest first."""
+        from ._user_catalog_cache import override_write_lock
+
         override_dir = Path.home() / ".llmcapa" / "catalogs" / "github"
         try:
             override_paths = sorted(
@@ -494,22 +496,34 @@ class Registry:
                             provider, ()
                         )
                     }
-                    if any(
-                        isinstance(data / filename, Path)
-                        and (data / filename).is_file()
-                        and (data / filename).stat().st_mtime_ns
-                        > original_stat.st_mtime_ns
-                        for filename in bundled_files
+                    if (
+                        bundled_files
+                        and all(
+                            self._catalog_files_by_provider.get(provider)
+                            for provider in provider_set
+                        )
+                        and all(
+                            isinstance(data / filename, Path)
+                            and (data / filename).is_file()
+                            and (data / filename).stat().st_mtime_ns
+                            > original_stat.st_mtime_ns
+                            for filename in bundled_files
+                        )
                     ):
-                        # A newer installed catalog supersedes this main snapshot.
+                        # Delete only if every contributing source is newer.
+                        # Coordinate the final identity check with publication.
                         try:
-                            current_stat = override_path.stat()
-                            if (
-                                current_stat.st_mtime_ns == original_stat.st_mtime_ns
-                                and current_stat.st_size == original_stat.st_size
-                                and current_stat.st_ino == original_stat.st_ino
-                            ):
-                                override_path.unlink()
+                            with override_write_lock(override_dir):
+                                current_stat = override_path.stat()
+                                if (
+                                    current_stat.st_mtime_ns
+                                    == original_stat.st_mtime_ns
+                                    and current_stat.st_ctime_ns
+                                    == original_stat.st_ctime_ns
+                                    and current_stat.st_size == original_stat.st_size
+                                    and current_stat.st_ino == original_stat.st_ino
+                                ):
+                                    override_path.unlink()
                         except OSError:
                             pass
                         continue
@@ -1173,6 +1187,8 @@ class Registry:
         capabilities: list[Capability],
     ) -> None:
         """Persist a fetched catalog under the user's home directory."""
+        from ._user_catalog_cache import override_write_lock
+
         override_dir = Path.home() / ".llmcapa" / "catalogs" / "github"
         override_key = hashlib.sha256(
             (cache_key + "\0" + ",".join(sorted(providers))).encode("utf-8")
@@ -1199,7 +1215,8 @@ class Registry:
                 json.dump(payload, temporary_file, ensure_ascii=False, indent=2)
                 temporary_file.write(chr(10))
                 temporary_path = Path(temporary_file.name)
-            os.replace(temporary_path, override_path)
+            with override_write_lock(override_dir):
+                os.replace(temporary_path, override_path)
         except OSError as exc:
             warnings.warn(
                 f"Could not persist GitHub catalog under {override_dir}: {exc}",

@@ -8,7 +8,7 @@ import sqlite3
 import tempfile
 import weakref
 import zlib
-from contextlib import closing
+from contextlib import closing, contextmanager
 from pathlib import Path
 from threading import RLock
 
@@ -38,6 +38,18 @@ CREATE TABLE entries (
     PRIMARY KEY (kind, provider, model_key)
 ) WITHOUT ROWID;
 """
+
+
+@contextmanager
+def override_write_lock(directory):
+    """Serialize durable override publication and deletion across processes."""
+    try:
+        with closing(sqlite3.connect(directory / ".override-lock.sqlite3")) as conn:
+            with conn:
+                conn.execute("BEGIN IMMEDIATE")
+                yield
+    except sqlite3.Error as exc:
+        raise OSError("Could not lock persistent catalog overrides") from exc
 
 
 def startup_signature(registry, home, now):

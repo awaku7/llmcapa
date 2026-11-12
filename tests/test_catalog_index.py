@@ -451,3 +451,82 @@ def test_user_cache_is_invalidated_when_persistent_source_changes(catalog, tmp_p
     path.unlink()
     assert Registry().get("gpt-demo-1.2", "openai").context_window == 1000
     assert not list((home / "sqlite_cache").glob("cache-*.sqlite3"))
+
+
+def test_persistent_override_requires_all_sources_to_be_newer(catalog, tmp_path):
+    data, database = catalog
+    second = data / "openai_extra.json"
+    second.write_text(
+        json.dumps([{"provider": "openai", "model_id": "extra-model"}]),
+        encoding="utf-8",
+    )
+    build_catalog(database)
+    registry = Registry()
+    registry._write_user_catalog_override(
+        "test",
+        "main",
+        {"openai"},
+        [Capability(provider="openai", model_id="gpt-demo-1.2", context_window=9999)],
+    )
+    directory = tmp_path / "home" / ".llmcapa" / "catalogs" / "github"
+    path = next(directory.glob("*.json"))
+    stamp = path.stat().st_mtime
+    os.utime(data / "openai.json", (stamp - 10, stamp - 10))
+    os.utime(second, (stamp + 10, stamp + 10))
+    assert Registry().get("gpt-demo-1.2", "openai").context_window == 9999
+    assert path.exists()
+
+    os.utime(data / "openai.json", (stamp + 10, stamp + 10))
+    assert Registry().get("gpt-demo-1.2", "openai").context_window == 1000
+    assert not path.exists()
+
+
+def test_stale_deletion_preserves_concurrent_publication(
+    catalog, tmp_path, monkeypatch
+):
+    from contextlib import contextmanager
+
+    from llmcapa import _user_catalog_cache
+
+    data, _ = catalog
+    writer = Registry()
+    writer._write_user_catalog_override(
+        "test",
+        "main",
+        {"openai"},
+        [Capability(provider="openai", model_id="gpt-demo-1.2", context_window=9999)],
+    )
+    directory = tmp_path / "home" / ".llmcapa" / "catalogs" / "github"
+    path = next(directory.glob("*.json"))
+    older = (data / "openai.json").stat().st_mtime - 10
+    os.utime(path, (older, older))
+    original_lock = _user_catalog_cache.override_write_lock
+    publications = []
+
+    @contextmanager
+    def publish_before_lock(directory):
+        if not publications:
+            publications.append(True)
+            writer._write_user_catalog_override(
+                "test",
+                "explicit-tag",
+                {"openai"},
+                [
+                    Capability(
+                        provider="openai",
+                        model_id="gpt-demo-1.2",
+                        context_window=5678,
+                    )
+                ],
+            )
+        with original_lock(directory):
+            yield
+
+    monkeypatch.setattr(
+        _user_catalog_cache, "override_write_lock", publish_before_lock
+    )
+    assert Registry().get("gpt-demo-1.2", "openai").context_window == 1000
+    assert publications == [True]
+    assert path.exists()
+    assert json.loads(path.read_text(encoding="utf-8"))["ref"] == "explicit-tag"
+    assert Registry().get("gpt-demo-1.2", "openai").context_window == 5678
