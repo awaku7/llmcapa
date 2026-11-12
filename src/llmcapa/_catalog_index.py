@@ -112,10 +112,10 @@ class LookupBuilder:
 def _decode_lookup_block(payload):
     rows = json.loads(zlib.decompress(payload))
     if not isinstance(rows, list):
-        raise ValueError("Invalid lookup block")
+        raise TypeError("Invalid lookup block")
     for name, record_id, is_alias in rows:
         if not isinstance(name, str) or not isinstance(record_id, int):
-            raise ValueError("Invalid lookup record")
+            raise TypeError("Invalid lookup record")
         yield name, record_id, is_alias
 
 
@@ -208,10 +208,10 @@ class CatalogIndex:
 
             with reader._connect() as conn:
                 version = conn.execute("PRAGMA user_version").fetchone()
-                if version not in ((1,), (2,)):
+                if version not in ((1,), (2,), (3,)):
                     return None
                 reader._schema_version = version[0]
-                if reader._schema_version == 2:
+                if reader._schema_version >= 2:
                     conn.execute(
                         "SELECT kind, bucket, ordinal, payload FROM lookup_blocks LIMIT 0"
                     )

@@ -56,7 +56,7 @@ def test_catalog_database_preserves_lookup_indexes(tmp_path, monkeypatch):
     check_catalog(destination)
 
     with closing(sqlite3.connect(destination)) as database:
-        assert database.execute("PRAGMA user_version").fetchone() == (2,)
+        assert database.execute("PRAGMA user_version").fetchone() == (3,)
         assert database.execute("PRAGMA integrity_check").fetchone() == ("ok",)
         assert database.execute("PRAGMA foreign_key_check").fetchall() == []
         blocks = {
@@ -91,9 +91,16 @@ def test_catalog_database_preserves_lookup_indexes(tmp_path, monkeypatch):
         assert dict(database.execute("SELECT * FROM aliases")) == registry._alias_index
         assert len(candidate_ids(database, "alias", "shared")) == 2
         assert database.execute(
-            "SELECT model_key FROM scoped_aliases WHERE provider = ? AND alias = ?",
-            ("openrouter", "shared"),
-        ).fetchone() == ("example",)
+            "SELECT COUNT(*) FROM strings WHERE value = ?", ("example",)
+        ).fetchone() == (1,)
+        assert database.execute(
+            "SELECT COUNT(*) FROM model_entries WHERE model_key_id = "
+            "(SELECT id FROM strings WHERE value = ?)",
+            ("example",),
+        ).fetchone() == (2,)
+        assert database.execute(
+            "SELECT name FROM sqlite_master WHERE name = 'scoped_aliases'"
+        ).fetchone() is None
         assert set(database.execute("SELECT * FROM provider_files")) == {
             (provider, filename)
             for provider, filenames in registry._catalog_files_by_provider.items()

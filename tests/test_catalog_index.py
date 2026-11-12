@@ -584,6 +584,11 @@ def test_scoped_alias_and_prefix_follow_overlays_and_mutations(catalog):
 def test_legacy_database_keeps_lookup_compatibility(catalog):
     _, database = catalog
     with closing(sqlite3.connect(database)) as conn, conn:
+        # Materialize the original text-keyed logical tables to exercise v1.
+        for table in ("models", "flat_models", "aliases"):
+            conn.execute(f"CREATE TABLE legacy_{table} AS SELECT * FROM {table}")
+            conn.execute(f"DROP VIEW {table}")
+            conn.execute(f"ALTER TABLE legacy_{table} RENAME TO {table}")
         conn.execute("DROP TABLE lookup_blocks")
         conn.execute("PRAGMA user_version = 1")
     registry = Registry()
