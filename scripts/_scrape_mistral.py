@@ -386,7 +386,8 @@ def main():
                 .loads(OUT.read_text(encoding="utf-8"))
                 .get("models", {})
             )
-        except (OSError, ValueError, TypeError, AttributeError):
+        # An unreadable previous snapshot is ignored in favor of a fresh scrape.
+        except Exception:  # noqa: BLE001
             prev = {}
     print("overview...", flush=True)
     ov_body = fetch(OVERVIEW)

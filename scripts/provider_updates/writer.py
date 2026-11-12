@@ -177,7 +177,7 @@ def parse_model_inventory(docs: dict[str, str]) -> list[dict]:
         or not isinstance(docs.get("models"), str)
         or not isinstance(docs.get("pricing"), str)
     ):
-        raise TypeError(
+        raise ValueError(  # noqa: TRY004 - preserve existing invalid-document contract
             "Writer scraper expects public model and pricing documentation text"
         )
     snapshots = _model_specs(docs["models"])

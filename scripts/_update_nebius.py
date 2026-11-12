@@ -49,7 +49,9 @@ def fetch_catalog() -> Any:
     with urllib.request.urlopen(request, timeout=30) as response:
         payload = json.loads(response.read().decode("utf-8"))
     if not isinstance(payload, list):
-        raise TypeError("Nebius public model catalog must be a JSON list")
+        raise ValueError(  # noqa: TRY004 - preserve upstream payload validation contract
+            "Nebius public model catalog must be a JSON list"
+        )
     return payload
 
 

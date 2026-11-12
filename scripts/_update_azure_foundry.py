@@ -788,7 +788,7 @@ def _date_is_past(value: Any) -> bool:
             elif fmt == "%m/%d/%Y %H:%M:%S %z":
                 parsed_date = datetime.strptime(text, "%m/%d/%Y %H:%M:%S %z").date()
             else:
-                parsed_date = datetime.fromisoformat(text).date()
+                parsed_date = datetime.strptime(text, "%Y-%m-%dT%H:%M:%S%z").date()
             return parsed_date <= utc_today
         except ValueError:
             continue
