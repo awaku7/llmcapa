@@ -12,8 +12,10 @@ import shutil
 import ssl
 from copy import deepcopy
 from datetime import datetime, timezone
+from html import unescape
 from pathlib import Path
 from urllib.error import URLError
+from urllib.parse import urljoin, urlsplit
 from urllib.request import Request, urlopen
 
 from _computer_use_metadata import (
@@ -27,6 +29,8 @@ INSTALLED = (
     Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "google.json"
 )
 SOURCE = "https://ai.google.dev/gemini-api/docs/pricing"
+MODEL_INDEX_SOURCE = "https://aistudio.google.com/docs/models"
+PRICING_SOURCE = "https://aistudio.google.com/docs/pricing"
 
 
 def normalize_native_endpoint(model: dict) -> None:
@@ -65,9 +69,9 @@ def parse_price(cell: str) -> float | None:
     return float(match.group(1)) if match else None
 
 
-def discover_prices() -> dict[str, tuple[float, float, int]]:
+def discover_prices(page_html: str | None = None) -> dict[str, tuple[float, float, int]]:
     """Read model IDs and current token prices from Google's pricing tables."""
-    html = fetch(SOURCE)
+    html = page_html if page_html is not None else fetch(SOURCE)
     headings = list(
         re.finditer(
             r'<h2 id="([^"]+)"[^>]*>.*?</h2>\s*<em>.*?<code[^>]*>([^<]+)</code>',
@@ -154,6 +158,311 @@ def discover_metadata(html: str) -> tuple[dict[str, dict], dict[str, str]]:
                 pass
             deprecations[model_id] = date
     return extras, deprecations
+
+
+def google_docs_markdown(page_html: str) -> str:
+    """Extract the public Markdown payload embedded in a Google docs page."""
+    match = re.search(
+        r"<noscript>\s*<pre>(.*?)</pre>\s*</noscript>", page_html, re.DOTALL | re.IGNORECASE
+    )
+    if not match:
+        raise ValueError("Google docs page has no embedded Markdown content")
+    return unescape(match.group(1))
+
+
+def discover_decision_model_index(
+    markdown: str, *, source: str = MODEL_INDEX_SOURCE
+) -> tuple[str, str, str]:
+    """Find the specialized Decisions API model from Google's official model index."""
+    rows = re.finditer(r"(?m)^\s*\*\s+\[([^\]]+)\]\(([^)]+)\)", markdown)
+    for match in rows:
+        separator = re.search(r"(?m)^\s*---\s*$", markdown[match.end() :])
+        end = match.end() + separator.start() if separator else len(markdown)
+        row = markdown[match.start() : end]
+        if "decision" not in match.group(1).lower() or "decisions api" not in row.lower():
+            continue
+        codes = re.findall(r"`([^`]+)`", row)
+        if codes:
+            return codes[-1].strip(), match.group(1).strip(), urljoin(source, match.group(2))
+    raise ValueError("official Google model index has no Decisions API model row")
+
+
+def _markdown_sections(markdown: str) -> list[tuple[str, str]]:
+    headings = list(re.finditer(r"(?m)^##\s+(.+)$", markdown))
+    sections = []
+    for index, heading in enumerate(headings):
+        end = headings[index + 1].start() if index + 1 < len(headings) else len(markdown)
+        sections.append((heading.group(1), markdown[heading.start() : end]))
+    return sections
+
+
+def _documented_capability(markdown: str, name: str) -> bool | None:
+    """Read a supported/not-supported badge from the official model page."""
+    match = re.search(
+        rf"\*\*{re.escape(name)}\*\*(.*?)(?=\{{%\s*/section\s*%\}})",
+        markdown,
+        re.DOTALL | re.IGNORECASE,
+    )
+    if not match:
+        return None
+    badge = re.search(
+        r'\{%\s*badge\s+type="(supported|not-supported)"\s*/%\}',
+        match.group(1),
+        re.IGNORECASE,
+    )
+    if not badge:
+        return None
+    return badge.group(1).lower() == "supported"
+
+
+def parse_decision_model_docs(
+    index_markdown: str,
+    model_markdown: str,
+    api_markdown: str,
+    pricing_markdown: str,
+    *,
+    index_source: str = MODEL_INDEX_SOURCE,
+    pricing_source: str = PRICING_SOURCE,
+) -> dict:
+    """Build the typed-decision record by parsing Google's official docs."""
+    model_id, display_name, model_url = discover_decision_model_index(
+        index_markdown, source=index_source
+    )
+    code_label = re.search(r"\bModel code\b", model_markdown, re.IGNORECASE)
+    model_code = (
+        re.search(r"`([^`]+)`", model_markdown[code_label.end() :])
+        if code_label
+        else None
+    )
+    if not model_code or model_code.group(1).strip() != model_id:
+        raise ValueError("Google model page code disagrees with the official model index")
+
+    input_match = re.search(r"(?m)^\s*(?:\*\s*)?\*\*Inputs\*\*[ 	]*(.*)$", model_markdown, re.IGNORECASE)
+    output_match = re.search(r"(?m)^\s*(?:\*\s*)?\*\*Output\*\*[ 	]*(.*)$", model_markdown, re.IGNORECASE)
+    input_limit = re.search(r"\*\*Input token limit\*\*[ 	]*([\d,]+)", model_markdown, re.IGNORECASE)
+    output_limit = re.search(r"\*\*Output token limit\*\*[ 	]*([\d,]+)", model_markdown, re.IGNORECASE)
+    max_questions = re.search(
+        r"up to\s+([\d,]+)\s+questions(?:\s+per request)?", model_markdown, re.IGNORECASE
+    )
+    if not all((input_match, output_match, input_limit, output_limit, max_questions)):
+        raise ValueError("Google model page is missing modalities or token limits")
+
+    input_types = input_match.group(1)
+    input_modalities = [
+        name
+        for name in ("text", "image", "audio", "video")
+        if re.search(rf"\b{name}\b", input_types, re.IGNORECASE)
+    ]
+    accepts_pdf = bool(re.search(r"\bpdf\b", input_types, re.IGNORECASE))
+    if (
+        not input_modalities
+        or "decision" not in display_name.lower()
+        or "probabilit" not in output_match.group(1).lower()
+    ):
+        raise ValueError("Google model page does not describe typed-decision output")
+    input_tokens = int(input_limit.group(1).replace(",", ""))
+    output_tokens = int(output_limit.group(1).replace(",", ""))
+    question_limit = int(max_questions.group(1).replace(",", ""))
+
+    question_kinds: list[str] = []
+    answer_fields: list[str] = []
+    in_question_table = False
+    for line in api_markdown.splitlines():
+        if not line.lstrip().startswith("|"):
+            if in_question_table:
+                break
+            continue
+        columns = [column.strip() for column in line.strip().strip("|").split("|")]
+        if len(columns) != 3:
+            continue
+        if "question type" in columns[0].lower() and "returns" in columns[2].lower():
+            in_question_table = True
+            continue
+        if not in_question_table:
+            continue
+        kind = re.search(r"`([^`]+)`", columns[0])
+        if not kind:
+            continue
+        question_kinds.append(kind.group(1))
+        answer_fields.extend(re.findall(r"`([^`]+)`", columns[2]))
+    question_kinds = list(dict.fromkeys(question_kinds))
+    answer_fields = list(dict.fromkeys(answer_fields))
+    if not question_kinds or not answer_fields:
+        raise ValueError("Decisions API docs lack typed question/answer tables")
+    if re.search(r'["\']type["\']\s*:', api_markdown):
+        answer_fields.insert(0, "type")
+
+    endpoint_match = re.search(
+        r"https://[A-Za-z0-9.-]+/v[0-9]+(?:alpha|beta)?/decisions", api_markdown
+    )
+    if not endpoint_match:
+        raise ValueError("Decisions API docs lack a versioned endpoint URL")
+    endpoint = endpoint_match.group(0)
+    endpoint_parts = urlsplit(endpoint)
+    endpoint_path = endpoint_parts.path
+    base_url = endpoint.rsplit("/", 1)[0]
+    api_version_match = re.search(r"/(v[0-9]+(?:alpha|beta)?)/", endpoint_path)
+    if not api_version_match:
+        raise ValueError("could not parse the documented Decisions API version")
+    api_version = api_version_match.group(1)
+
+    api_link = re.search(r"\[Decisions API\]\(([^)]+)\)", model_markdown, re.IGNORECASE)
+    api_source = urljoin(model_url, api_link.group(1)) if api_link else None
+    pricing_match = next(
+        (
+            (heading, section)
+            for heading, section in _markdown_sections(pricing_markdown)
+            if model_id in section and re.search(r"Input price", section, re.IGNORECASE)
+        ),
+        None,
+    )
+    if not pricing_match:
+        raise ValueError("official pricing page has no section for the listed model")
+    pricing_heading, pricing_section = pricing_match
+    input_price = None
+    for table in re.split(r"(?m)^\s*---\s*$", pricing_section):
+        cells = [
+            line.strip()[1:].strip()
+            for line in table.splitlines()
+            if re.match(r"^\s*\*\s+", line)
+        ]
+        if cells and re.match(r"Input price\b", cells[0], re.IGNORECASE):
+            input_price = parse_price(cells[-1])
+            break
+    if input_price is None:
+        raise ValueError("official pricing page has no numeric input price for the model")
+    pricing_anchor = re.search(r'\{%\s*id="([^"]+)"\s*%\}', pricing_heading)
+    pricing_url = f"{pricing_source}#{pricing_anchor.group(1)}" if pricing_anchor else pricing_source
+
+    choice_max = re.search(r"Evaluates\s+\d+\s+to\s+([\d,]+)\s+options", model_markdown, re.IGNORECASE)
+    score_max = re.search(
+        r"Evaluates\s+\d+\s+to\s+([\d,]+)\s+ordered rubric levels",
+        model_markdown,
+        re.IGNORECASE,
+    )
+    checked_at = datetime.now(timezone.utc).date().isoformat()
+    thinking = _documented_capability(model_markdown, "Thinking")
+    function_calling = _documented_capability(model_markdown, "Function calling")
+    structured_outputs = _documented_capability(model_markdown, "Structured outputs")
+    text_generation = _documented_capability(model_markdown, "Text generation")
+    state_shapes = []
+    if re.search(r"\binput\s*=\s*['\"]", api_markdown):
+        state_shapes.append("string")
+    if re.search(r"\binput\s*=\s*\[", api_markdown):
+        state_shapes.append("content_array")
+
+    return {
+        "provider": "google",
+        "model_id": model_id,
+        "display_name": display_name,
+        "context_window": input_tokens,
+        "max_output_tokens": output_tokens,
+        "input_modalities": input_modalities,
+        "output_modalities": ["decision"],
+        "supports_function_calling": function_calling,
+        "supports_json_mode": structured_outputs,
+        "supports_json_schema": structured_outputs,
+        "supports_streaming": None,
+        "supports_vision": "image" in input_modalities,
+        "supports_reasoning": None,
+        "supports_chat_completion": text_generation,
+        "supports_responses_api": None,
+        "supports_reasoning_effort": thinking,
+        "reasoning_effort_values": None,
+        "supports_thinking_budget": thinking,
+        "thinking_budget_values": None,
+        "supports_thinking_level": thinking,
+        "thinking_level_values": None,
+        "thinking_control": None,
+        "supports_anthropic_api": None,
+        "supports_google_api": True,
+        "supports_fim": None,
+        "license_type": "api",
+        "tokenizer_name": "",
+        "knowledge_cutoff": None,
+        "pricing": {
+            "input_per_1m": input_price,
+            "output_per_1m": 0.0 if output_tokens == 0 else None,
+            "currency": "USD",
+        },
+        "deprecated": False,
+        "aliases": [],
+        "extra": {
+            "endpoints": [
+                {
+                    "base_url": base_url,
+                    "protocol": "google-generative-language",
+                    "auth": "api-key",
+                    "source": api_source or model_url,
+                }
+            ],
+            "source": model_url,
+            "pricing_source": pricing_url,
+        },
+        "decision": {
+            "decision": True,
+            "question_kinds": question_kinds,
+            "answer_fields": answer_fields,
+            "returns_probabilities": "probabilities" in answer_fields,
+            "returns_confidence": "confidence" in answer_fields,
+            "calibrated_confidence": None,
+            "parallel_questions": bool(re.search(r"one forward pass", api_markdown, re.IGNORECASE)),
+            "free_form_text": output_tokens > 0,
+            "type_errors_possible": None,
+            "deterministic": None,
+            "state_shapes": state_shapes,
+            "max_state_tokens": None,
+            "max_total_tokens": input_tokens,
+            "output_token_billing": output_tokens > 0,
+            "max_questions": question_limit,
+            "cardinality_max": None,
+            "endpoints": [endpoint],
+            "source_url": api_source,
+            "checked_at": checked_at,
+            "status": "documented",
+            "extra": {
+                "endpoint_protocol": f"google-gemini-decisions-{api_version}",
+                "endpoint_path": endpoint_path,
+                "api_version": api_version,
+                "max_input_tokens": input_tokens,
+                "max_choice_options": int(choice_max.group(1).replace(",", ""))
+                if choice_max
+                else None,
+                "max_score_levels": int(score_max.group(1).replace(",", ""))
+                if score_max
+                else None,
+                "output_tokens": output_tokens,
+            },
+        },
+        "document": {
+            "accepts_file": accepts_pdf,
+            "input_formats": ["pdf"] if accepts_pdf else [],
+            "input_mime_types": ["application/pdf"] if accepts_pdf else [],
+            "source_url": model_url,
+            "checked_at": checked_at,
+            "status": "documented",
+        },
+    }
+
+
+def discover_decision_model(pricing_html: str) -> dict:
+    """Discover the Decisions API model entirely from Google's official docs."""
+    index_markdown = google_docs_markdown(fetch(MODEL_INDEX_SOURCE))
+    model_id, _display_name, model_url = discover_decision_model_index(index_markdown)
+    model_markdown = google_docs_markdown(fetch(model_url))
+    api_link = re.search(r"\[Decisions API\]\(([^)]+)\)", model_markdown, re.IGNORECASE)
+    if not api_link:
+        raise ValueError("official model page does not link to the Decisions API docs")
+    api_markdown = google_docs_markdown(fetch(urljoin(model_url, api_link.group(1))))
+    record = parse_decision_model_docs(
+        index_markdown,
+        model_markdown,
+        api_markdown,
+        google_docs_markdown(pricing_html),
+    )
+    if record["model_id"] != model_id:
+        raise ValueError("discovered model ID changed between official docs pages")
+    return record
 
 
 def template_for(model_id: str) -> dict:
@@ -297,13 +606,27 @@ def main() -> None:
     data = json.loads(OUT.read_text(encoding="utf-8"))
     models: list[dict] = data["models"]
     by_id = {m["model_id"]: m for m in models}
-    google_prices = discover_prices()
-    discovered_extras, discovered_deprecations = discover_metadata(fetch(SOURCE))
+    pricing_html = fetch(SOURCE)
+    decision_model = discover_decision_model(pricing_html)
+    google_prices = discover_prices(pricing_html)
+    discovered_extras, discovered_deprecations = discover_metadata(pricing_html)
 
     updated = 0
     inserted = 0
     specialty = 0
     deprecated_n = 0
+
+
+    decision_model_id = decision_model["model_id"]
+    previous_decision = by_id.get(decision_model_id)
+    if previous_decision is None:
+        models.append(decision_model)
+        by_id[decision_model_id] = decision_model
+        inserted += 1
+    elif previous_decision != decision_model:
+        models[models.index(previous_decision)] = decision_model
+        by_id[decision_model_id] = decision_model
+        updated += 1
 
     # Update existing prices / context
     for mid, (inp, out, ctx) in google_prices.items():

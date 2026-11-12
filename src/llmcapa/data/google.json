@@ -1923,7 +1923,7 @@
         "requires_beta": false,
         "enable_zoom": false,
         "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/computer-use",
-        "checked_at": "2026-11-10"
+        "checked_at": "2026-11-12"
       },
       "extra": {
         "source": "https://ai.google.dev/gemini-api/docs/pricing",
@@ -3850,7 +3850,7 @@
         "requires_beta": false,
         "enable_zoom": false,
         "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/computer-use",
-        "checked_at": "2026-11-10"
+        "checked_at": "2026-11-12"
       }
     },
     {
@@ -3999,7 +3999,7 @@
         "requires_beta": false,
         "enable_zoom": false,
         "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/computer-use",
-        "checked_at": "2026-11-10"
+        "checked_at": "2026-11-12"
       }
     },
     {
@@ -4841,7 +4841,7 @@
         "requires_beta": false,
         "enable_zoom": false,
         "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/computer-use",
-        "checked_at": "2026-11-10"
+        "checked_at": "2026-11-12"
       }
     },
     {
@@ -4921,7 +4921,7 @@
         "requires_beta": false,
         "enable_zoom": false,
         "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/computer-use",
-        "checked_at": "2026-11-10"
+        "checked_at": "2026-11-12"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -5366,6 +5366,122 @@
         ],
         "checked_at": "2026-10-28",
         "status": "inferred"
+      }
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-decision-1",
+      "display_name": "Gemini Decision",
+      "context_window": 262144,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image",
+        "audio",
+        "video"
+      ],
+      "output_modalities": [
+        "decision"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_json_schema": false,
+      "supports_streaming": null,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": false,
+      "reasoning_effort_values": null,
+      "supports_thinking_budget": false,
+      "thinking_budget_values": null,
+      "supports_thinking_level": false,
+      "thinking_level_values": null,
+      "thinking_control": null,
+      "supports_anthropic_api": null,
+      "supports_google_api": true,
+      "supports_fim": null,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "endpoints": [
+          {
+            "base_url": "https://generativelanguage.googleapis.com/v1beta",
+            "protocol": "google-generative-language",
+            "auth": "api-key",
+            "source": "https://aistudio.google.com/docs/decisions-api"
+          }
+        ],
+        "source": "https://aistudio.google.com/docs/models/gemini-decision-1",
+        "pricing_source": "https://aistudio.google.com/docs/pricing#gemini-decision"
+      },
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "noul",
+          "choice",
+          "score"
+        ],
+        "answer_fields": [
+          "type",
+          "noul",
+          "confidence",
+          "choice",
+          "probabilities",
+          "score",
+          "legend"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "calibrated_confidence": null,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": null,
+        "deterministic": null,
+        "state_shapes": [
+          "string",
+          "content_array"
+        ],
+        "max_state_tokens": null,
+        "max_total_tokens": 262144,
+        "output_token_billing": false,
+        "max_questions": 1000,
+        "cardinality_max": null,
+        "endpoints": [
+          "https://generativelanguage.googleapis.com/v1beta/decisions"
+        ],
+        "source_url": "https://aistudio.google.com/docs/decisions-api",
+        "checked_at": "2026-11-12",
+        "status": "documented",
+        "extra": {
+          "endpoint_protocol": "google-gemini-decisions-v1beta",
+          "endpoint_path": "/v1beta/decisions",
+          "api_version": "v1beta",
+          "max_input_tokens": 262144,
+          "max_choice_options": 255,
+          "max_score_levels": 255,
+          "output_tokens": 0
+        }
+      },
+      "document": {
+        "accepts_file": true,
+        "input_formats": [
+          "pdf"
+        ],
+        "input_mime_types": [
+          "application/pdf"
+        ],
+        "source_url": "https://aistudio.google.com/docs/models/gemini-decision-1",
+        "checked_at": "2026-11-12",
+        "status": "documented"
       }
     },
     {

@@ -33,6 +33,28 @@ OPENROUTER_ALPHA_DECISION_MODELS = {
 }
 
 
+def test_google_gemini_decision_model_has_decisions_endpoint_and_metadata():
+    cap = llmcapa.get("gemini-decision-1", provider="google")
+
+    assert cap.provider == "google"
+    assert cap.context_window == 262144
+    assert cap.max_output_tokens == 0
+    assert cap.input_modalities == ["text", "image", "audio", "video"]
+    assert cap.output_modalities == ["decision"]
+    assert cap.supports("decision_output") is True
+    assert cap.supports_chat_completion is False
+    assert cap.decision is not None
+    assert cap.decision.question_kinds == ("noul", "choice", "score")
+    assert cap.decision.max_questions == 1000
+    assert cap.decision.max_total_tokens == 262144
+    assert cap.decision.endpoints == (
+        "https://generativelanguage.googleapis.com/v1beta/decisions",
+    )
+    assert cap.decision.extra["endpoint_protocol"] == "google-gemini-decisions-v1beta"
+    assert cap.document is not None
+    assert cap.document.input_formats == ("pdf",)
+
+
 def test_perplexity_decision_model_has_explicit_endpoint_and_schema_metadata():
     cap = llmcapa.get(PERPLEXITY_DECIDER, provider="perplexity")
 

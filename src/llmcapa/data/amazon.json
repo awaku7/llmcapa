@@ -47,7 +47,7 @@
         "requires_beta": true,
         "enable_zoom": false,
         "source_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/computer-use.html",
-        "checked_at": "2026-11-10",
+        "checked_at": "2026-11-12",
         "beta_header": "computer-use-2025-01-24"
       },
       "extra": {
@@ -105,7 +105,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/computer-use.html",
-        "checked_at": "2026-11-10",
+        "checked_at": "2026-11-12",
         "beta_header": "computer-use-2025-11-24"
       },
       "extra": {
@@ -177,7 +177,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/computer-use.html",
-        "checked_at": "2026-11-10",
+        "checked_at": "2026-11-12",
         "beta_header": "computer-use-2025-11-24"
       },
       "extra": {
@@ -249,7 +249,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/computer-use.html",
-        "checked_at": "2026-11-10",
+        "checked_at": "2026-11-12",
         "beta_header": "computer-use-2025-11-24"
       },
       "extra": {
@@ -366,7 +366,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/computer-use.html",
-        "checked_at": "2026-11-10",
+        "checked_at": "2026-11-12",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -457,7 +457,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/computer-use.html",
-        "checked_at": "2026-11-10",
+        "checked_at": "2026-11-12",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -548,7 +548,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/computer-use.html",
-        "checked_at": "2026-11-10",
+        "checked_at": "2026-11-12",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -603,7 +603,7 @@
         "requires_beta": true,
         "enable_zoom": false,
         "source_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/computer-use.html",
-        "checked_at": "2026-11-10",
+        "checked_at": "2026-11-12",
         "beta_header": "computer-use-2025-01-24"
       },
       "extra": {
@@ -675,7 +675,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/computer-use.html",
-        "checked_at": "2026-11-10",
+        "checked_at": "2026-11-12",
         "beta_header": "computer-use-2025-11-24"
       },
       "extra": {
@@ -783,7 +783,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/computer-use.html",
-        "checked_at": "2026-11-10",
+        "checked_at": "2026-11-12",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -875,7 +875,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/computer-use.html",
-        "checked_at": "2026-11-10",
+        "checked_at": "2026-11-12",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -3282,7 +3282,7 @@
         "requires_beta": true,
         "enable_zoom": false,
         "source_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/computer-use.html",
-        "checked_at": "2026-11-10",
+        "checked_at": "2026-11-12",
         "beta_header": "computer-use-2025-01-24"
       }
     },
@@ -6156,8 +6156,8 @@
         "text"
       ],
       "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": false,
       "supports_chat_completion": true,
@@ -6170,7 +6170,10 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "deprecated": false,
-      "aliases": [],
+      "aliases": [
+        "us.openai.gpt-5.6-cyber",
+        "global.openai.gpt-5.6-cyber"
+      ],
       "license_type": "api",
       "pricing": {
         "input_per_1m": 13.75,
@@ -6182,6 +6185,12 @@
         "bedrock_model_provider": "OpenAI",
         "endpoints": [
           {
+            "base_url": "https://bedrock-runtime.{region}.amazonaws.com",
+            "protocol": "aws-bedrock",
+            "auth": "sigv4",
+            "source": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-openai-gpt-56-cyber.md"
+          },
+          {
             "base_url": "https://bedrock-mantle.{region}.api.aws/openai/v1",
             "protocol": "aws-bedrock-mantle",
             "auth": "bearer",
@@ -6189,7 +6198,8 @@
           }
         ],
         "supported_bedrock_endpoints": [
-          "bedrock-mantle"
+          "bedrock-mantle",
+          "bedrock-runtime"
         ],
         "published_token_pricing_tiers": [
           {
@@ -6960,8 +6970,8 @@
         "text"
       ],
       "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": false,
+      "supports_json_mode": true,
+      "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": false,
       "supports_chat_completion": true,
@@ -6974,7 +6984,10 @@
       "tokenizer_name": "",
       "knowledge_cutoff": null,
       "deprecated": false,
-      "aliases": [],
+      "aliases": [
+        "us.openai.gpt-daybreak-blue-5.6-sol",
+        "global.openai.gpt-daybreak-blue-5.6-sol"
+      ],
       "license_type": "api",
       "pricing": {
         "input_per_1m": 4.4,
@@ -6986,6 +6999,12 @@
         "bedrock_model_provider": "OpenAI",
         "endpoints": [
           {
+            "base_url": "https://bedrock-runtime.{region}.amazonaws.com",
+            "protocol": "aws-bedrock",
+            "auth": "sigv4",
+            "source": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-openai-gpt-daybreak-blue-56-sol.md"
+          },
+          {
             "base_url": "https://bedrock-mantle.{region}.api.aws/openai/v1",
             "protocol": "aws-bedrock-mantle",
             "auth": "bearer",
@@ -6993,7 +7012,8 @@
           }
         ],
         "supported_bedrock_endpoints": [
-          "bedrock-mantle"
+          "bedrock-mantle",
+          "bedrock-runtime"
         ],
         "published_token_pricing_tiers": [
           {
@@ -9230,7 +9250,7 @@
         "requires_beta": false,
         "enable_zoom": true,
         "source_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-anthropic-claude-fable-5-2.html",
-        "checked_at": "2026-11-10"
+        "checked_at": "2026-11-12"
       }
     },
     {
@@ -9297,7 +9317,7 @@
         "requires_beta": false,
         "enable_zoom": true,
         "source_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-anthropic-claude-mythos-5-2.html",
-        "checked_at": "2026-11-10"
+        "checked_at": "2026-11-12"
       }
     }
   ]
