@@ -43,11 +43,11 @@ CREATE TABLE entries (
 @contextmanager
 def override_write_lock(directory):
     """Serialize durable override publication and deletion across processes."""
+    lock_path = directory / ".override-lock.sqlite3"
     try:
-        with closing(sqlite3.connect(directory / ".override-lock.sqlite3")) as conn:
-            with conn:
-                conn.execute("BEGIN IMMEDIATE")
-                yield
+        with closing(sqlite3.connect(lock_path)) as conn, conn:
+            conn.execute("BEGIN IMMEDIATE")
+            yield
     except sqlite3.Error as exc:
         raise OSError("Could not lock persistent catalog overrides") from exc
 
