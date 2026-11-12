@@ -42,9 +42,7 @@ class CatalogIndex:
         self._fallback = None
 
     def _connect(self):
-        return closing(
-            sqlite3.connect(self.database.as_uri() + "?mode=ro", uri=True)
-        )
+        return closing(sqlite3.connect(self.database.as_uri() + "?mode=ro", uri=True))
 
     @classmethod
     def open(cls):
@@ -71,7 +69,8 @@ class CatalogIndex:
                 if conn.execute("PRAGMA user_version").fetchone() != (1,):
                     return None
                 names = {
-                    row[0] for row in conn.execute("SELECT filename FROM catalog_sources")
+                    row[0]
+                    for row in conn.execute("SELECT filename FROM catalog_sources")
                 }
                 if names != sources.keys() or any(
                     entry.stat().st_mtime_ns > cutoff for entry in sources.values()
@@ -168,8 +167,7 @@ class CatalogIndex:
                         if keys_only or table == "aliases":
                             return list(rows)
                         return [
-                            (row[0], self._capability(conn, *row[1:]))
-                            for row in rows
+                            (row[0], self._capability(conn, *row[1:])) for row in rows
                         ]
                 except _READ_ERRORS:
                     pass
@@ -201,10 +199,8 @@ class _Index(Mapping):
         return rows[0][1]
 
     def __iter__(self):
-        return iter(
-            row[0]
-            for row in self.reader.read(self.table, self.provider, keys_only=True)
-        )
+        rows = self.reader.read(self.table, self.provider, keys_only=True)
+        return iter(row[0] for row in rows)
 
     def __len__(self):
         return len(self.reader.read(self.table, self.provider, keys_only=True))
