@@ -643,9 +643,7 @@ def test_warm_cache_runtime_replacement_retains_numeric_tie_order(catalog):
         {"openai"},
         [
             Capability(provider="openai", model_id="cache-first"),
-            Capability(
-                provider="openai", model_id="cache-second", aliases=["tie-1.1"]
-            ),
+            Capability(provider="openai", model_id="cache-second", aliases=["tie-1.1"]),
         ],
     )
     cold = Registry()
@@ -655,9 +653,7 @@ def test_warm_cache_runtime_replacement_retains_numeric_tie_order(catalog):
     assert warm._by_provider["openai"]._user_cache is not None
     for registry in (cold, warm):
         registry.register(
-            Capability(
-                provider="openai", model_id="cache-first", aliases=["tie-1.1"]
-            ),
+            Capability(provider="openai", model_id="cache-first", aliases=["tie-1.1"]),
             overwrite=True,
         )
         assert registry.get("tie-1.2", "openai").model_id == "cache-first"
