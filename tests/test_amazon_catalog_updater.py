@@ -303,4 +303,6 @@ def test_overview_api_matrix_is_parsed_without_endpoint_api_section():
     backfilled = updater._merge_official_model({"pricing": None, "extra": {}}, model)
     assert backfilled["pricing"] == model["pricing"]
     curated = {"pricing": {"input_per_1m": 1.0}, "extra": {}}
-    assert updater._merge_official_model(curated, model)["pricing"] == curated["pricing"]
+    assert (
+        updater._merge_official_model(curated, model)["pricing"] == curated["pricing"]
+    )

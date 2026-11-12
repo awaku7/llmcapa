@@ -275,7 +275,11 @@ def _parse_api_support(markdown: str) -> dict[str, bool]:
         api_names = ("messages", "responses", "chat completions", "converse", "invoke")
         for headers, rows in _markdown_tables(markdown):
             api_index = next(
-                (i for i, header in enumerate(headers) if "apis supported" in header.lower()),
+                (
+                    i
+                    for i, header in enumerate(headers)
+                    if "apis supported" in header.lower()
+                ),
                 None,
             )
             if api_index is None:
@@ -374,7 +378,9 @@ def _parse_token_pricing(markdown: str) -> tuple[dict | None, dict]:
             (
                 i
                 for i, header in enumerate(normalized)
-                if "inference option" in header or "region" in header or header == "tier"
+                if "inference option" in header
+                or "region" in header
+                or header == "tier"
             ),
             None,
         )

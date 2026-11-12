@@ -1,4 +1,5 @@
 """Scrape DeepSeek pricing from the official documentation."""
+
 from __future__ import annotations
 
 import json
@@ -85,6 +86,7 @@ def parse_pricing_text(text: str) -> dict[str, dict]:
     required_prices = model_count * 6
     input_start = model_count * 3
     output_start = model_count * 5
+
     def row(start: int) -> list[float]:
         return (
             prices[start : start + model_count]
@@ -98,12 +100,8 @@ def parse_pricing_text(text: str) -> dict[str, dict]:
     input_prices = row(input_start)
     output_off_peak = row(model_count * 4)
     output_prices = row(output_start)
-    context_match = re.search(
-        r"CONTEXT LENGTH\s+([0-9.]+\s*[KM])", text, re.I
-    )
-    max_output_match = re.search(
-        r"MAX(?:IMUM)?[:\s]+([0-9.]+\s*[KM])", text, re.I
-    )
+    context_match = re.search(r"CONTEXT LENGTH\s+([0-9.]+\s*[KM])", text, re.I)
+    max_output_match = re.search(r"MAX(?:IMUM)?[:\s]+([0-9.]+\s*[KM])", text, re.I)
     versions_match = re.search(
         r"MODEL VERSION\s+([A-Za-z0-9._-]+)\s+([A-Za-z0-9._-]+)",
         text,
@@ -123,9 +121,7 @@ def parse_pricing_text(text: str) -> dict[str, dict]:
         if concurrency_match
         else []
     )
-    legacy_match = re.search(
-        r"legacy names (.*?) are still accepted", normalized, re.I
-    )
+    legacy_match = re.search(r"legacy names (.*?) are still accepted", normalized, re.I)
     legacy_aliases = (
         re.findall(r"\bdeepseek-[a-z0-9]+(?:-[a-z0-9]+)*", legacy_match.group(1))
         if legacy_match
@@ -152,15 +148,19 @@ def parse_pricing_text(text: str) -> dict[str, dict]:
             "version": versions[index] if index < len(versions) else "",
             "concurrency": concurrency[index] if index < len(concurrency) else 0,
             "aliases": legacy_aliases if index == 0 else [],
-            "supports_json_mode": feature_values("Json Output")[index:index + 1] == ["✓"],
-            "supports_function_calling": feature_values("Tool Calls")[index:index + 1] == ["✓"],
-            "supports_responses_api": feature_values("Responses API")[index:index + 1] == ["✓"],
-            "supports_anthropic_api": feature_values("Anthropic API")[index:index + 1] == ["✓"],
+            "supports_json_mode": feature_values("Json Output")[index : index + 1]
+            == ["✓"],
+            "supports_function_calling": feature_values("Tool Calls")[index : index + 1]
+            == ["✓"],
+            "supports_responses_api": feature_values("Responses API")[index : index + 1]
+            == ["✓"],
+            "supports_anthropic_api": feature_values("Anthropic API")[index : index + 1]
+            == ["✓"],
             "supports_fim": (
-                feature_values("FIM Completion（Beta）")[index:index + 1]
+                feature_values("FIM Completion（Beta）")[index : index + 1]
                 not in ([], ["Not supported"])
             ),
-            "supports_vision": feature_values("Vision")[index:index + 1] == ["✓"],
+            "supports_vision": feature_values("Vision")[index : index + 1] == ["✓"],
             "supports_reasoning": supports_reasoning,
         }
     return result

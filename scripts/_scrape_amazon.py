@@ -1,4 +1,5 @@
 """Fetch current Amazon Nova prices from official AWS sources."""
+
 from __future__ import annotations
 
 import gzip
@@ -46,7 +47,10 @@ def fetch_nova_prices() -> dict[str, dict[str, float]]:
     result: dict[str, dict[str, float]] = {}
 
     for table in re.findall(r"<table>(.*?)</table>", page, re.I | re.S):
-        headers = [_plain(v).lower() for v in re.findall(r"<th[^>]*>(.*?)</th>", table, re.I | re.S)]
+        headers = [
+            _plain(v).lower()
+            for v in re.findall(r"<th[^>]*>(.*?)</th>", table, re.I | re.S)
+        ]
         if not headers:
             continue
         input_index = next(
@@ -67,9 +71,7 @@ def fetch_nova_prices() -> dict[str, dict[str, float]]:
                 continue
 
             def cell_price(cell: str) -> float | None:
-                match = re.search(
-                    r"priceOf!bedrock/bedrock!([^!]+)!\*!([0-9]+)", cell
-                )
+                match = re.search(r"priceOf!bedrock/bedrock!([^!]+)!\*!([0-9]+)", cell)
                 if not match:
                     return None
                 key, multiplier = match.groups()

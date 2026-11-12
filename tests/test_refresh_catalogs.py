@@ -101,14 +101,14 @@ def test_preserve_line_endings_keeps_original_catalog_style(
     tmp_path, original_newline, expected_newline
 ):
     path = tmp_path / "catalog.json"
-    path.write_bytes(original_newline.join((b"{", b'  \"models\": []', b"}")))
+    path.write_bytes(original_newline.join((b"{", b'  "models": []', b"}")))
     original = path.read_bytes()
 
     # Simulate a Windows updater writing CRLF regardless of the source file.
-    path.write_bytes(b"{\r\n  \"models\": []\r\n}\r\n")
+    path.write_bytes(b'{\r\n  "models": []\r\n}\r\n')
     refresh.preserve_line_endings(path, original)
 
-    expected = expected_newline.join((b"{", b'  \"models\": []', b"}", b""))
+    expected = expected_newline.join((b"{", b'  "models": []', b"}", b""))
     assert path.read_bytes() == expected
 
 

@@ -25,19 +25,26 @@ def _fetch_markdown(url: str) -> str:
     try:
         return fetch_text(
             url + ".md",
-            headers={"Accept": "text/markdown,text/plain,*/*", "User-Agent": "llmcapa-provider-updater/1.0"},
+            headers={
+                "Accept": "text/markdown,text/plain,*/*",
+                "User-Agent": "llmcapa-provider-updater/1.0",
+            },
             timeout=30,
             max_bytes=4_000_000,
         )
     except (HTTPError, URLError) as exc:
-        raise RuntimeError(f"Writer official documentation fetch failed ({url}): {exc}") from exc
+        raise RuntimeError(
+            f"Writer official documentation fetch failed ({url}): {exc}"
+        ) from exc
 
 
 def fetch_inventory() -> dict[str, str]:
     models = _fetch_markdown(MODELS_SOURCE)
     pricing = _fetch_markdown(PRICING_SOURCE)
     if "API model ID" not in models or "## Base model" not in pricing:
-        raise RuntimeError("Writer public model/pricing docs did not contain their expected model tables")
+        raise RuntimeError(
+            "Writer public model/pricing docs did not contain their expected model tables"
+        )
     return {"models": models, "pricing": pricing}
 
 
@@ -85,21 +92,36 @@ def _model_specs(markdown: str) -> dict[str, dict]:
         if not in_comparison or not line.lstrip().startswith("|"):
             continue
         cells = _cells(line)
-        if cells and cells[0].casefold() == "feature" and any("palmyra" in cell.casefold() for cell in cells[1:]):
+        if (
+            cells
+            and cells[0].casefold() == "feature"
+            and any("palmyra" in cell.casefold() for cell in cells[1:])
+        ):
             header = cells[1:]
             model_names = [_clean(cell) for cell in header]
             continue
         if header is None or len(cells) != len(header) + 1:
             continue
         label = _clean(cells[0]).casefold()
-        if label in {"api model id", "pricing (input)", "pricing (output)", "context window", "max output"}:
+        if label in {
+            "api model id",
+            "pricing (input)",
+            "pricing (output)",
+            "context window",
+            "max output",
+        }:
             spec_rows[label] = cells[1:]
     if not model_names or "api model id" not in spec_rows:
         raise ValueError("Writer public model comparison table had no API model IDs")
     result: dict[str, dict] = {}
-    deprecation = re.search(r"will be deprecated on\s+\*\*(\d{4}-\d{2}-\d{2})\*\*", markdown, re.I)
+    deprecation = re.search(
+        r"will be deprecated on\s+\*\*(\d{4}-\d{2}-\d{2})\*\*", markdown, re.I
+    )
     retirement_date = date.fromisoformat(deprecation.group(1)) if deprecation else None
-    is_deprecated = retirement_date is not None and retirement_date <= datetime.now(timezone.utc).date()
+    is_deprecated = (
+        retirement_date is not None
+        and retirement_date <= datetime.now(timezone.utc).date()
+    )
     for index, cell in enumerate(spec_rows["api model id"]):
         ids = re.findall(r"`([^`]+)`", cell)
         if not ids:
@@ -109,10 +131,17 @@ def _model_specs(markdown: str) -> dict[str, dict]:
             continue
         result[model_id.casefold()] = {
             "model_id": model_id,
-            "display_name": model_names[index] if index < len(model_names) else model_id,
-            "context_window": _token_count(spec_rows.get("context window", [""] * len(model_names))[index]),
-            "max_output_tokens": _token_count(spec_rows.get("max output", [""] * len(model_names))[index]),
-            "deprecated": is_deprecated and model_id.casefold() in {"palmyra-x4", "palmyra-x5"},
+            "display_name": (
+                model_names[index] if index < len(model_names) else model_id
+            ),
+            "context_window": _token_count(
+                spec_rows.get("context window", [""] * len(model_names))[index]
+            ),
+            "max_output_tokens": _token_count(
+                spec_rows.get("max output", [""] * len(model_names))[index]
+            ),
+            "deprecated": is_deprecated
+            and model_id.casefold() in {"palmyra-x4", "palmyra-x5"},
             "input_per_1m": None,
             "output_per_1m": None,
         }
@@ -143,8 +172,14 @@ def _parse_base_model_prices(markdown: str) -> dict[str, tuple[float, float]]:
 
 
 def parse_model_inventory(docs: dict[str, str]) -> list[dict]:
-    if not isinstance(docs, dict) or not isinstance(docs.get("models"), str) or not isinstance(docs.get("pricing"), str):
-        raise ValueError("Writer scraper expects public model and pricing documentation text")
+    if (
+        not isinstance(docs, dict)
+        or not isinstance(docs.get("models"), str)
+        or not isinstance(docs.get("pricing"), str)
+    ):
+        raise ValueError(
+            "Writer scraper expects public model and pricing documentation text"
+        )
     snapshots = _model_specs(docs["models"])
     prices = _parse_base_model_prices(docs["pricing"])
     for key, snapshot in snapshots.items():
@@ -153,7 +188,9 @@ def parse_model_inventory(docs: dict[str, str]) -> list[dict]:
     return sorted(snapshots.values(), key=lambda row: row["model_id"].casefold())
 
 
-def merge_inventory(snapshots: list[dict], previous: list[dict], checked_at: str) -> list[dict]:
+def merge_inventory(
+    snapshots: list[dict], previous: list[dict], checked_at: str
+) -> list[dict]:
     old_by_id = {
         str(row.get("model_id", "")).casefold(): row
         for row in previous
@@ -169,12 +206,17 @@ def merge_inventory(snapshots: list[dict], previous: list[dict], checked_at: str
                 "provider": "writer",
                 "model_id": snapshot["model_id"],
                 "display_name": snapshot["display_name"],
-                "context_window": snapshot["context_window"] or row.get("context_window", 0),
-                "max_output_tokens": snapshot["max_output_tokens"] or row.get("max_output_tokens", 0),
+                "context_window": snapshot["context_window"]
+                or row.get("context_window", 0),
+                "max_output_tokens": snapshot["max_output_tokens"]
+                or row.get("max_output_tokens", 0),
                 "deprecated": snapshot["deprecated"],
             }
         )
-        if snapshot.get("input_per_1m") is not None and snapshot.get("output_per_1m") is not None:
+        if (
+            snapshot.get("input_per_1m") is not None
+            and snapshot.get("output_per_1m") is not None
+        ):
             row["pricing"] = {
                 "input_per_1m": snapshot["input_per_1m"],
                 "output_per_1m": snapshot["output_per_1m"],
@@ -189,7 +231,14 @@ def merge_inventory(snapshots: list[dict], previous: list[dict], checked_at: str
                 "official_spec_refresh": "official_writer_model_docs",
                 "api_base_url": BASE_URL,
                 "not_listed_in_current_docs": False,
-                "endpoints": [{"base_url": BASE_URL, "protocol": "openai-compatible", "auth": "bearer", "source": MODELS_SOURCE}],
+                "endpoints": [
+                    {
+                        "base_url": BASE_URL,
+                        "protocol": "openai-compatible",
+                        "auth": "bearer",
+                        "source": MODELS_SOURCE,
+                    }
+                ],
             }
         )
         row["extra"] = extra
@@ -202,7 +251,12 @@ def merge_inventory(snapshots: list[dict], previous: list[dict], checked_at: str
         if key and key not in seen:
             row = dict(old)
             extra = dict(row.get("extra") or {})
-            extra.update({"official_source_checked_at": checked_at, "not_listed_in_current_docs": True})
+            extra.update(
+                {
+                    "official_source_checked_at": checked_at,
+                    "not_listed_in_current_docs": True,
+                }
+            )
             row["extra"] = extra
             merged.append(row)
     return merged
@@ -213,7 +267,9 @@ def update_catalog(snapshots: list[dict], *, checked_at: str | None = None) -> i
     checked_at = checked_at or datetime.now(timezone.utc).date().isoformat()
     models = merge_inventory(snapshots, data.get("models") or [], checked_at)
     save_json(DATA, {**data, "models": models})
-    print(f"writer.json: refreshed {len(snapshots)} public model IDs; total={len(models)}")
+    print(
+        f"writer.json: refreshed {len(snapshots)} public model IDs; total={len(models)}"
+    )
     return len(snapshots)
 
 

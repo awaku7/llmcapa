@@ -63,9 +63,7 @@ def test_perplexity_decision_model_has_explicit_endpoint_and_schema_metadata():
     assert cap.decision is not None
     assert cap.decision.decision is True
     assert cap.decision.question_kinds == ("noul", "choice", "score")
-    assert cap.decision.endpoints == (
-        "https://api.perplexity.ai/v1/decisions",
-    )
+    assert cap.decision.endpoints == ("https://api.perplexity.ai/v1/decisions",)
     assert cap.decision.extra["endpoint_protocol"] == "perplexity-decisions-v1"
     assert cap.decision.extra["systemone_schema_compatible"] is True
     assert cap.decision.extra["typesafe_sdk_compatibility"] == "not-documented"
@@ -101,13 +99,8 @@ def test_openrouter_decision_routes_have_explicit_gateway_endpoints():
         assert cap.supports("decision_output") is True
         assert cap.decision is not None
         assert cap.decision.decision is True
-        assert cap.decision.endpoints == (
-            "https://openrouter.ai/api/alpha/decisions",
-        )
-        assert (
-            cap.decision.extra["endpoint_protocol"]
-            == "openrouter-alpha-decisions"
-        )
+        assert cap.decision.endpoints == ("https://openrouter.ai/api/alpha/decisions",)
+        assert cap.decision.extra["endpoint_protocol"] == "openrouter-alpha-decisions"
 
 
 def test_openrouter_refresh_retains_curated_decision_route_missing_from_api():
@@ -172,9 +165,7 @@ def test_openrouter_updater_preserves_decision_endpoint_metadata():
     cap = Capability.from_dict(openrouter_updater.map_model(raw))
     assert cap.output_modalities == ["decision"]
     assert cap.decision is not None
-    assert cap.decision.endpoints == (
-        "https://openrouter.ai/api/alpha/decisions",
-    )
+    assert cap.decision.endpoints == ("https://openrouter.ai/api/alpha/decisions",)
     assert cap.decision.extra["upstream_endpoint"] == (
         "https://api.perplexity.ai/v1/decisions"
     )
@@ -192,8 +183,8 @@ def test_together_tev1_is_marked_as_chat_completion_not_decisions_api():
     assert cap.output_modalities == ["decision"]
     assert cap.decision is not None
     assert cap.decision.decision is True
-    assert cap.decision.extra["endpoint_protocol"] == "openai-compatible-chat-completions"
-    assert cap.decision.endpoints == (
-        "https://openrouter.ai/api/v1/chat/completions",
+    assert (
+        cap.decision.extra["endpoint_protocol"] == "openai-compatible-chat-completions"
     )
+    assert cap.decision.endpoints == ("https://openrouter.ai/api/v1/chat/completions",)
     assert cap.decision.extra["systemone_schema_compatible"] is False

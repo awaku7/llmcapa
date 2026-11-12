@@ -6,7 +6,7 @@ from scripts.provider_updates.siliconflow import (
 
 
 def test_extract_model_ids_uses_model_fields_and_supported_lists_only():
-    markdown = '''
+    markdown = """
 # Example
 model = "deepseek-ai/DeepSeek-R1"
 
@@ -20,7 +20,7 @@ model = "deepseek-ai/DeepSeek-R1"
 ## Other details
 * fake/provider-9000
 {"model_id": "props:children:1:props:pageMetadata"}
-'''
+"""
 
     assert extract_model_ids(markdown) == {
         "deepseek-ai/DeepSeek-R1",

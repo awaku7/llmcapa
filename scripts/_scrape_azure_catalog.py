@@ -77,7 +77,9 @@ def _api_item_to_entry(item: dict) -> dict:
         "max_output_tokens": max_out,
         "input_modalities": input_mods,
         "output_modalities": output_mods,
-        "supports_function_calling": props.get("capabilities", {}).get("functionCalling", False),
+        "supports_function_calling": props.get("capabilities", {}).get(
+            "functionCalling", False
+        ),
         "supports_vision": supports_vision,
         "supports_audio_input": supports_audio_input,
         "supports_audio_output": supports_audio_output,
@@ -134,18 +136,18 @@ async def click_until_no_next(page) -> list:
         for item in values:
             all_entries.append(_api_item_to_entry(item))
         print(f"  Page {page_num}: {len(values)} models (total: {len(all_entries)})")
-        await asyncio.sleep(0.5)  # throttle API requests, as the UI requires a click per page
+        await asyncio.sleep(
+            0.5
+        )  # throttle API requests, as the UI requires a click per page
 
     async def ui_state():
-        return await page.evaluate(
-            """() => {
+        return await page.evaluate("""() => {
                 const links = Array.from(document.querySelectorAll('a[href*="/catalog/models/"]'));
                 const names = links.map(a => (a.href || '').replace(/\\/$/, '').split('/').pop());
                 const text = (document.body?.innerText || '').slice(-1000);
                 const match = text.match(/Prev\\s+(\\d+)\\s+Next/);
                 return {page: match ? Number(match[1]) : 0, names};
-            }"""
-        )
+            }""")
 
     async def wait_for_ui_advance(previous_state):
         await page.wait_for_function(
@@ -191,7 +193,8 @@ async def click_until_no_next(page) -> list:
             await next_btn.click()
             clicks += 1
             done, _ = await asyncio.wait(
-                (response_task, ui_task), timeout=16,
+                (response_task, ui_task),
+                timeout=16,
                 return_when=asyncio.FIRST_COMPLETED,
             )
 
@@ -271,8 +274,15 @@ async def fetch_ssr_detail(page, model_name: str) -> dict:
 
     # Extract quick facts
     qf = {}
-    labels = ["Model provider", "Type", "Lifecycle", "Input type",
-              "Output type", "Context window", "Token limits"]
+    labels = [
+        "Model provider",
+        "Type",
+        "Lifecycle",
+        "Input type",
+        "Output type",
+        "Context window",
+        "Token limits",
+    ]
     for i, line in enumerate(lines):
         if line in labels and i + 1 < len(lines):
             qf[line] = lines[i + 1]
@@ -285,7 +295,9 @@ async def fetch_ssr_detail(page, model_name: str) -> dict:
     # Parse token limits
     tok_raw = qf.get("Token limits", "")
     tok_match = re.search(r"([\d,.]+)\s*k", tok_raw, re.I)
-    max_out = int(float(tok_match.group(1).replace(",", "")) * 1000) if tok_match else 2048
+    max_out = (
+        int(float(tok_match.group(1).replace(",", "")) * 1000) if tok_match else 2048
+    )
 
     # Modalities
     input_type = qf.get("Input type", "").lower()

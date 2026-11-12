@@ -108,9 +108,7 @@ def test_anthropic_refresh_repairs_stale_52_records_and_adds_computer_use(
                 "extra": {"curated_note": "preserve"},
             }
         )
-    path.write_text(
-        json.dumps({"models": stale_models}), encoding="utf-8"
-    )
+    path.write_text(json.dumps({"models": stale_models}), encoding="utf-8")
     monkeypatch.setattr(_update_anthropic, "OUT", path)
     monkeypatch.setattr(_update_anthropic, "fetch", lambda _: "official pricing")
     monkeypatch.setattr(

@@ -55,9 +55,7 @@ def _fetch(url: str) -> str:
         with sync_playwright() as playwright:
             browser = playwright.chromium.launch(headless=True)
             try:
-                page = browser.new_page(
-                    user_agent="llmcapa-sarashina-updater/1.0"
-                )
+                page = browser.new_page(user_agent="llmcapa-sarashina-updater/1.0")
                 page.goto(url, wait_until="domcontentloaded", timeout=45_000)
                 page.wait_for_function(
                     "document.body && document.body.innerText.length > 200",

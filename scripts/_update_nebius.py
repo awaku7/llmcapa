@@ -77,8 +77,14 @@ def catalog_to_models(payload: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 continue
             context = flavor.get("max_model_len")
             if not isinstance(context, int) or context < 0:
-                context_k = flavor.get("context_window_k", model.get("context_window_k"))
-                context = int(float(context_k) * 1000) if _number(context_k) is not None else 0
+                context_k = flavor.get(
+                    "context_window_k", model.get("context_window_k")
+                )
+                context = (
+                    int(float(context_k) * 1000)
+                    if _number(context_k) is not None
+                    else 0
+                )
 
             input_price = _number(flavor.get("input_price_per_million_tokens"))
             output_price = _number(flavor.get("output_price_per_million_tokens"))
@@ -98,7 +104,9 @@ def catalog_to_models(payload: list[dict[str, Any]]) -> list[dict[str, Any]]:
             entry = {
                 "provider": "nebius",
                 "model_id": model_id,
-                "display_name": flavor.get("model_name") or model.get("name") or model_id,
+                "display_name": flavor.get("model_name")
+                or model.get("name")
+                or model_id,
                 "context_window": context,
                 # The public catalog reports context length, not a separate output cap.
                 "max_output_tokens": 0,
@@ -106,11 +114,21 @@ def catalog_to_models(payload: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 "output_modalities": list(output_modalities),
                 "supports_chat_completion": is_chat,
                 "supports_streaming": None,
-                "supports_function_calling": True if {"function_calling", "tools"} & set(use_cases + tags) else None,
-                "supports_json_mode": True if {"json mode", "json_mode", "json"} & set(use_cases + tags) else None,
+                "supports_function_calling": (
+                    True
+                    if {"function_calling", "tools"} & set(use_cases + tags)
+                    else None
+                ),
+                "supports_json_mode": (
+                    True
+                    if {"json mode", "json_mode", "json"} & set(use_cases + tags)
+                    else None
+                ),
                 "supports_vision": "image" in input_modalities,
                 "supports_reasoning": True if "reasoning" in use_cases + tags else None,
-                "supports_responses_api": True if "responses_api" in use_cases + tags else None,
+                "supports_responses_api": (
+                    True if "responses_api" in use_cases + tags else None
+                ),
                 "pricing": pricing,
                 "deprecated": False,
                 "aliases": [],
