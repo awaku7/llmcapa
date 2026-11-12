@@ -12,7 +12,7 @@
 4. **Run workflow** を押し、ブランチを **main** にします。
 5. Provider に **all**（初期値）を指定して、**Run workflow** を実行します。
 6. 実行履歴を開いて、各プロバイダーの成功・失敗と生成されたレポートを確認します。
-7. 差分がある場合は新しいPRが作成されます。**Files changed** と **Checks**、レポートを確認してからマージしてください。
+7. 差分がある場合は新しいPRが作成されます。開発者PCでPRのブランチをチェックアウトし、`python scripts/build_catalog_db.py` と `python scripts/build_catalog_db.py --check` を実行して `src/llmcapa/data/catalog.sqlite3` を同じブランチへコミット・プッシュしてください。**Files changed** と **Checks**、レポートを確認してからマージしてください。GitHub ActionsはDBを生成しません。
 
 公式ソースを更新する権限や対応する公開APIがない場合は、そのプロバイダーのみ失敗として報告され、以前のデータは保持されます。すべての公式サイトが常に取得可能とは限りません。
 
@@ -67,3 +67,5 @@ python -m pytest -q tests/test_refresh_catalogs.py
 ```
 
 ローカル実行ではカタログの変更がGitのステージング領域に残ります。PR作成とプッシュは行いません。**作業前に必ずクリーンな作業ツリーを用意してください。**
+
+単体更新（`scripts/_update_all_providers.py --provider openai` など）は成功後にSQLiteを同期します。一括更新（`scripts/refresh_catalogs.py`）は全プロバイダーの更新・検証・ロールバック終了後に1回だけ同期し、DBもステージします。DBの整合性が保たれていれば再生成しません。個別のプロバイダースクリプトを直接実行した場合は、従来どおり `python scripts/build_catalog_db.py` と `python scripts/build_catalog_db.py --check` を実行してください。

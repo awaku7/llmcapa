@@ -1,8 +1,11 @@
 from __future__ import annotations
 
 import importlib
+import subprocess
 import sys
 from pathlib import Path
+
+import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
@@ -175,3 +178,67 @@ def test_all_29_previously_metadata_only_catalogs_have_inventory_updaters():
         == "_update_local_inference_catalogs_from_hf.py"
         for name in static_hf_local
     )
+
+
+@pytest.mark.parametrize(
+    ("codes", "expected", "calls"),
+    [
+        ([0], 0, ["check"]),
+        ([1, 0, 0], 0, ["check", "build", "check"]),
+        ([1, 2], 2, ["check", "build"]),
+        ([1, 0, 3], 3, ["check", "build", "check"]),
+    ],
+)
+def test_sync_catalog_db(monkeypatch, tmp_path, codes, expected, calls):
+    dispatcher = _dispatcher()
+    observed = []
+    results = iter(codes)
+
+    def run(command, **kwargs):
+        assert kwargs["cwd"] == tmp_path
+        assert command[:2] == [
+            sys.executable,
+            str(tmp_path / "scripts" / "build_catalog_db.py"),
+        ]
+        observed.append("check" if "--check" in command else "build")
+        return subprocess.CompletedProcess(command, next(results))
+
+    monkeypatch.setattr(dispatcher.subprocess, "run", run)
+    assert dispatcher.sync_catalog_db(tmp_path) == expected
+    assert observed == calls
+
+
+@pytest.mark.parametrize(
+    ("actions", "skip", "updater_code", "sync_expected"),
+    [
+        (False, False, 0, True),
+        (True, False, 0, False),
+        (False, True, 0, False),
+        (False, False, 7, False),
+    ],
+)
+def test_dispatcher_syncs_only_after_successful_local_update(
+    monkeypatch, actions, skip, updater_code, sync_expected
+):
+    dispatcher = _dispatcher()
+    monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
+    if actions:
+        monkeypatch.setenv("GITHUB_ACTIONS", "true")
+    argv = ["update", "--provider", "openai"]
+    if skip:
+        argv.append("--skip-sqlite")
+    monkeypatch.setattr(sys, "argv", argv)
+    monkeypatch.setattr(
+        dispatcher.subprocess,
+        "run",
+        lambda command, **kwargs: subprocess.CompletedProcess(command, updater_code),
+    )
+    synced = []
+
+    def sync(root):
+        synced.append(root)
+        return 0
+
+    monkeypatch.setattr(dispatcher, "sync_catalog_db", sync)
+    assert dispatcher.main() == updater_code
+    assert bool(synced) == sync_expected

@@ -2,7 +2,7 @@
 
 Provider data must not be bulk-replaced from OpenRouter.  The actual update
 logic lives in provider-specific scripts; this compatibility entry point only
-dispatches to one selected script.
+dispatches to one selected script and synchronizes the local SQLite index.
 
 Examples:
     python scripts/_update_all_providers.py --list
@@ -13,6 +13,7 @@ Examples:
 from __future__ import annotations
 
 import argparse
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -156,10 +157,35 @@ CATALOG_NAME_ALIASES = {
 }
 
 
+def sync_catalog_db(root: Path) -> int:
+    """Rebuild only when the committed SQLite snapshot needs an update."""
+    command = [sys.executable, str(root / "scripts" / "build_catalog_db.py")]
+    checked = subprocess.run(
+        [*command, "--check"],
+        cwd=root,
+        check=False,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+    if checked.returncode == 0:
+        print("SQLite catalog already up to date.", flush=True)
+        return 0
+    print("Rebuilding SQLite catalog...", flush=True)
+    result = subprocess.run(command, cwd=root, check=False)
+    if result.returncode:
+        return result.returncode
+    return subprocess.run([*command, "--check"], cwd=root, check=False).returncode
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--provider", help="one provider key; required unless --list")
     parser.add_argument("--list", action="store_true", help="list provider keys")
+    parser.add_argument(
+        "--skip-sqlite",
+        action="store_true",
+        help="defer SQLite synchronization to the enclosing refresh runner",
+    )
     args = parser.parse_args()
 
     if args.list:
@@ -189,10 +215,14 @@ def main() -> int:
         parser.error(f"provider script not found: {script}")
 
     print(f"Running provider updater: {provider} ({script_name})", flush=True)
-    # No shared catalog rewrite/postprocessor: this process only invokes the
-    # chosen provider's own update script.
+    # Only the chosen provider updater writes JSON.
     command = [sys.executable, str(script), *PROVIDER_ARGS.get(provider, [])]
-    return subprocess.run(command, cwd=ROOT, check=False).returncode
+    result = subprocess.run(command, cwd=ROOT, check=False)
+    if result.returncode:
+        return result.returncode
+    if args.skip_sqlite or os.environ.get("GITHUB_ACTIONS") == "true":
+        return 0
+    return sync_catalog_db(ROOT)
 
 
 if __name__ == "__main__":

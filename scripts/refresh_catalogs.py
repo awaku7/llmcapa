@@ -17,7 +17,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from _update_all_providers import PROVIDER_SCRIPTS
+from _update_all_providers import PROVIDER_SCRIPTS, sync_catalog_db
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "src" / "llmcapa" / "data"
@@ -476,6 +476,7 @@ def validate_staged_catalogs(
     # resume guard itself was just fixed to support this retry.
     resumable_paths = catalog_paths | {
         "scripts/refresh_catalogs.py",
+        "src/llmcapa/data/catalog.sqlite3",
         "scripts/_image_capability_postprocess.py",
         "scripts/_update_amazon.py",
         "scripts/_update_azure_foundry.py",
@@ -523,6 +524,7 @@ def run_provider(
                 str(ROOT / "scripts" / "_update_all_providers.py"),
                 "--provider",
                 provider,
+                "--skip-sqlite",
             ]
             child_env = os.environ.copy()
             # Preserve page-level progress from nested updater subprocesses.
@@ -724,6 +726,16 @@ def refresh(
 
     totals = write_reports(statuses, output_directory)
     print(json.dumps(totals, ensure_ascii=False), flush=True)
+    # Provider updates have now been validated, staged, or rolled back.
+    # Generate once for the final JSON snapshot on the developer PC.
+    if os.environ.get("GITHUB_ACTIONS") != "true":
+        if sync_catalog_db(ROOT):
+            raise RuntimeError("SQLite synchronization failed; JSON updates are staged")
+        subprocess.run(
+            ["git", "add", "--", "src/llmcapa/data/catalog.sqlite3"],
+            cwd=ROOT,
+            check=True,
+        )
     return totals
 
 
@@ -747,7 +759,7 @@ def main() -> int:
             args.output,
             allow_staged_catalogs=args.resume_staged_catalogs,
         )
-    except ValueError as exc:
+    except (RuntimeError, ValueError) as exc:
         parser.error(str(exc))
     # Partial failure is shown explicitly in the report and PR.
     return 1 if not totals["updated"] and not totals["unchanged"] else 0
