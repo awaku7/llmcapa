@@ -28,6 +28,8 @@ class CatalogIndex:
         self._fallback = None
         self._batch_stack = None
         self._batch_connection = None
+        self._batch_metadata = {}
+        self._batch_owners = None
 
     def _connect(self):
         if self._batch_stack is None:
@@ -54,6 +56,8 @@ class CatalogIndex:
                 finally:
                     self._batch_connection = None
                     self._batch_stack = None
+                    self._batch_metadata.clear()
+                    self._batch_owners = None
 
     @classmethod
     def open(cls):
@@ -191,6 +195,51 @@ class CatalogIndex:
                 return [(name,) for name, _ in items]
             return list(items)
 
+    def registration_metadata(self, table, provider):
+        """Load only keys and IDs once per index during bulk registration."""
+        with self._lock:
+            if self._batch_stack is None or self._fallback is not None:
+                return None
+            cache_key = (table, provider)
+            if cache_key not in self._batch_metadata:
+                columns = (
+                    "alias, model_key"
+                    if table == "aliases"
+                    else "model_key, capability_id"
+                )
+                where = " WHERE provider = ?" if provider is not None else ""
+                args = [provider] if provider is not None else []
+                try:
+                    with self._connect() as conn:
+                        self._batch_metadata[cache_key] = dict(
+                            conn.execute(f"SELECT {columns} FROM {table}{where}", args)
+                        )
+                except _READ_ERRORS:
+                    self._json_index(table, provider)
+                    return None
+            return self._batch_metadata[cache_key]
+
+    def registration_provider(self, record_id):
+        """Resolve a flat record's provider without decoding its payload."""
+        with self._lock:
+            if self._fallback is not None:
+                return None
+            cap = self._objects.get(record_id)
+            if cap is not None:
+                return cap.provider
+            if self._batch_owners is None:
+                try:
+                    with self._connect() as conn:
+                        self._batch_owners = dict(
+                            conn.execute("SELECT capability_id, provider FROM models")
+                        )
+                except _READ_ERRORS:
+                    self._json_index("flat_models", None)
+                    return None
+            # A flat-only record may not be in the scoped index. Its caller
+            # must fall back to decoding that individual capability.
+            return self._batch_owners.get(record_id)
+
     def index(self, table, provider=None):
         return CatalogMapping(self, table, provider)
 
@@ -207,6 +256,10 @@ class CatalogMapping(Mapping):
     def __getitem__(self, key):
         if key in self._updates:
             return self._updates[key]
+        if self.table == "aliases":
+            metadata = self.reader.registration_metadata(self.table, self.provider)
+            if metadata is not None:
+                return metadata[key]
         rows = self.reader.read(self.table, self.provider, key=key)
         if not rows:
             raise KeyError(key)
@@ -216,9 +269,28 @@ class CatalogMapping(Mapping):
         self._updates[key] = value
 
     def __contains__(self, key):
-        return key in self._updates or bool(
+        if key in self._updates:
+            return True
+        metadata = self.reader.registration_metadata(self.table, self.provider)
+        if metadata is not None:
+            return key in metadata
+        return bool(
             self.reader.read(self.table, self.provider, key=key, keys_only=True)
         )
+
+    def registered_provider(self, key):
+        """Return the provider for a flat key, including in-memory overrides."""
+        if key in self._updates:
+            return self._updates[key].provider
+        metadata = self.reader.registration_metadata(self.table, self.provider)
+        if metadata is not None:
+            if key not in metadata:
+                return None
+            provider = self.reader.registration_provider(metadata[key])
+            if provider is not None:
+                return provider
+        cap = self.get(key)
+        return cap.provider if cap is not None else None
 
     def setdefault(self, key, default=None):
         try:
