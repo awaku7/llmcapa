@@ -221,7 +221,9 @@ def build() -> list[dict]:
         date_text = re.sub(r",\s*", ", ", deprecated_match.group(1))
         try:
             deprecation_date = (
-                datetime.strptime(date_text, "%B %d, %Y").date().isoformat()
+                datetime.strptime(f"{date_text} 00:00 +0000", "%B %d, %Y %H:%M %z")
+                .date()
+                .isoformat()
             )
         except ValueError:
             pass

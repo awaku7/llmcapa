@@ -115,7 +115,7 @@ def _model_specs(markdown: str) -> dict[str, dict]:
         raise ValueError("Writer public model comparison table had no API model IDs")
     result: dict[str, dict] = {}
     deprecation = re.search(
-        r"will be deprecated on\s+\*\*(\d{4}-\d{2}-\d{2})\*\*", markdown, re.I
+        r"will be deprecated on\s+\*\*(\d{4}-\d{2}-\d{2})\*\*", markdown, re.IGNORECASE
     )
     retirement_date = date.fromisoformat(deprecation.group(1)) if deprecation else None
     is_deprecated = (
@@ -177,7 +177,7 @@ def parse_model_inventory(docs: dict[str, str]) -> list[dict]:
         or not isinstance(docs.get("models"), str)
         or not isinstance(docs.get("pricing"), str)
     ):
-        raise ValueError(
+        raise TypeError(
             "Writer scraper expects public model and pricing documentation text"
         )
     snapshots = _model_specs(docs["models"])

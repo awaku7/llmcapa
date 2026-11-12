@@ -15,11 +15,11 @@ def fetch_qwen_catalog() -> dict[str, dict]:
         page = html.unescape(response.read().decode("utf-8", errors="replace"))
 
     result: dict[str, dict] = {}
-    for raw_row in re.findall(r"<tr[^>]*>(.*?)</tr>", page, re.I | re.S):
-        cells = re.findall(r"<td[^>]*>(.*?)</td>", raw_row, re.I | re.S)
+    for raw_row in re.findall(r"<tr[^>]*>(.*?)</tr>", page, re.IGNORECASE | re.DOTALL):
+        cells = re.findall(r"<td[^>]*>(.*?)</td>", raw_row, re.IGNORECASE | re.DOTALL)
         if len(cells) < 5:
             continue
-        model_match = re.search(r"\bqwen[a-z0-9][a-z0-9._-]*", cells[0], re.I)
+        model_match = re.search(r"\bqwen[a-z0-9][a-z0-9._-]*", cells[0], re.IGNORECASE)
         if not model_match:
             continue
         model_id = model_match.group(0).lower()
@@ -34,7 +34,7 @@ def fetch_qwen_catalog() -> dict[str, dict]:
             continue
         sizes = []
         for value, unit in re.findall(
-            r"(?:≤|<)\s*([0-9]+(?:\.[0-9]+)?)\s*([KM])", raw_joined, re.I
+            r"(?:≤|<)\s*([0-9]+(?:\.[0-9]+)?)\s*([KM])", raw_joined, re.IGNORECASE
         ):
             sizes.append(float(value) * (1_000 if unit.upper() == "K" else 1_000_000))
         result[model_id] = {

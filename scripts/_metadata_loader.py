@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import json
-from functools import lru_cache
+from functools import cache
 from pathlib import Path
 from typing import Any
 
@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parent
 METADATA = ROOT / "metadata"
 
 
-@lru_cache(maxsize=None)
+@cache
 def load_overrides(name: str) -> dict[tuple[str, str], dict[str, Any]]:
     """Load ``provider::model_id`` metadata overrides from a JSON file."""
     path = METADATA / name

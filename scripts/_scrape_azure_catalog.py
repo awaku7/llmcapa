@@ -289,12 +289,12 @@ async def fetch_ssr_detail(page, model_name: str) -> dict:
 
     # Parse context window (e.g. "400k" -> 400000)
     ctx_raw = qf.get("Context window", "")
-    ctx_match = re.search(r"([\d,.]+)\s*k", ctx_raw, re.I)
+    ctx_match = re.search(r"([\d,.]+)\s*k", ctx_raw, re.IGNORECASE)
     ctx = int(float(ctx_match.group(1).replace(",", "")) * 1000) if ctx_match else 0
 
     # Parse token limits
     tok_raw = qf.get("Token limits", "")
-    tok_match = re.search(r"([\d,.]+)\s*k", tok_raw, re.I)
+    tok_match = re.search(r"([\d,.]+)\s*k", tok_raw, re.IGNORECASE)
     max_out = (
         int(float(tok_match.group(1).replace(",", "")) * 1000) if tok_match else 2048
     )
@@ -404,8 +404,8 @@ async def main():
             else:
                 proj_root = Path(__file__).resolve().parent.parent
                 out_path = proj_root / "src" / "llmcapa" / "data" / "azure_foundry.json"
-            with open(out_path, "w", encoding="utf-8") as f:
-                json.dump(output, f, ensure_ascii=False, indent=2)
+            text = json.dumps(output, ensure_ascii=False, indent=2)
+            await asyncio.to_thread(out_path.write_text, text, encoding="utf-8")
             print(f"  Saved to {out_path}")
 
         await browser.close()

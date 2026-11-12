@@ -49,7 +49,7 @@ def fetch_catalog() -> Any:
     with urllib.request.urlopen(request, timeout=30) as response:
         payload = json.loads(response.read().decode("utf-8"))
     if not isinstance(payload, list):
-        raise ValueError("Nebius public model catalog must be a JSON list")
+        raise TypeError("Nebius public model catalog must be a JSON list")
     return payload
 
 

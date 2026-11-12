@@ -1,6 +1,8 @@
 """Scrape remaining providers from correct official URLs."""
 
-import sys, json, traceback
+import json
+import sys
+import traceback
 
 try:
     from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
@@ -76,7 +78,7 @@ try:
 
         browser.close()
         print(json.dumps(results, ensure_ascii=False))
-except Exception as e:
+except Exception as e:  # noqa: BLE001 - emit failures as structured CLI output
     print(
         json.dumps(
             {"error": str(e), "traceback": traceback.format_exc()}, ensure_ascii=False

@@ -15,7 +15,6 @@ Usage:
 from __future__ import annotations
 
 import html as htmlmod
-import json
 import re
 import time
 from pathlib import Path
@@ -152,7 +151,7 @@ def extract_card(slug, body):
     ip = op = cache_p = None
     unit = None
     hi = body.find("<h1")
-    fi = body.find("FEATURES", hi if hi >= 0 else 0)
+    fi = body.find("FEATURES", max(hi, 0))
     card_html = body[hi:fi] if hi >= 0 and fi > hi else body[:250000]
     pipe = re.sub(r"<[^>]+>", "|", card_html)
     pipe = re.sub(r"\|+", "|", pipe)
@@ -160,7 +159,6 @@ def extract_card(slug, body):
         r"\$\|([0-9]+(?:\.[0-9]+)?)(?:\|([^|$]{0,40}?))?\|/([^|$]{0,40})", pipe
     )
     price_vals = [float(v) for v, _, _ in triples]
-    price_units = [u for _, _, u in triples]
     m_tokens_unlabeled: list[float] = []
     min_p = page_p = None
     for v, label, u in triples:
@@ -246,16 +244,16 @@ def extract_card(slug, body):
             status = "Retired"
 
     hi2 = body.find("<h1")
-    feat0 = body.find("FEATURES", hi2 if hi2 >= 0 else 0)
-    feat1 = body.find("Other Models", feat0 if feat0 >= 0 else 0)
+    feat0 = body.find("FEATURES", max(hi2, 0))
+    feat1 = body.find("Other Models", max(feat0, 0))
     if feat0 >= 0 and feat1 > feat0:
         feat_region = body[feat0:feat1]
     else:
         feat_region = body[hi2 : hi2 + 250000] if hi2 >= 0 else body[:250000]
-    present = set(
+    present = {
         htmlmod.unescape(x).strip()
         for x in re.findall(r'LinkItem_title__ZRXu4">([^<]+)</span>', feat_region)
-    )
+    }
     feats = {name: (name in present) for name in FEATURE_NAMES}
     if not present:
         feats = dict.fromkeys(FEATURE_NAMES)
@@ -388,7 +386,7 @@ def main():
                 .loads(OUT.read_text(encoding="utf-8"))
                 .get("models", {})
             )
-        except Exception:
+        except (OSError, ValueError, TypeError, AttributeError):
             prev = {}
     print("overview...", flush=True)
     ov_body = fetch(OVERVIEW)
@@ -434,7 +432,7 @@ def main():
     print(f"overview slugs={len(slugs)}", flush=True)
     for s in slugs:
         print(" ", s, flush=True)
-    ordered = list(dict.fromkeys(slugs + [s for s in prev.keys() if s not in slugs]))
+    ordered = list(dict.fromkeys(slugs + [s for s in prev if s not in slugs]))
     results = {}
     errors = []
     for i, slug in enumerate(ordered, 1):
@@ -448,7 +446,7 @@ def main():
                 f"  {data.get('h1')} code={data.get('primaryCode')} ctx={data.get('ctx_k')} in={data.get('input_price')} out={data.get('output_price')} status={data.get('status')} dep={data.get('deprecation_date')} ret={data.get('retirement_date')} 404={data.get('is404')}",
                 flush=True,
             )
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001 - retain per-model errors and continue
             errors.append({"slug": slug, "error": str(e)})
             print(f"  ERR {e}", flush=True)
         if i % 8 == 0:

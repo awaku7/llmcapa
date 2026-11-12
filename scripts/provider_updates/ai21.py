@@ -39,7 +39,7 @@ def parse_model_ids(markdown: str) -> list[str]:
     ids: dict[str, str] = {}
     in_details = False
     for line in markdown.splitlines():
-        if re.match(r"^##\s+Model Details\s*$", line, re.I):
+        if re.match(r"^##\s+Model Details\s*$", line, re.IGNORECASE):
             in_details = True
             continue
         if in_details and re.match(r"^##\s+", line):
@@ -57,7 +57,9 @@ def parse_model_ids(markdown: str) -> list[str]:
     if versioning:
         for line in versioning.group(1).splitlines():
             match = re.search(
-                r"`([^`]+)`\s+(?:currently\s+)?points to\s+`([^`]+)`", line, re.I
+                r"`([^`]+)`\s+(?:currently\s+)?points to\s+`([^`]+)`",
+                line,
+                re.IGNORECASE,
             )
             if match:
                 for model_id in match.groups():

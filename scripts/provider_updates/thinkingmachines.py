@@ -37,7 +37,7 @@ def _cells(line: str) -> list[str]:
 
 
 def _context(value: str) -> int:
-    match = re.search(r"(\d+(?:\.\d+)?)\s*([KM])?", value, re.I)
+    match = re.search(r"(\d+(?:\.\d+)?)\s*([KM])?", value, re.IGNORECASE)
     if not match:
         return 0
     amount = float(match.group(1))
@@ -140,7 +140,9 @@ def parse_model_inventory(markdown: str) -> list[dict]:
             ),
             "model_type": model_type or previous.get("model_type", ""),
             "inventory_section": section,
-            "deprecated": bool(re.search(r"retir(?:e|ing|ed)", cells[name_index], re.I))
+            "deprecated": bool(
+                re.search(r"retir(?:e|ing|ed)", cells[name_index], re.IGNORECASE)
+            )
             or previous.get("deprecated", False),
         }
     if not rows:

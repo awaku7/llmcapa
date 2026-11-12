@@ -48,7 +48,7 @@ def _model_id(label: str) -> str:
 
 def _price(value: str) -> float | None:
     cleaned = value.replace("\\$", "$").strip()
-    if re.search(r"\bfree\b", cleaned, re.I):
+    if re.search(r"\bfree\b", cleaned, re.IGNORECASE):
         return 0.0
     match = re.search(r"\$\s*([\d,]+(?:\.\d+)?)", cleaned)
     if not match:

@@ -65,7 +65,7 @@ def parse_pricing_text(text: str) -> dict[str, dict]:
         match = re.search(
             rf"{re.escape(label)}\s+(.*?)(?=(?:{labels})|$)",
             feature_text,
-            re.I,
+            re.IGNORECASE,
         )
         return (
             re.findall(r"✓|Not supported|Non-thinking mode only", match.group(1))
@@ -100,35 +100,39 @@ def parse_pricing_text(text: str) -> dict[str, dict]:
     input_prices = row(input_start)
     output_off_peak = row(model_count * 4)
     output_prices = row(output_start)
-    context_match = re.search(r"CONTEXT LENGTH\s+([0-9.]+\s*[KM])", text, re.I)
-    max_output_match = re.search(r"MAX(?:IMUM)?[:\s]+([0-9.]+\s*[KM])", text, re.I)
+    context_match = re.search(r"CONTEXT LENGTH\s+([0-9.]+\s*[KM])", text, re.IGNORECASE)
+    max_output_match = re.search(
+        r"MAX(?:IMUM)?[:\s]+([0-9.]+\s*[KM])", text, re.IGNORECASE
+    )
     versions_match = re.search(
         r"MODEL VERSION\s+([A-Za-z0-9._-]+)\s+([A-Za-z0-9._-]+)",
         text,
-        re.I,
+        re.IGNORECASE,
     )
     versions = list(versions_match.groups()) if versions_match else []
     concurrency_text = re.sub(
-        r"Concurrency Limit\s*\([^)]*\)", "Concurrency Limit", text, flags=re.I
+        r"Concurrency Limit\s*\([^)]*\)", "Concurrency Limit", text, flags=re.IGNORECASE
     )
     concurrency_match = re.search(
         r"Concurrency Limit[^0-9]*([0-9]+)[^0-9]+([0-9]+)",
         concurrency_text,
-        re.I,
+        re.IGNORECASE,
     )
     concurrency = (
         [int(value) for value in concurrency_match.groups()]
         if concurrency_match
         else []
     )
-    legacy_match = re.search(r"legacy names (.*?) are still accepted", normalized, re.I)
+    legacy_match = re.search(
+        r"legacy names (.*?) are still accepted", normalized, re.IGNORECASE
+    )
     legacy_aliases = (
         re.findall(r"\bdeepseek-[a-z0-9]+(?:-[a-z0-9]+)*", legacy_match.group(1))
         if legacy_match
         else []
     )
     supports_reasoning = bool(
-        re.search(r"THINKING MODE .*?Supports both", normalized, re.I)
+        re.search(r"THINKING MODE .*?Supports both", normalized, re.IGNORECASE)
     )
     result: dict[str, dict] = {}
     for index, model_id in enumerate(model_ids):
@@ -174,7 +178,7 @@ def fetch_official_text(url: str) -> str:
             text = _html_to_text(response.read().decode("utf-8", errors="replace"))
         if text.strip():
             return text
-    except Exception:
+    except Exception:  # noqa: BLE001, S110 - try browser fallback after fetch failure
         pass
 
     if sync_playwright is None:
@@ -210,10 +214,14 @@ def scrape_pricing() -> dict[str, dict]:
 
     thinking_text = re.sub(r"\s+", " ", fetch_official_text(THINKING_URL))
     effort_match = re.search(
-        r"reasoning_effort[^a-z]+(low/high/max)", thinking_text, re.I
+        r"reasoning_effort[^a-z]+(low/high/max)", thinking_text, re.IGNORECASE
     )
     effort_values = (
-        list(dict.fromkeys(re.findall(r"low|high|max", effort_match.group(1), re.I)))
+        list(
+            dict.fromkeys(
+                re.findall(r"low|high|max", effort_match.group(1), re.IGNORECASE)
+            )
+        )
         if effort_match
         else []
     )
@@ -235,7 +243,7 @@ if __name__ == "__main__":
                 ensure_ascii=False,
             )
         )
-    except Exception as exc:
+    except Exception as exc:  # noqa: BLE001 - serialize scraper failures for CLI use
         print(
             json.dumps(
                 {"error": str(exc), "traceback": traceback.format_exc()},

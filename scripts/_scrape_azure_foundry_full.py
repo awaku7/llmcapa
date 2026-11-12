@@ -223,7 +223,7 @@ async def scrape_pricing(page) -> dict:
             out[key] = data
             ntab = len(data.get("tables") or [])
             print(f"    -> tables={ntab} body_len={data.get('body_len')}")
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001 - continue scraping remaining pages
             print(f"    ERROR {e}")
             out[key] = {"error": str(e), "url": url}
     return out
@@ -238,7 +238,7 @@ async def apply_chat_filter(page) -> None:
         if await hdr.count():
             await hdr.click(timeout=3000)
             await page.wait_for_timeout(800)
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - best-effort legacy UI helper
         print(f"  filter expand warn: {e}")
 
     # Try checkbox / option for Chat completion

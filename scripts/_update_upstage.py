@@ -28,15 +28,15 @@ def parse_official_model_page(text: str) -> dict:
         match = re.search(
             rf"{re.escape(label)}\s+Price\s+\$([0-9]+(?:\.[0-9]+)?)",
             normalized,
-            re.I,
+            re.IGNORECASE,
         )
         if not match:
             raise RuntimeError(f"Upstage page missing {label} price")
         return float(match.group(1))
 
-    context = re.search(r"(\d+)K context length", normalized, re.I)
-    max_output = re.search(r"Max output tokens\s+(\d+)K", normalized, re.I)
-    version = re.search(r"Versions\s+(solar-[a-z0-9-]+)", normalized, re.I)
+    context = re.search(r"(\d+)K context length", normalized, re.IGNORECASE)
+    max_output = re.search(r"Max output tokens\s+(\d+)K", normalized, re.IGNORECASE)
+    version = re.search(r"Versions\s+(solar-[a-z0-9-]+)", normalized, re.IGNORECASE)
     cutoff = re.search(r"([A-Z][a-z]{2},\s*\d{4}) training data cut-off", normalized)
     if not context or not max_output or not version:
         raise RuntimeError("Upstage official model page is missing required metadata")
