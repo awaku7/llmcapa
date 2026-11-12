@@ -119,6 +119,9 @@ def test_resume_accepts_only_explicitly_staged_catalog_changes():
 
     refresh.validate_staged_catalogs(staged_catalog, allow_staged_catalogs=True)
     refresh.validate_staged_catalogs(
+        {"src/llmcapa/data/catalog.sqlite3"}, allow_staged_catalogs=True
+    )
+    refresh.validate_staged_catalogs(
         {"scripts/refresh_catalogs.py"}, allow_staged_catalogs=True
     )
     refresh.validate_staged_catalogs(
@@ -797,3 +800,38 @@ def test_hf_legacy_output_placeholder_migrates_to_unknown():
 
     assert refresh.preserve_known_capabilities(previous, updated) == 0
     refresh.validate_refreshed_catalog(previous, updated)
+
+
+@pytest.mark.parametrize("actions", [False, True])
+def test_refresh_syncs_sqlite_once_after_provider_updates(
+    monkeypatch, tmp_path, actions
+):
+    monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
+    if actions:
+        monkeypatch.setenv("GITHUB_ACTIONS", "true")
+    monkeypatch.setattr(refresh, "ROOT", tmp_path)
+    monkeypatch.setattr(refresh, "DATA_DIR", tmp_path)
+    monkeypatch.setattr(refresh, "PROVIDER_SCRIPTS", {"a": "a.py", "b": "b.py"})
+    events = []
+
+    def run(command, **kwargs):
+        if command[1] == "add":
+            events.append("stage-db")
+            assert command[-1] == "src/llmcapa/data/catalog.sqlite3"
+        return subprocess.CompletedProcess(command, 0, stdout=b"")
+
+    def update(provider, **kwargs):
+        events.append(provider)
+        return {"provider": provider, "status": "updated"}
+
+    def sync(root):
+        assert root == tmp_path
+        events.append("sync-db")
+        return 0
+
+    monkeypatch.setattr(refresh.subprocess, "run", run)
+    monkeypatch.setattr(refresh, "run_provider", update)
+    monkeypatch.setattr(refresh, "sync_catalog_db", sync)
+    refresh.refresh("all", 10, tmp_path / "report")
+    expected = ["a", "b"] if actions else ["a", "b", "sync-db", "stage-db"]
+    assert events == expected
