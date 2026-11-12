@@ -488,3 +488,15 @@ Modellix は LLM ゲートウェイと画像・動画・音声のメディア AP
 同じくローカル推論バックエンドの `vllm.json` と `lmstudio.json` はHugging Faceモデル一覧から生成し、Responses APIや構造化出力など各サーバー固有のAPI機能を生成タスクごとに上書きします。ツール呼び出しなどモデルのテンプレートに依存する機能は、バックエンドがAPIを提供するだけでは対応扱いにしません。カタログへの掲載は、モデルが任意のサーバーバージョンやハードウェアで実行できることを保証しません。
 
 更新時の参照先は `https://docs.modellix.ai/llms.txt`、`https://www.modellix.ai/llm`、および Modellix の公式モデルドキュメントです。OpenRouter のデータを Modellix カタログへ流用してはなりません。メディアモデルはトークン系の `context_window` / `pricing` が提供されない場合があるため、未確認値は推測で補完せず `0` または `null` とし、モダリティと公式ドキュメントURLを `extra` に記録します。
+
+## SQLite配布用インデックス
+
+通常のwheelビルドでは、Hatchのビルドフックが同梱JSONから
+`llmcapa/data/catalog.sqlite3` を生成してwheelに追加します。
+JSONは正本として保持し、既存の更新スクリプトは変更しません。
+生成DBは `build/llmcapa-catalog/` に置き、Gitへコミットしません。
+ユーザー環境のGitHubキャッシュ・永続上書き・OpenRouterキャッシュは生成対象外です。
+既存レジストリと同じプロバイダー別・flat・エイリアスの優先順位を保存します。
+CIではwheelへの同梱、SQLiteの整合性、代表モデルの存在を確認します。
+この段階では実行時検索は従来のJSONを使用します。SQLite検索への切り替えと
+実行時JSON更新との同期は別の変更で実装します。

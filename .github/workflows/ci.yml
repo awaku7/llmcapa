@@ -61,6 +61,25 @@ jobs:
         run: |
           set -o pipefail
           python -m build 2>&1 | tee build.log
+      - name: Verify bundled SQLite catalog
+        run: |
+          python -m pip install --no-deps dist/*.whl
+          python - <<'PY'
+          import sqlite3
+          from importlib import resources
+
+          database = resources.files("llmcapa.data") / "catalog.sqlite3"
+          with sqlite3.connect(database) as connection:
+              assert connection.execute("PRAGMA user_version").fetchone() == (1,)
+              assert connection.execute("PRAGMA integrity_check").fetchone() == ("ok",)
+              assert connection.execute("PRAGMA foreign_key_check").fetchall() == []
+              assert connection.execute(
+                  "SELECT 1 FROM models WHERE provider = ? AND model_key = ?",
+                  ("openai", "gpt-4o"),
+              ).fetchone() == (1,)
+              print("Catalog bytes:", database.stat().st_size)
+              print("Provider records:", connection.execute("SELECT count(*) FROM models").fetchone()[0])
+          PY
       - name: Upload quality diagnostics
         if: failure()
         uses: actions/upload-artifact@v4
