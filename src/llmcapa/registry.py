@@ -24,6 +24,7 @@ from urllib.error import HTTPError
 from urllib.parse import quote
 
 from ._catalog_index import CatalogIndex, CatalogMapping, parse_numeric_name
+from ._temporary_cache import DAY, cleanup_temporary_caches, write_temporary_cache
 from .hf_overlay import expand_hf_overlay, is_hf_overlay
 from .models import Capability
 
@@ -212,6 +213,7 @@ class Registry:
             self._load_bundled()
 
     def _load_bundled(self) -> None:
+        cleanup_temporary_caches(Path.home() / ".llmcapa")
         if not self._try_load_sqlite():
             self._load_bundled_files()
 
@@ -755,14 +757,12 @@ class Registry:
             os.makedirs(cache_dir, exist_ok=True)
             cache_file = os.path.join(cache_dir, "openrouter_cache.json")
 
-            if os.path.exists(cache_file):
-                mtime = os.path.getmtime(cache_file)
-                if time.time() - mtime < cache_ttl:
-                    try:
-                        with open(cache_file, "r", encoding="utf-8") as f:
-                            records = json.load(f)
-                    except Exception:  # noqa: BLE001, S110
-                        pass
+            try:
+                if time.time() - os.path.getmtime(cache_file) < cache_ttl:
+                    with open(cache_file, "r", encoding="utf-8") as f:
+                        records = json.load(f)
+            except Exception:  # noqa: BLE001, S110
+                pass
 
         if not records:
             if progress_callback:
@@ -795,8 +795,9 @@ class Registry:
             os.makedirs(cache_dir, exist_ok=True)
             cache_file = os.path.join(cache_dir, "openrouter_cache.json")
             try:
-                with open(cache_file, "w", encoding="utf-8") as f:
-                    json.dump(records, f, ensure_ascii=False, indent=2)
+                write_temporary_cache(
+                    Path(cache_dir), Path(cache_file), records, max(DAY, cache_ttl)
+                )
             except Exception:  # noqa: BLE001, S110
                 pass
 
@@ -958,20 +959,18 @@ class Registry:
                 cache_dir, f"huggingface_all_tasks_cache_{cache_suffix}.json"
             )
 
-            if os.path.exists(cache_file):
-                mtime = os.path.getmtime(cache_file)
-                if time.time() - mtime < cache_ttl:
-                    try:
-                        with open(cache_file, "r", encoding="utf-8") as f:
-                            cache_data = json.load(f)
-                        if (
-                            isinstance(cache_data, dict)
-                            and cache_data.get("limit") == limit
-                            and isinstance(cache_data.get("models"), list)
-                        ):
-                            records = cache_data["models"]
-                    except Exception:  # noqa: BLE001, S110
-                        pass
+            try:
+                if time.time() - os.path.getmtime(cache_file) < cache_ttl:
+                    with open(cache_file, "r", encoding="utf-8") as f:
+                        cache_data = json.load(f)
+                    if (
+                        isinstance(cache_data, dict)
+                        and cache_data.get("limit") == limit
+                        and isinstance(cache_data.get("models"), list)
+                    ):
+                        records = cache_data["models"]
+            except Exception:  # noqa: BLE001, S110
+                pass
 
         if not records:
             ctx = ssl._create_unverified_context()
@@ -1059,13 +1058,12 @@ class Registry:
 
             if cache_file and records:
                 try:
-                    with open(cache_file, "w", encoding="utf-8") as f:
-                        json.dump(
-                            {"limit": limit, "models": records},
-                            f,
-                            ensure_ascii=False,
-                            indent=2,
-                        )
+                    write_temporary_cache(
+                        Path(cache_dir),
+                        Path(cache_file),
+                        {"limit": limit, "models": records},
+                        max(0, cache_ttl),
+                    )
                 except Exception:  # noqa: BLE001, S110
                     pass
         elif progress_callback:
@@ -1450,17 +1448,15 @@ class Registry:
 
         if cached_files is None:
             try:
-                cache_path.parent.mkdir(parents=True, exist_ok=True)
-                cache_path.write_text(
-                    json.dumps(
-                        {
-                            "ref": ref,
-                            "providers": sorted(target_providers),
-                            "files": downloaded_files,
-                        },
-                        ensure_ascii=False,
-                    ),
-                    encoding="utf-8",
+                write_temporary_cache(
+                    cache_path.parent.parent,
+                    cache_path,
+                    {
+                        "ref": ref,
+                        "providers": sorted(target_providers),
+                        "files": downloaded_files,
+                    },
+                    max(DAY, cache_ttl),
                 )
             except OSError:
                 pass
