@@ -281,6 +281,9 @@ def test_vllm_catalog_uses_static_huggingface_metadata():
 
 def test_dynamic_huggingface_fetch_queries_all_pipeline_tasks(monkeypatch):
     registry = Registry()
+    # This test exercises the mocked remote fetch only; do not load every
+    # bundled catalog just to fetch into a fresh registry.
+    registry._loaded = True
     requests_seen = []
     payload = json.dumps(
         [
@@ -324,6 +327,8 @@ def test_dynamic_huggingface_fetch_queries_all_pipeline_tasks(monkeypatch):
 
 def test_dynamic_huggingface_fetch_follows_next_links_by_default(monkeypatch):
     registry = Registry()
+    # Keep the test isolated from the unrelated bundled catalog snapshots.
+    registry._loaded = True
     requests_seen = []
     progress = []
     next_url = (
@@ -374,6 +379,8 @@ def test_dynamic_huggingface_fetch_follows_next_links_by_default(monkeypatch):
 
 def test_dynamic_huggingface_retries_rate_limits_with_exponential_backoff(monkeypatch):
     registry = Registry()
+    # Keep the test isolated from the unrelated bundled catalog snapshots.
+    registry._loaded = True
     progress = []
     sleeps = []
     attempts = []
