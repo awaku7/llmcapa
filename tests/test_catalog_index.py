@@ -327,17 +327,14 @@ def test_large_persistent_override_avoids_decoding_bundled_records(
     assert not registry._catalog_index._objects
 
 
-def test_registration_metadata_preserves_mutated_provider(catalog):
+def test_registration_metadata_preserves_flat_owner(catalog):
     registry = Registry()
     original = registry.get("gpt-demo-1.2")
-    original.provider = "custom"
     index = registry._catalog_index
     assert index is not None
     with index.batch():
         registry._register_refreshed_catalog_record(
-            Capability(
-                provider="openai", model_id="gpt-demo-1.2", context_window=789
-            )
+            Capability(provider="openrouter", model_id="gpt-demo-1.2", context_window=789)
         )
     assert registry.get("gpt-demo-1.2") is original
-    assert registry.get("gpt-demo-1.2", "openai").context_window == 789
+    assert registry.get("gpt-demo-1.2", "openrouter").context_window == 789
