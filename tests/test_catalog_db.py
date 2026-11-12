@@ -9,6 +9,7 @@ import pytest
 
 from llmcapa import Capability
 from llmcapa import registry as registry_module
+from llmcapa import _catalog_db
 from llmcapa._catalog_db import build_catalog, check_catalog
 
 
@@ -28,11 +29,11 @@ def test_catalog_database_preserves_lookup_indexes(tmp_path, monkeypatch):
         "aliases": ["shared", "router"],
         "context_window": 2000,
     }
-    for filename, record in (
-        ("openai.json", native),
-        ("openrouter.json", aggregator),
+    for filename, records in (
+        ("openai.json", [native, {**native, "model_id": "second", "aliases": []}]),
+        ("openrouter.json", [aggregator]),
     ):
-        (data / filename).write_text(json.dumps({"models": [record]}), encoding="utf-8")
+        (data / filename).write_text(json.dumps({"models": records}), encoding="utf-8")
     monkeypatch.setattr(registry_module.resources, "files", lambda _: data)
 
     def unexpected_cache(_self):
@@ -47,6 +48,7 @@ def test_catalog_database_preserves_lookup_indexes(tmp_path, monkeypatch):
     monkeypatch.setattr(
         registry_module.Registry, "_load_openrouter_cache", unexpected_cache
     )
+    monkeypatch.setattr(_catalog_db, "_BLOCK_SIZE", 2)
     registry = registry_module.Registry()
     registry._load_bundled_files()
     destination = tmp_path / "catalog.sqlite3"
@@ -57,27 +59,34 @@ def test_catalog_database_preserves_lookup_indexes(tmp_path, monkeypatch):
         assert database.execute("PRAGMA user_version").fetchone() == (1,)
         assert database.execute("PRAGMA integrity_check").fetchone() == ("ok",)
         assert database.execute("PRAGMA foreign_key_check").fetchall() == []
+        blocks = {
+            key: json.loads(zlib.decompress(payload))
+            for key, payload in database.execute(
+                "SELECT id, payload FROM capability_blocks"
+            )
+        }
+        assert [len(records) for records in blocks.values()] == [2, 1]
         for provider, models in registry._by_provider.items():
             rows = database.execute(
                 """
-                SELECT model_key, payload FROM models
+                SELECT model_key, block_id, position FROM models
                 JOIN capabilities ON capabilities.id = models.capability_id
                 WHERE provider = ? ORDER BY ordinal
                 """,
                 (provider,),
             )
             assert {
-                key: Capability.from_dict(json.loads(zlib.decompress(payload)))
-                for key, payload in rows
+                key: Capability.from_dict(blocks[block_id][position])
+                for key, block_id, position in rows
             } == models
         rows = database.execute("""
-            SELECT model_key, payload FROM flat_models
+            SELECT model_key, block_id, position FROM flat_models
             JOIN capabilities ON capabilities.id = flat_models.capability_id
             ORDER BY ordinal
             """)
         assert {
-            key: Capability.from_dict(json.loads(zlib.decompress(payload)))
-            for key, payload in rows
+            key: Capability.from_dict(blocks[block_id][position])
+            for key, block_id, position in rows
         } == registry._models
         assert dict(database.execute("SELECT * FROM aliases")) == registry._alias_index
         assert database.execute(

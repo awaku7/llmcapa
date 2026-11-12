@@ -14,48 +14,57 @@ from pathlib import Path
 from .models import Capability
 from .registry import Registry
 
+_BLOCK_SIZE = 256
+
 _SCHEMA = """
 PRAGMA user_version = 1;
 CREATE TABLE catalog_sources (
     filename TEXT PRIMARY KEY,
     sha256 TEXT NOT NULL
+) WITHOUT ROWID;
+CREATE TABLE capability_blocks (
+    id INTEGER PRIMARY KEY,
+    payload BLOB NOT NULL,
+    record_count INTEGER NOT NULL
 );
 CREATE TABLE capabilities (
     id INTEGER PRIMARY KEY,
-    payload BLOB NOT NULL
+    block_id INTEGER NOT NULL REFERENCES capability_blocks(id)
+        DEFERRABLE INITIALLY DEFERRED,
+    position INTEGER NOT NULL
 );
 CREATE TABLE providers (
     provider TEXT PRIMARY KEY,
     ordinal INTEGER NOT NULL
-);
+) WITHOUT ROWID;
 CREATE TABLE models (
     provider TEXT NOT NULL REFERENCES providers(provider),
     model_key TEXT NOT NULL,
     capability_id INTEGER NOT NULL REFERENCES capabilities(id),
     ordinal INTEGER NOT NULL,
     PRIMARY KEY (provider, model_key)
-);
+) WITHOUT ROWID;
 CREATE TABLE flat_models (
     model_key TEXT PRIMARY KEY,
     capability_id INTEGER NOT NULL REFERENCES capabilities(id),
     ordinal INTEGER NOT NULL
-);
+) WITHOUT ROWID;
 CREATE TABLE aliases (
     alias TEXT PRIMARY KEY,
     model_key TEXT NOT NULL REFERENCES flat_models(model_key)
-);
+) WITHOUT ROWID;
 CREATE TABLE scoped_aliases (
     provider TEXT NOT NULL,
     alias TEXT NOT NULL,
     model_key TEXT NOT NULL,
     PRIMARY KEY (provider, alias),
     FOREIGN KEY (provider, model_key) REFERENCES models(provider, model_key)
-);
+) WITHOUT ROWID;
 CREATE TABLE provider_files (
     provider TEXT NOT NULL,
     filename TEXT NOT NULL,
     PRIMARY KEY (provider, filename)
-);
+) WITHOUT ROWID;
 """
 
 
@@ -86,6 +95,15 @@ def check_catalog(database: Path) -> None:
             raise RuntimeError("Invalid SQLite catalog")
         if conn.execute("PRAGMA foreign_key_check").fetchone() is not None:
             raise RuntimeError("Invalid SQLite catalog references")
+        if conn.execute(
+            """
+            SELECT 1 FROM capabilities AS c
+            JOIN capability_blocks AS b ON b.id = c.block_id
+            WHERE c.position < 0 OR c.position >= b.record_count
+            LIMIT 1
+            """
+        ).fetchone():
+            raise RuntimeError("Invalid SQLite catalog block positions")
 
 
 def build_catalog(destination: Path) -> None:
@@ -108,21 +126,38 @@ def build_catalog(destination: Path) -> None:
                 "INSERT INTO catalog_sources VALUES (?, ?)", sources.items()
             )
             ids: dict[int, int] = {}
+            pending: list[dict] = []
+            block_id = 1
+
+            def flush_block() -> None:
+                nonlocal block_id
+                if not pending:
+                    return
+                payload = zlib.compress(
+                    json.dumps(
+                        pending, ensure_ascii=False, separators=(",", ":")
+                    ).encode("utf-8"),
+                    level=9,
+                )
+                connection.execute(
+                    "INSERT INTO capability_blocks VALUES (?, ?, ?)",
+                    (block_id, payload, len(pending)),
+                )
+                pending.clear()
+                block_id += 1
 
             def capability_id(capability: Capability) -> int:
                 key = id(capability)
                 if key not in ids:
-                    payload = zlib.compress(
-                        json.dumps(
-                            capability.to_dict(),
-                            ensure_ascii=False,
-                            separators=(",", ":"),
-                        ).encode("utf-8")
+                    record_id = len(ids) + 1
+                    connection.execute(
+                        "INSERT INTO capabilities VALUES (?, ?, ?)",
+                        (record_id, block_id, len(pending)),
                     )
-                    cursor = connection.execute(
-                        "INSERT INTO capabilities(payload) VALUES (?)", (payload,)
-                    )
-                    ids[key] = cursor.lastrowid
+                    ids[key] = record_id
+                    pending.append(capability.to_dict())
+                    if len(pending) == _BLOCK_SIZE:
+                        flush_block()
                 return ids[key]
 
             for provider_order, (provider, models) in enumerate(
@@ -149,6 +184,7 @@ def build_catalog(destination: Path) -> None:
                     "INSERT INTO flat_models VALUES (?, ?, ?)",
                     (key, capability_id(cap), order),
                 )
+            flush_block()
             connection.executemany(
                 "INSERT INTO aliases VALUES (?, ?)", registry._alias_index.items()
             )
