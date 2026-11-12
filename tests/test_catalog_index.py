@@ -340,3 +340,191 @@ def test_registration_metadata_preserves_flat_owner(catalog):
         )
     assert registry.get("gpt-demo-1.2") is original
     assert registry.get("gpt-demo-1.2", "openrouter").context_window == 789
+
+
+def test_warm_user_cache_uses_sqlite_without_json_registration(
+    catalog, tmp_path, monkeypatch
+):
+    home = tmp_path / "home" / ".llmcapa"
+    directory = home / "catalogs" / "github"
+    directory.mkdir(parents=True)
+    path = directory / "override.json"
+    path.write_text(
+        json.dumps(
+            {
+                "source": "https://github.com/awaku7/llmcapa",
+                "ref": "main",
+                "providers": ["openai"],
+                "models": [
+                    {
+                        "provider": "openai",
+                        "model_id": "gpt-demo-1.2",
+                        "context_window": 1234,
+                        "aliases": ["cached-alias"],
+                    },
+                    {
+                        "provider": "openai",
+                        "model_id": "new-cached-model",
+                    },
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    cold = Registry()
+    cap = cold.get("cached-alias")
+    assert cap.context_window == 1234
+    assert list((home / "sqlite_cache").glob("cache-*.sqlite3"))
+
+    def unexpected_load(self):
+        pytest.fail("Warm startup must not parse persistent JSON")
+
+    monkeypatch.setattr(Registry, "_load_startup_caches", unexpected_load)
+    warm = Registry()
+    result = warm.get("cached-alias")
+    assert result == cap
+    assert warm.get("gpt-demo-1.2", "openai") is result
+    assert warm.get("new-cached-model", "openai").provider == "openai"
+    assert warm._catalog_index is not None
+    assert not warm._catalog_index._objects
+    assert warm.list_models("openai") == cold.list_models("openai")
+    assert path.exists()
+
+
+def test_old_persistent_main_cache_is_removed(catalog, tmp_path):
+    data, _ = catalog
+    directory = tmp_path / "home" / ".llmcapa" / "catalogs" / "github"
+    directory.mkdir(parents=True)
+    path = directory / "old.json"
+    path.write_text(
+        json.dumps(
+            {
+                "source": "https://github.com/awaku7/llmcapa",
+                "ref": "main",
+                "providers": ["openai"],
+                "models": [
+                    {
+                        "provider": "openai",
+                        "model_id": "gpt-demo-1.2",
+                        "context_window": 9999,
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    older = (data / "openai.json").stat().st_mtime - 10
+    os.utime(path, (older, older))
+    registry = Registry()
+    assert registry.get("gpt-demo-1.2", "openai").context_window == 1000
+    assert not path.exists()
+
+
+def test_user_cache_is_invalidated_when_persistent_source_changes(catalog, tmp_path):
+    home = tmp_path / "home" / ".llmcapa"
+    directory = home / "catalogs" / "github"
+    directory.mkdir(parents=True)
+    path = directory / "override.json"
+
+    def write(context_window):
+        path.write_text(
+            json.dumps(
+                {
+                    "source": "https://github.com/awaku7/llmcapa",
+                    "providers": ["openai"],
+                    "models": [
+                        {
+                            "provider": "openai",
+                            "model_id": "gpt-demo-1.2",
+                            "context_window": context_window,
+                        }
+                    ],
+                }
+            ),
+            encoding="utf-8",
+        )
+
+    write(1234)
+    assert Registry().get("gpt-demo-1.2", "openai").context_window == 1234
+    write(23456)
+    assert Registry().get("gpt-demo-1.2", "openai").context_window == 23456
+    path.unlink()
+    assert Registry().get("gpt-demo-1.2", "openai").context_window == 1000
+    assert not list((home / "sqlite_cache").glob("cache-*.sqlite3"))
+
+
+def test_persistent_override_requires_all_sources_to_be_newer(catalog, tmp_path):
+    data, database = catalog
+    second = data / "openai_extra.json"
+    second.write_text(
+        json.dumps([{"provider": "openai", "model_id": "extra-model"}]),
+        encoding="utf-8",
+    )
+    build_catalog(database)
+    registry = Registry()
+    registry._write_user_catalog_override(
+        "test",
+        "main",
+        {"openai"},
+        [Capability(provider="openai", model_id="gpt-demo-1.2", context_window=9999)],
+    )
+    directory = tmp_path / "home" / ".llmcapa" / "catalogs" / "github"
+    path = next(directory.glob("*.json"))
+    stamp = path.stat().st_mtime
+    os.utime(data / "openai.json", (stamp - 10, stamp - 10))
+    os.utime(second, (stamp + 10, stamp + 10))
+    assert Registry().get("gpt-demo-1.2", "openai").context_window == 9999
+    assert path.exists()
+
+    os.utime(data / "openai.json", (stamp + 10, stamp + 10))
+    assert Registry().get("gpt-demo-1.2", "openai").context_window == 1000
+    assert not path.exists()
+
+
+def test_stale_deletion_preserves_concurrent_publication(
+    catalog, tmp_path, monkeypatch
+):
+    from contextlib import contextmanager
+
+    from llmcapa import _user_catalog_cache
+
+    data, _ = catalog
+    writer = Registry()
+    writer._write_user_catalog_override(
+        "test",
+        "main",
+        {"openai"},
+        [Capability(provider="openai", model_id="gpt-demo-1.2", context_window=9999)],
+    )
+    directory = tmp_path / "home" / ".llmcapa" / "catalogs" / "github"
+    path = next(directory.glob("*.json"))
+    older = (data / "openai.json").stat().st_mtime - 10
+    os.utime(path, (older, older))
+    original_lock = _user_catalog_cache.override_write_lock
+    publications = []
+
+    @contextmanager
+    def publish_before_lock(directory):
+        if not publications:
+            publications.append(True)
+            writer._write_user_catalog_override(
+                "test",
+                "explicit-tag",
+                {"openai"},
+                [
+                    Capability(
+                        provider="openai",
+                        model_id="gpt-demo-1.2",
+                        context_window=5678,
+                    )
+                ],
+            )
+        with original_lock(directory):
+            yield
+
+    monkeypatch.setattr(_user_catalog_cache, "override_write_lock", publish_before_lock)
+    assert Registry().get("gpt-demo-1.2", "openai").context_window == 1000
+    assert publications == [True]
+    assert path.exists()
+    assert json.loads(path.read_text(encoding="utf-8"))["ref"] == "explicit-tag"
+    assert Registry().get("gpt-demo-1.2", "openai").context_window == 5678

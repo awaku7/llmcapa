@@ -215,6 +215,11 @@ class Registry:
         if not self._try_load_sqlite():
             self._load_bundled_files()
 
+        if self._catalog_index is not None and self._load_user_cache_snapshot():
+            return
+        self._load_startup_caches()
+
+    def _load_startup_caches(self) -> None:
         # Apply cache records as sparse overrides without expanding the bundle.
         index = self._catalog_index
         with index.batch() if index is not None else nullcontext():
@@ -224,6 +229,68 @@ class Registry:
             self._load_persistent_github_catalogs()
             # Load fresh OpenRouter cache using the existing precedence rules.
             self._load_openrouter_cache()
+
+    def _load_user_cache_snapshot(self) -> bool:
+        """Reuse or build a local SQLite generation without changing JSON sources."""
+        from ._user_catalog_cache import (
+            ERRORS,
+            UserCatalogCache,
+            remove_old_generations,
+            startup_signature,
+            write_snapshot,
+        )
+
+        home = Path.home() / ".llmcapa"
+        directory = home / "sqlite_cache"
+        started = time.time_ns()
+        try:
+            signature = startup_signature(self, home, time.time())
+        except ERRORS:
+            return False
+        if signature is None:
+            remove_old_generations(directory, None, started)
+            return False
+        path = directory / f"cache-{signature}.sqlite3"
+
+        def fallback():
+            registry = Registry()
+            if not registry._try_load_sqlite():
+                registry._load_bundled_files()
+            registry._load_startup_caches()
+            return registry
+
+        try:
+            snapshot = UserCatalogCache(path, signature, fallback)
+        except ERRORS:
+            # First use or stale inputs: run the original registration path.
+            self._load_startup_caches()
+            try:
+                current = startup_signature(self, home, time.time())
+                if current is not None:
+                    path = directory / f"cache-{current}.sqlite3"
+                    # Do not publish data under a new input signature unless the
+                    # original inputs were unchanged during registration.
+                    if current == signature:
+                        write_snapshot(path, current, self)
+                        remove_old_generations(directory, path, started)
+                else:
+                    remove_old_generations(directory, None, started)
+            except ERRORS:
+                pass
+            return True
+
+        for kind, provider in snapshot.maps:
+            if kind == "flat_models":
+                mapping = self._models
+            elif kind == "aliases":
+                mapping = self._alias_index
+            else:
+                mapping = self._by_provider.setdefault(
+                    provider, self._catalog_index.index("models", provider)
+                )
+            mapping._user_cache = snapshot
+        remove_old_generations(directory, path, started)
+        return True
 
     def _try_load_sqlite(self) -> bool:
         """Initialize lazy indexes without changing registration precedence."""
@@ -389,6 +456,8 @@ class Registry:
 
     def _load_persistent_github_catalogs(self) -> None:
         """Load durable user-owned GitHub catalog overrides, newest first."""
+        from ._user_catalog_cache import override_write_lock
+
         override_dir = Path.home() / ".llmcapa" / "catalogs" / "github"
         try:
             override_paths = sorted(
@@ -402,6 +471,7 @@ class Registry:
         seen: set[tuple[str, str]] = set()
         for override_path in override_paths:
             try:
+                original_stat = override_path.stat()
                 payload = json.loads(override_path.read_text(encoding="utf-8"))
                 if (
                     not isinstance(payload, dict)
@@ -417,6 +487,46 @@ class Registry:
                 ):
                     continue
                 provider_set = {self._canonical_provider(name) for name in providers}
+                if payload.get("ref", "main") == "main":
+                    data = resources.files("llmcapa.data")
+                    bundled_files = {
+                        filename
+                        for provider in provider_set
+                        for filename in self._catalog_files_by_provider.get(
+                            provider, ()
+                        )
+                    }
+                    if (
+                        bundled_files
+                        and all(
+                            self._catalog_files_by_provider.get(provider)
+                            for provider in provider_set
+                        )
+                        and all(
+                            isinstance(data / filename, Path)
+                            and (data / filename).is_file()
+                            and (data / filename).stat().st_mtime_ns
+                            > original_stat.st_mtime_ns
+                            for filename in bundled_files
+                        )
+                    ):
+                        # Delete only if every contributing source is newer.
+                        # Coordinate the final identity check with publication.
+                        try:
+                            with override_write_lock(override_dir):
+                                current_stat = override_path.stat()
+                                if (
+                                    current_stat.st_mtime_ns
+                                    == original_stat.st_mtime_ns
+                                    and current_stat.st_ctime_ns
+                                    == original_stat.st_ctime_ns
+                                    and current_stat.st_size == original_stat.st_size
+                                    and current_stat.st_ino == original_stat.st_ino
+                                ):
+                                    override_path.unlink()
+                        except OSError:
+                            pass
+                        continue
                 for record in records:
                     try:
                         cap = self._canonical_capability(Capability.from_dict(record))
@@ -1077,6 +1187,8 @@ class Registry:
         capabilities: list[Capability],
     ) -> None:
         """Persist a fetched catalog under the user's home directory."""
+        from ._user_catalog_cache import override_write_lock
+
         override_dir = Path.home() / ".llmcapa" / "catalogs" / "github"
         override_key = hashlib.sha256(
             (cache_key + "\0" + ",".join(sorted(providers))).encode("utf-8")
@@ -1103,7 +1215,8 @@ class Registry:
                 json.dump(payload, temporary_file, ensure_ascii=False, indent=2)
                 temporary_file.write(chr(10))
                 temporary_path = Path(temporary_file.name)
-            os.replace(temporary_path, override_path)
+            with override_write_lock(override_dir):
+                os.replace(temporary_path, override_path)
         except OSError as exc:
             warnings.warn(
                 f"Could not persist GitHub catalog under {override_dir}: {exc}",
