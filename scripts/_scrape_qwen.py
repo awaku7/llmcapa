@@ -1,4 +1,5 @@
 """Fetch current Qwen International list prices from Alibaba Cloud docs."""
+
 from __future__ import annotations
 
 import html
@@ -14,11 +15,11 @@ def fetch_qwen_catalog() -> dict[str, dict]:
         page = html.unescape(response.read().decode("utf-8", errors="replace"))
 
     result: dict[str, dict] = {}
-    for raw_row in re.findall(r"<tr[^>]*>(.*?)</tr>", page, re.I | re.S):
-        cells = re.findall(r"<td[^>]*>(.*?)</td>", raw_row, re.I | re.S)
+    for raw_row in re.findall(r"<tr[^>]*>(.*?)</tr>", page, re.IGNORECASE | re.DOTALL):
+        cells = re.findall(r"<td[^>]*>(.*?)</td>", raw_row, re.IGNORECASE | re.DOTALL)
         if len(cells) < 5:
             continue
-        model_match = re.search(r"\bqwen[a-z0-9][a-z0-9._-]*", cells[0], re.I)
+        model_match = re.search(r"\bqwen[a-z0-9][a-z0-9._-]*", cells[0], re.IGNORECASE)
         if not model_match:
             continue
         model_id = model_match.group(0).lower()
@@ -26,11 +27,15 @@ def fetch_qwen_catalog() -> dict[str, dict]:
         joined = " ".join(cell_text)
         raw_joined = " ".join(cells)
         # The first two dollar values are the first International pricing tier.
-        prices = [float(value) for value in re.findall(r"\$\s*([0-9]+(?:\.[0-9]+)?)", joined)]
+        prices = [
+            float(value) for value in re.findall(r"\$\s*([0-9]+(?:\.[0-9]+)?)", joined)
+        ]
         if len(prices) < 2 or model_id in result:
             continue
         sizes = []
-        for value, unit in re.findall(r"(?:≤|<)\s*([0-9]+(?:\.[0-9]+)?)\s*([KM])", raw_joined, re.I):
+        for value, unit in re.findall(
+            r"(?:≤|<)\s*([0-9]+(?:\.[0-9]+)?)\s*([KM])", raw_joined, re.IGNORECASE
+        ):
             sizes.append(float(value) * (1_000 if unit.upper() == "K" else 1_000_000))
         result[model_id] = {
             "input_per_1m": prices[0],
@@ -39,7 +44,9 @@ def fetch_qwen_catalog() -> dict[str, dict]:
             "source": PRICING_URL,
         }
     if not result:
-        raise RuntimeError("no Qwen International prices found in official Alibaba docs")
+        raise RuntimeError(
+            "no Qwen International prices found in official Alibaba docs"
+        )
     return result
 
 

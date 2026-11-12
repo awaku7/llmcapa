@@ -130,9 +130,7 @@ def _tokens(value: str) -> int:
 
 
 def _row_context(row: str, label: str) -> int:
-    match = re.search(
-        label + r"\s*[:：]\s*([\d,.]+\s*[kKmM]?)", row, re.IGNORECASE
-    )
+    match = re.search(label + r"\s*[:：]\s*([\d,.]+\s*[kKmM]?)", row, re.IGNORECASE)
     return _tokens(match.group(1)) if match else 0
 
 

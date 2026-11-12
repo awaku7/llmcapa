@@ -30,7 +30,7 @@ import json
 import re
 import shutil
 from copy import deepcopy
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -777,12 +777,19 @@ def _date_is_past(value: Any) -> bool:
     text = str(value or "").strip()
     if not text:
         return False
+    utc_today = datetime.now(timezone.utc).date()
     for fmt in ("%m/%d/%Y %H:%M:%S %z", "%m/%d/%Y", "%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%d"):
         try:
-            parsed = datetime.strptime(text, fmt)
-            if parsed.tzinfo is None:
-                parsed = parsed.replace(tzinfo=timezone.utc)
-            return parsed.date() <= datetime.now(timezone.utc).date()
+            if fmt == "%m/%d/%Y":
+                month, day, year = (int(part) for part in text.split("/"))
+                parsed_date = date(year, month, day)
+            elif fmt == "%Y-%m-%d":
+                parsed_date = date.fromisoformat(text)
+            elif fmt == "%m/%d/%Y %H:%M:%S %z":
+                parsed_date = datetime.strptime(text, "%m/%d/%Y %H:%M:%S %z").date()
+            else:
+                parsed_date = datetime.strptime(text, "%Y-%m-%dT%H:%M:%S%z").date()
+            return parsed_date <= utc_today
         except ValueError:
             continue
     return False
@@ -1600,7 +1607,7 @@ def main() -> None:
 
         old = previous_by_id.get(key)
 
-        def _score(x: dict) -> tuple:
+        def _score(x: dict, old=old) -> tuple:
             return (
                 1 if old and x.get("model_id") == old.get("model_id") else 0,
                 1 if old and x.get("provider") == old.get("provider") else 0,

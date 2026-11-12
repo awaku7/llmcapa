@@ -38,8 +38,10 @@ def test_sakura_catalog_contexts_have_upstream_source_provenance() -> None:
         assert row["context_window"] == expected_context
         assert row["extra"]["context_window_basis"] == "upstream_base_model"
         assert row["extra"]["context_window_source"].startswith("https://")
-        assert "Sakura deployment-specific context limit is not published" in row[
-            "extra"]["context_window_note"]
+        assert (
+            "Sakura deployment-specific context limit is not published"
+            in row["extra"]["context_window_note"]
+        )
 
 
 def test_updater_preserves_catalog_context_metadata_without_constants() -> None:

@@ -7,7 +7,9 @@ from scripts.provider_updates._catalog_io import load_json, save_json
 
 def test_catalog_json_io_preserves_unicode_format_and_final_newline(tmp_path):
     path = tmp_path / "catalog.json"
-    payload = {"models": [{"model_id": "example/model", "display_name": "日本語モデル"}]}
+    payload = {
+        "models": [{"model_id": "example/model", "display_name": "日本語モデル"}]
+    }
 
     save_json(path, payload)
 

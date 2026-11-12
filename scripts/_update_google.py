@@ -69,7 +69,9 @@ def parse_price(cell: str) -> float | None:
     return float(match.group(1)) if match else None
 
 
-def discover_prices(page_html: str | None = None) -> dict[str, tuple[float, float, int]]:
+def discover_prices(
+    page_html: str | None = None,
+) -> dict[str, tuple[float, float, int]]:
     """Read model IDs and current token prices from Google's pricing tables."""
     html = page_html if page_html is not None else fetch(SOURCE)
     headings = list(
@@ -163,7 +165,9 @@ def discover_metadata(html: str) -> tuple[dict[str, dict], dict[str, str]]:
 def google_docs_markdown(page_html: str) -> str:
     """Extract the public Markdown payload embedded in a Google docs page."""
     match = re.search(
-        r"<noscript>\s*<pre>(.*?)</pre>\s*</noscript>", page_html, re.DOTALL | re.IGNORECASE
+        r"<noscript>\s*<pre>(.*?)</pre>\s*</noscript>",
+        page_html,
+        re.DOTALL | re.IGNORECASE,
     )
     if not match:
         raise ValueError("Google docs page has no embedded Markdown content")
@@ -179,11 +183,18 @@ def discover_decision_model_index(
         separator = re.search(r"(?m)^\s*---\s*$", markdown[match.end() :])
         end = match.end() + separator.start() if separator else len(markdown)
         row = markdown[match.start() : end]
-        if "decision" not in match.group(1).lower() or "decisions api" not in row.lower():
+        if (
+            "decision" not in match.group(1).lower()
+            or "decisions api" not in row.lower()
+        ):
             continue
         codes = re.findall(r"`([^`]+)`", row)
         if codes:
-            return codes[-1].strip(), match.group(1).strip(), urljoin(source, match.group(2))
+            return (
+                codes[-1].strip(),
+                match.group(1).strip(),
+                urljoin(source, match.group(2)),
+            )
     raise ValueError("official Google model index has no Decisions API model row")
 
 
@@ -191,7 +202,9 @@ def _markdown_sections(markdown: str) -> list[tuple[str, str]]:
     headings = list(re.finditer(r"(?m)^##\s+(.+)$", markdown))
     sections = []
     for index, heading in enumerate(headings):
-        end = headings[index + 1].start() if index + 1 < len(headings) else len(markdown)
+        end = (
+            headings[index + 1].start() if index + 1 < len(headings) else len(markdown)
+        )
         sections.append((heading.group(1), markdown[heading.start() : end]))
     return sections
 
@@ -235,14 +248,26 @@ def parse_decision_model_docs(
         else None
     )
     if not model_code or model_code.group(1).strip() != model_id:
-        raise ValueError("Google model page code disagrees with the official model index")
+        raise ValueError(
+            "Google model page code disagrees with the official model index"
+        )
 
-    input_match = re.search(r"(?m)^\s*(?:\*\s*)?\*\*Inputs\*\*[ 	]*(.*)$", model_markdown, re.IGNORECASE)
-    output_match = re.search(r"(?m)^\s*(?:\*\s*)?\*\*Output\*\*[ 	]*(.*)$", model_markdown, re.IGNORECASE)
-    input_limit = re.search(r"\*\*Input token limit\*\*[ 	]*([\d,]+)", model_markdown, re.IGNORECASE)
-    output_limit = re.search(r"\*\*Output token limit\*\*[ 	]*([\d,]+)", model_markdown, re.IGNORECASE)
+    input_match = re.search(
+        r"(?m)^\s*(?:\*\s*)?\*\*Inputs\*\*[ 	]*(.*)$", model_markdown, re.IGNORECASE
+    )
+    output_match = re.search(
+        r"(?m)^\s*(?:\*\s*)?\*\*Output\*\*[ 	]*(.*)$", model_markdown, re.IGNORECASE
+    )
+    input_limit = re.search(
+        r"\*\*Input token limit\*\*[ 	]*([\d,]+)", model_markdown, re.IGNORECASE
+    )
+    output_limit = re.search(
+        r"\*\*Output token limit\*\*[ 	]*([\d,]+)", model_markdown, re.IGNORECASE
+    )
     max_questions = re.search(
-        r"up to\s+([\d,]+)\s+questions(?:\s+per request)?", model_markdown, re.IGNORECASE
+        r"up to\s+([\d,]+)\s+questions(?:\s+per request)?",
+        model_markdown,
+        re.IGNORECASE,
     )
     if not all((input_match, output_match, input_limit, output_limit, max_questions)):
         raise ValueError("Google model page is missing modalities or token limits")
@@ -330,11 +355,19 @@ def parse_decision_model_docs(
             input_price = parse_price(cells[-1])
             break
     if input_price is None:
-        raise ValueError("official pricing page has no numeric input price for the model")
+        raise ValueError(
+            "official pricing page has no numeric input price for the model"
+        )
     pricing_anchor = re.search(r'\{%\s*id="([^"]+)"\s*%\}', pricing_heading)
-    pricing_url = f"{pricing_source}#{pricing_anchor.group(1)}" if pricing_anchor else pricing_source
+    pricing_url = (
+        f"{pricing_source}#{pricing_anchor.group(1)}"
+        if pricing_anchor
+        else pricing_source
+    )
 
-    choice_max = re.search(r"Evaluates\s+\d+\s+to\s+([\d,]+)\s+options", model_markdown, re.IGNORECASE)
+    choice_max = re.search(
+        r"Evaluates\s+\d+\s+to\s+([\d,]+)\s+options", model_markdown, re.IGNORECASE
+    )
     score_max = re.search(
         r"Evaluates\s+\d+\s+to\s+([\d,]+)\s+ordered rubric levels",
         model_markdown,
@@ -406,7 +439,9 @@ def parse_decision_model_docs(
             "returns_probabilities": "probabilities" in answer_fields,
             "returns_confidence": "confidence" in answer_fields,
             "calibrated_confidence": None,
-            "parallel_questions": bool(re.search(r"one forward pass", api_markdown, re.IGNORECASE)),
+            "parallel_questions": bool(
+                re.search(r"one forward pass", api_markdown, re.IGNORECASE)
+            ),
             "free_form_text": output_tokens > 0,
             "type_errors_possible": None,
             "deterministic": None,
@@ -425,12 +460,12 @@ def parse_decision_model_docs(
                 "endpoint_path": endpoint_path,
                 "api_version": api_version,
                 "max_input_tokens": input_tokens,
-                "max_choice_options": int(choice_max.group(1).replace(",", ""))
-                if choice_max
-                else None,
-                "max_score_levels": int(score_max.group(1).replace(",", ""))
-                if score_max
-                else None,
+                "max_choice_options": (
+                    int(choice_max.group(1).replace(",", "")) if choice_max else None
+                ),
+                "max_score_levels": (
+                    int(score_max.group(1).replace(",", "")) if score_max else None
+                ),
                 "output_tokens": output_tokens,
             },
         },
@@ -615,7 +650,6 @@ def main() -> None:
     inserted = 0
     specialty = 0
     deprecated_n = 0
-
 
     decision_model_id = decision_model["model_id"]
     previous_decision = by_id.get(decision_model_id)

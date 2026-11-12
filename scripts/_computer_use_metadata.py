@@ -82,9 +82,7 @@ ANTHROPIC_COMPUTER_20250124_MODELS = frozenset(
         "claude-opus-4",
     }
 )
-AMAZON_COMPUTER_TOOLSET_MODELS = frozenset(
-    {"claude-fable-5-2", "claude-mythos-5-2"}
-)
+AMAZON_COMPUTER_TOOLSET_MODELS = frozenset({"claude-fable-5-2", "claude-mythos-5-2"})
 AMAZON_COMPUTER_20251124_MODELS = frozenset(
     {
         "claude-opus-5-5",

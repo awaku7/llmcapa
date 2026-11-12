@@ -3,6 +3,7 @@
 import json
 import re
 from pathlib import Path
+
 try:
     from scripts.provider_updates._http import fetch_text
 except ModuleNotFoundError:  # Running this updater directly from its own directory.

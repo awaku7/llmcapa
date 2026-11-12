@@ -120,9 +120,7 @@ def fetch_models(min_downloads: int) -> list:
                 if resp.status_code in {429, 500, 502, 503, 504} and (
                     retry_index < MAX_RETRIES
                 ):
-                    delay = _retry_delay(
-                        resp.headers.get("Retry-After"), retry_index
-                    )
+                    delay = _retry_delay(resp.headers.get("Retry-After"), retry_index)
                     print(
                         f"  Retry {retry_index + 1}/{MAX_RETRIES} in {delay:g}s "
                         f"after HTTP {resp.status_code} at page {page}",
@@ -385,8 +383,7 @@ def retain_unlisted_models(current: list[dict], previous: list[dict]) -> list[di
             if (
                 not row.get("max_output_tokens")
                 and old.get("max_output_tokens")
-                and old.get("max_output_tokens")
-                != LEGACY_MAX_OUTPUT_TOKENS_DEFAULT
+                and old.get("max_output_tokens") != LEGACY_MAX_OUTPUT_TOKENS_DEFAULT
             ):
                 row["max_output_tokens"] = old["max_output_tokens"]
             if row.get("license_type") in (None, "", "unknown") and old.get(

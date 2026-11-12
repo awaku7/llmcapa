@@ -9,7 +9,7 @@ from pathlib import Path
 SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
-import _update_openai as updater  # noqa: E402
+import _update_openai as updater
 
 
 def test_detail_reads_shutdown_status_and_snapshot_aliases(monkeypatch):

@@ -142,6 +142,16 @@ def test_mistral_deprecation_flag_uses_official_card_status():
     )
 
 
+def test_azure_foundry_lifecycle_parses_utc_z_deprecation_dates():
+    updater = _script_module("_update_azure_foundry")
+    assert (
+        updater.lifecycle_of(
+            {"systemCatalogData": {"inferenceDeprecationDate": "2000-01-01T00:00:00Z"}}
+        )
+        == "Deprecated"
+    )
+
+
 def test_azure_foundry_retains_and_enriches_microsoft_decision_ssr_card():
     updater = _script_module("_update_azure_foundry")
     card = {

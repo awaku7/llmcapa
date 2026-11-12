@@ -31,8 +31,29 @@ def test_model_index_rejects_empty_and_duplicate_catalogs():
         refresh.model_index({"models": []})
     with pytest.raises(ValueError, match="duplicate"):
         refresh.model_index(_catalog("a", "a"))
+    with pytest.raises(ValueError, match="duplicate"):
+        refresh.model_index(_catalog("Model-A", "model-a"))
     with pytest.raises(ValueError, match="model_id"):
         refresh.model_index({"models": [{"model_id": ""}]})
+
+
+def test_case_only_model_id_change_preserves_known_limits():
+    previous = _catalog("Model-A")
+    previous["models"][0]["max_output_tokens"] = 20
+    updated = _catalog("model-a")
+    updated["models"][0]["context_window"] = 0
+    updated["models"][0]["max_output_tokens"] = 0
+
+    assert refresh.retain_unlisted_models(previous, updated) == 0
+    assert refresh.preserve_known_capabilities(previous, updated) == 1
+    refresh.validate_refreshed_catalog(previous, updated)
+    assert len(updated["models"]) == 1
+    assert updated["models"][0]["context_window"] == 100
+    assert updated["models"][0]["max_output_tokens"] == 20
+
+    diff = refresh.compare_catalogs(previous, updated)
+    assert diff["added"] == diff["removed"] == []
+    assert "model_id" in diff["modified"]["model-a"]
 
 
 def test_model_diff_lists_added_removed_and_nested_modified_fields():
@@ -80,14 +101,14 @@ def test_preserve_line_endings_keeps_original_catalog_style(
     tmp_path, original_newline, expected_newline
 ):
     path = tmp_path / "catalog.json"
-    path.write_bytes(original_newline.join((b"{", b'  \"models\": []', b"}")))
+    path.write_bytes(original_newline.join((b"{", b'  "models": []', b"}")))
     original = path.read_bytes()
 
     # Simulate a Windows updater writing CRLF regardless of the source file.
-    path.write_bytes(b"{\r\n  \"models\": []\r\n}\r\n")
+    path.write_bytes(b'{\r\n  "models": []\r\n}\r\n')
     refresh.preserve_line_endings(path, original)
 
-    expected = expected_newline.join((b"{", b'  \"models\": []', b"}", b""))
+    expected = expected_newline.join((b"{", b'  "models": []', b"}", b""))
     assert path.read_bytes() == expected
 
 

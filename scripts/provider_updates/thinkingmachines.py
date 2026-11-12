@@ -6,6 +6,7 @@ import json
 import re
 from datetime import datetime, timezone
 from pathlib import Path
+
 try:
     from scripts.provider_updates._http import fetch_text
 except ModuleNotFoundError:  # Running this updater directly from its own directory.
@@ -19,7 +20,10 @@ SOURCE = "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_prici
 def fetch_docs() -> str:
     text = fetch_text(
         SOURCE + "/index.md",
-        headers={"Accept": "text/markdown,text/plain,*/*", "User-Agent": "llmcapa-provider-updater/1.0"},
+        headers={
+            "Accept": "text/markdown,text/plain,*/*",
+            "User-Agent": "llmcapa-provider-updater/1.0",
+        },
         timeout=30,
         max_bytes=5_000_000,
     )
@@ -33,7 +37,7 @@ def _cells(line: str) -> list[str]:
 
 
 def _context(value: str) -> int:
-    match = re.search(r"(\d+(?:\.\d+)?)\s*([KM])?", value, re.I)
+    match = re.search(r"(\d+(?:\.\d+)?)\s*([KM])?", value, re.IGNORECASE)
     if not match:
         return 0
     amount = float(match.group(1))
@@ -68,7 +72,11 @@ def parse_model_inventory(markdown: str) -> list[dict]:
         heading = re.match(r"^##\s+(.+?)\s*$", line)
         if heading:
             title = heading.group(1).strip().casefold()
-            section = "training" if title == "training" else "serverless" if title.startswith("serverless inference") else ""
+            section = (
+                "training"
+                if title == "training"
+                else "serverless" if title.startswith("serverless inference") else ""
+            )
             header = None
             continue
         if not section or not line.lstrip().startswith("|"):
@@ -76,25 +84,43 @@ def parse_model_inventory(markdown: str) -> list[dict]:
         cells = _cells(line)
         if not cells:
             continue
-        if cells[0].casefold() == "model" and any("tinker id" in cell.casefold() for cell in cells):
+        if cells[0].casefold() == "model" and any(
+            "tinker id" in cell.casefold() for cell in cells
+        ):
             header = [cell.casefold() for cell in cells]
             continue
-        if header is None or len(cells) != len(header) or re.fullmatch(r"[\s|:-]+", line):
+        if (
+            header is None
+            or len(cells) != len(header)
+            or re.fullmatch(r"[\s|:-]+", line)
+        ):
             continue
         indices = {name: index for index, name in enumerate(header)}
-        id_index = next((idx for name, idx in indices.items() if "tinker id" in name), None)
+        id_index = next(
+            (idx for name, idx in indices.items() if "tinker id" in name), None
+        )
         if id_index is None:
             continue
         model_id = cells[id_index].strip().strip("`")
         if not model_id or model_id.casefold() in {"-", "tinker id"}:
             continue
         name_index = indices.get("model", 0)
-        context_index = next((idx for name, idx in indices.items() if name == "context"), None)
-        prefill_index = next((idx for name, idx in indices.items() if "prefill" in name), None)
-        sample_index = next((idx for name, idx in indices.items() if "sample" in name), None)
-        type_index = next((idx for name, idx in indices.items() if name == "type"), None)
+        context_index = next(
+            (idx for name, idx in indices.items() if name == "context"), None
+        )
+        prefill_index = next(
+            (idx for name, idx in indices.items() if "prefill" in name), None
+        )
+        sample_index = next(
+            (idx for name, idx in indices.items() if "sample" in name), None
+        )
+        type_index = next(
+            (idx for name, idx in indices.items() if name == "type"), None
+        )
         context = _context(cells[context_index]) if context_index is not None else 0
-        input_price = _price(cells[prefill_index]) if prefill_index is not None else None
+        input_price = (
+            _price(cells[prefill_index]) if prefill_index is not None else None
+        )
         output_price = _price(cells[sample_index]) if sample_index is not None else None
         model_type = cells[type_index] if type_index is not None else ""
         model_name = _display_name(cells[name_index])
@@ -104,11 +130,20 @@ def parse_model_inventory(markdown: str) -> list[dict]:
             "model_id": model_id,
             "display_name": model_name or previous.get("display_name") or model_id,
             "context_window": context or previous.get("context_window", 0),
-            "input_per_1m": input_price if input_price is not None else previous.get("input_per_1m"),
-            "output_per_1m": output_price if output_price is not None else previous.get("output_per_1m"),
+            "input_per_1m": (
+                input_price if input_price is not None else previous.get("input_per_1m")
+            ),
+            "output_per_1m": (
+                output_price
+                if output_price is not None
+                else previous.get("output_per_1m")
+            ),
             "model_type": model_type or previous.get("model_type", ""),
             "inventory_section": section,
-            "deprecated": bool(re.search(r"retir(?:e|ing|ed)", cells[name_index], re.I)) or previous.get("deprecated", False),
+            "deprecated": bool(
+                re.search(r"retir(?:e|ing|ed)", cells[name_index], re.IGNORECASE)
+            )
+            or previous.get("deprecated", False),
         }
     if not rows:
         raise ValueError("Tinker model docs contained no Tinker ID rows")
@@ -145,7 +180,9 @@ def _new_record(snapshot: dict) -> dict:
     }
 
 
-def merge_inventory(snapshots: list[dict], previous: list[dict], checked_at: str) -> list[dict]:
+def merge_inventory(
+    snapshots: list[dict], previous: list[dict], checked_at: str
+) -> list[dict]:
     old_by_id = {
         str(row.get("model_id", "")).casefold(): row
         for row in previous
@@ -161,11 +198,15 @@ def merge_inventory(snapshots: list[dict], previous: list[dict], checked_at: str
                 "provider": "thinkingmachines",
                 "model_id": snapshot["model_id"],
                 "display_name": snapshot["display_name"],
-                "context_window": snapshot["context_window"] or row.get("context_window", 0),
+                "context_window": snapshot["context_window"]
+                or row.get("context_window", 0),
                 "deprecated": snapshot["deprecated"],
             }
         )
-        if snapshot.get("input_per_1m") is not None and snapshot.get("output_per_1m") is not None:
+        if (
+            snapshot.get("input_per_1m") is not None
+            and snapshot.get("output_per_1m") is not None
+        ):
             row["pricing"] = {
                 "input_per_1m": snapshot["input_per_1m"],
                 "output_per_1m": snapshot["output_per_1m"],
@@ -192,7 +233,12 @@ def merge_inventory(snapshots: list[dict], previous: list[dict], checked_at: str
         if key and key not in seen:
             row = dict(old)
             extra = dict(row.get("extra") or {})
-            extra.update({"official_source_checked_at": checked_at, "not_listed_in_current_docs": True})
+            extra.update(
+                {
+                    "official_source_checked_at": checked_at,
+                    "not_listed_in_current_docs": True,
+                }
+            )
             row["extra"] = extra
             merged.append(row)
     return merged
@@ -202,8 +248,13 @@ def update_catalog(snapshots: list[dict], *, checked_at: str | None = None) -> i
     data = json.loads(DATA.read_text(encoding="utf-8"))
     checked_at = checked_at or datetime.now(timezone.utc).date().isoformat()
     models = merge_inventory(snapshots, data.get("models") or [], checked_at)
-    DATA.write_text(json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"thinkingmachines.json: refreshed {len(snapshots)} official Tinker model IDs; total={len(models)}")
+    DATA.write_text(
+        json.dumps({**data, "models": models}, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    print(
+        f"thinkingmachines.json: refreshed {len(snapshots)} official Tinker model IDs; total={len(models)}"
+    )
     return len(snapshots)
 
 

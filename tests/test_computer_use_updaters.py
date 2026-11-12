@@ -201,9 +201,7 @@ def test_anthropic_52_uses_latest_computer_toolsets_on_documented_platforms():
         ("claude-mythos-5-2", "mythos"),
     ):
         for platform in ("anthropic", "google-cloud"):
-            capability = metadata.anthropic_computer_use_capability(
-                model_id, platform
-            )
+            capability = metadata.anthropic_computer_use_capability(model_id, platform)
             assert capability is not None
             assert capability["tool_type"] == "computer_toolset_20260801"
             assert capability["requires_beta"] is False
