@@ -32,9 +32,7 @@ def test_catalog_database_preserves_lookup_indexes(tmp_path, monkeypatch):
         ("openai.json", native),
         ("openrouter.json", aggregator),
     ):
-        (data / filename).write_text(
-            json.dumps({"models": [record]}), encoding="utf-8"
-        )
+        (data / filename).write_text(json.dumps({"models": [record]}), encoding="utf-8")
     monkeypatch.setattr(registry_module.resources, "files", lambda _: data)
 
     def unexpected_cache(_self):
@@ -69,17 +67,17 @@ def test_catalog_database_preserves_lookup_indexes(tmp_path, monkeypatch):
                 (provider,),
             )
             assert {
-                key: Capability.from_dict(json.loads(zlib.decompress(payload))) for key, payload in rows
+                key: Capability.from_dict(json.loads(zlib.decompress(payload)))
+                for key, payload in rows
             } == models
-        rows = database.execute(
-            """
+        rows = database.execute("""
             SELECT model_key, payload FROM flat_models
             JOIN capabilities ON capabilities.id = flat_models.capability_id
             ORDER BY ordinal
-            """
-        )
+            """)
         assert {
-            key: Capability.from_dict(json.loads(zlib.decompress(payload))) for key, payload in rows
+            key: Capability.from_dict(json.loads(zlib.decompress(payload)))
+            for key, payload in rows
         } == registry._models
         assert dict(database.execute("SELECT * FROM aliases")) == registry._alias_index
         assert database.execute(

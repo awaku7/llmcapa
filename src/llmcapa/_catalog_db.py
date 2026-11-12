@@ -65,7 +65,9 @@ def _catalog_sources() -> dict[str, str]:
         entry.name: hashlib.sha256(
             entry.read_bytes().replace(b"\r\n", b"\n")
         ).hexdigest()
-        for entry in sorted(resources.files("llmcapa.data").iterdir(), key=lambda e: e.name)
+        for entry in sorted(
+            resources.files("llmcapa.data").iterdir(), key=lambda e: e.name
+        )
         if entry.name.endswith((".json", ".meta")) and entry.is_file()
     }
 
