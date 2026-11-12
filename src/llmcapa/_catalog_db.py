@@ -95,14 +95,12 @@ def check_catalog(database: Path) -> None:
             raise RuntimeError("Invalid SQLite catalog")
         if conn.execute("PRAGMA foreign_key_check").fetchone() is not None:
             raise RuntimeError("Invalid SQLite catalog references")
-        if conn.execute(
-            """
+        if conn.execute("""
             SELECT 1 FROM capabilities AS c
             JOIN capability_blocks AS b ON b.id = c.block_id
             WHERE c.position < 0 OR c.position >= b.record_count
             LIMIT 1
-            """
-        ).fetchone():
+            """).fetchone():
             raise RuntimeError("Invalid SQLite catalog block positions")
 
 
