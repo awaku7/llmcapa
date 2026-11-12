@@ -92,9 +92,7 @@ def check_catalog(database: Path) -> None:
             raise RuntimeError(
                 "Unsupported SQLite catalog schema; run scripts/build_catalog_db.py"
             )
-        conn.execute(
-            "SELECT kind, bucket, ordinal, payload FROM lookup_blocks LIMIT 0"
-        )
+        conn.execute("SELECT kind, bucket, ordinal, payload FROM lookup_blocks LIMIT 0")
         if dict(conn.execute("SELECT * FROM catalog_sources")) != _catalog_sources():
             raise RuntimeError("Stale SQLite catalog; run scripts/build_catalog_db.py")
         if conn.execute("PRAGMA integrity_check").fetchone() != ("ok",):
