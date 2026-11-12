@@ -1,7 +1,9 @@
 """Runtime SQLite parity and fallback tests using a small authoritative catalog."""
 
 import json
+import os
 import sqlite3
+import zlib
 from contextlib import closing
 
 import pytest
@@ -167,10 +169,11 @@ def test_missing_or_corrupt_database_falls_back(catalog, corrupt):
     assert registry._catalog_index is None
 
 
-def test_corrupt_payload_falls_back(catalog):
+@pytest.mark.parametrize("payload", [b"invalid", zlib.compress(b"[null]")])
+def test_corrupt_payload_falls_back(catalog, payload):
     _, database = catalog
     with closing(sqlite3.connect(database)) as conn, conn:
-        conn.execute("UPDATE capability_blocks SET payload = ?", (b"invalid",))
+        conn.execute("UPDATE capability_blocks SET payload = ?", (payload,))
     registry = Registry()
     assert registry.get("demo").provider == "openai"
     assert registry._catalog_index is not None
@@ -198,4 +201,18 @@ def test_persistent_cache_overrides_sqlite(catalog, tmp_path):
     )
     registry = Registry()
     assert registry.get("gpt-demo-1.2", "openai").context_window == 3456
+    assert registry._catalog_index is None
+
+
+def test_stale_source_with_preserved_mtime_falls_back(catalog):
+    data, _ = catalog
+    source = data / "openai.json"
+    original = source.stat()
+    records = json.loads(source.read_text(encoding="utf-8"))
+    records[0]["context_window"] = 2000
+    source.write_text(json.dumps(records), encoding="utf-8")
+    os.utime(source, ns=(original.st_atime_ns, original.st_mtime_ns))
+
+    registry = Registry()
+    assert registry.get("demo").context_window == 2000
     assert registry._catalog_index is None

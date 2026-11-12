@@ -7,27 +7,13 @@ import sqlite3
 import zlib
 from collections.abc import Mapping
 from contextlib import closing
-from importlib import metadata, resources
+from importlib import resources
 from pathlib import Path
 from threading import RLock
 
 from .models import Capability
 
 _READ_ERRORS = (OSError, sqlite3.Error, ValueError, KeyError, TypeError, zlib.error)
-
-
-def _installed_at(database: Path) -> int:
-    """Wheel installation can write JSON after the SQLite file."""
-    try:
-        dist = metadata.distribution("llmcapa")
-        if dist.locate_file("llmcapa/data/catalog.sqlite3").resolve() != database:
-            return 0
-        for entry in dist.files or ():
-            if str(entry).endswith(".dist-info/RECORD"):
-                return dist.locate_file(entry).stat().st_mtime_ns
-    except (OSError, metadata.PackageNotFoundError):
-        pass
-    return 0
 
 
 class CatalogIndex:
@@ -59,22 +45,16 @@ class CatalogIndex:
             marker = directory / ".catalog.sqlite3.stale"
             if marker.exists() and marker.stat().st_mtime_ns >= db_time:
                 return None
-            cutoff = max(db_time, _installed_at(database))
-            sources = {
-                entry.name: entry
-                for entry in directory.iterdir()
-                if entry.is_file() and entry.name.endswith((".json", ".meta"))
-            }
+            # Verify authoritative content once per reader, not on each lookup.
+            from ._catalog_db import _catalog_sources
+
             with reader._connect() as conn:
                 if conn.execute("PRAGMA user_version").fetchone() != (1,):
                     return None
-                names = {
-                    row[0]
-                    for row in conn.execute("SELECT filename FROM catalog_sources")
-                }
-                if names != sources.keys() or any(
-                    entry.stat().st_mtime_ns > cutoff for entry in sources.values()
-                ):
+                expected = dict(
+                    conn.execute("SELECT filename, sha256 FROM catalog_sources")
+                )
+                if expected != _catalog_sources():
                     return None
                 reader.providers = [
                     row[0]
@@ -117,7 +97,13 @@ class CatalogIndex:
             self._block_id = block_id
         if not 0 <= position < len(self._block):
             raise ValueError("Invalid capability position")
-        cap = Capability.from_dict(self._block[position])
+        record = self._block[position]
+        if not isinstance(record, dict):
+            raise ValueError("Invalid capability record")
+        try:
+            cap = Capability.from_dict(record)
+        except AttributeError as exc:
+            raise ValueError("Invalid nested capability record") from exc
         self._objects[record_id] = cap
         return cap
 
