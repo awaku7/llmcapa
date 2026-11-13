@@ -2,6 +2,116 @@
   "models": [
     {
       "provider": "foundry-local",
+      "model_id": "clm-v0.1-8b",
+      "display_name": "clm-v0.1-8b-cuda-gpu",
+      "context_window": 40960,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": false,
+      "supports_streaming": false,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_responses_api": false,
+      "license_type": "apache-2.0",
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [
+        "azureml://registries/b98c40bc-36d6-4175-b131-bad4502fe1a3/type/models/objectId/clm-v0.1-8b-cuda-gpu/version/1",
+        "azureml://registries/b98c40bc-36d6-4175-b131-bad4502fe1a3/type/models/objectId/clm-v0.1-8b-generic-cpu/version/1",
+        "azureml://registries/b98c40bc-36d6-4175-b131-bad4502fe1a3/type/models/objectId/clm-v0.1-8b-generic-gpu/version/1",
+        "clm-v0.1-8b-cuda-gpu",
+        "clm-v0.1-8b-generic-cpu",
+        "clm-v0.1-8b-generic-gpu"
+      ],
+      "extra": {
+        "source": "https://ai.azure.com/api/japaneast/ux/v1.0/entities/crossRegion",
+        "source_docs": "https://learn.microsoft.com/en-us/azure/foundry-local/reference/reference-rest",
+        "source_implementation": "https://github.com/microsoft/Foundry-Local",
+        "source_type": "official_foundry_local_catalog_api",
+        "catalog_region": "japaneast",
+        "tasks": [
+          "ranking"
+        ],
+        "media_model_type": "",
+        "publishers": [
+          "Microsoft"
+        ],
+        "licenses": [
+          "apache-2.0"
+        ],
+        "variants": [
+          {
+            "alias": "clm-v0.1-8b",
+            "name": "clm-v0.1-8b-cuda-gpu",
+            "entity_id": "azureml://registries/b98c40bc-36d6-4175-b131-bad4502fe1a3/type/models/objectId/clm-v0.1-8b-cuda-gpu/version/1",
+            "display_name": "clm-v0.1-8b-cuda-gpu",
+            "publisher": "Microsoft",
+            "task": "ranking",
+            "license": "apache-2.0",
+            "supports_tool_calling": null,
+            "supports_reasoning": null,
+            "context_window": 40960,
+            "max_output_tokens": null,
+            "uri": "azureml://registries/azureml/models/clm-v0.1-8b-cuda-gpu/versions/1",
+            "version": 1,
+            "min_foundry_local_version": "",
+            "model_type": "ONNX",
+            "device": "GPU",
+            "execution_provider": "CUDAExecutionProvider",
+            "file_size_bytes": 8959068398
+          },
+          {
+            "alias": "clm-v0.1-8b",
+            "name": "clm-v0.1-8b-generic-cpu",
+            "entity_id": "azureml://registries/b98c40bc-36d6-4175-b131-bad4502fe1a3/type/models/objectId/clm-v0.1-8b-generic-cpu/version/1",
+            "display_name": "clm-v0.1-8b-generic-cpu",
+            "publisher": "Microsoft",
+            "task": "ranking",
+            "license": "apache-2.0",
+            "supports_tool_calling": null,
+            "supports_reasoning": null,
+            "context_window": 40960,
+            "max_output_tokens": null,
+            "uri": "azureml://registries/azureml/models/clm-v0.1-8b-generic-cpu/versions/1",
+            "version": 1,
+            "min_foundry_local_version": "",
+            "model_type": "ONNX",
+            "device": "CPU",
+            "execution_provider": "CPUExecutionProvider",
+            "file_size_bytes": 8959103883
+          },
+          {
+            "alias": "clm-v0.1-8b",
+            "name": "clm-v0.1-8b-generic-gpu",
+            "entity_id": "azureml://registries/b98c40bc-36d6-4175-b131-bad4502fe1a3/type/models/objectId/clm-v0.1-8b-generic-gpu/version/1",
+            "display_name": "clm-v0.1-8b-generic-gpu",
+            "publisher": "Microsoft",
+            "task": "ranking",
+            "license": "apache-2.0",
+            "supports_tool_calling": null,
+            "supports_reasoning": null,
+            "context_window": 40960,
+            "max_output_tokens": null,
+            "uri": "azureml://registries/azureml/models/clm-v0.1-8b-generic-gpu/versions/1",
+            "version": 1,
+            "min_foundry_local_version": "",
+            "model_type": "ONNX",
+            "device": "GPU",
+            "execution_provider": "WebGPUExecutionProvider",
+            "file_size_bytes": 8959139038
+          }
+        ]
+      }
+    },
+    {
+      "provider": "foundry-local",
       "model_id": "deepseek-r1-1.5b",
       "display_name": "DeepSeek-R1-Distill-Qwen-1.5B-openvino-gpu",
       "context_window": 131072,
@@ -707,6 +817,292 @@
     },
     {
       "provider": "foundry-local",
+      "model_id": "kev-0.8b",
+      "display_name": "kev-0.8b-cuda-gpu",
+      "context_window": 262144,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": false,
+      "supports_streaming": false,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_responses_api": false,
+      "license_type": "apache-2.0",
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [
+        "azureml://registries/b98c40bc-36d6-4175-b131-bad4502fe1a3/type/models/objectId/kev-0.8b-cuda-gpu/version/1",
+        "azureml://registries/b98c40bc-36d6-4175-b131-bad4502fe1a3/type/models/objectId/kev-0.8b-generic-cpu/version/1",
+        "azureml://registries/b98c40bc-36d6-4175-b131-bad4502fe1a3/type/models/objectId/kev-0.8b-generic-gpu/version/1",
+        "kev-0.8b-cuda-gpu",
+        "kev-0.8b-generic-cpu",
+        "kev-0.8b-generic-gpu"
+      ],
+      "extra": {
+        "source": "https://ai.azure.com/api/japaneast/ux/v1.0/entities/crossRegion",
+        "source_docs": "https://learn.microsoft.com/en-us/azure/foundry-local/reference/reference-rest",
+        "source_implementation": "https://github.com/microsoft/Foundry-Local",
+        "source_type": "official_foundry_local_catalog_api",
+        "catalog_region": "japaneast",
+        "tasks": [
+          "decision"
+        ],
+        "media_model_type": "",
+        "publishers": [
+          "Microsoft"
+        ],
+        "licenses": [
+          "apache-2.0"
+        ],
+        "variants": [
+          {
+            "alias": "kev-0.8b",
+            "name": "kev-0.8b-cuda-gpu",
+            "entity_id": "azureml://registries/b98c40bc-36d6-4175-b131-bad4502fe1a3/type/models/objectId/kev-0.8b-cuda-gpu/version/1",
+            "display_name": "kev-0.8b-cuda-gpu",
+            "publisher": "Microsoft",
+            "task": "decision",
+            "license": "apache-2.0",
+            "supports_tool_calling": null,
+            "supports_reasoning": null,
+            "context_window": 262144,
+            "max_output_tokens": null,
+            "uri": "azureml://registries/azureml/models/kev-0.8b-cuda-gpu/versions/1",
+            "version": 1,
+            "min_foundry_local_version": "",
+            "model_type": "ONNX",
+            "device": "GPU",
+            "execution_provider": "CUDAExecutionProvider",
+            "file_size_bytes": 1300252028
+          },
+          {
+            "alias": "kev-0.8b",
+            "name": "kev-0.8b-generic-cpu",
+            "entity_id": "azureml://registries/b98c40bc-36d6-4175-b131-bad4502fe1a3/type/models/objectId/kev-0.8b-generic-cpu/version/1",
+            "display_name": "kev-0.8b-generic-cpu",
+            "publisher": "Microsoft",
+            "task": "decision",
+            "license": "apache-2.0",
+            "supports_tool_calling": null,
+            "supports_reasoning": null,
+            "context_window": 262144,
+            "max_output_tokens": null,
+            "uri": "azureml://registries/azureml/models/kev-0.8b-generic-cpu/versions/1",
+            "version": 1,
+            "min_foundry_local_version": "",
+            "model_type": "ONNX",
+            "device": "CPU",
+            "execution_provider": "CPUExecutionProvider",
+            "file_size_bytes": 1300251997
+          },
+          {
+            "alias": "kev-0.8b",
+            "name": "kev-0.8b-generic-gpu",
+            "entity_id": "azureml://registries/b98c40bc-36d6-4175-b131-bad4502fe1a3/type/models/objectId/kev-0.8b-generic-gpu/version/1",
+            "display_name": "kev-0.8b-generic-gpu",
+            "publisher": "Microsoft",
+            "task": "decision",
+            "license": "apache-2.0",
+            "supports_tool_calling": null,
+            "supports_reasoning": null,
+            "context_window": 262144,
+            "max_output_tokens": null,
+            "uri": "azureml://registries/azureml/models/kev-0.8b-generic-gpu/versions/1",
+            "version": 1,
+            "min_foundry_local_version": "",
+            "model_type": "ONNX",
+            "device": "GPU",
+            "execution_provider": "WebGPUExecutionProvider",
+            "file_size_bytes": 1300029717
+          }
+        ]
+      }
+    },
+    {
+      "provider": "foundry-local",
+      "model_id": "kev-4b",
+      "display_name": "kev-4b-cuda-gpu",
+      "context_window": 262144,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": false,
+      "supports_streaming": false,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_responses_api": false,
+      "license_type": "apache-2.0",
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [
+        "azureml://registries/b98c40bc-36d6-4175-b131-bad4502fe1a3/type/models/objectId/kev-4b-cuda-gpu/version/1",
+        "azureml://registries/b98c40bc-36d6-4175-b131-bad4502fe1a3/type/models/objectId/kev-4b-generic-cpu/version/1",
+        "azureml://registries/b98c40bc-36d6-4175-b131-bad4502fe1a3/type/models/objectId/kev-4b-generic-gpu/version/1",
+        "kev-4b-cuda-gpu",
+        "kev-4b-generic-cpu",
+        "kev-4b-generic-gpu"
+      ],
+      "extra": {
+        "source": "https://ai.azure.com/api/japaneast/ux/v1.0/entities/crossRegion",
+        "source_docs": "https://learn.microsoft.com/en-us/azure/foundry-local/reference/reference-rest",
+        "source_implementation": "https://github.com/microsoft/Foundry-Local",
+        "source_type": "official_foundry_local_catalog_api",
+        "catalog_region": "japaneast",
+        "tasks": [
+          "decision"
+        ],
+        "media_model_type": "",
+        "publishers": [
+          "Microsoft"
+        ],
+        "licenses": [
+          "apache-2.0"
+        ],
+        "variants": [
+          {
+            "alias": "kev-4b",
+            "name": "kev-4b-cuda-gpu",
+            "entity_id": "azureml://registries/b98c40bc-36d6-4175-b131-bad4502fe1a3/type/models/objectId/kev-4b-cuda-gpu/version/1",
+            "display_name": "kev-4b-cuda-gpu",
+            "publisher": "Microsoft",
+            "task": "decision",
+            "license": "apache-2.0",
+            "supports_tool_calling": null,
+            "supports_reasoning": null,
+            "context_window": 262144,
+            "max_output_tokens": null,
+            "uri": "azureml://registries/azureml/models/kev-4b-cuda-gpu/versions/1",
+            "version": 1,
+            "min_foundry_local_version": "",
+            "model_type": "ONNX",
+            "device": "GPU",
+            "execution_provider": "CUDAExecutionProvider",
+            "file_size_bytes": 5950640223
+          },
+          {
+            "alias": "kev-4b",
+            "name": "kev-4b-generic-cpu",
+            "entity_id": "azureml://registries/b98c40bc-36d6-4175-b131-bad4502fe1a3/type/models/objectId/kev-4b-generic-cpu/version/1",
+            "display_name": "kev-4b-generic-cpu",
+            "publisher": "Microsoft",
+            "task": "decision",
+            "license": "apache-2.0",
+            "supports_tool_calling": null,
+            "supports_reasoning": null,
+            "context_window": 262144,
+            "max_output_tokens": null,
+            "uri": "azureml://registries/azureml/models/kev-4b-generic-cpu/versions/1",
+            "version": 1,
+            "min_foundry_local_version": "",
+            "model_type": "ONNX",
+            "device": "CPU",
+            "execution_provider": "CPUExecutionProvider",
+            "file_size_bytes": 16917273822
+          },
+          {
+            "alias": "kev-4b",
+            "name": "kev-4b-generic-gpu",
+            "entity_id": "azureml://registries/b98c40bc-36d6-4175-b131-bad4502fe1a3/type/models/objectId/kev-4b-generic-gpu/version/1",
+            "display_name": "kev-4b-generic-gpu",
+            "publisher": "Microsoft",
+            "task": "decision",
+            "license": "apache-2.0",
+            "supports_tool_calling": null,
+            "supports_reasoning": null,
+            "context_window": 262144,
+            "max_output_tokens": null,
+            "uri": "azureml://registries/azureml/models/kev-4b-generic-gpu/versions/1",
+            "version": 1,
+            "min_foundry_local_version": "",
+            "model_type": "ONNX",
+            "device": "GPU",
+            "execution_provider": "WebGPUExecutionProvider",
+            "file_size_bytes": 5950412516
+          }
+        ]
+      }
+    },
+    {
+      "provider": "foundry-local",
+      "model_id": "ling-3.0-tiny",
+      "display_name": "ling-3.0-tiny-cuda-gpu",
+      "context_window": 131072,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_responses_api": false,
+      "license_type": "MIT",
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [
+        "azureml://registries/b98c40bc-36d6-4175-b131-bad4502fe1a3/type/models/objectId/ling-3.0-tiny-cuda-gpu/version/1",
+        "ling-3.0-tiny-cuda-gpu"
+      ],
+      "extra": {
+        "source": "https://ai.azure.com/api/japaneast/ux/v1.0/entities/crossRegion",
+        "source_docs": "https://learn.microsoft.com/en-us/azure/foundry-local/reference/reference-rest",
+        "source_implementation": "https://github.com/microsoft/Foundry-Local",
+        "source_type": "official_foundry_local_catalog_api",
+        "catalog_region": "japaneast",
+        "tasks": [
+          "chat-completion"
+        ],
+        "media_model_type": "",
+        "publishers": [
+          "Microsoft"
+        ],
+        "licenses": [
+          "MIT"
+        ],
+        "variants": [
+          {
+            "alias": "ling-3.0-tiny",
+            "name": "ling-3.0-tiny-cuda-gpu",
+            "entity_id": "azureml://registries/b98c40bc-36d6-4175-b131-bad4502fe1a3/type/models/objectId/ling-3.0-tiny-cuda-gpu/version/1",
+            "display_name": "ling-3.0-tiny-cuda-gpu",
+            "publisher": "Microsoft",
+            "task": "chat-completion",
+            "license": "MIT",
+            "supports_tool_calling": true,
+            "supports_reasoning": true,
+            "context_window": 131072,
+            "max_output_tokens": 2048,
+            "uri": "azureml://registries/azureml/models/ling-3.0-tiny-cuda-gpu/versions/1",
+            "version": 1,
+            "min_foundry_local_version": "",
+            "model_type": "ONNX",
+            "device": "GPU",
+            "execution_provider": "CUDAExecutionProvider",
+            "file_size_bytes": 4675228803
+          }
+        ]
+      }
+    },
+    {
+      "provider": "foundry-local",
       "model_id": "ministral-3-3b-instruct-2512",
       "display_name": "ministral-3-3b-instruct-2512-cuda-gpu",
       "context_window": 262144,
@@ -1226,7 +1622,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-11-12",
+        "checked_at": "2026-11-13",
         "status": "inferred"
       }
     },
@@ -1332,7 +1728,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-11-12",
+        "checked_at": "2026-11-13",
         "status": "inferred"
       }
     },
@@ -1438,7 +1834,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-11-12",
+        "checked_at": "2026-11-13",
         "status": "inferred"
       }
     },
@@ -1653,7 +2049,7 @@
           "transcription": true,
           "speech_understanding": true
         },
-        "checked_at": "2026-11-12",
+        "checked_at": "2026-11-13",
         "status": "inferred"
       }
     },
@@ -5146,7 +5542,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-11-12"
+        "checked_at": "2026-11-13"
       }
     },
     {
@@ -5264,7 +5660,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-11-12"
+        "checked_at": "2026-11-13"
       }
     },
     {
@@ -6365,7 +6761,7 @@
           "transcription": true,
           "speech_understanding": true
         },
-        "checked_at": "2026-11-12",
+        "checked_at": "2026-11-13",
         "status": "inferred"
       }
     },
@@ -6470,7 +6866,7 @@
           "transcription": true,
           "speech_understanding": true
         },
-        "checked_at": "2026-11-12",
+        "checked_at": "2026-11-13",
         "status": "inferred"
       }
     },
@@ -6575,7 +6971,7 @@
           "transcription": true,
           "speech_understanding": true
         },
-        "checked_at": "2026-11-12",
+        "checked_at": "2026-11-13",
         "status": "inferred"
       }
     },
@@ -6680,7 +7076,7 @@
           "transcription": true,
           "speech_understanding": true
         },
-        "checked_at": "2026-11-12",
+        "checked_at": "2026-11-13",
         "status": "inferred"
       }
     },
@@ -6785,7 +7181,7 @@
           "transcription": true,
           "speech_understanding": true
         },
-        "checked_at": "2026-11-12",
+        "checked_at": "2026-11-13",
         "status": "inferred"
       }
     }
