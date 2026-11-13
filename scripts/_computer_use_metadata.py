@@ -28,6 +28,7 @@ META_COMPUTER_USE_MODELS = frozenset({"muse-spark-1.1", "muse-spark-1.3"})
 # These model IDs are explicitly listed in Google's current Computer Use guide.
 GOOGLE_COMPUTER_USE_MODELS = frozenset(
     {
+        "gemini-4-hydrogen",
         "gemini-3.8-flash",
         "gemini-3.7-flash",
         "gemini-3.5-flash-lite",

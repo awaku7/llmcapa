@@ -82,6 +82,47 @@ def discover_prices(
         )
     )
     discovered: dict[str, tuple[float, float, int]] = {}
+
+    # Google now publishes the pricing page's source as Markdown embedded in
+    # the docs HTML. The older rendered-table markup above is still supported
+    # for cached/legacy pages, but does not contain the current Gemini 4 rows.
+    if not headings:
+        markdown = google_docs_markdown(html)
+        markdown_headings = list(
+            re.finditer(r'(?m)^##\s+.*?\{%\s*id="(gemini-[^"]+)"\s*%\}', markdown)
+        )
+        for index, heading in enumerate(markdown_headings):
+            model_id = heading.group(1)
+            section_end = (
+                markdown_headings[index + 1].start()
+                if index + 1 < len(markdown_headings)
+                else len(markdown)
+            )
+            section = markdown[heading.start() : section_end]
+            standard_tab = re.search(
+                r'\{%\s*tab title="Standard"\s*%\}(.*?)\{%\s*/tab\s*%\}',
+                section,
+                re.DOTALL,
+            )
+            if not standard_tab:
+                continue
+
+            def markdown_price(
+                label: str, source: str = standard_tab.group(1)
+            ) -> float | None:
+                row = re.search(
+                    rf"(?m)^\s*\*\s*{label}[^\n]*\n\s*\*\s*[^\n]*\n\s*\*\s*([^\n]+)",
+                    source,
+                    re.IGNORECASE,
+                )
+                return parse_price(row.group(1)) if row else None
+
+            inp = markdown_price("Input price")
+            out = markdown_price("Output price")
+            if inp is not None and out is not None:
+                discovered[model_id] = (inp, out, 1_048_576)
+        return discovered
+
     for index, match in enumerate(headings):
         model_id = match.group(2).strip()
         if not model_id.startswith("gemini-"):
@@ -518,7 +559,8 @@ def template_for(model_id: str) -> dict:
         "gemini-3.8-live-extended-thinking",
         "gemini-4-argon",
     }
-    is_modern_level = model_id in modern_level_models
+    is_hydrogen = model_id == "gemini-4-hydrogen"
+    is_modern_level = model_id in modern_level_models or is_hydrogen
     is_gemini_3_thinking = (
         re.match(r"^gemini-3(?:\.|-|$)", model_id) is not None
         and not is_specialized
@@ -530,9 +572,15 @@ def template_for(model_id: str) -> dict:
         else None
     )
     level_values = (
-        ["low", "medium", "high"]
-        if is_modern_level
-        else (["minimal", "low", "medium", "high"] if is_gemini_3_thinking else None)
+        ["low", "medium", "high", "xhigh"]
+        if is_hydrogen
+        else (
+            ["low", "medium", "high"]
+            if is_modern_level
+            else (
+                ["minimal", "low", "medium", "high"] if is_gemini_3_thinking else None
+            )
+        )
     )
     control = (
         {
@@ -551,14 +599,27 @@ def template_for(model_id: str) -> dict:
             else None
         )
     )
+    extra = {"source": SOURCE, "discovered_from": SOURCE}
+    if is_hydrogen:
+        extra.update(
+            {
+                "source": "https://ai.google.dev/gemini-api/docs/models/gemini-4-hydrogen",
+                "long_decode_max_output_tokens": 1_048_576,
+                "long_decode_requires_opt_in": True,
+            }
+        )
     return {
         "display_name": display,
-        "input_modalities": ["text"],
+        "input_modalities": (
+            ["text", "image", "video", "audio", "file"] if is_hydrogen else ["text"]
+        ),
         "output_modalities": ["text"],
         "supports_function_calling": True,
         "supports_json_mode": True,
-        "supports_vision": any(x in model_id for x in ("image", "vision")),
-        "supports_reasoning": any(x in model_id for x in ("pro", "flash")),
+        "supports_vision": is_hydrogen
+        or any(x in model_id for x in ("image", "vision")),
+        "supports_reasoning": is_hydrogen
+        or any(x in model_id for x in ("pro", "flash")),
         "supports_chat_completion": True,
         "supports_reasoning_effort": False,
         "reasoning_effort_values": None,
@@ -568,7 +629,7 @@ def template_for(model_id: str) -> dict:
         "thinking_level_values": level_values,
         "thinking_control": control,
         "max_output_tokens": 65_536,
-        "extra": {"source": SOURCE, "discovered_from": SOURCE},
+        "extra": extra,
     }
 
 

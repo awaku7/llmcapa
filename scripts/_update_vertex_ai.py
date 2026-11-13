@@ -53,6 +53,10 @@ VERTEX_GEMINI_SPECS = {
         "parameter": "thinking_level",
         "thinking_level_values": ["minimal", "low", "medium", "high"],
     },
+    "gemini-4-hydrogen": {
+        "parameter": "thinking_level",
+        "thinking_level_values": ["low", "medium", "high", "xhigh"],
+    },
 }
 
 

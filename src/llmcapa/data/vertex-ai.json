@@ -960,6 +960,35 @@
     },
     {
       "provider": "vertex-ai",
+      "model_id": "8bitstudio/sekai-1",
+      "display_name": "8bitstudio/sekai-1",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_vision": null,
+      "supports_reasoning": null,
+      "supports_responses_api": false,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
+        "platform": "Google Cloud Vertex AI / Model Garden",
+        "spec_status": "sdk_listed_only",
+        "modality_source": "conservative_model_id_heuristic"
+      }
+    },
+    {
+      "provider": "vertex-ai",
       "model_id": "8f-ai/verus-r1",
       "display_name": "8f-ai/verus-r1",
       "context_window": 0,
@@ -51767,7 +51796,7 @@
         "requires_beta": false,
         "enable_zoom": false,
         "source_url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/computer-use",
-        "checked_at": "2026-11-12"
+        "checked_at": "2026-11-13"
       },
       "extra": {
         "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
@@ -51978,6 +52007,98 @@
         ],
         "checked_at": "2026-10-28",
         "status": "inferred"
+      }
+    },
+    {
+      "provider": "vertex-ai",
+      "model_id": "gemini-4-hydrogen",
+      "display_name": "Gemini 4 Hydrogen",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "audio",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 1.5,
+        "output_per_1m": 7.5,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "thinking_budget_values": null,
+      "supports_thinking_level": true,
+      "thinking_level_values": [
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ],
+      "thinking_control": {
+        "kind": "level",
+        "parameter": "thinking_level",
+        "values": [
+          "low",
+          "medium",
+          "high",
+          "xhigh"
+        ]
+      },
+      "extra": {
+        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
+        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing",
+        "long_decode_max_output_tokens": 1048576,
+        "long_decode_requires_opt_in": true,
+        "platform": "Google Cloud Vertex AI / Model Garden",
+        "thinking_parameter": "thinking_level",
+        "thinking_level_values": [
+          "low",
+          "medium",
+          "high",
+          "xhigh"
+        ],
+        "thinking_source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/thinking"
+      },
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "vertex-ai",
+        "model": "gemini-4-hydrogen",
+        "api_type": "generate_content",
+        "tool_type": "computer_use",
+        "tool_version": null,
+        "status": "preview",
+        "environments": [
+          "browser",
+          "desktop",
+          "mobile"
+        ],
+        "requires_beta": false,
+        "enable_zoom": false,
+        "source_url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/computer-use",
+        "checked_at": "2026-11-13"
       }
     },
     {
@@ -96527,6 +96648,66 @@
     },
     {
       "provider": "vertex-ai",
+      "model_id": "minimaxai/minimax-h3-image",
+      "display_name": "minimaxai/minimax-h3-image",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "image",
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "supports_responses_api": false,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
+        "platform": "Google Cloud Vertex AI / Model Garden",
+        "spec_status": "sdk_listed_only",
+        "modality_source": "conservative_model_id_heuristic"
+      }
+    },
+    {
+      "provider": "vertex-ai",
+      "model_id": "minimaxai/minimax-h3-image-pe",
+      "display_name": "minimaxai/minimax-h3-image-pe",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "image",
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "supports_responses_api": false,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
+        "platform": "Google Cloud Vertex AI / Model Garden",
+        "spec_status": "sdk_listed_only",
+        "modality_source": "conservative_model_id_heuristic"
+      }
+    },
+    {
+      "provider": "vertex-ai",
       "model_id": "minimaxai/minimax-m2",
       "display_name": "minimaxai/minimax-m2",
       "context_window": 0,
@@ -96638,6 +96819,64 @@
         ]
       },
       "supports_fim": false
+    },
+    {
+      "provider": "vertex-ai",
+      "model_id": "minimaxai/minimax-m3-mxfp8",
+      "display_name": "minimaxai/minimax-m3-mxfp8",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_vision": null,
+      "supports_reasoning": null,
+      "supports_responses_api": false,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
+        "platform": "Google Cloud Vertex AI / Model Garden",
+        "spec_status": "sdk_listed_only",
+        "modality_source": "conservative_model_id_heuristic"
+      }
+    },
+    {
+      "provider": "vertex-ai",
+      "model_id": "minimaxai/minimax-m3.1-flash",
+      "display_name": "minimaxai/minimax-m3.1-flash",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_vision": null,
+      "supports_reasoning": null,
+      "supports_responses_api": false,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
+        "platform": "Google Cloud Vertex AI / Model Garden",
+        "spec_status": "sdk_listed_only",
+        "modality_source": "conservative_model_id_heuristic"
+      }
     },
     {
       "provider": "vertex-ai",
@@ -99008,6 +99247,35 @@
         ]
       },
       "supports_fim": false
+    },
+    {
+      "provider": "vertex-ai",
+      "model_id": "moganai/moganocr-tr",
+      "display_name": "moganai/moganocr-tr",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_vision": null,
+      "supports_reasoning": null,
+      "supports_responses_api": false,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
+        "platform": "Google Cloud Vertex AI / Model Garden",
+        "spec_status": "sdk_listed_only",
+        "modality_source": "conservative_model_id_heuristic"
+      }
     },
     {
       "provider": "vertex-ai",
@@ -111452,6 +111720,35 @@
         ]
       },
       "supports_fim": false
+    },
+    {
+      "provider": "vertex-ai",
+      "model_id": "nvidia/minimax-m3-nvfp4",
+      "display_name": "nvidia/minimax-m3-nvfp4",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_vision": null,
+      "supports_reasoning": null,
+      "supports_responses_api": false,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
+        "platform": "Google Cloud Vertex AI / Model Garden",
+        "spec_status": "sdk_listed_only",
+        "modality_source": "conservative_model_id_heuristic"
+      }
     },
     {
       "provider": "vertex-ai",
@@ -126299,6 +126596,36 @@
     },
     {
       "provider": "vertex-ai",
+      "model_id": "pottokao/moss-image-text-encoder-heretic",
+      "display_name": "pottokao/moss-image-text-encoder-heretic",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "image",
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "supports_responses_api": false,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
+        "platform": "Google Cloud Vertex AI / Model Garden",
+        "spec_status": "sdk_listed_only",
+        "modality_source": "conservative_model_id_heuristic"
+      }
+    },
+    {
+      "provider": "vertex-ai",
       "model_id": "pranav-s/polymerner",
       "display_name": "pranav-s/polymerner",
       "context_window": 0,
@@ -131706,6 +132033,35 @@
         ]
       },
       "supports_fim": false
+    },
+    {
+      "provider": "vertex-ai",
+      "model_id": "qvac/botpsy-0.8b",
+      "display_name": "qvac/botpsy-0.8b",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_vision": null,
+      "supports_reasoning": null,
+      "supports_responses_api": false,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
+        "platform": "Google Cloud Vertex AI / Model Garden",
+        "spec_status": "sdk_listed_only",
+        "modality_source": "conservative_model_id_heuristic"
+      }
     },
     {
       "provider": "vertex-ai",
@@ -161072,6 +161428,35 @@
         ]
       },
       "supports_fim": false
+    },
+    {
+      "provider": "vertex-ai",
+      "model_id": "tcmofashi/mai_replier-9b-v3",
+      "display_name": "tcmofashi/mai_replier-9b-v3",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": true,
+      "supports_streaming": true,
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_vision": null,
+      "supports_reasoning": null,
+      "supports_responses_api": false,
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [],
+      "extra": {
+        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
+        "platform": "Google Cloud Vertex AI / Model Garden",
+        "spec_status": "sdk_listed_only",
+        "modality_source": "conservative_model_id_heuristic"
+      }
     },
     {
       "provider": "vertex-ai",
@@ -192124,7 +192509,7 @@
         "requires_beta": false,
         "enable_zoom": false,
         "source_url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/computer-use",
-        "checked_at": "2026-11-12"
+        "checked_at": "2026-11-13"
       }
     },
     {
@@ -192259,7 +192644,7 @@
         "requires_beta": false,
         "enable_zoom": false,
         "source_url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/computer-use",
-        "checked_at": "2026-11-12"
+        "checked_at": "2026-11-13"
       }
     },
     {
@@ -192345,719 +192730,8 @@
         "requires_beta": false,
         "enable_zoom": false,
         "source_url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/computer-use",
-        "checked_at": "2026-11-12"
+        "checked_at": "2026-11-13"
       }
-    },
-    {
-      "provider": "vertex-ai",
-      "model_id": "ai-mo/kimina-prover-72b",
-      "display_name": "ai-mo/kimina-prover-72b",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
-        "platform": "Google Cloud Vertex AI / Model Garden",
-        "spec_status": "sdk_listed_only",
-        "modality_source": "conservative_model_id_heuristic",
-        "endpoints": [
-          {
-            "base_url": "https://{location}-aiplatform.googleapis.com/v1/projects/{project}/locations/{location}/publishers/google/models",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference"
-          }
-        ],
-        "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-12"
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "vertex-ai",
-      "model_id": "ai-mo/kimina-prover-distill-8b",
-      "display_name": "ai-mo/kimina-prover-distill-8b",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
-        "platform": "Google Cloud Vertex AI / Model Garden",
-        "spec_status": "sdk_listed_only",
-        "modality_source": "conservative_model_id_heuristic",
-        "endpoints": [
-          {
-            "base_url": "https://{location}-aiplatform.googleapis.com/v1/projects/{project}/locations/{location}/publishers/google/models",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference"
-          }
-        ],
-        "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-12"
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "vertex-ai",
-      "model_id": "ai-mo/numinamath-7b-cot",
-      "display_name": "ai-mo/numinamath-7b-cot",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
-        "platform": "Google Cloud Vertex AI / Model Garden",
-        "spec_status": "sdk_listed_only",
-        "modality_source": "conservative_model_id_heuristic",
-        "endpoints": [
-          {
-            "base_url": "https://{location}-aiplatform.googleapis.com/v1/projects/{project}/locations/{location}/publishers/google/models",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference"
-          }
-        ],
-        "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-12"
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "vertex-ai",
-      "model_id": "alpindale/glm-4.6-int8",
-      "display_name": "alpindale/glm-4.6-int8",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
-        "platform": "Google Cloud Vertex AI / Model Garden",
-        "spec_status": "sdk_listed_only",
-        "modality_source": "conservative_model_id_heuristic",
-        "endpoints": [
-          {
-            "base_url": "https://{location}-aiplatform.googleapis.com/v1/projects/{project}/locations/{location}/publishers/google/models",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference"
-          }
-        ],
-        "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-12"
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "vertex-ai",
-      "model_id": "davidau/ernie-21b-a3b-glm-4.7-flash-thinking",
-      "display_name": "davidau/ernie-21b-a3b-glm-4.7-flash-thinking",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
-        "platform": "Google Cloud Vertex AI / Model Garden",
-        "spec_status": "sdk_listed_only",
-        "modality_source": "conservative_model_id_heuristic",
-        "endpoints": [
-          {
-            "base_url": "https://{location}-aiplatform.googleapis.com/v1/projects/{project}/locations/{location}/publishers/google/models",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference"
-          }
-        ],
-        "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-12"
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "vertex-ai",
-      "model_id": "davidau/ernie-21b-a3b-thinking-gemini-3-pro-high-reasoning-v2",
-      "display_name": "davidau/ernie-21b-a3b-thinking-gemini-3-pro-high-reasoning-v2",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
-        "platform": "Google Cloud Vertex AI / Model Garden",
-        "spec_status": "sdk_listed_only",
-        "modality_source": "conservative_model_id_heuristic",
-        "endpoints": [
-          {
-            "base_url": "https://{location}-aiplatform.googleapis.com/v1/projects/{project}/locations/{location}/publishers/google/models",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference"
-          }
-        ],
-        "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-12"
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "vertex-ai",
-      "model_id": "hadadxyz/qwen3-4b-diversity",
-      "display_name": "hadadxyz/qwen3-4b-diversity",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
-        "platform": "Google Cloud Vertex AI / Model Garden",
-        "spec_status": "sdk_listed_only",
-        "modality_source": "conservative_model_id_heuristic",
-        "endpoints": [
-          {
-            "base_url": "https://{location}-aiplatform.googleapis.com/v1/projects/{project}/locations/{location}/publishers/google/models",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference"
-          }
-        ],
-        "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-12"
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "vertex-ai",
-      "model_id": "huginnfork/qwen3.6-27b-uncensored-heretic-v2-mtp-fp8",
-      "display_name": "huginnfork/qwen3.6-27b-uncensored-heretic-v2-mtp-fp8",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
-        "platform": "Google Cloud Vertex AI / Model Garden",
-        "spec_status": "sdk_listed_only",
-        "modality_source": "conservative_model_id_heuristic",
-        "endpoints": [
-          {
-            "base_url": "https://{location}-aiplatform.googleapis.com/v1/projects/{project}/locations/{location}/publishers/google/models",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference"
-          }
-        ],
-        "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-12"
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "vertex-ai",
-      "model_id": "huginnfork/qwen3.8-27b-fp8",
-      "display_name": "huginnfork/qwen3.8-27b-fp8",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
-        "platform": "Google Cloud Vertex AI / Model Garden",
-        "spec_status": "sdk_listed_only",
-        "modality_source": "conservative_model_id_heuristic",
-        "endpoints": [
-          {
-            "base_url": "https://{location}-aiplatform.googleapis.com/v1/projects/{project}/locations/{location}/publishers/google/models",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference"
-          }
-        ],
-        "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-12"
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "vertex-ai",
-      "model_id": "huginnfork/qwen3.8-27b-nvfp4a16",
-      "display_name": "huginnfork/qwen3.8-27b-nvfp4a16",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
-        "platform": "Google Cloud Vertex AI / Model Garden",
-        "spec_status": "sdk_listed_only",
-        "modality_source": "conservative_model_id_heuristic",
-        "endpoints": [
-          {
-            "base_url": "https://{location}-aiplatform.googleapis.com/v1/projects/{project}/locations/{location}/publishers/google/models",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference"
-          }
-        ],
-        "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-12"
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "vertex-ai",
-      "model_id": "lianghsun/keyboard-warrior",
-      "display_name": "lianghsun/keyboard-warrior",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
-        "platform": "Google Cloud Vertex AI / Model Garden",
-        "spec_status": "sdk_listed_only",
-        "modality_source": "conservative_model_id_heuristic",
-        "endpoints": [
-          {
-            "base_url": "https://{location}-aiplatform.googleapis.com/v1/projects/{project}/locations/{location}/publishers/google/models",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference"
-          }
-        ],
-        "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-12"
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "vertex-ai",
-      "model_id": "openguardrails/openguardrails-text-2510",
-      "display_name": "openguardrails/openguardrails-text-2510",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
-        "platform": "Google Cloud Vertex AI / Model Garden",
-        "spec_status": "sdk_listed_only",
-        "modality_source": "conservative_model_id_heuristic",
-        "endpoints": [
-          {
-            "base_url": "https://{location}-aiplatform.googleapis.com/v1/projects/{project}/locations/{location}/publishers/google/models",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference"
-          }
-        ],
-        "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-12"
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "vertex-ai",
-      "model_id": "skt-ai-labs/skt-st-x-0-3b",
-      "display_name": "skt-ai-labs/skt-st-x-0-3b",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
-        "platform": "Google Cloud Vertex AI / Model Garden",
-        "spec_status": "sdk_listed_only",
-        "modality_source": "conservative_model_id_heuristic",
-        "endpoints": [
-          {
-            "base_url": "https://{location}-aiplatform.googleapis.com/v1/projects/{project}/locations/{location}/publishers/google/models",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference"
-          }
-        ],
-        "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-12"
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "vertex-ai",
-      "model_id": "supralabs/supra2.1-ultra-preview-001",
-      "display_name": "supralabs/supra2.1-ultra-preview-001",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
-        "platform": "Google Cloud Vertex AI / Model Garden",
-        "spec_status": "sdk_listed_only",
-        "modality_source": "conservative_model_id_heuristic",
-        "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-12"
-      }
-    },
-    {
-      "provider": "vertex-ai",
-      "model_id": "twinkle-ai/twinkle-sqlcoder",
-      "display_name": "twinkle-ai/twinkle-sqlcoder",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
-        "platform": "Google Cloud Vertex AI / Model Garden",
-        "spec_status": "sdk_listed_only",
-        "modality_source": "conservative_model_id_heuristic",
-        "endpoints": [
-          {
-            "base_url": "https://{location}-aiplatform.googleapis.com/v1/projects/{project}/locations/{location}/publishers/google/models",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference"
-          }
-        ],
-        "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-12"
-      },
-      "supports_fim": true
-    },
-    {
-      "provider": "vertex-ai",
-      "model_id": "uzairkhn/almas-pashto-ai",
-      "display_name": "uzairkhn/almas-pashto-ai",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
-        "platform": "Google Cloud Vertex AI / Model Garden",
-        "spec_status": "sdk_listed_only",
-        "modality_source": "conservative_model_id_heuristic",
-        "endpoints": [
-          {
-            "base_url": "https://{location}-aiplatform.googleapis.com/v1/projects/{project}/locations/{location}/publishers/google/models",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference"
-          }
-        ],
-        "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-12"
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "vertex-ai",
-      "model_id": "voyageai/voyage-4-nano",
-      "display_name": "voyageai/voyage-4-nano",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
-        "platform": "Google Cloud Vertex AI / Model Garden",
-        "spec_status": "sdk_listed_only",
-        "modality_source": "conservative_model_id_heuristic",
-        "endpoints": [
-          {
-            "base_url": "https://{location}-aiplatform.googleapis.com/v1/projects/{project}/locations/{location}/publishers/google/models",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference"
-          }
-        ],
-        "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-12"
-      },
-      "supports_fim": false
-    },
-    {
-      "provider": "vertex-ai",
-      "model_id": "windowsxp811203/qwen3.8-27b-abliterated",
-      "display_name": "windowsxp811203/qwen3.8-27b-abliterated",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_chat_completion": true,
-      "supports_streaming": true,
-      "supports_function_calling": null,
-      "supports_json_mode": null,
-      "supports_vision": null,
-      "supports_reasoning": null,
-      "supports_responses_api": false,
-      "pricing": null,
-      "deprecated": false,
-      "aliases": [],
-      "extra": {
-        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models",
-        "platform": "Google Cloud Vertex AI / Model Garden",
-        "spec_status": "sdk_listed_only",
-        "modality_source": "conservative_model_id_heuristic",
-        "endpoints": [
-          {
-            "base_url": "https://{location}-aiplatform.googleapis.com/v1/projects/{project}/locations/{location}/publishers/google/models",
-            "protocol": "openai-compatible",
-            "auth": "bearer",
-            "source": "https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference"
-          }
-        ],
-        "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-12"
-      },
-      "supports_fim": false
     }
   ]
 }

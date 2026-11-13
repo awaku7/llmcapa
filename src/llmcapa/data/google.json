@@ -1923,7 +1923,7 @@
         "requires_beta": false,
         "enable_zoom": false,
         "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/computer-use",
-        "checked_at": "2026-11-12"
+        "checked_at": "2026-11-13"
       },
       "extra": {
         "source": "https://ai.google.dev/gemini-api/docs/pricing",
@@ -3850,7 +3850,7 @@
         "requires_beta": false,
         "enable_zoom": false,
         "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/computer-use",
-        "checked_at": "2026-11-12"
+        "checked_at": "2026-11-13"
       }
     },
     {
@@ -3999,7 +3999,7 @@
         "requires_beta": false,
         "enable_zoom": false,
         "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/computer-use",
-        "checked_at": "2026-11-12"
+        "checked_at": "2026-11-13"
       }
     },
     {
@@ -4841,7 +4841,7 @@
         "requires_beta": false,
         "enable_zoom": false,
         "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/computer-use",
-        "checked_at": "2026-11-12"
+        "checked_at": "2026-11-13"
       }
     },
     {
@@ -4921,7 +4921,7 @@
         "requires_beta": false,
         "enable_zoom": false,
         "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/computer-use",
-        "checked_at": "2026-11-12"
+        "checked_at": "2026-11-13"
       },
       "audio": {
         "accepts_audio_input": true,
@@ -5370,8 +5370,135 @@
     },
     {
       "provider": "google",
+      "model_id": "gemini-4-carbon",
+      "display_name": "Gemini 4 Carbon",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 2.0,
+        "output_per_1m": 10.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "thinking_budget_values": null,
+      "supports_thinking_level": false,
+      "thinking_level_values": null,
+      "thinking_control": null,
+      "extra": {
+        "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing"
+      }
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-4-hydrogen",
+      "display_name": "Gemini 4 Hydrogen",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text",
+        "image",
+        "video",
+        "audio",
+        "file"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 1.5,
+        "output_per_1m": 7.5,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "thinking_budget_values": null,
+      "supports_thinking_level": true,
+      "thinking_level_values": [
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ],
+      "thinking_control": {
+        "kind": "level",
+        "parameter": "thinking_level",
+        "values": [
+          "low",
+          "medium",
+          "high",
+          "xhigh"
+        ]
+      },
+      "extra": {
+        "source": "https://ai.google.dev/gemini-api/docs/models/gemini-4-hydrogen",
+        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing",
+        "long_decode_max_output_tokens": 1048576,
+        "long_decode_requires_opt_in": true
+      },
+      "computer_use": {
+        "supported": true,
+        "native": true,
+        "provider": "google",
+        "model": "gemini-4-hydrogen",
+        "api_type": "generate_content",
+        "tool_type": "computer_use",
+        "tool_version": null,
+        "status": "preview",
+        "environments": [
+          "browser",
+          "desktop",
+          "mobile"
+        ],
+        "requires_beta": false,
+        "enable_zoom": false,
+        "source_url": "https://ai.google.dev/gemini-api/docs/generate-content/computer-use",
+        "checked_at": "2026-11-13"
+      }
+    },
+    {
+      "provider": "google",
       "model_id": "gemini-decision-1",
-      "display_name": "Gemini Decision",
+      "display_name": "Gemini Decision 1",
       "context_window": 262144,
       "max_output_tokens": 0,
       "input_modalities": [
@@ -5459,7 +5586,7 @@
           "https://generativelanguage.googleapis.com/v1beta/decisions"
         ],
         "source_url": "https://aistudio.google.com/docs/decisions-api",
-        "checked_at": "2026-11-12",
+        "checked_at": "2026-11-13",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "google-gemini-decisions-v1beta",
@@ -5480,7 +5607,7 @@
           "application/pdf"
         ],
         "source_url": "https://aistudio.google.com/docs/models/gemini-decision-1",
-        "checked_at": "2026-11-12",
+        "checked_at": "2026-11-13",
         "status": "documented"
       }
     },
@@ -5739,6 +5866,50 @@
     },
     {
       "provider": "google",
+      "model_id": "gemini-omni-1.2-flash",
+      "display_name": "Gemini Omni 1.2 Flash",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 1.5,
+        "output_per_1m": 9.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "thinking_budget_values": null,
+      "supports_thinking_level": false,
+      "thinking_level_values": null,
+      "thinking_control": null,
+      "extra": {
+        "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing"
+      }
+    },
+    {
+      "provider": "google",
       "model_id": "gemini-omni-flash-preview",
       "display_name": "Gemini Omni Flash Preview",
       "context_window": 1048576,
@@ -5893,6 +6064,50 @@
     },
     {
       "provider": "google",
+      "model_id": "gemini-robotics-er-2",
+      "display_name": "Gemini Robotics Er 2",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 1.0,
+        "output_per_1m": 5.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "thinking_budget_values": null,
+      "supports_thinking_level": false,
+      "thinking_level_values": null,
+      "thinking_control": null,
+      "extra": {
+        "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing"
+      }
+    },
+    {
+      "provider": "google",
       "model_id": "gemini-robotics-er-2-preview",
       "display_name": "Gemini Robotics Er 2 Preview",
       "context_window": 1048576,
@@ -5934,6 +6149,50 @@
       "supports_thinking_level": false,
       "thinking_level_values": null,
       "thinking_control": null
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-robotics-er-2-streaming",
+      "display_name": "Gemini Robotics Er 2 Streaming",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": false,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": true,
+      "supports_fim": false,
+      "license_type": "api",
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "pricing": {
+        "input_per_1m": 1.0,
+        "output_per_1m": 5.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "reasoning_effort_values": null,
+      "thinking_budget_values": null,
+      "supports_thinking_level": false,
+      "thinking_level_values": null,
+      "thinking_control": null,
+      "extra": {
+        "source": "https://ai.google.dev/gemini-api/docs/pricing",
+        "discovered_from": "https://ai.google.dev/gemini-api/docs/pricing"
+      }
     },
     {
       "provider": "google",

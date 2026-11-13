@@ -1,6 +1,7 @@
 """Google Decisions API metadata is derived from official documentation text."""
 
 import sys
+from html import escape
 from pathlib import Path
 
 SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
@@ -110,3 +111,46 @@ POST https://generativelanguage.googleapis.com/v1beta/decisions
         "https://generativelanguage.googleapis.com/v1beta/decisions"
     ]
     assert record["document"]["input_formats"] == ["pdf"]
+
+
+def test_discover_prices_from_current_google_markdown_page():
+    pricing_markdown = """## Gemini 4 Hydrogen  {% id="gemini-4-hydrogen" %}
+
+{% tabs %}
+  {% tab title="Standard" %}
+  {% table %}
+  * Feature
+  * Free Tier
+  * Paid Tier, per 1M tokens in USD
+
+  ---
+
+  * Input price
+  * Free of charge
+  * $1.50
+
+  ---
+
+  * Output price (including thinking tokens)
+  * Free of charge
+  * $7.50
+  {% /table %}
+  {% /tab %}
+{% /tabs %}
+"""
+    page_html = f"<noscript><pre>{escape(pricing_markdown)}</pre></noscript>"
+
+    assert updater.discover_prices(page_html) == {
+        "gemini-4-hydrogen": (1.5, 7.5, 1_048_576)
+    }
+
+
+def test_gemini_4_hydrogen_metadata_matches_official_model_page():
+    template = updater.template_for("gemini-4-hydrogen")
+
+    assert template["input_modalities"] == ["text", "image", "video", "audio", "file"]
+    assert template["supports_vision"] is True
+    assert template["supports_reasoning"] is True
+    assert template["thinking_level_values"] == ["low", "medium", "high", "xhigh"]
+    assert template["max_output_tokens"] == 65_536
+    assert template["extra"]["long_decode_max_output_tokens"] == 1_048_576
