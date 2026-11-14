@@ -1814,7 +1814,10 @@ class Registry:
             regional = cap.regions
             if regional is None:
                 continue
-            if scope is not None and regional.scope.casefold() != scope.strip().casefold():
+            if (
+                scope is not None
+                and regional.scope.casefold() != scope.strip().casefold()
+            ):
                 continue
             for location in regional.locations:
                 normalized = location.strip()
@@ -1861,7 +1864,10 @@ class Registry:
             regional = cap.regions
             if regional is None:
                 continue
-            if scope is not None and regional.scope.casefold() != scope.strip().casefold():
+            if (
+                scope is not None
+                and regional.scope.casefold() != scope.strip().casefold()
+            ):
                 continue
             if wanted == "global":
                 matches = regional.global_endpoint is True

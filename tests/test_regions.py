@@ -43,9 +43,7 @@ def test_region_capability_round_trip_and_provider_extensions():
 
     assert isinstance(cap.regions, RegionCapability)
     assert cap.regions.locations == ("us-east-1", "eu-west-1")
-    assert cap.regions.inference_profiles == (
-        "us.anthropic.claude-sonnet-4-5-v1:0",
-    )
+    assert cap.regions.inference_profiles == ("us.anthropic.claude-sonnet-4-5-v1:0",)
     assert cap.to_dict()["regions"] == raw
     assert Capability.from_dict(cap.to_dict()) == cap
 
