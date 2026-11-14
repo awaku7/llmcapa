@@ -129,9 +129,12 @@ def test_registry_list_regions_and_find_by_region_are_scoped_and_offline():
 def test_bundled_regional_availability_snapshot_is_queryable():
     registry = Registry()
 
-    countries = registry.list_regions(provider="google", scope="country")
-    assert "Japan" in countries
-    assert len(countries) > 100
+    # Bundled region data uses cloud region/location names only. Service
+    # availability by country (e.g. the Gemini API country list) is not
+    # recorded, so the google provider carries no region metadata.
+    assert registry.list_regions(provider="google") == []
+    assert registry.list_regions(scope="country") == []
+    assert registry.get("gemini-2.5-flash", provider="google").regions is None
 
     vertex = registry.get("gemini-2.5-flash", provider="vertex-ai")
     assert "us-central1" in vertex.regions.locations

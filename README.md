@@ -556,9 +556,6 @@ print(llmcapa.providers())
 Regional location metadata can be listed and searched locally:
 
 ```python
-# Gemini API / AI Studio service availability (country/territory names)
-countries = llmcapa.list_regions(provider="google", scope="country")
-
 # Model-specific Vertex AI endpoint locations and global endpoint support
 vertex = llmcapa.get("gemini-2.5-flash", provider="vertex-ai")
 print(vertex.regions.locations)
@@ -582,17 +579,16 @@ cross-Region profile source Regions unless `include_inference_regions=True`;
 profile destinations are never reported as direct availability. The metadata
 includes `source_url` and `checked_at` for verification.
 
-The bundled snapshot includes Gemini API / AI Studio country availability from
-Google's service-level list (not a per-model Cloud deployment matrix), model-level
-Vertex AI location data for selected Gemini models, and AWS Bedrock availability
-for selected models. Coverage is intentionally explicit and not complete for every
+The bundled snapshot includes model-level Vertex AI location data for selected
+Gemini models and AWS Bedrock availability for selected models. Region entries
+use cloud region/location names only; service availability by country is not
+recorded. Coverage is intentionally explicit and not complete for every
 catalog record. All queries use local data and make no network requests. Availability
 changes over time; verify the linked official documentation before deployment or
 making data-residency decisions.
 
 Official sources:
 
-- [Gemini API available regions](https://ai.google.dev/gemini-api/docs/available-regions)
 - [Vertex AI model endpoint locations](https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations)
 - [Amazon Bedrock regional availability by model](https://docs.aws.amazon.com/bedrock/latest/userguide/models-region-compatibility.html)
 
