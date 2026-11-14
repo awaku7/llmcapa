@@ -75,6 +75,93 @@ class ReasoningMode(str, Enum):
 
 
 @dataclass(frozen=True)
+class RegionCapability:
+    """Regional availability metadata for a model/API.
+
+    ``locations`` contains direct endpoint locations (for example ``us-east-1``
+    or ``us-central1``); ``scope`` identifies whether those identifiers are
+    cloud regions, countries/territories, or another namespace. ``multi_regions``
+    records multi-region endpoints such as Google ``us`` and ``eu``. Bedrock
+    cross-Region profile source locations are kept separately from direct
+    availability in ``geographic_inference_regions`` and
+    ``global_inference_regions``.
+    """
+
+    locations: tuple[str, ...] = ()
+    scope: str = "cloud_region"
+    multi_regions: tuple[str, ...] = ()
+    global_endpoint: bool | None = None
+    geographic_inference_regions: tuple[str, ...] = ()
+    global_inference_regions: tuple[str, ...] = ()
+    inference_profiles: tuple[str, ...] = ()
+    source_url: str | None = None
+    checked_at: str | None = None
+    extra: dict[str, Any] = field(default_factory=dict)
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> RegionCapability:
+        """Create regional metadata while retaining provider extensions."""
+        values: dict[str, Any] = {}
+        known = {f for f in cls.__dataclass_fields__ if f != "extra"}  # type: ignore[attr-defined]
+        extra: dict[str, Any] = dict(data.get("extra") or {})
+        for key, value in data.items():
+            if key == "extra":
+                continue
+            if key in known:
+                values[key] = value
+            else:
+                extra[key] = value
+        locations = values.get("locations") or ()
+        multi_regions = values.get("multi_regions") or ()
+        geographic_regions = values.get("geographic_inference_regions") or ()
+        global_regions = values.get("global_inference_regions") or ()
+        profiles = values.get("inference_profiles") or ()
+        for key, value in (
+            ("locations", locations),
+            ("multi_regions", multi_regions),
+            ("geographic_inference_regions", geographic_regions),
+            ("global_inference_regions", global_regions),
+            ("inference_profiles", profiles),
+        ):
+            values[key] = (value,) if isinstance(value, str) else tuple(value)
+        values["scope"] = values.get("scope") or "cloud_region"
+        values["extra"] = extra
+        return cls(**values)
+
+    def to_dict(self) -> dict[str, Any]:
+        """Return regional metadata as JSON-compatible data."""
+        result = asdict(self)
+        for key in (
+            "locations",
+            "multi_regions",
+            "geographic_inference_regions",
+            "global_inference_regions",
+            "inference_profiles",
+        ):
+            result[key] = list(getattr(self, key))
+        extra = result.pop("extra", {})
+        result.update(extra)
+        for key in (
+            "locations",
+            "multi_regions",
+            "geographic_inference_regions",
+            "global_inference_regions",
+            "inference_profiles",
+        ):
+            if not getattr(self, key):
+                result.pop(key, None)
+        if self.global_endpoint is None:
+            result.pop("global_endpoint", None)
+        if self.scope == "cloud_region":
+            result.pop("scope", None)
+        if self.source_url is None:
+            result.pop("source_url", None)
+        if self.checked_at is None:
+            result.pop("checked_at", None)
+        return result
+
+
+@dataclass(frozen=True)
 class ResponsesApiCapability:
     """Feature-level support for a provider's Responses API implementation.
 
@@ -700,6 +787,8 @@ class Capability:
     reasoning_mode_values: list[str] | None = None
     # Appended after all existing fields for positional compatibility.
     responses_api: ResponsesApiCapability | None = None
+    # Appended after all existing fields for positional compatibility.
+    regions: RegionCapability | None = None
 
     def supports(self, feature: Feature | str) -> bool | None:
         """Return True if the model supports the given feature.
@@ -1164,6 +1253,10 @@ class Capability:
             d.pop("responses_api", None)
         else:
             d["responses_api"] = self.responses_api.to_dict()
+        if self.regions is None:
+            d.pop("regions", None)
+        else:
+            d["regions"] = self.regions.to_dict()
         if self.image is None:
             d.pop("image", None)
         else:
@@ -1264,6 +1357,12 @@ class Capability:
                         value
                         if isinstance(value, DecisionCapability)
                         else DecisionCapability.from_dict(value)
+                    )
+                elif key == "regions" and value is not None:
+                    kwargs[key] = (
+                        value
+                        if isinstance(value, RegionCapability)
+                        else RegionCapability.from_dict(value)
                     )
                 else:
                     kwargs[key] = value

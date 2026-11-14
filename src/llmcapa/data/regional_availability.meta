@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "models": [
+    {
+      "provider": "google",
+      "model_id": "*",
+      "regions": {
+        "scope": "country",
+        "locations": [
+          "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan",
+          "The Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "British Indian Ocean Territory", "British Virgin Islands", "Brunei", "Bulgaria", "Burkina Faso", "Burundi",
+          "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Caribbean Netherlands", "Cayman Islands", "Central African Republic", "Chad", "Chile", "Christmas Island", "Cocos (Keeling) Islands", "Colombia", "Comoros", "Cook Islands", "Costa Rica", "Côte d'Ivoire", "Croatia", "Curaçao", "Czech Republic",
+          "Democratic Republic of the Congo", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Falkland Islands (Islas Malvinas)", "Faroe Islands", "Fiji", "Finland", "France", "French Guiana", "Gabon", "The Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea-Bissau", "Guyana",
+          "Haiti", "Heard Island and McDonald Islands", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg",
+          "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Namibia", "Nauru", "Nepal", "Netherlands", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Niue", "Norfolk Island", "North Macedonia", "Northern Mariana Islands", "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Pitcairn Islands", "Poland", "Portugal", "Puerto Rico", "Qatar", "Republic of Cyprus", "Republic of the Congo", "Romania", "Rwanda", "Réunion",
+          "Saint Barthélemy", "Saint Helena, Ascension and Tristan da Cunha", "Saint Kitts and Nevis", "Saint Lucia", "Saint Pierre and Miquelon", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "São Tomé and Príncipe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Georgia and the South Sandwich Islands", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tokelau", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkmenistan", "Turks and Caicos Islands", "Tuvalu", "Türkiye", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "United States Minor Outlying Islands", "Uruguay", "U.S. Virgin Islands", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Wallis and Futuna", "Western Sahara", "Yemen", "Zambia", "Zimbabwe", "Åland Islands"
+        ],
+        "source_url": "https://ai.google.dev/gemini-api/docs/available-regions",
+        "checked_at": "2026-11-14",
+        "extra": {
+          "availability_level": "Gemini API / Google AI Studio service access",
+          "note": "Country and territory access list; this is not a model-specific Google Cloud deployment region matrix."
+        }
+      }
+    },
+    {
+      "provider": "vertex-ai",
+      "model_id": "gemini-2.5-pro",
+      "regions": {
+        "locations": ["us-west1", "us-west4", "us-central1", "us-east1", "us-east4", "us-east5", "us-south1", "northamerica-northeast1", "europe-west1", "europe-west4", "europe-north1", "europe-central2", "europe-west8", "europe-southwest1", "europe-west9", "asia-northeast1"],
+        "global_endpoint": true,
+        "source_url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations",
+        "checked_at": "2026-11-14"
+      }
+    },
+    {
+      "provider": "vertex-ai",
+      "model_id": "gemini-2.5-flash",
+      "regions": {
+        "locations": ["us-west1", "us-west4", "us-central1", "us-east1", "us-east4", "us-east5", "us-south1", "northamerica-northeast1", "southamerica-east1", "europe-west2", "europe-west1", "europe-west4", "europe-west3", "europe-north1", "europe-central2", "europe-west8", "europe-southwest1", "europe-west9", "asia-south1", "asia-southeast1", "asia-northeast1", "australia-southeast1", "asia-northeast3"],
+        "global_endpoint": true,
+        "source_url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations",
+        "checked_at": "2026-11-14"
+      }
+    },
+    {
+      "provider": "vertex-ai",
+      "model_id": "gemini-2.5-flash-lite",
+      "regions": {
+        "locations": ["us-west1", "us-west4", "us-central1", "us-east1", "us-east4", "us-east5", "us-south1", "europe-west1", "europe-west4", "europe-north1", "europe-central2", "europe-west8", "europe-southwest1", "europe-west9"],
+        "global_endpoint": true,
+        "source_url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations",
+        "checked_at": "2026-11-14"
+      }
+    },
+    {
+      "provider": "vertex-ai",
+      "model_id": "gemini-3.8-flash",
+      "regions": {
+        "locations": ["northamerica-northeast1", "asia-northeast1"],
+        "multi_regions": ["us", "eu"],
+        "global_endpoint": true,
+        "source_url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations",
+        "checked_at": "2026-11-14"
+      }
+    },
+    {
+      "provider": "vertex-ai",
+      "model_id": "gemini-3.5-flash",
+      "regions": {
+        "locations": ["northamerica-northeast1", "europe-west2", "europe-west3", "asia-south1", "asia-southeast1", "asia-northeast1", "australia-southeast1"],
+        "multi_regions": ["us", "eu"],
+        "global_endpoint": true,
+        "source_url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations",
+        "checked_at": "2026-11-14"
+      }
+    },
+    {
+      "provider": "vertex-ai",
+      "model_id": "gemini-3.5-flash-lite",
+      "regions": {
+        "locations": ["asia-south1"],
+        "multi_regions": ["us", "eu"],
+        "global_endpoint": true,
+        "source_url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations",
+        "checked_at": "2026-11-14"
+      }
+    },
+    {
+      "provider": "vertex-ai",
+      "model_id": "gemini-embedding-001",
+      "regions": {
+        "locations": ["us-west1", "us-west4", "us-central1", "us-east1", "us-east4", "us-east5", "us-south1", "northamerica-northeast1", "southamerica-east1", "europe-west2", "europe-west1", "europe-west4", "europe-west6", "europe-west3", "europe-north1", "europe-central2", "europe-west8", "europe-southwest1", "europe-west9", "asia-south1", "asia-southeast1", "asia-east2", "asia-east1", "asia-northeast1", "australia-southeast1", "asia-northeast3", "me-west1", "me-central1", "me-central2"],
+        "global_endpoint": false,
+        "source_url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations",
+        "checked_at": "2026-11-14"
+      }
+    },
+    {
+      "provider": "amazon",
+      "model_id": "amazon.nova-2-5-sonic",
+      "regions": {
+        "locations": ["us-east-1", "us-west-2", "eu-north-1", "ap-northeast-1"],
+        "source_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/models-region-compatibility.html",
+        "checked_at": "2026-11-14"
+      }
+    },
+    {
+      "provider": "amazon",
+      "model_id": "nova-2-lite-v1",
+      "regions": {
+        "geographic_inference_regions": ["us-east-1", "us-east-2", "us-west-1", "us-west-2", "ca-central-1", "ca-west-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-3", "ap-northeast-1"],
+        "global_inference_regions": ["us-east-1", "us-east-2", "us-west-1", "us-west-2", "ca-central-1", "ca-west-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "ap-east-2", "ap-northeast-1", "ap-northeast-2", "ap-south-1", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ap-southeast-5", "ap-southeast-6", "ap-southeast-7", "il-central-1", "me-central-1"],
+        "source_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/models-region-compatibility.html",
+        "checked_at": "2026-11-14"
+      }
+    },
+    {
+      "provider": "amazon",
+      "model_id": "titan-embed-text-v2",
+      "regions": {
+        "locations": ["us-east-1", "us-east-2", "us-west-2", "us-gov-east-1", "us-gov-west-1", "ca-central-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-2", "sa-east-1"],
+        "source_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/models-region-compatibility.html",
+        "checked_at": "2026-11-14"
+      }
+    },
+    {
+      "provider": "amazon",
+      "model_id": "anthropic.claude-sonnet-4-6",
+      "regions": {
+        "locations": ["eu-west-2"],
+        "geographic_inference_regions": ["us-east-1", "us-east-2", "us-west-1", "us-west-2", "ca-central-1", "ca-west-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "ap-northeast-1", "ap-northeast-3", "ap-southeast-2", "ap-southeast-4", "ap-southeast-6"],
+        "global_inference_regions": ["us-east-1", "us-east-2", "us-west-1", "us-west-2", "ca-central-1", "ca-west-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "ap-east-2", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ap-southeast-5", "ap-southeast-6", "ap-southeast-7", "il-central-1", "me-central-1", "me-south-1", "af-south-1", "sa-east-1", "mx-central-1"],
+        "source_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/models-region-compatibility.html",
+        "checked_at": "2026-11-14"
+      }
+    },
+    {
+      "provider": "amazon",
+      "model_id": "anthropic.claude-haiku-4-5-20251001-v1:0",
+      "regions": {
+        "locations": ["us-east-1", "us-east-2", "us-west-2", "us-gov-west-1", "eu-north-1", "eu-west-1", "ap-northeast-1", "ap-southeast-4"],
+        "geographic_inference_regions": ["us-east-1", "us-east-2", "us-west-1", "us-west-2", "ca-central-1", "us-gov-west-1", "us-gov-east-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "ap-northeast-1", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-2", "ap-southeast-4", "ap-southeast-6"],
+        "global_inference_regions": ["us-east-1", "us-east-2", "us-west-1", "us-west-2", "ca-central-1", "ca-west-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "ap-east-2", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ap-southeast-5", "ap-southeast-6", "ap-southeast-7", "il-central-1", "me-central-1", "me-south-1", "af-south-1", "sa-east-1", "mx-central-1"],
+        "source_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/models-region-compatibility.html",
+        "checked_at": "2026-11-14"
+      }
+    },
+    {
+      "provider": "vertex-ai",
+      "model_id": "gemini-4-hydrogen",
+      "regions": {
+        "multi_regions": ["us", "eu"],
+        "global_endpoint": true,
+        "source_url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations",
+        "checked_at": "2026-11-14"
+      }
+    }
+  ]
+}

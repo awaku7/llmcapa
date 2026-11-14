@@ -26,7 +26,7 @@ from urllib.parse import quote
 from ._catalog_index import CatalogIndex, CatalogMapping, parse_numeric_name
 from ._temporary_cache import DAY, cleanup_temporary_caches, write_temporary_cache
 from .hf_overlay import expand_hf_overlay, is_hf_overlay
-from .models import Capability
+from .models import Capability, RegionCapability
 
 _HF_MAX_RETRIES = 5
 _HF_MAX_BACKOFF_SECONDS = 60.0
@@ -218,8 +218,12 @@ class Registry:
             self._load_bundled_files()
 
         if self._catalog_index is not None and self._load_user_cache_snapshot():
+            # User snapshots created before the regional matrix was introduced
+            # may lack these optional fields; fill only absent metadata.
+            self._load_region_metadata()
             return
         self._load_startup_caches()
+        self._load_region_metadata()
 
     def _load_startup_caches(self) -> None:
         # Apply cache records as sparse overrides without expanding the bundle.
@@ -342,6 +346,62 @@ class Registry:
             self._load_json_text(
                 entry.read_text(encoding="utf-8"), catalog_name=entry.name
             )
+        self._load_region_metadata()
+
+    def _load_region_metadata(self) -> None:
+        """Apply official, versioned regional metadata to catalog models."""
+        data_pkg = resources.files("llmcapa.data")
+        path = data_pkg.joinpath("regional_availability.meta")
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError, TypeError):
+            return
+        records = payload.get("models", []) if isinstance(payload, dict) else []
+        if not isinstance(records, list):
+            return
+
+        for record in records:
+            if not isinstance(record, dict):
+                continue
+            provider = record.get("provider")
+            model_id = record.get("model_id")
+            regions_data = record.get("regions")
+            if not isinstance(provider, str) or not isinstance(model_id, str):
+                continue
+            if not isinstance(regions_data, dict):
+                continue
+            try:
+                regional = RegionCapability.from_dict(regions_data)
+            except (TypeError, ValueError):
+                continue
+
+            provider_key = self._canonical_provider(provider)
+            provider_models = self._by_provider.get(provider_key)
+            if provider_models is None:
+                continue
+            if model_id == "*":
+                targets = list(provider_models.items())
+            else:
+                wanted = model_id.casefold()
+                targets = [
+                    (key, cap)
+                    for key, cap in provider_models.items()
+                    if key.casefold() == wanted
+                    or any(alias.casefold() == wanted for alias in cap.aliases)
+                ]
+
+            for key, cap in targets:
+                # Explicit model-record metadata wins over this curated default.
+                if cap.regions is not None:
+                    continue
+                updated = replace(cap, regions=regional)
+                provider_models[key] = updated
+                flat = self._models.get(key)
+                if (
+                    flat is not None
+                    and self._canonical_provider(flat.provider) == provider_key
+                ):
+                    self._models[key] = updated
 
     def _load_openrouter_cache(self) -> None:
         """Load the existing local OpenRouter cache, if fresh."""
@@ -1565,7 +1625,7 @@ class Registry:
         return best[1] if best else None
 
     def _refresh_provider_catalog_on_miss(self, provider: str) -> bool:
-        """Try one cached/remote GitHub refresh per provider per registry."""
+        """Try one cached/remote refresh, persisting it as a user override."""
         provider_key = "\0".join(
             sorted(
                 self._normalize_provider(name)
@@ -1576,7 +1636,16 @@ class Registry:
             return False
         self._github_auto_refresh_attempted.add(provider_key)
         try:
-            return self.fetch_github_catalog(provider, cache_ttl=86400) > 0
+            # A lookup miss is an automatic runtime operation. Do not rewrite
+            # the installed package's bundled JSON: doing so invalidates its
+            # prebuilt SQLite index and makes every later startup reparse the
+            # full catalog. Explicit catalog refreshes may still opt into that.
+            return (
+                self.fetch_github_catalog(
+                    provider, cache_ttl=86400, write_bundled=False
+                )
+                > 0
+            )
         except (RuntimeError, ValueError):
             # Preserve the normal not-found behavior if GitHub is unavailable
             # or this provider has no published llmcapa catalog.
@@ -1587,8 +1656,9 @@ class Registry:
 
         When a provider is supplied and the local lookup misses, the matching
         llmcapa GitHub catalog is fetched (using its 24-hour cache) once per
-        provider for this registry, then the lookup is retried once. Unscoped
-        lookups and successful local lookups never trigger a fetch.
+        provider for this registry, persisted as a user override, then the
+        lookup is retried once. Unscoped lookups and successful local lookups
+        never trigger a fetch.
         """
         self._ensure_loaded()
         try:
@@ -1710,6 +1780,108 @@ class Registry:
             result = [c for c in result if not c.deprecated]
         return sorted(result, key=lambda c: (c.provider, c.model_id))
 
+    def list_regions(
+        self,
+        provider: str | None = None,
+        model_id: str | None = None,
+        include_deprecated: bool = False,
+        scope: str | None = None,
+        include_global: bool = False,
+        include_inference_regions: bool = False,
+    ) -> list[str]:
+        """List distinct locations with published regional metadata.
+
+        Location identifiers are returned as written in the catalog. Their
+        namespace is described by ``RegionCapability.scope`` (for example,
+        cloud-region IDs or countries/territories). ``include_global`` adds
+        the special identifier ``global`` for models documented as supporting
+        a global endpoint. With ``include_inference_regions=True``, source
+        Regions supported by cross-Region inference profiles are also included.
+        This method only examines local catalog data.
+        """
+        candidates = self.list_models(provider, include_deprecated)
+        if model_id is not None:
+            wanted = model_id.strip().casefold()
+            candidates = [
+                cap
+                for cap in candidates
+                if cap.model_id.casefold() == wanted
+                or any(alias.casefold() == wanted for alias in cap.aliases)
+            ]
+
+        locations: dict[str, str] = {}
+        for cap in candidates:
+            regional = cap.regions
+            if regional is None:
+                continue
+            if scope is not None and regional.scope.casefold() != scope.strip().casefold():
+                continue
+            for location in regional.locations:
+                normalized = location.strip()
+                if normalized:
+                    locations.setdefault(normalized.casefold(), normalized)
+            for location in regional.multi_regions:
+                normalized = location.strip()
+                if normalized:
+                    locations.setdefault(normalized.casefold(), normalized)
+            if include_inference_regions:
+                for location in (
+                    *regional.geographic_inference_regions,
+                    *regional.global_inference_regions,
+                ):
+                    normalized = location.strip()
+                    if normalized:
+                        locations.setdefault(normalized.casefold(), normalized)
+            if include_global and regional.global_endpoint is True:
+                locations.setdefault("global", "global")
+        return sorted(locations.values(), key=str.casefold)
+
+    def find_by_region(
+        self,
+        region: str,
+        provider: str | None = None,
+        include_deprecated: bool = False,
+        scope: str | None = None,
+        include_inference_regions: bool = False,
+    ) -> list[Capability]:
+        """Find models available directly in a region/location.
+
+        Region matching is case-insensitive and exact. Searching for
+        ``global`` matches only records whose ``global_endpoint`` is true;
+        inference-profile source Regions are excluded unless
+        ``include_inference_regions=True``. Inference-profile destinations are
+        not treated as direct availability.
+        """
+        wanted = region.strip().casefold()
+        if not wanted:
+            return []
+        candidates = self.list_models(provider, include_deprecated)
+        result = []
+        for cap in candidates:
+            regional = cap.regions
+            if regional is None:
+                continue
+            if scope is not None and regional.scope.casefold() != scope.strip().casefold():
+                continue
+            if wanted == "global":
+                matches = regional.global_endpoint is True
+            else:
+                matches = any(
+                    location.strip().casefold() == wanted
+                    for location in (*regional.locations, *regional.multi_regions)
+                )
+                if include_inference_regions and not matches:
+                    matches = any(
+                        location.strip().casefold() == wanted
+                        for location in (
+                            *regional.geographic_inference_regions,
+                            *regional.global_inference_regions,
+                        )
+                    )
+            if matches:
+                result.append(cap)
+        return sorted(result, key=lambda c: (c.provider, c.model_id))
+
     def providers(self) -> list[str]:
         """Return the sorted list of known providers."""
         self._ensure_loaded()
@@ -1790,7 +1962,7 @@ class Registry:
         include_deprecated: bool = False,
         limit: int | None = None,
     ) -> list[Capability]:
-        """Search locally, refreshing once if a provider-scoped query misses."""
+        """Search locally; persist an automatic provider-miss refresh as a user override."""
         self._ensure_loaded()
         result = self._search_local(prefix, provider, include_deprecated, limit)
         if (

@@ -33,7 +33,7 @@ llmcapa/
 
 ## Design Philosophy
 
-1. **Offline-First**: Core capability data is bundled statically inside the package as JSON files. Successful local lookups and unscoped misses make no network requests. A provider-scoped `get()` / `search()` miss may fetch the published llmcapa GitHub catalog once per provider per registry instance, using the 24-hour cache, then retry once. When writable, the corresponding bundled JSON is replaced after backing up the old file under `~/.llmcapa/github_catalog_backups`; otherwise, the persistent user catalog under `~/.llmcapa/catalogs/github` is used.
+1. **Offline-First**: Core capability data is bundled statically inside the package as JSON files. Successful local lookups and unscoped misses make no network requests. A provider-scoped `get()` / `search()` miss may fetch the published llmcapa GitHub catalog once per provider per registry instance, using the 24-hour cache, then retry once. Automatic miss refreshes are stored in the persistent user catalog under `~/.llmcapa/catalogs/github` and do not modify the installed package. Explicit catalog refreshes may replace bundled JSON after backing up the old files under `~/.llmcapa/github_catalog_backups`.
 2. **Zero Runtime Dependencies**: The library must run using only the Python standard library. External packages (like `pytest` or `build`) are strictly for development/testing.
 3. **Immutability & Performance**: The `Capability` dataclass is `frozen=True`. To avoid redundant calculations during feature checks, evaluation results are cached internally using memoization.
 
@@ -102,6 +102,17 @@ Route-qualified IDs such as `meta/muse-spark-1.3` belong to the `openrouter` cat
 Provider catalogs are updated by provider-specific scripts using each provider's official sources. There is no supported script that bulk-replaces all provider catalogs with OpenRouter data.
 
 Native provider catalogs must never fetch OpenRouter for record data. `openrouter.json` is the only file built from the OpenRouter API (`scripts/_update_openrouter.py`); all other `scripts/_update_*.py` scripts parse official documentation pages or official model APIs directly. The `scripts/openrouter_providers/` shims exist only for historical reference and must not be imported by active updaters.
+
+### Regional availability metadata
+
+`src/llmcapa/data/regional_availability.meta` is the curated, versioned overlay for provider region data. Its `models` entries use a provider and model ID plus a `regions` object; the `google` wildcard entry represents Gemini API / AI Studio service-level country access and is intentionally not a model-specific Cloud region claim. Model-specific Vertex AI and Bedrock records keep direct locations separate from multi-region endpoints and cross-Region inference-profile source Regions. Keep the official `source_url` and `checked_at` on each record. The loader only fills missing `Capability.regions`, preserving explicit model/catalog metadata.
+
+After changing this file, rebuild and validate the bundled SQLite snapshot:
+
+```bash
+python scripts/build_catalog_db.py
+python scripts/build_catalog_db.py --check
+```
 
 ### mdx.MaaS
 

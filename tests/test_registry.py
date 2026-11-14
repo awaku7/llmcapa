@@ -685,7 +685,7 @@ def test_google_gemini_provider_alias_and_strict_scope(monkeypatch) -> None:
     monkeypatch.setattr(
         llmcapa.default_registry(),
         "fetch_github_catalog",
-        lambda provider, cache_ttl=86400, ref="main": 0,
+        lambda provider, cache_ttl=86400, ref="main", write_bundled=True: 0,
     )
     assert llmcapa.get("gemini-2.5-flash", provider="google").provider == "google"
     assert llmcapa.get("gemini-2.5-flash", provider="gemini").provider == "google"
@@ -931,8 +931,8 @@ def test_provider_scoped_get_refreshes_github_catalog_once_on_miss(monkeypatch):
     )
     calls = []
 
-    def fake_fetch(provider, cache_ttl=86400, ref="main"):
-        calls.append((provider, cache_ttl))
+    def fake_fetch(provider, cache_ttl=86400, ref="main", write_bundled=True):
+        calls.append((provider, cache_ttl, write_bundled))
         registry.register(fresh_cap)
         return 1
 
@@ -940,11 +940,11 @@ def test_provider_scoped_get_refreshes_github_catalog_once_on_miss(monkeypatch):
     assert (
         registry.get("newly-published-model", provider="custom-provider") == fresh_cap
     )
-    assert calls == [("custom-provider", 86400)]
+    assert calls == [("custom-provider", 86400, False)]
 
     with pytest.raises(ModelNotFoundError):
         registry.get("still-missing-model", provider="custom-provider")
-    assert calls == [("custom-provider", 86400)]
+    assert calls == [("custom-provider", 86400, False)]
 
 
 def test_provider_scoped_search_refreshes_github_catalog_on_miss(monkeypatch):
@@ -958,7 +958,10 @@ def test_provider_scoped_search_refreshes_github_catalog_on_miss(monkeypatch):
         max_output_tokens=256,
     )
 
-    def fake_fetch(provider, cache_ttl=86400, ref="main"):
+    calls = []
+
+    def fake_fetch(provider, cache_ttl=86400, ref="main", write_bundled=True):
+        calls.append((provider, cache_ttl, write_bundled))
         registry.register(fresh_cap)
         return 1
 
@@ -967,6 +970,7 @@ def test_provider_scoped_search_refreshes_github_catalog_on_miss(monkeypatch):
         "newly-published-search-model", provider="custom-provider"
     )
     assert results == [fresh_cap]
+    assert calls == [("custom-provider", 86400, False)]
 
 
 def test_bundled_catalog_writer_replaces_json_atomically(tmp_path, monkeypatch):

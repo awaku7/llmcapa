@@ -514,6 +514,51 @@ big_reasoning_models = llmcapa.find(
 )
 ```
 
+### リージョン／提供地域の検索
+
+モデルごとの提供地域をローカルカタログから列挙・検索できます。
+
+```python
+# Gemini API / AI Studio のサービス提供国・地域
+countries = llmcapa.list_regions(provider="google", scope="country")
+
+# Vertex AI のモデル別リージョンとグローバルエンドポイント
+vertex = llmcapa.get("gemini-2.5-flash", provider="vertex-ai")
+print(vertex.regions.locations)
+print(vertex.regions.global_endpoint)
+
+# Bedrock のリージョンで直接利用できるモデル
+models = llmcapa.find_by_region("us-east-1", provider="bedrock")
+
+# Bedrock のクロスリージョン推論プロファイルを利用可能な呼び出し元リージョン
+regions = llmcapa.list_regions(
+    provider="bedrock",
+    model_id="nova-2-lite-v1",
+    include_inference_regions=True,
+)
+```
+
+`Capability.regions` は `RegionCapability` で、直接利用できる `locations`、
+Google の `multi_regions`、`global_endpoint`、Bedrock の地理的／グローバルな
+クロスリージョン推論プロファイルを利用できるソースリージョンを区別します。
+`find_by_region()` は既定ではクロスリージョン推論のソースリージョンを含めず、
+`include_inference_regions=True` で検索対象に追加します。プロファイルの宛先リージョンは
+直接利用可能なリージョンとして扱いません。確認用に公式 `source_url` と `checked_at`
+も記録しています。
+
+同梱スナップショットには、Gemini API / AI Studio のサービス提供国・地域一覧
+（個々のモデルの Google Cloud 配置リージョンとは別）、一部 Gemini モデルの Vertex AI
+モデル別リージョン情報、一部 Bedrock モデルのリージョン／推論プロファイル情報を収録
+しています。全モデルを網羅するものではありません。検索はローカルデータのみを使い、
+ネットワーク接続は行いません。提供状況は変更されるため、デプロイやデータ所在地の判断時は
+リンク先の公式情報を確認してください。
+
+公式情報:
+
+- [Gemini API の提供地域](https://ai.google.dev/gemini-api/docs/available-regions)
+- [Vertex AI モデルのエンドポイント所在地](https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations)
+- [Amazon Bedrock のモデル別リージョン提供状況](https://docs.aws.amazon.com/bedrock/latest/userguide/models-region-compatibility.html)
+
 ### オンデマンドでのOpenRouter連携（キャッシュ更新）
 
 最新のモデルデータや価格情報を取得したい場合は、必要に応じて（オンデマンドで）OpenRouter APIからモデルデータを取得し、ローカルに登録できます。`fetch_openrouter()` を実行すると、データは `~/.llmcapa/openrouter_cache.json` にキャッシュされ、次回以降のインポート時に自動的にロードされます。これにより、通常の利用時は完全にオフラインのまま最新データを活用できます。
@@ -579,7 +624,7 @@ count = llmcapa.fetch_huggingface(limit=200)
 
 ### llmcapa GitHub カタログのオンデマンド取得
 
-公開リポジトリ [`awaku7/llmcapa`](https://github.com/awaku7/llmcapa) から、指定したプロバイダーの正規化済みカタログを取得できます。プロバイダーエイリアスに対応し、複数ファイルに分かれたカタログもまとめて取得します。取得結果は既定で24時間 `~/.llmcapa/github_catalog_cache` にキャッシュし、`main` ブランチの有効なキャッシュは次回以降のプロセスでもネットワーク接続なしで読み込みます。プロバイダーを指定した `get()` / `search()` でモデルが見つからない場合も、プロバイダーごとにレジストリ内で一度だけカタログ取得を試し、検索を再実行します。通常のヒットとプロバイダー未指定の検索では通信しません。
+公開リポジトリ [`awaku7/llmcapa`](https://github.com/awaku7/llmcapa) から、指定したプロバイダーの正規化済みカタログを取得できます。プロバイダーエイリアスに対応し、複数ファイルに分かれたカタログもまとめて取得します。取得結果は既定で24時間 `~/.llmcapa/github_catalog_cache` にキャッシュし、`main` ブランチの有効なキャッシュは次回以降のプロセスでもネットワーク接続なしで読み込みます。プロバイダーを指定した `get()` / `search()` でモデルが見つからない場合も、プロバイダーごとにレジストリ内で一度だけカタログ取得を試し、検索を再実行します。この自動更新結果は永続ユーザーカタログに保存し、インストール済みパッケージは変更しません。通常のヒットとプロバイダー未指定の検索では通信しません。
 
 ```python
 # GitHub上のOpenAIカタログを取得して現在のレジストリに登録
@@ -597,7 +642,7 @@ llmcapa update gh --provider openai
 llmcapa update gh --provider modellix --refresh
 ```
 
-既定では、取得したプロバイダーJSONで対応する同梱ファイルを更新します（パッケージのデータディレクトリが書き込み可能な場合）。更新前のファイルは `~/.llmcapa/github_catalog_backups` にバックアップします。読み取り専用の場合、または `write_bundled=False` の場合は、永続的なユーザーカタログを `~/.llmcapa/catalogs/github` に保存し、次回以降の起動時にも読み込みます（同梱カタログより優先）。ユーザー上書きを解除するには、このディレクトリを削除してください。24時間のダウンロードキャッシュとは別に管理されます。本番利用前にデータの出所と仕様を確認してください。
+明示的な `fetch_github_catalog()` 呼び出しまたはCLI更新では、既定で取得したプロバイダーJSONに対応する同梱ファイルを更新します（パッケージのデータディレクトリが書き込み可能な場合）。更新前のファイルは `~/.llmcapa/github_catalog_backups` にバックアップします。読み取り専用の場合、または `write_bundled=False` の場合は、永続的なユーザーカタログを `~/.llmcapa/catalogs/github` に保存し、次回以降の起動時にも読み込みます（同梱カタログより優先）。ユーザー上書きを解除するには、このディレクトリを削除してください。24時間のダウンロードキャッシュとは別に管理されます。本番利用前にデータの出所と仕様を確認してください。
 
 ### トークン数のカウント（スタンドアロン）
 

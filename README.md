@@ -551,6 +551,51 @@ print(llmcapa.providers())
 # ['...', 'novita', '...']
 ```
 
+### Regional Availability
+
+Regional location metadata can be listed and searched locally:
+
+```python
+# Gemini API / AI Studio service availability (country/territory names)
+countries = llmcapa.list_regions(provider="google", scope="country")
+
+# Model-specific Vertex AI endpoint locations and global endpoint support
+vertex = llmcapa.get("gemini-2.5-flash", provider="vertex-ai")
+print(vertex.regions.locations)
+print(vertex.regions.global_endpoint)
+
+# Bedrock direct in-Region availability
+models = llmcapa.find_by_region("us-east-1", provider="bedrock")
+
+# Include source Regions from Bedrock geographic/global cross-Region profiles
+regions = llmcapa.list_regions(
+    provider="bedrock",
+    model_id="nova-2-lite-v1",
+    include_inference_regions=True,
+)
+```
+
+`Capability.regions` is a `RegionCapability`. It distinguishes direct `locations`,
+Google-style `multi_regions`, a `global_endpoint`, and Bedrock geographic/global
+inference-profile source Regions. For example, `find_by_region()` excludes
+cross-Region profile source Regions unless `include_inference_regions=True`;
+profile destinations are never reported as direct availability. The metadata
+includes `source_url` and `checked_at` for verification.
+
+The bundled snapshot includes Gemini API / AI Studio country availability from
+Google's service-level list (not a per-model Cloud deployment matrix), model-level
+Vertex AI location data for selected Gemini models, and AWS Bedrock availability
+for selected models. Coverage is intentionally explicit and not complete for every
+catalog record. All queries use local data and make no network requests. Availability
+changes over time; verify the linked official documentation before deployment or
+making data-residency decisions.
+
+Official sources:
+
+- [Gemini API available regions](https://ai.google.dev/gemini-api/docs/available-regions)
+- [Vertex AI model endpoint locations](https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations)
+- [Amazon Bedrock regional availability by model](https://docs.aws.amazon.com/bedrock/latest/userguide/models-region-compatibility.html)
+
 ### On-demand OpenRouter Integration (Caching)
 
 To update model data or fetch the latest pricing, you can optionally fetch and register models from the OpenRouter API on-demand using `fetch_openrouter()`. The response is cached locally in `~/.llmcapa/openrouter_cache.json` and automatically loaded on subsequent imports (if the cache is less than 24 hours old), keeping the library fully offline during regular usage.
@@ -590,7 +635,7 @@ count = llmcapa.fetch_huggingface(limit=200)
 
 ### On-demand llmcapa GitHub Catalog
 
-Fetch the published, normalized catalog for one provider from the public [`awaku7/llmcapa`](https://github.com/awaku7/llmcapa) repository. Provider aliases are accepted, and catalogs backed by multiple data files are fetched together. Downloads are cached under `~/.llmcapa/github_catalog_cache` for 24 hours by default; fresh `main`-branch snapshots are loaded by later processes without network access. A provider-scoped `get()` or `search()` that misses locally also tries this catalog once per provider per registry instance, then retries the lookup. Successful lookups and unscoped lookups remain offline.
+Fetch the published, normalized catalog for one provider from the public [`awaku7/llmcapa`](https://github.com/awaku7/llmcapa) repository. Provider aliases are accepted, and catalogs backed by multiple data files are fetched together. Downloads are cached under `~/.llmcapa/github_catalog_cache` for 24 hours by default; fresh `main`-branch snapshots are loaded by later processes without network access. A provider-scoped `get()` or `search()` that misses locally also tries this catalog once per provider per registry instance, then retries the lookup. This automatic refresh uses a persistent user catalog and does not rewrite the installed package. Successful lookups and unscoped lookups remain offline.
 
 ```python
 # Fetch the latest published OpenAI catalog and register its records
@@ -608,7 +653,7 @@ llmcapa update gh --provider openai
 llmcapa update gh --provider modellix --refresh
 ```
 
-By default, the fetched provider JSON files replace the corresponding bundled files when the package directory is writable. Previous files are backed up under `~/.llmcapa/github_catalog_backups`. If the package directory is read-only—or `write_bundled=False` is set—llmcapa saves a persistent user catalog under `~/.llmcapa/catalogs/github` and loads it on later runs, overlaying bundled records. Remove that directory to discard the user overrides. The 24-hour download cache is separate. Verify catalog provenance and specifications before relying on them in production.
+An explicit `fetch_github_catalog()` call or CLI update replaces the corresponding bundled JSON files by default when the package directory is writable. Previous files are backed up under `~/.llmcapa/github_catalog_backups`. If the package directory is read-only—or `write_bundled=False` is set—llmcapa saves a persistent user catalog under `~/.llmcapa/catalogs/github` and loads it on later runs, overlaying bundled records. Remove that directory to discard the user overrides. The 24-hour download cache is separate. Verify catalog provenance and specifications before relying on them in production.
 
 ### Token Counting (Standalone)
 

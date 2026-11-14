@@ -29,6 +29,7 @@ from .models import (
     ImageEndpointCapability,
     ReasoningEffort,
     ReasoningMode,
+    RegionCapability,
     RerankCapability,
     ResponsesApiCapability,
     SpatialCapability,
@@ -42,7 +43,7 @@ try:
     __version__ = package_version("llmcapa")
 except PackageNotFoundError:
     # Source-tree fallback when the project is not installed yet.
-    __version__ = "0.5.82"
+    __version__ = "0.5.83"
 
 __all__ = [
     "AudioCapability",
@@ -59,6 +60,7 @@ __all__ = [
     "ModelNotFoundError",
     "ReasoningEffort",
     "ReasoningMode",
+    "RegionCapability",
     "Registry",
     "RerankCapability",
     "ResponsesApiCapability",
@@ -73,11 +75,13 @@ __all__ = [
     "fetch_huggingface",
     "fetch_openrouter",
     "find",
+    "find_by_region",
     "find_model",
     "get",
     "get_computer_use_capability",
     "get_reasoning_mode_values",
     "list_models",
+    "list_regions",
     "load_extra",
     "providers",
     "register",
@@ -113,6 +117,25 @@ def list_models(
     return default_registry().list_models(provider, include_deprecated)
 
 
+def list_regions(
+    provider: str | None = None,
+    model_id: str | None = None,
+    include_deprecated: bool = False,
+    scope: str | None = None,
+    include_global: bool = False,
+    include_inference_regions: bool = False,
+) -> list[str]:
+    """List known locations from bundled/user catalogs, optionally by model."""
+    return default_registry().list_regions(
+        provider,
+        model_id,
+        include_deprecated,
+        scope,
+        include_global,
+        include_inference_regions,
+    )
+
+
 def providers() -> list[str]:
     """Return the sorted list of known providers."""
     return default_registry().providers()
@@ -131,6 +154,19 @@ def find_model(model_id: str) -> list[tuple[str, Capability]]:
     multiple providers with different specs/pricing.
     """
     return default_registry().find_by_model_id(model_id)
+
+
+def find_by_region(
+    region: str,
+    provider: str | None = None,
+    include_deprecated: bool = False,
+    scope: str | None = None,
+    include_inference_regions: bool = False,
+) -> list[Capability]:
+    """Find catalog models available directly in a region/location."""
+    return default_registry().find_by_region(
+        region, provider, include_deprecated, scope, include_inference_regions
+    )
 
 
 def search(

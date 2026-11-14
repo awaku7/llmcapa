@@ -16,7 +16,7 @@ from ._catalog_index import LOOKUP_SCHEMA, LookupBuilder, candidate_ids
 from .models import Capability
 
 ERRORS = (OSError, sqlite3.Error, ValueError, TypeError, KeyError, zlib.error)
-_FORMAT = 3
+_FORMAT = 4
 _SCHEMA = """
 CREATE TABLE metadata (signature TEXT NOT NULL);
 CREATE TABLE maps (
