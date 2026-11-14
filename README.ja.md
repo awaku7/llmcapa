@@ -519,9 +519,6 @@ big_reasoning_models = llmcapa.find(
 モデルごとの提供地域をローカルカタログから列挙・検索できます。
 
 ```python
-# Gemini API / AI Studio のサービス提供国・地域
-countries = llmcapa.list_regions(provider="google", scope="country")
-
 # Vertex AI のモデル別リージョンとグローバルエンドポイント
 vertex = llmcapa.get("gemini-2.5-flash", provider="vertex-ai")
 print(vertex.regions.locations)
@@ -546,16 +543,14 @@ Google の `multi_regions`、`global_endpoint`、Bedrock の地理的／グロ�
 直接利用可能なリージョンとして扱いません。確認用に公式 `source_url` と `checked_at`
 も記録しています。
 
-同梱スナップショットには、Gemini API / AI Studio のサービス提供国・地域一覧
-（個々のモデルの Google Cloud 配置リージョンとは別）、一部 Gemini モデルの Vertex AI
+同梱スナップショットには、一部 Gemini モデルの Vertex AI
 モデル別リージョン情報、一部 Bedrock モデルのリージョン／推論プロファイル情報を収録
-しています。全モデルを網羅するものではありません。検索はローカルデータのみを使い、
+しています。リージョンはクラウドのリージョン名だけで記録し、サービスが使える国の一覧は入れていません。全モデルを網羅するものではありません。検索はローカルデータのみを使い、
 ネットワーク接続は行いません。提供状況は変更されるため、デプロイやデータ所在地の判断時は
 リンク先の公式情報を確認してください。
 
 公式情報:
 
-- [Gemini API の提供地域](https://ai.google.dev/gemini-api/docs/available-regions)
 - [Vertex AI モデルのエンドポイント所在地](https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations)
 - [Amazon Bedrock のモデル別リージョン提供状況](https://docs.aws.amazon.com/bedrock/latest/userguide/models-region-compatibility.html)
 

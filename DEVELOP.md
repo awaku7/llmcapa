@@ -105,7 +105,7 @@ Native provider catalogs must never fetch OpenRouter for record data. `openroute
 
 ### Regional availability metadata
 
-`src/llmcapa/data/regional_availability.meta` is the curated, versioned overlay for provider region data. Its `models` entries use a provider and model ID plus a `regions` object; the `google` wildcard entry represents Gemini API / AI Studio service-level country access and is intentionally not a model-specific Cloud region claim. Model-specific Vertex AI and Bedrock records keep direct locations separate from multi-region endpoints and cross-Region inference-profile source Regions. Keep the official `source_url` and `checked_at` on each record. The loader only fills missing `Capability.regions`, preserving explicit model/catalog metadata.
+`src/llmcapa/data/regional_availability.meta` is the curated, versioned overlay for provider region data. Its `models` entries use a provider and model ID plus a `regions` object. Entries record cloud region/location names only; do not add service availability by country (for example the Gemini API / AI Studio country list). Model-specific Vertex AI and Bedrock records keep direct locations separate from multi-region endpoints and cross-Region inference-profile source Regions. Keep the official `source_url` and `checked_at` on each record. The loader only fills missing `Capability.regions`, preserving explicit model/catalog metadata.
 
 After changing this file, rebuild and validate the bundled SQLite snapshot:
 
