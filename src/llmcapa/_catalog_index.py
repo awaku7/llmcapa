@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 import sqlite3
 import zlib
@@ -15,6 +16,75 @@ from threading import RLock
 from .models import Capability
 
 _READ_ERRORS = (OSError, sqlite3.Error, ValueError, KeyError, TypeError, zlib.error)
+
+_STAMP_VERSION = 1
+
+
+def _file_stat(path):
+    stat = path.stat()
+    return [stat.st_size, stat.st_mtime_ns, stat.st_ctime_ns, stat.st_ino]
+
+
+def _source_stats(directory, database):
+    """Stat the database and its source files without reading their content."""
+    stats = {"database": _file_stat(database), "sources": {}}
+    for entry in sorted(directory.iterdir(), key=lambda e: e.name):
+        if entry.name.endswith((".json", ".meta")) and entry.is_file():
+            stats["sources"][entry.name] = _file_stat(entry)
+    return stats
+
+
+def _stamp_path():
+    return Path.home() / ".llmcapa" / "catalog_index_stamp.json"
+
+
+def _read_stamp():
+    try:
+        payload = json.loads(_stamp_path().read_text(encoding="utf-8"))
+    except (OSError, ValueError, RuntimeError):
+        return {}
+    if not isinstance(payload, dict) or payload.get("version") != _STAMP_VERSION:
+        return {}
+    databases = payload.get("databases")
+    return databases if isinstance(databases, dict) else {}
+
+
+def _write_stamp(database, stats):
+    try:
+        path = _stamp_path()
+        path.parent.mkdir(parents=True, exist_ok=True)
+        databases = _read_stamp()
+        databases[str(database)] = stats
+        payload = {"version": _STAMP_VERSION, "databases": databases}
+        temporary = path.with_name(f"{path.name}.{os.getpid()}.tmp")
+        temporary.write_text(json.dumps(payload), encoding="utf-8")
+        os.replace(temporary, path)
+    except (OSError, RuntimeError):
+        pass
+
+
+def _sources_match(directory, database, expected):
+    """Verify the bundled sources still match the database fingerprints.
+
+    A stat stamp recorded after a successful hash verification lets later
+    processes skip re-reading every source file. Any stat change (size,
+    mtime, ctime, or inode of the database or a source) falls back to the
+    authoritative sha256 comparison, so refreshed or edited sources are
+    still detected before the database is trusted.
+    """
+    try:
+        stats = _source_stats(directory, database)
+    except OSError:
+        stats = None
+    if stats is not None and _read_stamp().get(str(database)) == stats:
+        return True
+    from ._catalog_db import _catalog_sources
+
+    if expected != _catalog_sources():
+        return False
+    if stats is not None:
+        _write_stamp(database, stats)
+    return True
 
 
 _VERSION_RE = re.compile(r"(?<![A-Za-z])(\d+(?:\.\d+)+|\d+)(?![A-Za-z])")
@@ -204,8 +274,6 @@ class CatalogIndex:
             if marker.exists() and marker.stat().st_mtime_ns >= db_time:
                 return None
             # Verify authoritative content once per reader, not on each lookup.
-            from ._catalog_db import _catalog_sources
-
             with reader._connect() as conn:
                 version = conn.execute("PRAGMA user_version").fetchone()
                 if version not in ((1,), (2,), (3,)):
@@ -218,7 +286,7 @@ class CatalogIndex:
                 expected = dict(
                     conn.execute("SELECT filename, sha256 FROM catalog_sources")
                 )
-                if expected != _catalog_sources():
+                if not _sources_match(directory, database, expected):
                     return None
                 reader.source_fingerprints = expected
                 reader.providers = [
@@ -521,7 +589,7 @@ class CatalogMapping(Mapping):
     def values(self):
         return [value for _, value in self.items()]
 
-    def matching_values(self, ids, kind, term):
+    def matching_items(self, ids, kind, term):
         cached = {}
         excluded = set()
         if self._user_cache is not None:
@@ -538,9 +606,9 @@ class CatalogMapping(Mapping):
                 elif key in matches:
                     cached[key] = matches[key]
         cached.update(self._updates)
-        return [
-            value
-            for _, value in self.reader.matching_items(
-                self.table, self.provider, ids, cached, excluded
-            )
-        ]
+        return list(
+            self.reader.matching_items(self.table, self.provider, ids, cached, excluded)
+        )
+
+    def matching_values(self, ids, kind, term):
+        return [value for _, value in self.matching_items(ids, kind, term)]

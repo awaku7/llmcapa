@@ -59,6 +59,37 @@ def _verified_vllm_reasoning_models() -> dict:
     return json.loads(resource.read_text(encoding="utf-8"))["models"]
 
 
+def _region_targets(provider_models, model_id: str):
+    """Find (key, capability) pairs whose key or aliases match ``model_id``.
+
+    On the lazy SQLite index, resolve through the candidate postings so a
+    metadata record does not decode the provider's whole catalog. The scan
+    predicate is re-checked either way, so the result is identical.
+    """
+    wanted = model_id.casefold()
+
+    def matches(key, cap):
+        return key.casefold() == wanted or any(
+            alias.casefold() == wanted for alias in cap.aliases
+        )
+
+    if isinstance(provider_models, CatalogMapping):
+        candidate_ids = None
+        for term in {wanted, model_id.lower()}:
+            ids = provider_models.reader.candidate_ids("name", term)
+            if ids is not None:
+                candidate_ids = ids if candidate_ids is None else candidate_ids | ids
+        if candidate_ids is not None:
+            return [
+                (key, cap)
+                for key, cap in provider_models.matching_items(
+                    candidate_ids, "name", wanted
+                )
+                if matches(key, cap)
+            ]
+    return [(key, cap) for key, cap in provider_models.items() if matches(key, cap)]
+
+
 class ModelNotFoundError(KeyError):
     """Raised when a model id or alias cannot be resolved."""
 
@@ -382,13 +413,7 @@ class Registry:
             if model_id == "*":
                 targets = list(provider_models.items())
             else:
-                wanted = model_id.casefold()
-                targets = [
-                    (key, cap)
-                    for key, cap in provider_models.items()
-                    if key.casefold() == wanted
-                    or any(alias.casefold() == wanted for alias in cap.aliases)
-                ]
+                targets = _region_targets(provider_models, model_id)
 
             for key, cap in targets:
                 # Explicit model-record metadata wins over this curated default.
