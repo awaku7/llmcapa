@@ -20,9 +20,77 @@ _READ_ERRORS = (OSError, sqlite3.Error, ValueError, KeyError, TypeError, zlib.er
 _STAMP_VERSION = 1
 
 
+def _windows_change_time_ns(path):
+    """Return the NTFS change time of *path* in nanoseconds, or None.
+
+    ``st_ctime`` is the creation time on Windows, so it cannot prove a
+    file was not rewritten. The ``ChangeTime`` in ``FILE_BASIC_INFO``
+    advances on content and metadata writes and cannot be restored with
+    ``SetFileTime``, which makes it the ctime analogue the stamp needs.
+    """
+    try:
+        import ctypes
+        from ctypes import wintypes
+
+        class FileBasicInfo(ctypes.Structure):
+            _fields_ = [
+                ("creation_time", ctypes.c_longlong),
+                ("last_access_time", ctypes.c_longlong),
+                ("last_write_time", ctypes.c_longlong),
+                ("change_time", ctypes.c_longlong),
+                ("file_attributes", wintypes.DWORD),
+            ]
+
+        kernel32 = ctypes.windll.kernel32
+        kernel32.CreateFileW.restype = ctypes.c_void_p
+        kernel32.CreateFileW.argtypes = [
+            wintypes.LPCWSTR,
+            wintypes.DWORD,
+            wintypes.DWORD,
+            ctypes.c_void_p,
+            wintypes.DWORD,
+            wintypes.DWORD,
+            wintypes.HANDLE,
+        ]
+        kernel32.GetFileInformationByHandleEx.argtypes = [
+            wintypes.HANDLE,
+            ctypes.c_int,
+            ctypes.c_void_p,
+            wintypes.DWORD,
+        ]
+        handle = kernel32.CreateFileW(
+            str(path),
+            0x00000080,  # FILE_READ_ATTRIBUTES
+            0x00000001 | 0x00000002 | 0x00000004,  # share read/write/delete
+            None,
+            3,  # OPEN_EXISTING
+            0x00000080,  # FILE_ATTRIBUTE_NORMAL
+            None,
+        )
+        if not handle or handle == ctypes.c_void_p(-1).value:
+            return None
+        try:
+            info = FileBasicInfo()
+            if not kernel32.GetFileInformationByHandleEx(
+                handle, 0, ctypes.byref(info), ctypes.sizeof(info)
+            ):
+                return None
+            return info.change_time * 100
+        finally:
+            kernel32.CloseHandle(handle)
+    except Exception:  # noqa: BLE001 - any failure means "no stamp shortcut"
+        return None
+
+
 def _file_stat(path):
     stat = path.stat()
-    return [stat.st_size, stat.st_mtime_ns, stat.st_ctime_ns, stat.st_ino]
+    if os.name == "nt":
+        changed = _windows_change_time_ns(path)
+        if changed is None:
+            raise OSError("no reliable change timestamp for the catalog stamp")
+    else:
+        changed = stat.st_ctime_ns
+    return [stat.st_size, stat.st_mtime_ns, changed, stat.st_ino]
 
 
 def _source_stats(directory, database):

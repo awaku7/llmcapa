@@ -807,6 +807,27 @@ def test_stamp_miss_when_database_file_is_replaced(catalog, monkeypatch):
     assert calls, "replacing the database file must re-run the hash check"
 
 
+def test_windows_change_time_helper_is_unavailable_off_windows(tmp_path):
+    if os.name == "nt":
+        pytest.skip("the helper reads the real NTFS change time on Windows")
+    from llmcapa import _catalog_index
+
+    assert _catalog_index._windows_change_time_ns(tmp_path / "x") is None
+
+
+def test_file_stat_requires_a_change_time_on_windows(tmp_path, monkeypatch):
+    from llmcapa import _catalog_index
+
+    target = tmp_path / "source.json"
+    target.write_text("{}", encoding="utf-8")
+    monkeypatch.setattr(os, "name", "nt")
+    monkeypatch.setattr(_catalog_index, "_windows_change_time_ns", lambda path: 4242)
+    assert _catalog_index._file_stat(target)[2] == 4242
+    monkeypatch.setattr(_catalog_index, "_windows_change_time_ns", lambda path: None)
+    with pytest.raises(OSError):
+        _catalog_index._file_stat(target)
+
+
 def test_corrupt_stamp_is_ignored(catalog, tmp_path):
     registry = Registry()
     assert registry.get("demo").provider == "openai"
