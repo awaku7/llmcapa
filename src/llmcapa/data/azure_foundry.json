@@ -72,7 +72,7 @@
           "wait"
         ],
         "source_url": "https://ai.azure.com/catalog/models",
-        "checked_at": "2026-11-13"
+        "checked_at": "2026-11-15"
       }
     },
     {
@@ -1982,7 +1982,7 @@
         "refresh_metadata_fallbacks": [
           "output_modalities"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-13"
+        "refresh_metadata_fallback_checked_at": "2026-11-15"
       }
     },
     {
@@ -4026,7 +4026,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 6,
+        "version": 7,
         "maas_or_paygo": true,
         "summary": "DeepSeek V4 Flash 0731 MoE checkpoint for long-context reasoning and coding.",
         "long_context": true,
@@ -4077,7 +4077,7 @@
           "VM"
         ],
         "deployment_options": "MaaP,Managed Compute",
-        "version": 3,
+        "version": 4,
         "maas_or_paygo": true,
         "summary": "Multimodal DeepSeek V4.1 Flash MoE for long-context reasoning, coding, and agents.",
         "long_context": true,
@@ -5364,7 +5364,7 @@
         "requires_beta": true,
         "enable_zoom": false,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-13",
+        "checked_at": "2026-11-15",
         "beta_header": "computer-use-2025-01-24"
       }
     },
@@ -5446,6 +5446,7 @@
           "standard-paygo"
         ],
         "deployment_options": "UnifiedEndpointMaaS,Serverless API",
+        "inference_deprecation_date": "2027-03-16T00:00:00Z",
         "version": 20251101,
         "maas_or_paygo": true,
         "summary": "Claude Opus 4.5 is Anthropic’s most intelligent model, and an industry leader across coding, agents, computer use, and enterprise workflows. With a 200K token context window and 64K max output, Opus 4.5 is ideal for production code, sophisticated agents, o",
@@ -5467,7 +5468,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-13",
+        "checked_at": "2026-11-15",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -5529,7 +5530,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-13",
+        "checked_at": "2026-11-15",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -5591,7 +5592,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-13",
+        "checked_at": "2026-11-15",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -5652,7 +5653,7 @@
         "requires_beta": true,
         "enable_zoom": false,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-13",
+        "checked_at": "2026-11-15",
         "beta_header": "computer-use-2025-01-24"
       }
     },
@@ -5714,7 +5715,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-13",
+        "checked_at": "2026-11-15",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -7463,6 +7464,180 @@
         "version": 1,
         "maas_or_paygo": true,
         "summary": "A 10B-parameter open-weight reasoning model that delivers the best accuracy-efficiency balance in the 7-10B class, with dual-mode (thinking on/off) inference, tool calling, and a 32K native context window extensible to 128K."
+      }
+    },
+    {
+      "provider": "elastic",
+      "model_id": "jina-embeddings-v5-omni-nano",
+      "display_name": "Jina Embeddings v5 Omni Nano",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image",
+        "audio",
+        "video",
+        "pdf"
+      ],
+      "output_modalities": [
+        "embeddings"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Embeddings",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "supports_audio_input": true,
+      "aliases": [
+        "elastic/jina-embeddings-v5-omni-nano"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference"
+        ],
+        "azure_offers": [
+          "VM",
+          "VM-withSurcharge"
+        ],
+        "deployment_options": "MaaP",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "Compact multimodal embedding model that maps text, images, video, audio, and PDF pages into one 768-dimensional vector space shared with jina-embeddings-v5-text-nano."
+      }
+    },
+    {
+      "provider": "elastic",
+      "model_id": "jina-embeddings-v5-omni-small",
+      "display_name": "Jina Embeddings v5 Omni Small",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image",
+        "audio",
+        "video",
+        "pdf"
+      ],
+      "output_modalities": [
+        "embeddings"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Embeddings",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "supports_audio_input": true,
+      "aliases": [
+        "elastic/jina-embeddings-v5-omni-small"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference"
+        ],
+        "azure_offers": [
+          "VM",
+          "VM-withSurcharge"
+        ],
+        "deployment_options": "MaaP",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "Multimodal embedding model that maps text, images, video, audio, and PDF pages into one 1024-dimensional vector space shared with jina-embeddings-v5-text-small."
+      }
+    },
+    {
+      "provider": "elastic",
+      "model_id": "jina-embeddings-v5-text-nano",
+      "display_name": "Jina Embeddings v5 Text Nano",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embeddings"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Embeddings",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "elastic/jina-embeddings-v5-text-nano"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference"
+        ],
+        "azure_offers": [
+          "VM",
+          "VM-withSurcharge"
+        ],
+        "deployment_options": "MaaP",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "Compact multilingual text embedding model with 768-dimensional vectors, task-specific adapters, and inputs up to 8,192 tokens."
+      }
+    },
+    {
+      "provider": "elastic",
+      "model_id": "jina-embeddings-v5-text-small",
+      "display_name": "Jina Embeddings v5 Text Small",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embeddings"
+      ],
+      "supports_chat_completion": false,
+      "supports_function_calling": false,
+      "supports_json_mode": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "knowledge_cutoff": "",
+      "azure_type": "Embeddings",
+      "azure_lifecycle": "GA",
+      "source": "azure_foundry",
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "aliases": [
+        "elastic/jina-embeddings-v5-text-small"
+      ],
+      "extra": {
+        "deployment_types": [
+          "maap-inference"
+        ],
+        "azure_offers": [
+          "VM",
+          "VM-withSurcharge"
+        ],
+        "deployment_options": "MaaP",
+        "version": 1,
+        "maas_or_paygo": true,
+        "summary": "Multilingual text embedding model with 1024-dimensional vectors, task-specific adapters, and inputs up to 32,768 tokens."
       }
     },
     {
@@ -16760,7 +16935,7 @@
         "refresh_metadata_fallbacks": [
           "input_modalities"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-13"
+        "refresh_metadata_fallback_checked_at": "2026-11-15"
       }
     },
     {
@@ -16923,7 +17098,7 @@
         "refresh_metadata_fallbacks": [
           "output_modalities"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-13"
+        "refresh_metadata_fallback_checked_at": "2026-11-15"
       }
     },
     {
@@ -17647,7 +17822,7 @@
         ],
         "deployment_options": "UnifiedEndpointMaaS,ServerlessMaaS,Serverless API",
         "inference_retirement_date": "2027-02-15T00:00:00Z",
-        "inference_deprecation_date": "2026-12-15T00:00:00Z",
+        "inference_deprecation_date": "2099-06-03T00:00:00Z",
         "version": 2,
         "maas_or_paygo": true,
         "summary": "Codestral 25.01 by Mistral AI is designed for code generation, supporting 80+ programming languages, and optimized for tasks like code completion and fill-in-the-middle",
@@ -21152,7 +21327,7 @@
         "pricing_match_key": "microsoft-decision-1",
         "official_model_catalog_url": "https://ai.azure.com/catalog/models/Microsoft-Decision-1",
         "official_usage_docs": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-microsoft-decision",
-        "official_catalog_checked_at": "2026-11-13",
+        "official_catalog_checked_at": "2026-11-15",
         "deployment_types": [
           "DataZoneStandard",
           "GlobalStandard"
@@ -21475,7 +21650,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-13",
+        "checked_at": "2026-11-15",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -21521,7 +21696,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-13",
+        "checked_at": "2026-11-15",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -21567,7 +21742,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-13",
+        "checked_at": "2026-11-15",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -21613,7 +21788,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-13",
+        "checked_at": "2026-11-15",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -21659,7 +21834,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-13",
+        "checked_at": "2026-11-15",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -21705,7 +21880,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-13",
+        "checked_at": "2026-11-15",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -21751,7 +21926,7 @@
         "requires_beta": true,
         "enable_zoom": true,
         "source_url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
-        "checked_at": "2026-11-13",
+        "checked_at": "2026-11-15",
         "beta_header": "computer-use-2025-11-24"
       }
     },
@@ -81460,8 +81635,7 @@
           "VM"
         ],
         "deployment_options": "MaaP",
-        "version": 1,
-        "not_listed_in_current_docs": true
+        "version": 1
       }
     },
     {
@@ -95779,7 +95953,7 @@
         "refresh_metadata_fallbacks": [
           "output_modalities"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-13"
+        "refresh_metadata_fallback_checked_at": "2026-11-15"
       }
     },
     {
@@ -122104,7 +122278,8 @@
           "VM"
         ],
         "deployment_options": "MaaP",
-        "version": 1
+        "version": 1,
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -136613,7 +136788,8 @@
           "VM"
         ],
         "deployment_options": "MaaP",
-        "version": 1
+        "version": 1,
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -163329,7 +163505,8 @@
           "VM"
         ],
         "deployment_options": "MaaP",
-        "version": 1
+        "version": 1,
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -163407,8 +163584,7 @@
           "VM"
         ],
         "deployment_options": "MaaP",
-        "version": 1,
-        "not_listed_in_current_docs": true
+        "version": 1
       }
     },
     {
@@ -186964,8 +187140,7 @@
           "VM"
         ],
         "deployment_options": "MaaP",
-        "version": 1,
-        "not_listed_in_current_docs": true
+        "version": 1
       }
     },
     {
@@ -228384,7 +228559,8 @@
           "VM"
         ],
         "deployment_options": "MaaP",
-        "version": 1
+        "version": 1,
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -228735,8 +228911,7 @@
           "VM"
         ],
         "deployment_options": "MaaP",
-        "version": 1,
-        "not_listed_in_current_docs": true
+        "version": 1
       }
     },
     {
@@ -231273,7 +231448,8 @@
           "VM"
         ],
         "deployment_options": "MaaP",
-        "version": 1
+        "version": 1,
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -240867,7 +241043,8 @@
           "VM"
         ],
         "deployment_options": "MaaP",
-        "version": 1
+        "version": 1,
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -249018,7 +249195,8 @@
           "VM"
         ],
         "deployment_options": "MaaP",
-        "version": 1
+        "version": 1,
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -276552,7 +276730,8 @@
           "VM"
         ],
         "deployment_options": "MaaP",
-        "version": 1
+        "version": 1,
+        "not_listed_in_current_docs": true
       }
     },
     {
@@ -280296,7 +280475,8 @@
           "VM"
         ],
         "deployment_options": "MaaP",
-        "version": 1
+        "version": 1,
+        "not_listed_in_current_docs": true
       }
     },
     {

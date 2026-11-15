@@ -2129,8 +2129,10 @@
           "include_reasoning",
           "logit_bias",
           "logprobs",
+          "max_completion_tokens",
           "max_tokens",
           "min_p",
+          "parallel_tool_calls",
           "presence_penalty",
           "reasoning",
           "reasoning_effort",
@@ -5828,7 +5830,7 @@
           "details": "/api/v1/models/anthropic/claude-fable-5.2-20261109/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 7,
+          "design_arena": 10,
           "artificial_analysis": 1
         },
         "features": [
@@ -5936,7 +5938,7 @@
           "details": "/api/v1/models/anthropic/claude-fable-5.2-20261109/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 7,
+          "design_arena": 10,
           "artificial_analysis": 1
         },
         "features": [
@@ -9336,164 +9338,6 @@
     },
     {
       "provider": "openrouter",
-      "model_id": "apodex/apodex-1.1-mini",
-      "display_name": "Apodex: Apodex 1.1 Mini (free)",
-      "context_window": 262144,
-      "max_output_tokens": 262144,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "apodex-1.1-mini",
-        "openrouter/apodex/apodex-1.1-mini"
-      ],
-      "license_type": "free",
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "apodex",
-        "tokenizer": "",
-        "top_provider": {
-          "context_length": 262144,
-          "max_completion_tokens": 262144,
-          "is_moderated": null
-        },
-        "supported_parameters": [
-          "reasoning",
-          "include_reasoning",
-          "max_tokens",
-          "temperature",
-          "top_p",
-          "stop",
-          "frequency_penalty",
-          "presence_penalty",
-          "seed",
-          "top_k",
-          "repetition_penalty",
-          "response_format",
-          "tools",
-          "tool_choice"
-        ],
-        "description": "Apodex 1.1 Mini is a reasoning-first model from Apodex, built for complex, long-horizon research and forecasting tasks. It works directly with files, data, code, and tools to produce verifiable results, and is designed for agentic research workflows where answers need to be grounded in evidence.",
-        "free_tier": true,
-        "features": [
-          "tools",
-          "structured_outputs",
-          "reasoning"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "apodex/apodex-1.1-mini:free",
-      "display_name": "Apodex: Apodex 1.1 Mini (free)",
-      "context_window": 262144,
-      "max_output_tokens": 235929,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "apodex-1.1-mini:free",
-        "openrouter/apodex/apodex-1.1-mini:free",
-        "apodex/apodex-1.1-mini-20261001"
-      ],
-      "license_type": "free",
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "apodex",
-        "canonical_slug": "apodex/apodex-1.1-mini-20261001",
-        "modality": "text->text",
-        "tokenizer": "Other",
-        "top_provider": {
-          "context_length": 262144,
-          "max_completion_tokens": 235929,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "frequency_penalty",
-          "include_reasoning",
-          "max_tokens",
-          "presence_penalty",
-          "reasoning",
-          "repetition_penalty",
-          "response_format",
-          "seed",
-          "stop",
-          "temperature",
-          "tool_choice",
-          "tools",
-          "top_k",
-          "top_p"
-        ],
-        "created": "2026-10-01",
-        "description": "Apodex 1.1 Mini is a reasoning-first model from Apodex, built for complex, long-horizon research and forecasting tasks. It works directly with files, data, code, and tools to produce verifiable results,...",
-        "free_tier": true,
-        "reasoning_meta": {
-          "mandatory": false
-        },
-        "links": {
-          "details": "/api/v1/models/apodex/apodex-1.1-mini-20261001/endpoints"
-        },
-        "features": [
-          "tools",
-          "structured_outputs",
-          "reasoning"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
       "model_id": "assemblyai/assemblyai-tts-1",
       "display_name": "AssemblyAI: TTS 1",
       "context_window": 0,
@@ -11829,6 +11673,9 @@
         "currency": "USD"
       },
       "extra": {
+        "free_tier": true,
+        "image_input_per_1m": 8000.0,
+        "image_output_per_1m": 4.790419,
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -11847,9 +11694,6 @@
           "top_p"
         ],
         "description": "Seedream 5.5 is an image generation and editing model from ByteDance Seed. It is suited for creating images from text prompts and for editing or combining existing images, using up to 10 reference images per request.",
-        "free_tier": true,
-        "image_input_per_1m": 8000.0,
-        "image_output_per_1m": 4.790419,
         "features": [
           "vision",
           "image_output"
@@ -12621,7 +12465,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/cloudflare/clef",
-        "checked_at": "2026-11-13",
+        "checked_at": "2026-11-15",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -12726,7 +12570,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/cloudflare/clef-flash",
-        "checked_at": "2026-11-13",
+        "checked_at": "2026-11-15",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -14118,7 +13962,7 @@
       "model_id": "deepseek/deepseek-chat",
       "display_name": "DeepSeek: DeepSeek V3",
       "context_window": 163840,
-      "max_output_tokens": 16384,
+      "max_output_tokens": 16000,
       "input_modalities": [
         "text"
       ],
@@ -14149,8 +13993,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.32,
-        "output_per_1m": 0.89,
+        "input_per_1m": 0.2574,
+        "output_per_1m": 1.0287,
         "currency": "USD"
       },
       "extra": {
@@ -14164,8 +14008,8 @@
         "modality": "text->text",
         "tokenizer": "DeepSeek",
         "top_provider": {
-          "context_length": 163840,
-          "max_completion_tokens": 16384,
+          "context_length": 128000,
+          "max_completion_tokens": 16000,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -14383,7 +14227,7 @@
       "model_id": "deepseek/deepseek-r1-0528",
       "display_name": "DeepSeek: R1 0528",
       "context_window": 163840,
-      "max_output_tokens": 32768,
+      "max_output_tokens": 32000,
       "input_modalities": [
         "text"
       ],
@@ -14413,8 +14257,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.5,
-        "output_per_1m": 2.15,
+        "input_per_1m": 0.571,
+        "output_per_1m": 2.286,
         "currency": "USD"
       },
       "extra": {
@@ -14430,8 +14274,8 @@
         "tokenizer": "DeepSeek",
         "instruct_type": "deepseek-r1",
         "top_provider": {
-          "context_length": 163840,
-          "max_completion_tokens": 32768,
+          "context_length": 128000,
+          "max_completion_tokens": 32000,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -14870,7 +14714,7 @@
       "model_id": "deepseek/deepseek-v4-flash-0731",
       "display_name": "DeepSeek: DeepSeek V4 Flash 0731",
       "context_window": 1048576,
-      "max_output_tokens": 943718,
+      "max_output_tokens": 384000,
       "input_modalities": [
         "text"
       ],
@@ -14901,12 +14745,12 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.0434,
-        "output_per_1m": 0.3,
+        "input_per_1m": 0.06,
+        "output_per_1m": 0.18,
         "currency": "USD"
       },
       "extra": {
-        "cache_read_per_1m": 0.035,
+        "cache_read_per_1m": 0.015,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -14918,7 +14762,7 @@
         "tokenizer": "DeepSeek",
         "top_provider": {
           "context_length": 1048576,
-          "max_completion_tokens": 943718,
+          "max_completion_tokens": 384000,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -15212,7 +15056,7 @@
       "model_id": "deepseek/deepseek-v4-pro",
       "display_name": "DeepSeek: DeepSeek V4 Pro 0423",
       "context_window": 1048576,
-      "max_output_tokens": 384000,
+      "max_output_tokens": 393216,
       "input_modalities": [
         "text"
       ],
@@ -15243,12 +15087,12 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.95526,
-        "output_per_1m": 1.91052,
+        "input_per_1m": 0.9,
+        "output_per_1m": 1.5,
         "currency": "USD"
       },
       "extra": {
-        "cache_read_per_1m": 0.079605,
+        "cache_read_per_1m": 0.25,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -15259,8 +15103,8 @@
         "modality": "text->text",
         "tokenizer": "DeepSeek",
         "top_provider": {
-          "context_length": 1024000,
-          "max_completion_tokens": 384000,
+          "context_length": 1048576,
+          "max_completion_tokens": 393216,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -15527,7 +15371,7 @@
       "model_id": "deepseek/deepseek-v4.1-flash",
       "display_name": "DeepSeek: DeepSeek V4.1 Flash",
       "context_window": 1048576,
-      "max_output_tokens": 943718,
+      "max_output_tokens": 393216,
       "input_modalities": [
         "text",
         "image"
@@ -15559,12 +15403,12 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.3,
-        "output_per_1m": 1.2,
+        "input_per_1m": 0.0507,
+        "output_per_1m": 0.2028,
         "currency": "USD"
       },
       "extra": {
-        "cache_read_per_1m": 0.006,
+        "cache_read_per_1m": 0.001014,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -15576,7 +15420,7 @@
         "tokenizer": "DeepSeek",
         "top_provider": {
           "context_length": 1048576,
-          "max_completion_tokens": 943718,
+          "max_completion_tokens": 393216,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -15641,7 +15485,7 @@
       "model_id": "deepseek/deepseek-v4.1-flash-1017",
       "display_name": "DeepSeek: DeepSeek V4.1 Flash 1017",
       "context_window": 1048576,
-      "max_output_tokens": 393216,
+      "max_output_tokens": 943718,
       "input_modalities": [
         "text",
         "image"
@@ -15671,8 +15515,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.15,
-        "output_per_1m": 0.6,
+        "input_per_1m": 0.038,
+        "output_per_1m": 0.5,
         "currency": "USD"
       },
       "extra": {
@@ -15757,7 +15601,7 @@
             "input_cache_read": "0.000000003"
           }
         ],
-        "cache_read_per_1m": 0.003,
+        "cache_read_per_1m": 0.01,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -15769,7 +15613,7 @@
         "tokenizer": "DeepSeek",
         "top_provider": {
           "context_length": 1048576,
-          "max_completion_tokens": 393216,
+          "max_completion_tokens": 943718,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -15838,7 +15682,7 @@
       "model_id": "deepseek/deepseek-v4.1-flash-1017:batch",
       "display_name": "DeepSeek: DeepSeek V4.1 Flash 1017 (batch)",
       "context_window": 1048576,
-      "max_output_tokens": 384000,
+      "max_output_tokens": 943718,
       "input_modalities": [
         "text",
         "image"
@@ -15846,8 +15690,8 @@
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": true,
       "supports_reasoning": true,
@@ -15868,12 +15712,12 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.05,
-        "output_per_1m": 0.15,
+        "input_per_1m": 0.045,
+        "output_per_1m": 0.25,
         "currency": "USD"
       },
       "extra": {
-        "cache_read_per_1m": 0.004,
+        "cache_read_per_1m": 0.002,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -15885,20 +15729,29 @@
         "tokenizer": "DeepSeek",
         "top_provider": {
           "context_length": 1048576,
-          "max_completion_tokens": 384000,
+          "max_completion_tokens": 943718,
           "is_moderated": false
         },
         "supported_parameters": [
           "frequency_penalty",
           "include_reasoning",
+          "logit_bias",
+          "logprobs",
           "max_tokens",
+          "min_p",
           "presence_penalty",
           "reasoning",
           "reasoning_effort",
+          "repetition_penalty",
+          "response_format",
           "seed",
           "stop",
+          "structured_outputs",
           "temperature",
+          "tool_choice",
+          "tools",
           "top_k",
+          "top_logprobs",
           "top_p"
         ],
         "created": "2026-10-17",
@@ -15922,6 +15775,8 @@
           "artificial_analysis": 1
         },
         "features": [
+          "tools",
+          "structured_outputs",
           "reasoning",
           "reasoning_effort",
           "vision"
@@ -15997,6 +15852,7 @@
           "frequency_penalty",
           "include_reasoning",
           "logit_bias",
+          "logprobs",
           "max_tokens",
           "min_p",
           "presence_penalty",
@@ -16011,6 +15867,7 @@
           "tool_choice",
           "tools",
           "top_k",
+          "top_logprobs",
           "top_p"
         ],
         "created": "2026-09-10",
@@ -22558,7 +22415,7 @@
           "details": "/api/v1/models/google/gemini-4-argon-20261013/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 11,
+          "design_arena": 12,
           "artificial_analysis": 1
         },
         "features": [
@@ -22716,7 +22573,7 @@
           "details": "/api/v1/models/google/gemini-4-argon-20261013/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 11,
+          "design_arena": 12,
           "artificial_analysis": 1
         },
         "features": [
@@ -22874,7 +22731,7 @@
           "details": "/api/v1/models/google/gemini-4-carbon-20261110/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 6,
+          "design_arena": 8,
           "artificial_analysis": 1
         },
         "features": [
@@ -22987,7 +22844,7 @@
           "details": "/api/v1/models/google/gemini-4-carbon-20261110/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 6,
+          "design_arena": 8,
           "artificial_analysis": 1
         },
         "features": [
@@ -23052,6 +22909,12 @@
         "currency": "USD"
       },
       "extra": {
+        "cache_read_per_1m": 0.075,
+        "cache_write_per_1m": 0.083333,
+        "web_search_per_request_usd": 0.014,
+        "image_input_per_1m": 1.5,
+        "audio_input_per_1m": 1.5,
+        "internal_reasoning_per_1m": 7.5,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -23081,12 +22944,6 @@
         ],
         "created": "2026-11-12",
         "description": "Gemini 4 Hydrogen is the high-efficiency workhorse model of the Gemini 4 family from Google, built for high-throughput agentic workflows, coding and multi-model routing at lower cost and latency than...",
-        "cache_read_per_1m": 0.075,
-        "cache_write_per_1m": 0.083333,
-        "web_search_per_request_usd": 0.014,
-        "image_input_per_1m": 1.5,
-        "audio_input_per_1m": 1.5,
-        "internal_reasoning_per_1m": 7.5,
         "reasoning_meta": {
           "mandatory": true,
           "supported_efforts": [
@@ -23099,6 +22956,10 @@
         },
         "links": {
           "details": "/api/v1/models/google/gemini-4-hydrogen-20261112/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 6,
+          "artificial_analysis": 1
         },
         "features": [
           "tools",
@@ -23162,6 +23023,12 @@
         "currency": "USD"
       },
       "extra": {
+        "cache_read_per_1m": 0.0375,
+        "cache_write_per_1m": 0.083333,
+        "web_search_per_request_usd": 0.014,
+        "image_input_per_1m": 0.75,
+        "audio_input_per_1m": 0.75,
+        "internal_reasoning_per_1m": 3.75,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -23191,12 +23058,6 @@
         ],
         "created": "2026-11-12",
         "description": "Gemini 4 Hydrogen is the high-efficiency workhorse model of the Gemini 4 family from Google, built for high-throughput agentic workflows, coding and multi-model routing at lower cost and latency than...",
-        "cache_read_per_1m": 0.0375,
-        "cache_write_per_1m": 0.083333,
-        "web_search_per_request_usd": 0.014,
-        "image_input_per_1m": 0.75,
-        "audio_input_per_1m": 0.75,
-        "internal_reasoning_per_1m": 3.75,
         "reasoning_meta": {
           "mandatory": true,
           "supported_efforts": [
@@ -23209,6 +23070,10 @@
         },
         "links": {
           "details": "/api/v1/models/google/gemini-4-hydrogen-20261112/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 6,
+          "artificial_analysis": 1
         },
         "features": [
           "tools",
@@ -24304,8 +24169,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.0765,
-        "output_per_1m": 0.255,
+        "input_per_1m": 0.0675,
+        "output_per_1m": 0.225,
         "currency": "USD"
       },
       "video": {
@@ -24340,7 +24205,7 @@
         "status": "inferred"
       },
       "extra": {
-        "cache_read_per_1m": 0.0425,
+        "cache_read_per_1m": 0.0375,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -25491,6 +25356,120 @@
     },
     {
       "provider": "openrouter",
+      "model_id": "heygen/heygen-decision-1",
+      "display_name": "HeyGen: HeyGen Decision",
+      "context_window": 131072,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "decisions"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "heygen-decision-1",
+        "openrouter/heygen/heygen-decision-1"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.14,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "heygen",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 131072,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "HeyGen Decision 1 is a decision model from HeyGen. It reads text and images and answers a set of named questions in one request, returning typed answers with probabilities: a yes/no likelihood (`noul`), a pick from a list of options (`choice`), or a rating on an ordered scale (`score`). It is suited for classification, routing, triage, and scoring content against your own criteria, where one call ",
+        "features": [
+          "vision"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "heygen/heygen-decision-1-turbo",
+      "display_name": "HeyGen: HeyGen Decision Turbo",
+      "context_window": 262144,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "decisions"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "heygen-decision-1-turbo",
+        "openrouter/heygen/heygen-decision-1-turbo"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.09,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "heygen",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 262144,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "HeyGen Decision 1 Turbo is a lower-cost variant of [HeyGen Decision 1](/heygen/heygen-decision-1) from HeyGen, with the same question types (`noul`, `choice`, and `score`) over text and images. It suits high-volume classification, routing, and triage where cost matters most. HeyGen lists it as a preview model.",
+        "features": [
+          "vision"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
       "model_id": "heygen/heygen-video-1",
       "display_name": "HeyGen: HeyGen Video",
       "context_window": 0,
@@ -25773,7 +25752,7 @@
       "license_type": "api",
       "pricing": {
         "input_per_1m": 0.06,
-        "output_per_1m": 0.15,
+        "output_per_1m": 0.25,
         "currency": "USD"
       },
       "extra": {
@@ -25896,7 +25875,7 @@
       "extra": {
         "cache_read_per_1m": 0.0,
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13",
+        "provider_refresh_checked_at": "2026-11-15",
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -26053,180 +26032,6 @@
         "features": [
           "tools",
           "structured_outputs",
-          "reasoning"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "inclusionai/ling-3.0-flash-fin",
-      "display_name": "inclusionAI: Ling 3.0 Flash Fin",
-      "context_window": 262144,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "ling-3.0-flash-fin",
-        "openrouter/inclusionai/ling-3.0-flash-fin",
-        "inclusionai/ling-3.0-flash-fin-20260827"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.042,
-        "output_per_1m": 0.1232,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "inclusionai",
-        "canonical_slug": "inclusionai/ling-3.0-flash-fin-20260827",
-        "modality": "text->text",
-        "tokenizer": "Other",
-        "top_provider": {
-          "context_length": 262144,
-          "max_completion_tokens": 32768,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "frequency_penalty",
-          "include_reasoning",
-          "logprobs",
-          "max_tokens",
-          "presence_penalty",
-          "reasoning",
-          "repetition_penalty",
-          "seed",
-          "stop",
-          "temperature",
-          "tool_choice",
-          "tools",
-          "top_k",
-          "top_logprobs",
-          "top_p"
-        ],
-        "created": "2026-08-27",
-        "description": "Ling 3.0 Flash Fin is a finance-focused mixture-of-experts model from InclusionAI, built on Ling 3.0 Flash with 5.1B active parameters out of 124B total. It is designed for real-world investment...",
-        "cache_read_per_1m": 0.0084,
-        "reasoning_meta": {
-          "mandatory": false,
-          "default_enabled": true
-        },
-        "links": {
-          "details": "/api/v1/models/inclusionai/ling-3.0-flash-fin-20260827/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
-        "features": [
-          "tools",
-          "reasoning"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "inclusionai/ling-3.0-flash-sante",
-      "display_name": "inclusionAI: Ling 3.0 Flash Sante",
-      "context_window": 262144,
-      "max_output_tokens": 32768,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": false,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "ling-3.0-flash-sante",
-        "openrouter/inclusionai/ling-3.0-flash-sante",
-        "inclusionai/ling-3.0-flash-sante-20260904"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.042,
-        "output_per_1m": 0.1232,
-        "currency": "USD"
-      },
-      "extra": {
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "inclusionai",
-        "canonical_slug": "inclusionai/ling-3.0-flash-sante-20260904",
-        "modality": "text->text",
-        "tokenizer": "Other",
-        "top_provider": {
-          "context_length": 262144,
-          "max_completion_tokens": 32768,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "frequency_penalty",
-          "include_reasoning",
-          "logprobs",
-          "max_tokens",
-          "presence_penalty",
-          "reasoning",
-          "repetition_penalty",
-          "seed",
-          "stop",
-          "temperature",
-          "tool_choice",
-          "tools",
-          "top_k",
-          "top_logprobs",
-          "top_p"
-        ],
-        "created": "2026-09-04",
-        "description": "Ling 3.0 Flash Sante is a health and medicine-focused mixture-of-experts model from InclusionAI, built on Ling 3.0 Flash with 5.1B active parameters out of 124B total. It is designed for...",
-        "cache_read_per_1m": 0.0084,
-        "reasoning_meta": {
-          "mandatory": false,
-          "default_enabled": true
-        },
-        "links": {
-          "details": "/api/v1/models/inclusionai/ling-3.0-flash-sante-20260904/endpoints"
-        },
-        "features": [
-          "tools",
           "reasoning"
         ]
       }
@@ -26538,9 +26343,177 @@
         "links": {
           "details": "/api/v1/models/inclusionai/ling-3.1-flash-20261002/endpoints"
         },
+        "benchmarks_present": {
+          "design_arena": 0,
+          "artificial_analysis": 1
+        },
         "features": [
           "tools",
           "reasoning"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "inclusionai/ling-3.2-flash",
+      "display_name": "inclusionAI: Ling 3.2 Flash (free)",
+      "context_window": 1048576,
+      "max_output_tokens": 262144,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "ling-3.2-flash",
+        "openrouter/inclusionai/ling-3.2-flash"
+      ],
+      "license_type": "free",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "inclusionai",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 1048576,
+          "max_completion_tokens": 262144,
+          "is_moderated": null
+        },
+        "supported_parameters": [
+          "reasoning",
+          "include_reasoning",
+          "temperature",
+          "top_p",
+          "top_k",
+          "max_tokens",
+          "stop",
+          "seed",
+          "frequency_penalty",
+          "presence_penalty",
+          "response_format",
+          "tools",
+          "tool_choice",
+          "structured_outputs"
+        ],
+        "description": "Ling 3.2 Flash is a hybrid reasoning model from inclusionAI that accepts text and image input, with a 1M-token context window and up to 200 images per request. Thinking can be switched off per request.",
+        "free_tier": true,
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "vision"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "inclusionai/ling-3.2-flash:free",
+      "display_name": "inclusionAI: Ling 3.2 Flash (free)",
+      "context_window": 1048576,
+      "max_output_tokens": 262144,
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "ling-3.2-flash:free",
+        "openrouter/inclusionai/ling-3.2-flash:free",
+        "inclusionai/ling-3.2-flash-20261113"
+      ],
+      "license_type": "free",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "inclusionai",
+        "canonical_slug": "inclusionai/ling-3.2-flash-20261113",
+        "hugging_face_id": "inclusionAI/Ling-3.2-flash",
+        "modality": "text+image->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 1048576,
+          "max_completion_tokens": 262144,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "max_tokens",
+          "presence_penalty",
+          "reasoning",
+          "response_format",
+          "seed",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_k",
+          "top_p"
+        ],
+        "created": "2026-11-13",
+        "description": "Ling 3.2 Flash is a hybrid reasoning model from inclusionAI that accepts text and image input, with a 1M-token context window and up to 200 images per request. Thinking can...",
+        "free_tier": true,
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": true
+        },
+        "links": {
+          "details": "/api/v1/models/inclusionai/ling-3.2-flash-20261113/endpoints"
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "vision"
         ]
       }
     },
@@ -26939,7 +26912,7 @@
         "refresh_metadata_fallbacks": [
           "max_output_tokens"
         ],
-        "refresh_metadata_fallback_checked_at": "2026-11-13",
+        "refresh_metadata_fallback_checked_at": "2026-11-15",
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -26989,7 +26962,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/jaredpalmer/kev-4b",
-        "checked_at": "2026-11-13",
+        "checked_at": "2026-11-15",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -27254,7 +27227,7 @@
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": false,
+      "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
@@ -27305,6 +27278,8 @@
           "response_format",
           "structured_outputs",
           "temperature",
+          "tool_choice",
+          "tools",
           "top_k",
           "top_logprobs",
           "top_p"
@@ -27318,6 +27293,7 @@
           "details": "/api/v1/models/kt/midm-k-3.0-pro/endpoints"
         },
         "features": [
+          "tools",
           "structured_outputs",
           "reasoning"
         ]
@@ -27672,7 +27648,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/liquid/d1",
-        "checked_at": "2026-11-13",
+        "checked_at": "2026-11-15",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -27802,210 +27778,6 @@
     },
     {
       "provider": "openrouter",
-      "model_id": "liquid/lfm-2.5-2.6b",
-      "display_name": "LiquidAI: LFM2.5-2.6B",
-      "context_window": 128000,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_json_schema": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "lfm-2.5-2.6b",
-        "openrouter/liquid/lfm-2.5-2.6b",
-        "liquid/lfm-2.5-2.6b-20260811",
-        "liquid/lfm-2.5-2.6b"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.35,
-        "output_per_1m": 0.5,
-        "currency": "USD"
-      },
-      "extra": {
-        "cache_read_per_1m": 0.04,
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "liquid",
-        "canonical_slug": "liquid/lfm-2.5-2.6b-20260811",
-        "hugging_face_id": "LiquidAI/LFM2.5-2.6B",
-        "modality": "text->text",
-        "tokenizer": "Other",
-        "top_provider": {
-          "context_length": 128000,
-          "max_completion_tokens": 8192,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "frequency_penalty",
-          "include_reasoning",
-          "logprobs",
-          "max_completion_tokens",
-          "max_tokens",
-          "min_p",
-          "presence_penalty",
-          "reasoning",
-          "repetition_penalty",
-          "response_format",
-          "seed",
-          "stop",
-          "structured_outputs",
-          "temperature",
-          "tool_choice",
-          "tools",
-          "top_k",
-          "top_logprobs",
-          "top_p"
-        ],
-        "created": "2026-08-11",
-        "description": "LFM2.5-2.6B is a compact reasoning model from Liquid AI. It is suited for agent workflows, data extraction, RAG, and long-context processing. Liquid advises against using it for agentic coding or...",
-        "expiration_date": "2026-11-13",
-        "default_parameters": {
-          "temperature": 0.1,
-          "top_k": 50,
-          "repetition_penalty": 1.1
-        },
-        "reasoning_meta": {
-          "mandatory": true
-        },
-        "links": {
-          "details": "/api/v1/models/liquid/lfm-2.5-2.6b-20260811/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
-        "features": [
-          "tools",
-          "structured_outputs",
-          "reasoning"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "liquid/lfm-2.5-2.6b:free",
-      "display_name": "LiquidAI: LFM2.5-2.6B (free)",
-      "context_window": 65536,
-      "max_output_tokens": 8192,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_json_schema": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "lfm-2.5-2.6b:free",
-        "openrouter/liquid/lfm-2.5-2.6b:free",
-        "liquid/lfm-2.5-2.6b-20260811",
-        "liquid/lfm-2.5-2.6b:free"
-      ],
-      "license_type": "free",
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "extra": {
-        "free_tier": true,
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "liquid",
-        "canonical_slug": "liquid/lfm-2.5-2.6b-20260811",
-        "hugging_face_id": "LiquidAI/LFM2.5-2.6B",
-        "modality": "text->text",
-        "tokenizer": "Other",
-        "top_provider": {
-          "context_length": 65536,
-          "max_completion_tokens": 8192,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "frequency_penalty",
-          "include_reasoning",
-          "logprobs",
-          "max_completion_tokens",
-          "max_tokens",
-          "min_p",
-          "presence_penalty",
-          "reasoning",
-          "repetition_penalty",
-          "response_format",
-          "seed",
-          "stop",
-          "structured_outputs",
-          "temperature",
-          "tool_choice",
-          "tools",
-          "top_k",
-          "top_logprobs",
-          "top_p"
-        ],
-        "created": "2026-08-11",
-        "description": "LFM2.5-2.6B is a compact reasoning model from Liquid AI. It is suited for agent workflows, data extraction, RAG, and long-context processing. Liquid advises against using it for agentic coding or...",
-        "expiration_date": "2026-11-13",
-        "default_parameters": {
-          "temperature": 0.1,
-          "top_k": 50,
-          "repetition_penalty": 1.1
-        },
-        "reasoning_meta": {
-          "mandatory": true
-        },
-        "links": {
-          "details": "/api/v1/models/liquid/lfm-2.5-2.6b-20260811/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 0,
-          "artificial_analysis": 1
-        },
-        "features": [
-          "tools",
-          "structured_outputs",
-          "reasoning"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
       "model_id": "liquid/lfm-2.5-24b-a2b",
       "display_name": "LiquidAI: LFM2.5-24B-A2B",
       "context_window": 128000,
@@ -28096,73 +27868,6 @@
           "tools",
           "structured_outputs",
           "reasoning"
-        ]
-      }
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "liquid/lfm-2.5-embedding-350m",
-      "display_name": "LiquidAI: LFM2.5-Embedding-350M (free)",
-      "context_window": 512,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "embeddings"
-      ],
-      "supports_function_calling": false,
-      "supports_json_mode": false,
-      "supports_json_schema": null,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": false,
-      "supports_chat_completion": false,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": false,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "lfm-2.5-embedding-350m",
-        "openrouter/liquid/lfm-2.5-embedding-350m",
-        "liquid/lfm-2.5-embedding-350m"
-      ],
-      "license_type": "free",
-      "pricing": {
-        "input_per_1m": 0.0,
-        "output_per_1m": 0.0,
-        "currency": "USD"
-      },
-      "embedding": {
-        "embedding": true,
-        "output_formats": [
-          "float"
-        ],
-        "status": "inferred",
-        "checked_at": "2026-10-10"
-      },
-      "extra": {
-        "free_tier": true,
-        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "liquid",
-        "tokenizer": "",
-        "top_provider": {
-          "context_length": 512,
-          "max_completion_tokens": null,
-          "is_moderated": null
-        },
-        "supported_parameters": [],
-        "description": "LFM2.5-Embedding-350M is a text embedding model from Liquid AI. It produces 1,024-dimensional embeddings for retrieval and semantic search.\n\nSuccessful OpenRouter requests and embeddings may be retained and used to train Liquid models.",
-        "features": [
-          "embeddings"
         ]
       }
     },
@@ -28776,7 +28481,7 @@
       "model_id": "meta-llama/llama-3.2-3b-instruct",
       "display_name": "Meta: Llama 3.2 3B Instruct",
       "context_window": 131072,
-      "max_output_tokens": 117964,
+      "max_output_tokens": 72000,
       "input_modalities": [
         "text"
       ],
@@ -28806,8 +28511,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.05,
-        "output_per_1m": 0.33,
+        "input_per_1m": 0.0509,
+        "output_per_1m": 0.335,
         "currency": "USD"
       },
       "extra": {
@@ -28822,8 +28527,8 @@
         "tokenizer": "Llama3",
         "instruct_type": "llama3",
         "top_provider": {
-          "context_length": 131072,
-          "max_completion_tokens": 117964,
+          "context_length": 80000,
+          "max_completion_tokens": 72000,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -28844,6 +28549,7 @@
         ],
         "created": "2024-09-25",
         "description": "Llama 3.2 3B is a 3-billion-parameter multilingual large language model, optimized for advanced natural language processing tasks like dialogue generation, reasoning, and summarization. Designed with the latest transformer architecture, it...",
+        "expiration_date": "2026-11-20",
         "links": {
           "details": "/api/v1/models/meta-llama/llama-3.2-3b-instruct/endpoints"
         },
@@ -29373,6 +29079,7 @@
           "frequency_penalty",
           "include_reasoning",
           "logit_bias",
+          "logprobs",
           "max_tokens",
           "min_p",
           "presence_penalty",
@@ -29387,6 +29094,7 @@
           "tool_choice",
           "tools",
           "top_k",
+          "top_logprobs",
           "top_p"
         ],
         "created": "2026-08-09",
@@ -30810,7 +30518,7 @@
           "details": "/api/v1/models/meta/muse-wonder-20261012/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 11,
+          "design_arena": 12,
           "artificial_analysis": 1
         },
         "features": [
@@ -32147,8 +31855,8 @@
       "provider": "openrouter",
       "model_id": "minimax/minimax-m2.5",
       "display_name": "MiniMax: MiniMax M2.5",
-      "context_window": 200000,
-      "max_output_tokens": 128000,
+      "context_window": 198000,
+      "max_output_tokens": 32768,
       "input_modalities": [
         "text"
       ],
@@ -32180,11 +31888,11 @@
       "license_type": "api",
       "pricing": {
         "input_per_1m": 0.27,
-        "output_per_1m": 1.08,
+        "output_per_1m": 0.95,
         "currency": "USD"
       },
       "extra": {
-        "cache_read_per_1m": 0.027,
+        "cache_read_per_1m": 0.03,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -32195,8 +31903,8 @@
         "modality": "text->text",
         "tokenizer": "Other",
         "top_provider": {
-          "context_length": 200000,
-          "max_completion_tokens": 128000,
+          "context_length": 198000,
+          "max_completion_tokens": 32768,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -36997,8 +36705,10 @@
           "include_reasoning",
           "logit_bias",
           "logprobs",
+          "max_completion_tokens",
           "max_tokens",
           "min_p",
+          "parallel_tool_calls",
           "presence_penalty",
           "reasoning",
           "reasoning_effort",
@@ -37034,7 +36744,7 @@
           "details": "/api/v1/models/moonshotai/kimi-k3-20260715/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 19,
+          "design_arena": 20,
           "artificial_analysis": 1
         },
         "features": [
@@ -37152,7 +36862,7 @@
           "details": "/api/v1/models/moonshotai/kimi-k3.1-pro-20261023/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 15,
+          "design_arena": 16,
           "artificial_analysis": 1
         },
         "features": [
@@ -37239,11 +36949,12 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.7,
-        "output_per_1m": 6.0,
+        "input_per_1m": 0.346,
+        "output_per_1m": 4.41,
         "currency": "USD"
       },
       "extra": {
+        "cache_read_per_1m": 0.111,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -37261,18 +36972,21 @@
         "supported_parameters": [
           "frequency_penalty",
           "include_reasoning",
+          "logit_bias",
           "max_tokens",
+          "min_p",
           "presence_penalty",
           "reasoning",
           "reasoning_effort",
+          "repetition_penalty",
           "seed",
           "stop",
           "temperature",
-          "top_k"
+          "top_k",
+          "top_p"
         ],
         "created": "2026-10-23",
         "description": "Kimi K3.1 Pro is Moonshot AI's flagship open-weight multimodal reasoning model and a post-trained successor to Kimi K3, with a 1M-token context window. It is built for long-horizon coding, 3D...",
-        "cache_read_per_1m": 0.1,
         "default_parameters": {
           "top_p": 0.95
         },
@@ -37291,7 +37005,7 @@
           "details": "/api/v1/models/moonshotai/kimi-k3.1-pro-20261023/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 15,
+          "design_arena": 16,
           "artificial_analysis": 1
         },
         "features": [
@@ -37438,7 +37152,7 @@
           "details": "/api/v1/models/moonshotai/kimi-k3-20260715/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 19,
+          "design_arena": 20,
           "artificial_analysis": 1
         },
         "features": [
@@ -37807,7 +37521,7 @@
       "output_modalities": [
         "text"
       ],
-      "supports_function_calling": false,
+      "supports_function_calling": true,
       "supports_json_mode": true,
       "supports_streaming": true,
       "supports_vision": false,
@@ -37859,6 +37573,8 @@
           "response_format",
           "structured_outputs",
           "temperature",
+          "tool_choice",
+          "tools",
           "top_k",
           "top_logprobs",
           "top_p"
@@ -37876,6 +37592,7 @@
           "artificial_analysis": 1
         },
         "features": [
+          "tools",
           "structured_outputs",
           "reasoning"
         ]
@@ -38645,7 +38362,7 @@
       "provider": "openrouter",
       "model_id": "nvidia/nemotron-3-embed-1b",
       "display_name": "NVIDIA: Nemotron 3 Embed 1B (free)",
-      "context_window": 32768,
+      "context_window": 4096,
       "max_output_tokens": 0,
       "input_modalities": [
         "text"
@@ -38697,7 +38414,7 @@
         "native_provider": "nvidia",
         "tokenizer": "",
         "top_provider": {
-          "context_length": 32768,
+          "context_length": 4096,
           "max_completion_tokens": null,
           "is_moderated": null
         },
@@ -49042,7 +48759,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/openai/gpt-6-luna-decisions",
-        "checked_at": "2026-11-13",
+        "checked_at": "2026-11-15",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -50116,7 +49833,7 @@
           "details": "/api/v1/models/openai/gpt-6.1-sol-20260929/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 13,
+          "design_arena": 14,
           "artificial_analysis": 1
         },
         "features": [
@@ -50479,7 +50196,7 @@
           "details": "/api/v1/models/openai/gpt-6.1-sol-20260929/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 13,
+          "design_arena": 14,
           "artificial_analysis": 1
         },
         "features": [
@@ -53507,7 +53224,7 @@
     {
       "provider": "openrouter",
       "model_id": "parallel/decisions-fast",
-      "display_name": "Parallel: Decisions Fast (free)",
+      "display_name": "Parallel: Decisions Fast",
       "context_window": 32000,
       "max_output_tokens": 0,
       "input_modalities": [
@@ -53593,7 +53310,7 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.05,
+        "input_per_1m": 0.06,
         "output_per_1m": 0.5,
         "currency": "USD"
       },
@@ -53709,6 +53426,7 @@
         "currency": "USD"
       },
       "extra": {
+        "free_tier": true,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -53745,7 +53463,6 @@
         ],
         "created": "2026-10-28",
         "description": "Particle-1 is a token-efficient agentic coding model from Particle AI, post-trained on DeepSeek V4.1 Flash. It is suited for software engineering work such as terminal workflows, codebase changes, and data...",
-        "free_tier": true,
         "reasoning_meta": {
           "mandatory": false,
           "default_enabled": true,
@@ -54139,6 +53856,7 @@
         "currency": "USD"
       },
       "extra": {
+        "free_tier": true,
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -54152,7 +53870,6 @@
         },
         "supported_parameters": [],
         "description": "Decider Flash V1.3 is a decision model from Perplexity, a smaller, lower-cost sibling of [Decider V1.3](/perplexity/pplx-decider-v1.3) with the same API contract. Instead of generating text, it reads content passed as `state` (text, JSON, or images) and returns typed, probabilistic answers to one or more named questions in a single request: the probability of yes for a yes/no question (`noul`), a ",
-        "free_tier": true,
         "features": [
           "vision"
         ]
@@ -54198,7 +53915,7 @@
       },
       "extra": {
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13",
+        "provider_refresh_checked_at": "2026-11-15",
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -54360,6 +54077,7 @@
         "currency": "USD"
       },
       "extra": {
+        "free_tier": true,
         "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -54373,7 +54091,6 @@
         },
         "supported_parameters": [],
         "description": "Decider V1.3 is a decision model from Perplexity, succeeding [Decider V1.2](/perplexity/pplx-decider-v1.2). Instead of generating text, it reads content passed as `state` (text, JSON, or images) and returns typed, probabilistic answers to one or more named questions in a single request: the probability of yes for a yes/no question (`noul`), a probability for every option plus the most likely one (",
-        "free_tier": true,
         "features": [
           "vision"
         ]
@@ -57541,6 +57258,7 @@
         ],
         "created": "2025-10-06",
         "description": "Qwen3-VL-30B-A3B-Thinking is a multimodal model that unifies strong text generation with visual understanding for images and videos. Its Thinking variant enhances reasoning in STEM, math, and complex tasks. It excels...",
+        "expiration_date": "2026-11-15",
         "default_parameters": {
           "temperature": 0.8,
           "top_p": 0.95,
@@ -58223,8 +57941,8 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.084,
-        "output_per_1m": 0.124,
+        "input_per_1m": 0.092,
+        "output_per_1m": 0.136,
         "currency": "USD"
       },
       "video": {
@@ -58259,7 +57977,7 @@
         "status": "inferred"
       },
       "extra": {
-        "cache_read_per_1m": 0.076,
+        "cache_read_per_1m": 0.083,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -59772,7 +59490,7 @@
       "provider": "openrouter",
       "model_id": "qwen/qwen3.8-27b",
       "display_name": "Qwen: Qwen3.8 27B",
-      "context_window": 1048575,
+      "context_window": 1024000,
       "max_output_tokens": 235929,
       "input_modalities": [
         "text",
@@ -61362,6 +61080,63 @@
     },
     {
       "provider": "openrouter",
+      "model_id": "recraft/recraft-v4.1-flash-v2",
+      "display_name": "Recraft: Recraft V4.1 Flash V2 (free)",
+      "context_window": 65536,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "image"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "recraft-v4.1-flash-v2",
+        "openrouter/recraft/recraft-v4.1-flash-v2"
+      ],
+      "license_type": "free",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "recraft",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 65536,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "Recraft V4.1 Flash V2 is a text-to-image model from Recraft, an updated version of [Recraft V4.1 Flash](/recraft/recraft-v4.1-flash) in the speed tier of the V4.1 family. It is suited for rapid iteration, prototyping, and high-volume generation, and improves on its predecessor in generation speed and in rendering text inside images.\n\nIt is generation only: image inputs, styles, and style reference",
+        "free_tier": true,
+        "features": [
+          "image_output"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
       "model_id": "recraft/recraft-v4.1-pro",
       "display_name": "Recraft: Recraft V4.1 Pro",
       "context_window": 65536,
@@ -62347,7 +62122,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/respan/span-01",
-        "checked_at": "2026-11-13",
+        "checked_at": "2026-11-15",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -62439,7 +62214,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/respan/span-01-lite",
-        "checked_at": "2026-11-13",
+        "checked_at": "2026-11-15",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -62541,12 +62316,12 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.2,
-        "output_per_1m": 0.6,
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.3,
         "currency": "USD"
       },
       "extra": {
-        "cache_read_per_1m": 0.05,
+        "cache_read_per_1m": 0.025,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -64418,6 +64193,7 @@
         ],
         "created": "2026-01-29",
         "description": "Step 3.5 Flash is StepFun's most capable open-source foundation model. Built on a sparse Mixture of Experts (MoE) architecture, it selectively activates only 11B of its 196B parameters per token....",
+        "expiration_date": "2026-11-15",
         "reasoning_meta": {
           "mandatory": true
         },
@@ -64845,6 +64621,7 @@
         ],
         "created": "2025-07-08",
         "description": "Hunyuan-A13B is a 13B active parameter Mixture-of-Experts (MoE) language model developed by Tencent, with a total parameter count of 80B and support for reasoning via Chain-of-Thought. It offers competitive benchmark...",
+        "expiration_date": "2026-11-15",
         "reasoning_meta": {
           "mandatory": false
         },
@@ -65136,6 +64913,64 @@
         },
         "features": [
           "structured_outputs"
+        ]
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "tencent/hy-world-2.1-panorama",
+      "display_name": "Tencent: HY-World 2.1 Panorama",
+      "context_window": 4096,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "image"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "hy-world-2.1-panorama",
+        "openrouter/tencent/hy-world-2.1-panorama"
+      ],
+      "license_type": "free",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "tencent",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 4096,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "HY-World 2.1 Panorama is a 360-degree panorama generation model from Tencent, part of the Hunyuan World family. It turns a single text prompt into one high-resolution equirectangular panorama suitable for virtual tours, skyboxes, and world-building, and is particularly strong at coherent, seamless scene layout across the full sphere. Each request produces one panorama; prompts are capped at 600 ch",
+        "free_tier": true,
+        "image_output_per_1m": 1.6,
+        "features": [
+          "image_output"
         ]
       }
     },
@@ -66144,6 +65979,7 @@
       },
       "extra": {
         "free_tier": true,
+        "cache_read_per_1m": 0.03,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -66182,7 +66018,6 @@
         ],
         "created": "2026-11-09",
         "description": "Inkling 2 Small is an open-weight multimodal mixture-of-experts reasoning model from Thinking Machines Lab, with 17B active parameters out of 594B total. It is the first model in the second...",
-        "cache_read_per_1m": 0.03,
         "reasoning_meta": {
           "mandatory": true,
           "default_enabled": true,
@@ -66643,7 +66478,7 @@
           "https://openrouter.ai/api/v1/chat/completions"
         ],
         "source_url": "https://openrouter.ai/togethercomputer/tev1-4b-experimental",
-        "checked_at": "2026-11-13",
+        "checked_at": "2026-11-15",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openai-compatible-chat-completions",
@@ -67370,7 +67205,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/upstage/solar-decide",
-        "checked_at": "2026-11-13",
+        "checked_at": "2026-11-15",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -67470,7 +67305,7 @@
           "https://openrouter.ai/api/alpha/decisions"
         ],
         "source_url": "https://openrouter.ai/upstage/solar-decide-flash",
-        "checked_at": "2026-11-13",
+        "checked_at": "2026-11-15",
         "status": "documented",
         "extra": {
           "endpoint_protocol": "openrouter-alpha-decisions",
@@ -68801,7 +68636,7 @@
           "details": "/api/v1/models/x-ai/grok-4.7-20260916/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 11,
+          "design_arena": 12,
           "artificial_analysis": 1
         },
         "features": [
@@ -68922,7 +68757,7 @@
           "details": "/api/v1/models/x-ai/grok-4.7-20260916/endpoints"
         },
         "benchmarks_present": {
-          "design_arena": 11,
+          "design_arena": 12,
           "artificial_analysis": 1
         },
         "features": [
@@ -70819,12 +70654,12 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.6,
-        "output_per_1m": 2.2,
+        "input_per_1m": 0.4,
+        "output_per_1m": 1.75,
         "currency": "USD"
       },
       "extra": {
-        "cache_read_per_1m": 0.11,
+        "cache_read_per_1m": 0.08,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -70835,7 +70670,7 @@
         "modality": "text->text",
         "tokenizer": "Other",
         "top_provider": {
-          "context_length": 204800,
+          "context_length": 202752,
           "max_completion_tokens": 131072,
           "is_moderated": false
         },
@@ -71174,7 +71009,7 @@
       "model_id": "z-ai/glm-5.1",
       "display_name": "Z.ai: GLM 5.1",
       "context_window": 204800,
-      "max_output_tokens": 131072,
+      "max_output_tokens": 182476,
       "input_modalities": [
         "text"
       ],
@@ -71222,7 +71057,7 @@
         "tokenizer": "Other",
         "top_provider": {
           "context_length": 202752,
-          "max_completion_tokens": 131072,
+          "max_completion_tokens": 182476,
           "is_moderated": false
         },
         "supported_parameters": [
@@ -71248,6 +71083,7 @@
         ],
         "created": "2026-04-07",
         "description": "GLM-5.1 delivers a major leap in coding capability, with particularly significant gains in handling long-horizon tasks. Unlike previous models built around minute-level interactions, GLM-5.1 can work independently and continuously on...",
+        "expiration_date": "2026-11-20",
         "default_parameters": {
           "temperature": 1,
           "top_p": 0.95
@@ -71334,121 +71170,6 @@
           "max_tokens",
           "min_p",
           "parallel_tool_calls",
-          "presence_penalty",
-          "reasoning",
-          "reasoning_effort",
-          "repetition_penalty",
-          "response_format",
-          "seed",
-          "stop",
-          "structured_outputs",
-          "temperature",
-          "tool_choice",
-          "tools",
-          "top_k",
-          "top_logprobs",
-          "top_p"
-        ],
-        "created": "2026-06-16",
-        "description": "GLM 5.2 is a large-scale reasoning model from Z.ai. It supports text input and output with a 1M-token context window, and is suited for long-horizon agent workflows, project-level software engineering,...",
-        "default_parameters": {
-          "temperature": 1,
-          "top_p": 0.95
-        },
-        "reasoning_meta": {
-          "mandatory": false,
-          "default_enabled": true,
-          "supported_efforts": [
-            "xhigh",
-            "high",
-            "none"
-          ],
-          "default_effort": "high"
-        },
-        "links": {
-          "details": "/api/v1/models/z-ai/glm-5.2-20260616/endpoints"
-        },
-        "benchmarks_present": {
-          "design_arena": 19,
-          "artificial_analysis": 1
-        },
-        "features": [
-          "tools",
-          "structured_outputs",
-          "reasoning",
-          "reasoning_effort"
-        ]
-      },
-      "reasoning_effort_values": [
-        "none",
-        "minimal",
-        "low",
-        "medium",
-        "high",
-        "xhigh"
-      ]
-    },
-    {
-      "provider": "openrouter",
-      "model_id": "z-ai/glm-5.2:batch",
-      "display_name": "Z.ai: GLM 5.2 (batch)",
-      "context_window": 1048576,
-      "max_output_tokens": 943718,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": true,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": false,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [
-        "glm-5.2:batch",
-        "openrouter/z-ai/glm-5.2:batch",
-        "z-ai/glm-5.2-20260616"
-      ],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.298,
-        "output_per_1m": 0.916,
-        "currency": "USD"
-      },
-      "extra": {
-        "cache_read_per_1m": 0.101,
-        "source": "https://openrouter.ai/api/v1/models",
-        "docs": "https://openrouter.ai/docs",
-        "models_page": "https://openrouter.ai/models",
-        "base_url": "https://openrouter.ai/api/v1",
-        "native_provider": "z-ai",
-        "canonical_slug": "z-ai/glm-5.2-20260616",
-        "hugging_face_id": "zai-org/GLM-5.2",
-        "modality": "text->text",
-        "tokenizer": "Other",
-        "top_provider": {
-          "context_length": 1048576,
-          "max_completion_tokens": 943718,
-          "is_moderated": false
-        },
-        "supported_parameters": [
-          "frequency_penalty",
-          "include_reasoning",
-          "logit_bias",
-          "logprobs",
-          "max_tokens",
-          "min_p",
           "presence_penalty",
           "reasoning",
           "reasoning_effort",
@@ -72018,6 +71739,7 @@
           "reasoning",
           "reasoning_effort",
           "response_format",
+          "structured_outputs",
           "temperature",
           "tool_choice",
           "tools",
@@ -72277,7 +71999,7 @@
       "model_id": "z-ai/glm-5.3:batch",
       "display_name": "Z.ai: GLM 5.3 (batch)",
       "context_window": 1048576,
-      "max_output_tokens": 131072,
+      "max_output_tokens": 943718,
       "input_modalities": [
         "text"
       ],
@@ -72308,12 +72030,12 @@
       ],
       "license_type": "api",
       "pricing": {
-        "input_per_1m": 0.45,
-        "output_per_1m": 2.0,
+        "input_per_1m": 0.347,
+        "output_per_1m": 1.068,
         "currency": "USD"
       },
       "extra": {
-        "cache_read_per_1m": 0.1,
+        "cache_read_per_1m": 0.117,
         "source": "https://openrouter.ai/api/v1/models",
         "docs": "https://openrouter.ai/docs",
         "models_page": "https://openrouter.ai/models",
@@ -72325,13 +72047,14 @@
         "tokenizer": "Other",
         "top_provider": {
           "context_length": 1048576,
-          "max_completion_tokens": 131072,
+          "max_completion_tokens": 943718,
           "is_moderated": false
         },
         "supported_parameters": [
           "frequency_penalty",
           "include_reasoning",
           "logit_bias",
+          "logprobs",
           "max_tokens",
           "min_p",
           "presence_penalty",
@@ -72346,6 +72069,7 @@
           "tool_choice",
           "tools",
           "top_k",
+          "top_logprobs",
           "top_p"
         ],
         "created": "2026-08-18",
@@ -72512,6 +72236,740 @@
     },
     {
       "provider": "openrouter",
+      "model_id": "apodex/apodex-1.1-mini",
+      "display_name": "Apodex: Apodex 1.1 Mini (free)",
+      "context_window": 262144,
+      "max_output_tokens": 262144,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "apodex-1.1-mini",
+        "openrouter/apodex/apodex-1.1-mini"
+      ],
+      "license_type": "free",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "apodex",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 262144,
+          "max_completion_tokens": 262144,
+          "is_moderated": null
+        },
+        "supported_parameters": [
+          "reasoning",
+          "include_reasoning",
+          "max_tokens",
+          "temperature",
+          "top_p",
+          "stop",
+          "frequency_penalty",
+          "presence_penalty",
+          "seed",
+          "top_k",
+          "repetition_penalty",
+          "response_format",
+          "tools",
+          "tool_choice"
+        ],
+        "description": "Apodex 1.1 Mini is a reasoning-first model from Apodex, built for complex, long-horizon research and forecasting tasks. It works directly with files, data, code, and tools to produce verifiable results, and is designed for agentic research workflows where answers need to be grounded in evidence.",
+        "free_tier": true,
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-15"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "apodex/apodex-1.1-mini:free",
+      "display_name": "Apodex: Apodex 1.1 Mini (free)",
+      "context_window": 262144,
+      "max_output_tokens": 235929,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "apodex-1.1-mini:free",
+        "openrouter/apodex/apodex-1.1-mini:free",
+        "apodex/apodex-1.1-mini-20261001"
+      ],
+      "license_type": "free",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "apodex",
+        "canonical_slug": "apodex/apodex-1.1-mini-20261001",
+        "modality": "text->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 262144,
+          "max_completion_tokens": 235929,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "max_tokens",
+          "presence_penalty",
+          "reasoning",
+          "repetition_penalty",
+          "response_format",
+          "seed",
+          "stop",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_k",
+          "top_p"
+        ],
+        "created": "2026-10-01",
+        "description": "Apodex 1.1 Mini is a reasoning-first model from Apodex, built for complex, long-horizon research and forecasting tasks. It works directly with files, data, code, and tools to produce verifiable results,...",
+        "free_tier": true,
+        "reasoning_meta": {
+          "mandatory": false
+        },
+        "links": {
+          "details": "/api/v1/models/apodex/apodex-1.1-mini-20261001/endpoints"
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-15"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "inclusionai/ling-3.0-flash-fin",
+      "display_name": "inclusionAI: Ling 3.0 Flash Fin",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "ling-3.0-flash-fin",
+        "openrouter/inclusionai/ling-3.0-flash-fin",
+        "inclusionai/ling-3.0-flash-fin-20260827"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.042,
+        "output_per_1m": 0.1232,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "inclusionai",
+        "canonical_slug": "inclusionai/ling-3.0-flash-fin-20260827",
+        "modality": "text->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 262144,
+          "max_completion_tokens": 32768,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "logprobs",
+          "max_tokens",
+          "presence_penalty",
+          "reasoning",
+          "repetition_penalty",
+          "seed",
+          "stop",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_k",
+          "top_logprobs",
+          "top_p"
+        ],
+        "created": "2026-08-27",
+        "description": "Ling 3.0 Flash Fin is a finance-focused mixture-of-experts model from InclusionAI, built on Ling 3.0 Flash with 5.1B active parameters out of 124B total. It is designed for real-world investment...",
+        "cache_read_per_1m": 0.0084,
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": true
+        },
+        "links": {
+          "details": "/api/v1/models/inclusionai/ling-3.0-flash-fin-20260827/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 0,
+          "artificial_analysis": 1
+        },
+        "features": [
+          "tools",
+          "reasoning"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-15"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "inclusionai/ling-3.0-flash-sante",
+      "display_name": "inclusionAI: Ling 3.0 Flash Sante",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": false,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "ling-3.0-flash-sante",
+        "openrouter/inclusionai/ling-3.0-flash-sante",
+        "inclusionai/ling-3.0-flash-sante-20260904"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.042,
+        "output_per_1m": 0.1232,
+        "currency": "USD"
+      },
+      "extra": {
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "inclusionai",
+        "canonical_slug": "inclusionai/ling-3.0-flash-sante-20260904",
+        "modality": "text->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 262144,
+          "max_completion_tokens": 32768,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "logprobs",
+          "max_tokens",
+          "presence_penalty",
+          "reasoning",
+          "repetition_penalty",
+          "seed",
+          "stop",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_k",
+          "top_logprobs",
+          "top_p"
+        ],
+        "created": "2026-09-04",
+        "description": "Ling 3.0 Flash Sante is a health and medicine-focused mixture-of-experts model from InclusionAI, built on Ling 3.0 Flash with 5.1B active parameters out of 124B total. It is designed for...",
+        "cache_read_per_1m": 0.0084,
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": true
+        },
+        "links": {
+          "details": "/api/v1/models/inclusionai/ling-3.0-flash-sante-20260904/endpoints"
+        },
+        "features": [
+          "tools",
+          "reasoning"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-15"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "liquid/lfm-2.5-2.6b",
+      "display_name": "LiquidAI: LFM2.5-2.6B",
+      "context_window": 128000,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "lfm-2.5-2.6b",
+        "openrouter/liquid/lfm-2.5-2.6b",
+        "liquid/lfm-2.5-2.6b-20260811",
+        "liquid/lfm-2.5-2.6b"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.35,
+        "output_per_1m": 0.5,
+        "currency": "USD"
+      },
+      "extra": {
+        "cache_read_per_1m": 0.04,
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "liquid",
+        "canonical_slug": "liquid/lfm-2.5-2.6b-20260811",
+        "hugging_face_id": "LiquidAI/LFM2.5-2.6B",
+        "modality": "text->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 128000,
+          "max_completion_tokens": 8192,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "logprobs",
+          "max_completion_tokens",
+          "max_tokens",
+          "min_p",
+          "presence_penalty",
+          "reasoning",
+          "repetition_penalty",
+          "response_format",
+          "seed",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_k",
+          "top_logprobs",
+          "top_p"
+        ],
+        "created": "2026-08-11",
+        "description": "LFM2.5-2.6B is a compact reasoning model from Liquid AI. It is suited for agent workflows, data extraction, RAG, and long-context processing. Liquid advises against using it for agentic coding or...",
+        "expiration_date": "2026-11-13",
+        "default_parameters": {
+          "temperature": 0.1,
+          "top_k": 50,
+          "repetition_penalty": 1.1
+        },
+        "reasoning_meta": {
+          "mandatory": true
+        },
+        "links": {
+          "details": "/api/v1/models/liquid/lfm-2.5-2.6b-20260811/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 0,
+          "artificial_analysis": 1
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-15"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "liquid/lfm-2.5-2.6b:free",
+      "display_name": "LiquidAI: LFM2.5-2.6B (free)",
+      "context_window": 65536,
+      "max_output_tokens": 8192,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "lfm-2.5-2.6b:free",
+        "openrouter/liquid/lfm-2.5-2.6b:free",
+        "liquid/lfm-2.5-2.6b-20260811",
+        "liquid/lfm-2.5-2.6b:free"
+      ],
+      "license_type": "free",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "extra": {
+        "free_tier": true,
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "liquid",
+        "canonical_slug": "liquid/lfm-2.5-2.6b-20260811",
+        "hugging_face_id": "LiquidAI/LFM2.5-2.6B",
+        "modality": "text->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 65536,
+          "max_completion_tokens": 8192,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "logprobs",
+          "max_completion_tokens",
+          "max_tokens",
+          "min_p",
+          "presence_penalty",
+          "reasoning",
+          "repetition_penalty",
+          "response_format",
+          "seed",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_k",
+          "top_logprobs",
+          "top_p"
+        ],
+        "created": "2026-08-11",
+        "description": "LFM2.5-2.6B is a compact reasoning model from Liquid AI. It is suited for agent workflows, data extraction, RAG, and long-context processing. Liquid advises against using it for agentic coding or...",
+        "expiration_date": "2026-11-13",
+        "default_parameters": {
+          "temperature": 0.1,
+          "top_k": 50,
+          "repetition_penalty": 1.1
+        },
+        "reasoning_meta": {
+          "mandatory": true
+        },
+        "links": {
+          "details": "/api/v1/models/liquid/lfm-2.5-2.6b-20260811/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 0,
+          "artificial_analysis": 1
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-15"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "liquid/lfm-2.5-embedding-350m",
+      "display_name": "LiquidAI: LFM2.5-Embedding-350M (free)",
+      "context_window": 512,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embeddings"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_json_schema": null,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": false,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "lfm-2.5-embedding-350m",
+        "openrouter/liquid/lfm-2.5-embedding-350m",
+        "liquid/lfm-2.5-embedding-350m"
+      ],
+      "license_type": "free",
+      "pricing": {
+        "input_per_1m": 0.0,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "embedding": {
+        "embedding": true,
+        "output_formats": [
+          "float"
+        ],
+        "status": "inferred",
+        "checked_at": "2026-10-10"
+      },
+      "extra": {
+        "free_tier": true,
+        "source": "https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "liquid",
+        "tokenizer": "",
+        "top_provider": {
+          "context_length": 512,
+          "max_completion_tokens": null,
+          "is_moderated": null
+        },
+        "supported_parameters": [],
+        "description": "LFM2.5-Embedding-350M is a text embedding model from Liquid AI. It produces 1,024-dimensional embeddings for retrieval and semantic search.\n\nSuccessful OpenRouter requests and embeddings may be retained and used to train Liquid models.",
+        "features": [
+          "embeddings"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-15"
+      }
+    },
+    {
+      "provider": "openrouter",
+      "model_id": "z-ai/glm-5.2:batch",
+      "display_name": "Z.ai: GLM 5.2 (batch)",
+      "context_window": 1048576,
+      "max_output_tokens": 943718,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": true,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": false,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [
+        "glm-5.2:batch",
+        "openrouter/z-ai/glm-5.2:batch",
+        "z-ai/glm-5.2-20260616"
+      ],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.298,
+        "output_per_1m": 0.916,
+        "currency": "USD"
+      },
+      "extra": {
+        "cache_read_per_1m": 0.101,
+        "source": "https://openrouter.ai/api/v1/models",
+        "docs": "https://openrouter.ai/docs",
+        "models_page": "https://openrouter.ai/models",
+        "base_url": "https://openrouter.ai/api/v1",
+        "native_provider": "z-ai",
+        "canonical_slug": "z-ai/glm-5.2-20260616",
+        "hugging_face_id": "zai-org/GLM-5.2",
+        "modality": "text->text",
+        "tokenizer": "Other",
+        "top_provider": {
+          "context_length": 1048576,
+          "max_completion_tokens": 943718,
+          "is_moderated": false
+        },
+        "supported_parameters": [
+          "frequency_penalty",
+          "include_reasoning",
+          "logit_bias",
+          "logprobs",
+          "max_tokens",
+          "min_p",
+          "presence_penalty",
+          "reasoning",
+          "reasoning_effort",
+          "repetition_penalty",
+          "response_format",
+          "seed",
+          "stop",
+          "structured_outputs",
+          "temperature",
+          "tool_choice",
+          "tools",
+          "top_k",
+          "top_logprobs",
+          "top_p"
+        ],
+        "created": "2026-06-16",
+        "description": "GLM 5.2 is a large-scale reasoning model from Z.ai. It supports text input and output with a 1M-token context window, and is suited for long-horizon agent workflows, project-level software engineering,...",
+        "default_parameters": {
+          "temperature": 1,
+          "top_p": 0.95
+        },
+        "reasoning_meta": {
+          "mandatory": false,
+          "default_enabled": true,
+          "supported_efforts": [
+            "xhigh",
+            "high",
+            "none"
+          ],
+          "default_effort": "high"
+        },
+        "links": {
+          "details": "/api/v1/models/z-ai/glm-5.2-20260616/endpoints"
+        },
+        "benchmarks_present": {
+          "design_arena": 19,
+          "artificial_analysis": 1
+        },
+        "features": [
+          "tools",
+          "structured_outputs",
+          "reasoning",
+          "reasoning_effort"
+        ],
+        "not_listed_in_current_provider_refresh": true,
+        "provider_refresh_checked_at": "2026-11-15"
+      },
+      "reasoning_effort_values": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ]
+    },
+    {
+      "provider": "openrouter",
       "model_id": "bytedance-seed/seed-1.6",
       "display_name": "ByteDance Seed: Seed 1.6",
       "context_window": 262144,
@@ -72633,7 +73091,7 @@
           "vision"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       }
     },
     {
@@ -72759,7 +73217,7 @@
           "vision"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       }
     },
     {
@@ -72894,7 +73352,7 @@
           "vision"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       },
       "reasoning_effort_values": [
         "none",
@@ -72989,7 +73447,7 @@
           "vision"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       }
     },
     {
@@ -73073,7 +73531,7 @@
           "structured_outputs"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       }
     },
     {
@@ -73151,7 +73609,7 @@
           "reasoning"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       }
     },
     {
@@ -73246,7 +73704,7 @@
           "reasoning"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       }
     },
     {
@@ -73330,7 +73788,7 @@
           "reasoning"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       }
     },
     {
@@ -73428,7 +73886,7 @@
           "file_input"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       },
       "reasoning_effort_values": [
         "none",
@@ -73537,7 +73995,7 @@
           "reasoning_effort"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       },
       "reasoning_effort_values": [
         "none",
@@ -73639,7 +74097,7 @@
           "reasoning_effort"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       },
       "reasoning_effort_values": [
         "none",
@@ -73742,7 +74200,7 @@
           "reasoning_effort"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       },
       "reasoning_effort_values": [
         "none",
@@ -73822,7 +74280,7 @@
           "vision"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       }
     },
     {
@@ -73908,7 +74366,7 @@
           "reasoning"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       }
     },
     {
@@ -73981,7 +74439,7 @@
           "details": "/api/v1/models/minimax/minimax-m2-her-20260123/endpoints"
         },
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       }
     },
     {
@@ -74070,7 +74528,7 @@
           "reasoning"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       }
     },
     {
@@ -74153,7 +74611,7 @@
           "structured_outputs"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       }
     },
     {
@@ -74235,7 +74693,7 @@
           "structured_outputs"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       }
     },
     {
@@ -74317,7 +74775,7 @@
           "vision"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       }
     },
     {
@@ -74435,7 +74893,7 @@
           "audio_input"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       },
       "reasoning_effort_values": [
         "none",
@@ -74561,7 +75019,7 @@
           "audio_input"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       },
       "reasoning_effort_values": [
         "none",
@@ -74625,7 +75083,7 @@
         "description": "rerank-2.5 is a cutting-edge reranker optimized for quality, delivering a 7.94% improvement in retrieval accuracy over Cohere Rerank v3.5 across 93 datasets. It also outperformed Cohere Rerank v3.5 by 12.70% on the Massive Instructed Retrieval Benchmark (MAIR). The model supports a combined context length of 32K tokens per query–document pair, including up to 8K tokens for the query, enabling more",
         "free_tier": true,
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       },
       "rerank": {
         "rerank": true,
@@ -74687,7 +75145,7 @@
         "description": "rerank-2.5-lite is a reranker optimized for both latency and quality, delivering a 7.16% improvement in retrieval accuracy over Cohere Rerank v3.5 across 93 datasets. It also outperformed Cohere Rerank v3.5 by 10.36% on the Massive Instructed Retrieval Benchmark (MAIR). The model supports a combined context length of 32K tokens per query–document pair, including up to 8K tokens for the query, enab",
         "free_tier": true,
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       },
       "rerank": {
         "rerank": true,
@@ -74749,7 +75207,7 @@
         "description": "rerank-3 is a reranker optimized for quality and a drop-in upgrade to rerank-2.5, improving on it by 0.80% NDCG@10 on average across domain evaluations and by 3.35% on long-document evaluations, with code retrieval gains of 2.01% atop voyage-3-large and 1.96% atop voyage-4-large. Across 93 retrieval datasets it outperforms Cohere Rerank v4.0 Pro by 2.14% and Qwen3-Reranker-8B by 3.31%. The model s",
         "free_tier": true,
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       },
       "rerank": {
         "rerank": true,
@@ -74811,7 +75269,7 @@
         "description": "rerank-3-lite is a reranker optimized for both latency and quality and a drop-in upgrade to rerank-2.5-lite, improving on it by 0.94% NDCG@10 on average across domain evaluations and by 1.86% on long-document evaluations, with code retrieval gains of 2.77% atop voyage-3-large and 2.59% atop voyage-4-large. It matches the retrieval quality of rerank-2.5, and across 93 retrieval datasets it outperfo",
         "free_tier": true,
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       },
       "rerank": {
         "rerank": true,
@@ -74875,7 +75333,7 @@
           "embeddings"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       },
       "embedding": {
         "embedding": true,
@@ -74941,7 +75399,7 @@
           "embeddings"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       },
       "embedding": {
         "embedding": true,
@@ -75007,7 +75465,7 @@
           "embeddings"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       },
       "embedding": {
         "embedding": true,
@@ -75073,7 +75531,7 @@
           "embeddings"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       },
       "embedding": {
         "embedding": true,
@@ -75141,7 +75599,7 @@
           "embeddings"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       },
       "embedding": {
         "embedding": true,
@@ -75231,7 +75689,7 @@
           "image_output"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       }
     },
     {
@@ -75313,7 +75771,7 @@
           "reasoning"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       }
     },
     {
@@ -75395,7 +75853,7 @@
           "reasoning"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       }
     },
     {
@@ -75477,7 +75935,7 @@
           "reasoning"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       }
     },
     {
@@ -75559,7 +76017,7 @@
           "reasoning"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       }
     },
     {
@@ -75667,7 +76125,7 @@
           "file_input"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       }
     },
     {
@@ -75770,7 +76228,7 @@
           "file_input"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       }
     },
     {
@@ -75882,7 +76340,7 @@
           "file_input"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       },
       "reasoning_effort_values": [
         "none",
@@ -76000,7 +76458,7 @@
           "file_input"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       },
       "reasoning_effort_values": [
         "none",
@@ -76103,7 +76561,7 @@
           "reasoning"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       }
     },
     {
@@ -76204,7 +76662,7 @@
           "reasoning_effort"
         ],
         "not_listed_in_current_provider_refresh": true,
-        "provider_refresh_checked_at": "2026-11-13"
+        "provider_refresh_checked_at": "2026-11-15"
       },
       "reasoning_effort_values": [
         "none",
