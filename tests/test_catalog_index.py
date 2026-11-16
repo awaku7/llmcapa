@@ -938,6 +938,26 @@ def test_record_regions_match_between_sqlite_and_json(region_catalog):
         assert registry.find_by_region(region) == baseline.find_by_region(region)
 
 
+def test_object_cache_evicts_oldest_decodes(region_catalog, monkeypatch):
+    import llmcapa._catalog_index as index_module
+
+    monkeypatch.setattr(index_module, "_OBJECT_CACHE_LIMIT", 3)
+    registry = Registry()
+    first = registry.get("model-a", "vertex-ai")
+    registry.get("model-b", "vertex-ai")
+    registry.get("model-c", "vertex-ai")
+    newest = registry.get("model-d", "vertex-ai")
+
+    index = registry._catalog_index
+    assert index is not None
+    assert len(index._objects) == 3
+    # Recent decodes keep their identity; the evicted oldest record is
+    # decoded again and compares equal without being the same object.
+    assert registry.get("model-d", "vertex-ai") is newest
+    assert registry.get("model-a", "vertex-ai") == first
+    assert registry.get("model-a", "vertex-ai") is not first
+
+
 def test_refreshed_record_preserves_bundled_regions(region_catalog):
     registry = Registry()
     registry._ensure_loaded()
