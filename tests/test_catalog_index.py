@@ -904,48 +904,26 @@ def region_catalog(tmp_path, monkeypatch):
         {"provider": "vertex-ai", "model_id": f"model-{letter}"} for letter in "abcdef"
     ]
     models[1]["aliases"] = ["bee"]
+    models[1]["regions"] = {"locations": ["us-central1"]}
     models[2]["aliases"] = ["cee"]
+    models[2]["regions"] = {"locations": ["europe-west1"]}
     models[3]["regions"] = {"locations": ["own-region"]}
-    # A display name equal to a metadata target must not attract the record.
+    # A display-name twin of a region-bearing record carries no regions.
     models.append(
         {"provider": "vertex-ai", "model_id": "model-g", "display_name": "model-b"}
     )
     (data / "vertex-ai.json").write_text(json.dumps(models), encoding="utf-8")
-    meta = {
-        "models": [
-            {
-                "provider": "vertex-ai",
-                "model_id": "model-b",
-                "regions": {"locations": ["us-central1"]},
-            },
-            {
-                "provider": "vertex-ai",
-                "model_id": "cee",
-                "regions": {"locations": ["europe-west1"]},
-            },
-            {
-                "provider": "vertex-ai",
-                "model_id": "model-d",
-                "regions": {"locations": ["must-not-win"]},
-            },
-        ]
-    }
-    (data / "regional_availability.meta").write_text(json.dumps(meta), encoding="utf-8")
     database = data / "catalog.sqlite3"
     build_catalog(database)
     return data, database
 
 
-def test_region_metadata_matches_json_without_provider_scan(region_catalog):
+def test_record_regions_match_between_sqlite_and_json(region_catalog):
     baseline = json_registry()
 
     registry = Registry()
     registry._ensure_loaded()
     assert registry._catalog_index is not None
-    # Seven models share the provider; only the metadata targets (by model
-    # id, by alias, and the explicit-regions record being checked) plus the
-    # display-name candidate may be decoded while applying the metadata.
-    assert len(registry._catalog_index._objects) < 7
 
     for model_id in ("model-a", "model-b", "model-c", "model-d", "model-e", "model-g"):
         assert registry.get(model_id, "vertex-ai") == baseline.get(
@@ -954,7 +932,6 @@ def test_region_metadata_matches_json_without_provider_scan(region_catalog):
     assert registry.get("model-g", "vertex-ai").regions is None
     assert registry.get("model-b", "vertex-ai").regions.locations == ("us-central1",)
     assert registry.get("model-c", "vertex-ai").regions.locations == ("europe-west1",)
-    # Explicit model-record metadata wins over the curated default.
     assert registry.get("model-d", "vertex-ai").regions.locations == ("own-region",)
     assert registry.list_regions() == baseline.list_regions()
     for region in baseline.list_regions():

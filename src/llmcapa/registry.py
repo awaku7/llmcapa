@@ -26,7 +26,7 @@ from urllib.parse import quote
 from ._catalog_index import CatalogIndex, CatalogMapping, parse_numeric_name
 from ._temporary_cache import DAY, cleanup_temporary_caches, write_temporary_cache
 from .hf_overlay import expand_hf_overlay, is_hf_overlay
-from .models import Capability, RegionCapability
+from .models import Capability
 
 _HF_MAX_RETRIES = 5
 _HF_MAX_BACKOFF_SECONDS = 60.0
@@ -57,37 +57,6 @@ def _verified_vllm_reasoning_models() -> dict:
     """Bundled exact-ID reasoning evidence shared across catalog load paths."""
     resource = resources.files("llmcapa.data").joinpath("_vllm_verified_reasoning.meta")
     return json.loads(resource.read_text(encoding="utf-8"))["models"]
-
-
-def _region_targets(provider_models, model_id: str):
-    """Find (key, capability) pairs whose key or aliases match ``model_id``.
-
-    On the lazy SQLite index, resolve through the candidate postings so a
-    metadata record does not decode the provider's whole catalog. The scan
-    predicate is re-checked either way, so the result is identical.
-    """
-    wanted = model_id.casefold()
-
-    def matches(key, cap):
-        return key.casefold() == wanted or any(
-            alias.casefold() == wanted for alias in cap.aliases
-        )
-
-    if isinstance(provider_models, CatalogMapping):
-        candidate_ids = None
-        for term in {wanted, model_id.lower()}:
-            ids = provider_models.reader.candidate_ids("name", term)
-            if ids is not None:
-                candidate_ids = ids if candidate_ids is None else candidate_ids | ids
-        if candidate_ids is not None:
-            return [
-                (key, cap)
-                for key, cap in provider_models.matching_items(
-                    candidate_ids, "name", wanted
-                )
-                if matches(key, cap)
-            ]
-    return [(key, cap) for key, cap in provider_models.items() if matches(key, cap)]
 
 
 class ModelNotFoundError(KeyError):
@@ -249,12 +218,8 @@ class Registry:
             self._load_bundled_files()
 
         if self._catalog_index is not None and self._load_user_cache_snapshot():
-            # User snapshots created before the regional matrix was introduced
-            # may lack these optional fields; fill only absent metadata.
-            self._load_region_metadata()
             return
         self._load_startup_caches()
-        self._load_region_metadata()
 
     def _load_startup_caches(self) -> None:
         # Apply cache records as sparse overrides without expanding the bundle.
@@ -377,56 +342,6 @@ class Registry:
             self._load_json_text(
                 entry.read_text(encoding="utf-8"), catalog_name=entry.name
             )
-        self._load_region_metadata()
-
-    def _load_region_metadata(self) -> None:
-        """Apply official, versioned regional metadata to catalog models."""
-        data_pkg = resources.files("llmcapa.data")
-        path = data_pkg.joinpath("regional_availability.meta")
-        try:
-            payload = json.loads(path.read_text(encoding="utf-8"))
-        except (OSError, ValueError, TypeError):
-            return
-        records = payload.get("models", []) if isinstance(payload, dict) else []
-        if not isinstance(records, list):
-            return
-
-        for record in records:
-            if not isinstance(record, dict):
-                continue
-            provider = record.get("provider")
-            model_id = record.get("model_id")
-            regions_data = record.get("regions")
-            if not isinstance(provider, str) or not isinstance(model_id, str):
-                continue
-            if not isinstance(regions_data, dict):
-                continue
-            try:
-                regional = RegionCapability.from_dict(regions_data)
-            except (TypeError, ValueError):
-                continue
-
-            provider_key = self._canonical_provider(provider)
-            provider_models = self._by_provider.get(provider_key)
-            if provider_models is None:
-                continue
-            if model_id == "*":
-                targets = list(provider_models.items())
-            else:
-                targets = _region_targets(provider_models, model_id)
-
-            for key, cap in targets:
-                # Explicit model-record metadata wins over this curated default.
-                if cap.regions is not None:
-                    continue
-                updated = replace(cap, regions=regional)
-                provider_models[key] = updated
-                flat = self._models.get(key)
-                if (
-                    flat is not None
-                    and self._canonical_provider(flat.provider) == provider_key
-                ):
-                    self._models[key] = updated
 
     def _load_openrouter_cache(self) -> None:
         """Load the existing local OpenRouter cache, if fresh."""

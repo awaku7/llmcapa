@@ -58,9 +58,9 @@ ______________________________________________________________________
 
 ## リージョン提供情報
 
-`src/llmcapa/data/regional_availability.meta` は、公式ソースに基づくリージョン情報のバージョン管理されたオーバーレイです。`models` の各行に provider / model ID と `regions` を記録します。リージョンはクラウドのリージョン名だけで記録し、サービスが使える国の一覧（Gemini API / AI Studio の提供国など）は入れません。Vertex AI と Bedrock はモデル別に登録し、直接利用可能な location と multi-region endpoint、Bedrock のクロスリージョン推論プロファイルのソースリージョンを区別します。各レコードには公式 `source_url` と確認日 `checked_at` を記録してください。明示的なモデルカタログの `regions` が存在する場合は、オーバーレイより優先されます。
+リージョン情報は、各プロバイダーのカタログ JSON のレコードに `regions` として直接記録します。リージョンはクラウドのリージョン名だけで記録し、サービスが使える国の一覧（Gemini API / AI Studio の提供国など）は入れません。Vertex AI と Bedrock はモデル別に登録し、直接利用可能な location と multi-region endpoint、Bedrock のクロスリージョン推論プロファイルのソースリージョンを区別します。各レコードには公式 `source_url` と確認日 `checked_at` を記録してください。プロバイダーの更新スクリプトは既存レコードを土台に作り直すため、手で登録した `regions` は更新後も引き継がれます。
 
-このファイルを変更したら、同梱 SQLite スナップショットを再生成して検証します。
+リージョン情報を変更したら、同梱 SQLite スナップショットを再生成して検証します。
 
 ```bash
 python scripts/build_catalog_db.py
