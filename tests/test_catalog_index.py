@@ -841,6 +841,52 @@ def test_corrupt_stamp_is_ignored(catalog, tmp_path):
     assert registry._catalog_index is not None
 
 
+def test_diagnostics_reports_healthy_sqlite(catalog):
+    registry = Registry()
+    assert registry.get("demo").provider == "openai"
+    diagnostics = registry.catalog_diagnostics()
+    assert diagnostics["mode"] == "sqlite"
+    assert diagnostics["schema_version"] >= 2
+    assert diagnostics["using_json_fallback"] is False
+    assert diagnostics["fallback_reason"] is None
+    assert diagnostics["candidate_failures"] == 0
+    assert diagnostics["last_candidate_error"] is None
+
+
+def test_diagnostics_json_mode():
+    registry = json_registry()
+    assert registry.catalog_diagnostics() == {"mode": "json"}
+
+
+def test_diagnostics_records_candidate_failure(catalog):
+    _, database = catalog
+    registry = Registry()
+    assert registry.get("demo").provider == "openai"
+    with closing(sqlite3.connect(database)) as conn:
+        conn.execute("DROP TABLE lookup_blocks")
+        conn.commit()
+
+    # Lookups still answer through the full scan, but the failure is visible.
+    assert registry.search("demo")
+    diagnostics = registry.catalog_diagnostics()
+    assert diagnostics["candidate_failures"] >= 1
+    assert "lookup_blocks" in diagnostics["last_candidate_error"]
+
+
+def test_diagnostics_records_json_fallback(catalog):
+    _, database = catalog
+    registry = Registry()
+    assert registry.get("demo").provider == "openai"
+    with closing(sqlite3.connect(database)) as conn:
+        conn.execute("DROP VIEW models")
+        conn.commit()
+
+    assert registry.get("demo", "openai").provider == "openai"
+    diagnostics = registry.catalog_diagnostics()
+    assert diagnostics["using_json_fallback"] is True
+    assert "models" in diagnostics["fallback_reason"]
+
+
 @pytest.fixture
 def region_catalog(tmp_path, monkeypatch):
     data = tmp_path / "data"

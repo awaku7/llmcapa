@@ -82,6 +82,11 @@ def _windows_change_time_ns(path):
         return None
 
 
+def _error_text(exc):
+    """One-line, length-capped rendering of a read failure for diagnostics."""
+    return f"{type(exc).__name__}: {exc}".replace("\n", " ")[:120]
+
+
 def _file_stat(path):
     stat = path.stat()
     if os.name == "nt":
@@ -297,6 +302,27 @@ class CatalogIndex:
         self._batch_metadata = {}
         self._batch_owners = None
         self._schema_version = 1
+        self._fallback_reason = None
+        self._candidate_failures = 0
+        self._last_candidate_error = None
+
+    def _note_fallback(self, exc):
+        if self._fallback_reason is None:
+            self._fallback_reason = _error_text(exc)
+
+    def _note_candidate_failure(self, exc):
+        self._candidate_failures += 1
+        self._last_candidate_error = _error_text(exc)
+
+    def diagnostics(self):
+        """Report silent degradations: JSON fallback use and candidate failures."""
+        return {
+            "schema_version": self._schema_version,
+            "using_json_fallback": self._fallback is not None,
+            "fallback_reason": self._fallback_reason,
+            "candidate_failures": self._candidate_failures,
+            "last_candidate_error": self._last_candidate_error,
+        }
 
     def _connect(self):
         if self._batch_stack is None:
@@ -456,8 +482,8 @@ class CatalogIndex:
                         return [
                             (row[0], self._capability(conn, *row[1:])) for row in rows
                         ]
-                except _READ_ERRORS:
-                    pass
+                except _READ_ERRORS as exc:
+                    self._note_fallback(exc)
             fallback = self._json_index(table, provider)
             if key is not None:
                 items = [(key, fallback[key])] if key in fallback else []
@@ -486,7 +512,8 @@ class CatalogIndex:
                         self._batch_metadata[cache_key] = dict(
                             conn.execute(f"SELECT {columns} FROM {table}{where}", args)
                         )
-                except _READ_ERRORS:
+                except _READ_ERRORS as exc:
+                    self._note_fallback(exc)
                     self._json_index(table, provider)
                     return None
             return self._batch_metadata[cache_key]
@@ -505,7 +532,8 @@ class CatalogIndex:
                         self._batch_owners = dict(
                             conn.execute("SELECT capability_id, provider FROM models")
                         )
-                except _READ_ERRORS:
+                except _READ_ERRORS as exc:
+                    self._note_fallback(exc)
                     self._json_index("flat_models", None)
                     return None
             # A flat-only record may not be in the scoped index. Its caller
@@ -520,7 +548,8 @@ class CatalogIndex:
             try:
                 with self._connect() as conn:
                     return candidate_ids(conn, kind, term)
-            except _READ_ERRORS:
+            except _READ_ERRORS as exc:
+                self._note_candidate_failure(exc)
                 return None
 
     def matching_items(self, table, provider, candidate_ids, updates, excluded):
@@ -557,8 +586,8 @@ class CatalogIndex:
                                 )
                         result.update(updates)
                         return result.items()
-                except _READ_ERRORS:
-                    pass
+                except _READ_ERRORS as exc:
+                    self._note_fallback(exc)
             combined = {
                 key: value
                 for key, value in self._json_index(table, provider).items()
