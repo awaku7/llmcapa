@@ -13,7 +13,7 @@ from importlib import resources
 from pathlib import Path
 from threading import RLock
 
-from .models import Capability
+from .models import Capability, RegionCapability
 
 _READ_ERRORS = (OSError, sqlite3.Error, ValueError, KeyError, TypeError, zlib.error)
 
@@ -370,7 +370,7 @@ class CatalogIndex:
             # Verify authoritative content once per reader, not on each lookup.
             with reader._connect() as conn:
                 version = conn.execute("PRAGMA user_version").fetchone()
-                if version not in ((1,), (2,), (3,)):
+                if version not in ((1,), (2,), (3,), (4,)):
                     return None
                 reader._schema_version = version[0]
                 if reader._schema_version >= 2:
@@ -552,6 +552,30 @@ class CatalogIndex:
                 self._note_candidate_failure(exc)
                 return None
 
+    def bundled_regions(self, provider, key):
+        """Read a bundled record's regions without decoding its payload."""
+        if self._schema_version < 4 or self._fallback is not None:
+            return None
+        with self._lock:
+            try:
+                with self._connect() as conn:
+                    row = conn.execute(
+                        "SELECT r.regions FROM models AS m"
+                        " JOIN record_regions AS r"
+                        " ON r.capability_id = m.capability_id"
+                        " WHERE m.provider = ? AND m.model_key = ?",
+                        (provider, key),
+                    ).fetchone()
+            except _READ_ERRORS as exc:
+                self._note_candidate_failure(exc)
+                return None
+        if row is None:
+            return None
+        try:
+            return RegionCapability.from_dict(json.loads(row[0]))
+        except (TypeError, ValueError):
+            return None
+
     def matching_items(self, table, provider, candidate_ids, updates, excluded):
         """Read candidates in base order, then append new overlay keys."""
         if candidate_ids is None:
@@ -685,6 +709,12 @@ class CatalogMapping(Mapping):
 
     def values(self):
         return [value for _, value in self.items()]
+
+    def bundled_regions(self, key):
+        """Regions of the bundled record behind this mapping, if any."""
+        if self.table != "models" or self.provider is None:
+            return None
+        return self.reader.bundled_regions(self.provider, key)
 
     def matching_items(self, ids, kind, term):
         cached = {}

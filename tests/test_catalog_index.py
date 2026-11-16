@@ -10,7 +10,7 @@ import pytest
 
 from llmcapa import registry as registry_module
 from llmcapa._catalog_db import build_catalog
-from llmcapa.models import Capability
+from llmcapa.models import Capability, RegionCapability
 from llmcapa.registry import ModelNotFoundError, Registry
 
 
@@ -904,48 +904,26 @@ def region_catalog(tmp_path, monkeypatch):
         {"provider": "vertex-ai", "model_id": f"model-{letter}"} for letter in "abcdef"
     ]
     models[1]["aliases"] = ["bee"]
+    models[1]["regions"] = {"locations": ["us-central1"]}
     models[2]["aliases"] = ["cee"]
+    models[2]["regions"] = {"locations": ["europe-west1"]}
     models[3]["regions"] = {"locations": ["own-region"]}
-    # A display name equal to a metadata target must not attract the record.
+    # A display-name twin of a region-bearing record carries no regions.
     models.append(
         {"provider": "vertex-ai", "model_id": "model-g", "display_name": "model-b"}
     )
     (data / "vertex-ai.json").write_text(json.dumps(models), encoding="utf-8")
-    meta = {
-        "models": [
-            {
-                "provider": "vertex-ai",
-                "model_id": "model-b",
-                "regions": {"locations": ["us-central1"]},
-            },
-            {
-                "provider": "vertex-ai",
-                "model_id": "cee",
-                "regions": {"locations": ["europe-west1"]},
-            },
-            {
-                "provider": "vertex-ai",
-                "model_id": "model-d",
-                "regions": {"locations": ["must-not-win"]},
-            },
-        ]
-    }
-    (data / "regional_availability.meta").write_text(json.dumps(meta), encoding="utf-8")
     database = data / "catalog.sqlite3"
     build_catalog(database)
     return data, database
 
 
-def test_region_metadata_matches_json_without_provider_scan(region_catalog):
+def test_record_regions_match_between_sqlite_and_json(region_catalog):
     baseline = json_registry()
 
     registry = Registry()
     registry._ensure_loaded()
     assert registry._catalog_index is not None
-    # Seven models share the provider; only the metadata targets (by model
-    # id, by alias, and the explicit-regions record being checked) plus the
-    # display-name candidate may be decoded while applying the metadata.
-    assert len(registry._catalog_index._objects) < 7
 
     for model_id in ("model-a", "model-b", "model-c", "model-d", "model-e", "model-g"):
         assert registry.get(model_id, "vertex-ai") == baseline.get(
@@ -954,8 +932,76 @@ def test_region_metadata_matches_json_without_provider_scan(region_catalog):
     assert registry.get("model-g", "vertex-ai").regions is None
     assert registry.get("model-b", "vertex-ai").regions.locations == ("us-central1",)
     assert registry.get("model-c", "vertex-ai").regions.locations == ("europe-west1",)
-    # Explicit model-record metadata wins over the curated default.
     assert registry.get("model-d", "vertex-ai").regions.locations == ("own-region",)
     assert registry.list_regions() == baseline.list_regions()
     for region in baseline.list_regions():
         assert registry.find_by_region(region) == baseline.find_by_region(region)
+
+
+def test_refreshed_record_preserves_bundled_regions(region_catalog):
+    registry = Registry()
+    registry._ensure_loaded()
+    index = registry._catalog_index
+    assert index is not None
+
+    # A snapshot fetched before regions moved into the records omits the
+    # field; the refresh must not drop the bundled regional availability.
+    with index.batch():
+        registry._register_refreshed_catalog_record(
+            Capability(provider="vertex-ai", model_id="model-b", context_window=123)
+        )
+    updated = registry.get("model-b", "vertex-ai")
+    assert updated.context_window == 123
+    assert updated.regions.locations == ("us-central1",)
+    # The bundled payload was never decoded to recover the regions.
+    assert not index._objects
+
+    # A refreshed record that carries regions replaces them.
+    with index.batch():
+        registry._register_refreshed_catalog_record(
+            Capability(
+                provider="vertex-ai",
+                model_id="model-b",
+                regions=RegionCapability(locations=("new-region",)),
+            )
+        )
+    assert registry.get("model-b", "vertex-ai").regions.locations == ("new-region",)
+
+
+def test_fetch_github_catalog_preserves_regions_in_written_bundle(
+    region_catalog, monkeypatch
+):
+    from io import BytesIO
+
+    data, _database = region_catalog
+    registry = Registry()
+    registry._ensure_loaded()
+
+    # The fetched snapshot predates regions in the records.
+    stale = [{"provider": "vertex-ai", "model_id": "model-b", "context_window": 999}]
+    response_data = json.dumps({"models": stale}).encode("utf-8")
+    monkeypatch.setattr(
+        "llmcapa.registry.urllib.request.urlopen",
+        lambda request, context=None, timeout=None: BytesIO(response_data),
+    )
+    registered = registry.fetch_github_catalog("vertex-ai", cache_ttl=0)
+    assert registered >= 1
+    assert registry.get("model-b", "vertex-ai").regions.locations == ("us-central1",)
+
+    # The bundled file written from the download carries the regions too,
+    # so a fresh registry still sees them.
+    written = json.loads((data / "vertex-ai.json").read_text(encoding="utf-8"))
+    record = next(r for r in written["models"] if r["model_id"] == "model-b")
+    assert record["regions"]["locations"] == ["us-central1"]
+    fresh = Registry()
+    assert fresh.get("model-b", "vertex-ai").regions.locations == ("us-central1",)
+
+
+def test_refreshed_record_preserves_regions_in_json_mode(region_catalog):
+    registry = json_registry()
+    registry._register_refreshed_catalog_record(
+        Capability(provider="vertex-ai", model_id="model-b", context_window=123)
+    )
+    updated = registry.get("model-b", "vertex-ai")
+    assert updated.context_window == 123
+    assert updated.regions.locations == ("us-central1",)

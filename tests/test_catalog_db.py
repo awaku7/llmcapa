@@ -56,7 +56,7 @@ def test_catalog_database_preserves_lookup_indexes(tmp_path, monkeypatch):
     check_catalog(destination)
 
     with closing(sqlite3.connect(destination)) as database:
-        assert database.execute("PRAGMA user_version").fetchone() == (3,)
+        assert database.execute("PRAGMA user_version").fetchone() == (4,)
         assert database.execute("PRAGMA integrity_check").fetchone() == ("ok",)
         assert database.execute("PRAGMA foreign_key_check").fetchall() == []
         blocks = {
