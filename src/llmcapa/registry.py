@@ -1106,6 +1106,18 @@ class Registry:
             self.register(cap)
             return
 
+        if cap.regions is None:
+            # Snapshots fetched before regions moved into the records omit
+            # the field; keep the bundled record's regional availability
+            # instead of dropping it with the rest of the refresh.
+            if isinstance(provider_models, CatalogMapping):
+                regions = provider_models.bundled_regions(key)
+            else:
+                existing = provider_models.get(key)
+                regions = existing.regions if existing is not None else None
+            if regions is not None:
+                cap = replace(cap, regions=regions)
+
         # Refresh the provider-scoped entry. Only replace the flat lookup entry
         # when it already belongs to this provider; another provider may own it.
         provider_models[key] = cap

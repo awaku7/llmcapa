@@ -10,7 +10,7 @@ import pytest
 
 from llmcapa import registry as registry_module
 from llmcapa._catalog_db import build_catalog
-from llmcapa.models import Capability
+from llmcapa.models import Capability, RegionCapability
 from llmcapa.registry import ModelNotFoundError, Registry
 
 
@@ -936,3 +936,43 @@ def test_record_regions_match_between_sqlite_and_json(region_catalog):
     assert registry.list_regions() == baseline.list_regions()
     for region in baseline.list_regions():
         assert registry.find_by_region(region) == baseline.find_by_region(region)
+
+
+def test_refreshed_record_preserves_bundled_regions(region_catalog):
+    registry = Registry()
+    registry._ensure_loaded()
+    index = registry._catalog_index
+    assert index is not None
+
+    # A snapshot fetched before regions moved into the records omits the
+    # field; the refresh must not drop the bundled regional availability.
+    with index.batch():
+        registry._register_refreshed_catalog_record(
+            Capability(provider="vertex-ai", model_id="model-b", context_window=123)
+        )
+    updated = registry.get("model-b", "vertex-ai")
+    assert updated.context_window == 123
+    assert updated.regions.locations == ("us-central1",)
+    # The bundled payload was never decoded to recover the regions.
+    assert not index._objects
+
+    # A refreshed record that carries regions replaces them.
+    with index.batch():
+        registry._register_refreshed_catalog_record(
+            Capability(
+                provider="vertex-ai",
+                model_id="model-b",
+                regions=RegionCapability(locations=("new-region",)),
+            )
+        )
+    assert registry.get("model-b", "vertex-ai").regions.locations == ("new-region",)
+
+
+def test_refreshed_record_preserves_regions_in_json_mode(region_catalog):
+    registry = json_registry()
+    registry._register_refreshed_catalog_record(
+        Capability(provider="vertex-ai", model_id="model-b", context_window=123)
+    )
+    updated = registry.get("model-b", "vertex-ai")
+    assert updated.context_window == 123
+    assert updated.regions.locations == ("us-central1",)

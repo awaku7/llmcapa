@@ -18,7 +18,7 @@ from .registry import Registry
 _BLOCK_SIZE = 256
 
 _SCHEMA = """
-PRAGMA user_version = 3;
+PRAGMA user_version = 4;
 CREATE TABLE catalog_sources (
     filename TEXT PRIMARY KEY,
     sha256 TEXT NOT NULL
@@ -33,6 +33,10 @@ CREATE TABLE capabilities (
     block_id INTEGER NOT NULL REFERENCES capability_blocks(id)
         DEFERRABLE INITIALLY DEFERRED,
     position INTEGER NOT NULL
+);
+CREATE TABLE record_regions (
+    capability_id INTEGER PRIMARY KEY REFERENCES capabilities(id),
+    regions TEXT NOT NULL
 );
 CREATE TABLE strings (
     id INTEGER PRIMARY KEY,
@@ -101,7 +105,7 @@ def check_catalog(database: Path) -> None:
     if not database.is_file():
         raise RuntimeError("Missing SQLite catalog; run scripts/build_catalog_db.py")
     with closing(sqlite3.connect(database.as_uri() + "?mode=ro", uri=True)) as conn:
-        if conn.execute("PRAGMA user_version").fetchone() != (3,):
+        if conn.execute("PRAGMA user_version").fetchone() != (4,):
             raise RuntimeError(
                 "Unsupported SQLite catalog schema; run scripts/build_catalog_db.py"
             )
@@ -189,6 +193,18 @@ def build_catalog(destination: Path) -> None:
                     )
                     ids[key] = record_id
                     lookup.add(record_id, capability)
+                    if capability.regions is not None:
+                        connection.execute(
+                            "INSERT INTO record_regions VALUES (?, ?)",
+                            (
+                                record_id,
+                                json.dumps(
+                                    capability.regions.to_dict(),
+                                    ensure_ascii=False,
+                                    separators=(",", ":"),
+                                ),
+                            ),
+                        )
                     pending.append(capability.to_dict())
                     if len(pending) == _BLOCK_SIZE:
                         flush_block()
