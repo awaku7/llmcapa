@@ -18,6 +18,10 @@ from .models import Capability, RegionCapability
 _READ_ERRORS = (OSError, sqlite3.Error, ValueError, KeyError, TypeError, zlib.error)
 
 _STAMP_VERSION = 1
+# Decoded capabilities double as an identity map whose mutations stay
+# visible to later searches, so entries cannot simply be dropped; past
+# this many records the oldest decodes go first.
+_OBJECT_CACHE_LIMIT = 8192
 
 
 def _windows_change_time_ns(path):
@@ -432,6 +436,8 @@ class CatalogIndex:
         except AttributeError as exc:
             raise ValueError("Invalid nested capability record") from exc
         self._objects[record_id] = cap
+        while len(self._objects) > _OBJECT_CACHE_LIMIT:
+            self._objects.pop(next(iter(self._objects)))
         return cap
 
     def _json_index(self, table, provider):
