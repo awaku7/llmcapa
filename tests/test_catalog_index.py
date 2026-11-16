@@ -743,3 +743,173 @@ def test_catalog_parity_rejects_candidate_query_fallback(catalog, monkeypatch):
     monkeypatch.setattr(_catalog_index, "candidate_ids", failed_candidates)
     with pytest.raises(CatalogParityError, match="candidate lookup fell back"):
         verify_catalog()
+
+
+def test_open_stamp_skips_source_rehash(catalog, monkeypatch):
+    from llmcapa import _catalog_db
+
+    registry = Registry()
+    assert registry.get("demo").provider == "openai"
+    assert registry._catalog_index is not None
+
+    def unexpected_hash():
+        pytest.fail("stamp hit must not re-read the source files")
+
+    monkeypatch.setattr(_catalog_db, "_catalog_sources", unexpected_hash)
+    registry = Registry()
+    assert registry.get("demo").provider == "openai"
+    assert registry._catalog_index is not None
+
+
+def test_stamp_detects_source_edit_with_preserved_mtime(catalog):
+    data, _ = catalog
+    registry = Registry()
+    assert registry.get("demo").context_window == 1000
+    assert registry._catalog_index is not None
+
+    source = data / "openai.json"
+    original = source.stat()
+    records = json.loads(source.read_text(encoding="utf-8"))
+    records[0]["context_window"] = 2000
+    source.write_text(json.dumps(records), encoding="utf-8")
+    os.utime(source, ns=(original.st_atime_ns, original.st_mtime_ns))
+
+    registry = Registry()
+    assert registry.get("demo").context_window == 2000
+    assert registry._catalog_index is None
+
+
+def test_stamp_miss_when_database_file_is_replaced(catalog, monkeypatch):
+    import shutil
+
+    from llmcapa import _catalog_db
+
+    _, database = catalog
+    registry = Registry()
+    assert registry.get("demo").provider == "openai"
+    assert registry._catalog_index is not None
+
+    calls = []
+    original = _catalog_db._catalog_sources
+
+    def counting():
+        calls.append(1)
+        return original()
+
+    monkeypatch.setattr(_catalog_db, "_catalog_sources", counting)
+    replacement = database.with_name("replacement.sqlite3")
+    shutil.copyfile(database, replacement)
+    os.replace(replacement, database)
+
+    registry = Registry()
+    assert registry.get("demo").provider == "openai"
+    assert registry._catalog_index is not None
+    assert calls, "replacing the database file must re-run the hash check"
+
+
+def test_windows_change_time_helper_is_unavailable_off_windows(tmp_path):
+    if os.name == "nt":
+        pytest.skip("the helper reads the real NTFS change time on Windows")
+    from llmcapa import _catalog_index
+
+    assert _catalog_index._windows_change_time_ns(tmp_path / "x") is None
+
+
+def test_file_stat_requires_a_change_time_on_windows(tmp_path, monkeypatch):
+    from llmcapa import _catalog_index
+
+    target = tmp_path / "source.json"
+    target.write_text("{}", encoding="utf-8")
+    monkeypatch.setattr(os, "name", "nt")
+    monkeypatch.setattr(_catalog_index, "_windows_change_time_ns", lambda path: 4242)
+    assert _catalog_index._file_stat(target)[2] == 4242
+    monkeypatch.setattr(_catalog_index, "_windows_change_time_ns", lambda path: None)
+    with pytest.raises(OSError):
+        _catalog_index._file_stat(target)
+
+
+def test_corrupt_stamp_is_ignored(catalog, tmp_path):
+    registry = Registry()
+    assert registry.get("demo").provider == "openai"
+    assert registry._catalog_index is not None
+    stamp = tmp_path / "home" / ".llmcapa" / "catalog_index_stamp.json"
+    assert stamp.is_file()
+    stamp.write_text("not json", encoding="utf-8")
+
+    registry = Registry()
+    assert registry.get("demo").provider == "openai"
+    assert registry._catalog_index is not None
+
+
+@pytest.fixture
+def region_catalog(tmp_path, monkeypatch):
+    data = tmp_path / "data"
+    data.mkdir()
+    home = tmp_path / "home"
+    home.mkdir()
+    monkeypatch.setenv("HOME", str(home))
+    monkeypatch.setenv("USERPROFILE", str(home))
+    monkeypatch.setattr(registry_module.Path, "home", lambda: home)
+    monkeypatch.setattr(registry_module.resources, "files", lambda package: data)
+    monkeypatch.setattr(
+        Registry, "_refresh_provider_catalog_on_miss", lambda self, provider: False
+    )
+    models = [
+        {"provider": "vertex-ai", "model_id": f"model-{letter}"} for letter in "abcdef"
+    ]
+    models[1]["aliases"] = ["bee"]
+    models[2]["aliases"] = ["cee"]
+    models[3]["regions"] = {"locations": ["own-region"]}
+    # A display name equal to a metadata target must not attract the record.
+    models.append(
+        {"provider": "vertex-ai", "model_id": "model-g", "display_name": "model-b"}
+    )
+    (data / "vertex-ai.json").write_text(json.dumps(models), encoding="utf-8")
+    meta = {
+        "models": [
+            {
+                "provider": "vertex-ai",
+                "model_id": "model-b",
+                "regions": {"locations": ["us-central1"]},
+            },
+            {
+                "provider": "vertex-ai",
+                "model_id": "cee",
+                "regions": {"locations": ["europe-west1"]},
+            },
+            {
+                "provider": "vertex-ai",
+                "model_id": "model-d",
+                "regions": {"locations": ["must-not-win"]},
+            },
+        ]
+    }
+    (data / "regional_availability.meta").write_text(json.dumps(meta), encoding="utf-8")
+    database = data / "catalog.sqlite3"
+    build_catalog(database)
+    return data, database
+
+
+def test_region_metadata_matches_json_without_provider_scan(region_catalog):
+    baseline = json_registry()
+
+    registry = Registry()
+    registry._ensure_loaded()
+    assert registry._catalog_index is not None
+    # Seven models share the provider; only the metadata targets (by model
+    # id, by alias, and the explicit-regions record being checked) plus the
+    # display-name candidate may be decoded while applying the metadata.
+    assert len(registry._catalog_index._objects) < 7
+
+    for model_id in ("model-a", "model-b", "model-c", "model-d", "model-e", "model-g"):
+        assert registry.get(model_id, "vertex-ai") == baseline.get(
+            model_id, "vertex-ai"
+        )
+    assert registry.get("model-g", "vertex-ai").regions is None
+    assert registry.get("model-b", "vertex-ai").regions.locations == ("us-central1",)
+    assert registry.get("model-c", "vertex-ai").regions.locations == ("europe-west1",)
+    # Explicit model-record metadata wins over the curated default.
+    assert registry.get("model-d", "vertex-ai").regions.locations == ("own-region",)
+    assert registry.list_regions() == baseline.list_regions()
+    for region in baseline.list_regions():
+        assert registry.find_by_region(region) == baseline.find_by_region(region)

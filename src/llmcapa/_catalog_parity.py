@@ -73,6 +73,12 @@ def _compare_search(expected, actual, prefix, provider, deprecated, limit):
         _compare_capabilities(label, original, cap)
 
 
+def _compare_capability_lists(label, left, right):
+    _require_equal(f"{label} count", len(left), len(right))
+    for original, cap in zip(left, right):
+        _compare_capabilities(label, original, cap)
+
+
 def _query_probes(expected, actual):
     """Exercise indexed lookups before the exhaustive comparison decodes data."""
     for provider, models in expected._by_provider.items():
@@ -99,6 +105,35 @@ def _query_probes(expected, actual):
     for key in ("nonexistent-parity-model-xyz", *list(expected._models)[:3]):
         _compare_query(expected, actual, key, None)
         _compare_search(expected, actual, key[:12], None, True, 5)
+    _require_equal("providers()", expected.providers(), actual.providers())
+    for provider in expected.providers():
+        _compare_capability_lists(
+            f"list_models({provider!r})",
+            expected.list_models(provider, include_deprecated=True),
+            actual.list_models(provider, include_deprecated=True),
+        )
+        _compare_capability_lists(
+            f"find(provider={provider!r})",
+            expected.find(provider=provider, include_deprecated=True),
+            actual.find(provider=provider, include_deprecated=True),
+        )
+    _compare_capability_lists(
+        "list_models()",
+        expected.list_models(include_deprecated=True),
+        actual.list_models(include_deprecated=True),
+    )
+    _compare_capability_lists(
+        "find()",
+        expected.find(include_deprecated=True),
+        actual.find(include_deprecated=True),
+    )
+    _require_equal("list_regions()", expected.list_regions(), actual.list_regions())
+    for region in expected.list_regions():
+        _compare_capability_lists(
+            f"find_by_region({region!r})",
+            expected.find_by_region(region, include_deprecated=True),
+            actual.find_by_region(region, include_deprecated=True),
+        )
 
 
 def compare_registries(expected, actual):
