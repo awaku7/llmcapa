@@ -968,6 +968,35 @@ def test_refreshed_record_preserves_bundled_regions(region_catalog):
     assert registry.get("model-b", "vertex-ai").regions.locations == ("new-region",)
 
 
+def test_fetch_github_catalog_preserves_regions_in_written_bundle(
+    region_catalog, monkeypatch
+):
+    from io import BytesIO
+
+    data, _database = region_catalog
+    registry = Registry()
+    registry._ensure_loaded()
+
+    # The fetched snapshot predates regions in the records.
+    stale = [{"provider": "vertex-ai", "model_id": "model-b", "context_window": 999}]
+    response_data = json.dumps({"models": stale}).encode("utf-8")
+    monkeypatch.setattr(
+        "llmcapa.registry.urllib.request.urlopen",
+        lambda request, context=None, timeout=None: BytesIO(response_data),
+    )
+    registered = registry.fetch_github_catalog("vertex-ai", cache_ttl=0)
+    assert registered >= 1
+    assert registry.get("model-b", "vertex-ai").regions.locations == ("us-central1",)
+
+    # The bundled file written from the download carries the regions too,
+    # so a fresh registry still sees them.
+    written = json.loads((data / "vertex-ai.json").read_text(encoding="utf-8"))
+    record = next(r for r in written["models"] if r["model_id"] == "model-b")
+    assert record["regions"]["locations"] == ["us-central1"]
+    fresh = Registry()
+    assert fresh.get("model-b", "vertex-ai").regions.locations == ("us-central1",)
+
+
 def test_refreshed_record_preserves_regions_in_json_mode(region_catalog):
     registry = json_registry()
     registry._register_refreshed_catalog_record(

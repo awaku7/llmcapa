@@ -1240,6 +1240,56 @@ class Registry:
                 except OSError:
                     pass
 
+    def _bundled_regions(self, provider: str, model_id: str):
+        """Regions of the currently bundled record, without expanding it."""
+        provider_models = self._by_provider.get(self._normalize_provider(provider))
+        if provider_models is None:
+            return None
+        key = model_id.lower()
+        if isinstance(provider_models, CatalogMapping):
+            return provider_models.bundled_regions(key)
+        existing = provider_models.get(key)
+        return existing.regions if existing is not None else None
+
+    def _inherit_bundled_regions(
+        self, downloaded_files: dict[str, str]
+    ) -> dict[str, str]:
+        """Add bundled regions to downloaded records that predate them.
+
+        Catalog files fetched from a pre-migration ref omit ``regions``;
+        without this, persisting the download (bundled write or cache)
+        would drop the regional availability the refresh upsert preserves
+        in memory.
+        """
+        patched = dict(downloaded_files)
+        for filename, text in downloaded_files.items():
+            try:
+                payload = json.loads(text)
+            except ValueError:
+                continue
+            records = (
+                payload.get("models", []) if isinstance(payload, dict) else payload
+            )
+            if not isinstance(records, list):
+                continue
+            changed = False
+            for record in records:
+                if not isinstance(record, dict) or record.get("regions"):
+                    continue
+                provider = record.get("provider")
+                model_id = record.get("model_id")
+                if not isinstance(provider, str) or not isinstance(model_id, str):
+                    continue
+                regions = self._bundled_regions(provider, model_id)
+                if regions is not None:
+                    record["regions"] = regions.to_dict()
+                    changed = True
+            if changed:
+                patched[filename] = (
+                    json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
+                )
+        return patched
+
     def fetch_github_catalog(
         self,
         provider: str,
@@ -1409,6 +1459,8 @@ class Registry:
             progress_callback(
                 f"Loaded {len(downloaded_files)} GitHub file(s) from cache"
             )
+
+        downloaded_files = self._inherit_bundled_regions(downloaded_files)
 
         capabilities: list[Capability] = []
         if progress_callback:
