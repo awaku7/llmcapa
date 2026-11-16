@@ -1918,6 +1918,22 @@ class Registry:
         self._ensure_loaded()
         return sorted(self._by_provider.keys())
 
+    def catalog_diagnostics(self) -> dict:
+        """Report how the bundled catalog is served and any silent degradation.
+
+        ``mode`` is ``"sqlite"`` when the lazy snapshot is in use and
+        ``"json"`` when the JSON catalog was loaded directly. In SQLite
+        mode the mapping also reports the snapshot schema version, whether
+        a read failure moved lookups to the JSON fallback (with the first
+        reason), and how many candidate lookups failed over to full scans
+        (with the most recent error).
+        """
+        self._ensure_loaded()
+        index = self._catalog_index
+        if index is None:
+            return {"mode": "json"}
+        return {"mode": "sqlite", **index.diagnostics()}
+
     def find(
         self,
         provider: str | None = None,
