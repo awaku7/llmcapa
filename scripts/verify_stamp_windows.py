@@ -34,7 +34,7 @@ for _candidate in (Path(__file__).parent / "src", Path(__file__).parent.parent /
         sys.path.insert(0, str(_candidate))
         break
 
-from llmcapa import _catalog_index  # noqa: E402
+from llmcapa import _catalog_index
 
 failures = []
 
@@ -75,7 +75,9 @@ with tempfile.TemporaryDirectory() as directory:
     )
     check(
         "ChangeTime advanced despite the forged mtime",
-        change_after is not None and change_before is not None and change_after > change_before,
+        change_after is not None
+        and change_before is not None
+        and change_after > change_before,
         f"{change_before} -> {change_after}",
     )
     check(
