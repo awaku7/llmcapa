@@ -136,6 +136,10 @@ def test_resume_accepts_only_explicitly_staged_catalog_changes():
             "tests/test_provider_http.py",
             "scripts/_update_sarashina.py",
             "tests/test_sarashina.py",
+            "scripts/_update_modellix.py",
+            "scripts/_update_modellix_media.py",
+            "tests/test_new_provider_updaters.py",
+            "tests/test_liquid_provider.py",
         },
         allow_staged_catalogs=True,
     )

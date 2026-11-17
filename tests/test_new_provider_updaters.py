@@ -198,11 +198,16 @@ def test_modellix_media_classification_requires_a_clear_task():
         "media_model_type": "text-to-video",
     }
     rows, skipped = updater.parse_catalog_index(
-        "- [HappyHorse 1.1 T2V](https://docs.modellix.ai/alibaba/happyhorse-1-1-t2v.md): [Core Function] Text-to-video generation model.\n"
+        "- [HappyHorse 1.1 T2V](https://docs.modellix.ai/alibaba/happyhorse-1-1-t2v.md): Alibaba's text-to-video model with native sound.\n"
         "- [Unknown model](https://docs.modellix.ai/vendor/unknown.md): [Core Function] A model for an undocumented task.\n"
+        "- [Choose the Right Model](https://docs.modellix.ai/get-started/model-select.md): Choose an image, video, or speech model.\n"
+        "- [Live Overview](https://docs.modellix.ai/live/overview.md): Realtime voice transcription and audio understanding.\n"
     )
     assert rows[0]["model_id"] == "alibaba/happyhorse-1-1-t2v"
     assert skipped == ["vendor/unknown"]
+    assert (
+        updater.merge_catalog([], [{"model_id": "live/overview"}], "2026-11-17") == []
+    )
 
     assert (
         updater.classify_task(

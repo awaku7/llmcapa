@@ -36,7 +36,7 @@
       },
       "extra": {
         "official_source": "https://www.morphllm.com/api/models/json",
-        "official_source_checked_at": "2026-11-15",
+        "official_source_checked_at": "2026-11-17",
         "official_spec_refresh": "official_morph_model_api",
         "structured_output_source": "https://docs.morphllm.com/sdk/components/fast-models",
         "structured_output_checked_at": "2026-09-01",
@@ -46,7 +46,7 @@
         "description": "Morph's fastest apply model for code edits. 10,500+ tokens/sec with 96% accuracy for rapid code transformations.",
         "hugging_face_id": null,
         "quantization": "fp8",
-        "created": 1794716714,
+        "created": 1794887130,
         "is_ready": null
       },
       "supports_json_schema": null
@@ -87,7 +87,7 @@
       },
       "extra": {
         "official_source": "https://www.morphllm.com/api/models/json",
-        "official_source_checked_at": "2026-11-15",
+        "official_source_checked_at": "2026-11-17",
         "official_spec_refresh": "official_morph_model_api",
         "structured_output_source": "https://docs.morphllm.com/sdk/components/fast-models",
         "structured_output_checked_at": "2026-09-01",
@@ -97,7 +97,7 @@
         "description": "Morph's high-accuracy apply model for complex code edits. 2500+ tokens/sec with 98% accuracy for precise code transformations.",
         "hugging_face_id": null,
         "quantization": "fp8",
-        "created": 1794716714,
+        "created": 1794887130,
         "is_ready": null
       },
       "supports_json_schema": null
@@ -123,8 +123,8 @@
       "supports_chat_completion": true,
       "supports_responses_api": null,
       "pricing": {
-        "input_per_1m": 0.6940000000000001,
-        "output_per_1m": 2.136,
+        "input_per_1m": 1.278,
+        "output_per_1m": 3.9330000000000003,
         "currency": "USD"
       },
       "deprecated": false,
@@ -132,15 +132,69 @@
       "license_type": "api",
       "extra": {
         "official_source": "https://www.morphllm.com/api/models/json",
-        "official_source_checked_at": "2026-11-15",
+        "official_source_checked_at": "2026-11-17",
         "official_spec_refresh": "official_morph_model_api",
         "base_url": "https://api.morphllm.com/v1",
         "description": "GLM-5.3 served by Morph and Morph's custom kernels with TP8, DCP sharding, MTP speculative decoding, and tiered prefix reuse. Sparse-MoE text model for agentic coding, reasoning, and tool use. 1M context window.",
         "hugging_face_id": "zai-org/GLM-5.3",
         "quantization": "fp8",
-        "created": 1794716714,
+        "created": 1794887130,
         "is_ready": true,
-        "cached_input_per_1m": 0.234
+        "cached_input_per_1m": 0.431
+      }
+    },
+    {
+      "provider": "morph",
+      "model_id": "morph-glm52-744b",
+      "display_name": "Morph: GLM-5.2",
+      "context_window": 1048576,
+      "max_output_tokens": 1048576,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "supports_reasoning_effort": true,
+      "supports_thinking_budget": false,
+      "supports_anthropic_api": true,
+      "supports_google_api": false,
+      "supports_fim": false,
+      "tokenizer_name": "Other",
+      "knowledge_cutoff": null,
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "pricing": {
+        "input_per_1m": 0.643,
+        "output_per_1m": 1.978,
+        "currency": "USD"
+      },
+      "extra": {
+        "official_source": "https://www.morphllm.com/api/models/json",
+        "structured_output_source": "https://docs.morphllm.com/sdk/components/fast-models",
+        "structured_output_api_documented": true,
+        "catalog_source": "official_morph_fast_models",
+        "structured_output_checked_at": "2026-09-01",
+        "structured_output_source_status": "reachable",
+        "official_source_checked_at": "2026-11-17",
+        "official_spec_refresh": "official_morph_model_api",
+        "base_url": "https://api.morphllm.com/v1",
+        "description": "GLM-5.2 endpoint served by Morph and Morph's custom kernels with TP8, DCP sharding, MTP speculative decoding, and tiered prefix reuse. Sparse-MoE text model for agentic coding, reasoning, and tool use. 1M context window.",
+        "hugging_face_id": "zai-org/GLM-5.2",
+        "quantization": "fp8",
+        "created": 1794887130,
+        "is_ready": true,
+        "cached_input_per_1m": 0.217,
+        "official_morph_current": false
       }
     },
     {
@@ -166,8 +220,8 @@
       "supports_chat_completion": true,
       "supports_responses_api": null,
       "pricing": {
-        "input_per_1m": 0.158,
-        "output_per_1m": 0.166,
+        "input_per_1m": 0.072,
+        "output_per_1m": 0.20800000000000002,
         "currency": "USD"
       },
       "deprecated": false,
@@ -175,15 +229,15 @@
       "license_type": "api",
       "extra": {
         "official_source": "https://www.morphllm.com/api/models/json",
-        "official_source_checked_at": "2026-11-15",
+        "official_source_checked_at": "2026-11-17",
         "official_spec_refresh": "official_morph_model_api",
         "base_url": "https://api.morphllm.com/v1",
         "description": "GLM-5.3-Flash (320B total / 18B active params) served by Morph and Morph's custom kernels with prefix reuse. Natively multimodal sparse MoE for agentic coding, reasoning, and tool use. 1M context window.",
         "hugging_face_id": "zai-org/GLM-5.3-Flash",
         "quantization": "fp8",
-        "created": 1794716714,
+        "created": 1794887130,
         "is_ready": true,
-        "cached_input_per_1m": 0.068
+        "cached_input_per_1m": 0.036
       },
       "video": {
         "accepts_video_input": true,
@@ -240,8 +294,8 @@
       "supports_chat_completion": true,
       "supports_responses_api": null,
       "pricing": {
-        "input_per_1m": 0.08900000000000001,
-        "output_per_1m": 0.5,
+        "input_per_1m": 0.059,
+        "output_per_1m": 0.52,
         "currency": "USD"
       },
       "deprecated": false,
@@ -249,15 +303,57 @@
       "license_type": "api",
       "extra": {
         "official_source": "https://www.morphllm.com/api/models/json",
-        "official_source_checked_at": "2026-11-15",
+        "official_source_checked_at": "2026-11-17",
         "official_spec_refresh": "official_morph_model_api",
         "base_url": "https://api.morphllm.com/v1",
         "description": "DeepSeek V4.1 Flash 1017 served by Morph with prefix reuse. Vision-language sparse MoE with thinking on by default, for agentic coding, reasoning, and tool use. 1M context window.",
         "hugging_face_id": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
         "quantization": "fp8",
-        "created": 1794716714,
+        "created": 1794887130,
         "is_ready": true,
-        "cached_input_per_1m": 0.004
+        "cached_input_per_1m": 0.005
+      }
+    },
+    {
+      "provider": "morph",
+      "model_id": "morph-dsv41flash-1017-fast",
+      "display_name": "Morph: DeepSeek V4.1 Flash 1017 Ultrafast",
+      "context_window": 1048576,
+      "max_output_tokens": 1048576,
+      "input_modalities": [
+        "image",
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_json_schema": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "supports_reasoning": true,
+      "supports_chat_completion": true,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 0.6,
+        "output_per_1m": 2.4,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "extra": {
+        "official_source": "https://www.morphllm.com/api/models/json",
+        "official_source_checked_at": "2026-11-17",
+        "official_spec_refresh": "official_morph_model_api",
+        "base_url": "https://api.morphllm.com/v1",
+        "description": "DeepSeek V4.1 Flash 1017 Ultrafast served by Morph with prefix reuse. Vision-language sparse MoE with thinking on by default, for agentic coding, reasoning, and tool use. 1M context window.",
+        "hugging_face_id": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+        "quantization": "fp8",
+        "created": 1794887130,
+        "is_ready": true,
+        "cached_input_per_1m": 0.014
       }
     },
     {
@@ -287,13 +383,13 @@
       "license_type": "api",
       "extra": {
         "official_source": "https://www.morphllm.com/api/models/json",
-        "official_source_checked_at": "2026-11-15",
+        "official_source_checked_at": "2026-11-17",
         "official_spec_refresh": "official_morph_model_api",
         "base_url": "https://api.morphllm.com/v1",
         "description": "Morph's decision model. Answers typed choice, noul and score questions about a state of text, JSON and images. The state is prefix-cached across requests, so repeat questions on the same state bill at the cached-input rate. 65k context window.",
         "hugging_face_id": null,
         "quantization": "bf16",
-        "created": 1794716714,
+        "created": 1794887130,
         "is_ready": true,
         "cached_input_per_1m": 0.002
       }
@@ -320,8 +416,8 @@
       "supports_chat_completion": true,
       "supports_responses_api": null,
       "pricing": {
-        "input_per_1m": 0.692,
-        "output_per_1m": 8.82,
+        "input_per_1m": 0.886,
+        "output_per_1m": 13.285,
         "currency": "USD"
       },
       "deprecated": false,
@@ -329,69 +425,15 @@
       "license_type": "api",
       "extra": {
         "official_source": "https://www.morphllm.com/api/models/json",
-        "official_source_checked_at": "2026-11-15",
+        "official_source_checked_at": "2026-11-17",
         "official_spec_refresh": "official_morph_model_api",
         "base_url": "https://api.morphllm.com/v1",
         "description": "Kimi K3.1 served by Morph on GB300 racks with PD-disaggregation and MTP speculative decoding. Multimodal MoE reasoning model for agentic coding, reasoning, and vision. Full 1M context window.",
         "hugging_face_id": "moonshotai/Kimi-K3.1-Pro",
         "quantization": "fp8",
-        "created": 1794716714,
+        "created": 1794887130,
         "is_ready": true,
-        "cached_input_per_1m": 0.221
-      }
-    },
-    {
-      "provider": "morph",
-      "model_id": "morph-glm52-744b",
-      "display_name": "Morph: GLM-5.2",
-      "context_window": 1048576,
-      "max_output_tokens": 1048576,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "supports_function_calling": true,
-      "supports_json_mode": true,
-      "supports_json_schema": true,
-      "supports_streaming": true,
-      "supports_vision": false,
-      "supports_reasoning": true,
-      "supports_chat_completion": true,
-      "supports_responses_api": null,
-      "supports_reasoning_effort": true,
-      "supports_thinking_budget": false,
-      "supports_anthropic_api": true,
-      "supports_google_api": false,
-      "supports_fim": false,
-      "tokenizer_name": "Other",
-      "knowledge_cutoff": null,
-      "deprecated": false,
-      "aliases": [],
-      "license_type": "api",
-      "pricing": {
-        "input_per_1m": 0.595,
-        "output_per_1m": 1.831,
-        "currency": "USD"
-      },
-      "extra": {
-        "official_source": "https://www.morphllm.com/api/models/json",
-        "structured_output_source": "https://docs.morphllm.com/sdk/components/fast-models",
-        "structured_output_api_documented": true,
-        "catalog_source": "official_morph_fast_models",
-        "structured_output_checked_at": "2026-09-01",
-        "structured_output_source_status": "reachable",
-        "official_source_checked_at": "2026-11-15",
-        "official_spec_refresh": "official_morph_model_api",
-        "base_url": "https://api.morphllm.com/v1",
-        "description": "GLM-5.2 endpoint served by Morph and Morph's custom kernels with TP8, DCP sharding, MTP speculative decoding, and tiered prefix reuse. Sparse-MoE text model for agentic coding, reasoning, and tool use. 1M context window.",
-        "hugging_face_id": "zai-org/GLM-5.2",
-        "quantization": "fp8",
-        "created": 1794546037,
-        "is_ready": true,
-        "cached_input_per_1m": 0.201,
-        "official_morph_current": false
+        "cached_input_per_1m": 0.28200000000000003
       }
     },
     {
@@ -425,7 +467,7 @@
       "license_type": "api",
       "extra": {
         "official_source": "https://www.morphllm.com/api/models/json",
-        "official_source_checked_at": "2026-11-15",
+        "official_source_checked_at": "2026-11-17",
         "official_spec_refresh": "official_morph_model_api",
         "base_url": "https://api.morphllm.com/v1",
         "description": "DeepSeek V4.1 Flash served by Morph with prefix reuse. Vision-language sparse MoE with thinking on by default, for agentic coding, reasoning, and tool use. 1M context window.",
@@ -479,7 +521,7 @@
         "catalog_source": "official_morph_fast_models",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
-        "official_source_checked_at": "2026-11-15",
+        "official_source_checked_at": "2026-11-17",
         "official_spec_refresh": "official_morph_model_api",
         "base_url": "https://api.morphllm.com/v1",
         "description": "DeepSeek V4 Flash 0731 served by Morph. Fast MoE model with compressed attention and a 1M context window for coding, reasoning, and tool use.",
@@ -521,7 +563,7 @@
       "license_type": "api",
       "extra": {
         "official_source": "https://www.morphllm.com/api/models/json",
-        "official_source_checked_at": "2026-11-15",
+        "official_source_checked_at": "2026-11-17",
         "official_spec_refresh": "official_morph_model_api",
         "base_url": "https://api.morphllm.com/v1",
         "description": "DeepSeek V4 Flash 0731 served by Morph. Fast MoE model with compressed attention and a 1M context window for coding, reasoning, and tool use.",
@@ -576,7 +618,7 @@
         "catalog_source": "official_morph_fast_models",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
-        "official_source_checked_at": "2026-11-15",
+        "official_source_checked_at": "2026-11-17",
         "official_spec_refresh": "official_morph_model_api",
         "base_url": "https://api.morphllm.com/v1",
         "description": "Kimi K3 (2.8T total, ~A50B active) served by Morph on GB300 racks with PD-disaggregation and MTP speculative decoding. Multimodal MoE reasoning model (KDA hybrid attention) for agentic coding, reasoning, and vision. Full 1M context window.",
@@ -631,7 +673,7 @@
         "catalog_source": "official_morph_fast_models",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
-        "official_source_checked_at": "2026-11-15",
+        "official_source_checked_at": "2026-11-17",
         "official_spec_refresh": "official_morph_model_api",
         "base_url": "https://api.morphllm.com/v1",
         "description": "Kimi K3 served by Morph on GB300 racks tuned for latency: the same 2.8T MoE weights and full 1M context as morph-kimik3, with prefill/decode disaggregation shaped for time-to-first-token and per-request speed instead of batch throughput.",
@@ -685,7 +727,7 @@
         "catalog_source": "official_morph_fast_models",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
-        "official_source_checked_at": "2026-11-15",
+        "official_source_checked_at": "2026-11-17",
         "official_spec_refresh": "pending_provider_parser",
         "official_morph_current": false
       }
@@ -732,7 +774,7 @@
         "catalog_source": "official_morph_fast_models",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
-        "official_source_checked_at": "2026-11-15",
+        "official_source_checked_at": "2026-11-17",
         "official_spec_refresh": "pending_provider_parser",
         "official_morph_current": false
       }
@@ -779,7 +821,7 @@
         "catalog_source": "official_morph_fast_models",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
-        "official_source_checked_at": "2026-11-15",
+        "official_source_checked_at": "2026-11-17",
         "official_spec_refresh": "pending_provider_parser",
         "official_morph_current": false
       }
@@ -826,7 +868,7 @@
         "catalog_source": "official_morph_fast_models",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
-        "official_source_checked_at": "2026-11-15",
+        "official_source_checked_at": "2026-11-17",
         "official_spec_refresh": "pending_provider_parser",
         "official_morph_current": false
       }
@@ -873,7 +915,7 @@
         "catalog_source": "official_morph_fast_models",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
-        "official_source_checked_at": "2026-11-15",
+        "official_source_checked_at": "2026-11-17",
         "official_spec_refresh": "pending_provider_parser",
         "official_morph_current": false
       }
@@ -920,7 +962,7 @@
         "catalog_source": "official_morph_fast_models",
         "structured_output_checked_at": "2026-09-01",
         "structured_output_source_status": "reachable",
-        "official_source_checked_at": "2026-11-15",
+        "official_source_checked_at": "2026-11-17",
         "official_spec_refresh": "pending_provider_parser",
         "official_morph_current": false
       }

@@ -57,7 +57,7 @@
         "language_values": [],
         "endpoints": [],
         "source_url": "https://docs.liquid.ai/lfm/models/d1-2b",
-        "checked_at": "2026-11-15",
+        "checked_at": "2026-11-17",
         "status": "documented",
         "extra": {
           "base_url": null,
@@ -67,7 +67,7 @@
       },
       "extra": {
         "official_source": "https://docs.liquid.ai/lfm/models/d1-2b",
-        "official_source_checked_at": "2026-11-15",
+        "official_source_checked_at": "2026-11-17",
         "docs": "https://docs.liquid.ai/lfm/models/decision-models",
         "model_family": "d1",
         "not_a_language_model": true,
@@ -135,7 +135,7 @@
         "language_values": [],
         "endpoints": [],
         "source_url": "https://docs.liquid.ai/lfm/models/d1-omni-2b",
-        "checked_at": "2026-11-15",
+        "checked_at": "2026-11-17",
         "status": "documented",
         "extra": {
           "base_url": null,
@@ -145,7 +145,7 @@
       },
       "extra": {
         "official_source": "https://docs.liquid.ai/lfm/models/d1-omni-2b",
-        "official_source_checked_at": "2026-11-15",
+        "official_source_checked_at": "2026-11-17",
         "docs": "https://docs.liquid.ai/lfm/models/decision-models",
         "model_family": "d1",
         "not_a_language_model": true,
@@ -252,7 +252,7 @@
         ],
         "endpoints": [],
         "source_url": "https://docs.liquid.ai/lfm/models/d1-omni-600m",
-        "checked_at": "2026-11-15",
+        "checked_at": "2026-11-17",
         "status": "documented",
         "extra": {
           "architecture": "LFM2.5-Encoder-350M fine-tuned for structured decisions",
@@ -266,7 +266,7 @@
       },
       "extra": {
         "official_source": "https://docs.liquid.ai/lfm/models/d1-omni-600m",
-        "official_source_checked_at": "2026-11-15",
+        "official_source_checked_at": "2026-11-17",
         "docs": "https://docs.liquid.ai/lfm/models/decision-models",
         "model_card": "https://huggingface.co/LiquidAI/d1-omni-600M-GGUF",
         "license_name": "LFM Open License v1.0",
@@ -290,6 +290,160 @@
           "speech_understanding": true
         },
         "checked_at": "2026-10-28"
+      }
+    },
+    {
+      "provider": "liquid",
+      "model_id": "d1.2-ultra",
+      "display_name": "Liquid AI d1.2-ultra",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image",
+        "audio"
+      ],
+      "output_modalities": [
+        "decision"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_json_schema": false,
+      "supports_streaming": false,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "license_type": "api",
+      "deprecated": false,
+      "aliases": [],
+      "pricing": null,
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "choice",
+          "score",
+          "noul"
+        ],
+        "answer_fields": [
+          "choice",
+          "score",
+          "noul",
+          "confidence",
+          "probabilities",
+          "legend"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "calibrated_confidence": null,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "state_shapes": [
+          "string",
+          "json_object",
+          "image",
+          "audio"
+        ],
+        "max_state_tokens": null,
+        "max_total_tokens": null,
+        "output_token_billing": false,
+        "language_values": [],
+        "endpoints": [
+          "https://api.liquid.ai/decisions/v1/systemone"
+        ],
+        "source_url": "https://docs.liquid.ai/lfm/models/d1#models",
+        "checked_at": "2026-11-17",
+        "status": "documented",
+        "extra": {
+          "base_url": "https://api.liquid.ai",
+          "deployment": "hosted-liquid-api"
+        }
+      },
+      "extra": {
+        "official_source": "https://docs.liquid.ai/lfm/models/d1#models",
+        "official_source_checked_at": "2026-11-17",
+        "docs": "https://docs.liquid.ai/lfm/models/decision-models",
+        "model_family": "d1",
+        "not_a_language_model": true,
+        "catalog_listed": true
+      }
+    },
+    {
+      "provider": "liquid",
+      "model_id": "d1.2",
+      "display_name": "Liquid AI d1.2",
+      "context_window": 0,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text",
+        "image",
+        "audio"
+      ],
+      "output_modalities": [
+        "decision"
+      ],
+      "supports_function_calling": false,
+      "supports_json_mode": false,
+      "supports_json_schema": false,
+      "supports_streaming": false,
+      "supports_vision": true,
+      "supports_reasoning": false,
+      "supports_chat_completion": false,
+      "supports_responses_api": false,
+      "license_type": "api",
+      "deprecated": false,
+      "aliases": [],
+      "pricing": null,
+      "decision": {
+        "decision": true,
+        "question_kinds": [
+          "choice",
+          "score",
+          "noul"
+        ],
+        "answer_fields": [
+          "choice",
+          "score",
+          "noul",
+          "confidence",
+          "probabilities",
+          "legend"
+        ],
+        "returns_probabilities": true,
+        "returns_confidence": true,
+        "calibrated_confidence": null,
+        "parallel_questions": true,
+        "free_form_text": false,
+        "type_errors_possible": false,
+        "state_shapes": [
+          "string",
+          "json_object",
+          "image",
+          "audio"
+        ],
+        "max_state_tokens": null,
+        "max_total_tokens": null,
+        "output_token_billing": false,
+        "language_values": [],
+        "endpoints": [
+          "https://api.liquid.ai/decisions/v1/systemone"
+        ],
+        "source_url": "https://docs.liquid.ai/lfm/models/d1",
+        "checked_at": "2026-11-17",
+        "status": "documented",
+        "extra": {
+          "base_url": "https://api.liquid.ai",
+          "deployment": "hosted-liquid-api"
+        }
+      },
+      "extra": {
+        "official_source": "https://docs.liquid.ai/lfm/models/d1",
+        "official_source_checked_at": "2026-11-17",
+        "docs": "https://docs.liquid.ai/lfm/models/decision-models",
+        "model_family": "d1",
+        "not_a_language_model": true,
+        "catalog_listed": true
       }
     },
     {

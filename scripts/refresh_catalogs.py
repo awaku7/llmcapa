@@ -494,6 +494,10 @@ def validate_staged_catalogs(
         "tests/test_catalog_refresh_regressions.py",
         "tests/test_provider_inventory_refresh.py",
         "tests/test_provider_http.py",
+        "scripts/_update_modellix.py",
+        "scripts/_update_modellix_media.py",
+        "tests/test_new_provider_updaters.py",
+        "tests/test_liquid_provider.py",
     }
     unexpected = staged_paths - resumable_paths
     if unexpected:

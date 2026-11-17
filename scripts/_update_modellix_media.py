@@ -18,6 +18,8 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "modellix_media.json"
 INDEX_URL = "https://docs.modellix.ai/llms.txt"
 MEDIA_API = "https://api.modellix.ai"
+NON_MODEL_SECTIONS = {"get-started", "ways-to-use", "api", "changelog"}
+NON_MODEL_IDS = {"live/overview"}
 
 MODEL_LINK_RE = re.compile(
     r"^\s*-\s+\[([^\]]+)\]\((https://docs\.modellix\.ai/([^/]+)/([^/]+)\.md)\)\s*:?\s*(.*)$",
@@ -45,7 +47,7 @@ def fetch_index() -> str:
 def classify_task(
     model_id: str, title: str, description: str
 ) -> dict[str, object] | None:
-    """Classify only explicit media task labels and documented core functions."""
+    """Classify only explicit media tasks stated in official page summaries."""
     identity = f"{model_id} {title}".casefold().replace("_", "-")
     core = description.casefold()
     if "[core function]" in core:
@@ -256,9 +258,15 @@ def parse_catalog_index(text: str) -> tuple[list[dict], list[str]]:
         if not match:
             continue
         title, url, provider, slug, description = match.groups()
-        if "[Core Function]" not in description:
+        # The current llms.txt index uses concise summaries rather than the
+        # older [Core Function] label. Ignore documentation/tutorial sections;
+        # model pages are still admitted only when their summary identifies a
+        # task that classify_task can conservatively recognize.
+        if provider.casefold() in NON_MODEL_SECTIONS:
             continue
         model_id = f"{provider}/{slug}"
+        if model_id.casefold() in NON_MODEL_IDS:
+            continue
         task = classify_task(model_id, title, description)
         if task is None:
             skipped.append(model_id)
@@ -335,7 +343,7 @@ def merge_catalog(
         if not isinstance(old, dict):
             continue
         key = str(old.get("model_id", "")).casefold()
-        if key and key not in seen:
+        if key and key not in seen and key not in NON_MODEL_IDS:
             row = dict(old)
             extra = dict(row.get("extra") or {})
             extra["not_listed_in_current_docs"] = True

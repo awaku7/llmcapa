@@ -126,6 +126,50 @@ def extract_page_rows(page) -> list[dict[str, Any]]:
             const match = text.match(/\\$\\s*([\\d,]+(?:\\.\\d+)?)/);
             return match ? Number(match[1].replaceAll(',', '')) : null;
           };
+
+          // Current markup uses data-tier-key rows with row-spanned model
+          // identity cells. Keep following tier rows attached to that model.
+          const currentRows = Array.from(table.querySelectorAll('tbody tr[data-tier-key]'));
+          if (currentRows.length) {
+            const models = new Map();
+            let current = null;
+            for (const tr of currentRows) {
+              const cells = Array.from(tr.querySelectorAll(':scope > td'));
+              const modelCell = cells.find(cell => cell.querySelector('code'));
+              if (modelCell) {
+                const groups = Array.from(modelCell.querySelectorAll('[role="group"]'));
+                const labels = group => Array.from(group?.querySelectorAll('.app-icon-badge[aria-label]') || [])
+                  .map(el => el.getAttribute('aria-label'));
+                current = {
+                  model_id: modelCell.querySelector('code')?.innerText?.trim() || '',
+                  display_name: modelCell.querySelector('strong')?.innerText?.trim() || '',
+                  input_modalities: labels(groups.find(group => group.getAttribute('aria-label') === 'Input modalities')),
+                  output_modalities: labels(groups.find(group => group.getAttribute('aria-label') === 'Output modalities')),
+                  context_window: cells[1]?.innerText?.trim() || '',
+                  price_tiers: []
+                };
+                if (current.model_id) models.set(current.model_id.toLowerCase(), current);
+              }
+              if (!current?.model_id) continue;
+              const firstTier = Boolean(modelCell);
+              const priceOffset = firstTier ? 3 : 1;
+              const priceValue = cell => {
+                if (!cell) return null;
+                const actual = cell.querySelector('.model-price__actual');
+                return price(actual || cell);
+              };
+              current.price_tiers.push({
+                input_context: cells[firstTier ? 2 : 0]?.innerText?.trim() || '',
+                input_per_1m: priceValue(cells[priceOffset]),
+                output_per_1m: priceValue(cells[priceOffset + 1]),
+                cache_read_per_1m: priceValue(cells[priceOffset + 2]),
+                cache_write_per_1m: priceValue(cells[priceOffset + 3])
+              });
+            }
+            return Array.from(models.values());
+          }
+
+          // Previous grouped-table markup is retained as a compatibility path.
           return Array.from(table.querySelectorAll('tbody.llm-table__group')).map(group => {
             const rows = Array.from(group.querySelectorAll(':scope > tr'));
             const first = rows[0];
@@ -173,7 +217,7 @@ def fetch_catalog() -> list[dict[str, Any]]:
         try:
             page.goto(SOURCE, wait_until="networkidle", timeout=90_000)
             page.locator(
-                'table[aria-label="Price table"] tbody.llm-table__group'
+                'table[aria-label="Price table"] tbody tr[data-tier-key]'
             ).first.wait_for(timeout=45_000)
             for page_number in range(PAGE_SIZE_LIMIT):
                 for row in extract_page_rows(page):
@@ -184,11 +228,13 @@ def fetch_catalog() -> list[dict[str, Any]]:
                 if next_page.count() == 0 or next_page.is_disabled():
                     break
                 previous_ids = page.locator(
-                    'table[aria-label="Price table"] tbody.llm-table__group code'
-                ).all_inner_texts()
+                    'table[aria-label="Price table"] tbody tr[data-tier-key]'
+                ).evaluate_all(
+                    "rows => rows.map(row => row.getAttribute('data-tier-key'))"
+                )
                 next_page.click()
                 page.wait_for_function(
-                    "previous => { const code = document.querySelector('table[aria-label=\"Price table\"] tbody.llm-table__group code'); return code && code.textContent.trim() !== previous[0]; }",
+                    "previous => { const rows = Array.from(document.querySelectorAll('table[aria-label=\"Price table\"] tbody tr[data-tier-key]')); const keys = rows.map(row => row.getAttribute('data-tier-key')); return keys.length > 0 && JSON.stringify(keys) !== JSON.stringify(previous); }",
                     arg=previous_ids,
                     timeout=30_000,
                 )

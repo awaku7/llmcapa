@@ -10,6 +10,8 @@ EXPECTED_LIQUID_MODELS = {
     "d1-omni-2B",
     "d1-omni-600M",
     "d1-ultra",
+    "d1.2",
+    "d1.2-ultra",
 }
 
 
