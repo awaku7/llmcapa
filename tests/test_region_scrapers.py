@@ -74,6 +74,18 @@ def test_amazon_region_tables_union_mantle_and_duplicate_sections():
     assert tables["pub-model-c"]["geographic_inference_regions"] == ["ap-northeast-1"]
 
 
+def test_amazon_region_tables_drop_regions_after_stated_eol():
+    import datetime
+
+    scraper = _script_module("_scrape_amazon_regions")
+    # Model A's GovCloud cell is "Legacy (EOL: 2026-09-30)": it counts as
+    # available up to that date, and not on a refresh after it.
+    on_eol = scraper.parse_region_tables(AMAZON_MD, as_of=datetime.date(2026, 9, 30))
+    assert on_eol["pub-model-a"]["locations"] == ["us-east-1", "us-gov-west-1"]
+    after_eol = scraper.parse_region_tables(AMAZON_MD, as_of=datetime.date(2026, 10, 1))
+    assert after_eol["pub-model-a"]["locations"] == ["us-east-1"]
+
+
 def test_amazon_base_id_strips_geo_prefixes():
     scraper = _script_module("_scrape_amazon_regions")
     assert scraper._base_id("us.anthropic.claude-v1:0") == "anthropic.claude-v1:0"

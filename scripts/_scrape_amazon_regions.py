@@ -16,7 +16,8 @@ are AWS Regions and whose columns are the inference options:
 
 A cell counts as supported when it carries the supported icon or a legacy
 note such as ``Legacy (EOL: 2026-11-26)`` / ``EOL: 2026-07-30`` (the model
-is still available in that Region until the stated date).
+is still available in that Region until the stated date). A refresh dated
+after the stated EOL date no longer counts the cell as supported.
 
 Model sections are keyed by model-card slug. Slugs are resolved to catalog
 model IDs by fetching each card and matching the IDs it names against the
@@ -26,6 +27,7 @@ catalog are skipped.
 
 from __future__ import annotations
 
+import datetime
 import json
 import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -63,23 +65,41 @@ def _fetch(url: str) -> bytes:
     )
 
 
-def _supported(cell: str) -> bool:
+_EOL_DATE = re.compile(r"EOL:\s*(\d{4}-\d{2}-\d{2})")
+
+
+def _supported(cell: str, as_of: datetime.date | None = None) -> bool:
     cell = cell.strip()
     if not cell:
         return False
     if "icon-no" in cell:
         return False
+    eol = _EOL_DATE.search(cell)
+    if (
+        eol is not None
+        and as_of is not None
+        and datetime.date.fromisoformat(eol.group(1)) < as_of
+    ):
+        # A legacy/EOL note means availability ends on the stated date;
+        # a refresh after that date must not keep listing the Region.
+        return False
     return "icon-yes" in cell or not cell.startswith("![")
 
 
-def parse_region_tables(markdown: str) -> dict[str, dict[str, list[str]]]:
-    """Parse the regional-availability Markdown keyed by model-card slug."""
+def parse_region_tables(
+    markdown: str, as_of: datetime.date | None = None
+) -> dict[str, dict[str, list[str]]]:
+    """Parse the regional-availability Markdown keyed by model-card slug.
+
+    ``as_of`` is the refresh date: legacy cells whose stated EOL date has
+    passed by then no longer count as supported.
+    """
     result: dict[str, dict[str, list[str]]] = {}
     parts = _HEADING.split(markdown)
     # parts: [prelude, slug, body, slug, body, ...]
     for i in range(1, len(parts) - 1, 2):
         slug, body = parts[i], parts[i + 1]
-        table = _parse_first_table(body)
+        table = _parse_first_table(body, as_of)
         if table is None:
             continue
         if slug not in result:
@@ -95,7 +115,9 @@ def parse_region_tables(markdown: str) -> dict[str, dict[str, list[str]]]:
     return result
 
 
-def _parse_first_table(body: str) -> dict[str, list[str]] | None:
+def _parse_first_table(
+    body: str, as_of: datetime.date | None = None
+) -> dict[str, list[str]] | None:
     lines = body.splitlines()
     header_at = None
     columns: dict[str, int | list[int]] = {}
@@ -138,7 +160,7 @@ def _parse_first_table(body: str) -> dict[str, list[str]] | None:
         region = match.group(1)
         for key, pos in columns.items():
             positions = pos if isinstance(pos, list) else [pos]
-            if any(p < len(cells) and _supported(cells[p]) for p in positions):
+            if any(p < len(cells) and _supported(cells[p], as_of) for p in positions):
                 found[key].append(region)
     return found
 
@@ -203,7 +225,9 @@ def _resolve_card_records(slug: str, owners: dict[str, set[str]]) -> set[str]:
 def fetch_bedrock_regions(checked_at: str) -> dict[str, dict]:
     """Return regional availability keyed by amazon.json model ID."""
     markdown = _fetch(REGIONS_URL).decode("utf-8", errors="replace")
-    tables = parse_region_tables(markdown)
+    tables = parse_region_tables(
+        markdown, as_of=datetime.date.fromisoformat(checked_at)
+    )
     if not tables:
         raise RuntimeError("no Bedrock region tables found in official AWS page")
     owners = _catalog_owners()
