@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib
+import json
 import sys
 from pathlib import Path
 
@@ -107,6 +108,10 @@ VERTEX_HTML = """
       <td><a href="#">Model B</a><br><code>(model-b)</code></td>
       <td></td>
     </tr>
+    <tr>
+      <td><a href="#">Model C</a><br><code>(model-c)</code></td>
+      <td></td>
+    </tr>
   </tbody>
 </table>
 <h3 id="multi-region" data-text="Multi-region">Multi-region</h3>
@@ -151,6 +156,44 @@ def test_vertex_locations_parse_tables():
     model_b = models["model-b"]
     assert model_b["global_endpoint"] is False
     assert model_b["locations"] == ["us-west1"]
+
+
+def test_vertex_fetch_keeps_explicit_empty_record_for_unsupported_model(
+    tmp_path, monkeypatch
+):
+    scraper = _script_module("_scrape_vertex_regions")
+    catalog = tmp_path / "vertex-ai.json"
+    catalog.write_text(
+        json.dumps(
+            {
+                "models": [
+                    {"model_id": "model-a"},
+                    {"model_id": "model-c"},
+                    {"model_id": "model-absent"},
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(scraper, "VERTEX_JSON", catalog)
+    monkeypatch.setattr(scraper, "_fetch", lambda url: VERTEX_HTML.encode())
+
+    result = scraper.fetch_vertex_regions("2026-11-18")
+
+    # Model C is listed on the page but has no supported endpoint: the
+    # explicit empty record lets a refresh clear its stale regions.
+    assert result["model-c"]["global_endpoint"] is False
+    assert "locations" not in result["model-c"]
+    assert result["model-c"]["checked_at"] == "2026-11-18"
+    # Models absent from the page stay untouched by the refresh.
+    assert "model-absent" not in result
+    assert result["model-a"]["global_endpoint"] is True
+
+    postprocess = _script_module("_region_capability_postprocess")
+    models = [{"model_id": "model-c", "regions": {"locations": ["stale"]}}]
+    assert postprocess.apply_regions(models, result) == 1
+    assert models[0]["regions"]["global_endpoint"] is False
+    assert "locations" not in models[0]["regions"]
 
 
 def test_region_postprocess_applies_only_listed_models():

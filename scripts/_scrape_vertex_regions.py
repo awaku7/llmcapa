@@ -15,7 +15,10 @@ with the same sub-tables:
 
 A cell counts as supported when it carries ``aria-label="Supported"``
 (the ``compare-yes`` class). Only models present in ``vertex-ai.json``
-are returned.
+are returned. A listed model with no supported endpoint at all still
+gets an explicit record (``global_endpoint: False`` with the source and
+check date) so a refresh clears any regional availability it carried
+before; models absent from the page are not returned.
 """
 
 from __future__ import annotations
@@ -210,8 +213,11 @@ def fetch_vertex_regions(checked_at: str) -> dict[str, dict]:
             regions["multi_regions"] = entry["multi_regions"]
         if entry["global_endpoint"]:
             regions["global_endpoint"] = True
-        if not regions:
-            continue
+        elif not regions:
+            # Listed on the page but no endpoint is supported: keep an
+            # explicit empty record so the refresh clears stale regions
+            # instead of leaving them in place.
+            regions["global_endpoint"] = False
         regions["source_url"] = LOCATIONS_URL
         regions["checked_at"] = checked_at
         result[model_id] = regions
