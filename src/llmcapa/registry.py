@@ -1745,6 +1745,31 @@ class Registry:
             result = [c for c in result if not c.deprecated]
         return sorted(result, key=lambda c: (c.provider, c.model_id))
 
+    def _region_query_candidates(
+        self, provider: str | None, include_deprecated: bool
+    ) -> list[Capability]:
+        """Candidates for region queries.
+
+        Region metadata belongs to a provider's own record, so an
+        unqualified query considers every provider catalog instead of the
+        flat first-registered-wins mapping: that mapping would hide, for
+        example, Vertex AI locations behind the same model's Gemini API
+        record, which carries no region data.
+        """
+        if provider is not None:
+            return self.list_models(provider, include_deprecated)
+        self._ensure_loaded()
+        seen: set[int] = set()
+        result: list[Capability] = []
+        for provider_models in self._by_provider.values():
+            for cap in provider_models.values():
+                if id(cap) in seen:
+                    continue
+                seen.add(id(cap))
+                if include_deprecated or not cap.deprecated:
+                    result.append(cap)
+        return sorted(result, key=lambda c: (c.provider, c.model_id))
+
     def list_regions(
         self,
         provider: str | None = None,
@@ -1762,9 +1787,10 @@ class Registry:
         the special identifier ``global`` for models documented as supporting
         a global endpoint. With ``include_inference_regions=True``, source
         Regions supported by cross-Region inference profiles are also included.
+        Without a provider, every provider's own records are considered.
         This method only examines local catalog data.
         """
-        candidates = self.list_models(provider, include_deprecated)
+        candidates = self._region_query_candidates(provider, include_deprecated)
         if model_id is not None:
             wanted = model_id.strip().casefold()
             candidates = [
@@ -1818,12 +1844,14 @@ class Registry:
         ``global`` matches only records whose ``global_endpoint`` is true;
         inference-profile source Regions are excluded unless
         ``include_inference_regions=True``. Inference-profile destinations are
-        not treated as direct availability.
+        not treated as direct availability. Without a provider, every
+        provider's own records are considered, and matching capabilities
+        keep the provider whose record carries the region data.
         """
         wanted = region.strip().casefold()
         if not wanted:
             return []
-        candidates = self.list_models(provider, include_deprecated)
+        candidates = self._region_query_candidates(provider, include_deprecated)
         result = []
         for cap in candidates:
             regional = cap.regions
