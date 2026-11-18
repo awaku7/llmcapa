@@ -151,9 +151,12 @@ class _LocationsParser(HTMLParser):
                 elif self.section == "multi-region" and region:
                     if region not in entry["multi_regions"]:
                         entry["multi_regions"].append(region)
-                elif self.section in _LOCATION_SECTIONS and region:
-                    if region not in entry["locations"]:
-                        entry["locations"].append(region)
+                elif (
+                    self.section in _LOCATION_SECTIONS
+                    and region
+                    and region not in entry["locations"]
+                ):
+                    entry["locations"].append(region)
 
 
 def _model_ids(cell_text: str) -> list[str]:

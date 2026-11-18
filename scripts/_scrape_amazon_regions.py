@@ -180,7 +180,7 @@ def _resolve_card_records(slug: str, owners: dict[str, set[str]]) -> set[str]:
         text = _fetch(f"{CARDS_BASE}model-card-{slug}.md").decode(
             "utf-8", errors="replace"
         )
-    except Exception:
+    except Exception:  # noqa: BLE001 - a failed card fetch resolves to no records
         return set()
     counts: dict[str, int] = {}
     for token in re.findall(r"[a-z0-9][a-z0-9._:-]*", text):
