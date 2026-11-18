@@ -261,7 +261,5 @@ def fetch_bedrock_regions(checked_at: str) -> dict[str, dict]:
 
 
 if __name__ == "__main__":
-    from datetime import datetime, timezone
-
-    today = datetime.now(timezone.utc).date().isoformat()
+    today = datetime.datetime.now(datetime.timezone.utc).date().isoformat()
     print(json.dumps(fetch_bedrock_regions(today), ensure_ascii=False, indent=2))

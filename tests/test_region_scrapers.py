@@ -87,6 +87,19 @@ def test_amazon_region_tables_drop_regions_after_stated_eol():
     assert after_eol["pub-model-a"]["locations"] == ["us-east-1"]
 
 
+def test_amazon_scraper_keeps_datetime_module_binding():
+    # fetch_bedrock_regions() uses datetime.date.fromisoformat; the module
+    # binding must stay the datetime module (a class import would shadow
+    # it and break the standalone entry point).
+    import datetime
+
+    scraper = _script_module("_scrape_amazon_regions")
+    assert scraper.datetime is datetime
+    assert scraper.datetime.date.fromisoformat("2026-11-18") == datetime.date(
+        2026, 11, 18
+    )
+
+
 def test_amazon_base_id_strips_geo_prefixes():
     scraper = _script_module("_scrape_amazon_regions")
     assert scraper._base_id("us.anthropic.claude-v1:0") == "anthropic.claude-v1:0"
