@@ -33,7 +33,7 @@ llmcapa/
 
 ## Design Philosophy
 
-1. **Offline-First**: Core capability data is bundled statically inside the package as JSON files. Successful local lookups and unscoped misses make no network requests. A provider-scoped `get()` / `search()` miss may fetch the published llmcapa GitHub catalog once per provider per registry instance, using the 24-hour cache, then retry once. Automatic miss refreshes are stored in the persistent user catalog under `~/.llmcapa/catalogs/github` and do not modify the installed package. Explicit catalog refreshes may replace bundled JSON after backing up the old files under `~/.llmcapa/github_catalog_backups`.
+1. **Offline-First**: Core capability data is bundled statically inside the package as JSON files. All lookups make no network requests: `get()` / `search()` resolve against the bundled catalogs and any previously fetched user catalogs only, and a miss never triggers a fetch. Fetching the published llmcapa GitHub catalog happens only when `fetch_github_catalog` is called explicitly. Explicit catalog refreshes may replace bundled JSON after backing up the old files under `~/.llmcapa/github_catalog_backups`; with `write_bundled=False` the fetched catalog is stored in the persistent user catalog under `~/.llmcapa/catalogs/github` and loaded at startup ahead of the bundled data.
 2. **Zero Runtime Dependencies**: The library must run using only the Python standard library. External packages (like `pytest` or `build`) are strictly for development/testing.
 3. **Immutability & Performance**: The `Capability` dataclass is `frozen=True`. To avoid redundant calculations during feature checks, evaluation results are cached internally using memoization.
 

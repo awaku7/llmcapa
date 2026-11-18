@@ -919,60 +919,6 @@ def test_fetch_github_catalog_rejects_unknown_provider_and_unsafe_ref():
         registry.fetch_github_catalog("openai", ref="../main")
 
 
-def test_provider_scoped_get_refreshes_github_catalog_once_on_miss(monkeypatch):
-    registry = Registry()
-    # Keep this unit test independent of the full bundled catalog set.
-    registry._loaded = True
-    fresh_cap = Capability(
-        provider="custom-provider",
-        model_id="newly-published-model",
-        context_window=1234,
-        max_output_tokens=256,
-    )
-    calls = []
-
-    def fake_fetch(provider, cache_ttl=86400, ref="main", write_bundled=True):
-        calls.append((provider, cache_ttl, write_bundled))
-        registry.register(fresh_cap)
-        return 1
-
-    monkeypatch.setattr(registry, "fetch_github_catalog", fake_fetch)
-    assert (
-        registry.get("newly-published-model", provider="custom-provider") == fresh_cap
-    )
-    assert calls == [("custom-provider", 86400, False)]
-
-    with pytest.raises(ModelNotFoundError):
-        registry.get("still-missing-model", provider="custom-provider")
-    assert calls == [("custom-provider", 86400, False)]
-
-
-def test_provider_scoped_search_refreshes_github_catalog_on_miss(monkeypatch):
-    registry = Registry()
-    # Keep this unit test independent of the full bundled catalog set.
-    registry._loaded = True
-    fresh_cap = Capability(
-        provider="custom-provider",
-        model_id="newly-published-search-model",
-        context_window=1234,
-        max_output_tokens=256,
-    )
-
-    calls = []
-
-    def fake_fetch(provider, cache_ttl=86400, ref="main", write_bundled=True):
-        calls.append((provider, cache_ttl, write_bundled))
-        registry.register(fresh_cap)
-        return 1
-
-    monkeypatch.setattr(registry, "fetch_github_catalog", fake_fetch)
-    results = registry.search(
-        "newly-published-search-model", provider="custom-provider"
-    )
-    assert results == [fresh_cap]
-    assert calls == [("custom-provider", 86400, False)]
-
-
 def test_bundled_catalog_writer_replaces_json_atomically(tmp_path, monkeypatch):
     destination = tmp_path / "xai.json"
     destination.write_text('{"models": []}', encoding="utf-8")

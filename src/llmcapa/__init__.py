@@ -102,9 +102,6 @@ def get(model_id: str, provider: str | None = None) -> Capability:
         model_id: Model id, alias, or deployment name.
         provider: If given, scope the lookup to models from this
                   provider only (e.g. ``provider="novita"``).
-
-    A provider-scoped miss tries the cached llmcapa GitHub catalog once per
-    provider for this process and retries the lookup once.
     """
     return default_registry().get(model_id, provider)
 
@@ -178,8 +175,7 @@ def search(
     """Search models by prefix matching on model_id, display_name, or aliases.
 
     Case-insensitive prefix search. Results are sorted by
-    ``(deprecated, provider, model_id)``. A provider-scoped miss tries the
-    cached llmcapa GitHub catalog once per provider and retries once.
+    ``(deprecated, provider, model_id)``.
     """
     return default_registry().search(prefix, provider, include_deprecated, limit)
 

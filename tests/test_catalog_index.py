@@ -24,9 +24,6 @@ def catalog(tmp_path, monkeypatch):
     monkeypatch.setenv("USERPROFILE", str(home))
     monkeypatch.setattr(registry_module.Path, "home", lambda: home)
     monkeypatch.setattr(registry_module.resources, "files", lambda package: data)
-    monkeypatch.setattr(
-        Registry, "_refresh_provider_catalog_on_miss", lambda self, provider: False
-    )
 
     def write(name, records):
         (data / name).write_text(json.dumps(records), encoding="utf-8")
@@ -897,9 +894,6 @@ def region_catalog(tmp_path, monkeypatch):
     monkeypatch.setenv("USERPROFILE", str(home))
     monkeypatch.setattr(registry_module.Path, "home", lambda: home)
     monkeypatch.setattr(registry_module.resources, "files", lambda package: data)
-    monkeypatch.setattr(
-        Registry, "_refresh_provider_catalog_on_miss", lambda self, provider: False
-    )
     models = [
         {"provider": "vertex-ai", "model_id": f"model-{letter}"} for letter in "abcdef"
     ]

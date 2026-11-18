@@ -1,6 +1,6 @@
 # llmcapa
 
-Lookup capabilities (context window, modalities, supported features) of various LLM models — offline by default; provider-scoped misses can refresh the GitHub catalog.
+Lookup capabilities (context window, modalities, supported features) of various LLM models — offline; GitHub catalogs are only fetched when explicitly requested.
 
 ## Features
 
@@ -631,7 +631,7 @@ count = llmcapa.fetch_huggingface(limit=200)
 
 ### On-demand llmcapa GitHub Catalog
 
-Fetch the published, normalized catalog for one provider from the public [`awaku7/llmcapa`](https://github.com/awaku7/llmcapa) repository. Provider aliases are accepted, and catalogs backed by multiple data files are fetched together. Downloads are cached under `~/.llmcapa/github_catalog_cache` for 24 hours by default; fresh `main`-branch snapshots are loaded by later processes without network access. A provider-scoped `get()` or `search()` that misses locally also tries this catalog once per provider per registry instance, then retries the lookup. This automatic refresh uses a persistent user catalog and does not rewrite the installed package. Successful lookups and unscoped lookups remain offline.
+Fetch the published, normalized catalog for one provider from the public [`awaku7/llmcapa`](https://github.com/awaku7/llmcapa) repository. Provider aliases are accepted, and catalogs backed by multiple data files are fetched together. Downloads are cached under `~/.llmcapa/github_catalog_cache` for 24 hours by default; fresh `main`-branch snapshots are loaded by later processes without network access. Fetching is explicit only: `get()` and `search()` never access the network, so a model that is not in the local catalogs is reported as not found until its provider catalog is fetched.
 
 ```python
 # Fetch the latest published OpenAI catalog and register its records
