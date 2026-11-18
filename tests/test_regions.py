@@ -195,9 +195,7 @@ def test_bundled_regional_availability_snapshot_is_queryable():
     # records now carry regions, not only the first hand-written few.
     bedrock_caps = registry.list_models(provider="bedrock")
     assert sum(1 for cap in bedrock_caps if cap.regions is not None) >= 140
-    assert (
-        len(registry.find_by_region("ap-northeast-1", provider="bedrock")) >= 30
-    )
+    assert len(registry.find_by_region("ap-northeast-1", provider="bedrock")) >= 30
     nova_pro = registry.get("amazon.nova-pro-v1:0", provider="bedrock")
     assert "us-east-1" in nova_pro.regions.locations
 
