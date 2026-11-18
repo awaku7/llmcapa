@@ -126,6 +126,42 @@ def test_registry_list_regions_and_find_by_region_are_scoped_and_offline():
     ] == ["claude-test"]
 
 
+def test_region_queries_without_provider_use_each_providers_own_record():
+    registry = Registry()
+    registry._loaded = True
+    # The Gemini API record is registered first and wins the flat mapping;
+    # it carries no region data. The Vertex AI record for the same model
+    # ID must still answer unqualified region queries, attributed to
+    # vertex-ai rather than to the flat winner.
+    registry.register(
+        Capability.from_dict(
+            {
+                "provider": "google",
+                "model_id": "shared-model",
+                "context_window": 1024,
+                "max_output_tokens": 256,
+            }
+        )
+    )
+    registry.register(
+        _regional_model(
+            "vertex-ai",
+            "shared-model",
+            locations=["asia-northeast1"],
+            source_url="https://example.com/vertex",
+        )
+    )
+
+    assert registry.get("shared-model").provider == "google"
+    assert registry.get("shared-model").regions is None
+    assert "asia-northeast1" in registry.list_regions()
+    assert registry.list_regions(provider="google") == []
+    hits = registry.find_by_region("asia-northeast1")
+    assert [(cap.provider, cap.model_id) for cap in hits] == [
+        ("vertex-ai", "shared-model")
+    ]
+
+
 def test_bundled_regional_availability_snapshot_is_queryable():
     registry = Registry()
 
@@ -144,6 +180,31 @@ def test_bundled_regional_availability_snapshot_is_queryable():
     assert hydrogen.regions.multi_regions == ("us", "eu")
     assert hydrogen.regions.global_endpoint is True
     assert hydrogen.regions.locations == ()
+
+    # Unqualified region queries consider each provider's own record:
+    # the Vertex AI locations surface even though the same model IDs also
+    # exist in the google catalog without region data.
+    assert "asia-northeast1" in registry.list_regions()
+    assert "ap-northeast-1" in registry.list_regions()
+    unqualified = registry.find_by_region("asia-northeast1")
+    assert ("vertex-ai", "gemini-2.5-flash") in [
+        (cap.provider, cap.model_id) for cap in unqualified
+    ]
+
+    # Coverage scraped from the official Bedrock page: most Bedrock
+    # records now carry regions, not only the first hand-written few.
+    bedrock_caps = registry.list_models(provider="bedrock")
+    assert sum(1 for cap in bedrock_caps if cap.regions is not None) >= 140
+    assert (
+        len(registry.find_by_region("ap-northeast-1", provider="bedrock")) >= 30
+    )
+    nova_pro = registry.get("amazon.nova-pro-v1:0", provider="bedrock")
+    assert "us-east-1" in nova_pro.regions.locations
+
+    # Vertex coverage from the official locations page.
+    flash37 = registry.get("gemini-3.7-flash", provider="vertex-ai")
+    assert flash37.regions is not None
+    assert flash37.regions.global_endpoint is True
 
     nova = registry.get("nova-2-lite-v1", provider="bedrock")
     assert "us-east-1" in nova.regions.geographic_inference_regions

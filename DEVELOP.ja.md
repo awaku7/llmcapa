@@ -60,6 +60,12 @@ ______________________________________________________________________
 
 リージョン情報は、各プロバイダーのカタログ JSON のレコードに `regions` として直接記録します。リージョンはクラウドのリージョン名だけで記録し、サービスが使える国の一覧（Gemini API / AI Studio の提供国など）は入れません。Vertex AI と Bedrock はモデル別に登録し、直接利用可能な location と multi-region endpoint、Bedrock のクロスリージョン推論プロファイルのソースリージョンを区別します。各レコードには公式 `source_url` と確認日 `checked_at` を記録してください。プロバイダーの更新スクリプトは既存レコードを土台に作り直すため、手で登録した `regions` は更新後も引き継がれます。
 
+Bedrock と Vertex AI のリージョン情報は、公式ドキュメントページから `scripts/_region_capability_postprocess.py` で取り込めます（パーサーは `scripts/_scrape_amazon_regions.py` と `scripts/_scrape_vertex_regions.py`）。
+
+```bash
+python scripts/_region_capability_postprocess.py
+```
+
 リージョン情報を変更したら、同梱 SQLite スナップショットを再生成して検証します。
 
 ```bash

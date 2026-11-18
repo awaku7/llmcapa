@@ -105,9 +105,15 @@ Native provider catalogs must never fetch OpenRouter for record data. `openroute
 
 ### Regional availability metadata
 
-`src/llmcapa/data/regional_availability.meta` is the curated, versioned overlay for provider region data. Its `models` entries use a provider and model ID plus a `regions` object. Entries record cloud region/location names only; do not add service availability by country (for example the Gemini API / AI Studio country list). Model-specific Vertex AI and Bedrock records keep direct locations separate from multi-region endpoints and cross-Region inference-profile source Regions. Keep the official `source_url` and `checked_at` on each record. The loader only fills missing `Capability.regions`, preserving explicit model/catalog metadata.
+Regional availability is recorded directly as a `regions` object on provider catalog records (currently `amazon.json` and `vertex-ai.json`). Entries record cloud region/location names only; do not add service availability by country (for example the Gemini API / AI Studio country list). Model-specific Vertex AI and Bedrock records keep direct locations separate from multi-region endpoints and cross-Region inference-profile source Regions. Keep the official `source_url` and `checked_at` on each record. Provider updater scripts rebuild on top of existing records, so recorded `regions` carry over refreshes.
 
-After changing this file, rebuild and validate the bundled SQLite snapshot:
+Bedrock and Vertex AI region data is refreshed from the official documentation pages by `scripts/_region_capability_postprocess.py` (parsers: `scripts/_scrape_amazon_regions.py`, `scripts/_scrape_vertex_regions.py`):
+
+```bash
+python scripts/_region_capability_postprocess.py
+```
+
+After changing region data, rebuild and validate the bundled SQLite snapshot:
 
 ```bash
 python scripts/build_catalog_db.py
