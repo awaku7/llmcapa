@@ -32,7 +32,7 @@
 - プロバイダー別カタログは、原則としてそのプロバイダーの公式 API、公式ドキュメント、専用更新スクリプトを一次ソースにします。
 - **OpenRouter のデータから構築してよいのは `openrouter.json` のみ**です。他プロバイダーのカタログに OpenRouter の情報を流用・上書きしないでください。複数カタログの一括更新でも、各プロバイダーを個別の公式ソースで処理します。
 - `scripts/openrouter_providers/` のシムは歴史的参照用です。現役の更新スクリプトから import しないでください。
-- `fetch_github_catalog(provider, ...)` は公開リポジトリ `awaku7/llmcapa` の正規化済みカタログを取得します。プロバイダー指定の `get()` / `search()` が miss した場合も、プロバイダーごとにレジストリ内で一度だけ取得を試み、1回だけ再検索します。通常のヒットとプロバイダー未指定の検索はオフラインです。既定では取得したJSONで対応する同梱カタログを更新し、更新前のファイルを `~/.llmcapa/github_catalog_backups` にバックアップします。書き込み不可、または `write_bundled=False` の場合は永続的なユーザーカタログ `~/.llmcapa/catalogs/github` に保存し、次回起動時に同梱データより優先して読み込みます。ユーザー上書きの削除でリセットできます。24時間の通信キャッシュとは別です。公式ソースからのカタログ生成・検証手順は引き続き維持してください。
+- `fetch_github_catalog(provider, ...)` は公開リポジトリ `awaku7/llmcapa` の正規化済みカタログを取得します。取得は明示的に呼ばれた場合のみで、`get()` / `search()` は miss しても自動では取得しません。すべての検索はローカルで完結し、オフラインです。既定では取得したJSONで対応する同梱カタログを更新し、更新前のファイルを `~/.llmcapa/github_catalog_backups` にバックアップします。書き込み不可、または `write_bundled=False` の場合は永続的なユーザーカタログ `~/.llmcapa/catalogs/github` に保存し、次回起動時に同梱データより優先して読み込みます。ユーザー上書きの削除でリセットできます。24時間の通信キャッシュとは別です。公式ソースからのカタログ生成・検証手順は引き続き維持してください。
 - 新しいプロバイダーを追加する場合は、`src/llmcapa/data/<provider>.json` を作成し、`providers()` / `list_models()` / `get()` で登録・取得できるテストを `tests/test_registry.py` に追加します。更新スクリプトや別の登録処理が必要かも既存実装で確認してください。
 - `get()`、`list_models()`、`search()` のプロバイダー名は正規化・エイリアス解決されます。エイリアスを追加する場合は `registry.py` の `_provider_aliases` と `tests/test_registry.py` の両方を更新します。
 - `search(provider=None)` は全プロバイダーを走査し、同じ model ID が複数プロバイダーにある場合も保持する仕様です。変更時は `list_models` / `_by_provider` 経由の動作を確認してください。
