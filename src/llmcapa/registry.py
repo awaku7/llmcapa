@@ -74,8 +74,6 @@ class Registry:
         # Provider-to-bundled-file index used by the optional GitHub catalog
         # fetcher. Some providers (for example Modellix) have multiple files.
         self._catalog_files_by_provider: dict[str, set[str]] = {}
-        # Auto-refresh at most once per provider in this Registry instance.
-        self._github_auto_refresh_attempted: set[str] = set()
 
         self._loaded = False
         self._catalog_index: CatalogIndex | None = None
@@ -1310,9 +1308,6 @@ class Registry:
         ``~/.llmcapa/catalogs/github``. Set ``write_bundled`` to False to use
         that user catalog instead of changing the bundled files.
 
-        Provider-scoped lookup misses call this method once per provider per
-        registry instance, then retry the lookup once.
-
         Args:
             provider: Provider name or one of its configured aliases.
             cache_ttl: Cache lifetime in seconds (default 24 hours). Pass 0 to
@@ -1628,49 +1623,15 @@ class Registry:
                     best = (version, capability)
         return best[1] if best else None
 
-    def _refresh_provider_catalog_on_miss(self, provider: str) -> bool:
-        """Try one cached/remote refresh, persisting it as a user override."""
-        provider_key = "\0".join(
-            sorted(
-                self._normalize_provider(name)
-                for name in self._matching_providers(provider)
-            )
-        )
-        if provider_key in self._github_auto_refresh_attempted:
-            return False
-        self._github_auto_refresh_attempted.add(provider_key)
-        try:
-            # A lookup miss is an automatic runtime operation. Do not rewrite
-            # the installed package's bundled JSON: doing so invalidates its
-            # prebuilt SQLite index and makes every later startup reparse the
-            # full catalog. Explicit catalog refreshes may still opt into that.
-            return (
-                self.fetch_github_catalog(
-                    provider, cache_ttl=86400, write_bundled=False
-                )
-                > 0
-            )
-        except (RuntimeError, ValueError):
-            # Preserve the normal not-found behavior if GitHub is unavailable
-            # or this provider has no published llmcapa catalog.
-            return False
-
     def get(self, model_id: str, provider: str | None = None) -> Capability:
-        """Resolve a model, refreshing a provider catalog once after a miss.
+        """Resolve a model from the local catalogs only.
 
-        When a provider is supplied and the local lookup misses, the matching
-        llmcapa GitHub catalog is fetched (using its 24-hour cache) once per
-        provider for this registry, persisted as a user override, then the
-        lookup is retried once. Unscoped lookups and successful local lookups
-        never trigger a fetch.
+        Raises ModelNotFoundError when the model is not present locally.
+        Fetching a provider catalog from GitHub is never implicit; call
+        fetch_github_catalog explicitly to add one.
         """
         self._ensure_loaded()
-        try:
-            return self._get_local(model_id, provider)
-        except ModelNotFoundError:
-            if provider is None or not self._refresh_provider_catalog_on_miss(provider):
-                raise
-            return self._get_local(model_id, provider)
+        return self._get_local(model_id, provider)
 
     def _lookup_values(self, indexes, kind, term) -> list[Capability]:
         """Select only possible matches, retaining overlay and iteration semantics."""
@@ -1988,17 +1949,8 @@ class Registry:
         include_deprecated: bool = False,
         limit: int | None = None,
     ) -> list[Capability]:
-        """Search locally; persist an automatic provider-miss refresh as a user override."""
+        """Search the local catalogs only; never fetches from GitHub."""
         self._ensure_loaded()
-        result = self._search_local(prefix, provider, include_deprecated, limit)
-        if (
-            result
-            or provider is None
-            or not prefix.strip()
-            or limit == 0
-            or not self._refresh_provider_catalog_on_miss(provider)
-        ):
-            return result
         return self._search_local(prefix, provider, include_deprecated, limit)
 
     def _search_local(
