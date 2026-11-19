@@ -673,6 +673,27 @@ def _cmd_list(args: argparse.Namespace) -> int:
     return _finish(caps, args, _subject(args))
 
 
+def _all_records(include_deprecated: bool) -> list[Capability]:
+    """Every provider's own records, deduped by identity.
+
+    The flat mapping behind ``list_models()`` keeps only the
+    first-registered record per model id, which would silently drop
+    provider records that prefix search does return.
+    """
+    registry = default_registry()
+    registry._ensure_loaded()
+    seen: set[int] = set()
+    result: list[Capability] = []
+    for mapping in registry._by_provider.values():
+        for cap in mapping.values():
+            if id(cap) in seen:
+                continue
+            seen.add(id(cap))
+            if include_deprecated or not cap.deprecated:
+                result.append(cap)
+    return result
+
+
 def _contains_match(cap: Capability, needle: str) -> bool:
     if needle in cap.model_id.casefold():
         return True
@@ -685,10 +706,12 @@ def _cmd_search(args: argparse.Namespace) -> int:
     if args.contains:
         if args.region:
             caps = _region_scope(args)
-        else:
+        elif args.provider:
             caps = list_models(
                 args.provider, include_deprecated=args.include_deprecated
             )
+        else:
+            caps = _all_records(args.include_deprecated)
         needle = args.prefix.casefold()
         caps = [c for c in caps if _contains_match(c, needle)]
     else:
@@ -776,9 +799,13 @@ def _cmd_providers(args: argparse.Namespace) -> int:
 
 
 def _cmd_regions(args: argparse.Namespace) -> int:
-    if args.provider and args.provider not in providers():
-        print(f"error: unknown provider: {args.provider}", file=sys.stderr)
-        return 1
+    if args.provider:
+        providers()  # force the catalogs to load before inspecting them
+        registry = default_registry()
+        resolved = registry._scoped_provider_order(args.provider)
+        if not any(name in registry._by_provider for name in resolved):
+            print(f"error: unknown provider: {args.provider}", file=sys.stderr)
+            return 1
     for name in list_regions(
         provider=args.provider,
         include_deprecated=args.include_deprecated,
@@ -1099,14 +1126,6 @@ def build_parser() -> argparse.ArgumentParser:
     _add_github_update_options(p_github)
     p_github.set_defaults(func=_cmd_fetch_github)
 
-    # Keep the former flat commands working, but omit them from the main help.
-    p_legacy_hf = sub.add_parser("fetch-hf", help=argparse.SUPPRESS)
-    p_legacy_hf.set_defaults(func=_cmd_fetch_hf)
-
-    p_legacy_github = sub.add_parser("fetch-github", help=argparse.SUPPRESS)
-    _add_github_update_options(p_legacy_github)
-    p_legacy_github.set_defaults(func=_cmd_fetch_github)
-
     p_tok = sub.add_parser("tokens", help="count tokens for text or messages")
     p_tok.add_argument("model_id", help="model identifier")
     p_tok.add_argument(
@@ -1123,9 +1142,35 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
+# Former flat commands, rewritten to their ``update`` spelling in main().
+# They are deliberately not registered as subparsers: help=SUPPRESS
+# subparsers leak into the top-level help as "==SUPPRESS==" on
+# Python 3.14, and listing them would promote a legacy spelling.
+_LEGACY_COMMANDS = {"fetch-hf": ("update", "hf"), "fetch-github": ("update", "gh")}
+
+
+def _rewrite_legacy(argv: list[str]) -> list[str]:
+    args = list(argv)
+    i = 0
+    while i < len(args):
+        token = args[i]
+        if token == "--extra":
+            i += 2  # skip the option and its value
+            continue
+        if token.startswith("-"):
+            i += 1
+            continue
+        if token in _LEGACY_COMMANDS:
+            args[i : i + 1] = _LEGACY_COMMANDS[token]
+        break
+    return args
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
-    args = parser.parse_args(argv)
+    if argv is None:
+        argv = sys.argv[1:]
+    args = parser.parse_args(_rewrite_legacy(argv))
     if not getattr(args, "command", None):
         parser.print_help()
         return 0

@@ -533,3 +533,40 @@ def test_regions_known_provider_without_region_data(capsys):
     captured = capsys.readouterr()
     assert rc == 0
     assert captured.out == ""
+
+
+def test_search_contains_covers_all_providers(capsys):
+    rc = cli.main(["search", "gemini-3-flash-preview", "--format", "json"])
+    assert rc == 0
+    prefix_providers = {d["provider"] for d in json.loads(capsys.readouterr().out)}
+    rc = cli.main(
+        ["search", "gemini-3-flash-preview", "--contains", "--format", "json"]
+    )
+    assert rc == 0
+    contains_providers = {d["provider"] for d in json.loads(capsys.readouterr().out)}
+    # The flat first-registered-wins mapping would hide the vertex-ai and
+    # ollama records behind the google one.
+    assert contains_providers == prefix_providers
+    assert "vertex-ai" in contains_providers
+
+
+def test_regions_provider_alias_and_case(capsys):
+    rc = cli.main(["regions", "--provider", "azure"])
+    out = capsys.readouterr().out
+    assert rc == 0
+    assert "japaneast" in out
+    rc = cli.main(["regions", "--provider", "Azure-Foundry"])
+    assert rc == 0
+    assert "japaneast" in capsys.readouterr().out
+
+
+def test_help_omits_legacy_commands(capsys):
+    import pytest
+
+    with pytest.raises(SystemExit) as excinfo:
+        cli.main(["--help"])
+    assert excinfo.value.code == 0
+    out = capsys.readouterr().out
+    assert "SUPPRESS" not in out
+    assert "fetch-hf" not in out
+    assert "fetch-github" not in out
