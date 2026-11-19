@@ -76,6 +76,7 @@ _SSR_PRESERVE_FIELDS = (
     "rerank",
     "spatial",
     "azure_type",
+    "regions",
 )
 
 
