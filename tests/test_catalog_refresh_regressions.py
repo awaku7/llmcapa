@@ -190,6 +190,23 @@ def test_azure_foundry_preserves_missing_curated_specialized_metadata():
     assert row == previous
 
 
+def test_azure_foundry_preserves_regions_during_refresh():
+    updater = _script_module("_update_azure_foundry")
+    regions = {
+        "locations": ["eastus", "japaneast"],
+        "source_url": "https://example.com/region-availability",
+        "checked_at": "2026-11-19",
+    }
+    previous = {"regions": regions}
+
+    row = updater.build_entry({"name": "gpt-4o"}, {})
+    assert "regions" not in row
+
+    updater._preserve_curated_fields(row, previous)
+
+    assert row["regions"] == regions
+
+
 def test_azure_foundry_ssr_cards_keep_existing_curated_metadata():
     updater = _script_module("_update_azure_foundry")
     previous = {"image": {"accepts_image_input": True}}
