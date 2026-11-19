@@ -16,8 +16,13 @@ Only models the official pages list are touched; records without a
 from __future__ import annotations
 
 import json
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
+from llmcapa._catalog_format import dump_catalog
 
 try:
     from scripts._scrape_amazon_regions import fetch_bedrock_regions
@@ -43,13 +48,9 @@ def apply_regions(models: list[dict], scraped: dict[str, dict]) -> int:
 
 def _refresh(filename: str, scraped: dict[str, dict]) -> int:
     path = DATA / filename
-    raw = path.read_bytes()
-    payload = json.loads(raw.decode("utf-8"))
+    payload = json.loads(path.read_bytes().decode("utf-8"))
     count = apply_regions(payload["models"], scraped)
-    text = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
-    if b"\r\n" in raw:  # Keep the file's existing line endings.
-        text = text.replace("\n", "\r\n")
-    path.write_bytes(text.encode("utf-8"))
+    path.write_bytes(dump_catalog(payload).encode("utf-8"))
     return count
 
 

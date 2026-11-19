@@ -23,6 +23,7 @@ from typing import Callable, ClassVar
 from urllib.error import HTTPError
 from urllib.parse import quote
 
+from ._catalog_format import dump_catalog
 from ._catalog_index import CatalogIndex, CatalogMapping, parse_numeric_name
 from ._temporary_cache import DAY, cleanup_temporary_caches, write_temporary_cache
 from .hf_overlay import expand_hf_overlay, is_hf_overlay
@@ -1220,8 +1221,7 @@ class Registry:
                 suffix=".tmp",
                 delete=False,
             ) as temporary_file:
-                json.dump(payload, temporary_file, ensure_ascii=False, indent=2)
-                temporary_file.write(chr(10))
+                temporary_file.write(dump_catalog(payload))
                 temporary_path = Path(temporary_file.name)
             with override_write_lock(override_dir):
                 os.replace(temporary_path, override_path)
@@ -1283,9 +1283,7 @@ class Registry:
                     record["regions"] = regions.to_dict()
                     changed = True
             if changed:
-                patched[filename] = (
-                    json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
-                )
+                patched[filename] = dump_catalog(payload)
         return patched
 
     def fetch_github_catalog(
