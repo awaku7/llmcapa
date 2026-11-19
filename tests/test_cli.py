@@ -550,6 +550,33 @@ def test_search_contains_covers_all_providers(capsys):
     assert "vertex-ai" in contains_providers
 
 
+def test_search_contains_region_matches_prefix_providers(capsys):
+    rc = cli.main(
+        ["search", "gemini-3-flash-preview", "--region", "global", "--format", "json"]
+    )
+    assert rc == 0
+    prefix_providers = {d["provider"] for d in json.loads(capsys.readouterr().out)}
+    rc = cli.main(
+        [
+            "search",
+            "gemini-3-flash-preview",
+            "--contains",
+            "--region",
+            "global",
+            "--format",
+            "json",
+        ]
+    )
+    assert rc == 0
+    contains_providers = {d["provider"] for d in json.loads(capsys.readouterr().out)}
+    # Region filtering must match by model id, as prefix search does:
+    # restricting candidates to records that directly carry region data
+    # would keep only vertex-ai and drop google / ollama / vercel.
+    assert contains_providers == prefix_providers
+    assert "vertex-ai" in contains_providers
+    assert "google" in contains_providers
+
+
 def test_regions_provider_alias_and_case(capsys):
     rc = cli.main(["regions", "--provider", "azure"])
     out = capsys.readouterr().out

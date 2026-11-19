@@ -704,9 +704,7 @@ def _contains_match(cap: Capability, needle: str) -> bool:
 
 def _cmd_search(args: argparse.Namespace) -> int:
     if args.contains:
-        if args.region:
-            caps = _region_scope(args)
-        elif args.provider:
+        if args.provider:
             caps = list_models(
                 args.provider, include_deprecated=args.include_deprecated
             )
@@ -714,6 +712,9 @@ def _cmd_search(args: argparse.Namespace) -> int:
             caps = _all_records(args.include_deprecated)
         needle = args.prefix.casefold()
         caps = [c for c in caps if _contains_match(c, needle)]
+        if args.region:
+            available = {c.model_id.casefold() for c in _region_scope(args)}
+            caps = [c for c in caps if c.model_id.casefold() in available]
     else:
         # limit is applied after sorting, so ask the registry for the full set.
         caps = search(
