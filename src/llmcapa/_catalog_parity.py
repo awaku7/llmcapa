@@ -79,6 +79,42 @@ def _compare_capability_lists(label, left, right):
         _compare_capabilities(label, original, cap)
 
 
+def _region_coverage(registry):
+    """Map each region to the models find_by_region() would return.
+
+    Derived from the provider maps with the same candidate selection
+    and matching as ``Registry.find_by_region`` (deprecated included,
+    inference-profile regions excluded). Comparing this mapping is an
+    exhaustive region check that does not call the query API per
+    region: on the SQLite backend each such call scans and decodes the
+    whole catalog (~13 s), so probing all regions took ~18 minutes.
+    """
+    coverage: dict[str, list[tuple[str, str]]] = {}
+    seen: set[int] = set()
+    # Keep every candidate alive while iterating, as
+    # _region_query_candidates does: lazily decoded capabilities are
+    # freed as the maps advance, and a recycled id() would otherwise
+    # make the dedupe skip a distinct model.
+    candidates = []
+    for provider_models in registry._by_provider.values():
+        for cap in provider_models.values():
+            if id(cap) in seen:
+                continue
+            seen.add(id(cap))
+            candidates.append(cap)
+    for cap in candidates:
+        regional = cap.regions
+        if regional is None:
+            continue
+        for location in (*regional.locations, *regional.multi_regions):
+            normalized = location.strip().casefold()
+            if normalized:
+                coverage.setdefault(normalized, []).append((cap.provider, cap.model_id))
+    for models in coverage.values():
+        models.sort()
+    return coverage
+
+
 def _query_probes(expected, actual):
     """Exercise indexed lookups before the exhaustive comparison decodes data."""
     for provider, models in expected._by_provider.items():
@@ -127,8 +163,19 @@ def _query_probes(expected, actual):
         expected.find(include_deprecated=True),
         actual.find(include_deprecated=True),
     )
-    _require_equal("list_regions()", expected.list_regions(), actual.list_regions())
-    for region in expected.list_regions():
+    regions = expected.list_regions()
+    _require_equal("list_regions()", regions, actual.list_regions())
+    # Exhaustive region coverage is compared from the provider maps;
+    # the query API itself is probed on a sample of regions (plus the
+    # special "global" lookup) because every SQLite-backed call scans
+    # the full catalog.
+    _require_equal(
+        "find_by_region() coverage",
+        _region_coverage(expected),
+        _region_coverage(actual),
+    )
+    samples = [regions[0], regions[-1]] if regions else []
+    for region in dict.fromkeys((*samples, "global")):
         _compare_capability_lists(
             f"find_by_region({region!r})",
             expected.find_by_region(region, include_deprecated=True),
