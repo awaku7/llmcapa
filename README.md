@@ -848,8 +848,18 @@ llmcapa find decision=true
 llmcapa find embedding=true --provider amazon
 llmcapa find vision=false --min-context 64000
 
+# Filter by region availability (list / search / find)
+llmcapa regions
+llmcapa regions --provider azure-foundry
+llmcapa list --provider azure-foundry --region japaneast
+llmcapa find vision --region ap-northeast-1 --columns provider,model_id,regions
+
+# Search by substring instead of prefix
+llmcapa search sonnet --contains
+
 # List all known providers
 llmcapa providers
+llmcapa providers --counts
 
 # Count tokens for text or messages
 llmcapa tokens gpt-4o "Hello, world!"
