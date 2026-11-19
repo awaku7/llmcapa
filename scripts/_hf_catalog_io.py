@@ -10,6 +10,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from llmcapa._catalog_format import dump_catalog
 from llmcapa.hf_overlay import expand_hf_overlay, is_hf_overlay, pack_hf_overlay
 
 
@@ -32,4 +33,5 @@ def serialize_catalog(path: Path, catalog: dict[str, Any]) -> str:
         catalog = pack_hf_overlay(
             _hf_source(path), catalog, provider=original["provider"]
         )
-    return json.dumps(catalog, ensure_ascii=False, indent=2) + "\n"
+        return json.dumps(catalog, ensure_ascii=False, indent=2) + "\n"
+    return dump_catalog(catalog)
