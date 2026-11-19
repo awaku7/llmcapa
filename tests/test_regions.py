@@ -204,6 +204,22 @@ def test_bundled_regional_availability_snapshot_is_queryable():
     assert flash37.regions is not None
     assert flash37.regions.global_endpoint is True
 
+    # Azure Foundry coverage from the official region availability page:
+    # most models sold directly by Azure now carry regions.
+    azure_caps = registry.list_models(provider="azure-foundry")
+    assert sum(1 for cap in azure_caps if cap.regions is not None) >= 100
+    gpt4o = registry.get("gpt-4o", provider="azure-foundry")
+    assert "japaneast" in gpt4o.regions.locations
+    assert "eastus" in gpt4o.regions.locations
+    assert gpt4o.regions.source_url.endswith("region-availability")
+    assert ("azure-foundry", "gpt-4o") in [
+        (cap.provider, cap.model_id)
+        for cap in registry.find_by_region("japaneast", provider="azure-foundry")
+    ]
+    assert ("azure-foundry", "gpt-4o") in [
+        (cap.provider, cap.model_id) for cap in registry.find_by_region("japaneast")
+    ]
+
     nova = registry.get("nova-2-lite-v1", provider="bedrock")
     assert "us-east-1" in nova.regions.geographic_inference_regions
     assert "nova-2-lite-v1" not in [

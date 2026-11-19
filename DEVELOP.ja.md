@@ -62,6 +62,8 @@ ______________________________________________________________________
 
 Bedrock と Vertex AI のリージョン情報は、公式ドキュメントページから `scripts/_region_capability_postprocess.py` で取り込めます（パーサーは `scripts/_scrape_amazon_regions.py` と `scripts/_scrape_vertex_regions.py`）。
 
+Azure Foundry のリージョン情報も同じ後処理で取り込めます（パーサーは `scripts/_scrape_azure_regions.py`、出典は Microsoft Learn の「Region availability for Foundry Models sold by Azure」）。Azure のカタログはモデル名ごとのレコードなので、記録するリージョンは公式ページに載る全バージョン・全デプロイ種別（Global Standard、Data Zone Standard、Standard/Regional、プロビジョニング系、バッチ系）の和集合です。そのリージョンでどのデプロイ種別が使えるかは出典ページで確認してください。
+
 ```bash
 python scripts/_region_capability_postprocess.py
 ```

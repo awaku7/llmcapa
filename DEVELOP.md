@@ -105,9 +105,11 @@ Native provider catalogs must never fetch OpenRouter for record data. `openroute
 
 ### Regional availability metadata
 
-Regional availability is recorded directly as a `regions` object on provider catalog records (currently `amazon.json` and `vertex-ai.json`). Entries record cloud region/location names only; do not add service availability by country (for example the Gemini API / AI Studio country list). Model-specific Vertex AI and Bedrock records keep direct locations separate from multi-region endpoints and cross-Region inference-profile source Regions. Keep the official `source_url` and `checked_at` on each record. Provider updater scripts rebuild on top of existing records, so recorded `regions` carry over refreshes.
+Regional availability is recorded directly as a `regions` object on provider catalog records (currently `amazon.json`, `vertex-ai.json`, and `azure_foundry.json`). Entries record cloud region/location names only; do not add service availability by country (for example the Gemini API / AI Studio country list). Model-specific Vertex AI and Bedrock records keep direct locations separate from multi-region endpoints and cross-Region inference-profile source Regions. Keep the official `source_url` and `checked_at` on each record. Provider updater scripts rebuild on top of existing records, so recorded `regions` carry over refreshes.
 
 Bedrock and Vertex AI region data is refreshed from the official documentation pages by `scripts/_region_capability_postprocess.py` (parsers: `scripts/_scrape_amazon_regions.py`, `scripts/_scrape_vertex_regions.py`):
+
+Azure Foundry region data is refreshed by the same postprocess (parser: `scripts/_scrape_azure_regions.py`; source: the Microsoft Learn "Region availability for Foundry Models sold by Azure" page). The Azure catalog carries one record per model name, so the recorded regions are the union over every listed version and deployment type (Global Standard, Data Zone Standard, Standard/Regional, the provisioned variants, and the batch variants): the regions where the model can be deployed at all. Which deployment types a region supports is documented on the source page.
 
 ```bash
 python scripts/_region_capability_postprocess.py

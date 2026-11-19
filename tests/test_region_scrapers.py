@@ -209,6 +209,89 @@ def test_vertex_fetch_keeps_explicit_empty_record_for_unsupported_model(
     assert "locations" not in models[0]["regions"]
 
 
+AZURE_HTML = """
+<h2 id="global-standard">Global Standard</h2>
+<h4>Availability for Azure OpenAI in Foundry Models</h4>
+<table>
+  <thead><tr><th><strong>Model</strong></th><th><strong>Version</strong></th><th><strong>eastus</strong></th><th><strong>japaneast</strong></th></tr></thead>
+  <tbody>
+    <tr><td>model-a</td><td>2025-01-01</td><td>✅</td><td>-</td></tr>
+    <tr><td>model-a</td><td>2025-06-01</td><td>-</td><td>✅</td></tr>
+    <tr><td>model-b</td><td>1</td><td>-</td><td>-</td></tr>
+  </tbody>
+</table>
+<h2 id="standardregional">Standard/Regional</h2>
+<table>
+  <thead><tr><th>Model</th><th>Version</th><th>eastus</th><th>westeurope</th></tr></thead>
+  <tbody>
+    <tr><td>model-a</td><td>2025-01-01</td><td>✅</td><td>✅</td></tr>
+  </tbody>
+</table>
+<table>
+  <thead><tr><th>Unrelated</th><th>Table</th></tr></thead>
+  <tbody><tr><td>model-a</td><td>✅</td></tr></tbody>
+</table>
+<h2 id="related-content">Related content</h2>
+<table>
+  <thead><tr><th>Model</th><th>Version</th><th>moonregion</th></tr></thead>
+  <tbody><tr><td>model-a</td><td>1</td><td>✅</td></tr></tbody>
+</table>
+"""
+
+
+def test_azure_availability_parse_tables_unions_versions_and_types():
+    scraper = _script_module("_scrape_azure_regions")
+    models = scraper.parse_availability_html(AZURE_HTML)
+
+    # Regions are the union over versions and deployment types, in
+    # document order; the unrelated table inside a deployment section
+    # and the matrix under "Related content" are both ignored.
+    assert models["model-a"] == ["eastus", "japaneast", "westeurope"]
+    # A listed model with no supported region is still returned, empty.
+    assert models["model-b"] == []
+
+
+def test_azure_fetch_resolves_catalog_ids_and_keeps_empty_record(tmp_path, monkeypatch):
+    scraper = _script_module("_scrape_azure_regions")
+    catalog = tmp_path / "azure_foundry.json"
+    catalog.write_text(
+        json.dumps(
+            {
+                "models": [
+                    {"model_id": "Model-A"},
+                    {"model_id": "model-b"},
+                    {"model_id": "model-absent"},
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(scraper, "AZURE_FOUNDRY_JSON", catalog)
+    monkeypatch.setattr(scraper, "_fetch", lambda url: AZURE_HTML.encode())
+
+    result = scraper.fetch_azure_regions("2026-11-19")
+
+    # Page names resolve to the catalog's own model ID spelling.
+    assert result["Model-A"]["locations"] == ["eastus", "japaneast", "westeurope"]
+    assert result["Model-A"]["source_url"] == scraper.REGIONS_PAGE_URL
+    # Model B is listed but unsupported everywhere: the explicit empty
+    # record lets a refresh clear its stale regions.
+    assert "locations" not in result["model-b"]
+    assert result["model-b"]["checked_at"] == "2026-11-19"
+    # Models absent from the page stay untouched by the refresh.
+    assert "model-absent" not in result
+
+
+def test_azure_scraper_keeps_datetime_module_binding():
+    # The standalone entry point uses datetime.datetime.now; the module
+    # binding must stay the datetime module (a class import would
+    # shadow it and break the entry point, as happened for Bedrock).
+    import datetime
+
+    scraper = _script_module("_scrape_azure_regions")
+    assert scraper.datetime is datetime
+
+
 def test_region_postprocess_applies_only_listed_models():
     postprocess = _script_module("_region_capability_postprocess")
     models = [
