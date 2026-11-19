@@ -361,3 +361,175 @@ def test_update_github_cli_forces_refresh_when_requested(monkeypatch, capsys):
     captured = capsys.readouterr()
     assert "registered 3 models" in captured.out.lower()
     assert "downloading github file 1/1" in captured.err.lower()
+
+
+def test_regions_command_lists_known_regions(capsys):
+    rc = cli.main(["regions"])
+    out = capsys.readouterr().out
+    assert rc == 0
+    assert "japaneast" in out
+    assert "ap-northeast-1" in out
+
+
+def test_regions_command_provider_filter(capsys):
+    rc = cli.main(["regions", "--provider", "azure-foundry"])
+    out = capsys.readouterr().out
+    assert rc == 0
+    assert "japaneast" in out
+    assert "ap-northeast-1" not in out
+
+
+def test_regions_command_global_is_opt_in(capsys):
+    # vertex-ai records use the global_endpoint flag (no literal "global"
+    # location), so "global" appears only with --global.
+    rc = cli.main(["regions", "--provider", "vertex-ai"])
+    assert rc == 0
+    assert "global" not in capsys.readouterr().out.splitlines()
+    rc = cli.main(["regions", "--provider", "vertex-ai", "--global"])
+    assert rc == 0
+    assert "global" in capsys.readouterr().out.splitlines()
+
+
+def test_list_region_filter(capsys):
+    rc = cli.main(
+        [
+            "list",
+            "--provider",
+            "azure-foundry",
+            "--region",
+            "japaneast",
+            "--format",
+            "json",
+        ]
+    )
+    assert rc == 0
+    data = json.loads(capsys.readouterr().out)
+    assert data
+    assert any(d["model_id"] == "gpt-4o" for d in data)
+    for entry in data:
+        assert entry["provider"] == "azure-foundry"
+        assert "japaneast" in entry["regions"]["locations"]
+
+
+def test_find_region_filter_and_regions_column(capsys):
+    rc = cli.main(
+        [
+            "find",
+            "--provider",
+            "amazon",
+            "--region",
+            "ap-northeast-1",
+            "--columns",
+            "provider,model_id,regions",
+            "--format",
+            "csv",
+            "--limit",
+            "5",
+        ]
+    )
+    out = capsys.readouterr().out
+    assert rc == 0
+    lines = out.strip().splitlines()
+    assert lines[0] == "provider,model_id,regions"
+    assert len(lines) > 1
+    for line in lines[1:]:
+        assert "ap-northeast-1" in line
+
+
+def test_find_region_no_match_is_error(capsys):
+    rc = cli.main(["find", "--provider", "amazon", "--region", "japaneast"])
+    captured = capsys.readouterr()
+    assert rc == 1
+    assert "region: japaneast" in captured.err
+
+
+def test_search_region_filter_narrows_results(capsys):
+    rc = cli.main(["search", "claude", "--format", "json"])
+    assert rc == 0
+    all_hits = json.loads(capsys.readouterr().out)
+    rc = cli.main(
+        ["search", "claude", "--region", "ap-northeast-1", "--format", "json"]
+    )
+    assert rc == 0
+    region_hits = json.loads(capsys.readouterr().out)
+    assert 0 < len(region_hits) < len(all_hits)
+
+
+def test_search_contains_matches_substring(capsys):
+    assert cli.main(["search", "onnet"]) == 1
+    capsys.readouterr()
+    rc = cli.main(["search", "onnet", "--contains", "--format", "json"])
+    assert rc == 0
+    data = json.loads(capsys.readouterr().out)
+    assert data
+    assert any("sonnet" in d["model_id"].lower() for d in data)
+    for entry in data:
+        fields = [entry["model_id"], entry["display_name"] or "", *entry["aliases"]]
+        assert any("onnet" in field.lower() for field in fields)
+
+
+def test_show_provider_option(capsys):
+    rc = cli.main(["show", "gpt-4o", "--provider", "azure-foundry", "--json"])
+    assert rc == 0
+    data = json.loads(capsys.readouterr().out)
+    assert data["provider"] == "azure-foundry"
+    assert "japaneast" in data["regions"]["locations"]
+
+
+def test_show_unknown_model_suggests_near_matches(capsys):
+    rc = cli.main(["show", "gpt-4oo"])
+    captured = capsys.readouterr()
+    assert rc == 1
+    assert "model not found: gpt-4oo" in captured.err
+    assert "did you mean:" in captured.err
+    assert "gpt-4o (azure-foundry)" in captured.err
+
+
+def test_providers_counts(capsys):
+    rc = cli.main(["providers", "--counts"])
+    out = capsys.readouterr().out
+    assert rc == 0
+    lines = {line.split()[0]: line for line in out.strip().splitlines()}
+    assert "amazon" in lines
+    count = int(lines["amazon"].split()[-1])
+    assert count > 100
+    rc = cli.main(["providers"])
+    plain = capsys.readouterr().out
+    assert rc == 0
+    assert "amazon" in plain.strip().splitlines()
+
+
+def test_regions_column_shows_global_endpoint(capsys):
+    rc = cli.main(
+        [
+            "list",
+            "--provider",
+            "vertex-ai",
+            "--region",
+            "global",
+            "--columns",
+            "model_id,regions",
+            "--format",
+            "csv",
+        ]
+    )
+    out = capsys.readouterr().out
+    assert rc == 0
+    row = next(
+        line for line in out.splitlines() if line.startswith("gemini-3-flash-preview,")
+    )
+    assert "global" in row
+
+
+def test_regions_unknown_provider_is_error(capsys):
+    rc = cli.main(["regions", "--provider", "bogus-provider"])
+    captured = capsys.readouterr()
+    assert rc == 1
+    assert "unknown provider: bogus-provider" in captured.err
+
+
+def test_regions_known_provider_without_region_data(capsys):
+    rc = cli.main(["regions", "--provider", "huggingface"])
+    captured = capsys.readouterr()
+    assert rc == 0
+    assert captured.out == ""

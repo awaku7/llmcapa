@@ -1,11 +1,12 @@
 """Command line interface for llmcapa.
 
 Usage:
-    llmcapa show <model_id> [--json]
+    llmcapa show <model_id> [--provider PROVIDER] [--json]
     llmcapa list [OPTIONS]
     llmcapa search <prefix> [OPTIONS]
     llmcapa find [NAME[=BOOL] ...] [OPTIONS]
-    llmcapa providers
+    llmcapa providers [--counts]
+    llmcapa regions [--provider PROVIDER] [--all] [--global]
     llmcapa tokens <model_id> [TEXT] [--messages]
     llmcapa update openrouter
     llmcapa update hf
@@ -25,6 +26,12 @@ Rendering options shared by ``list``, ``search``, and ``find``:
 
 Deprecated models are hidden unless ``--all`` is given, and when shown they are
 always ordered after the active ones.
+
+The ``list``, ``search``, and ``find`` commands accept ``--region REGION``
+to keep only models available in that region (case-insensitive; ``global``
+matches models with a global endpoint). Region data lives on each
+provider's own record, so a model can match through a different provider's
+record than the one an unfiltered listing shows for it.
 """
 
 from __future__ import annotations
@@ -43,8 +50,10 @@ from . import (
     count_messages_tokens,
     count_tokens,
     find,
+    find_by_region,
     get,
     list_models,
+    list_regions,
     providers,
     search,
 )
@@ -184,6 +193,17 @@ def _decision_pck(cap: Capability) -> str:
     )
 
 
+def _fmt_regions(cap: Capability) -> str:
+    """Format the model's direct-availability regions, or ``-``."""
+    regional = cap.regions
+    if regional is None:
+        return "-"
+    names = dict.fromkeys((*regional.locations, *regional.multi_regions))
+    if regional.global_endpoint:
+        names.setdefault("global", None)
+    return ",".join(names) or "-"
+
+
 def _decision_state(cap: Capability) -> str:
     """Format ``max_state_tokens``/``max_total_tokens``."""
     record = cap.decision
@@ -238,6 +258,8 @@ _COLUMN_ALIASES: dict[str, str] = {
     "license": "license",
     "tokenizer": "tokenizer",
     "aliases": "aliases",
+    "regions": "regions",
+    "region": "regions",
     # specialized capability records
     "decision": "decision",
     "dec": "decision",
@@ -284,6 +306,7 @@ _COLUMNS: dict[str, tuple[str, Callable[[Capability], str]]] = {
     "license": ("license", lambda c: c.license_type or "-"),
     "tokenizer": ("tokenizer", lambda c: c.tokenizer_name or "-"),
     "aliases": ("aliases", lambda c: ",".join(c.aliases) or "-"),
+    "regions": ("regions", _fmt_regions),
     # specialized capability records
     "decision": ("decision", lambda c: _cap_flag(c, "decision")),
     "image": ("image", lambda c: _cap_flag(c, "image")),
@@ -313,6 +336,7 @@ _WIDE_COLUMNS: tuple[str, ...] = (
     "in_mod",
     "out_mod",
     "cutoff",
+    "regions",
     "decision",
     "image",
     "audio",
@@ -577,11 +601,27 @@ def _iter_show_rows(data: dict[str, Any], prefix: str = "") -> list[tuple[str, s
     return rows
 
 
+def _suggest(model_id: str, provider: str | None) -> list[Capability]:
+    """Near matches for a mistyped model id, via a shrinking prefix search."""
+    for end in range(len(model_id), 2, -1):
+        hits = search(
+            model_id[:end], provider=provider, include_deprecated=True, limit=5
+        )
+        if hits:
+            return hits
+    return []
+
+
 def _cmd_show(args: argparse.Namespace) -> int:
     try:
-        cap = get(args.model_id)
+        cap = get(args.model_id, provider=args.provider)
     except ModelNotFoundError:
         print(f"error: model not found: {args.model_id}", file=sys.stderr)
+        suggestions = _suggest(args.model_id, args.provider)
+        if suggestions:
+            print("did you mean:", file=sys.stderr)
+            for hit in suggestions:
+                print(f"  {hit.model_id} ({hit.provider})", file=sys.stderr)
         return 1
     if args.json:
         print(json.dumps(cap.to_dict(), ensure_ascii=False, indent=2))
@@ -602,30 +642,70 @@ def _finish(caps: list[Capability], args: argparse.Namespace, subject: str) -> i
     return _emit(caps, args)
 
 
+def _region_scope(args: argparse.Namespace) -> list[Capability]:
+    """Capabilities whose own record carries ``args.region`` metadata."""
+    return find_by_region(
+        args.region,
+        provider=getattr(args, "provider", None),
+        include_deprecated=args.include_deprecated,
+    )
+
+
+def _subject(args: argparse.Namespace, base: str | None = None) -> str:
+    parts = []
+    if base:
+        parts.append(base)
+    if getattr(args, "provider", None):
+        parts.append(f"provider: {args.provider}")
+    if getattr(args, "region", None):
+        parts.append(f"region: {args.region}")
+    return ", ".join(parts) if parts else "the catalog"
+
+
 def _cmd_list(args: argparse.Namespace) -> int:
     caps = list_models(args.provider, include_deprecated=args.include_deprecated)
+    if args.region:
+        available = {c.model_id.casefold() for c in _region_scope(args)}
+        caps = [c for c in caps if c.model_id.casefold() in available]
     _sort_caps(caps, args.sort)
     if args.limit is not None:
         caps = caps[: args.limit]
-    if args.provider:
-        subject = f"provider: {args.provider}"
-    else:
-        subject = "the catalog"
-    return _finish(caps, args, subject)
+    return _finish(caps, args, _subject(args))
+
+
+def _contains_match(cap: Capability, needle: str) -> bool:
+    if needle in cap.model_id.casefold():
+        return True
+    if cap.display_name and needle in cap.display_name.casefold():
+        return True
+    return any(needle in alias.casefold() for alias in cap.aliases)
 
 
 def _cmd_search(args: argparse.Namespace) -> int:
-    # limit is applied after sorting, so ask the registry for the full set.
-    caps = search(
-        args.prefix,
-        provider=args.provider,
-        include_deprecated=args.include_deprecated,
-        limit=None,
-    )
+    if args.contains:
+        if args.region:
+            caps = _region_scope(args)
+        else:
+            caps = list_models(
+                args.provider, include_deprecated=args.include_deprecated
+            )
+        needle = args.prefix.casefold()
+        caps = [c for c in caps if _contains_match(c, needle)]
+    else:
+        # limit is applied after sorting, so ask the registry for the full set.
+        caps = search(
+            args.prefix,
+            provider=args.provider,
+            include_deprecated=args.include_deprecated,
+            limit=None,
+        )
+        if args.region:
+            available = {c.model_id.casefold() for c in _region_scope(args)}
+            caps = [c for c in caps if c.model_id.casefold() in available]
     _sort_caps(caps, args.sort)
     if args.limit is not None:
         caps = caps[: args.limit]
-    return _finish(caps, args, f"prefix: {args.prefix}")
+    return _finish(caps, args, _subject(args, f"prefix: {args.prefix}"))
 
 
 _TRUE_WORDS = {"true", "yes", "y", "t", "1", "on"}
@@ -666,20 +746,44 @@ def _cmd_find(args: argparse.Namespace) -> int:
         include_deprecated=args.include_deprecated,
         **flags,
     )
+    if args.region:
+        available = {(c.provider, c.model_id.casefold()) for c in _region_scope(args)}
+        caps = [c for c in caps if (c.provider, c.model_id.casefold()) in available]
     _sort_caps(caps, args.sort)
     if args.limit is not None:
         caps = caps[: args.limit]
     if flags:
         subject = " ".join(f"{name}={value}" for name, value in sorted(flags.items()))
-    elif args.provider:
-        subject = f"provider: {args.provider}"
+        subject = _subject(args, subject)
     else:
-        subject = "the catalog"
+        subject = _subject(args)
     return _finish(caps, args, subject)
 
 
-def _cmd_providers(_args: argparse.Namespace) -> int:
-    for name in providers():
+def _cmd_providers(args: argparse.Namespace) -> int:
+    names = providers()
+    if not getattr(args, "counts", False):
+        for name in names:
+            print(name)
+        return 0
+    # len() of a provider map is O(1) on both backends, while
+    # list_models() would decode every record just to count it.
+    registry = default_registry()
+    width = max((len(name) for name in names), default=0)
+    for name in names:
+        print(f"{name:<{width}}  {len(registry._by_provider[name])}")
+    return 0
+
+
+def _cmd_regions(args: argparse.Namespace) -> int:
+    if args.provider and args.provider not in providers():
+        print(f"error: unknown provider: {args.provider}", file=sys.stderr)
+        return 1
+    for name in list_regions(
+        provider=args.provider,
+        include_deprecated=args.include_deprecated,
+        include_global=args.include_global,
+    ):
         print(name)
     return 0
 
@@ -864,6 +968,15 @@ def _add_render_options(parser: argparse.ArgumentParser) -> None:
     )
 
 
+def _add_region_option(parser: argparse.ArgumentParser) -> None:
+    parser.add_argument(
+        "--region",
+        default=None,
+        metavar="REGION",
+        help="keep only models available in this region (e.g. japaneast, global)",
+    )
+
+
 def _add_github_update_options(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--provider", required=True, help="provider catalog to fetch")
     parser.add_argument("--ref", default="main", help="Git branch, tag, or commit")
@@ -892,11 +1005,13 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_show = sub.add_parser("show", help="show capability of a model")
     p_show.add_argument("model_id")
+    p_show.add_argument("--provider", help="provider of the model")
     p_show.add_argument("--json", action="store_true", help="output as JSON")
     p_show.set_defaults(func=_cmd_show)
 
     p_list = sub.add_parser("list", help="list known models")
     p_list.add_argument("--provider", help="filter by provider")
+    _add_region_option(p_list)
     _add_render_options(p_list)
     p_list.set_defaults(func=_cmd_list)
 
@@ -908,6 +1023,7 @@ def build_parser() -> argparse.ArgumentParser:
         help="feature filter, e.g. decision=true vision=yes; a bare NAME means true",
     )
     p_find.add_argument("--provider", help="filter by provider")
+    _add_region_option(p_find)
     p_find.add_argument(
         "--min-context",
         dest="min_context",
@@ -926,13 +1042,40 @@ def build_parser() -> argparse.ArgumentParser:
     p_find.set_defaults(func=_cmd_find)
 
     p_prov = sub.add_parser("providers", help="list known providers")
+    p_prov.add_argument(
+        "--counts", action="store_true", help="show the model count per provider"
+    )
     p_prov.set_defaults(func=_cmd_providers)
+
+    p_regions = sub.add_parser("regions", help="list known regions")
+    p_regions.add_argument("--provider", help="filter by provider")
+    p_regions.add_argument(
+        "--all",
+        "--include-deprecated",
+        dest="include_deprecated",
+        action="store_true",
+        help="include deprecated models (hidden by default)",
+    )
+    p_regions.add_argument(
+        "--global",
+        dest="include_global",
+        action="store_true",
+        help="include the special 'global' identifier",
+    )
+    p_regions.set_defaults(func=_cmd_regions)
 
     p_search = sub.add_parser("search", help="search models by prefix")
     p_search.add_argument(
         "prefix", help="prefix to match against model_id, display_name, or aliases"
     )
     p_search.add_argument("--provider", help="filter by provider")
+    p_search.add_argument(
+        "--contains",
+        action="store_true",
+        help="match the text anywhere in the model id, name, or aliases "
+        "(default: prefix match)",
+    )
+    _add_region_option(p_search)
     _add_render_options(p_search)
     p_search.set_defaults(func=_cmd_search)
 
