@@ -1103,6 +1103,72 @@
     },
     {
       "provider": "foundry-local",
+      "model_id": "mai-code-1.1-flash",
+      "display_name": "mai-code-1.1-flash-cuda-gpu",
+      "context_window": 262145,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": false,
+      "supports_streaming": false,
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_responses_api": false,
+      "license_type": "MIT",
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [
+        "azureml://registries/b98c40bc-36d6-4175-b131-bad4502fe1a3/type/models/objectId/mai-code-1.1-flash-cuda-gpu/version/2",
+        "mai-code-1.1-flash-cuda-gpu"
+      ],
+      "extra": {
+        "source": "https://ai.azure.com/api/japaneast/ux/v1.0/entities/crossRegion",
+        "source_docs": "https://learn.microsoft.com/en-us/azure/foundry-local/reference/reference-rest",
+        "source_implementation": "https://github.com/microsoft/Foundry-Local",
+        "source_type": "official_foundry_local_catalog_api",
+        "catalog_region": "japaneast",
+        "tasks": [
+          "coding"
+        ],
+        "media_model_type": "",
+        "publishers": [
+          "Microsoft"
+        ],
+        "licenses": [
+          "MIT"
+        ],
+        "variants": [
+          {
+            "alias": "mai-code-1.1-flash",
+            "name": "mai-code-1.1-flash-cuda-gpu",
+            "entity_id": "azureml://registries/b98c40bc-36d6-4175-b131-bad4502fe1a3/type/models/objectId/mai-code-1.1-flash-cuda-gpu/version/2",
+            "display_name": "mai-code-1.1-flash-cuda-gpu",
+            "publisher": "Microsoft",
+            "task": "coding",
+            "license": "MIT",
+            "supports_tool_calling": true,
+            "supports_reasoning": null,
+            "context_window": 262145,
+            "max_output_tokens": 2048,
+            "uri": "azureml://registries/azureml/models/mai-code-1.1-flash-cuda-gpu/versions/2",
+            "version": 2,
+            "min_foundry_local_version": "",
+            "model_type": "ONNX",
+            "device": "GPU",
+            "execution_provider": "CUDAExecutionProvider",
+            "file_size_bytes": 51505787109
+          }
+        ]
+      }
+    },
+    {
+      "provider": "foundry-local",
       "model_id": "ministral-3-3b-instruct-2512",
       "display_name": "ministral-3-3b-instruct-2512-cuda-gpu",
       "context_window": 262144,
@@ -1622,8 +1688,74 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-11-17",
+        "checked_at": "2026-11-19",
         "status": "inferred"
+      }
+    },
+    {
+      "provider": "foundry-local",
+      "model_id": "nemotron-3.5-bolt-74b-a9b",
+      "display_name": "nemotron-3.5-bolt-74b-a9b-cuda-gpu",
+      "context_window": 262144,
+      "max_output_tokens": 2048,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "supports_chat_completion": false,
+      "supports_streaming": false,
+      "supports_function_calling": true,
+      "supports_json_mode": null,
+      "supports_vision": false,
+      "supports_reasoning": true,
+      "supports_responses_api": false,
+      "license_type": "custom",
+      "pricing": null,
+      "deprecated": false,
+      "aliases": [
+        "azureml://registries/b98c40bc-36d6-4175-b131-bad4502fe1a3/type/models/objectId/nemotron-3.5-bolt-74b-a9b-cuda-gpu/version/1",
+        "nemotron-3.5-bolt-74b-a9b-cuda-gpu"
+      ],
+      "extra": {
+        "source": "https://ai.azure.com/api/japaneast/ux/v1.0/entities/crossRegion",
+        "source_docs": "https://learn.microsoft.com/en-us/azure/foundry-local/reference/reference-rest",
+        "source_implementation": "https://github.com/microsoft/Foundry-Local",
+        "source_type": "official_foundry_local_catalog_api",
+        "catalog_region": "japaneast",
+        "tasks": [
+          "coding"
+        ],
+        "media_model_type": "",
+        "publishers": [
+          "Microsoft"
+        ],
+        "licenses": [
+          "custom"
+        ],
+        "variants": [
+          {
+            "alias": "nemotron-3.5-bolt-74b-a9b",
+            "name": "nemotron-3.5-bolt-74b-a9b-cuda-gpu",
+            "entity_id": "azureml://registries/b98c40bc-36d6-4175-b131-bad4502fe1a3/type/models/objectId/nemotron-3.5-bolt-74b-a9b-cuda-gpu/version/1",
+            "display_name": "nemotron-3.5-bolt-74b-a9b-cuda-gpu",
+            "publisher": "Microsoft",
+            "task": "coding",
+            "license": "custom",
+            "supports_tool_calling": true,
+            "supports_reasoning": true,
+            "context_window": 262144,
+            "max_output_tokens": 2048,
+            "uri": "azureml://registries/azureml/models/nemotron-3.5-bolt-74b-a9b-cuda-gpu/versions/1",
+            "version": 1,
+            "min_foundry_local_version": "",
+            "model_type": "ONNX",
+            "device": "GPU",
+            "execution_provider": "CUDAExecutionProvider",
+            "file_size_bytes": 26358839077
+          }
+        ]
       }
     },
     {
@@ -1728,7 +1860,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-11-17",
+        "checked_at": "2026-11-19",
         "status": "inferred"
       }
     },
@@ -1834,7 +1966,7 @@
           "speech_understanding": true,
           "streaming": true
         },
-        "checked_at": "2026-11-17",
+        "checked_at": "2026-11-19",
         "status": "inferred"
       }
     },
@@ -2049,7 +2181,7 @@
           "transcription": true,
           "speech_understanding": true
         },
-        "checked_at": "2026-11-17",
+        "checked_at": "2026-11-19",
         "status": "inferred"
       }
     },
@@ -5542,7 +5674,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-11-17"
+        "checked_at": "2026-11-19"
       }
     },
     {
@@ -5660,7 +5792,7 @@
           "float"
         ],
         "status": "inferred",
-        "checked_at": "2026-11-17"
+        "checked_at": "2026-11-19"
       }
     },
     {
@@ -6761,7 +6893,7 @@
           "transcription": true,
           "speech_understanding": true
         },
-        "checked_at": "2026-11-17",
+        "checked_at": "2026-11-19",
         "status": "inferred"
       }
     },
@@ -6866,7 +6998,7 @@
           "transcription": true,
           "speech_understanding": true
         },
-        "checked_at": "2026-11-17",
+        "checked_at": "2026-11-19",
         "status": "inferred"
       }
     },
@@ -6971,7 +7103,7 @@
           "transcription": true,
           "speech_understanding": true
         },
-        "checked_at": "2026-11-17",
+        "checked_at": "2026-11-19",
         "status": "inferred"
       }
     },
@@ -7076,7 +7208,7 @@
           "transcription": true,
           "speech_understanding": true
         },
-        "checked_at": "2026-11-17",
+        "checked_at": "2026-11-19",
         "status": "inferred"
       }
     },
@@ -7181,7 +7313,7 @@
           "transcription": true,
           "speech_understanding": true
         },
-        "checked_at": "2026-11-17",
+        "checked_at": "2026-11-19",
         "status": "inferred"
       }
     }

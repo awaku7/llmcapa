@@ -30,7 +30,9 @@ def test_azure_foundry_is_canonical_for_old_azure_openai_rows(registry):
 def test_azure_openai_alias_includes_all_foundry_models(registry):
     for provider in ("azure-openai", "azure-foundry", "azure"):
         assert registry.get("gpt-5.4-mini", provider).provider == "azure-foundry"
-        assert registry.get("claude-opus-4-8", provider).provider == "azure-foundry"
+        claude = registry.get("claude-opus-4-8", provider)
+        assert claude.provider == "azure-foundry"
+        assert claude.extra["upstream_provider"] == "anthropic"
     assert registry.get("gpt-5.4", provider="openai").provider == "openai"
 
 

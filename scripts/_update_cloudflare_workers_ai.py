@@ -126,6 +126,18 @@ def _parse_token_count(value: str) -> int:
 
 
 def _parse_pricing(value: str, task_type: str) -> dict[str, object] | None:
+    # Promotional model docs may include the struck-through standard rate and
+    # a later note naming the price after the promotion. Keep only the current
+    # advertised clause and ignore deleted/struck-through amounts.
+    promo = re.search(r"\bpromo(?:tional)?\b", value, re.IGNORECASE)
+    if promo:
+        value = value[: promo.start()]
+    value = re.sub(
+        r"~~.*?~~|<del\b[^>]*>.*?</del\s*>|<strike\b[^>]*>.*?</strike\s*>|<s\b[^>]*>.*?</s\s*>",
+        "",
+        value,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
     prices = {
         direction.casefold(): float(amount.replace(",", ""))
         for amount, direction in re.findall(

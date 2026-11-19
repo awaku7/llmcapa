@@ -30,7 +30,7 @@
       "license_type": "api",
       "extra": {
         "official_source": "https://docs.perplexity.ai/docs/getting-started/pricing",
-        "official_source_checked_at": "2026-11-17",
+        "official_source_checked_at": "2026-11-19",
         "official_spec_refresh": "official_perplexity_pricing_model_inventory",
         "model_type": "decision",
         "base_url": "https://api.perplexity.ai",
@@ -67,7 +67,7 @@
       "license_type": "api",
       "extra": {
         "official_source": "https://docs.perplexity.ai/docs/getting-started/pricing",
-        "official_source_checked_at": "2026-11-17",
+        "official_source_checked_at": "2026-11-19",
         "official_spec_refresh": "official_perplexity_pricing_model_inventory",
         "model_type": "decision",
         "base_url": "https://api.perplexity.ai",
@@ -104,7 +104,7 @@
       "license_type": "api",
       "extra": {
         "official_source": "https://docs.perplexity.ai/docs/getting-started/pricing",
-        "official_source_checked_at": "2026-11-17",
+        "official_source_checked_at": "2026-11-19",
         "official_spec_refresh": "official_perplexity_pricing_model_inventory",
         "model_type": "decision",
         "base_url": "https://api.perplexity.ai",
@@ -141,7 +141,7 @@
       "license_type": "api",
       "extra": {
         "official_source": "https://docs.perplexity.ai/docs/getting-started/pricing",
-        "official_source_checked_at": "2026-11-17",
+        "official_source_checked_at": "2026-11-19",
         "official_spec_refresh": "official_perplexity_pricing_model_inventory",
         "model_type": "decision",
         "base_url": "https://api.perplexity.ai",
@@ -186,7 +186,7 @@
       },
       "extra": {
         "official_source": "https://docs.perplexity.ai/docs/getting-started/pricing",
-        "official_source_checked_at": "2026-11-17",
+        "official_source_checked_at": "2026-11-19",
         "official_spec_refresh": "official_perplexity_pricing_model_inventory",
         "model_type": "embedding",
         "base_url": "https://api.perplexity.ai",
@@ -232,7 +232,7 @@
       },
       "extra": {
         "official_source": "https://docs.perplexity.ai/docs/getting-started/pricing",
-        "official_source_checked_at": "2026-11-17",
+        "official_source_checked_at": "2026-11-19",
         "official_spec_refresh": "official_perplexity_pricing_model_inventory",
         "model_type": "embedding",
         "base_url": "https://api.perplexity.ai",
@@ -289,7 +289,7 @@
           }
         ],
         "official_source": "https://docs.perplexity.ai/docs/getting-started/pricing",
-        "official_source_checked_at": "2026-11-17",
+        "official_source_checked_at": "2026-11-19",
         "official_spec_refresh": "official_perplexity_pricing_model_inventory",
         "model_type": "embedding",
         "base_url": "https://api.perplexity.ai",
@@ -355,7 +355,7 @@
           }
         ],
         "official_source": "https://docs.perplexity.ai/docs/getting-started/pricing",
-        "official_source_checked_at": "2026-11-17",
+        "official_source_checked_at": "2026-11-19",
         "official_spec_refresh": "official_perplexity_pricing_model_inventory",
         "model_type": "embedding",
         "base_url": "https://api.perplexity.ai",
@@ -370,6 +370,98 @@
         ],
         "status": "inferred",
         "checked_at": "2026-10-14"
+      }
+    },
+    {
+      "provider": "perplexity",
+      "model_id": "pplx-embed-v2-context-0.6b",
+      "display_name": "Perplexity: pplx-embed-v2-context-0.6b",
+      "context_window": 32000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embeddings"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_json_schema": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 0.02,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "embedding": {
+        "embedding": true,
+        "output_formats": [
+          "float"
+        ],
+        "status": "official_docs",
+        "checked_at": "2026-11-19"
+      },
+      "extra": {
+        "official_source": "https://docs.perplexity.ai/docs/getting-started/pricing",
+        "official_source_checked_at": "2026-11-19",
+        "official_spec_refresh": "official_perplexity_pricing_model_inventory",
+        "model_type": "embedding",
+        "base_url": "https://api.perplexity.ai",
+        "not_listed_in_current_docs": false,
+        "embedding_dimensions": 1024
+      }
+    },
+    {
+      "provider": "perplexity",
+      "model_id": "pplx-embed-v2-context-9b",
+      "display_name": "Perplexity: pplx-embed-v2-context-9b",
+      "context_window": 32000,
+      "max_output_tokens": 0,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "embeddings"
+      ],
+      "supports_function_calling": null,
+      "supports_json_mode": null,
+      "supports_json_schema": null,
+      "supports_streaming": null,
+      "supports_vision": false,
+      "supports_reasoning": null,
+      "supports_chat_completion": false,
+      "supports_responses_api": null,
+      "pricing": {
+        "input_per_1m": 0.12,
+        "output_per_1m": 0.0,
+        "currency": "USD"
+      },
+      "deprecated": false,
+      "aliases": [],
+      "license_type": "api",
+      "embedding": {
+        "embedding": true,
+        "output_formats": [
+          "float"
+        ],
+        "status": "official_docs",
+        "checked_at": "2026-11-19"
+      },
+      "extra": {
+        "official_source": "https://docs.perplexity.ai/docs/getting-started/pricing",
+        "official_source_checked_at": "2026-11-19",
+        "official_spec_refresh": "official_perplexity_pricing_model_inventory",
+        "model_type": "embedding",
+        "base_url": "https://api.perplexity.ai",
+        "not_listed_in_current_docs": false,
+        "embedding_dimensions": 2048
       }
     },
     {
@@ -422,7 +514,7 @@
           }
         ],
         "official_source": "https://docs.perplexity.ai/docs/getting-started/pricing",
-        "official_source_checked_at": "2026-11-17",
+        "official_source_checked_at": "2026-11-19",
         "official_spec_refresh": "official_perplexity_pricing_model_inventory",
         "model_type": "chat",
         "base_url": "https://api.perplexity.ai",
@@ -484,7 +576,7 @@
           }
         ],
         "official_source": "https://docs.perplexity.ai/docs/getting-started/pricing",
-        "official_source_checked_at": "2026-11-17",
+        "official_source_checked_at": "2026-11-19",
         "official_spec_refresh": "official_perplexity_pricing_model_inventory",
         "model_type": "chat",
         "base_url": "https://api.perplexity.ai",
@@ -547,7 +639,7 @@
           }
         ],
         "official_source": "https://docs.perplexity.ai/docs/getting-started/pricing",
-        "official_source_checked_at": "2026-11-17",
+        "official_source_checked_at": "2026-11-19",
         "official_spec_refresh": "official_perplexity_pricing_model_inventory",
         "model_type": "chat",
         "base_url": "https://api.perplexity.ai",
@@ -610,7 +702,7 @@
           }
         ],
         "official_source": "https://docs.perplexity.ai/docs/getting-started/pricing",
-        "official_source_checked_at": "2026-11-17",
+        "official_source_checked_at": "2026-11-19",
         "official_spec_refresh": "official_perplexity_pricing_model_inventory",
         "model_type": "chat",
         "base_url": "https://api.perplexity.ai",
@@ -653,7 +745,7 @@
       "license_type": "api",
       "extra": {
         "official_source": "https://docs.perplexity.ai/docs/getting-started/pricing",
-        "official_source_checked_at": "2026-11-17",
+        "official_source_checked_at": "2026-11-19",
         "official_spec_refresh": "official_perplexity_pricing_model_inventory",
         "model_type": "decision",
         "base_url": "https://api.perplexity.ai",
@@ -754,7 +846,7 @@
       },
       "extra": {
         "official_source": "https://docs.perplexity.ai/docs/getting-started/pricing",
-        "official_source_checked_at": "2026-11-17",
+        "official_source_checked_at": "2026-11-19",
         "model_family": "pplx-decider",
         "api_base_url": "https://api.perplexity.ai",
         "api_endpoint": "https://api.perplexity.ai/v1/decisions",
@@ -817,7 +909,7 @@
             "source": "https://docs.perplexity.ai/"
           }
         ],
-        "official_source_checked_at": "2026-11-17",
+        "official_source_checked_at": "2026-11-19",
         "not_listed_in_current_docs": true
       },
       "supports_json_schema": true

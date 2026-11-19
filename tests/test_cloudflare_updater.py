@@ -291,6 +291,18 @@ def test_parse_clairic_input_only_rate():
     }
 
 
+def test_promotional_price_wins_over_struck_through_standard_rate():
+    published = (
+        "$0.10 per M input tokens ~~$0.24~~ Promo<br>"
+        "Promotional price until December 1, 2026, then $0.24 per M input tokens."
+    )
+    assert _UPDATER._parse_pricing(published, "Text Generation") == {
+        "input_per_1m": 0.1,
+        "output_per_1m": 0.0,
+        "currency": "USD",
+    }
+
+
 def test_clairic_published_input_price_is_in_bundled_catalog():
     import json
 

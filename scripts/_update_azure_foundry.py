@@ -772,6 +772,41 @@ def provider_of(item: dict) -> str:
     return "azure-foundry"
 
 
+def set_azure_foundry_host_provider(row: dict[str, Any]) -> None:
+    """Label rows by their Azure Foundry hosting catalog, not publisher.
+
+    Preserve the model publisher separately and keep its qualified model alias
+    for compatibility with existing lookups.
+    """
+    publisher = str(row.get("provider") or "").strip()
+    model_id = str(row.get("model_id") or "").strip()
+    # Microsoft-owned entries keep their native Microsoft namespace; the
+    # Foundry alias is for models from other publishers hosted on Foundry.
+    if publisher == "microsoft":
+        return
+    if publisher and publisher != "azure-foundry":
+        extra = row.get("extra")
+        if not isinstance(extra, dict):
+            extra = {}
+            row["extra"] = extra
+        extra.setdefault("upstream_provider", publisher)
+
+    aliases = row.get("aliases")
+    aliases = list(aliases) if isinstance(aliases, list) else []
+    if model_id:
+        aliases.append(f"azure-foundry/{model_id}")
+        if publisher and publisher != "azure-foundry":
+            aliases.append(f"{publisher}/{model_id}")
+    row["provider"] = "azure-foundry"
+    aliases = list(
+        dict.fromkeys(alias for alias in aliases if alias and alias != model_id)
+    )
+    if aliases:
+        row["aliases"] = aliases
+    else:
+        row.pop("aliases", None)
+
+
 def _date_is_past(value: Any) -> bool:
     """Return whether a catalog lifecycle date has already elapsed."""
     text = str(value or "").strip()
@@ -1621,6 +1656,8 @@ def main() -> None:
     if retained_missing:
         print(f"retained {retained_missing} models not listed in the current catalog")
     models = [by_id[k] for k in sorted(by_id)]
+    for model in models:
+        set_azure_foundry_host_provider(model)
     reconcile_computer_use(models)
 
     models.sort(key=sort_key)
