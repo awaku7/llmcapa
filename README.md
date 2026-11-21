@@ -631,7 +631,7 @@ count = llmcapa.fetch_huggingface(limit=200)
 
 ### On-demand llmcapa GitHub Catalog
 
-Fetch the published, normalized catalog for one provider from the public [`awaku7/llmcapa`](https://github.com/awaku7/llmcapa) repository. Provider aliases are accepted, and catalogs backed by multiple data files are fetched together. Downloads are cached under `~/.llmcapa/github_catalog_cache` for 24 hours by default; fresh `main`-branch snapshots are loaded by later processes without network access. Fetching is explicit only: `get()` and `search()` never access the network, so a model that is not in the local catalogs is reported as not found until its provider catalog is fetched.
+Fetch the published, normalized catalog for one provider from the public [`awaku7/llmcapa`](https://github.com/awaku7/llmcapa) repository. Provider aliases are accepted, and catalogs backed by multiple data files are fetched together. Downloads are cached under `~/.llmcapa/github_catalog_cache` for explicit fetch calls, but cached GitHub snapshots and durable user catalogs are never loaded over the bundled catalogs at startup. Fetching is explicit only: `get()` and `search()` never access the network, so a model that is not in the bundled catalog is reported as not found until its provider catalog is fetched.
 
 ```python
 # Fetch the latest published OpenAI catalog and register its records
@@ -649,7 +649,7 @@ llmcapa update gh --provider openai
 llmcapa update gh --provider modellix --refresh
 ```
 
-An explicit `fetch_github_catalog()` call or CLI update replaces the corresponding bundled JSON files by default when the package directory is writable. Previous files are backed up under `~/.llmcapa/github_catalog_backups`. If the package directory is read-only—or `write_bundled=False` is set—llmcapa saves a persistent user catalog under `~/.llmcapa/catalogs/github` and loads it on later runs, overlaying bundled records. Remove that directory to discard the user overrides. The 24-hour download cache is separate. Verify catalog provenance and specifications before relying on them in production.
+An explicit `fetch_github_catalog()` call or CLI update replaces the corresponding bundled JSON files by default when the package directory is writable. Previous files are backed up under `~/.llmcapa/github_catalog_backups`. With `write_bundled=False`, a read-only package, or an unsupported partial overlay, fetched records are registered only in the current process. llmcapa does not persist or load user catalog overrides. The response cache is used only by an explicit fetch and never overlays bundled data at startup. Verify catalog provenance and specifications before relying on them in production.
 
 ### Token Counting (Standalone)
 

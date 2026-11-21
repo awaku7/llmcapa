@@ -129,6 +129,8 @@ def test_resume_accepts_only_explicitly_staged_catalog_changes():
             "scripts/_update_amazon.py",
             "tests/test_amazon_catalog_updater.py",
             "scripts/_update_azure_foundry.py",
+            "scripts/_update_google.py",
+            "scripts/_update_vertex_ai.py",
             "scripts/_update_cloudflare_workers_ai.py",
             "tests/test_cloudflare_updater.py",
             "tests/test_azure_provider_alias.py",
@@ -137,6 +139,8 @@ def test_resume_accepts_only_explicitly_staged_catalog_changes():
             "scripts/provider_updates/bytedance-seed.py",
             "tests/test_provider_inventory_refresh.py",
             "tests/test_provider_http.py",
+            "src/llmcapa/registry.py",
+            "tests/test_catalog_index.py",
             "scripts/_update_sarashina.py",
             "tests/test_sarashina.py",
             "scripts/_update_modellix.py",
@@ -149,7 +153,7 @@ def test_resume_accepts_only_explicitly_staged_catalog_changes():
 
     with pytest.raises(ValueError, match="unrelated staged changes"):
         refresh.validate_staged_catalogs(
-            {"src/llmcapa/registry.py"}, allow_staged_catalogs=True
+            {"src/llmcapa/models.py"}, allow_staged_catalogs=True
         )
 
 
@@ -442,6 +446,34 @@ def test_refresh_guard_allows_documented_modality_expansion():
     previous["models"][0]["input_modalities"] = ["text"]
     updated = json.loads(json.dumps(previous))
     updated["models"][0]["input_modalities"] = ["text", "image"]
+    refresh.validate_refreshed_catalog(previous, updated)
+
+
+def test_authoritatively_enumerated_fields_can_remove_stale_capabilities():
+    previous = _complete_catalog()
+    previous["models"][0]["input_modalities"] = ["text", "image", "video"]
+    previous["models"][0]["video"] = {"accepts_video_input": True}
+    updated = json.loads(json.dumps(previous))
+    updated["models"][0]["input_modalities"] = ["text", "image"]
+    updated["models"][0].pop("video")
+    updated["models"][0]["extra"]["officially_enumerated_capability_fields"] = [
+        "input_modalities",
+        "video",
+    ]
+
+    assert refresh.preserve_known_capabilities(previous, updated) == 0
+    refresh.validate_refreshed_catalog(previous, updated)
+
+
+def test_authoritative_billing_fields_can_clear_an_inferred_rate():
+    previous = _complete_catalog()
+    previous["models"][0]["extra"]["cache_write_per_1m"] = 1.25
+    updated = json.loads(json.dumps(previous))
+    updated["models"][0]["extra"].pop("cache_write_per_1m")
+    updated["models"][0]["extra"]["officially_enumerated_billing_fields"] = [
+        "cache_write_per_1m"
+    ]
+
     refresh.validate_refreshed_catalog(previous, updated)
 
 

@@ -27,35 +27,26 @@ DATA = ROOT / "src" / "llmcapa" / "data" / "sambanova.json"
 SOURCE = "https://docs.sambanova.ai/docs/en/models/sambacloud-models"
 
 MODELS = {
-    "MiniMax-M3": {
-        "stage": "preview",
-        "input": ["text"],
-        "context_window": 1_000_000,
-    },
-    "DeepSeek-V3.1": {
-        "stage": "production",
-        "input": ["text"],
-        "context_window": 128_000,
-    },
-    "Meta-Llama-3.3-70B-Instruct": {
-        "stage": "production",
-        "input": ["text"],
-        "context_window": 128_000,
-    },
     "gpt-oss-120b": {
-        "stage": "production",
+        "stage": "preview",
         "input": ["text"],
         "context_window": 128_000,
     },
-    "DeepSeek-V3.2": {
+    "MiniMax-M3.1-Flash": {
         "stage": "preview",
-        "input": ["text"],
-        "context_window": 32_000,
+        "input": ["text", "image", "video"],
+        "context_window": 1_000_000,
     },
     "gemma-4-31B-it": {
         "stage": "preview",
-        "input": ["text", "image", "video"],
+        "input": ["text", "image"],
         "context_window": 128_000,
+    },
+    "GLM-5.3": {
+        "stage": "preview",
+        "input": ["text"],
+        "context_window": 1_000_000,
+        "reasoning": True,
     },
 }
 
@@ -112,7 +103,8 @@ def main() -> None:
             "supports_function_calling": None,
             "supports_json_mode": None,
             "supports_vision": "image" in input_modalities,
-            "supports_reasoning": None,
+            "supports_reasoning": spec.get("reasoning"),
+            "supports_reasoning_effort": bool(spec.get("reasoning")),
             "supports_responses_api": False,
             "pricing": None,
             "deprecated": False,
@@ -124,10 +116,17 @@ def main() -> None:
                 .isoformat(),
                 "official_spec_refresh": "parsed",
                 "availability": spec["stage"],
-                "supported_modalities_note": (
-                    "Text, Image, Video; audio input is not supported"
+                "officially_enumerated_capability_fields": [
+                    "input_modalities",
+                    "video",
+                ],
+                "supported_modalities_note": ", ".join(
+                    value.title() for value in input_modalities
+                )
+                + (
+                    "; audio input is not supported"
                     if model_id == "gemma-4-31B-it"
-                    else "Text"
+                    else ""
                 ),
                 "pricing_status": "not specified on SambaCloud models page",
             },

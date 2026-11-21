@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import sys
+import types
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -245,6 +247,8 @@ def test_perplexity_router_parser_reads_only_official_hosted_route_prices():
             "provider": "perplexity-router",
             "model_id": "perplexity/kimi-k3",
             "display_name": "Perplexity Router: Kimi",
+            "context_window": 0,
+            "max_output_tokens": 0,
             "input_per_1m": 3.0,
             "output_per_1m": 15.0,
             "cache_read_per_1m": 0.3,
@@ -259,6 +263,267 @@ def test_perplexity_router_parser_reads_only_official_hosted_route_prices():
     new_record = updater._base_record(rows[0], None, "2026-10-12")
     assert new_record["context_window"] == 0
     assert new_record["max_output_tokens"] == 0
+
+
+def test_perplexity_orchestrator_parser_reads_current_perplexity_tab_only():
+    updater = _load("update_perplexity_router")
+    docs = """## Available Models
+> [tab] Anthropic
+> | `anthropic/claude` | Tier 1 | 200,000 | 64,000 | 1.00 | 5.00 | 0.10 |
+
+> [tab] Z.AI
+>
+> | Model | Usage tier | Context window | Max output | Input ($/1M) | Output ($/1M) | Cache read ($/1M) |
+> | - | - | -: | -: | -: | -: | -: |
+> | `perplexity/glm-5.3` | Tier 0 | 1,000,000 | 131,072 | 1.40 | 4.40 | 0.26 |
+> | `zai/glm` | Tier 0 | 100,000 | 10,000 | 1.00 | 1.00 | 0.10 |
+
+> [tab] Moonshot AI
+> | `perplexity/kimi-k3` | Tier 0 | 1,048,576 | 131,072 | 3.00 | 15.00 | 0.30 |
+
+## Access by Usage Tier
+"""
+    rows = updater.parse_model_table(docs)
+    assert {row["model_id"] for row in rows} == {
+        "perplexity/kimi-k3",
+        "perplexity/glm-5.3",
+    }
+    by_id = {row["model_id"]: row for row in rows}
+    assert by_id["perplexity/kimi-k3"]["context_window"] == 1_048_576
+    assert by_id["perplexity/kimi-k3"]["max_output_tokens"] == 131_072
+    assert by_id["perplexity/kimi-k3"]["input_per_1m"] == 3.0
+    assert by_id["perplexity/glm-5.3"]["cache_read_per_1m"] == 0.26
+    record = updater._base_record(by_id["perplexity/kimi-k3"], None, "2026-11-20")
+    assert record["context_window"] == 1_048_576
+    assert record["max_output_tokens"] == 131_072
+    assert record["extra"]["orchestrator_api_base_url"].endswith("/orchestrator/v1")
+
+
+def test_vertex_sdk_discovery_includes_documented_gemini4_variants(monkeypatch):
+    updater = _load("update_vertex_ai")
+    vertexai = types.ModuleType("vertexai")
+    vertexai.model_garden = types.SimpleNamespace(
+        list_deployable_models=lambda **_: [f"sdk-model-{index}" for index in range(20)]
+    )
+    monkeypatch.setitem(sys.modules, "vertexai", vertexai)
+
+    discovered = dict(updater.discover_models())
+    expected = {
+        "gemini-4-argon",
+        "gemini-4-carbon",
+        "gemini-4-hydrogen",
+        "gemini-4-neon",
+    }
+    assert expected <= discovered.keys()
+    assert set(updater.VERTEX_GEMINI_MODEL_PAGE_SPECS) <= discovered.keys()
+
+    for model_id, modalities in (
+        ("gemini-4-argon", ["image", "audio", "video", "file"]),
+        ("gemini-4-carbon", ["image", "audio", "video", "file"]),
+        ("gemini-4-hydrogen", ["image", "audio", "video", "file"]),
+        ("gemini-4-neon", ["image", "audio", "video", "file"]),
+    ):
+        row = updater.minimal(model_id, discovered[model_id])
+        updater.enrich_thinking(row)
+        updater.enrich_vertex_gemini_modalities(row)
+        updater.apply_vertex_gemini_model_page_spec(row)
+        assert row["supports_reasoning"] is True
+        assert set(modalities) <= set(row["input_modalities"])
+        assert row["supports_vision"] is True
+        assert row["supports_audio_input"] is True
+        assert row["audio"]["accepts_audio_input"] is True
+        assert row["video"]["accepts_video_input"] is True
+
+
+def test_vertex_ai_catalog_contains_all_documented_gemini4_variants():
+    path = ROOT / "src" / "llmcapa" / "data" / "vertex-ai.json"
+    rows = json.loads(path.read_text(encoding="utf-8"))["models"]
+    model_ids = {row.get("model_id") for row in rows}
+    assert {
+        "gemini-4-argon",
+        "gemini-4-carbon",
+        "gemini-4-hydrogen",
+        "gemini-4-neon",
+    } <= model_ids
+
+    by_id = {row["model_id"]: row for row in rows}
+    for model_id in (
+        "gemini-4-argon",
+        "gemini-4-carbon",
+        "gemini-4-hydrogen",
+        "gemini-4-neon",
+    ):
+        assert {"image", "audio", "file", "video"} <= set(
+            by_id[model_id]["input_modalities"]
+        )
+        assert by_id[model_id]["supports_vision"] is True
+        assert by_id[model_id]["supports_audio_input"] is True
+        assert by_id[model_id]["audio"]["accepts_audio_input"] is True
+        assert by_id[model_id]["video"]["accepts_video_input"] is True
+        assert by_id[model_id]["max_output_tokens"] == 65_536
+        assert by_id[model_id]["extra"]["long_decode_max_output_tokens"] == 1_048_576
+
+
+def test_vertex_ai_catalog_covers_official_gemini_model_pages():
+    updater = _load("update_vertex_ai")
+    path = ROOT / "src" / "llmcapa" / "data" / "vertex-ai.json"
+    rows = {
+        row["model_id"]: row
+        for row in json.loads(path.read_text(encoding="utf-8"))["models"]
+    }
+    specs = updater.VERTEX_GEMINI_MODEL_PAGE_SPECS
+
+    assert set(specs) <= rows.keys()
+    for model_id, spec in specs.items():
+        row = rows[model_id]
+        assert row["context_window"] == spec["context_window"], model_id
+        assert row["max_output_tokens"] == spec["max_output_tokens"], model_id
+        assert row["input_modalities"] == spec["input_modalities"], model_id
+        assert row["output_modalities"] == spec["output_modalities"], model_id
+        assert row["extra"]["vertex_model_page_source"] == spec["source"], model_id
+
+    assert rows["gemini-3.8-flash-cyber"]["pricing"] is None
+    assert rows["gemini-live-2.5-flash-native-audio"]["context_window"] == 131_072
+    assert rows["gemini-3.5-transcribe"]["context_window"] == 0
+    assert rows["gemini-3.5-transcribe"]["input_modalities"] == ["audio"]
+
+
+def test_vertex_gemini38_flash_matches_official_modality_and_thinking_specs():
+    updater = _load("update_vertex_ai")
+    model_id = "gemini-3.8-flash"
+    row = updater.minimal(model_id, "Gemini 3.8 Flash")
+    updater.enrich_thinking(row)
+    updater.enrich_vertex_gemini_modalities(row)
+    updater.apply_vertex_gemini_model_page_spec(row)
+
+    assert set(row["input_modalities"]) == {
+        "text",
+        "image",
+        "audio",
+        "video",
+        "file",
+    }
+    assert row["supports_vision"] is True
+    assert row["supports_audio_input"] is True
+    assert row["supports_audio_output"] is False
+    assert row["audio"]["accepts_audio_input"] is True
+    assert row["video"]["accepts_video_input"] is True
+    assert row["thinking_level_values"] == ["low", "medium", "high"]
+
+    path = ROOT / "src" / "llmcapa" / "data" / "vertex-ai.json"
+    catalog = {
+        item["model_id"]: item
+        for item in json.loads(path.read_text(encoding="utf-8"))["models"]
+    }
+    saved = catalog[model_id]
+    assert set(saved["input_modalities"]) == {
+        "text",
+        "image",
+        "audio",
+        "video",
+        "file",
+    }
+    assert saved["supports_vision"] is True
+    assert saved["audio"]["accepts_audio_input"] is True
+    assert saved["video"]["accepts_video_input"] is True
+    assert saved["thinking_level_values"] == ["low", "medium", "high"]
+
+
+def test_google_gemini4_modalities_match_official_model_pages():
+    updater = _load("update_google")
+    expected_levels = {
+        "gemini-4-argon": ["low", "medium", "high"],
+        "gemini-4-carbon": ["low", "medium", "high"],
+        "gemini-4-hydrogen": ["low", "medium", "high", "xhigh"],
+        "gemini-4-neon": ["low", "medium", "high", "xhigh"],
+    }
+    path = ROOT / "src" / "llmcapa" / "data" / "google.json"
+    rows = {row["model_id"]: row for row in json.loads(path.read_text(encoding="utf-8"))["models"]}
+
+    for model_id, thinking_levels in expected_levels.items():
+        template = updater.template_for(model_id)
+        row = rows[model_id]
+        expected_modalities = {"text", "image", "audio", "video", "file"}
+        assert set(template["input_modalities"]) == expected_modalities
+        assert template["thinking_level_values"] == thinking_levels
+        assert set(row["input_modalities"]) == {
+            "text",
+            "image",
+            "audio",
+            "video",
+            "file",
+        }
+        assert row["supports_vision"] is True
+        assert row["supports_audio_input"] is True
+        assert row["audio"]["accepts_audio_input"] is True
+        assert row["video"]["accepts_video_input"] is True
+        assert row["thinking_level_values"] == thinking_levels
+
+
+def test_google_audio_models_use_documented_modalities_and_token_limits():
+    updater = _load("update_google")
+    path = ROOT / "src" / "llmcapa" / "data" / "google.json"
+    rows = {
+        row["model_id"]: row
+        for row in json.loads(path.read_text(encoding="utf-8"))["models"]
+    }
+
+    for model_id in (
+        "gemini-3.5-transcribe",
+        "gemini-3.5-transcribe-live",
+        "gemini-3.5-live-translate-preview",
+    ):
+        row = json.loads(json.dumps(rows[model_id]))
+        updater.apply_google_gemini_audio_metadata(row)
+        expected = updater.GOOGLE_GEMINI_AUDIO_MODEL_SPECS[model_id]
+        assert row["input_modalities"] == expected["input_modalities"]
+        assert row["output_modalities"] == expected["output_modalities"]
+        assert row["context_window"] == expected["context_window"]
+        assert row["max_output_tokens"] == expected["max_output_tokens"]
+        assert row["supports_audio_input"] is True
+        assert row["supports_audio_output"] == (
+            "audio" in expected["output_modalities"]
+        )
+        assert row["audio"]["source_url"] == expected["source"]
+
+    transcribe = rows["gemini-3.5-transcribe"]
+    assert transcribe["input_modalities"] == ["audio"]
+    assert transcribe["context_window"] == 0
+    assert transcribe["max_output_tokens"] == 0
+    live_translate = rows["gemini-3.5-live-translate-preview"]
+    assert live_translate["input_modalities"] == ["audio"]
+    assert live_translate["output_modalities"] == ["audio", "text"]
+    assert live_translate["context_window"] == 131_072
+    assert live_translate["max_output_tokens"] == 65_536
+
+
+def test_google_gemini38_live_documents_video_frame_input_only():
+    updater = _load("update_google")
+    model_id = "gemini-3.8-live"
+    catalog_path = ROOT / "src" / "llmcapa" / "data" / "google.json"
+    catalog = {
+        model["model_id"]: model
+        for model in json.loads(catalog_path.read_text(encoding="utf-8"))["models"]
+    }
+    row = json.loads(json.dumps(catalog[model_id]))
+    updater.apply_google_gemini_live_video_metadata(row)
+
+    assert "video" in row["input_modalities"]
+    assert "video" not in row["output_modalities"]
+    assert row["supports_audio_input"] is True
+    assert row["supports_audio_output"] is True
+    assert row["video"]["accepts_video_input"] is True
+    assert row["video"]["generation"] is False
+    assert row["video"]["max_input_fps"] == 1
+    assert row["video"]["input_mime_types"] == ["image/jpeg", "image/png"]
+    assert row["video"]["source_url"] == (
+        "https://ai.google.dev/gemini-api/docs/live-api/capabilities"
+    )
+    saved = catalog[model_id]
+    assert "video" in saved["input_modalities"]
+    assert "video" not in saved["output_modalities"]
+    assert saved["video"]["accepts_video_input"] is True
+    assert saved["video"]["generation"] is False
 
 
 def test_typesafe_parser_tracks_current_version_aliases_and_limits():

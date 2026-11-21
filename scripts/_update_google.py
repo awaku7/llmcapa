@@ -31,6 +31,79 @@ INSTALLED = (
 SOURCE = "https://ai.google.dev/gemini-api/docs/pricing"
 MODEL_INDEX_SOURCE = "https://aistudio.google.com/docs/models"
 PRICING_SOURCE = "https://aistudio.google.com/docs/pricing"
+GOOGLE_GEMINI_4_MODEL_SPECS = {
+    "gemini-4-argon": {
+        "source": "https://ai.google.dev/gemini-api/docs/models/gemini-4-argon",
+        "thinking_level_values": ["low", "medium", "high"],
+    },
+    "gemini-4-carbon": {
+        "source": "https://ai.google.dev/gemini-api/docs/models/gemini-4-carbon",
+        "thinking_level_values": ["low", "medium", "high"],
+    },
+    "gemini-4-hydrogen": {
+        "source": "https://ai.google.dev/gemini-api/docs/models/gemini-4-hydrogen",
+        "thinking_level_values": ["low", "medium", "high", "xhigh"],
+    },
+    "gemini-4-neon": {
+        "source": "https://ai.google.dev/gemini-api/docs/models/gemini-4-neon",
+        "thinking_level_values": ["low", "medium", "high", "xhigh"],
+    },
+}
+
+GOOGLE_GEMINI_LIVE_VIDEO_SPECS = {
+    "gemini-3.8-live": {
+        "source": "https://ai.google.dev/gemini-api/docs/live-api/capabilities",
+        "input_formats": ["individual JPEG or PNG video frames"],
+        "input_mime_types": ["image/jpeg", "image/png"],
+        "max_input_fps": 1,
+    },
+}
+GOOGLE_GEMINI_4_INPUT_MODALITIES = ["text", "image", "video", "audio", "file"]
+_GOOGLE_GEMINI_4_VIDEO_MIME_TYPES = [
+    "video/x-flv",
+    "video/quicktime",
+    "video/mpeg",
+    "video/mpegs",
+    "video/mpg",
+    "video/mp4",
+    "video/webm",
+    "video/wmv",
+    "video/3gpp",
+]
+
+GOOGLE_GEMINI_AUDIO_MODEL_SPECS = {
+    "gemini-3.5-transcribe": {
+        "source": "https://ai.google.dev/gemini-api/docs/models/gemini-3.5-transcribe",
+        "input_modalities": ["audio"],
+        "output_modalities": ["text"],
+        # The official page describes a one-hour audio duration limit, not a
+        # token context/output limit. Keep those token values unknown.
+        "context_window": 0,
+        "max_output_tokens": 0,
+        "supports_streaming": False,
+        "supports_realtime": False,
+    },
+    "gemini-3.5-transcribe-live": {
+        "source": "https://ai.google.dev/gemini-api/docs/models/gemini-3.5-transcribe",
+        "input_modalities": ["audio"],
+        "output_modalities": ["text"],
+        # The live model documents duration/session limits rather than token
+        # limits; do not inherit the generic pricing-page defaults.
+        "context_window": 0,
+        "max_output_tokens": 0,
+        "supports_streaming": True,
+        "supports_realtime": True,
+    },
+    "gemini-3.5-live-translate-preview": {
+        "source": "https://ai.google.dev/gemini-api/docs/models/gemini-3.5-live-translate-preview",
+        "input_modalities": ["audio"],
+        "output_modalities": ["audio", "text"],
+        "context_window": 131_072,
+        "max_output_tokens": 65_536,
+        "supports_streaming": True,
+        "supports_realtime": True,
+    },
+}
 
 
 def normalize_native_endpoint(model: dict) -> None:
@@ -544,6 +617,7 @@ def discover_decision_model(pricing_html: str) -> dict:
 def template_for(model_id: str) -> dict:
     """Build conservative metadata for a newly documented Gemini model."""
     display = model_id.replace("-", " ").title()
+    gemini_4_spec = GOOGLE_GEMINI_4_MODEL_SPECS.get(model_id)
     # Gemini's native API exposes thinking_budget for Gemini 2.5 and
     # thinking_level for Gemini 3+. reasoning_effort is an OpenAI parameter,
     # not a native Google API parameter, so it must not be advertised here.
@@ -552,15 +626,13 @@ def template_for(model_id: str) -> dict:
         re.match(r"^gemini-2\.5(?:-|$)", model_id) is not None and not is_specialized
     )
     # The official thinking-level matrix differs by Gemini generation.
-    # The 3.8 live model does not expose thinking levels; its extended-
-    # thinking counterpart and Gemini 4 Argon accept low/medium/high only.
+    # The 3.8 live model does not expose thinking levels; the Gemini 4 model
+    # pages document the per-model level values in GOOGLE_GEMINI_4_MODEL_SPECS.
     modern_level_models = {
         "gemini-3.8-flash",
         "gemini-3.8-live-extended-thinking",
-        "gemini-4-argon",
     }
-    is_hydrogen = model_id == "gemini-4-hydrogen"
-    is_modern_level = model_id in modern_level_models or is_hydrogen
+    is_modern_level = model_id in modern_level_models
     is_gemini_3_thinking = (
         re.match(r"^gemini-3(?:\.|-|$)", model_id) is not None
         and not is_specialized
@@ -572,8 +644,8 @@ def template_for(model_id: str) -> dict:
         else None
     )
     level_values = (
-        ["low", "medium", "high", "xhigh"]
-        if is_hydrogen
+        list(gemini_4_spec["thinking_level_values"])
+        if gemini_4_spec
         else (
             ["low", "medium", "high"]
             if is_modern_level
@@ -600,10 +672,10 @@ def template_for(model_id: str) -> dict:
         )
     )
     extra = {"source": SOURCE, "discovered_from": SOURCE}
-    if is_hydrogen:
+    if gemini_4_spec:
         extra.update(
             {
-                "source": "https://ai.google.dev/gemini-api/docs/models/gemini-4-hydrogen",
+                "source": gemini_4_spec["source"],
                 "long_decode_max_output_tokens": 1_048_576,
                 "long_decode_requires_opt_in": True,
             }
@@ -611,14 +683,14 @@ def template_for(model_id: str) -> dict:
     return {
         "display_name": display,
         "input_modalities": (
-            ["text", "image", "video", "audio", "file"] if is_hydrogen else ["text"]
+            list(GOOGLE_GEMINI_4_INPUT_MODALITIES) if gemini_4_spec else ["text"]
         ),
         "output_modalities": ["text"],
         "supports_function_calling": True,
         "supports_json_mode": True,
-        "supports_vision": is_hydrogen
+        "supports_vision": bool(gemini_4_spec)
         or any(x in model_id for x in ("image", "vision")),
-        "supports_reasoning": is_hydrogen
+        "supports_reasoning": bool(gemini_4_spec)
         or any(x in model_id for x in ("pro", "flash")),
         "supports_chat_completion": True,
         "supports_reasoning_effort": False,
@@ -631,6 +703,143 @@ def template_for(model_id: str) -> dict:
         "max_output_tokens": 65_536,
         "extra": extra,
     }
+
+
+def apply_gemini4_metadata(model: dict) -> None:
+    """Apply the modality matrix from Google's current Gemini 4 model pages."""
+    model_id = model.get("model_id", "")
+    spec = GOOGLE_GEMINI_4_MODEL_SPECS.get(model_id)
+    if not spec:
+        return
+
+    template = template_for(model_id)
+    for field in (
+        "input_modalities",
+        "output_modalities",
+        "supports_function_calling",
+        "supports_json_mode",
+        "supports_vision",
+        "supports_reasoning",
+        "supports_chat_completion",
+        "supports_reasoning_effort",
+        "supports_thinking_budget",
+        "thinking_budget_values",
+        "supports_thinking_level",
+        "thinking_level_values",
+        "thinking_control",
+        "max_output_tokens",
+    ):
+        model[field] = deepcopy(template[field])
+    model["context_window"] = 1_048_576
+    model["supports_audio_input"] = True
+    model["supports_audio_output"] = False
+    model["audio"] = {
+        "accepts_audio_input": True,
+        "speech_generation": False,
+        "speech_understanding": True,
+        "supports_streaming": None,
+        "supports_realtime": False,
+        "source_url": spec["source"],
+        "status": "documented",
+        "endpoints": {"speech_understanding": True},
+        "extra": {},
+    }
+    model["video"] = {
+        "accepts_video_input": True,
+        "generation": False,
+        "understanding": True,
+        "text_to_video": False,
+        "image_to_video": False,
+        "video_to_video": False,
+        "supports_streaming": None,
+        "supports_realtime": False,
+        "source_url": spec["source"],
+        "status": "documented",
+        "endpoints": {"understanding": True},
+        "input_mime_types": list(_GOOGLE_GEMINI_4_VIDEO_MIME_TYPES),
+        "extra": {},
+    }
+    extra = model.get("extra") or {}
+    extra.update(template["extra"])
+    extra["checked_at"] = datetime.now(timezone.utc).date().isoformat()
+    model["extra"] = extra
+
+
+def apply_google_gemini_live_video_metadata(model: dict) -> None:
+    """Record video frames accepted by Google's Gemini Live API."""
+    spec = GOOGLE_GEMINI_LIVE_VIDEO_SPECS.get(model.get("model_id", ""))
+    if not spec:
+        return
+
+    model["input_modalities"] = list(
+        dict.fromkeys([*(model.get("input_modalities") or ["text"]), "video"])
+    )
+    model["supports_audio_input"] = True
+    model["supports_audio_output"] = True
+    model["video"] = {
+        "accepts_video_input": True,
+        "generation": False,
+        "understanding": True,
+        "text_to_video": False,
+        "image_to_video": False,
+        "video_to_video": False,
+        "supports_streaming": True,
+        "supports_realtime": True,
+        "source_url": spec["source"],
+        "status": "documented",
+        "endpoints": {
+            "understanding": True,
+            "streaming": True,
+            "realtime": True,
+        },
+        "input_formats": list(spec["input_formats"]),
+        "input_mime_types": list(spec["input_mime_types"]),
+        "max_input_fps": spec["max_input_fps"],
+        "extra": {"video_transport": "individual image frames"},
+    }
+    extra = model.get("extra") or {}
+    extra["live_video_source"] = spec["source"]
+    model["extra"] = extra
+
+
+def apply_google_gemini_audio_metadata(model: dict) -> None:
+    """Apply exact audio-model limits and data types from Google model cards."""
+    spec = GOOGLE_GEMINI_AUDIO_MODEL_SPECS.get(model.get("model_id", ""))
+    if not spec:
+        return
+
+    has_audio_output = "audio" in spec["output_modalities"]
+    model["input_modalities"] = list(spec["input_modalities"])
+    model["output_modalities"] = list(spec["output_modalities"])
+    model["context_window"] = spec["context_window"]
+    model["max_output_tokens"] = spec["max_output_tokens"]
+    model["supports_vision"] = False
+    model["supports_reasoning"] = False
+    model["supports_function_calling"] = False
+    model["supports_json_mode"] = False
+    model["supports_chat_completion"] = False
+    model["supports_streaming"] = spec["supports_streaming"]
+    model["supports_audio_input"] = True
+    model["supports_audio_output"] = has_audio_output
+    model["audio"] = {
+        "accepts_audio_input": True,
+        "speech_generation": has_audio_output,
+        "speech_understanding": True,
+        "supports_streaming": spec["supports_streaming"],
+        "supports_realtime": spec["supports_realtime"],
+        "source_url": spec["source"],
+        "status": "documented",
+        "endpoints": {
+            "speech_understanding": True,
+            **({"speech_generation": True} if has_audio_output else {}),
+            **({"streaming": True} if spec["supports_streaming"] else {}),
+        },
+        "extra": {},
+    }
+    extra = model.get("extra") or {}
+    extra["source"] = spec["source"]
+    extra["checked_at"] = datetime.now(timezone.utc).date().isoformat()
+    model["extra"] = extra
 
 
 def base_model(
@@ -804,6 +1013,11 @@ def main() -> None:
         m["supports_google_api"] = True
         m.setdefault("supports_responses_api", False)
         m.setdefault("supports_fim", False)
+
+    for model in models:
+        apply_gemini4_metadata(model)
+        apply_google_gemini_audio_metadata(model)
+        apply_google_gemini_live_video_metadata(model)
 
     reconcile_computer_use(models)
 

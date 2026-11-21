@@ -204,10 +204,11 @@ def test_bundled_regional_availability_snapshot_is_queryable():
     assert flash37.regions is not None
     assert flash37.regions.global_endpoint is True
 
-    # Azure Foundry coverage from the official region availability page:
-    # most models sold directly by Azure now carry regions.
+    # Azure's official region table covers 104 catalog rows in total. Ten
+    # Microsoft-published entries are registered under ``microsoft`` rather
+    # than ``azure-foundry``, leaving 94 host-catalog rows with regions.
     azure_caps = registry.list_models(provider="azure-foundry")
-    assert sum(1 for cap in azure_caps if cap.regions is not None) >= 100
+    assert sum(1 for cap in azure_caps if cap.regions is not None) >= 90
     gpt4o = registry.get("gpt-4o", provider="azure-foundry")
     assert "japaneast" in gpt4o.regions.locations
     assert "eastus" in gpt4o.regions.locations

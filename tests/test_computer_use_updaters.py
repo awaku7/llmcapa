@@ -400,15 +400,6 @@ def test_vertex_updater_refuses_to_overwrite_with_empty_sdk_result(monkeypatch):
 def test_reconciled_catalog_reports_provider_specific_computer_use(monkeypatch):
     import llmcapa
 
-    # User-owned GitHub cache snapshots override bundled data; isolate this
-    # test from cache state on the developer's machine.
-    monkeypatch.setattr(llmcapa.Registry, "_load_github_catalog_caches", lambda _: None)
-    monkeypatch.setattr(
-        llmcapa.Registry, "_load_persistent_github_catalogs", lambda _: None
-    )
-    # The generated SQLite user-cache snapshot can also carry those local
-    # overrides, so bypass it to make this assertion use the bundled catalog.
-    monkeypatch.setattr(llmcapa.Registry, "_load_user_cache_snapshot", lambda _: False)
     registry = llmcapa.Registry()
     for model_id, provider in (
         ("gpt-5.4", "openai"),

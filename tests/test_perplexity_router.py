@@ -9,7 +9,7 @@ EXPECTED_MODELS = {
     "perplexity/nemotron-3-ultra-550b-a55b",
     "perplexity/deepseek-v4-pro-0813",
 }
-ROUTER_CHAT_BASE = "https://api.perplexity.ai/router/v1"
+ORCHESTRATOR_CHAT_BASE = "https://api.perplexity.ai/orchestrator/v1"
 
 
 def test_perplexity_router_models_are_registered():
@@ -23,19 +23,24 @@ def test_perplexity_router_endpoints_and_api_surfaces_are_explicit():
     for model_id in EXPECTED_MODELS:
         cap = llmcapa.get(model_id, provider="perplexity-router")
 
-        assert cap.extra["router_api_base_url"] == ROUTER_CHAT_BASE
+        assert cap.extra["orchestrator_api_base_url"] == ORCHESTRATOR_CHAT_BASE
         assert cap.extra["chat_completions_endpoint"] == (
-            f"{ROUTER_CHAT_BASE}/chat/completions"
+            f"{ORCHESTRATOR_CHAT_BASE}/chat/completions"
         )
-        assert cap.extra["responses_endpoint"] == f"{ROUTER_CHAT_BASE}/responses"
+        assert cap.extra["responses_endpoint"] == f"{ORCHESTRATOR_CHAT_BASE}/responses"
         assert cap.extra["messages_endpoint"] == (
-            "https://api.perplexity.ai/router/v1/messages"
+            "https://api.perplexity.ai/orchestrator/v1/messages"
         )
-        assert cap.extra["model_catalog_endpoint"] == f"{ROUTER_CHAT_BASE}/models"
-        assert cap.extra["router_preview"] is True
+        assert cap.extra["model_catalog_endpoint"] == f"{ORCHESTRATOR_CHAT_BASE}/models"
+        assert cap.extra["orchestrator_api"] is True
         assert cap.supports_chat_completion is True
         assert cap.supports_responses_api is True
         assert cap.supports_anthropic_api is True
+        if model_id != "perplexity/nemotron-3-ultra-550b-a55b":
+            assert "cache_write_per_1m" not in cap.extra
+            assert cap.extra["officially_enumerated_billing_fields"] == [
+                "cache_write_per_1m"
+            ]
 
 
 def test_perplexity_router_specs_and_rates_match_published_catalog():
@@ -44,7 +49,7 @@ def test_perplexity_router_specs_and_rates_match_published_catalog():
         "perplexity/glm-5.3": (1000000, 1.4, 4.4, ["text"]),
         "perplexity/glm-5.3-flash": (1000000, 0.15, 0.5, ["text", "image"]),
         "perplexity/nemotron-3-ultra-550b-a55b": (1000000, 0.25, 2.5, ["text"]),
-        "perplexity/deepseek-v4-pro-0813": (0, 1.32, 3.96, ["text"]),
+        "perplexity/deepseek-v4-pro-0813": (1048576, 1.32, 3.96, ["text"]),
     }
 
     for model_id, (context, input_rate, output_rate, modalities) in expected.items():

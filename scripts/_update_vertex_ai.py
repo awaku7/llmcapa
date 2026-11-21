@@ -49,15 +49,211 @@ VERTEX_GEMINI_SPECS = {
         "parameter": "thinking_level",
         "thinking_level_values": ["low", "high"],
     },
+    "gemini-3.8-flash": {
+        "parameter": "thinking_level",
+        "thinking_level_values": ["low", "medium", "high"],
+    },
     "gemini-3-flash-preview": {
         "parameter": "thinking_level",
         "thinking_level_values": ["minimal", "low", "medium", "high"],
+    },
+    "gemini-4-argon": {
+        "parameter": "thinking_level",
+        "thinking_level_values": ["low", "medium", "high"],
+    },
+    "gemini-4-carbon": {
+        "parameter": "thinking_level",
+        "thinking_level_values": ["low", "medium", "high"],
     },
     "gemini-4-hydrogen": {
         "parameter": "thinking_level",
         "thinking_level_values": ["low", "medium", "high", "xhigh"],
     },
+    "gemini-4-neon": {
+        "parameter": "thinking_level",
+        "thinking_level_values": ["low", "medium", "high", "xhigh"],
+    },
 }
+
+
+def _vertex_model_page_spec(
+    display_name: str,
+    page: str,
+    context_window: int,
+    max_output_tokens: int,
+    input_modalities: list[str],
+    output_modalities: list[str],
+    **flags,
+) -> dict:
+    return {
+        "display_name": display_name,
+        "source": f"https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/{page}",
+        "context_window": context_window,
+        "max_output_tokens": max_output_tokens,
+        "input_modalities": input_modalities,
+        "output_modalities": output_modalities,
+        **flags,
+    }
+
+
+# Model Garden SDK discovery can lag the official first-party model index.
+# Keep the linked model-page IDs explicit and use their pages as the source of
+# truth for token limits and modalities.
+VERTEX_GEMINI_MODEL_PAGE_SPECS = {
+    "gemini-3.1-pro-preview": _vertex_model_page_spec(
+        "Gemini 3.1 Pro", "3-1-pro", 1_048_576, 65_536,
+        ["text", "image", "audio", "video", "file"], ["text"],
+    ),
+    "gemini-3.6-flash": _vertex_model_page_spec(
+        "Gemini 3.6 Flash", "3-6-flash", 1_048_576, 65_536,
+        ["text", "image", "audio", "video", "file"], ["text"],
+    ),
+    "gemini-live-2.5-flash-native-audio": _vertex_model_page_spec(
+        "Gemini 2.5 Flash with Gemini Live API", "2-5-flash-live-api",
+        131_072, 65_536, ["text", "image", "audio", "video"],
+        ["text", "audio"], supports_chat_completion=False,
+        supports_function_calling=True, supports_json_mode=False,
+        supports_reasoning=False, supports_realtime=True,
+        supports_streaming=True,
+    ),
+    "gemini-3.5-flash-lite": _vertex_model_page_spec(
+        "Gemini 3.5 Flash-Lite", "3-5-flash-lite", 1_048_576, 65_536,
+        ["text", "image", "audio", "video", "file"], ["text"],
+    ),
+    "gemini-3.1-flash-lite": _vertex_model_page_spec(
+        "Gemini 3.1 Flash-Lite", "3-1-flash-lite", 1_048_576, 65_536,
+        ["text", "image", "audio", "video", "file"], ["text"],
+    ),
+    "gemini-nano-banana-2.1": _vertex_model_page_spec(
+        "Gemini Nano Banana 2.1", "nano-banana-2-1", 131_072, 32_768,
+        ["text", "image", "video", "file"], ["text", "image"],
+    ),
+    "gemini-3.1-flash-image": _vertex_model_page_spec(
+        "Gemini 3.1 Flash Image (Nano Banana 2)", "3-1-flash-image",
+        131_072, 32_768, ["text", "image", "video", "file"], ["text", "image"],
+    ),
+    "gemini-3.1-flash-lite-image": _vertex_model_page_spec(
+        "Gemini 3.1 Flash-Lite Image (Nano Banana 2 Lite)",
+        "3-1-flash-lite-image", 65_536, 4_096,
+        ["text", "image", "video", "file"], ["text", "image"],
+    ),
+    "gemini-3-pro-image": _vertex_model_page_spec(
+        "Gemini 3 Pro Image (Nano Banana Pro)", "3-pro-image", 65_536,
+        32_768, ["text", "image", "file"], ["text", "image"],
+    ),
+    "gemini-2.5-flash-image": _vertex_model_page_spec(
+        "Gemini 2.5 Flash Image", "2-5-flash-image", 32_768, 32_768,
+        ["text", "image", "file"], ["text", "image"],
+    ),
+    "gemini-omni-1.2-flash": _vertex_model_page_spec(
+        "Gemini Omni 1.2 Flash", "omni-1-2-flash", 131_072, 260_640,
+        ["text", "image", "video"], ["text", "video"],
+    ),
+    "gemini-omni-1.1-flash-preview": _vertex_model_page_spec(
+        "Gemini Omni 1.1 Flash Preview", "omni-1-1-flash", 131_072,
+        57_920, ["text", "image", "video"], ["text", "video"],
+    ),
+    "gemini-omni-flash-preview": _vertex_model_page_spec(
+        "Gemini Omni Flash Preview", "omni-flash-preview", 131_072,
+        57_920, ["text", "image", "video"], ["text", "video"],
+    ),
+    "gemini-3.8-flash": _vertex_model_page_spec(
+        "Gemini 3.8 Flash", "3-8-flash", 1_048_576, 65_536,
+        ["text", "image", "audio", "video", "file"], ["text"],
+        supports_reasoning=True,
+    ),
+    "gemini-3.8-flash-cyber": _vertex_model_page_spec(
+        "Gemini 3.8 Flash Cyber", "3-8-flash-cyber", 1_048_576,
+        65_536, ["text", "image", "audio", "video", "file"], ["text"],
+        supports_chat_completion=True, supports_function_calling=True,
+        supports_json_mode=True, supports_reasoning=True,
+    ),
+    "gemini-3.8-live": _vertex_model_page_spec(
+        "Gemini 3.8 Live", "3-8-live", 131_072, 65_536,
+        ["text", "image", "audio", "video"], ["text", "audio", "video"],
+        supports_chat_completion=False, supports_function_calling=True,
+        supports_json_mode=False, supports_reasoning=False,
+        supports_realtime=True, supports_streaming=True,
+    ),
+    "gemini-3.8-flash-tts": _vertex_model_page_spec(
+        "Gemini 3.8 Flash TTS", "3-8-flash-tts", 8_192, 16_384,
+        ["text"], ["audio"], supports_chat_completion=False,
+        supports_function_calling=False, supports_json_mode=False,
+        supports_reasoning=False, supports_streaming=True,
+    ),
+    "gemini-3.8-flash-lite-tts": _vertex_model_page_spec(
+        "Gemini 3.8 Flash-Lite TTS", "3-8-flash-lite-tts", 8_192,
+        16_384, ["text"], ["audio"], supports_chat_completion=False,
+        supports_function_calling=False, supports_json_mode=False,
+        supports_reasoning=False, supports_streaming=True,
+    ),
+    "gemini-3.5-transcribe": _vertex_model_page_spec(
+        "Gemini 3.5 Transcribe", "3-5-transcribe", 0, 0,
+        ["audio"], ["text"], supports_chat_completion=False,
+        supports_function_calling=False, supports_json_mode=False,
+        supports_reasoning=False, supports_streaming=False,
+    ),
+    "gemini-3.5-transcribe-live": _vertex_model_page_spec(
+        "Gemini 3.5 Transcribe Live", "3-5-transcribe", 0, 0,
+        ["audio"], ["text"], supports_chat_completion=False,
+        supports_function_calling=False, supports_json_mode=False,
+        supports_reasoning=False, supports_realtime=True,
+        supports_streaming=True,
+    ),
+    "gemini-3.5-live-translate-preview": _vertex_model_page_spec(
+        "Gemini 3.5 Live Translate", "3-5-live-translate", 131_072,
+        65_536, ["audio"], ["text", "audio"],
+        supports_chat_completion=False, supports_function_calling=False,
+        supports_json_mode=False, supports_reasoning=False,
+        supports_realtime=True, supports_streaming=True,
+    ),
+    "gemini-embedding-2": _vertex_model_page_spec(
+        "Gemini Embedding 2", "embedding-2", 8_192, 0,
+        ["text", "image", "audio", "video", "file"], ["embedding"],
+        supports_chat_completion=False, supports_function_calling=False,
+        supports_json_mode=False, supports_reasoning=False,
+    ),
+    "gemini-robotics-er-2-preview": _vertex_model_page_spec(
+        "Gemini Robotics ER 2", "robotics-er-2", 131_072, 65_536,
+        ["text", "image", "audio", "video"], ["text"],
+        supports_reasoning=True,
+    ),
+}
+
+VERTEX_GEMINI_MODALITY_OVERRIDES = {
+    "gemini-3.8-flash": {
+        "input_modalities": ["image", "audio", "video", "file"],
+        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-8-flash",
+    },
+    "gemini-4-argon": {
+        "input_modalities": ["image", "audio", "video", "file"],
+        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/4-argon",
+    },
+    "gemini-4-carbon": {
+        "input_modalities": ["image", "audio", "video", "file"],
+        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/4-carbon",
+    },
+    "gemini-4-hydrogen": {
+        "input_modalities": ["image", "audio", "video", "file"],
+        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/4-hydrogen",
+    },
+    "gemini-4-neon": {
+        "input_modalities": ["image", "audio", "video", "file"],
+        "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/4-neon",
+    },
+}
+
+_VERTEX_GEMINI_4_VIDEO_MIME_TYPES = [
+    "video/x-flv",
+    "video/quicktime",
+    "video/mpeg",
+    "video/mpegs",
+    "video/mpg",
+    "video/mp4",
+    "video/webm",
+    "video/wmv",
+    "video/3gpp",
+]
 
 
 def discover_models() -> list[tuple[str, str]]:
@@ -116,6 +312,10 @@ def discover_models() -> list[tuple[str, str]]:
     # so their model-specific thinking controls are not lost.
     for model_id in VERTEX_GEMINI_SPECS:
         result.setdefault(model_id, model_id.replace("-", " ").title())
+    # The official model index also documents first-party models that can lag
+    # the SDK listing. Add those exact page IDs to keep the catalog complete.
+    for model_id, spec in VERTEX_GEMINI_MODEL_PAGE_SPECS.items():
+        result.setdefault(model_id, spec["display_name"])
     return sorted(result.items())
 
 
@@ -161,6 +361,7 @@ def enrich_thinking(row: dict) -> None:
     )
     if not spec:
         return
+    row["supports_reasoning"] = True
     row["supports_reasoning_effort"] = False
     row["reasoning_effort_values"] = None
     row["supports_thinking_level"] = bool(spec.get("thinking_level_values"))
@@ -185,6 +386,152 @@ def enrich_thinking(row: dict) -> None:
     if "thinking_level_values" in spec:
         extra["thinking_level_values"] = list(spec["thinking_level_values"])
     extra["thinking_source"] = THINKING_SOURCE
+
+
+def enrich_vertex_gemini_modalities(row: dict) -> None:
+    """Add modality support explicitly documented by Vertex Gemini 4 guides."""
+    override = VERTEX_GEMINI_MODALITY_OVERRIDES.get(row.get("model_id", "").lower())
+    if not override:
+        return
+    current = row.get("input_modalities")
+    current = current if isinstance(current, list) else []
+    row["input_modalities"] = list(
+        dict.fromkeys([*current, *override["input_modalities"]])
+    )
+    if "image" in row["input_modalities"]:
+        row["supports_vision"] = True
+    if "audio" in override["input_modalities"]:
+        row["supports_audio_input"] = True
+        row["supports_audio_output"] = bool(override.get("supports_audio_output", False))
+        row["audio"] = {
+            "accepts_audio_input": True,
+            "speech_generation": False,
+            "speech_understanding": True,
+            "supports_streaming": None,
+            "supports_realtime": None,
+            "source_url": override["source"],
+            "status": "documented",
+            "endpoints": {"speech_understanding": True},
+            "extra": {},
+        }
+    if "video" in override["input_modalities"]:
+        row["video"] = {
+            "accepts_video_input": True,
+            "generation": False,
+            "understanding": True,
+            "text_to_video": False,
+            "image_to_video": False,
+            "video_to_video": False,
+            "supports_streaming": None,
+            "supports_realtime": None,
+            "source_url": override["source"],
+            "status": "documented",
+            "endpoints": {"understanding": True},
+            "input_mime_types": list(_VERTEX_GEMINI_4_VIDEO_MIME_TYPES),
+            "extra": {},
+        }
+    extra = row.setdefault("extra", {})
+    extra["vertex_modality_source"] = override["source"]
+    if row.get("model_id", "").startswith("gemini-4-"):
+        # Vertex model cards document a 65,536-token foreground segment and
+        # long decodes up to the unified 1,048,576-token limit.
+        extra["long_decode_max_output_tokens"] = 1_048_576
+        extra["long_decode_requires_opt_in"] = True
+
+
+def apply_vertex_gemini_model_page_spec(row: dict) -> None:
+    """Apply token and modality facts from a model's official Vertex page."""
+    spec = VERTEX_GEMINI_MODEL_PAGE_SPECS.get(row.get("model_id", "").lower())
+    if not spec:
+        return
+
+    inputs = list(spec["input_modalities"])
+    outputs = list(spec["output_modalities"])
+    audio_input = "audio" in inputs
+    audio_output = "audio" in outputs
+    video_input = "video" in inputs
+    video_output = "video" in outputs
+    row["display_name"] = spec["display_name"]
+    row["context_window"] = spec["context_window"]
+    row["max_output_tokens"] = spec["max_output_tokens"]
+    row["input_modalities"] = inputs
+    row["output_modalities"] = outputs
+    row["supports_vision"] = "image" in inputs
+    row["supports_audio_input"] = audio_input
+    row["supports_audio_output"] = audio_output
+    row.pop("supports_realtime", None)
+    row["supports_google_api"] = True
+    row["supports_fim"] = False
+    for field in (
+        "supports_chat_completion",
+        "supports_function_calling",
+        "supports_json_mode",
+        "supports_reasoning",
+        "supports_streaming",
+    ):
+        if field in spec:
+            row[field] = spec[field]
+
+    if audio_input or audio_output:
+        endpoints = {}
+        if audio_input:
+            endpoints["speech_understanding"] = True
+        if audio_output:
+            endpoints["speech_generation"] = True
+        if spec.get("supports_streaming"):
+            endpoints["streaming"] = True
+        row["audio"] = {
+            "accepts_audio_input": audio_input,
+            "speech_generation": audio_output,
+            "speech_understanding": audio_input,
+            "supports_streaming": spec.get("supports_streaming"),
+            "supports_realtime": bool(spec.get("supports_realtime", False)),
+            "source_url": spec["source"],
+            "status": "documented",
+            "endpoints": endpoints,
+            "extra": {},
+        }
+    else:
+        row.pop("audio", None)
+
+    if video_input or video_output:
+        endpoints = {}
+        if video_input:
+            endpoints["understanding"] = True
+        if video_output:
+            endpoints["generation"] = True
+        if spec.get("supports_streaming"):
+            endpoints["streaming"] = True
+        row["video"] = {
+            "accepts_video_input": video_input,
+            "generation": video_output,
+            "understanding": video_input,
+            "text_to_video": False,
+            "image_to_video": False,
+            "video_to_video": False,
+            "supports_streaming": spec.get("supports_streaming"),
+            "supports_realtime": bool(spec.get("supports_realtime", False)),
+            "source_url": spec["source"],
+            "status": "documented",
+            "endpoints": endpoints,
+            "input_mime_types": (
+                list(_VERTEX_GEMINI_4_VIDEO_MIME_TYPES) if video_input else []
+            ),
+            "extra": {},
+        }
+    else:
+        row.pop("video", None)
+
+    if spec.get("supports_reasoning") is False:
+        row["supports_thinking_level"] = False
+        row["thinking_level_values"] = None
+        row["supports_thinking_budget"] = False
+        row["thinking_budget_values"] = None
+        row["thinking_control"] = None
+
+    extra = row.setdefault("extra", {})
+    extra["source"] = spec["source"]
+    extra["vertex_model_page_source"] = spec["source"]
 
 
 def enrich_modalities(row: dict) -> None:
@@ -251,6 +598,8 @@ def main() -> None:
         row["extra"]["platform"] = "Google Cloud Vertex AI / Model Garden"
         enrich_modalities(row)
         enrich_thinking(row)
+        enrich_vertex_gemini_modalities(row)
+        apply_vertex_gemini_model_page_spec(row)
         computer_use = google_computer_use_capability(model_id, "vertex-ai")
         if computer_use is not None and model_id in VERTEX_COMPUTER_USE_MODELS:
             computer_use["source_url"] = COMPUTER_USE_SOURCE

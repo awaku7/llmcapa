@@ -12,7 +12,6 @@ import tempfile
 import time
 import urllib.request
 import warnings
-from contextlib import nullcontext
 from dataclasses import replace
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
@@ -215,83 +214,15 @@ class Registry:
         cleanup_temporary_caches(Path.home() / ".llmcapa")
         if not self._try_load_sqlite():
             self._load_bundled_files()
-
-        if self._catalog_index is not None and self._load_user_cache_snapshot():
-            return
-        self._load_startup_caches()
-
-    def _load_startup_caches(self) -> None:
-        # Apply cache records as sparse overrides without expanding the bundle.
+        # Only load the additive OpenRouter response cache at startup. GitHub
+        # snapshots and durable user catalogs are deliberately never applied
+        # over the authoritative bundled catalogs.
         index = self._catalog_index
-        with index.batch() if index is not None else nullcontext():
-            # Reuse explicitly fetched GitHub snapshots without networking.
-            self._load_github_catalog_caches()
-            # Persistent user catalogs take precedence over bundled snapshots.
-            self._load_persistent_github_catalogs()
-            # Load fresh OpenRouter cache using the existing precedence rules.
+        if index is not None:
+            with index.batch():
+                self._load_openrouter_cache()
+        else:
             self._load_openrouter_cache()
-
-    def _load_user_cache_snapshot(self) -> bool:
-        """Reuse or build a local SQLite generation without changing JSON sources."""
-        from ._user_catalog_cache import (
-            ERRORS,
-            UserCatalogCache,
-            remove_old_generations,
-            startup_signature,
-            write_snapshot,
-        )
-
-        home = Path.home() / ".llmcapa"
-        directory = home / "sqlite_cache"
-        started = time.time_ns()
-        try:
-            signature = startup_signature(self, home, time.time())
-        except ERRORS:
-            return False
-        if signature is None:
-            remove_old_generations(directory, None, started)
-            return False
-        path = directory / f"cache-{signature}.sqlite3"
-
-        def fallback():
-            registry = Registry()
-            if not registry._try_load_sqlite():
-                registry._load_bundled_files()
-            registry._load_startup_caches()
-            return registry
-
-        try:
-            snapshot = UserCatalogCache(path, signature, fallback)
-        except ERRORS:
-            # First use or stale inputs: run the original registration path.
-            self._load_startup_caches()
-            try:
-                current = startup_signature(self, home, time.time())
-                if current is not None:
-                    path = directory / f"cache-{current}.sqlite3"
-                    # Do not publish data under a new input signature unless the
-                    # original inputs were unchanged during registration.
-                    if current == signature:
-                        write_snapshot(path, current, self)
-                        remove_old_generations(directory, path, started)
-                else:
-                    remove_old_generations(directory, None, started)
-            except ERRORS:
-                pass
-            return True
-
-        for kind, provider in snapshot.maps:
-            if kind == "flat_models":
-                mapping = self._models
-            elif kind == "aliases":
-                mapping = self._alias_index
-            else:
-                mapping = self._by_provider.setdefault(
-                    provider, self._catalog_index.index("models", provider)
-                )
-            mapping._user_cache = snapshot
-        remove_old_generations(directory, path, started)
-        return True
 
     def _try_load_sqlite(self) -> bool:
         """Initialize lazy indexes without changing registration precedence."""
@@ -366,192 +297,6 @@ class Registry:
                     self.register(self._map_openrouter_record(r), overwrite=False)
             except Exception:  # noqa: BLE001, S110
                 pass
-
-    def _load_github_catalog_caches(self) -> None:
-        """Load fresh main-branch GitHub snapshots from the local cache only."""
-        cache_dir = Path.home() / ".llmcapa" / "github_catalog_cache"
-        try:
-            cache_paths = sorted(
-                cache_dir.glob("*.json"),
-                key=lambda path: path.stat().st_mtime,
-                reverse=True,
-            )
-        except OSError:
-            return
-
-        seen: set[tuple[str, str]] = set()
-        now = time.time()
-        for cache_path in cache_paths:
-            try:
-                cache_mtime = cache_path.stat().st_mtime
-                if now - cache_mtime >= 86400:
-                    continue
-                cache_data = json.loads(cache_path.read_text(encoding="utf-8"))
-                if not isinstance(cache_data, dict) or cache_data.get("ref") != "main":
-                    continue
-                providers = cache_data.get("providers")
-                files = cache_data.get("files")
-                if (
-                    not isinstance(providers, list)
-                    or not isinstance(files, dict)
-                    or not all(isinstance(name, str) for name in providers)
-                ):
-                    continue
-                provider_set = {self._canonical_provider(name) for name in providers}
-                remote_hf = files.get("huggingface.json")
-                remote_source = (
-                    json.loads(remote_hf) if isinstance(remote_hf, str) else None
-                )
-                for filename, text in files.items():
-                    if filename == "huggingface.json":
-                        continue
-                    if not isinstance(filename, str) or Path(filename).name != filename:
-                        continue
-                    if not isinstance(text, str):
-                        continue
-                    bundled_path = Path(__file__).resolve().parent / "data" / filename
-                    try:
-                        # A cache fetched before an explicit bundled refresh must
-                        # not overwrite the newer local catalog on the next load.
-                        if (
-                            bundled_path.is_file()
-                            and bundled_path.stat().st_mtime > cache_mtime
-                        ):
-                            continue
-                    except OSError:
-                        pass
-                    payload = json.loads(text)
-                    if is_hf_overlay(payload):
-                        if remote_source is None:
-                            # Older caches have no source snapshot; they cannot
-                            # safely expand against the installed HF catalog.
-                            continue
-                        payload = expand_hf_overlay(remote_source, payload)
-                    records = (
-                        payload.get("models", [])
-                        if isinstance(payload, dict)
-                        else payload
-                    )
-                    if not isinstance(records, list):
-                        continue
-                    for record in records:
-                        try:
-                            cap = self._catalog_capability(
-                                Capability.from_dict(record), filename
-                            )
-                            provider = self._canonical_provider(cap.provider)
-                            if (
-                                provider not in provider_set
-                                or provider not in self._catalog_files_by_provider
-                            ):
-                                continue
-                            identity = (provider, cap.model_id.lower())
-                            if identity in seen:
-                                continue
-                            seen.add(identity)
-                            self._register_refreshed_catalog_record(cap)
-                        except (TypeError, ValueError, KeyError):
-                            continue
-            except (OSError, ValueError, TypeError):
-                continue
-
-    def _load_persistent_github_catalogs(self) -> None:
-        """Load durable user-owned GitHub catalog overrides, newest first."""
-        from ._user_catalog_cache import override_write_lock
-
-        override_dir = Path.home() / ".llmcapa" / "catalogs" / "github"
-        try:
-            override_paths = sorted(
-                override_dir.glob("*.json"),
-                key=lambda path: path.stat().st_mtime,
-                reverse=True,
-            )
-        except OSError:
-            return
-
-        seen: set[tuple[str, str]] = set()
-        for override_path in override_paths:
-            try:
-                original_stat = override_path.stat()
-                payload = json.loads(override_path.read_text(encoding="utf-8"))
-                if (
-                    not isinstance(payload, dict)
-                    or payload.get("source") != "https://github.com/awaku7/llmcapa"
-                ):
-                    continue
-                providers = payload.get("providers")
-                records = payload.get("models")
-                if (
-                    not isinstance(providers, list)
-                    or not isinstance(records, list)
-                    or not all(isinstance(name, str) for name in providers)
-                ):
-                    continue
-                provider_set = {self._canonical_provider(name) for name in providers}
-                if payload.get("ref", "main") == "main":
-                    data = resources.files("llmcapa.data")
-                    bundled_files = {
-                        filename
-                        for provider in provider_set
-                        for filename in self._catalog_files_by_provider.get(
-                            provider, ()
-                        )
-                    }
-                    if (
-                        bundled_files
-                        and all(
-                            self._catalog_files_by_provider.get(provider)
-                            for provider in provider_set
-                        )
-                        and all(
-                            isinstance(data / filename, Path)
-                            and (data / filename).is_file()
-                            and (data / filename).stat().st_mtime_ns
-                            > original_stat.st_mtime_ns
-                            for filename in bundled_files
-                        )
-                    ):
-                        # Delete only if every contributing source is newer.
-                        # Coordinate the final identity check with publication.
-                        try:
-                            with override_write_lock(override_dir):
-                                current_stat = override_path.stat()
-                                if (
-                                    current_stat.st_mtime_ns
-                                    == original_stat.st_mtime_ns
-                                    and current_stat.st_ctime_ns
-                                    == original_stat.st_ctime_ns
-                                    and current_stat.st_size == original_stat.st_size
-                                    and current_stat.st_ino == original_stat.st_ino
-                                ):
-                                    override_path.unlink()
-                        except OSError:
-                            pass
-                        continue
-                for record in records:
-                    try:
-                        cap = self._canonical_capability(Capability.from_dict(record))
-                        if (
-                            provider_set == {"azure-foundry"}
-                            and cap.provider == "deepseek"
-                            and cap.extra.get("source") == "azure_foundry"
-                        ):
-                            cap = replace(cap, provider="azure-foundry")
-                        provider = self._canonical_provider(cap.provider)
-                        if (
-                            provider not in provider_set
-                            or provider not in self._catalog_files_by_provider
-                        ):
-                            continue
-                        identity = (provider, cap.model_id.lower())
-                        if identity in seen:
-                            continue
-                        seen.add(identity)
-                        self._register_refreshed_catalog_record(cap)
-                    except (TypeError, ValueError, KeyError):
-                        continue
-            except (OSError, ValueError, TypeError):
-                continue
 
     def _load_json_text(self, text: str, catalog_name: str | None = None) -> int:
         payload = json.loads(text)
@@ -1188,56 +933,6 @@ class Registry:
                         pass
         return success
 
-    def _write_user_catalog_override(
-        self,
-        cache_key: str,
-        ref: str,
-        providers: set[str],
-        capabilities: list[Capability],
-    ) -> None:
-        """Persist a fetched catalog under the user's home directory."""
-        from ._user_catalog_cache import override_write_lock
-
-        override_dir = Path.home() / ".llmcapa" / "catalogs" / "github"
-        override_key = hashlib.sha256(
-            (cache_key + "\0" + ",".join(sorted(providers))).encode("utf-8")
-        ).hexdigest()
-        override_path = override_dir / f"{override_key}.json"
-        payload = {
-            "source": "https://github.com/awaku7/llmcapa",
-            "ref": ref,
-            "updated_at": time.time(),
-            "providers": sorted(providers),
-            "models": [cap.to_dict() for cap in capabilities],
-        }
-        temporary_path: Path | None = None
-        try:
-            override_dir.mkdir(parents=True, exist_ok=True)
-            with tempfile.NamedTemporaryFile(
-                mode="w",
-                encoding="utf-8",
-                dir=override_dir,
-                prefix=f".{cache_key}.",
-                suffix=".tmp",
-                delete=False,
-            ) as temporary_file:
-                temporary_file.write(dump_catalog(payload))
-                temporary_path = Path(temporary_file.name)
-            with override_write_lock(override_dir):
-                os.replace(temporary_path, override_path)
-        except OSError as exc:
-            warnings.warn(
-                f"Could not persist GitHub catalog under {override_dir}: {exc}",
-                RuntimeWarning,
-                stacklevel=2,
-            )
-        finally:
-            if temporary_path is not None:
-                try:
-                    temporary_path.unlink(missing_ok=True)
-                except OSError:
-                    pass
-
     def _bundled_regions(self, provider: str, model_id: str):
         """Regions of the currently bundled record, without expanding it."""
         provider_models = self._by_provider.get(self._normalize_provider(provider))
@@ -1300,11 +995,11 @@ class Registry:
         provider-to-file mapping is derived from the bundled catalogs, so
         providers backed by multiple files are handled as well. By default,
         fetched JSON files replace the corresponding bundled files when the
-        package directory is writable; fetched records are also upserted into
-        this registry and cached under ``~/.llmcapa``. If the package is
-        read-only, a durable user catalog is saved under
-        ``~/.llmcapa/catalogs/github``. Set ``write_bundled`` to False to use
-        that user catalog instead of changing the bundled files.
+        package directory is writable. Fetched records are upserted into this
+        registry and the download response may be cached for later explicit
+        fetch calls. User catalog overrides are not written or loaded. If the
+        package is read-only, fetched records exist only in this registry
+        instance.
 
         Args:
             provider: Provider name or one of its configured aliases.
@@ -1312,6 +1007,8 @@ class Registry:
                 force a network refresh.
             ref: Git branch, tag, or commit (default ``main``).
             write_bundled: Replace the package's source JSON files when writable.
+                If False or the package is read-only, changes are process-local;
+                no durable user override is created.
 
         Returns:
             Number of matching model records registered.
@@ -1495,12 +1192,16 @@ class Registry:
             is_remote_overlay = "huggingface.json" in downloaded_files
             # An overlay is only valid together with its matching HF source.
             # Replacing one bundled file would corrupt other installed local
-            # providers; persist fully materialized user records instead.
+            # providers. User-owned persistent catalog overrides are disabled;
+            # this refresh remains process-local instead.
             if write_bundled and not is_remote_overlay:
                 bundled_updated = self._write_bundled_catalog_files(downloaded_files)
-            if not bundled_updated:
-                self._write_user_catalog_override(
-                    cache_key, ref, target_providers, capabilities
+            if write_bundled and not bundled_updated:
+                warnings.warn(
+                    "GitHub catalog was registered for this process only; "
+                    "persistent user catalog overrides are disabled.",
+                    RuntimeWarning,
+                    stacklevel=2,
                 )
 
         if cached_files is None:

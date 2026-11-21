@@ -43,7 +43,7 @@ try:
     __version__ = package_version("llmcapa")
 except PackageNotFoundError:
     # Source-tree fallback when the project is not installed yet.
-    __version__ = "0.5.90"
+    __version__ = "0.5.91"
 
 __all__ = [
     "AudioCapability",
@@ -220,7 +220,9 @@ def fetch_github_catalog(
     """Fetch and register a provider catalog from the public llmcapa repository.
 
     The corresponding bundled JSON is rewritten when the package directory is
-    writable. Set ``write_bundled=False`` to update only the user cache.
+    writable. If ``write_bundled=False`` or the package is read-only, fetched
+    records are available only in the current registry; persistent user
+    catalog overrides are not supported.
     """
     return default_registry().fetch_github_catalog(
         provider=provider,

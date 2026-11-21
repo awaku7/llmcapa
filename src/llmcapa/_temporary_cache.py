@@ -3,15 +3,27 @@
 import json
 import math
 import re
+import sqlite3
 import stat
 import tempfile
 import time
+from contextlib import closing, contextmanager
 from pathlib import Path
-
-from ._user_catalog_cache import override_write_lock
 
 DAY = 86400
 LEGACY_RETENTION = 30 * DAY
+
+
+@contextmanager
+def _cache_write_lock(directory, *, timeout=5.0):
+    """Serialize temporary-cache publication and cleanup across processes."""
+    lock_path = directory / ".cache-write-lock.sqlite3"
+    try:
+        with closing(sqlite3.connect(lock_path, timeout=timeout)) as conn, conn:
+            conn.execute("BEGIN IMMEDIATE")
+            yield
+    except sqlite3.Error as exc:
+        raise OSError("Could not lock temporary caches") from exc
 
 
 def _identity(info):
@@ -39,7 +51,7 @@ def _atomic_text(path, text):
 def write_temporary_cache(home, path, payload, ttl):
     """Keep existing JSON formats; publish data and retention metadata together."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    with override_write_lock(home):
+    with _cache_write_lock(home):
         _atomic_text(path, json.dumps(payload, ensure_ascii=False, indent=2))
         info = path.stat()
         _atomic_text(
@@ -91,7 +103,7 @@ def _paths(home):
 
 
 def cleanup_temporary_caches(home, now=None):
-    """Remove only recognized expired cache files; never delete user overrides."""
+    """Remove only recognized expired temporary cache files."""
     now = time.time() if now is None else now
     try:
         if home.is_symlink() or not home.is_dir():
@@ -101,7 +113,7 @@ def cleanup_temporary_caches(home, now=None):
                 info = path.lstat()
                 if not _expired(path, info, now):
                     continue
-                with override_write_lock(home, timeout=0):
+                with _cache_write_lock(home, timeout=0):
                     current = path.lstat()
                     if _identity(current) != _identity(info):
                         continue

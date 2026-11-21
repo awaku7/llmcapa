@@ -10,8 +10,6 @@ from llmcapa import Capability, ModelNotFoundError, Registry
 @pytest.fixture
 def registry(monkeypatch):
     # Alias tests must not depend on local GitHub cache snapshots or networking.
-    monkeypatch.setattr(Registry, "_load_github_catalog_caches", lambda _: None)
-    monkeypatch.setattr(Registry, "_load_persistent_github_catalogs", lambda _: None)
     result = Registry()
     monkeypatch.setattr(result, "fetch_github_catalog", lambda *args, **kwargs: 0)
     return result
@@ -68,7 +66,7 @@ def test_azure_alias_keeps_other_provider_aliases_unchanged(registry):
 
 @pytest.mark.parametrize("stored_provider", ("azure-foundry", "azure-openai"))
 @pytest.mark.parametrize("storage", ("cache", "persistent"))
-def test_azure_cached_catalog_reloads_legacy_provider(
+def test_azure_legacy_github_catalogs_do_not_overlay_bundle(
     tmp_path, monkeypatch, stored_provider, storage
 ):
     monkeypatch.setenv("HOME", str(tmp_path))
@@ -102,16 +100,11 @@ def test_azure_cached_catalog_reloads_legacy_provider(
     )
 
     restarted = Registry()
-    loaded = [
-        cap
+    assert all(
+        cap.model_id != model_id
         for cap in restarted.list_models(provider="azure-foundry")
-        if cap.model_id == model_id
-    ]
-    assert len(loaded) == 1
-    assert loaded[0].provider == "azure-foundry"
-    assert loaded[0].context_window == 4096
-    for provider in ("azure-foundry", "azure-openai", "azure"):
-        assert restarted.get(model_id, provider=provider) is loaded[0]
+    )
+    assert (catalog_dir / "azure-legacy-test.json").exists()
 
 
 @pytest.mark.parametrize(

@@ -40,12 +40,6 @@ def test_catalog_database_preserves_lookup_indexes(tmp_path, monkeypatch):
         pytest.fail("build must not read local user caches")
 
     monkeypatch.setattr(
-        registry_module.Registry, "_load_github_catalog_caches", unexpected_cache
-    )
-    monkeypatch.setattr(
-        registry_module.Registry, "_load_persistent_github_catalogs", unexpected_cache
-    )
-    monkeypatch.setattr(
         registry_module.Registry, "_load_openrouter_cache", unexpected_cache
     )
     monkeypatch.setattr(_catalog_db, "_BLOCK_SIZE", 2)

@@ -638,19 +638,10 @@ class CatalogMapping(Mapping):
         self.table = table
         self.provider = provider
         self._updates = {}
-        self._user_cache = None
-
-    def _cached_rows(self, key=None, **kwargs):
-        if self._user_cache is None:
-            return []
-        return self._user_cache.read(self.table, self.provider, key, **kwargs)
 
     def __getitem__(self, key):
         if key in self._updates:
             return self._updates[key]
-        cached = self._cached_rows(key)
-        if cached:
-            return cached[0][1]
         if self.table == "aliases":
             metadata = self.reader.registration_metadata(self.table, self.provider)
             if metadata is not None:
@@ -664,7 +655,7 @@ class CatalogMapping(Mapping):
         self._updates[key] = value
 
     def __contains__(self, key):
-        if key in self._updates or self._cached_rows(key, keys_only=True):
+        if key in self._updates:
             return True
         metadata = self.reader.registration_metadata(self.table, self.provider)
         if metadata is not None:
@@ -677,9 +668,6 @@ class CatalogMapping(Mapping):
         """Return the provider for a flat key, including in-memory overrides."""
         if key in self._updates:
             return self._updates[key].provider
-        cached = self._cached_rows(key, owner_only=True)
-        if cached:
-            return cached[0][1]
         metadata = self.reader.registration_metadata(self.table, self.provider)
         if metadata is not None:
             if key not in metadata:
@@ -700,7 +688,6 @@ class CatalogMapping(Mapping):
     def __iter__(self):
         rows = self.reader.read(self.table, self.provider, keys_only=True)
         keys = dict.fromkeys(row[0] for row in rows)
-        keys.update(dict.fromkeys(row[0] for row in self._cached_rows(keys_only=True)))
         keys.update(dict.fromkeys(self._updates))
         return iter(keys)
 
@@ -709,7 +696,6 @@ class CatalogMapping(Mapping):
 
     def items(self):
         combined = dict(self.reader.read(self.table, self.provider))
-        combined.update(self._cached_rows())
         combined.update(self._updates)
         return combined.items()
 
@@ -723,24 +709,8 @@ class CatalogMapping(Mapping):
         return self.reader.bundled_regions(self.provider, key)
 
     def matching_items(self, ids, kind, term):
-        cached = {}
-        excluded = set()
-        if self._user_cache is not None:
-            keys = [key for key, _ in self._cached_rows(keys_only=True)]
-            excluded = set(keys)
-            matches = dict(
-                self._user_cache.matching_items(self.table, self.provider, kind, term)
-            )
-            # Runtime replacements retain their original snapshot position,
-            # even when the previous payload was not a search candidate.
-            for key in keys:
-                if key in self._updates:
-                    cached[key] = self._updates[key]
-                elif key in matches:
-                    cached[key] = matches[key]
-        cached.update(self._updates)
         return list(
-            self.reader.matching_items(self.table, self.provider, ids, cached, excluded)
+            self.reader.matching_items(self.table, self.provider, ids, self._updates, set())
         )
 
     def matching_values(self, ids, kind, term):

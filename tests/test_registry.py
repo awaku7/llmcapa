@@ -863,7 +863,7 @@ def test_together_provider():
     assert len(all_models) >= 90, "should have 90+ together models"
 
 
-def test_fetch_github_catalog_downloads_selected_provider_and_uses_cache(
+def test_fetch_github_catalog_downloads_selected_provider_without_user_override(
     tmp_path, monkeypatch
 ):
     from io import BytesIO
@@ -897,7 +897,7 @@ def test_fetch_github_catalog_downloads_selected_provider_and_uses_cache(
     assert request_count >= 1
     assert any(url.endswith("/src/llmcapa/data/xai.json") for url in requests)
     user_catalogs = tmp_path / ".llmcapa" / "catalogs" / "github"
-    assert list(user_catalogs.glob("*.json"))
+    assert not list(user_catalogs.glob("*.json"))
 
     cached_registry = Registry()
     cached_registry._loaded = True
@@ -942,9 +942,10 @@ def test_bundled_catalog_writer_replaces_json_atomically(tmp_path, monkeypatch):
     assert not list(tmp_path.glob("*.tmp"))
 
 
-def test_persistent_user_catalog_is_loaded_by_new_registry(tmp_path, monkeypatch):
+def test_persistent_user_catalog_is_not_loaded_by_new_registry(tmp_path, monkeypatch):
     monkeypatch.setenv("USERPROFILE", str(tmp_path))
     monkeypatch.setenv("HOME", str(tmp_path))
+    monkeypatch.setattr(registry_module.Path, "home", lambda: tmp_path)
     bundled_dir = tmp_path / "bundled"
     bundled_dir.mkdir()
     (bundled_dir / "xai.json").write_text(
@@ -962,14 +963,23 @@ def test_persistent_user_catalog_is_loaded_by_new_registry(tmp_path, monkeypatch
     )
     registry = Registry()
     registry._ensure_loaded()
-    registry._write_user_catalog_override(
-        "test-snapshot", "main", {"xai"}, [capability]
+    override_dir = tmp_path / ".llmcapa" / "catalogs" / "github"
+    override_dir.mkdir(parents=True)
+    (override_dir / "legacy-override.json").write_text(
+        json.dumps(
+            {
+                "source": "https://github.com/awaku7/llmcapa",
+                "ref": "main",
+                "providers": ["xai"],
+                "models": [capability.to_dict()],
+            }
+        ),
+        encoding="utf-8",
     )
 
     restarted_registry = Registry()
-    loaded = restarted_registry.get("persistent-user-catalog-model", provider="xai")
-    assert loaded.model_id == capability.model_id
-    assert loaded.context_window == 4096
+    with pytest.raises(ModelNotFoundError):
+        restarted_registry.get("persistent-user-catalog-model", provider="xai")
 
 
 def test_older_github_cache_does_not_override_newer_bundled_catalog(

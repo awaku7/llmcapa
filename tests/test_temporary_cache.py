@@ -105,7 +105,7 @@ def test_cleanup_skips_busy_publication_lock(tmp_path):
             "huggingface_all_tasks_cache_all.json",
         )
     ]
-    with closing(sqlite3.connect(tmp_path / ".override-lock.sqlite3")) as conn:
+    with closing(sqlite3.connect(tmp_path / ".cache-write-lock.sqlite3")) as conn:
         conn.execute("BEGIN IMMEDIATE")
         started = time.perf_counter()
         cleanup_temporary_caches(tmp_path)

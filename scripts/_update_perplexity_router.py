@@ -1,8 +1,8 @@
-"""Refresh Perplexity Router catalog rows from its official Router docs.
+"""Refresh Perplexity Orchestrator catalog rows from its official docs.
 
-The unauthenticated docs table publishes the current model IDs, input/output
-prices, cache-read prices, and native model-card links. Provider-specific
-capabilities are preserved for known IDs and left unknown for new routes.
+The unauthenticated docs tables publish current model IDs, context/output
+limits, token prices, and API surfaces. Provider-specific capabilities are
+preserved for known IDs and left unknown for new routes.
 """
 
 from __future__ import annotations
@@ -16,8 +16,8 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "llmcapa" / "data" / "perplexity-router.json"
-SOURCE = "https://docs.perplexity.ai/docs/router/models"
-API_BASE = "https://api.perplexity.ai/router/v1"
+SOURCE = "https://docs.perplexity.ai/docs/orchestrator/models"
+API_BASE = "https://api.perplexity.ai/orchestrator/v1"
 
 
 def fetch_docs() -> str:
@@ -30,8 +30,8 @@ def fetch_docs() -> str:
     )
     with urlopen(request, timeout=30) as response:
         text = response.read(1_000_000).decode("utf-8", "replace")
-    if "Perplexity-Hosted Models" not in text or "Input" not in text:
-        raise RuntimeError("Perplexity Router model docs were not recognizable")
+    if "Available Models" not in text or "perplexity/" not in text:
+        raise RuntimeError("Perplexity Orchestrator model docs were not recognizable")
     return text
 
 
@@ -46,28 +46,54 @@ def _price(cell: str) -> float | None:
 
 
 def parse_model_table(markdown: str) -> list[dict]:
-    """Extract only rows in the Perplexity-hosted Router pricing table."""
-    match = re.search(r"(?im)^##\s+Perplexity-Hosted Models\s*$", markdown)
-    if not match:
-        raise ValueError("Perplexity Router docs have no hosted-model table")
-    section = markdown[match.end() :]
+    """Parse Perplexity-prefixed rows across current Orchestrator model tabs.
+
+    The former Router page used a dedicated ``Perplexity-Hosted Models`` table.
+    The current page groups rows by the underlying model provider, so Perplexity
+    routes appear in several tabs. Select them by their documented ID prefix.
+    """
+    current_section = re.search(r"(?im)^##\s+Available Models\s*$", markdown)
+    legacy_section = re.search(r"(?im)^##\s+Perplexity-Hosted Models\s*$", markdown)
+    if current_section:
+        section = markdown[current_section.end() :]
+        next_heading = re.search(r"(?im)^##\s+", section)
+        if next_heading:
+            section = section[: next_heading.start()]
+        current_format = True
+    elif legacy_section:
+        section = markdown[legacy_section.end() :]
+        current_format = False
+    else:
+        raise ValueError("Perplexity docs have no Orchestrator model table")
+
     rows: dict[str, dict] = {}
     for line in section.splitlines():
+        line = re.sub(r"^\s*>\s?", "", line)
         if not line.lstrip().startswith("|"):
             continue
         cells = [item.strip() for item in line.strip().strip("|").split("|")]
-        if len(cells) < 5:
+        if len(cells) < (7 if current_format else 5):
             continue
         model_id_match = re.search(r"`([^`]+)`", cells[0])
-        source_link = re.search(r"\[([^]]+)\]\((https?://[^)]+)\)", cells[4])
         if not model_id_match:
             continue
         model_id = model_id_match.group(1).strip()
         if not model_id.startswith("perplexity/"):
             continue
-        input_price = _price(cells[1])
-        output_price = _price(cells[2])
-        cache_read = _price(cells[3])
+        if current_format:
+            context_window = _token_count(cells[2])
+            max_output_tokens = _token_count(cells[3])
+            input_price = _price(cells[4])
+            output_price = _price(cells[5])
+            cache_read = _price(cells[6])
+            source_link = None
+        else:
+            context_window = 0
+            max_output_tokens = 0
+            input_price = _price(cells[1])
+            output_price = _price(cells[2])
+            cache_read = _price(cells[3])
+            source_link = re.search(r"\[([^]]+)\]\((https?://[^)]+)\)", cells[4])
         if input_price is None or output_price is None:
             continue
         native_source = source_link.group(2) if source_link else None
@@ -83,7 +109,13 @@ def parse_model_table(markdown: str) -> list[dict]:
         rows[model_id.casefold()] = {
             "provider": "perplexity-router",
             "model_id": model_id,
-            "display_name": f"Perplexity Router: {source_link.group(1) if source_link else model_id.split('/', 1)[-1]}",
+            "display_name": (
+                f"Perplexity: {source_link.group(1) if source_link else model_id.split('/', 1)[-1]}"
+                if current_format
+                else f"Perplexity Router: {source_link.group(1) if source_link else model_id.split('/', 1)[-1]}"
+            ),
+            "context_window": context_window,
+            "max_output_tokens": max_output_tokens,
             "input_per_1m": input_price,
             "output_per_1m": output_price,
             "cache_read_per_1m": cache_read,
@@ -91,8 +123,15 @@ def parse_model_table(markdown: str) -> list[dict]:
             "native_provider": native_provider,
         }
     if not rows:
-        raise ValueError("No Perplexity-hosted Router model pricing rows were parsed")
+        raise ValueError("No Perplexity model pricing rows were parsed")
     return list(rows.values())
+
+
+def _token_count(cell: str) -> int:
+    match = re.search(r"[\d,]+", cell)
+    if not match:
+        return 0
+    return int(match.group(0).replace(",", ""))
 
 
 def _base_record(snapshot: dict, old: dict | None, checked_at: str) -> dict:
@@ -102,8 +141,12 @@ def _base_record(snapshot: dict, old: dict | None, checked_at: str) -> dict:
             "provider": "perplexity-router",
             "model_id": snapshot["model_id"],
             "display_name": snapshot["display_name"],
-            "context_window": old.get("context_window", 0) if old else 0,
-            "max_output_tokens": old.get("max_output_tokens", 0) if old else 0,
+            "context_window": snapshot.get(
+                "context_window", old.get("context_window", 0) if old else 0
+            ),
+            "max_output_tokens": snapshot.get(
+                "max_output_tokens", old.get("max_output_tokens", 0) if old else 0
+            ),
             "input_modalities": (
                 old.get("input_modalities", ["text"]) if old else ["text"]
             ),
@@ -129,16 +172,23 @@ def _base_record(snapshot: dict, old: dict | None, checked_at: str) -> dict:
         }
     )
     extra = dict(old.get("extra") or {}) if old else {}
+    extra.pop("not_listed_in_current_docs", None)
+    extra.pop("router_api_base_url", None)
+    extra.pop("router_preview", None)
+    # The current model table lists cache-read rates but does not publish a
+    # Perplexity cache-write price; the former input-rate fallback was inferred.
+    extra.pop("cache_write_per_1m", None)
     extra.update(
         {
             "official_source": SOURCE,
             "official_source_checked_at": checked_at,
-            "router_api_base_url": API_BASE,
+            "orchestrator_api_base_url": API_BASE,
             "chat_completions_endpoint": f"{API_BASE}/chat/completions",
             "responses_endpoint": f"{API_BASE}/responses",
             "messages_endpoint": f"{API_BASE}/messages",
             "model_catalog_endpoint": f"{API_BASE}/models",
-            "router_preview": True,
+            "orchestrator_api": True,
+            "officially_enumerated_billing_fields": ["cache_write_per_1m"],
             "api_schema_support": [
                 "openai-chat-completions",
                 "openai-responses",
@@ -148,12 +198,9 @@ def _base_record(snapshot: dict, old: dict | None, checked_at: str) -> dict:
     )
     if snapshot["cache_read_per_1m"] is not None:
         extra["cache_read_per_1m"] = snapshot["cache_read_per_1m"]
-        # The docs state cache writes use the input rate when a dedicated write
-        # rate is not listed.
-        extra["cache_write_per_1m"] = snapshot["input_per_1m"]
-    if snapshot["native_model_source"]:
+    if snapshot.get("native_model_source"):
         extra["native_model_source"] = snapshot["native_model_source"]
-    if snapshot["native_provider"] and not extra.get("native_provider"):
+    if snapshot.get("native_provider") and not extra.get("native_provider"):
         extra["native_provider"] = snapshot["native_provider"]
     result["extra"] = extra
     return result
@@ -183,6 +230,19 @@ def merge_catalog(
             row = dict(old)
             extra = dict(row.get("extra") or {})
             extra["not_listed_in_current_docs"] = True
+            extra.pop("router_api_base_url", None)
+            extra.pop("router_preview", None)
+            extra.update(
+                {
+                    "official_source": SOURCE,
+                    "orchestrator_api_base_url": API_BASE,
+                    "chat_completions_endpoint": f"{API_BASE}/chat/completions",
+                    "responses_endpoint": f"{API_BASE}/responses",
+                    "messages_endpoint": f"{API_BASE}/messages",
+                    "model_catalog_endpoint": f"{API_BASE}/models",
+                    "orchestrator_api": True,
+                }
+            )
             row["extra"] = extra
             merged.append(row)
     return merged

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import pytest
+
 from llmcapa.hf_overlay import expand_hf_overlay, is_hf_overlay, pack_hf_overlay
 
 
@@ -209,15 +211,18 @@ def test_remote_overlay_uses_matching_newer_hf_snapshot(tmp_path, monkeypatch):
         return BytesIO(body.encode("utf-8"))
 
     monkeypatch.setattr("llmcapa.registry.urllib.request.urlopen", fake_urlopen)
-    count = registry.fetch_github_catalog("vllm")
+    with pytest.warns(RuntimeWarning, match="registered for this process only"):
+        count = registry.fetch_github_catalog("vllm")
     assert count == 4
     assert registry.get("org/new-on-remote", provider="vllm").max_output_tokens == 321
     assert len(calls) == 2
-    # The installed HF source was not overwritten, and the remote results are
-    # durable even if the registry is rebuilt while offline.
+    # The installed HF source is not overwritten and GitHub snapshots are not
+    # automatically reapplied by a new registry; the fetch is process-local.
     offline = Registry()
-    cap = offline.get("org/new-on-remote", provider="vllm")
-    assert cap.max_output_tokens == 321
+    from llmcapa.registry import ModelNotFoundError
+
+    with pytest.raises(ModelNotFoundError):
+        offline.get("org/new-on-remote", provider="vllm")
     assert len(calls) == 2
 
 

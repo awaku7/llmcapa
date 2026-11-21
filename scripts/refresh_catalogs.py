@@ -147,6 +147,19 @@ def _has_authoritative_hf_pipeline_change(
     )
 
 
+def _authoritative_capability_fields(row: dict[str, Any]) -> set[str]:
+    """Return fields explicitly enumerated by the provider's current source."""
+    extra = row.get("extra")
+    fields = (
+        extra.get("officially_enumerated_capability_fields")
+        if isinstance(extra, dict)
+        else None
+    )
+    if not isinstance(fields, list):
+        return set()
+    return {field for field in fields if isinstance(field, str)}
+
+
 def preserve_known_capabilities(
     previous: dict[str, Any], updated: dict[str, Any], *, checked_at: str | None = None
 ) -> int:
@@ -175,9 +188,14 @@ def preserve_known_capabilities(
         refreshed = new.get(model_id)
         if refreshed is None:
             continue
+        authoritative = _authoritative_capability_fields(refreshed)
         fallbacks: set[str] = set()
         for field in specialized:
-            if previous_row.get(field) and not refreshed.get(field):
+            if (
+                field not in authoritative
+                and previous_row.get(field)
+                and not refreshed.get(field)
+            ):
                 refreshed[field] = copy.deepcopy(previous_row[field])
                 fallbacks.add(field)
         for field in ("context_window", "max_output_tokens"):
@@ -197,6 +215,8 @@ def preserve_known_capabilities(
                 refreshed[field] = old_value
                 fallbacks.add(field)
         for field in ("input_modalities", "output_modalities"):
+            if field in authoritative:
+                continue
             old_values = previous_row.get(field)
             new_values = refreshed.get(field)
             if not isinstance(old_values, list) or not old_values:
@@ -315,6 +335,8 @@ def validate_refreshed_catalog(
             # existing catalog until an explicit, reviewed removal is made.
             raise ValueError(f"{model_id}: model disappeared from provider catalog")
 
+        authoritative = _authoritative_capability_fields(refreshed)
+
         for key in (
             "image",
             "audio",
@@ -326,7 +348,11 @@ def validate_refreshed_catalog(
             "computer_use",
             "spatial",
         ):
-            if previous_row.get(key) and not refreshed.get(key):
+            if (
+                key not in authoritative
+                and previous_row.get(key)
+                and not refreshed.get(key)
+            ):
                 raise ValueError(f"{model_id}: documented {key} was lost")
         for key in ("context_window", "max_output_tokens"):
             if previous_row.get(key, 0) > 0 and refreshed[key] == 0:
@@ -339,6 +365,8 @@ def validate_refreshed_catalog(
                 raise ValueError(f"{model_id}: known {key} became zero")
 
         for key in ("input_modalities", "output_modalities"):
+            if key in authoritative:
+                continue
             documented = previous_row.get(key)
             if not isinstance(documented, list) or not documented:
                 continue
@@ -372,6 +400,11 @@ def validate_refreshed_catalog(
             raise TypeError(f"{model_id}: invalid extra")
         previous_extra = previous_extra or {}
         refreshed_extra = refreshed_extra or {}
+        enumerated_billing_fields = refreshed_extra.get(
+            "officially_enumerated_billing_fields"
+        )
+        if not isinstance(enumerated_billing_fields, list):
+            enumerated_billing_fields = []
         # Non-token prices are usually kept in extra. Do not enumerate only
         # today's Mistral keys: images, speech, video, and new APIs may
         # introduce other published units. Preserve 0.0 as a known rate.
@@ -380,7 +413,7 @@ def validate_refreshed_catalog(
                 word in key.casefold()
                 for word in ("price", "pricing", "cost", "rate", "billing")
             )
-            if is_billing_field:
+            if is_billing_field and key not in enumerated_billing_fields:
                 _protect_known_pricing(
                     known_value, refreshed_extra.get(key), model_id, key
                 )
@@ -476,10 +509,16 @@ def validate_staged_catalogs(
     # resume guard itself was just fixed to support this retry.
     resumable_paths = catalog_paths | {
         "scripts/refresh_catalogs.py",
+        "src/llmcapa/registry.py",
+        "src/llmcapa/_catalog_index.py",
+        "src/llmcapa/_temporary_cache.py",
+        "src/llmcapa/_user_catalog_cache.py",
         "src/llmcapa/data/catalog.sqlite3",
         "scripts/_image_capability_postprocess.py",
         "scripts/_update_amazon.py",
         "scripts/_update_azure_foundry.py",
+        "scripts/_update_google.py",
+        "scripts/_update_vertex_ai.py",
         "scripts/_update_cloudflare_workers_ai.py",
         "scripts/_scrape_huggingface.py",
         "scripts/provider_updates/bytedance-seed.py",
@@ -489,6 +528,13 @@ def validate_staged_catalogs(
         "scripts/_update_sarashina.py",
         "tests/test_sarashina.py",
         "tests/test_refresh_catalogs.py",
+        "tests/test_catalog_index.py",
+        "tests/test_hf_overlay.py",
+        "tests/test_registry.py",
+        "tests/test_temporary_cache.py",
+        "tests/test_catalog_db.py",
+        "tests/test_anthropic_haiku_55.py",
+        "tests/test_computer_use_updaters.py",
         "tests/test_image_capability_postprocess.py",
         "tests/test_computer_use_updaters.py",
         "tests/test_azure_provider_alias.py",
@@ -499,7 +545,11 @@ def validate_staged_catalogs(
         "tests/test_provider_http.py",
         "scripts/_update_modellix.py",
         "scripts/_update_modellix_media.py",
+        "scripts/_update_perplexity_router.py",
+        "scripts/provider_updates/sambanova.py",
         "tests/test_new_provider_updaters.py",
+        "tests/test_perplexity_router.py",
+        "tests/test_regions.py",
         "tests/test_liquid_provider.py",
     }
     unexpected = staged_paths - resumable_paths
