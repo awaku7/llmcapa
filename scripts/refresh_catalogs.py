@@ -18,6 +18,7 @@ from pathlib import Path
 from typing import Any
 
 from _update_all_providers import PROVIDER_SCRIPTS, sync_catalog_db
+from provider_updates._catalog_io import serialize_json
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "src" / "llmcapa" / "data"
@@ -81,13 +82,11 @@ def load_catalog(path: Path) -> dict[str, Any]:
 
 
 def preserve_line_endings(path: Path, original: bytes) -> None:
-    """Keep a provider updater from rewriting an entire catalog's newlines.
+    """Preserve the existing final-newline convention after compact writes.
 
-    ``Path.write_text`` translates LF to the host platform's newline by
-    default. Provider updates run on Windows as well as POSIX, so a small
-    metadata refresh must not turn every LF in a bundled catalog into CRLF
-    (or vice versa). JSON string newlines are escaped, making normalization of
-    the file's structural line endings safe.
+    Catalog JSON is emitted as one compact line. Normalize only its structural
+    line ending so provider refreshes behave consistently on Windows and POSIX.
+    JSON string newlines are escaped, so normalization is safe.
     """
     crlf_count = original.count(b"\r\n")
     lf_count = original.count(b"\n") - crlf_count
@@ -536,7 +535,6 @@ def validate_staged_catalogs(
         "tests/test_anthropic_haiku_55.py",
         "tests/test_computer_use_updaters.py",
         "tests/test_image_capability_postprocess.py",
-        "tests/test_computer_use_updaters.py",
         "tests/test_azure_provider_alias.py",
         "tests/test_cloudflare_updater.py",
         "tests/test_amazon_catalog_updater.py",
@@ -629,19 +627,21 @@ def run_provider(
         updated = load_catalog(path)
         retained = retain_unlisted_models(previous, updated)
         fallbacks = preserve_known_capabilities(previous, updated)
+        raw_updated = json.loads(path.read_text(encoding="utf-8"))
+        saved = raw_updated
         if retained or fallbacks:
-            saved = json.loads(path.read_text(encoding="utf-8"))
-            if is_hf_overlay(saved):
+            if is_hf_overlay(raw_updated):
                 source = json.loads(
                     (path.parent / "huggingface.json").read_text(encoding="utf-8")
                 )
-                saved = pack_hf_overlay(source, updated, provider=saved["provider"])
+                saved = pack_hf_overlay(
+                    source, updated, provider=raw_updated["provider"]
+                )
             else:
                 saved = updated
-            path.write_text(
-                json.dumps(saved, ensure_ascii=False, indent=2) + "\n",
-                encoding="utf-8",
-            )
+        if relative_path in touched or retained or fallbacks:
+            path.write_bytes(serialize_json(saved).encode("utf-8"))
+        if retained or fallbacks:
             with log_path.open("a", encoding="utf-8") as log:
                 log.write("\nRefresh safety fallbacks applied:")
                 log.write(f" retained_rows={retained}; capability_rows={fallbacks}.\n")

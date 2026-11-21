@@ -14,7 +14,19 @@ def load_json(path: str | PathLike[str]) -> Any:
         return json.load(handle)
 
 
+def serialize_json(value: Any) -> str:
+    """Return compact, Unicode-preserving JSON with one trailing newline."""
+    return json.dumps(value, ensure_ascii=False, separators=(",", ":")) + "\n"
+
+
 def save_json(path: str | PathLike[str], value: Any) -> None:
-    """Write pretty, Unicode-preserving UTF-8 JSON with a final newline."""
-    text = json.dumps(value, ensure_ascii=False, indent=2) + "\n"
-    Path(path).write_text(text, encoding="utf-8")
+    """Write compact, Unicode-preserving UTF-8 JSON with a final newline."""
+    Path(path).write_bytes(serialize_json(value).encode("utf-8"))
+
+
+def compact_json_file(path: str | PathLike[str]) -> None:
+    """Compact an existing JSON file without changing its parsed value."""
+    target = Path(path)
+    compact = serialize_json(load_json(target)).encode("utf-8")
+    if target.read_bytes() != compact:
+        target.write_bytes(compact)

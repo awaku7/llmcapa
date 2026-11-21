@@ -18,6 +18,7 @@ sys.path.insert(0, str(SCRIPTS))
 import _scrape_huggingface as hf_scraper
 import refresh_catalogs as refresh
 from provider_updates import sambanova
+from provider_updates._catalog_io import compact_json_file
 
 
 def _catalog(*ids: str) -> dict:
@@ -110,6 +111,55 @@ def test_preserve_line_endings_keeps_original_catalog_style(
 
     expected = expected_newline.join((b"{", b'  "models": []', b"}", b""))
     assert path.read_bytes() == expected
+
+
+def test_catalog_json_is_compact_and_preserves_all_fields(tmp_path):
+    catalog = _catalog("model-1")
+    catalog["models"][0]["extra"] = {"tags": ["unicode-日本語", "verified"]}
+    path = tmp_path / "catalog.json"
+    path.write_text(json.dumps(catalog, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    compact_json_file(path)
+
+    serialized = path.read_bytes()
+    assert serialized == refresh.serialize_json(catalog).encode("utf-8")
+    assert json.loads(serialized) == catalog
+    assert b"\n" not in serialized[:-1]
+
+
+def test_run_provider_compacts_updater_output_for_any_provider(tmp_path, monkeypatch):
+    monkeypatch.setattr(refresh, "ROOT", tmp_path)
+    data_dir = tmp_path / "src" / "llmcapa" / "data"
+    data_dir.mkdir(parents=True)
+    catalog_path = data_dir / "google.json"
+    previous = _complete_catalog()
+    catalog_path.write_bytes(refresh.serialize_json(previous).encode("utf-8"))
+    updated = json.loads(json.dumps(previous))
+    updated["models"][0]["context_window"] = 2048
+
+    class FakeProcess:
+        def wait(self, timeout=None):
+            catalog_path.write_text(
+                json.dumps(updated, ensure_ascii=False, indent=2), encoding="utf-8"
+            )
+            return 0
+
+    monkeypatch.setattr(refresh, "DATA_DIR", data_dir)
+    monkeypatch.setattr(refresh.subprocess, "Popen", lambda *_args, **_kwargs: FakeProcess())
+    monkeypatch.setattr(
+        refresh, "unstaged_files", lambda: {"src/llmcapa/data/google.json"}
+    )
+    monkeypatch.setattr(refresh, "restore_unstaged", lambda: None)
+    monkeypatch.setattr(refresh.subprocess, "run", lambda *_args, **_kwargs: None)
+
+    result = refresh.run_provider(
+        "google", timeout_seconds=1, log_directory=tmp_path / "logs"
+    )
+
+    assert result["status"] == "updated"
+    contents = catalog_path.read_bytes()
+    assert contents == refresh.serialize_json(updated).encode("utf-8")
+    assert json.loads(contents) == updated
 
 
 def test_resume_accepts_only_explicitly_staged_catalog_changes():

@@ -18,8 +18,11 @@ import subprocess
 import sys
 from pathlib import Path
 
+from provider_updates._catalog_io import compact_json_file
+
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
+DATA_DIR = ROOT / "src" / "llmcapa" / "data"
 
 PROVIDER_SCRIPTS = {
     "ai21": "provider_updates/ai21.py",
@@ -105,6 +108,11 @@ PROVIDER_SCRIPTS = {
     "undi95": "_update_hf_official_orgs.py",
     "writer": "provider_updates/writer.py",
     "z-ai": "provider_updates/z-ai.py",
+}
+CATALOG_FILENAME_OVERRIDES = {
+    "azure-foundry": "azure_foundry.json",
+    "foundry-local": "foundry_local.json",
+    "llama-cpp": "llama_cpp.json",
 }
 
 # The HF organization updater handles several small provider catalogs. Pass a
@@ -220,6 +228,12 @@ def main() -> int:
     result = subprocess.run(command, cwd=ROOT, check=False)
     if result.returncode:
         return result.returncode
+    catalog_filename = CATALOG_FILENAME_OVERRIDES.get(provider, f"{provider}.json")
+    catalog_path = DATA_DIR / catalog_filename
+    if not catalog_path.is_file():
+        print(f"Provider updater did not produce {catalog_path}", file=sys.stderr)
+        return 1
+    compact_json_file(catalog_path)
     if args.skip_sqlite or os.environ.get("GITHUB_ACTIONS") == "true":
         return 0
     return sync_catalog_db(ROOT)

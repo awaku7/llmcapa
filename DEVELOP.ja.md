@@ -157,6 +157,8 @@ python scripts/_update_all_providers.py --provider openai
 
 ネイティブプロバイダーのカタログは、レコード取得に OpenRouter を使ってはなりません。OpenRouter API から構築するのは `openrouter.json` だけです（`scripts/_update_openrouter.py`）。他の `scripts/_update_*.py` は公式ドキュメントページまたは公式モデル API を直接解析します。`scripts/openrouter_providers/` 配下のシムは歴史的参照用であり、現役の更新スクリプトから import してはなりません。
 
+`src/llmcapa/data/*.json` の全プロバイダーカタログは、意味内容を変えずにコンパクトなUTF-8 JSON（インデントなし、末尾改行あり）で保存します。更新時に全ファイルを pretty-print して空白でサイズを膨らませないでください。新しいメンバーやデフォルト値は、公式根拠とスキーマ上の必要性がある場合だけ追加し、直列化の変更では読み込んだJSON値が完全に保持されるテストを行います。
+
 ### mdx.MaaS
 
 `src/llmcapa/data/mdx-maas.json` は、mdx.MaaS の公式モデル一覧に掲載された即時応答APIモデルのスナップショットです。次のスクリプトで公式の公開スプレッドシートから更新できます。
