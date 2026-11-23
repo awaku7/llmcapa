@@ -1037,3 +1037,42 @@ def test_older_github_cache_does_not_override_newer_bundled_catalog(
     assert cap.decision.endpoints == tuple(record["decision"]["endpoints"])
     assert bundled_path.read_bytes() == bundled_bytes
     assert not list((cache_home / ".llmcapa" / "catalogs" / "github").glob("*.json"))
+
+
+def test_concurrent_first_load_does_not_miss_models():
+    """A get() racing the first catalog load must wait, not miss.
+
+    _ensure_loaded used to mark the registry loaded before the load had
+    finished, so a concurrent lookup saw empty indexes and raised
+    ModelNotFoundError for a model that exists.
+    """
+    import threading
+    import time
+
+    registry = Registry()
+    original_load = registry._load_bundled
+
+    def slow_load():
+        time.sleep(0.3)
+        original_load()
+
+    registry._load_bundled = slow_load
+
+    results = {}
+
+    def lookup(name, delay):
+        if delay:
+            time.sleep(delay)
+        try:
+            results[name] = registry.get("gpt-6-luna", provider="openai").model_id
+        except Exception as exc:  # noqa: BLE001
+            results[name] = f"{type(exc).__name__}: {exc}"
+
+    first = threading.Thread(target=lookup, args=("first", 0))
+    second = threading.Thread(target=lookup, args=("second", 0.05))
+    first.start()
+    second.start()
+    first.join()
+    second.join()
+
+    assert results == {"first": "gpt-6-luna", "second": "gpt-6-luna"}

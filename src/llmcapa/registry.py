@@ -9,6 +9,7 @@ import re
 import ssl
 import stat
 import tempfile
+import threading
 import time
 import urllib.request
 import warnings
@@ -76,6 +77,7 @@ class Registry:
         self._catalog_files_by_provider: dict[str, set[str]] = {}
 
         self._loaded = False
+        self._load_lock = threading.RLock()
         self._catalog_index: CatalogIndex | None = None
         self._hf_catalog_source: dict | None = None
 
@@ -206,9 +208,12 @@ class Registry:
     # loading
     # ------------------------------------------------------------------
     def _ensure_loaded(self) -> None:
-        if not self._loaded:
-            self._loaded = True
-            self._load_bundled()
+        if self._loaded:
+            return
+        with self._load_lock:
+            if not self._loaded:
+                self._load_bundled()
+                self._loaded = True
 
     def _load_bundled(self) -> None:
         cleanup_temporary_caches(Path.home() / ".llmcapa")
