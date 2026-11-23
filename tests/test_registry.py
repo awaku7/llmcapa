@@ -1065,7 +1065,7 @@ def test_concurrent_first_load_does_not_miss_models():
             time.sleep(delay)
         try:
             results[name] = registry.get("gpt-6-luna", provider="openai").model_id
-        except Exception as exc:  # noqa: BLE001 - any failure is recorded for the assert below
+        except Exception as exc:  # noqa: BLE001
             results[name] = f"{type(exc).__name__}: {exc}"
 
     first = threading.Thread(target=lookup, args=("first", 0))
