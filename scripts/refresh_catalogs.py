@@ -617,7 +617,16 @@ def run_provider(
                 proc.wait()
                 raise
         if returncode:
-            raise RuntimeError(f"updater exited with code {returncode}")
+            # Surface the provider-specific failure rather than forcing users to
+            # inspect a separate log file for the root cause.
+            log_lines = log_path.read_text(
+                encoding="utf-8", errors="replace"
+            ).splitlines()
+            diagnostic = next(
+                (line.strip() for line in reversed(log_lines) if line.strip()), ""
+            )
+            detail = f": {diagnostic}" if diagnostic else ""
+            raise RuntimeError(f"updater exited with code {returncode}{detail}")
 
         touched = unstaged_files()
         unexpected = touched - {relative_path}

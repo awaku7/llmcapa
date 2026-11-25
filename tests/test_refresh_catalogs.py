@@ -162,6 +162,39 @@ def test_run_provider_compacts_updater_output_for_any_provider(tmp_path, monkeyp
     assert json.loads(contents) == updated
 
 
+def test_run_provider_reports_final_updater_error(tmp_path, monkeypatch):
+    monkeypatch.setattr(refresh, "ROOT", tmp_path)
+    data_dir = tmp_path / "src" / "llmcapa" / "data"
+    data_dir.mkdir(parents=True)
+    catalog_path = data_dir / "google.json"
+    catalog_path.write_bytes(
+        refresh.serialize_json(_complete_catalog()).encode("utf-8")
+    )
+    monkeypatch.setattr(refresh, "DATA_DIR", data_dir)
+    monkeypatch.setattr(refresh, "restore_unstaged", lambda: None)
+
+    class FailedProcess:
+        def wait(self, timeout=None):
+            return 1
+
+    def start_failed_process(*_args, **kwargs):
+        kwargs["stdout"].write("urllib.error.HTTPError: HTTP Error 401: Unauthorized")
+        kwargs["stdout"].write(chr(10))
+        return FailedProcess()
+
+    monkeypatch.setattr(refresh.subprocess, "Popen", start_failed_process)
+
+    result = refresh.run_provider(
+        "google", timeout_seconds=1, log_directory=tmp_path / "logs"
+    )
+
+    assert result["status"] == "failed"
+    assert result["reason"] == (
+        "updater exited with code 1: "
+        "urllib.error.HTTPError: HTTP Error 401: Unauthorized"
+    )
+
+
 def test_resume_accepts_only_explicitly_staged_catalog_changes():
     staged_catalog = {"src/llmcapa/data/ai21.json"}
     with pytest.raises(ValueError, match="--resume-staged-catalogs"):
