@@ -33,6 +33,7 @@ from .models import (
     RerankCapability,
     ResponsesApiCapability,
     SpatialCapability,
+    ToolSearchCapability,
     VideoCapability,
     VideoEndpointCapability,
 )
@@ -65,6 +66,7 @@ __all__ = [
     "RerankCapability",
     "ResponsesApiCapability",
     "SpatialCapability",
+    "ToolSearchCapability",
     "VideoCapability",
     "VideoEndpointCapability",
     "__version__",
@@ -238,8 +240,15 @@ def register(cap: Capability) -> None:
 
 
 def supports_tool_search(model_id: str, provider: str | None = None) -> bool | None:
-    """Return whether the model explicitly supports Responses API tool_search."""
+    """Return whether the model explicitly supports deferred tool loading."""
     return get(model_id, provider).supports_tool_search
+
+
+def tool_search_detail(
+    model_id: str, provider: str | None = None
+) -> ToolSearchCapability | None:
+    """Return how the model's provider implements tool search, if known."""
+    return get(model_id, provider).tool_search
 
 
 def get_reasoning_mode_values(model_id: str, provider: str | None = None) -> list[str]:

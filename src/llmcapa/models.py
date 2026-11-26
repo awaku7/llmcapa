@@ -202,6 +202,56 @@ class ResponsesApiCapability:
 
 
 @dataclass(frozen=True)
+class ToolSearchCapability:
+    """How a provider's deferred tool loading ("tool search") works.
+
+    The flat :attr:`Capability.supports_tool_search` flag records whether
+    the model supports deferred tool loading at all. This object records
+    how the provider's mechanism works, because the implementations
+    differ: what is kept out of the model's context (``deferred_scope``:
+    the whole tool ``"definition"``, or only its parameter ``"schema"``
+    while the name and description stay visible), where the search runs
+    (``execution``: ``"server"`` and/or ``"client"``), which API surface
+    offers the feature (``api_surfaces``, for example ``"responses"``,
+    ``"messages"`` or ``"interactions"``), and any named search
+    ``variants`` the provider offers. ``None`` means that detail has not
+    been verified. This object supplements the flat flag; it does not
+    imply support by itself.
+    """
+
+    execution: tuple[str, ...] | None = None
+    deferred_scope: str | None = None
+    api_surfaces: tuple[str, ...] | None = None
+    variants: tuple[str, ...] | None = None
+    status: str | None = None
+    extra: dict[str, Any] = field(default_factory=dict)
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> ToolSearchCapability:
+        """Create tool search metadata from JSON data."""
+        values = dict(data)
+        known = {field for field in cls.__dataclass_fields__ if field != "extra"}  # type: ignore[attr-defined]
+        extra = dict(values.get("extra") or {})
+        for key in tuple(values):
+            if key != "extra" and key not in known:
+                extra[key] = values.pop(key)
+        values["extra"] = extra
+        for key in ("execution", "api_surfaces", "variants"):
+            items = values.get(key)
+            if items is not None:
+                values[key] = tuple(items)
+        return cls(**values)
+
+    def to_dict(self) -> dict[str, Any]:
+        """Return tool search metadata in JSON-compatible form."""
+        result = asdict(self)
+        for key in ("execution", "api_surfaces", "variants"):
+            if result.get(key) is not None:
+                result[key] = list(result[key])
+        return result
+
+
+@dataclass(frozen=True)
 class ComputerUseCapability:
     """Normalized Computer Use / CUA capability information."""
 
@@ -789,6 +839,8 @@ class Capability:
     responses_api: ResponsesApiCapability | None = None
     # Appended after all existing fields for positional compatibility.
     regions: RegionCapability | None = None
+    # Appended after all existing fields for positional compatibility.
+    tool_search: ToolSearchCapability | None = None
 
     def supports(self, feature: Feature | str) -> bool | None:
         """Return True if the model supports the given feature.
@@ -1257,6 +1309,10 @@ class Capability:
             d.pop("regions", None)
         else:
             d["regions"] = self.regions.to_dict()
+        if self.tool_search is None:
+            d.pop("tool_search", None)
+        else:
+            d["tool_search"] = self.tool_search.to_dict()
         if self.image is None:
             d.pop("image", None)
         else:
@@ -1309,6 +1365,12 @@ class Capability:
                         value
                         if isinstance(value, ResponsesApiCapability)
                         else ResponsesApiCapability.from_dict(value)
+                    )
+                elif key == "tool_search" and value is not None:
+                    kwargs[key] = (
+                        value
+                        if isinstance(value, ToolSearchCapability)
+                        else ToolSearchCapability.from_dict(value)
                     )
                 elif key == "image" and value is not None:
                     kwargs[key] = (

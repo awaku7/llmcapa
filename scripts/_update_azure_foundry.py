@@ -77,6 +77,7 @@ _SSR_PRESERVE_FIELDS = (
     "spatial",
     "azure_type",
     "regions",
+    "tool_search",
 )
 
 
