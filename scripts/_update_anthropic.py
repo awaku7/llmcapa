@@ -23,6 +23,48 @@ SOURCE_OVERVIEW = "https://platform.claude.com/docs/en/about-claude/models/overv
 SOURCE_PRICING = "https://platform.claude.com/docs/en/about-claude/pricing"
 OPUS_45_OVERVIEW = "https://platform.claude.com/docs/en/models/opus-4-5/overview"
 
+# Tool search (deferred tool loading) support, from Anthropic's official
+# model compatibility list (https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-search-tool,
+# checked 2026-11-27): both search variants are available on Haiku, Sonnet
+# and Opus 4.5 and later and on the Fable/Mythos lines, and the docs state
+# that Opus 4.1 and earlier models do not support the tool search tool.
+TOOL_SEARCH_DETAIL = {
+    "execution": ["server", "client"],
+    "deferred_scope": "definition",
+    "api_surfaces": ["messages"],
+    "variants": ["regex", "bm25"],
+}
+_TOOL_SEARCH_FAMILIES = ("opus", "sonnet", "haiku", "fable", "mythos")
+
+
+def anthropic_tool_search_support(model_id: str) -> bool | None:
+    """Return tool search support for a Claude model id, or None if unknown.
+
+    The generational cut in Anthropic's compatibility list: 4.5 and later
+    (and the Fable/Mythos lines) support the tool search tool; Opus 4.1
+    and earlier do not. Anything else the list does not cover (for example
+    Sonnet 4 or Haiku 3.5) stays unknown.
+    """
+    parts = model_id.split("-")
+    if parts and len(parts[-1]) == 8 and parts[-1].isdigit():
+        parts.pop()  # dated snapshot suffix, e.g. -20240229
+    if len(parts) < 3 or parts[0] != "claude":
+        return None
+    if parts[1].isdigit():
+        # Legacy shape: claude-3-opus, claude-3-5-sonnet.
+        family = next((p for p in parts[2:] if p in _TOOL_SEARCH_FAMILIES), None)
+        return False if family == "opus" else None
+    family = parts[1]
+    if family not in _TOOL_SEARCH_FAMILIES or not parts[2].isdigit():
+        return None
+    major = int(parts[2])
+    minor = int(parts[3]) if len(parts) > 3 and parts[3].isdigit() else 0
+    if family in ("fable", "mythos") or (major, minor) >= (4, 5):
+        return True
+    if family == "opus" and (major, minor) <= (4, 1):
+        return False
+    return None
+
 
 def base(
     *,
@@ -520,6 +562,13 @@ def build() -> list[dict]:
                 "min": 1024,
                 "max": old.get("max_output_tokens") or 128000,
             }
+        tool_search = anthropic_tool_search_support(mid)
+        if tool_search is not None:
+            old["supports_tool_search"] = tool_search
+            if tool_search:
+                old["tool_search"] = dict(TOOL_SEARCH_DETAIL)
+            else:
+                old.pop("tool_search", None)
         models.append(old)
     # Keep historical models that are no longer listed in current pricing.
     discovered_ids = {m["model_id"] for m in models}
