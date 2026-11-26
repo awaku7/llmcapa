@@ -907,6 +907,32 @@ def reconcile_computer_use(models: list[dict]) -> None:
             model.pop("computer_use", None)
 
 
+# Tool Retrieval supported models, from Google's official list
+# (https://aistudio.google.com/docs/tool-retrieval, checked 2026-11-27).
+# The feature is preview and Interactions API only. Models not listed
+# stay unknown rather than unsupported: the docs list is exact, and this
+# catalog also covers surfaces other than the Interactions API.
+TOOL_SEARCH_MODELS = {
+    "gemini-4-carbon",
+    "gemini-4-neon",
+    "gemini-4-hydrogen",
+    "gemini-4-argon",
+    "gemini-3.8-flash",
+    "gemini-3.6-flash",
+}
+TOOL_SEARCH_DETAIL = {
+    "execution": ["server", "client"],
+    "deferred_scope": "schema",
+    "api_surfaces": ["interactions"],
+    "status": "preview",
+}
+
+
+def google_tool_search_support(model_id: str) -> bool | None:
+    """Return Tool Retrieval support for a Gemini model id, or None."""
+    return True if model_id in TOOL_SEARCH_MODELS else None
+
+
 def main() -> None:
     data = json.loads(OUT.read_text(encoding="utf-8"))
     models: list[dict] = data["models"]
@@ -1026,6 +1052,13 @@ def main() -> None:
 
     models.sort(key=lambda x: x["model_id"])
     data["models"] = models
+    # Apply Tool Retrieval support to existing and newly inserted rows.
+    for model in models:
+        tool_search = google_tool_search_support(model["model_id"])
+        if tool_search is not None:
+            model["supports_tool_search"] = tool_search
+            model["tool_search"] = dict(TOOL_SEARCH_DETAIL)
+
     OUT.write_text(
         json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )

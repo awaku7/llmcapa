@@ -339,6 +339,44 @@ def test_azure_tool_search_support_requires_responses_api_and_excludes_nano():
     assert azure_tool_search_support("gpt-6-luna", False) is None
 
 
+def test_anthropic_tool_search_support_follows_official_compatibility():
+    scripts_path = str(Path(__file__).resolve().parents[1] / "scripts")
+    sys.path.insert(0, scripts_path)
+    try:
+        from _update_anthropic import anthropic_tool_search_support
+    finally:
+        sys.path.remove(scripts_path)
+
+    # Listed by Anthropic's official model compatibility (checked 2026-11-27).
+    assert anthropic_tool_search_support("claude-opus-4-5") is True
+    assert anthropic_tool_search_support("claude-haiku-4-5-20251001") is True
+    assert anthropic_tool_search_support("claude-fable-5-2") is True
+    assert anthropic_tool_search_support("claude-opus-5-6") is True
+    # The docs state Opus 4.1 and earlier do not support the tool.
+    assert anthropic_tool_search_support("claude-opus-4-1") is False
+    assert anthropic_tool_search_support("claude-opus-4") is False
+    assert anthropic_tool_search_support("claude-3-opus-20240229") is False
+    # Models the list does not cover stay unknown.
+    assert anthropic_tool_search_support("claude-sonnet-4") is None
+    assert anthropic_tool_search_support("claude-3-5-sonnet-20241022") is None
+
+
+def test_google_tool_search_support_follows_official_model_list():
+    scripts_path = str(Path(__file__).resolve().parents[1] / "scripts")
+    sys.path.insert(0, scripts_path)
+    try:
+        from _update_google import google_tool_search_support
+    finally:
+        sys.path.remove(scripts_path)
+
+    # Google's official Tool Retrieval supported models (checked 2026-11-27).
+    assert google_tool_search_support("gemini-4-hydrogen") is True
+    assert google_tool_search_support("gemini-3.6-flash") is True
+    # Anything else stays unknown, including other Gemini 3.x models.
+    assert google_tool_search_support("gemini-3.7-flash") is None
+    assert google_tool_search_support("gemini-2.5-pro") is None
+
+
 def test_azure_foundry_selects_supported_tasks_and_modalities():
     scripts_path = str(Path(__file__).resolve().parents[1] / "scripts")
     sys.path.insert(0, scripts_path)
