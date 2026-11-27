@@ -354,6 +354,7 @@ ______________________________________________________________________
 |---|---|
 | `decision` | decision モデルかどうか（`yes` / `no` / `?` / `-`） |
 | `image` `audio` `video` `document` `embedding` `rerank` `spatial` | 対応するレコードの有無 |
+| `responses_api` `interactions_api` `google_api` `anthropic_api` | 各 API の対応状況（`yes` / `no` / `?`） |
 | `q_kinds` | `decision.question_kinds`（例 `choice,score,noul`） |
 | `answers` | `decision.answer_fields` |
 | `pck` | `returns_probabilities` / `returns_confidence` / `calibrated_confidence` の3スロット |
@@ -367,8 +368,9 @@ ______________________________________________________________________
 1. レコードが無く、入力モダリティのみの場合は `?`。画像を入力できることは画像生成の可否を意味しないため、`yes` にはしない。
 1. それ以外は `-`。
 
-`--wide` は `name,in_mod,out_mod,cutoff` に加えて `decision,image,audio,video` を追加します。
+`--wide` は `name,in_mod,out_mod,cutoff` に加えて `decision,image,audio,video,responses_api,interactions_api,google_api,anthropic_api` を追加します。
 `--sort` は specialized capability 名も指定できます（`yes`=1 > `-`=0 > `no` / `?`=-1。`_sort_value()` の定義どおり）。
+API カラムは `--columns` で個別指定することもできます（例: `llmcapa list --provider google --columns provider,model_id,interactions_api,google_api`）。
 
 `llmcapa find` のフィルタは `Capability.supports()` を使うため、`find image=true` は
 入力モダリティとして画像を受け取るモデルも返します。カラムの `?` と一致しない場合がある点に注意してください。

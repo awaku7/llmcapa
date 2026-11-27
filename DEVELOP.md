@@ -320,6 +320,7 @@ The nested `Capability` records (`image` / `audio` / `video` / `document` / `emb
 |---|---|
 | `decision` | Whether the model is a decision model (`yes` / `no` / `?` / `-`) |
 | `image` `audio` `video` `document` `embedding` `rerank` `spatial` | Presence of the corresponding record |
+| `responses_api` `interactions_api` `google_api` `anthropic_api` | Support for the corresponding API surface (`yes` / `no` / `?`) |
 | `q_kinds` | `decision.question_kinds` (e.g. `choice,score,noul`) |
 | `answers` | `decision.answer_fields` |
 | `pck` | Three slots: `returns_probabilities`, `returns_confidence`, `calibrated_confidence` |
@@ -333,8 +334,10 @@ Resolution rules (`_cap_flag()`):
 1. No record and input modality only reports `?`. Accepting images as input says nothing about image generation, so it is not `yes`.
 1. Otherwise `-`.
 
-`--wide` adds `decision,image,audio,video` on top of `name,in_mod,out_mod,cutoff`.
+`--wide` adds `decision,image,audio,video,responses_api,interactions_api,google_api,anthropic_api` on top of `name,in_mod,out_mod,cutoff`.
 `--sort` also accepts specialized capability names (`yes`=1 > `no`=0 > `?`=-1).
+The API surface columns are also independently selectable with `--columns`, for example
+`llmcapa list --provider google --columns provider,model_id,interactions_api,google_api`.
 
 `llmcapa find` filters through `Capability.supports()`, so `find image=true` also returns
 models that accept images as input. That can disagree with the `?` shown in the column.

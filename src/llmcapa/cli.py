@@ -247,6 +247,12 @@ _COLUMN_ALIASES: dict[str, str] = {
     "json": "json",
     "json_mode": "json",
     "streaming": "streaming",
+    "responses": "responses_api",
+    "responses_api": "responses_api",
+    "interactions": "interactions_api",
+    "interactions_api": "interactions_api",
+    "google_api": "google_api",
+    "anthropic_api": "anthropic_api",
     "in_mod": "in_mod",
     "input_modalities": "in_mod",
     "out_mod": "out_mod",
@@ -299,6 +305,13 @@ _COLUMNS: dict[str, tuple[str, Callable[[Capability], str]]] = {
     "reasoning": ("reasoning", lambda c: _tri(c.supports_reasoning)),
     "json": ("json", lambda c: _tri(c.supports_json_mode)),
     "streaming": ("streaming", lambda c: _tri(c.supports_streaming)),
+    "responses_api": ("responses_api", lambda c: _tri(c.supports_responses_api)),
+    "interactions_api": (
+        "interactions_api",
+        lambda c: _tri(c.supports_interactions_api),
+    ),
+    "google_api": ("google_api", lambda c: _tri(c.supports_google_api)),
+    "anthropic_api": ("anthropic_api", lambda c: _tri(c.supports_anthropic_api)),
     "in_mod": ("in_mod", lambda c: ",".join(c.input_modalities) or "-"),
     "out_mod": ("out_mod", lambda c: ",".join(c.output_modalities) or "-"),
     "price": ("$/1M in/out", _fmt_price),
@@ -341,6 +354,10 @@ _WIDE_COLUMNS: tuple[str, ...] = (
     "image",
     "audio",
     "video",
+    "responses_api",
+    "interactions_api",
+    "google_api",
+    "anthropic_api",
 )
 
 
@@ -390,6 +407,10 @@ _SORT_KEYS: tuple[str, ...] = (
     "reasoning",
     "json",
     "streaming",
+    "responses_api",
+    "interactions_api",
+    "google_api",
+    "anthropic_api",
     "deprecated",
 ) + _CAPABILITY_NAMES
 
@@ -399,6 +420,10 @@ _FLAG_SORT = {
     "reasoning": "supports_reasoning",
     "json": "supports_json_mode",
     "streaming": "supports_streaming",
+    "responses_api": "supports_responses_api",
+    "interactions_api": "supports_interactions_api",
+    "google_api": "supports_google_api",
+    "anthropic_api": "supports_anthropic_api",
 }
 
 
