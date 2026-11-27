@@ -274,6 +274,7 @@ ______________________________________________________________________
 
 現在の標準 `Feature` Enum（`src/llmcapa/models.py`）には、Realtime と拡張モダリティも含まれます:
 
+- `LLMC_FEAT_INTERACTIONS_API`（プロバイダー・モデル別。未確認は `None`）
 - `LLMC_FEAT_REALTIME`
 - `LLMC_FEAT_FILE_INPUT`（PDFを含むファイル系入力。PDFは独立した Enum ではなく `file_input` のサブタイプとして評価されます）
 - `LLMC_FEAT_SPEECH_INPUT` / `LLMC_FEAT_SPEECH_OUTPUT`
@@ -282,6 +283,10 @@ ______________________________________________________________________
 - `LLMC_FEAT_TEXT_INPUT` / `LLMC_FEAT_IMAGE_INPUT` / `LLMC_FEAT_AUDIO_INPUT` / `LLMC_FEAT_VIDEO_INPUT`
 - `LLMC_FEAT_TEXT_OUTPUT` / `LLMC_FEAT_IMAGE_OUTPUT` / `LLMC_FEAT_AUDIO_OUTPUT` / `LLMC_FEAT_VIDEO_OUTPUT`
 - `LLMC_FEAT_RERANK` / `LLMC_FEAT_RERANK_OUTPUT` / `LLMC_FEAT_DECISION_OUTPUT`
+
+Google Gemini Interactions API の対応状況は、ネイティブ Google API のフラグと分けて
+`Capability.supports_interactions_api` に記録します。この値は三値（`True` / `False` / `None`）で、
+Google AI と Vertex AI はそれぞれの公式対応モデル一覧に基づいて更新します。
 
 ### 1. データクラスの更新
 
@@ -539,7 +544,6 @@ DBが100 MiBを超える場合は既存DBを置き換えずエラーにします
 全Capability属性・登録順序・全エイリアス・全検索候補を比較します。検索APIの代表ケースも
 照合し、不一致やSQLiteからのフォールバックがあれば異常終了します。CIのqualityジョブで
 一度だけ実行し、DBやJSONは変更しません。永続ユーザーカタログのoverride機能は廃止しており、回帰テストで起動時に無視されることを確認します。
-
 
 ### ユーザーキャッシュの自動整理
 

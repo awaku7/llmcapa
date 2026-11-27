@@ -22,10 +22,45 @@ SOURCE = "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models"
 THINKING_SOURCE = (
     "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/thinking"
 )
+INTERACTIONS_API_SOURCE = "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/capabilities/interactions"
 COMPUTER_USE_SOURCE = (
     "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/computer-use"
 )
 VERTEX_COMPUTER_USE_MODELS = GOOGLE_COMPUTER_USE_MODELS - {"gemini-3.5-flash-lite"}
+
+# Gemini and Lyria models in Vertex AI's official Interactions API support list
+# (INTERACTIONS_API_SOURCE, checked 2026-11-27). The catalog provider is
+# separate from Google AI Studio, so do not inherit Google's support flags.
+VERTEX_INTERACTIONS_API_MODELS = frozenset(
+    {
+        "gemini-omni-flash-preview",
+        "gemini-omni-1.2-flash",
+        "gemini-omni-1.1-flash-preview",
+        "gemini-4-neon",
+        "gemini-4-hydrogen",
+        "gemini-4-carbon",
+        "gemini-4-argon",
+        "gemini-3.8-flash-cyber",
+        "gemini-3.8-flash",
+        "gemini-3.7-flash",
+        "gemini-3.6-flash",
+        "gemini-3.5-flash-lite",
+        "gemini-3.5-flash",
+        "gemini-3.1-pro-preview",
+        "gemini-3.1-flash-lite",
+        "lyria-3-clip-preview",
+        "lyria-3-pro-preview",
+    }
+)
+
+
+def apply_vertex_interactions_api(model: dict) -> None:
+    """Set Vertex's documented Interactions API status for supported model families."""
+    model_id = str(model.get("model_id", ""))
+    model.pop("supports_interactions_api", None)
+    if model_id.startswith(("gemini-", "lyria-")):
+        model["supports_interactions_api"] = model_id in VERTEX_INTERACTIONS_API_MODELS
+
 
 # First-party Vertex Gemini controls. These are model-specific and deliberately
 # kept separate from OpenAI-compatible reasoning_effort.
@@ -101,121 +136,236 @@ def _vertex_model_page_spec(
 # truth for token limits and modalities.
 VERTEX_GEMINI_MODEL_PAGE_SPECS = {
     "gemini-3.1-pro-preview": _vertex_model_page_spec(
-        "Gemini 3.1 Pro", "3-1-pro", 1_048_576, 65_536,
-        ["text", "image", "audio", "video", "file"], ["text"],
+        "Gemini 3.1 Pro",
+        "3-1-pro",
+        1_048_576,
+        65_536,
+        ["text", "image", "audio", "video", "file"],
+        ["text"],
     ),
     "gemini-3.6-flash": _vertex_model_page_spec(
-        "Gemini 3.6 Flash", "3-6-flash", 1_048_576, 65_536,
-        ["text", "image", "audio", "video", "file"], ["text"],
+        "Gemini 3.6 Flash",
+        "3-6-flash",
+        1_048_576,
+        65_536,
+        ["text", "image", "audio", "video", "file"],
+        ["text"],
     ),
     "gemini-live-2.5-flash-native-audio": _vertex_model_page_spec(
-        "Gemini 2.5 Flash with Gemini Live API", "2-5-flash-live-api",
-        131_072, 65_536, ["text", "image", "audio", "video"],
-        ["text", "audio"], supports_chat_completion=False,
-        supports_function_calling=True, supports_json_mode=False,
-        supports_reasoning=False, supports_realtime=True,
+        "Gemini 2.5 Flash with Gemini Live API",
+        "2-5-flash-live-api",
+        131_072,
+        65_536,
+        ["text", "image", "audio", "video"],
+        ["text", "audio"],
+        supports_chat_completion=False,
+        supports_function_calling=True,
+        supports_json_mode=False,
+        supports_reasoning=False,
+        supports_realtime=True,
         supports_streaming=True,
     ),
     "gemini-3.5-flash-lite": _vertex_model_page_spec(
-        "Gemini 3.5 Flash-Lite", "3-5-flash-lite", 1_048_576, 65_536,
-        ["text", "image", "audio", "video", "file"], ["text"],
+        "Gemini 3.5 Flash-Lite",
+        "3-5-flash-lite",
+        1_048_576,
+        65_536,
+        ["text", "image", "audio", "video", "file"],
+        ["text"],
     ),
     "gemini-3.1-flash-lite": _vertex_model_page_spec(
-        "Gemini 3.1 Flash-Lite", "3-1-flash-lite", 1_048_576, 65_536,
-        ["text", "image", "audio", "video", "file"], ["text"],
+        "Gemini 3.1 Flash-Lite",
+        "3-1-flash-lite",
+        1_048_576,
+        65_536,
+        ["text", "image", "audio", "video", "file"],
+        ["text"],
     ),
     "gemini-nano-banana-2.1": _vertex_model_page_spec(
-        "Gemini Nano Banana 2.1", "nano-banana-2-1", 131_072, 32_768,
-        ["text", "image", "video", "file"], ["text", "image"],
+        "Gemini Nano Banana 2.1",
+        "nano-banana-2-1",
+        131_072,
+        32_768,
+        ["text", "image", "video", "file"],
+        ["text", "image"],
     ),
     "gemini-3.1-flash-image": _vertex_model_page_spec(
-        "Gemini 3.1 Flash Image (Nano Banana 2)", "3-1-flash-image",
-        131_072, 32_768, ["text", "image", "video", "file"], ["text", "image"],
+        "Gemini 3.1 Flash Image (Nano Banana 2)",
+        "3-1-flash-image",
+        131_072,
+        32_768,
+        ["text", "image", "video", "file"],
+        ["text", "image"],
     ),
     "gemini-3.1-flash-lite-image": _vertex_model_page_spec(
         "Gemini 3.1 Flash-Lite Image (Nano Banana 2 Lite)",
-        "3-1-flash-lite-image", 65_536, 4_096,
-        ["text", "image", "video", "file"], ["text", "image"],
+        "3-1-flash-lite-image",
+        65_536,
+        4_096,
+        ["text", "image", "video", "file"],
+        ["text", "image"],
     ),
     "gemini-3-pro-image": _vertex_model_page_spec(
-        "Gemini 3 Pro Image (Nano Banana Pro)", "3-pro-image", 65_536,
-        32_768, ["text", "image", "file"], ["text", "image"],
+        "Gemini 3 Pro Image (Nano Banana Pro)",
+        "3-pro-image",
+        65_536,
+        32_768,
+        ["text", "image", "file"],
+        ["text", "image"],
     ),
     "gemini-2.5-flash-image": _vertex_model_page_spec(
-        "Gemini 2.5 Flash Image", "2-5-flash-image", 32_768, 32_768,
-        ["text", "image", "file"], ["text", "image"],
+        "Gemini 2.5 Flash Image",
+        "2-5-flash-image",
+        32_768,
+        32_768,
+        ["text", "image", "file"],
+        ["text", "image"],
     ),
     "gemini-omni-1.2-flash": _vertex_model_page_spec(
-        "Gemini Omni 1.2 Flash", "omni-1-2-flash", 131_072, 260_640,
-        ["text", "image", "video"], ["text", "video"],
+        "Gemini Omni 1.2 Flash",
+        "omni-1-2-flash",
+        131_072,
+        260_640,
+        ["text", "image", "video"],
+        ["text", "video"],
     ),
     "gemini-omni-1.1-flash-preview": _vertex_model_page_spec(
-        "Gemini Omni 1.1 Flash Preview", "omni-1-1-flash", 131_072,
-        57_920, ["text", "image", "video"], ["text", "video"],
+        "Gemini Omni 1.1 Flash Preview",
+        "omni-1-1-flash",
+        131_072,
+        57_920,
+        ["text", "image", "video"],
+        ["text", "video"],
     ),
     "gemini-omni-flash-preview": _vertex_model_page_spec(
-        "Gemini Omni Flash Preview", "omni-flash-preview", 131_072,
-        57_920, ["text", "image", "video"], ["text", "video"],
+        "Gemini Omni Flash Preview",
+        "omni-flash-preview",
+        131_072,
+        57_920,
+        ["text", "image", "video"],
+        ["text", "video"],
     ),
     "gemini-3.8-flash": _vertex_model_page_spec(
-        "Gemini 3.8 Flash", "3-8-flash", 1_048_576, 65_536,
-        ["text", "image", "audio", "video", "file"], ["text"],
+        "Gemini 3.8 Flash",
+        "3-8-flash",
+        1_048_576,
+        65_536,
+        ["text", "image", "audio", "video", "file"],
+        ["text"],
         supports_reasoning=True,
     ),
     "gemini-3.8-flash-cyber": _vertex_model_page_spec(
-        "Gemini 3.8 Flash Cyber", "3-8-flash-cyber", 1_048_576,
-        65_536, ["text", "image", "audio", "video", "file"], ["text"],
-        supports_chat_completion=True, supports_function_calling=True,
-        supports_json_mode=True, supports_reasoning=True,
+        "Gemini 3.8 Flash Cyber",
+        "3-8-flash-cyber",
+        1_048_576,
+        65_536,
+        ["text", "image", "audio", "video", "file"],
+        ["text"],
+        supports_chat_completion=True,
+        supports_function_calling=True,
+        supports_json_mode=True,
+        supports_reasoning=True,
     ),
     "gemini-3.8-live": _vertex_model_page_spec(
-        "Gemini 3.8 Live", "3-8-live", 131_072, 65_536,
-        ["text", "image", "audio", "video"], ["text", "audio", "video"],
-        supports_chat_completion=False, supports_function_calling=True,
-        supports_json_mode=False, supports_reasoning=False,
-        supports_realtime=True, supports_streaming=True,
+        "Gemini 3.8 Live",
+        "3-8-live",
+        131_072,
+        65_536,
+        ["text", "image", "audio", "video"],
+        ["text", "audio", "video"],
+        supports_chat_completion=False,
+        supports_function_calling=True,
+        supports_json_mode=False,
+        supports_reasoning=False,
+        supports_realtime=True,
+        supports_streaming=True,
     ),
     "gemini-3.8-flash-tts": _vertex_model_page_spec(
-        "Gemini 3.8 Flash TTS", "3-8-flash-tts", 8_192, 16_384,
-        ["text"], ["audio"], supports_chat_completion=False,
-        supports_function_calling=False, supports_json_mode=False,
-        supports_reasoning=False, supports_streaming=True,
+        "Gemini 3.8 Flash TTS",
+        "3-8-flash-tts",
+        8_192,
+        16_384,
+        ["text"],
+        ["audio"],
+        supports_chat_completion=False,
+        supports_function_calling=False,
+        supports_json_mode=False,
+        supports_reasoning=False,
+        supports_streaming=True,
     ),
     "gemini-3.8-flash-lite-tts": _vertex_model_page_spec(
-        "Gemini 3.8 Flash-Lite TTS", "3-8-flash-lite-tts", 8_192,
-        16_384, ["text"], ["audio"], supports_chat_completion=False,
-        supports_function_calling=False, supports_json_mode=False,
-        supports_reasoning=False, supports_streaming=True,
+        "Gemini 3.8 Flash-Lite TTS",
+        "3-8-flash-lite-tts",
+        8_192,
+        16_384,
+        ["text"],
+        ["audio"],
+        supports_chat_completion=False,
+        supports_function_calling=False,
+        supports_json_mode=False,
+        supports_reasoning=False,
+        supports_streaming=True,
     ),
     "gemini-3.5-transcribe": _vertex_model_page_spec(
-        "Gemini 3.5 Transcribe", "3-5-transcribe", 0, 0,
-        ["audio"], ["text"], supports_chat_completion=False,
-        supports_function_calling=False, supports_json_mode=False,
-        supports_reasoning=False, supports_streaming=False,
+        "Gemini 3.5 Transcribe",
+        "3-5-transcribe",
+        0,
+        0,
+        ["audio"],
+        ["text"],
+        supports_chat_completion=False,
+        supports_function_calling=False,
+        supports_json_mode=False,
+        supports_reasoning=False,
+        supports_streaming=False,
     ),
     "gemini-3.5-transcribe-live": _vertex_model_page_spec(
-        "Gemini 3.5 Transcribe Live", "3-5-transcribe", 0, 0,
-        ["audio"], ["text"], supports_chat_completion=False,
-        supports_function_calling=False, supports_json_mode=False,
-        supports_reasoning=False, supports_realtime=True,
+        "Gemini 3.5 Transcribe Live",
+        "3-5-transcribe",
+        0,
+        0,
+        ["audio"],
+        ["text"],
+        supports_chat_completion=False,
+        supports_function_calling=False,
+        supports_json_mode=False,
+        supports_reasoning=False,
+        supports_realtime=True,
         supports_streaming=True,
     ),
     "gemini-3.5-live-translate-preview": _vertex_model_page_spec(
-        "Gemini 3.5 Live Translate", "3-5-live-translate", 131_072,
-        65_536, ["audio"], ["text", "audio"],
-        supports_chat_completion=False, supports_function_calling=False,
-        supports_json_mode=False, supports_reasoning=False,
-        supports_realtime=True, supports_streaming=True,
+        "Gemini 3.5 Live Translate",
+        "3-5-live-translate",
+        131_072,
+        65_536,
+        ["audio"],
+        ["text", "audio"],
+        supports_chat_completion=False,
+        supports_function_calling=False,
+        supports_json_mode=False,
+        supports_reasoning=False,
+        supports_realtime=True,
+        supports_streaming=True,
     ),
     "gemini-embedding-2": _vertex_model_page_spec(
-        "Gemini Embedding 2", "embedding-2", 8_192, 0,
-        ["text", "image", "audio", "video", "file"], ["embedding"],
-        supports_chat_completion=False, supports_function_calling=False,
-        supports_json_mode=False, supports_reasoning=False,
+        "Gemini Embedding 2",
+        "embedding-2",
+        8_192,
+        0,
+        ["text", "image", "audio", "video", "file"],
+        ["embedding"],
+        supports_chat_completion=False,
+        supports_function_calling=False,
+        supports_json_mode=False,
+        supports_reasoning=False,
     ),
     "gemini-robotics-er-2-preview": _vertex_model_page_spec(
-        "Gemini Robotics ER 2", "robotics-er-2", 131_072, 65_536,
-        ["text", "image", "audio", "video"], ["text"],
+        "Gemini Robotics ER 2",
+        "robotics-er-2",
+        131_072,
+        65_536,
+        ["text", "image", "audio", "video"],
+        ["text"],
         supports_reasoning=True,
     ),
 }
@@ -402,7 +552,9 @@ def enrich_vertex_gemini_modalities(row: dict) -> None:
         row["supports_vision"] = True
     if "audio" in override["input_modalities"]:
         row["supports_audio_input"] = True
-        row["supports_audio_output"] = bool(override.get("supports_audio_output", False))
+        row["supports_audio_output"] = bool(
+            override.get("supports_audio_output", False)
+        )
         row["audio"] = {
             "accepts_audio_input": True,
             "speech_generation": False,
@@ -600,6 +752,7 @@ def main() -> None:
         enrich_thinking(row)
         enrich_vertex_gemini_modalities(row)
         apply_vertex_gemini_model_page_spec(row)
+        apply_vertex_interactions_api(row)
         computer_use = google_computer_use_capability(model_id, "vertex-ai")
         if computer_use is not None and model_id in VERTEX_COMPUTER_USE_MODELS:
             computer_use["source_url"] = COMPUTER_USE_SOURCE

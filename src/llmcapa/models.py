@@ -25,6 +25,7 @@ class Feature(str, Enum):
     LLMC_FEAT_REASONING = "reasoning"
     LLMC_FEAT_CHAT_COMPLETION = "chat_completion"
     LLMC_FEAT_RESPONSES_API = "responses_api"
+    LLMC_FEAT_INTERACTIONS_API = "interactions_api"
     LLMC_FEAT_REASONING_EFFORT = "reasoning_effort"
     LLMC_FEAT_REASONING_MODE = "reasoning_mode"
     LLMC_FEAT_TOOL_SEARCH = "tool_search"
@@ -841,13 +842,15 @@ class Capability:
     regions: RegionCapability | None = None
     # Appended after all existing fields for positional compatibility.
     tool_search: ToolSearchCapability | None = None
+    # Appended after all existing fields for positional compatibility.
+    supports_interactions_api: bool | None = None
 
     def supports(self, feature: Feature | str) -> bool | None:
         """Return True if the model supports the given feature.
 
         Accepts short names such as "vision", "json_mode",
         "function_calling", "json_schema", "streaming", "reasoning",
-        "chat_completion", "responses_api", "multimodal",
+        "chat_completion", "responses_api", "interactions_api", "multimodal",
         "reasoning_effort", "reasoning_mode", "tool_search",
         "thinking_budget", "fim",
         or a modality such as "image", "audio", "video", "embedding",
@@ -909,6 +912,7 @@ class Capability:
             "reasoning",
             "chat_completion",
             "responses_api",
+            "interactions_api",
             "reasoning_effort",
             "reasoning_mode",
             "tool_search",
@@ -1120,6 +1124,7 @@ class Capability:
                 "reasoning",
                 "chat_completion",
                 "responses_api",
+                "interactions_api",
                 "reasoning_effort",
                 "reasoning_mode",
                 "tool_search",
@@ -1287,6 +1292,8 @@ class Capability:
             d.pop("reasoning_mode_values", None)
         if self.supports_tool_search is None:
             d.pop("supports_tool_search", None)
+        if self.supports_interactions_api is None:
+            d.pop("supports_interactions_api", None)
         if self.supports_reasoning_mode is None:
             d.pop("supports_reasoning_mode", None)
         if d.get("thinking_budget_values") is None:

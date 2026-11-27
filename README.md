@@ -8,7 +8,7 @@ Lookup capabilities (context window, modalities, supported features) of various 
 - **Zero Runtime Dependencies**: Built entirely on the Python standard library.
 - **Alias Resolution**: Automatically resolves model aliases and provider-specific names (e.g., `gpt-4o-2024-08-06` -> `gpt-4o`, `gemini-1.5-pro-preview-0409` -> `gemini-1.5-pro`).
 - **Provider Aliases**: Provider arguments accept common aliases and normalized forms (e.g., `grok`/`x-ai` → `xai`, `bedrock`/`aws-bedrock`/`aws` → `amazon`, `vertexai` → `vertex-ai`, `open-ai` → `openai`, `google-ai` → `google`, `azure` → `azure-openai`, `hf` → `huggingface`, `alibaba`/`dashscope` → `qwen`, `lm-studio` → `lmstudio`, `modellix-ai` → `modellix`, `mdx`/`mdxmaas` → `mdx-maas`, `cloudflare`/`workers-ai` → `cloudflare-workers-ai`, `particle` → `particle-ai`). Separators `_. ` are treated as `-`.
-- **Advanced Feature Queries**: Check support for `vision`, `multimodal`, `chat_completion`, `responses_api`, `realtime`, `tool_search`, `reasoning_effort`, `reasoning_mode`, `thinking_budget`, and specific input/output modalities (e.g., `image_input`, `audio_input`, `file_input`, `speech_input`, `embedding_output`). PDF is treated as a subtype of `file_input`.
+- **Advanced Feature Queries**: Check support for `vision`, `multimodal`, `chat_completion`, `responses_api`, `interactions_api`, `realtime`, `tool_search`, `reasoning_effort`, `reasoning_mode`, `thinking_budget`, and specific input/output modalities (e.g., `image_input`, `audio_input`, `file_input`, `speech_input`, `embedding_output`). PDF is treated as a subtype of `file_input`.
 - **High Performance**: Evaluated feature checks are cached internally using memoization to avoid redundant calculations.
 - **Cost Estimation**: Estimate API costs based on input and output token counts.
 - **Drop-in Replacement Checker**: Check if a model can be safely replaced by another model based on context window and required features.
@@ -69,6 +69,12 @@ from llmcapa import Feature, ReasoningEffort
 print(cap.supports(Feature.LLMC_FEAT_VISION))             # True
 print(cap.supports(Feature.LLMC_FEAT_RESPONSES_API))      # True
 print(cap.supports(Feature.LLMC_FEAT_REASONING_EFFORT))   # False
+
+# The Gemini Interactions API is tracked separately by provider and model.
+gemini = llmcapa.get("gemini-4-carbon", provider="google")
+print(gemini.supports(Feature.LLMC_FEAT_INTERACTIONS_API))  # True
+vertex_gemini = llmcapa.get("gemini-4-carbon", provider="vertex-ai")
+print(vertex_gemini.supports("interactions_api"))  # True
 
 # Use ReasoningEffort enum for models supporting reasoning_effort
 print(ReasoningEffort.LLMC_EFFORT_HIGH)                   # "high"

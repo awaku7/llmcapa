@@ -927,6 +927,43 @@ TOOL_SEARCH_DETAIL = {
     "status": "preview",
 }
 
+# Gemini API models in Google's official Interactions API support table
+# (https://ai.google.dev/gemini-api/docs/interactions, checked 2026-11-27).
+# Keep this separate from supports_google_api: that flag describes the native
+# Google API generally, not support for this particular API surface.
+GOOGLE_INTERACTIONS_API_MODELS = frozenset(
+    {
+        "gemini-4-carbon",
+        "gemini-4-argon",
+        "gemini-4-neon",
+        "gemini-4-hydrogen",
+        "gemini-3.8-flash",
+        "gemini-3.6-flash",
+        "gemini-3.1-pro-preview",
+        "gemini-3.5-flash-lite",
+        "gemini-3.1-flash-lite",
+        "gemini-3-flash-preview",
+        "gemini-2.5-pro",
+        "gemini-2.5-flash",
+        "gemini-2.5-flash-lite",
+        "gemini-3-pro-image",
+        "gemini-3.1-flash-image",
+        "gemini-3.1-flash-tts-preview",
+        "gemma-4-31b-it",
+        "gemma-4-26b-a4b-it",
+        "lyria-3.5",
+        "lyria-3-clip-preview",
+        "lyria-3-pro-preview",
+    }
+)
+
+
+def apply_google_interactions_api(model: dict) -> None:
+    """Set the model-level Interactions API status from Google's support list."""
+    model["supports_interactions_api"] = (
+        model.get("model_id") in GOOGLE_INTERACTIONS_API_MODELS
+    )
+
 
 def google_tool_search_support(model_id: str) -> bool | None:
     """Return Tool Retrieval support for a Gemini model id, or None."""
@@ -1058,6 +1095,7 @@ def main() -> None:
         if tool_search is not None:
             model["supports_tool_search"] = tool_search
             model["tool_search"] = dict(TOOL_SEARCH_DETAIL)
+        apply_google_interactions_api(model)
 
     OUT.write_text(
         json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"

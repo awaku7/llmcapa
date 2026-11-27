@@ -2,7 +2,7 @@
 
 This document explains how to develop, extend, and maintain the `llmcapa` library.
 
----
+______________________________________________________________________
 
 ## Project Structure
 
@@ -29,26 +29,26 @@ llmcapa/
     └── test_advanced.py
 ```
 
----
+______________________________________________________________________
 
 ## Design Philosophy
 
 1. **Offline-First**: Core capability data is bundled statically inside the package as JSON files. `get()` / `search()` make no network requests and resolve only against bundled catalogs plus additive OpenRouter API cache entries; misses never trigger a fetch. Fetching the published llmcapa GitHub catalog happens only when `fetch_github_catalog` is called explicitly. Explicit refreshes replace bundled JSON when writable and back up old files under `~/.llmcapa/github_catalog_backups`. With `write_bundled=False` or a read-only package, fetched records are process-local only. Durable user catalog overrides are not written or loaded; GitHub response caches are used only during explicit fetch calls and never overlay bundled data at startup.
-2. **Zero Runtime Dependencies**: The library must run using only the Python standard library. External packages (like `pytest` or `build`) are strictly for development/testing.
-3. **Immutability & Performance**: The `Capability` dataclass is `frozen=True`. To avoid redundant calculations during feature checks, evaluation results are cached internally using memoization.
+1. **Zero Runtime Dependencies**: The library must run using only the Python standard library. External packages (like `pytest` or `build`) are strictly for development/testing.
+1. **Immutability & Performance**: The `Capability` dataclass is `frozen=True`. To avoid redundant calculations during feature checks, evaluation results are cached internally using memoization.
 
----
+______________________________________________________________________
 
-
----
+______________________________________________________________________
 
 ## Provider Aliases & Normalization
 
 `get()`, `list_models()`, and `search()` accept provider names that are normalized and alias-resolved before lookup.
 
 ### Normalization
+
 1. Lowercase
-2. Unify separators `_. \t` → `-` (e.g. `azure_openai` → `azure-openai`, `X AI` → `x-ai`)
+1. Unify separators `_. \t` → `-` (e.g. `azure_openai` → `azure-openai`, `X AI` → `x-ai`)
 
 ### Built-in aliases (`Registry._provider_aliases`)
 
@@ -183,6 +183,7 @@ The audit distinguishes missing generation metadata from ambiguous or image-anal
 To add a new model provider (e.g., `cohere`):
 
 ### 1. Create a Data File
+
 Create a new JSON file under `src/llmcapa/data/<provider_name>.json`.
 
 ```json
@@ -216,6 +217,7 @@ Create a new JSON file under `src/llmcapa/data/<provider_name>.json`.
 ```
 
 ### 2. Update the Provider Test List
+
 Open `tests/test_registry.py` and add your new provider name to the `expected` set in `test_providers()`:
 
 ```python
@@ -231,7 +233,7 @@ def test_providers():
     assert expected <= set(provs)
 ```
 
----
+______________________________________________________________________
 
 ## Adding a New Feature Flag
 
@@ -239,6 +241,7 @@ To add a new capability/feature flag (e.g., `supports_structured_outputs`):
 
 The standard `Feature` enum also includes Realtime and extended modalities:
 
+- `LLMC_FEAT_INTERACTIONS_API` (provider- and model-specific; `None` means unverified)
 - `LLMC_FEAT_REALTIME`
 - `LLMC_FEAT_FILE_INPUT` (file inputs, including PDF as a subtype)
 - `LLMC_FEAT_SPEECH_INPUT` / `LLMC_FEAT_SPEECH_OUTPUT`
@@ -246,7 +249,12 @@ The standard `Feature` enum also includes Realtime and extended modalities:
 
 PDF is intentionally evaluated as `file_input` rather than having a separate enum member.
 
+Google Gemini Interactions API support is stored separately from the native Google API flag:
+`Capability.supports_interactions_api` is tri-state, and the Google and Vertex AI catalogs use
+their respective official supported-model lists.
+
 ### 1. Update the Dataclass
+
 Open `src/llmcapa/models.py` and add the new field to the `Capability` dataclass with a default value:
 
 ```python
@@ -258,6 +266,7 @@ class Capability:
 ```
 
 ### 2. Update the Replacement Checker (Optional)
+
 If the new feature is a critical capability that should be verified when checking if one model can replace another, add it to the `features_to_check` list in `can_be_replaced_by()` inside `src/llmcapa/models.py`:
 
 ```python
@@ -276,12 +285,14 @@ If the new feature is a critical capability that should be verified when checkin
 ```
 
 ### 3. Update JSON Data Files
+
 Add the new field to the relevant models in the JSON files under `src/llmcapa/data/`.
 
 ### 4. Add Unit Tests
+
 Add test cases in `tests/test_advanced.py` or `tests/test_registry.py` to verify that the new feature flag is correctly parsed, evaluated, and cached.
 
----
+______________________________________________________________________
 
 ## CLI Output Design
 
@@ -317,10 +328,10 @@ The nested `Capability` records (`image` / `audio` / `video` / `document` / `emb
 Resolution rules (`_cap_flag()`):
 
 1. A nested record with a same-named primary field reports that value (`decision.decision`).
-2. A record without a primary field reports `yes` (`image` / `audio` / `video` are per-operation records).
-3. No record but the name is in `output_modalities` reports `yes`.
-4. No record and input modality only reports `?`. Accepting images as input says nothing about image generation, so it is not `yes`.
-5. Otherwise `-`.
+1. A record without a primary field reports `yes` (`image` / `audio` / `video` are per-operation records).
+1. No record but the name is in `output_modalities` reports `yes`.
+1. No record and input modality only reports `?`. Accepting images as input says nothing about image generation, so it is not `yes`.
+1. Otherwise `-`.
 
 `--wide` adds `decision,image,audio,video` on top of `name,in_mod,out_mod,cutoff`.
 `--sort` also accepts specialized capability names (`yes`=1 > `no`=0 > `?`=-1).
@@ -362,11 +373,12 @@ llmcapa find --provider amazon --min-max-output 32768
 
 JSON output still returns every `Capability.to_dict()` field, so its column set does not match csv/markdown.
 
----
+______________________________________________________________________
 
 ## Development Workflow
 
 ### Running Tests
+
 We use `pytest` for testing. Run the following command from the project root directory:
 
 ```bash
@@ -376,6 +388,7 @@ python -m pytest -v
 ```
 
 ### Code Verification
+
 Before building or committing, verify that all Python files compile successfully:
 
 ```bash
@@ -383,6 +396,7 @@ python -m py_compile src/llmcapa/*.py tests/*.py
 ```
 
 ### Building the Package
+
 To build the source distribution (sdist) and wheel binary:
 
 ```bash
@@ -395,7 +409,7 @@ python -m build
 
 The built files will be generated under the `dist/` directory.
 
----
+______________________________________________________________________
 
 ## Azure Catalog Scraping
 
@@ -420,7 +434,7 @@ When `fetch_openrouter()` is called, it maps the OpenRouter API model schema to 
 | `pricing` | `pricing` | Converts `prompt` and `completion` rates to per-1M token rates |
 | `aliases` | `id` | Lowercased `id` is added as an alias |
 
----
+______________________________________________________________________
 
 ## HuggingFace Mapping Details
 
@@ -446,5 +460,3 @@ Modellix provides an LLM gateway and media APIs for image, video, and audio. In 
 Both files use `provider="modellix"`; upstream providers remain in the model ID prefix, such as `kling/kling-v3-t2v`. Because Modellix is an aggregated catalog, `Registry._load_bundled()` loads these files last so native provider data is not overwritten.
 
 Refresh from `https://docs.modellix.ai/llms.txt`, `https://www.modellix.ai/llm`, and Modellix's official model documentation. Do not reuse OpenRouter data for the Modellix catalog. Media models may not publish token-oriented `context_window` or `pricing`; keep unverified values at `0` or `null` and record modalities and official documentation URLs in `extra` rather than inventing values.
-
-
