@@ -1,7 +1,8 @@
-"""Update google.json from Google's published Gemini pricing tables.
+"""Update google.json using Google's official pricing and model detail pages.
 
-Model IDs and token prices are discovered from the official page at runtime;
-existing catalog metadata is preserved where the page does not provide it.
+Model IDs and token prices come from the pricing page. Token limits, modalities,
+and explicit capability badges come from matching model detail pages. Existing
+catalog values are preserved when an official page omits or cannot verify them.
 """
 
 from __future__ import annotations
@@ -10,10 +11,13 @@ import json
 import re
 import shutil
 import ssl
+from collections.abc import Iterable
+from concurrent.futures import ThreadPoolExecutor
 from copy import deepcopy
 from datetime import datetime, timezone
 from html import unescape
 from pathlib import Path
+from typing import Any
 from urllib.error import URLError
 from urllib.parse import urljoin, urlsplit
 from urllib.request import Request, urlopen
@@ -29,6 +33,7 @@ INSTALLED = (
     Path(__file__).resolve().parents[1] / "src" / "llmcapa" / "data" / "google.json"
 )
 SOURCE = "https://ai.google.dev/gemini-api/docs/pricing"
+MODEL_DETAILS_SOURCE = "https://ai.google.dev/gemini-api/docs/models"
 MODEL_INDEX_SOURCE = "https://aistudio.google.com/docs/models"
 PRICING_SOURCE = "https://aistudio.google.com/docs/pricing"
 GOOGLE_GEMINI_4_MODEL_SPECS = {
@@ -72,6 +77,40 @@ _GOOGLE_GEMINI_4_VIDEO_MIME_TYPES = [
 ]
 
 GOOGLE_GEMINI_AUDIO_MODEL_SPECS = {
+    "gemini-2.5-flash-native-audio-preview-12-2025": {
+        "source": "https://ai.google.dev/gemini-api/docs/models/gemini-2.5-flash-native-audio-preview-12-2025",
+        "input_modalities": ["text", "audio", "video"],
+        "output_modalities": ["text", "audio"],
+        "context_window": 131_072,
+        "max_output_tokens": 8_192,
+        "supports_streaming": True,
+        "supports_realtime": True,
+        "speech_understanding": True,
+        "supports_chat_completion": True,
+        "supports_function_calling": True,
+        "supports_json_mode": False,
+        "supports_reasoning": True,
+    },
+    "gemini-2.5-flash-preview-tts": {
+        "source": "https://ai.google.dev/gemini-api/docs/models/gemini-2.5-flash-preview-tts",
+        "input_modalities": ["text"],
+        "output_modalities": ["audio"],
+        "context_window": 8_192,
+        "max_output_tokens": 16_384,
+        "supports_streaming": None,
+        "supports_realtime": False,
+        "speech_understanding": False,
+    },
+    "gemini-2.5-pro-preview-tts": {
+        "source": "https://ai.google.dev/gemini-api/docs/models/gemini-2.5-pro-preview-tts",
+        "input_modalities": ["text"],
+        "output_modalities": ["audio"],
+        "context_window": 8_192,
+        "max_output_tokens": 16_384,
+        "supports_streaming": None,
+        "supports_realtime": False,
+        "speech_understanding": False,
+    },
     "gemini-3.5-transcribe": {
         "source": "https://ai.google.dev/gemini-api/docs/models/gemini-3.5-transcribe",
         "input_modalities": ["audio"],
@@ -102,6 +141,36 @@ GOOGLE_GEMINI_AUDIO_MODEL_SPECS = {
         "max_output_tokens": 65_536,
         "supports_streaming": True,
         "supports_realtime": True,
+    },
+    "gemini-3.1-flash-tts-preview": {
+        "source": "https://ai.google.dev/gemini-api/docs/models/gemini-3.1-flash-tts-preview",
+        "input_modalities": ["text"],
+        "output_modalities": ["audio"],
+        "context_window": 8_192,
+        "max_output_tokens": 16_384,
+        "supports_streaming": None,
+        "supports_realtime": False,
+        "speech_understanding": False,
+    },
+    "gemini-3.8-flash-tts": {
+        "source": "https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash-tts",
+        "input_modalities": ["text"],
+        "output_modalities": ["audio"],
+        "context_window": 8_192,
+        "max_output_tokens": 16_384,
+        "supports_streaming": None,
+        "supports_realtime": False,
+        "speech_understanding": False,
+    },
+    "gemini-3.8-flash-lite-tts": {
+        "source": "https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash-lite-tts",
+        "input_modalities": ["text"],
+        "output_modalities": ["audio"],
+        "context_window": 8_192,
+        "max_output_tokens": 16_384,
+        "supports_streaming": None,
+        "supports_realtime": False,
+        "speech_understanding": False,
     },
 }
 
@@ -193,7 +262,9 @@ def discover_prices(
             inp = markdown_price("Input price")
             out = markdown_price("Output price")
             if inp is not None and out is not None:
-                discovered[model_id] = (inp, out, 1_048_576)
+                # Pricing pages do not publish context limits. They are read
+                # from each model's official detail page below.
+                discovered[model_id] = (inp, out, 0)
         return discovered
 
     for index, match in enumerate(headings):
@@ -216,8 +287,172 @@ def discover_prices(
 
         inp, out = paid_price("Input price"), paid_price("Output price")
         if inp is not None and out is not None:
-            discovered[model_id] = (inp, out, 1_048_576)
+            # Pricing pages do not publish context limits. They are read
+            # from each model's official detail page below.
+            discovered[model_id] = (inp, out, 0)
     return discovered
+
+
+def _modalities_from_model_text(value: str) -> list[str]:
+    """Normalize documented Google input/output types to catalog modalities."""
+    patterns = (
+        ("text", r"\btext\b"),
+        ("image", r"\bimages?\b"),
+        ("audio", r"\baudio\b|\bspeech\b"),
+        ("video", r"\bvideo\b"),
+        ("file", r"\bpdf\b|\bfile\b"),
+    )
+    lowered = value.lower()
+    return [name for name, pattern in patterns if re.search(pattern, lowered)]
+
+
+def parse_model_metadata(
+    markdown: str, expected_model_id: str
+) -> dict[str, Any] | None:
+    """Parse limits, modalities, and explicit capability badges from a model page."""
+    code_match = re.search(r"(?is)\bModel code\b.*?`([^`]+)`", markdown)
+    if not code_match or code_match.group(1).strip() != expected_model_id:
+        return None
+
+    metadata: dict[str, Any] = {}
+    for label, key in (
+        ("Input token limit", "context_window"),
+        ("Output token limit", "max_output_tokens"),
+    ):
+        match = re.search(
+            rf"(?i)\*\*{re.escape(label)}\*\*\s*([\d,]+)", markdown
+        )
+        if match:
+            metadata[key] = int(match.group(1).replace(",", ""))
+
+    input_match = re.search(r"(?im)^.*?\*\*Inputs\*\*\s*([^\r\n]+)", markdown)
+    output_match = re.search(r"(?im)^.*?\*\*Output\*\*\s*([^\r\n]+)", markdown)
+    inputs = (
+        _modalities_from_model_text(input_match.group(1)) if input_match else []
+    )
+    outputs = (
+        _modalities_from_model_text(output_match.group(1)) if output_match else []
+    )
+    if inputs:
+        metadata["input_modalities"] = inputs
+        metadata["supports_vision"] = "image" in inputs
+        metadata["supports_audio_input"] = "audio" in inputs
+    if outputs:
+        metadata["output_modalities"] = outputs
+        metadata["supports_audio_output"] = "audio" in outputs
+
+    for label, key in (
+        ("Function calling", "supports_function_calling"),
+        ("Structured outputs", "supports_json_mode"),
+        ("Thinking", "supports_reasoning"),
+    ):
+        supported = _documented_capability(markdown, label)
+        if supported is not None:
+            metadata[key] = supported
+    return metadata or None
+
+
+def parse_model_token_limits(
+    markdown: str, expected_model_id: str
+) -> dict[str, int] | None:
+    """Return only exact token-limit values from a matching Google model page."""
+    metadata = parse_model_metadata(markdown, expected_model_id)
+    if metadata is None:
+        return None
+    limits = {
+        key: metadata[key]
+        for key in ("context_window", "max_output_tokens")
+        if key in metadata
+    }
+    return limits or None
+
+
+def discover_model_specs(
+    model_ids: Iterable[str], *, fetcher=None
+) -> dict[str, dict[str, Any]]:
+    """Fetch official model pages and return verified model metadata.
+
+    Batch aliases share their base model page. A missing page or undocumented
+    value is left unknown rather than being filled with a family-wide guess.
+    """
+    fetch_page = fetcher or fetch
+    requested_ids = [str(model_id) for model_id in model_ids]
+    page_ids = list(
+        dict.fromkeys(
+            model_id.split(":", 1)[0]
+            for model_id in requested_ids
+            if model_id.startswith("gemini-")
+            and not model_id.startswith("gemini-decision-")
+        )
+    )
+
+    def fetch_limits(model_id: str):
+        source = f"{MODEL_DETAILS_SOURCE}/{model_id}"
+        try:
+            markdown = google_docs_markdown(fetch_page(source))
+        except (OSError, TimeoutError, ValueError, ssl.SSLError):
+            return model_id, None
+        metadata = parse_model_metadata(markdown, model_id)
+        if metadata is None:
+            return model_id, None
+        return model_id, {**metadata, "source_url": source}
+
+    with ThreadPoolExecutor(max_workers=8) as executor:
+        fetched = dict(executor.map(fetch_limits, page_ids))
+
+    return {
+        requested_id: fetched[requested_id.split(":", 1)[0]]
+        for requested_id in requested_ids
+        if fetched.get(requested_id.split(":", 1)[0]) is not None
+    }
+
+
+def discover_model_token_limits(
+    model_ids: Iterable[str], *, fetcher=None
+) -> dict[str, dict[str, int | str]]:
+    """Compatibility helper returning only token limits and their source."""
+    specs = discover_model_specs(model_ids, fetcher=fetcher)
+    return {
+        model_id: {
+            key: value
+            for key, value in spec.items()
+            if key in {"context_window", "max_output_tokens", "source_url"}
+        }
+        for model_id, spec in specs.items()
+        if "context_window" in spec or "max_output_tokens" in spec
+    }
+
+
+def apply_model_metadata(model: dict, metadata: dict[str, Any] | None) -> bool:
+    """Apply verified model-page values and retain their source in metadata."""
+    if not metadata:
+        return False
+    for key in (
+        "context_window",
+        "max_output_tokens",
+        "input_modalities",
+        "output_modalities",
+        "supports_vision",
+        "supports_audio_input",
+        "supports_audio_output",
+        "supports_function_calling",
+        "supports_json_mode",
+        "supports_reasoning",
+    ):
+        if key in metadata:
+            model[key] = deepcopy(metadata[key])
+    extra = model.get("extra") or {}
+    extra["model_specs_source"] = metadata.get("source_url")
+    extra["model_specs_checked_at"] = datetime.now(timezone.utc).date().isoformat()
+    model["extra"] = extra
+    return True
+
+
+def apply_model_token_limits(
+    model: dict, limits: dict[str, int | str] | None
+) -> bool:
+    """Apply verified token limits and retain their source in model metadata."""
+    return apply_model_metadata(model, limits)
 
 
 def discover_metadata(html: str) -> tuple[dict[str, dict], dict[str, str]]:
@@ -700,7 +935,9 @@ def template_for(model_id: str) -> dict:
         "supports_thinking_level": level_values is not None,
         "thinking_level_values": level_values,
         "thinking_control": control,
-        "max_output_tokens": 65_536,
+        # Limits are populated from each model's official detail page. Gemini
+        # 4 is the exception because its family specs are explicitly verified.
+        "max_output_tokens": 65_536 if gemini_4_spec else 0,
         "extra": extra,
     }
 
@@ -808,29 +1045,32 @@ def apply_google_gemini_audio_metadata(model: dict) -> None:
     if not spec:
         return
 
+    has_audio_input = "audio" in spec["input_modalities"]
     has_audio_output = "audio" in spec["output_modalities"]
+    speech_understanding = spec.get("speech_understanding", has_audio_input)
     model["input_modalities"] = list(spec["input_modalities"])
     model["output_modalities"] = list(spec["output_modalities"])
     model["context_window"] = spec["context_window"]
     model["max_output_tokens"] = spec["max_output_tokens"]
     model["supports_vision"] = False
-    model["supports_reasoning"] = False
-    model["supports_function_calling"] = False
-    model["supports_json_mode"] = False
-    model["supports_chat_completion"] = False
+    model["supports_reasoning"] = spec.get("supports_reasoning", False)
+    model["supports_function_calling"] = spec.get("supports_function_calling", False)
+    model["supports_json_mode"] = spec.get("supports_json_mode", False)
+    model["supports_chat_completion"] = spec.get("supports_chat_completion", False)
     model["supports_streaming"] = spec["supports_streaming"]
-    model["supports_audio_input"] = True
+    model["supports_realtime"] = spec["supports_realtime"]
+    model["supports_audio_input"] = has_audio_input
     model["supports_audio_output"] = has_audio_output
     model["audio"] = {
-        "accepts_audio_input": True,
+        "accepts_audio_input": has_audio_input,
         "speech_generation": has_audio_output,
-        "speech_understanding": True,
+        "speech_understanding": speech_understanding,
         "supports_streaming": spec["supports_streaming"],
         "supports_realtime": spec["supports_realtime"],
         "source_url": spec["source"],
         "status": "documented",
         "endpoints": {
-            "speech_understanding": True,
+            **({"speech_understanding": True} if speech_understanding else {}),
             **({"speech_generation": True} if has_audio_output else {}),
             **({"streaming": True} if spec["supports_streaming"] else {}),
         },
@@ -977,6 +1217,7 @@ def main() -> None:
     pricing_html = fetch(SOURCE)
     decision_model = discover_decision_model(pricing_html)
     google_prices = discover_prices(pricing_html)
+    model_specs = discover_model_specs(google_prices)
     discovered_extras, discovered_deprecations = discover_metadata(pricing_html)
 
     updated = 0
@@ -995,14 +1236,13 @@ def main() -> None:
         by_id[decision_model_id] = decision_model
         updated += 1
 
-    # Update existing prices / context
-    for mid, (inp, out, ctx) in google_prices.items():
+    # Update prices from the pricing page and token limits from each model page.
+    for mid, (inp, out, _ctx) in google_prices.items():
         if mid not in by_id:
             continue
         m = by_id[mid]
         m["pricing"] = {"input_per_1m": inp, "output_per_1m": out, "currency": "USD"}
-        if not m.get("context_window"):
-            m["context_window"] = ctx
+        apply_model_metadata(m, model_specs.get(mid))
         m["supports_google_api"] = True
         m["supports_responses_api"] = False
         m["supports_fim"] = False
@@ -1025,20 +1265,9 @@ def main() -> None:
     for mid in google_prices:
         tmpl = template_for(mid)
         if mid in by_id:
-            # still ensure price applied
-            if mid in google_prices:
-                inp, out, ctx = google_prices[mid]
-                by_id[mid]["pricing"] = {
-                    "input_per_1m": inp,
-                    "output_per_1m": out,
-                    "currency": "USD",
-                }
-                if not by_id[mid].get("context_window"):
-                    by_id[mid]["context_window"] = ctx
-            continue
-        if mid not in google_prices:
             continue
         new_m = base_model(mid, tmpl, google_prices[mid])
+        apply_model_metadata(new_m, model_specs.get(mid))
         models.append(new_m)
         by_id[mid] = new_m
         inserted += 1

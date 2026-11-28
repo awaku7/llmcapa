@@ -185,6 +185,26 @@ def test_tool_search_support_anthropic_and_google_catalog_values():
     assert llmcapa.tool_search_detail("gpt-5.4-nano", provider="openai") is None
 
 
+def test_tool_search_support_deepseek_and_openrouter_catalog_values():
+    deepseek_flash = llmcapa.get("deepseek-flash", provider="deepseek")
+    assert deepseek_flash.supports("tool_search") is True
+    assert deepseek_flash.tool_search is not None
+    assert deepseek_flash.tool_search.execution == ("client",)
+    assert deepseek_flash.tool_search.api_surfaces == ("responses", "messages")
+
+    deepseek_pro = llmcapa.get("deepseek-v4-pro", provider="deepseek")
+    assert deepseek_pro.supports("tool_search") is False
+    assert deepseek_pro.tool_search is None
+
+    openrouter = llmcapa.get("openai/gpt-5.4", provider="openrouter")
+    assert openrouter.supports("tool_search") is True
+    assert openrouter.tool_search is not None
+    assert openrouter.tool_search.execution == ("server",)
+    assert openrouter.tool_search.api_surfaces == ("responses", "messages")
+    assert openrouter.tool_search.variants == ("regex",)
+    assert openrouter.tool_search.status == "beta"
+
+
 def test_tool_search_capability_round_trip():
     detail = ToolSearchCapability.from_dict(
         {

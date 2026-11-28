@@ -592,3 +592,96 @@ def test_typesafe_parser_handles_current_wide_version_table_and_alias_moves():
     assert merged[0]["aliases"] == ["jev-preview"]
     assert merged[1]["model_id"] == "jev-1.13.0"
     assert merged[1]["aliases"] == ["jev-latest", "jev-1.13"]
+
+
+def test_openrouter_tool_search_is_provider_wide_and_limited_to_documented_apis():
+    updater = _load("update_openrouter")
+    routes = [{"model_id": "openai/gpt-5.4"}, {"model_id": "openrouter/auto"}]
+
+    updater.apply_openrouter_tool_search(routes)
+
+    for route in routes:
+        assert route["supports_tool_search"] is True
+        assert route["tool_search"]["execution"] == ["server"]
+        assert route["tool_search"]["deferred_scope"] == "definition"
+        assert route["tool_search"]["api_surfaces"] == ["responses", "messages"]
+        assert route["tool_search"]["variants"] == ["regex"]
+        assert route["tool_search"]["status"] == "beta"
+    routes[0]["tool_search"]["variants"].append("test-only")
+    assert routes[1]["tool_search"]["variants"] == ["regex"]
+
+
+def test_deepseek_tool_search_is_model_and_api_specific(monkeypatch, tmp_path):
+    updater = _load("update_deepseek")
+    catalog = tmp_path / "deepseek.json"
+    catalog.write_text('{"models":[]}', encoding="utf-8")
+    monkeypatch.setattr(updater, "OUT", catalog)
+    pricing = {
+        "deepseek-flash": {
+            "version": "DeepSeek V4 Flash",
+            "off_peak": {},
+            "cache_hit": 0.01,
+            "input": 0.3,
+            "output": 1.2,
+            "ctx": 1_000_000,
+            "max_out": 384_000,
+            "supports_responses_api": True,
+            "supports_anthropic_api": True,
+        },
+        "deepseek-v4-pro": {
+            "version": "DeepSeek V4 Pro",
+            "off_peak": {},
+            "cache_hit": 0.01,
+            "input": 1.0,
+            "output": 2.0,
+            "ctx": 1_000_000,
+            "max_out": 384_000,
+            "supports_responses_api": True,
+            "supports_anthropic_api": True,
+        },
+    }
+
+    by_id = {model["model_id"]: model for model in updater.build(pricing)}
+
+    flash = by_id["deepseek-flash"]
+    assert flash["supports_tool_search"] is True
+    assert flash["tool_search"]["execution"] == ["client"]
+    assert flash["tool_search"]["api_surfaces"] == ["responses", "messages"]
+    assert by_id["deepseek-v4-pro"]["supports_tool_search"] is False
+    assert "tool_search" not in by_id["deepseek-v4-pro"]
+
+
+def test_google_model_limits_and_audio_modalities_follow_model_pages():
+    rows = {
+        model["model_id"]: model
+        for model in json.loads(
+            (ROOT / "src" / "llmcapa" / "data" / "google.json").read_text(
+                encoding="utf-8"
+            )
+        )["models"]
+    }
+    assert rows["gemini-2.5-computer-use-preview-10-2025"]["context_window"] == 128_000
+    assert rows["gemini-2.5-flash-image"]["context_window"] == 65_536
+    assert rows["gemini-3.1-flash-lite-image"]["max_output_tokens"] == 4_096
+    assert rows["gemini-3.1-flash-tts-preview"]["context_window"] == 8_192
+
+    tts = rows["gemini-2.5-flash-preview-tts"]
+    assert tts["input_modalities"] == ["text"]
+    assert tts["output_modalities"] == ["audio"]
+    assert tts["supports_audio_input"] is False
+    assert tts["supports_audio_output"] is True
+    assert tts["supports_function_calling"] is False
+    assert tts["supports_json_mode"] is False
+    assert tts["supports_realtime"] is False
+    assert tts["audio"]["speech_generation"] is True
+    assert tts["audio"]["speech_understanding"] is False
+
+    live_audio = rows["gemini-2.5-flash-native-audio-preview-12-2025"]
+    assert live_audio["input_modalities"] == ["text", "audio", "video"]
+    assert live_audio["output_modalities"] == ["text", "audio"]
+    assert live_audio["supports_realtime"] is True
+
+    image = rows["gemini-nano-banana-2.1"]
+    assert image["context_window"] == 131_072
+    assert image["max_output_tokens"] == 32_768
+    assert image["output_modalities"] == ["text", "image"]

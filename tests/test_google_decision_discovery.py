@@ -141,8 +141,90 @@ def test_discover_prices_from_current_google_markdown_page():
     page_html = f"<noscript><pre>{escape(pricing_markdown)}</pre></noscript>"
 
     assert updater.discover_prices(page_html) == {
-        "gemini-4-hydrogen": (1.5, 7.5, 1_048_576)
+        "gemini-4-hydrogen": (1.5, 7.5, 0)
     }
+
+
+def test_google_model_token_limits_are_read_from_matching_model_pages():
+    model_markdown = """## Gemini 3.8 Flash TTS
+
+* Model code
+* `gemini-3.8-flash-tts`
+
+* **Input token limit** 8,192
+* **Output token limit** 16,384 (Gemini API serving limit)
+"""
+    page_html = f"<noscript><pre>{escape(model_markdown)}</pre></noscript>"
+    requested = ["gemini-3.8-flash-tts", "gemini-3.8-flash-tts:batch"]
+    fetched_urls = []
+
+    limits = updater.discover_model_token_limits(
+        requested, fetcher=lambda url: fetched_urls.append(url) or page_html
+    )
+
+    expected = {
+        "context_window": 8192,
+        "max_output_tokens": 16384,
+        "source_url": (
+            "https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash-tts"
+        ),
+    }
+    assert limits == {model_id: expected for model_id in requested}
+    assert fetched_urls == [expected["source_url"]]
+
+    stale = {
+        "context_window": 1_048_576,
+        "max_output_tokens": 65_536,
+        "extra": {"existing": "retained"},
+    }
+    assert updater.apply_model_token_limits(stale, limits[requested[0]]) is True
+    assert stale["context_window"] == 8192
+    assert stale["max_output_tokens"] == 16384
+    assert stale["extra"]["existing"] == "retained"
+    assert stale["extra"]["model_specs_source"] == expected["source_url"]
+
+
+def test_google_model_token_limit_parser_rejects_mismatched_model_and_unknown_limits():
+    page = """* Model code
+* `gemini-3.8-flash`
+* **Input token limit** 1,048,576
+* **Output token limit** 65,536
+"""
+    assert updater.parse_model_token_limits(page, "gemini-3.7-flash") is None
+    assert updater.parse_model_token_limits(
+        "* Model code\n* `gemini-3.8-flash`\nNo token limits listed.",
+        "gemini-3.8-flash",
+    ) is None
+    assert updater.template_for("gemini-undocumented-preview")["max_output_tokens"] == 0
+
+
+def test_google_model_metadata_parser_extracts_modalities_and_explicit_badges():
+    page = """* Model code
+* `gemini-2.5-flash-native-audio-preview-12-2025`
+* **Inputs** Audio, video, text
+* **Output** Audio and text
+**Function calling**
+{% badge type="not-supported" /%}
+{% /section %}
+**Structured outputs**
+{% badge type="not-supported" /%}
+{% /section %}
+**Thinking**
+{% badge type="not-supported" /%}
+{% /section %}
+"""
+    metadata = updater.parse_model_metadata(
+        page, "gemini-2.5-flash-native-audio-preview-12-2025"
+    )
+
+    assert metadata is not None
+    assert metadata["input_modalities"] == ["text", "audio", "video"]
+    assert metadata["output_modalities"] == ["text", "audio"]
+    assert metadata["supports_audio_input"] is True
+    assert metadata["supports_audio_output"] is True
+    assert metadata["supports_function_calling"] is False
+    assert metadata["supports_json_mode"] is False
+    assert metadata["supports_reasoning"] is False
 
 
 def test_gemini_4_hydrogen_metadata_matches_official_model_page():

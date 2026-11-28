@@ -18,6 +18,7 @@ import json
 import shutil
 import ssl
 import urllib.request
+from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -46,6 +47,27 @@ DYNAMIC_PRICE = -1_000_000.0
 
 # Effort values commonly accepted via OpenRouter reasoning_effort
 DEFAULT_EFFORT = ["none", "minimal", "low", "medium", "high", "xhigh"]
+TOOL_SEARCH_SOURCE = (
+    "https://openrouter.ai/docs/guides/features/server-tools/tool-search"
+)
+OPENROUTER_TOOL_SEARCH_DETAIL = {
+    "execution": ["server"],
+    "deferred_scope": "definition",
+    "api_surfaces": ["responses", "messages"],
+    "variants": ["regex"],
+    "status": "beta",
+    "extra": {
+        "source_url": TOOL_SEARCH_SOURCE,
+        "model_scope": "any upstream model",
+    },
+}
+
+
+def apply_openrouter_tool_search(models: list[dict]) -> None:
+    """Record OpenRouter's provider-side Tool Search on every catalog route."""
+    for model in models:
+        model["supports_tool_search"] = True
+        model["tool_search"] = deepcopy(OPENROUTER_TOOL_SEARCH_DETAIL)
 
 # Synthetic "~latest" convenience aliases (not in API; keep for clients)
 # Prices are approximate shells from prior catalog / flagship rates.
@@ -1024,6 +1046,9 @@ def main() -> None:
         preserve_openrouter_metadata(model, previous_by_id.get(model.get("model_id")))
         for model in models
     ]
+    # This is a gateway capability, independent of the upstream model. The
+    # server tool is accepted on Responses and Messages, but not Chat Completions.
+    apply_openrouter_tool_search(models)
 
     # sort: openrouter/* specials first, then ~aliases, then alpha by id
     def sort_key(m: dict) -> tuple:

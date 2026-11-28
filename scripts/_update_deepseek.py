@@ -32,6 +32,46 @@ SOURCE_UPDATES = "https://api-docs.deepseek.com/updates/"
 SOURCE_THINKING = "https://api-docs.deepseek.com/guides/thinking_mode/"
 BASE_URL = "https://api.deepseek.com"
 BASE_URL_ANTHROPIC = "https://api.deepseek.com/anthropic"
+TOOL_SEARCH_SOURCE = "https://api-docs.deepseek.com/guides/tool_calls/"
+RESPONSES_API_SOURCE = "https://api-docs.deepseek.com/guides/responses_api/"
+DEEPSEEK_TOOL_SEARCH_SUPPORT = {
+    # DeepSeek Flash supports deferred tool loading through the Responses and
+    # Anthropic-compatible APIs. Chat Completions does not expose this protocol.
+    "deepseek-flash": True,
+    # The current V4 Pro model does not honor deferred tool loading.
+    "deepseek-v4-pro": False,
+}
+DEEPSEEK_TOOL_SEARCH_DETAIL = {
+    "execution": ["client"],
+    "api_surfaces": ["responses", "messages"],
+    "extra": {
+        "source_urls": [TOOL_SEARCH_SOURCE, RESPONSES_API_SOURCE],
+        "protocol": "client-side deferred tool loading",
+    },
+}
+
+
+def apply_deepseek_tool_search(model: dict) -> None:
+    """Apply the documented DeepSeek deferred-tool-loading support by model."""
+    model_id = str(model.get("model_id", "")).casefold()
+    support = DEEPSEEK_TOOL_SEARCH_SUPPORT.get(model_id)
+    if support is None:
+        return
+    model["supports_tool_search"] = support
+    if support:
+        model["tool_search"] = {
+            **DEEPSEEK_TOOL_SEARCH_DETAIL,
+            "execution": list(DEEPSEEK_TOOL_SEARCH_DETAIL["execution"]),
+            "api_surfaces": list(DEEPSEEK_TOOL_SEARCH_DETAIL["api_surfaces"]),
+            "extra": {
+                **DEEPSEEK_TOOL_SEARCH_DETAIL["extra"],
+                "source_urls": list(
+                    DEEPSEEK_TOOL_SEARCH_DETAIL["extra"]["source_urls"]
+                ),
+            },
+        }
+    else:
+        model.pop("tool_search", None)
 
 
 def base(
@@ -198,7 +238,10 @@ def build(pricing_catalog: dict[str, dict]) -> list[dict]:
             "catalog_status"
         ] = "retained_from_previous_catalog_not_in_current_pricing_table"
         models.append(carried)
-    return dedupe(models)
+    models = dedupe(models)
+    for model in models:
+        apply_deepseek_tool_search(model)
+    return models
 
 
 def dedupe(models: list[dict]) -> list[dict]:
